@@ -5,23 +5,21 @@
 학교를 졸업하고도 학연을 그리워하는 한국에서, 아쉽게도 동문을 만날 수 있는 방법은 많이 없습니다. 카카오 오픈채팅, 네이버 카페 등을 이용하여 동창들과 이어지는 것을 넘어 졸업 후에도 선후배를 만날 수 있는 커뮤니티를 만들고자 하는 아이디어에서 시작되었습니다.
 
 대학교 졸업생 동문 사이트 [홈커밍데이 HomeComingDay] 에서 전국의 선후배를 만나보세요!
-
 <br/>
 <br/>
-
 ## 🗓프로젝트 기간
 
 - 2022.08.26 ~ 2022.10.07
-
-
-
-
+<br/>
+<br/>
 ## 🔔 기술 스택 Front-End 
 
 <img alt="Csharp" src ="https://img.shields.io/badge/JavaScript-F7DF1E.svg?&style=for-the-badge&logo=JavaScript&logoColor=whtie"/>   <img alt="Csharp" src ="https://img.shields.io/badge/React-61DAFB.svg?&style=for-the-badge&logo=React&logoColor=white"/>
-
+<br/>
+<br/>
 ## 📊 주요 기능
-
+<br/>
+<br/>
 
 
 ## 📪 주소
@@ -30,11 +28,13 @@
 - 시연 영상 : 
 - Front-End Git Hub : https://github.com/jennywoon/HomeComingDay.git
 - Back-End Git Hub : 
-
+<br/>
+<br/>
 ## API 설계도
 
 - 📑 Notion : https://prairie-scion-76d.notion.site/API-7e8621cd61dc49fbb935f692242d69f3
 - 일부 캡처
 ![image](https://user-images.githubusercontent.com/109018926/187039932-52f91535-68e1-4493-9bef-5910aa04158b.png)
-
+<br/>
+<br/>
 ## ❓ Trouble Shooting Front-End
