@@ -33,7 +33,7 @@
 ## 📪 주소
 - 사이트 링크 : 
 - 시연 영상 : 유튜브 링크 달자
-[Front-End Git Hub](https://github.com/jennywoon/HomeComingDay.git)
+- [Front-End Git Hub](https://github.com/jennywoon/HomeComingDay.git)
 - Back-End Git Hub : 
 <br/>
 <br/>
