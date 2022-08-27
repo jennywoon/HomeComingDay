@@ -1,4 +1,4 @@
-# Home Coming Day
+# <img src="https://previews.123rf.com/images/anthonycz/anthonycz1702/anthonycz170200100/72876256-%ED%95%99%EA%B5%90-%EC%95%84%EC%9D%B4%EC%BD%98.jpg>"Home Coming Day</img>
 
 홈커밍데이(homecoming day)라는 단어는 미국에서 고교 졸업자들이 30년 뒤에 모교를 방문하는 행사를 말합니다. 한국에서는 동창회란 표현이 있기 때문에 홈커밍은 동창회나 동문회, 동기회에서 추진하는 연간 모임이 아닌 학교 등 교육기관에서 공식적으로 추진하는 행사를 가리키는 표현이 되었습니다.[출처 : 나무위키]
 
