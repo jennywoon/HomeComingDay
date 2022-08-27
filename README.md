@@ -27,4 +27,6 @@
 - Front-End Git Hub : https://github.com/jennywoon/HomeComingDay.git
 - Back-End Git Hub : 
 
+## API 설계도
 
+- 📑 Notion : https://prairie-scion-76d.notion.site/API-7e8621cd61dc49fbb935f692242d69f3
