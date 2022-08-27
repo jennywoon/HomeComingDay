@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import NaverLogin from "../components/NaverLogin";
 
 const Router = () => {
 
@@ -7,7 +8,7 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route path="/main" element={<MainPage />} /> */}
+        <Route path="/naverlogin" element={<NaverLogin />} />
       </Routes>
     </BrowserRouter>
   );
