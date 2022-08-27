@@ -17,8 +17,11 @@
 
 ## 🔔 기술 스택 Front-End 
 <br/>
+
 <img alt="Csharp" src ="https://img.shields.io/badge/JavaScript-F7DF1E.svg?&style=for-the-badge&logo=JavaScript&logoColor=whtie"/><img alt="Csharp" src ="https://img.shields.io/badge/React-61DAFB.svg?&style=for-the-badge&logo=React&logoColor=white"/>
 
+<br/>
+<br/>
 
 ## 📊 주요 기능
 
