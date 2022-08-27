@@ -33,14 +33,14 @@
 ## 📪 주소
 - 사이트 링크 : 
 - 시연 영상 : 유튜브 링크 달자
-- Front-End Git Hub : [Front-End Git Hub 링크](https://github.com/jennywoon/HomeComingDay.git)
+- Front-End Git Hub : [Front-End Git Hub 링크 클릭](https://github.com/jennywoon/HomeComingDay.git)
 - Back-End Git Hub : 
 <br/>
 <br/>
 <br/>
 
 ## 📑 API 설계도
-- Notion : [Notion 링크](https://prairie-scion-76d.notion.site/API-7e8621cd61dc49fbb935f692242d69f3)
+- Notion : [Notion 링크 클릭](https://prairie-scion-76d.notion.site/API-7e8621cd61dc49fbb935f692242d69f3)
 - 일부 캡처
 ![image](https://user-images.githubusercontent.com/109018926/187039932-52f91535-68e1-4493-9bef-5910aa04158b.png)
 <br/>
