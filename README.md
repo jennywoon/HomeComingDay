@@ -39,13 +39,18 @@
 <br/>
 <br/>
 
-## API 설계도
+## 📑 API 설계도
 <br/>
-- 📑 Notion : https://prairie-scion-76d.notion.site/API-7e8621cd61dc49fbb935f692242d69f3
+- Notion : https://prairie-scion-76d.notion.site/API-7e8621cd61dc49fbb935f692242d69f3
 - 일부 캡처
 ![image](https://user-images.githubusercontent.com/109018926/187039932-52f91535-68e1-4493-9bef-5910aa04158b.png)
 <br/>
 <br/>
 <br/>
 
+## 📕 와이어 프레임
+<br/>
+- Figma : https://www.figma.com/file/73hhMPremRjZhBagMjIFgy/Untitled?node-id=7%3A32
+<br/>
+<br/>
 ## ❓ Trouble Shooting Front-End
