@@ -1,4 +1,4 @@
-# 🏫 Home Coming Day
+## 🏫 Home Coming Day
 
 홈커밍데이(homecoming day)라는 단어는 미국에서 고교 졸업자들이 30년 뒤에 모교를 방문하는 행사를 말합니다. 한국에서는 동창회란 표현이 있기 때문에 홈커밍은 동창회나 동문회, 동기회에서 추진하는 연간 모임이 아닌 학교 등 교육기관에서 공식적으로 추진하는 행사를 가리키는 표현이 되었습니다.[출처 : 나무위키]
 
@@ -7,17 +7,17 @@
 대학교 졸업생 동문 사이트 [홈커밍데이 HomeComingDay] 에서 전국의 선후배를 만나보세요!
 
 
-# 🗓프로젝트 기간
+## 🗓프로젝트 기간
 
 - 2022.08.26 ~ 2022.10.07
 
 
-# 🧑‍💻 기술 스택 Front-End 👨‍💻
+## 🧑‍💻 기술 스택 Front-End 👨‍💻
 
 <img alt="Csharp" src ="https://img.shields.io/badge/JavaScript-F7DF1E.svg?&style=for-the-badge&logo=JavaScript&logoColor=whtie"/>   <img alt="Csharp" src ="https://img.shields.io/badge/React-61DAFB.svg?&style=for-the-badge&logo=React&logoColor=white"/>
 
 
-# 주소
+## 주소
 
 - 사이트 링크 : 
 - Front-End Git Hub : 
