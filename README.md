@@ -35,6 +35,7 @@
 - 시연 영상 : 유튜브 링크 달자
 - Front-End Git Hub : [Front-End Git Hub 링크 클릭](https://github.com/jennywoon/HomeComingDay.git)
 - Back-End Git Hub : 
+- 기획안 정리(팀 회의록 포함) : [Notion 링크 클릭](https://prairie-scion-76d.notion.site/1-194af719c75a4851b4bdb7d3e38f6bde)
 <br/>
 <br/>
 <br/>
