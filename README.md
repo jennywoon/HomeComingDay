@@ -48,7 +48,7 @@
 <br/>
 
 ## 📕 와이어 프레임
-- Figma : [Figma 링크](https://www.figma.com/file/73hhMPremRjZhBagMjIFgy/Untitled?node-id=7%3A32)
+- Figma : [Figma 링크 클릭](https://www.figma.com/file/73hhMPremRjZhBagMjIFgy/Untitled?node-id=7%3A32)
 <br/>
 <br/>
 
