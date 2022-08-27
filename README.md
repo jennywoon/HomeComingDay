@@ -7,9 +7,11 @@
 대학교 졸업생 동문 사이트 [홈커밍데이 HomeComingDay] 에서 전국의 선후배를 만나보세요!
 <br/>
 <br/>
+<br/>
 ## 🗓프로젝트 기간
 
 - 2022.08.26 ~ 2022.10.07
+<br/>
 <br/>
 <br/>
 ## 🔔 기술 스택 Front-End 
@@ -17,7 +19,9 @@
 <img alt="Csharp" src ="https://img.shields.io/badge/JavaScript-F7DF1E.svg?&style=for-the-badge&logo=JavaScript&logoColor=whtie"/>   <img alt="Csharp" src ="https://img.shields.io/badge/React-61DAFB.svg?&style=for-the-badge&logo=React&logoColor=white"/>
 <br/>
 <br/>
+<br/>
 ## 📊 주요 기능
+<br/>
 <br/>
 <br/>
 
@@ -30,11 +34,13 @@
 - Back-End Git Hub : 
 <br/>
 <br/>
+<br/>
 ## API 설계도
 
 - 📑 Notion : https://prairie-scion-76d.notion.site/API-7e8621cd61dc49fbb935f692242d69f3
 - 일부 캡처
 ![image](https://user-images.githubusercontent.com/109018926/187039932-52f91535-68e1-4493-9bef-5910aa04158b.png)
+<br/>
 <br/>
 <br/>
 ## ❓ Trouble Shooting Front-End
