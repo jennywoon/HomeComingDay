@@ -6,6 +6,9 @@
 
 대학교 졸업생 동문 사이트 [홈커밍데이 HomeComingDay] 에서 전국의 선후배를 만나보세요!
 
+# 프로젝트 기간
+
+- 2022.08.26 ~ 2022.10.07
 
 
 # 🧑‍💻 기술 스택 Front-End 👨‍💻
@@ -13,7 +16,7 @@
 <img alt="Csharp" src ="https://img.shields.io/badge/JavaScript-F7DF1E.svg?&style=for-the-badge&logo=JavaScript&logoColor=whtie"/>   <img alt="Csharp" src ="https://img.shields.io/badge/React-61DAFB.svg?&style=for-the-badge&logo=React&logoColor=white"/>
 
 
-### `yarn start`
+# 🗓
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
