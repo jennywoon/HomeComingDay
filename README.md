@@ -12,7 +12,7 @@
 ## 기술 스택
 
 Front-End
-<button style={{width: "100px", height: "100px"}}>![react](https://user-images.githubusercontent.com/109018926/187037494-6d742bdf-e66f-4443-bb53-1cb161d095a3.svg)
+<button>![react](https://user-images.githubusercontent.com/109018926/187037494-6d742bdf-e66f-4443-bb53-1cb161d095a3.svg)
 </button>
 
 
