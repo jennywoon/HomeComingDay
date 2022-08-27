@@ -20,7 +20,7 @@
 ## 📪 주소
 
 - 사이트 링크 : 
-- Front-End Git Hub : 
+- Front-End Git Hub : https://github.com/jennywoon/HomeComingDay.git
 - Back-End Git Hub : 
 
 Runs the app in the development mode.\
