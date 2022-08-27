@@ -41,6 +41,7 @@
 
 ## 📑 API 설계도
 - Notion : https://prairie-scion-76d.notion.site/API-7e8621cd61dc49fbb935f692242d69f3
+<br/>
 - 일부 캡처
 ![image](https://user-images.githubusercontent.com/109018926/187039932-52f91535-68e1-4493-9bef-5910aa04158b.png)
 <br/>
