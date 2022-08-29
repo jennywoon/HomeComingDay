@@ -2,139 +2,172 @@ import styled from "styled-components"
 import Img from "../assets/naverIcon.png"
 
 const Help = () => {
-    return (
-        <HelpContainer>
-            <Banner/>
-            <Select name="state">
-                <option>최신순</option>
-                <option>인기순</option>
-            </Select>
-            <HelpList>{/* map돌리기 */}
-                <HelpCard>
-                    <CardHead>
-                        <HeadImg src={Img} alt="" />
-                        <HeadName>최형용</HeadName>
-                        <HeadStudent>14학번</HeadStudent>
-                        <HeadTime>15분전</HeadTime>
-                    </CardHead>
-                    <CardBody>
-                        <BodyTitle>제목인데 어떻습니까</BodyTitle>
-                        <BodyContent>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero iure esse ad, dicta asperiores mollitia similique maiores nostrum accusamus unde sed enim voluptatum voluptas soluta error veritatis harum excepturi obcaecati.</BodyContent>
-                    </CardBody>
-                    <CardFooter>
-                        <Views>조회수 1500</Views>
-                        <CommentCount>댓글 2700</CommentCount>
-                    </CardFooter>
-                </HelpCard>
-            </HelpList>
-            <HelpList>{/* map돌리기 */}
-                <HelpCard>
-                    <CardHead>
-                        <HeadImg src={Img} alt="" />
-                        <HeadName>최형용</HeadName>
-                        <HeadStudent>14학번</HeadStudent>
-                        <HeadTime>15분전</HeadTime>
-                    </CardHead>
-                    <CardBody>
-                        <BodyTitle>제목인데 어떻습니까</BodyTitle>
-                        <BodyContent>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero iure esse ad, dicta asperiores mollitia similique maiores nostrum accusamus unde sed enim voluptatum voluptas soluta error veritatis harum excepturi obcaecati.</BodyContent>
-                    </CardBody>
-                    <CardFooter>
-                        <Views>조회수 1500</Views>
-                        <CommentCount>댓글 2700</CommentCount>
-                    </CardFooter>
-                </HelpCard>
-            </HelpList>
-            <HelpList>{/* map돌리기 */}
-                <HelpCard>
-                    <CardHead>
-                        <HeadImg src={Img} alt="" />
-                        <HeadName>최형용</HeadName>
-                        <HeadStudent>14학번</HeadStudent>
-                        <HeadTime>15분전</HeadTime>
-                    </CardHead>
-                    <CardBody>
-                        <BodyTitle>제목인데 어떻습니까</BodyTitle>
-                        <BodyContent>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero iure esse ad, dicta asperiores mollitia similique maiores nostrum accusamus unde sed enim voluptatum voluptas soluta error veritatis harum excepturi obcaecati.</BodyContent>
-                    </CardBody>
-                    <CardFooter>
-                        <Views>조회수 1500</Views>
-                        <CommentCount>댓글 2700</CommentCount>
-                    </CardFooter>
-                </HelpCard>
-            </HelpList>
-            <HelpList>{/* map돌리기 */}
-                <HelpCard>
-                    <CardHead>
-                        <HeadImg src={Img} alt="" />
-                        <HeadName>최형용</HeadName>
-                        <HeadStudent>14학번</HeadStudent>
-                        <HeadTime>15분전</HeadTime>
-                    </CardHead>
-                    <CardBody>
-                        <BodyTitle>제목인데 어떻습니까</BodyTitle>
-                        <BodyContent>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero iure esse ad, dicta asperiores mollitia similique maiores nostrum accusamus unde sed enim voluptatum voluptas soluta error veritatis harum excepturi obcaecati.</BodyContent>
-                    </CardBody>
-                    <CardFooter>
-                        <Views>조회수 1500</Views>
-                        <CommentCount>댓글 2700</CommentCount>
-                    </CardFooter>
-                </HelpCard>
-            </HelpList>
-            <HelpList>{/* map돌리기 */}
-                <HelpCard>
-                    <CardHead>
-                        <HeadImg src={Img} alt="" />
-                        <HeadName>최형용</HeadName>
-                        <HeadStudent>14학번</HeadStudent>
-                        <HeadTime>15분전</HeadTime>
-                    </CardHead>
-                    <CardBody>
-                        <BodyTitle>제목인데 어떻습니까</BodyTitle>
-                        <BodyContent>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero iure esse ad, dicta asperiores mollitia similique maiores nostrum accusamus unde sed enim voluptatum voluptas soluta error veritatis harum excepturi obcaecati.</BodyContent>
-                    </CardBody>
-                    <CardFooter>
-                        <Views>조회수 1500</Views>
-                        <CommentCount>댓글 2700</CommentCount>
-                    </CardFooter>
-                </HelpCard>
-            </HelpList>
-        </HelpContainer>
-    )
+  return (
+    <HelpContainer>
+      <Banner />
+      <HelpWrap>
+        <Select name='state'>
+          <option>최신순</option>
+          <option>인기순</option>
+        </Select>
+        <HelpList>
+          {/* map돌리기 */}
+          <HelpCard>
+            <CardHead>
+              <HeadImg src={Img} alt='' />
+              <HeadName>최형용</HeadName>
+              <HeadStudent>14학번</HeadStudent>
+              <HeadTime>15분전</HeadTime>
+            </CardHead>
+            <CardBody>
+              <BodyTitle>제목인데 어떻습니까</BodyTitle>
+              <BodyContent>
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero
+                iure esse ad, dicta asperiores mollitia similique maiores
+                nostrum accusamus unde sed enim voluptatum voluptas soluta error
+                veritatis harum excepturi obcaecati.
+              </BodyContent>
+            </CardBody>
+            <CardFooter>
+              <Views>조회수 1500</Views>
+              <CommentCount>댓글 2700</CommentCount>
+            </CardFooter>
+          </HelpCard>
+        </HelpList>
+        <HelpList>
+          {/* map돌리기 */}
+          <HelpCard>
+            <CardHead>
+              <HeadImg src={Img} alt='' />
+              <HeadName>최형용</HeadName>
+              <HeadStudent>14학번</HeadStudent>
+              <HeadTime>15분전</HeadTime>
+            </CardHead>
+            <CardBody>
+              <BodyTitle>제목인데 어떻습니까</BodyTitle>
+              <BodyContent>
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero
+                iure esse ad, dicta asperiores mollitia similique maiores
+                nostrum accusamus unde sed enim voluptatum voluptas soluta error
+                veritatis harum excepturi obcaecati.
+              </BodyContent>
+            </CardBody>
+            <CardFooter>
+              <Views>조회수 1500</Views>
+              <CommentCount>댓글 2700</CommentCount>
+            </CardFooter>
+          </HelpCard>
+        </HelpList>
+        <HelpList>
+          {/* map돌리기 */}
+          <HelpCard>
+            <CardHead>
+              <HeadImg src={Img} alt='' />
+              <HeadName>최형용</HeadName>
+              <HeadStudent>14학번</HeadStudent>
+              <HeadTime>15분전</HeadTime>
+            </CardHead>
+            <CardBody>
+              <BodyTitle>제목인데 어떻습니까</BodyTitle>
+              <BodyContent>
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero
+                iure esse ad, dicta asperiores mollitia similique maiores
+                nostrum accusamus unde sed enim voluptatum voluptas soluta error
+                veritatis harum excepturi obcaecati.
+              </BodyContent>
+            </CardBody>
+            <CardFooter>
+              <Views>조회수 1500</Views>
+              <CommentCount>댓글 2700</CommentCount>
+            </CardFooter>
+          </HelpCard>
+        </HelpList>
+        <HelpList>
+          {/* map돌리기 */}
+          <HelpCard>
+            <CardHead>
+              <HeadImg src={Img} alt='' />
+              <HeadName>최형용</HeadName>
+              <HeadStudent>14학번</HeadStudent>
+              <HeadTime>15분전</HeadTime>
+            </CardHead>
+            <CardBody>
+              <BodyTitle>제목인데 어떻습니까</BodyTitle>
+              <BodyContent>
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero
+                iure esse ad, dicta asperiores mollitia similique maiores
+                nostrum accusamus unde sed enim voluptatum voluptas soluta error
+                veritatis harum excepturi obcaecati.
+              </BodyContent>
+            </CardBody>
+            <CardFooter>
+              <Views>조회수 1500</Views>
+              <CommentCount>댓글 2700</CommentCount>
+            </CardFooter>
+          </HelpCard>
+        </HelpList>
+        <HelpList>
+          {/* map돌리기 */}
+          <HelpCard>
+            <CardHead>
+              <HeadImg src={Img} alt='' />
+              <HeadName>최형용</HeadName>
+              <HeadStudent>14학번</HeadStudent>
+              <HeadTime>15분전</HeadTime>
+            </CardHead>
+            <CardBody>
+              <BodyTitle>제목인데 어떻습니까</BodyTitle>
+              <BodyContent>
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero
+                iure esse ad, dicta asperiores mollitia similique maiores
+                nostrum accusamus unde sed enim voluptatum voluptas soluta error
+                veritatis harum excepturi obcaecati.
+              </BodyContent>
+            </CardBody>
+            <CardFooter>
+              <Views>조회수 1500</Views>
+              <CommentCount>댓글 2700</CommentCount>
+            </CardFooter>
+          </HelpCard>
+        </HelpList>
+      </HelpWrap>
+    </HelpContainer>
+  );
+};
 
-}
-
-export default Help
+export default Help;
 
 const HelpContainer = styled.div`
-    gap: 12px;
-`
+  gap: 12px;
+`;
 
 const Banner = styled.div`
-    /* width: 420px; */
-    /* width: 100vw; */
-    height: 120px;
-    border: 1px solid gray;
-    margin-bottom: 12px;
-`
-const Select = styled.select`
-    display: flex;
-    margin-left: auto;
-    margin-bottom: 10px;
-    padding:2px 4px;
-    border-radius: 10px;
+  height: 120px;
+  border: 1px solid gray;
+  margin-bottom: 12px;
 `
 
-const HelpList = styled.div`
-`
+const HelpWrap = styled.div`
+  padding: 0 10px;
+`;
+const Select = styled.select`
+  display: flex;
+  margin-left: auto;
+  margin-bottom: 10px;
+  padding: 2px 4px;
+  border-radius: 10px;
+`;
+
+const HelpList = styled.div``;
 
 const HelpCard = styled.div`
-    padding : 10px; 
-    border:1px solid #F6F6F6;
-    border-radius: 20px;
-    box-shadow: 5px 3px 3px -2px rgba(0,0,0,0.10);
-    cursor: pointer;
-`
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  /* box-shadow: 5px 3px 3px -2px rgba(0,0,0,0.10); */
+  cursor: pointer;
+  margin-bottom: 20px;
+`;
 
 const CardHead = styled.div`
     display: flex;
