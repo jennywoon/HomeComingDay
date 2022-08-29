@@ -27,7 +27,7 @@ const LayoutContainer = styled.div`
 
 const LayoutWrap = styled.div`
     width: 420px;
-    height: 1190px;
+    height: 100vh;
     border: 1px solid blue;
     background-color: white;
     display: flex;
