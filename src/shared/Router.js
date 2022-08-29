@@ -7,7 +7,6 @@ import MainHelp from "../pages/MainHelp"
 import MainPage from "../pages/MainPage";
 
 const Router = () => {
-
   
   return (
     <BrowserRouter>
