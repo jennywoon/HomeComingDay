@@ -19,16 +19,17 @@ export default Layout;
 
 const LayoutContainer = styled.div`
     width: 100%;
-    /* height: 100vh; */
-    height: calc(var(--vh, 1vh) * 100);
+    height: 100%;
+    /* height: calc(var(--vh, 1vh) * 100); */
     background-color: #F7EDE2;
     display: flex;
     justify-content: center;    
 `
 
 const LayoutWrap = styled.div`
-    width: 420px;
-    /* height: 929px; */
+    /* width: 420px;
+    height: 929px; */
+    height: 100%;
     /* height: calc(var(--vh, 1vh) * 100); */
     border: 1px solid blue;
     background-color: white;
