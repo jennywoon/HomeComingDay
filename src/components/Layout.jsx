@@ -28,7 +28,7 @@ const LayoutContainer = styled.div`
 
 const LayoutWrap = styled.div`
     width: 420px;
-    height: 929px;
+    /* height: 929px; */
     /* height: calc(var(--vh, 1vh) * 100); */
     border: 1px solid blue;
     background-color: white;

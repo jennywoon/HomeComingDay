@@ -40,7 +40,7 @@ export default BottomTap;
 const SecondWrap = styled.div`
     width: 420px;
     position: relative;
-    /* bottom: 0; */
+    bottom: 0;
 `
 const Bottom = styled.div`
     height: 60px;
