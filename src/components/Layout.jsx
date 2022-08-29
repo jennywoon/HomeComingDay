@@ -22,14 +22,12 @@ export default Layout;
 
 const LayoutContainer = styled.div`
   margin: 0 auto;
-  width: 500px;
+  width: 100%;
   height: 100%;
-  /* height: calc(var(--vh, 1vh) * 100); */
   background-color: #f7ede2;
   display: flex;
   justify-content: center;
   @media only screen and (max-width: 768px) {
-    /* border: 1px solid blue; */
     width: 100%;
     height: 100%;
     display: flex;
@@ -38,10 +36,7 @@ const LayoutContainer = styled.div`
 `;
 
 const LayoutWrap = styled.div`
-  /* width: 420px; */
-  /* height: 929px; */
-  /* height: calc(var(--vh, 1vh) * 100); */
-  width: 100%;
+  width: 500px;
   background-color: white;
   display: flex;
   flex-direction: column;

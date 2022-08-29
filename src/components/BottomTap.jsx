@@ -46,13 +46,10 @@ const SecondWrap = styled.div`
     bottom: 0;
 `
 const Bottom = styled.div`
-    /* width: 420px; */
     height: 60px;
-    /* border: 1px solid red; */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* padding: 0 50px; */
 `
 
 const Tap = styled.div`
@@ -60,7 +57,6 @@ const Tap = styled.div`
     flex-direction: column;
     align-items: center;
     cursor: pointer;
-    /* padding: 0 20px; */
 `
 const TapTitle = styled.div`
     font-size: 12px;

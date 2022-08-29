@@ -25,7 +25,6 @@ export default HeaderTap;
 const Navbar = styled.div`
     width: 100%;
     height: 40px;
-    /* border: 1px solid green; */
     display: flex;
     justify-content: space-between;
     align-items: center;

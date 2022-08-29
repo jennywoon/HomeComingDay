@@ -164,7 +164,6 @@ const HelpCard = styled.div`
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 10px;
-  /* box-shadow: 5px 3px 3px -2px rgba(0,0,0,0.10); */
   cursor: pointer;
   margin-bottom: 20px;
 `;
@@ -190,7 +189,6 @@ const HeadTime = styled.p`
     margin-left: auto;
 `
 const CardBody = styled.div`
-    /* border: 1px solid red; */
 `
 const BodyTitle = styled.h3`
     margin: 5px 0px;

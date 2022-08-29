@@ -31,6 +31,5 @@ const HeaderContainer = styled.div`
 `
 
 const HeaderTitle = styled.div`
-    /* padding-left: 20px; */
 `
 
