@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import Img from "../assets/naverIcon.png"
+import help from "../assets/help.png"
 
 const Help = () => {
   return (
@@ -145,6 +146,9 @@ const Banner = styled.div`
   height: 120px;
   border: 1px solid gray;
   margin-bottom: 12px;
+  background-image: url(${help});
+  background-position: center;
+  background-size: 100% 100%;
 `
 
 const HelpWrap = styled.div`
