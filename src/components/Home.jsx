@@ -16,11 +16,11 @@ export default Home;
 
 const HomeContainer = styled.div`
     width: 100%;
-    height: 800px;
+    /* height: 800px; */
     /* height: calc(var(--vh, 1vh) * 93); */
-    border: 1px solid red;
+    /* border: 1px solid red; */
     display: flex;
     flex-direction: column;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    /* overflow-y: scroll; */
+    /* overflow-x: hidden; */
 `
