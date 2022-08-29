@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import naverIcon from "../assets/naverIcon.png"
+import { logout } from "../actions/Cookie"
 
 const NaverLogin = () => {
 
@@ -8,9 +9,6 @@ const NaverLogin = () => {
     const naverRef = useRef()
     const { naver } = window
 
-    // 환경 변수 처리를 해주었다면 ?
-    // 환경 변수를 사용하여 CLIENT ID, CALLBACK URL 불러온다.  
-    // 설명이 필요하다면 댓글 또는 메일을 남겨주세요! 
     const NAVER_CLIENT_ID = process.env.REACT_APP_NAVER_CLIENT_ID
     const NAVER_CALLBACK_URL = process.env.REACT_APP_NAVER_CALLBACK_URL
 
@@ -22,7 +20,8 @@ const NaverLogin = () => {
             clientId: NAVER_CLIENT_ID,
             callbackUrl: NAVER_CALLBACK_URL,
             isPopup: false,
-            loginButton: { color: 'green', type: 3, height: 58 },
+            // loginButton: { color: 'green', type: 3, height: 58 },
+            loginButton: { color: 'green', type: 4, height: 47 },
             callbackHandle: true,
         })
         naverLogin.init()
@@ -39,7 +38,6 @@ const NaverLogin = () => {
         initializeNaverLogin()
         userAccessToken()
     }, [])
-
 
     // handleClick 함수 onClick 이벤트 발생 시 useRef 를 통해 지정한 naverRef 항목이 클릭 된다.
     // current 를 통해 아래 div 태그의 ref={} 속성을 줄 수 있다. ( 자세한 내용은 공식문서를 확인하자. )
