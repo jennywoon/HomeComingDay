@@ -12,9 +12,9 @@ const BottomTap = () => {
     return (
         <SecondWrap>
                 <Bottom>
-                    <Tap onClick={() => {
-                        navigate("/")
-                    }}>
+                    <Tap onClick={() => {navigate("/")}}
+                    style={{paddingLeft: "20px"}}
+                    >
                         <AiOutlineHome size="23"/>
                         <TapTitle>HOME</TapTitle>
                     </Tap>
@@ -26,7 +26,9 @@ const BottomTap = () => {
                         <BiSearch size="23"/>
                         <TapTitle>SEARCH</TapTitle>
                     </Tap>
-                    <Tap>
+                    <Tap
+                    style={{paddingRight: "20px"}}
+                    >
                         <FiUser size="23"/>
                         <TapTitle>MY</TapTitle>
                     </Tap>
@@ -58,7 +60,7 @@ const Tap = styled.div`
     flex-direction: column;
     align-items: center;
     cursor: pointer;
-    /* padding: 0 30px; */
+    /* padding: 0 20px; */
 `
 const TapTitle = styled.div`
     font-size: 12px;
