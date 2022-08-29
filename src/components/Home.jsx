@@ -16,4 +16,6 @@ const HomeContainer = styled.div`
     width: 100%;
     height: 809px;
     border: 1px solid red;
+    display: flex;
+    flex-direction: column;
 `

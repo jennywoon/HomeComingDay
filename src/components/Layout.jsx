@@ -23,11 +23,12 @@ const LayoutContainer = styled.div`
     background-color: #F7EDE2;
     display: flex;
     justify-content: center;
+    
 `
 
 const LayoutWrap = styled.div`
     width: 420px;
-    height: 100vh;
+    height: 929px;
     border: 1px solid blue;
     background-color: white;
     display: flex;

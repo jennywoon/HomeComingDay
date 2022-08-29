@@ -1,13 +1,13 @@
 import styled from "styled-components"
 import Img from "../assets/naverIcon.png"
 
-const Help =() =>{
+const Help = () => {
     return (
-        <Layout>{/*레이아웃생기면 없애면댐*/}
+        <HelpContainer>
             {/* banner 선배님도와주세요*/}
             <Select name="state">
-              <option>최신순</option>
-              <option>인기순</option>
+                <option>최신순</option>
+                <option>인기순</option>
             </Select>
             <HelpList>{/* map돌리기 */}
                 <HelpCard>
@@ -27,21 +27,16 @@ const Help =() =>{
                     </CardFooter>
                 </HelpCard>
             </HelpList>
-        </Layout>
+        </HelpContainer>
     )
 
 }
 
 export default Help
 
-const Layout = styled.div`
-    width : 375px;
-    height: 100vh;
-    border:1px solid gray;
-    margin: auto;
-    padding : 20px;
+const HelpContainer = styled.div`
+    
 `
-
 const Select = styled.select`
     display: flex;
     margin-left: auto;

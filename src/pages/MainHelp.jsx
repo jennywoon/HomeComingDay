@@ -1,10 +1,11 @@
 import Help from "../components/Help"
+import Layout from "../components/Layout"
 
 const MainHelp = () =>{
     return (
-        //Layout
-        //nav
-        <Help></Help>
+        <Layout>
+            <Help/>
+        </Layout>
 
     )
 
