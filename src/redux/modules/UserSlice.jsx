@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { getCookie, setCookie } from '../../shared/cookies';
+import { getCookie, setCookie } from '../../shared/Cookies';
 
 const BASE_URL = '';
 
@@ -32,7 +32,7 @@ const initialState = {
   error: null,
 };
 
-export const userSlice = createSlice({
+export const UserSlice = createSlice({
   name: 'userSlice',
   initialState,
   reducers: {},
@@ -52,4 +52,4 @@ export const userSlice = createSlice({
   }
 })
 
-export default userSlice;
+export default UserSlice;

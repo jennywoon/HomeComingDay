@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from './elements/Button';
 import Input from './elements/Input';
-import { __loginUser } from '../redux/modules/userSlice';
+import { __loginUser } from '../redux/modules/UserSlice';
 
 const Login = () => {
   const dispatch = useDispatch();
