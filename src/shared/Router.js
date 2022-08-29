@@ -1,10 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-<<<<<<< Updated upstream
 import NaverLogin from "../components/NaverLogin";
-=======
-import GoogleLogin from "../components/GoogleLogin";
->>>>>>> Stashed changes
+import MainHelp from "../pages/MainHelp"
 
 const Router = () => {
 
@@ -12,12 +9,8 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-<<<<<<< Updated upstream
         <Route path="/naverlogin" element={<NaverLogin />} />
-=======
-      <Route path="/" element={<GoogleLogin />} />
-        {/* <Route path="/main" element={<MainPage />} /> */}
->>>>>>> Stashed changes
+        <Route path="/mainhelp" element={<MainHelp />} />
       </Routes>
     </BrowserRouter>
   );
