@@ -9,12 +9,12 @@ const HeaderTap = () => {
             <Navbar>
                 <NavbarTitle
                     onClick={() => { navigate("/") }}
-                    style={{ cursor: "pointer", paddingLeft: "30px" }}
+                    style={{ cursor: "pointer", paddingLeft: "20px" }}
                 >도움요청</NavbarTitle>
                 <NavbarTitle>정보공유</NavbarTitle>
                 <NavbarTitle>만남일정</NavbarTitle>
                 <NavbarTitle
-                    style={{ paddingRight: "30px" }}
+                    style={{ paddingRight: "20px" }}
                 >자유토크</NavbarTitle>
             </Navbar>
     );
@@ -31,10 +31,6 @@ const Navbar = styled.div`
     align-items: center;
     font-size: 15px;
     font-weight: bold;
-    margin-top: 60px;
-    position: fixed;
-    background-color: white;
-    z-index: 2;
 `
 
 const NavbarTitle = styled.div``

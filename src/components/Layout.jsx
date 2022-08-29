@@ -12,9 +12,7 @@ const Layout = ({ children }) => {
         <LayoutContainer>
             <LayoutWrap>
                 <Header />
-                <HeaderTap/>
                 <LayoutContents>{children}</LayoutContents>
-                <BottomTap/>
             </LayoutWrap>
         </LayoutContainer>
     );
@@ -53,5 +51,4 @@ const LayoutWrap = styled.div`
 const LayoutContents = styled.div`
     display: flex;
     justify-content: center;
-    align-items: center;
 `

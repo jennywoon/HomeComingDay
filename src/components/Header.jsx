@@ -8,8 +8,8 @@ const Header = () => {
 
     return (
         <HeaderContainer>
-                <HeaderTitle style={{paddingLeft : "30px"}}>HomeComing Day</HeaderTitle>
-                <VscBell size="23" style={{paddingRight : "30px"}}/>
+                <HeaderTitle>HomeComing Day</HeaderTitle>
+                <VscBell size="23"/>
         </HeaderContainer>
 
     );
@@ -25,14 +25,9 @@ const HeaderContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* padding: 0 20px; */
+    padding: 0 20px;
     font-size: 20px;
     font-weight: bold;
-    position: fixed;
-    background-color: white;
-    border: 1px solid green;
-    z-index: 1;
-    /* top: 0; */
 `
 
 const HeaderTitle = styled.div`

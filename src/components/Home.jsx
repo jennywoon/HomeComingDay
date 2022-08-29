@@ -7,13 +7,13 @@ import Layout from './Layout';
 
 const Home = () => {
     return (
-        // <Layout>
+
         <HomeContainer>
-                {/* <HeaderTap /> */}
+                <HeaderTap />
                 <Help />
-                {/* <BottomTap /> */}
+                <BottomTap />
         </HomeContainer>
-        // </Layout>
+
     );
 };
 
