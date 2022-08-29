@@ -38,10 +38,11 @@ const BottomTap = () => {
 export default BottomTap;
 
 const SecondWrap = styled.div`
-    /* width: 420px; */
-    width: 100%;
+    width: 420px;
+    /* width: 100%; */
     position: fixed;
     bottom: 0;
+    background-color: white;
 `
 const Bottom = styled.div`
     height: 60px;

@@ -9,7 +9,7 @@ const Layout = ({ children }) => {
             <LayoutWrap>
                 <Header />
                 <LayoutContents>{children}</LayoutContents>
-                <BottomTap/>
+                {/* <BottomTap/> */}
             </LayoutWrap>
         </LayoutContainer>
     );
@@ -27,9 +27,10 @@ const LayoutContainer = styled.div`
 `
 
 const LayoutWrap = styled.div`
-    /* width: 420px;
-    height: 929px; */
-    height: 100%;
+    width: 420px;
+    /* height: 929px; */
+    /* width: 100%;
+    height: 100%; */
     /* height: calc(var(--vh, 1vh) * 100); */
     border: 1px solid blue;
     background-color: white;

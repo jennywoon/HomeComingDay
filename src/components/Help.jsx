@@ -112,7 +112,7 @@ const HelpContainer = styled.div`
 
 const Banner = styled.div`
     /* width: 420px; */
-    width: 100vw;
+    /* width: 100vw; */
     height: 120px;
     border: 1px solid gray;
     margin-bottom: 12px;
