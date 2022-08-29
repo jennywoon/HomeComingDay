@@ -18,8 +18,9 @@ const Header = () => {
 export default Header;
 
 const HeaderContainer = styled.div`
-    /* width: 100%; */
-    width: 420px;
+    position: sticky;
+    top: 0;
+    background-color: #eee;
     height: 60px;
     display: flex;
     justify-content: space-between;
