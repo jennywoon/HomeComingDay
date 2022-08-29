@@ -14,7 +14,7 @@ const Router = () => {
       <Routes>
         <Route path="/naverlogin" element={<NaverLogin />} />
         <Route path="/login" element={<LoginPage />}></Route>
-          <Route path="/signup" element={<SignUpPage />}></Route>
+        <Route path="/signup" element={<SignUpPage />}></Route>
         <Route path="/" element={<MainPage />} />
         <Route path="/mainhelp" element={<MainHelp />} />
       </Routes>
