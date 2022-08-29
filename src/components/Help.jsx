@@ -107,7 +107,10 @@ const Help = () => {
 export default Help
 
 const HelpContainer = styled.div`
+    height: 100vh;
     gap: 12px;
+    margin-top: 100px;
+    padding: 0 5px;
 `
 
 const Banner = styled.div`

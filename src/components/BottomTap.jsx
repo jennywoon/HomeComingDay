@@ -38,19 +38,20 @@ const BottomTap = () => {
 export default BottomTap;
 
 const SecondWrap = styled.div`
-    width: 420px;
+    /* width: 420px; */
     /* width: 100%; */
     position: fixed;
     bottom: 0;
     background-color: white;
 `
 const Bottom = styled.div`
+    width: 420px;
     height: 60px;
     /* border: 1px solid red; */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 50px;
+    /* padding: 0 50px; */
 `
 
 const Tap = styled.div`
@@ -58,6 +59,7 @@ const Tap = styled.div`
     flex-direction: column;
     align-items: center;
     cursor: pointer;
+    padding: 0 30px;
 `
 const TapTitle = styled.div`
     font-size: 12px;
