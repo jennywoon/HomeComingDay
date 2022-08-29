@@ -8,7 +8,7 @@ const HeaderTap = () => {
     return (
         <Navbar>
             <NavbarTitle
-                onClick={() => { navigate("/mainhelp") }}
+                onClick={() => { navigate("/") }}
                 style={{ cursor: "pointer", paddingLeft: "20px" }}
             >도움요청</NavbarTitle>
             <NavbarTitle>정보공유</NavbarTitle>
@@ -24,7 +24,7 @@ export default HeaderTap;
 
 const Navbar = styled.div`
     width: 420px;
-    height: 30px;
+    height: 40px;
     border: 1px solid green;
     display: flex;
     justify-content: space-between;

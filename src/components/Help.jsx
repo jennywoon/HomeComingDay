@@ -4,11 +4,83 @@ import Img from "../assets/naverIcon.png"
 const Help = () => {
     return (
         <HelpContainer>
-            {/* banner 선배님도와주세요*/}
+            <Banner/>
             <Select name="state">
                 <option>최신순</option>
                 <option>인기순</option>
             </Select>
+            <HelpList>{/* map돌리기 */}
+                <HelpCard>
+                    <CardHead>
+                        <HeadImg src={Img} alt="" />
+                        <HeadName>최형용</HeadName>
+                        <HeadStudent>14학번</HeadStudent>
+                        <HeadTime>15분전</HeadTime>
+                    </CardHead>
+                    <CardBody>
+                        <BodyTitle>제목인데 어떻습니까</BodyTitle>
+                        <BodyContent>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero iure esse ad, dicta asperiores mollitia similique maiores nostrum accusamus unde sed enim voluptatum voluptas soluta error veritatis harum excepturi obcaecati.</BodyContent>
+                    </CardBody>
+                    <CardFooter>
+                        <Views>조회수 1500</Views>
+                        <CommentCount>댓글 2700</CommentCount>
+                    </CardFooter>
+                </HelpCard>
+            </HelpList>
+            <HelpList>{/* map돌리기 */}
+                <HelpCard>
+                    <CardHead>
+                        <HeadImg src={Img} alt="" />
+                        <HeadName>최형용</HeadName>
+                        <HeadStudent>14학번</HeadStudent>
+                        <HeadTime>15분전</HeadTime>
+                    </CardHead>
+                    <CardBody>
+                        <BodyTitle>제목인데 어떻습니까</BodyTitle>
+                        <BodyContent>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero iure esse ad, dicta asperiores mollitia similique maiores nostrum accusamus unde sed enim voluptatum voluptas soluta error veritatis harum excepturi obcaecati.</BodyContent>
+                    </CardBody>
+                    <CardFooter>
+                        <Views>조회수 1500</Views>
+                        <CommentCount>댓글 2700</CommentCount>
+                    </CardFooter>
+                </HelpCard>
+            </HelpList>
+            <HelpList>{/* map돌리기 */}
+                <HelpCard>
+                    <CardHead>
+                        <HeadImg src={Img} alt="" />
+                        <HeadName>최형용</HeadName>
+                        <HeadStudent>14학번</HeadStudent>
+                        <HeadTime>15분전</HeadTime>
+                    </CardHead>
+                    <CardBody>
+                        <BodyTitle>제목인데 어떻습니까</BodyTitle>
+                        <BodyContent>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero iure esse ad, dicta asperiores mollitia similique maiores nostrum accusamus unde sed enim voluptatum voluptas soluta error veritatis harum excepturi obcaecati.</BodyContent>
+                    </CardBody>
+                    <CardFooter>
+                        <Views>조회수 1500</Views>
+                        <CommentCount>댓글 2700</CommentCount>
+                    </CardFooter>
+                </HelpCard>
+            </HelpList>
+            <HelpList>{/* map돌리기 */}
+                <HelpCard>
+                    <CardHead>
+                        <HeadImg src={Img} alt="" />
+                        <HeadName>최형용</HeadName>
+                        <HeadStudent>14학번</HeadStudent>
+                        <HeadTime>15분전</HeadTime>
+                    </CardHead>
+                    <CardBody>
+                        <BodyTitle>제목인데 어떻습니까</BodyTitle>
+                        <BodyContent>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero iure esse ad, dicta asperiores mollitia similique maiores nostrum accusamus unde sed enim voluptatum voluptas soluta error veritatis harum excepturi obcaecati.</BodyContent>
+                    </CardBody>
+                    <CardFooter>
+                        <Views>조회수 1500</Views>
+                        <CommentCount>댓글 2700</CommentCount>
+                    </CardFooter>
+                </HelpCard>
+            </HelpList>
             <HelpList>{/* map돌리기 */}
                 <HelpCard>
                     <CardHead>
@@ -35,7 +107,14 @@ const Help = () => {
 export default Help
 
 const HelpContainer = styled.div`
-    
+    gap: 12px;
+`
+
+const Banner = styled.div`
+    width: 420px;
+    height: 120px;
+    border: 1px solid gray;
+    margin-bottom: 12px;
 `
 const Select = styled.select`
     display: flex;
@@ -46,7 +125,6 @@ const Select = styled.select`
 `
 
 const HelpList = styled.div`
-        
 `
 
 const HelpCard = styled.div`

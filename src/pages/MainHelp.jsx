@@ -3,10 +3,7 @@ import Layout from "../components/Layout"
 
 const MainHelp = () =>{
     return (
-        <Layout>
             <Help/>
-        </Layout>
-
     )
 
 }
