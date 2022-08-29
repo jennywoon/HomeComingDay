@@ -145,7 +145,7 @@ const Banner = styled.div`
   height: 120px;
   border: 1px solid gray;
   margin-bottom: 12px;
-`;
+`
 
 const HelpWrap = styled.div`
   padding: 0 10px;

@@ -9,7 +9,7 @@ const Layout = ({ children }) => {
             <LayoutWrap>
                 <Header />
                 <LayoutContents>{children}</LayoutContents>
-                <BottomTap/>
+                {/* <BottomTap/> */}
             </LayoutWrap>
         </LayoutContainer>
     );
@@ -44,6 +44,7 @@ const LayoutWrap = styled.div`
   flex-direction: column;
   justify-content: space-between;
 `;
+
 const LayoutContents = styled.div`
     display: flex;
     justify-content: center;
