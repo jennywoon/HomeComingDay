@@ -6,17 +6,21 @@ const HeaderTap = () => {
     const navigate = useNavigate();
 
     return (
-            <Navbar>
-                <NavbarTitle
-                    onClick={() => { navigate("/") }}
-                    style={{ cursor: "pointer", paddingLeft: "20px" }}
-                >도움요청</NavbarTitle>
-                <NavbarTitle>정보공유</NavbarTitle>
-                <NavbarTitle>만남일정</NavbarTitle>
-                <NavbarTitle
-                    style={{ paddingRight: "20px" }}
-                >자유토크</NavbarTitle>
-            </Navbar>
+        <Navbar>
+            <NavbarTitle
+                onClick={() => { navigate("/") }}
+                style={{ cursor: "pointer", paddingLeft: "20px" }}
+            >도움요청</NavbarTitle>
+            <NavbarTitle
+                onClick={() => { navigate("/information") }}
+                style={{ cursor: "pointer" }}
+            >정보공유</NavbarTitle>
+            <NavbarTitle>만남일정</NavbarTitle>
+            <NavbarTitle
+                onClick={() => { navigate("/freetalk") }}
+                style={{ cursor: "pointer", paddingRight: "20px" }}
+            >자유토크</NavbarTitle>
+        </Navbar>
     );
 };
 
