@@ -9,11 +9,13 @@ const HeaderTap = () => {
         <Navbar>
             <NavbarTitle
                 onClick={() => { navigate("/mainhelp") }}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer", paddingLeft: "20px" }}
             >도움요청</NavbarTitle>
             <NavbarTitle>정보공유</NavbarTitle>
             <NavbarTitle>만남일정</NavbarTitle>
-            <NavbarTitle>자유토크</NavbarTitle>
+            <NavbarTitle
+                style={{ paddingRight: "20px"}}
+            >자유토크</NavbarTitle>
         </Navbar>
     );
 };
