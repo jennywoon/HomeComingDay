@@ -34,6 +34,7 @@ const Navbar = styled.div`
     align-items: center;
     font-size: 15px;
     font-weight: bold;
+    ;
 `
 
 const NavbarTitle = styled.div``
