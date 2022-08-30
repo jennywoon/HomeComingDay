@@ -1,16 +1,11 @@
 import styled from "styled-components"
 import Img from "../assets/naverIcon.png"
-
+import help from "../assets/help.png"
 import {TiPencil} from "react-icons/ti";
 import { useNavigate } from "react-router-dom";
 
 const Help = () => {
   const navigate = useNavigate();
-
-import help from "../assets/help.png"
-
-const Help = () => {
-
 
   return (
     <HelpContainer>
