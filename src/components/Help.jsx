@@ -3,6 +3,7 @@ import Img from "../assets/naverIcon.png"
 import help from "../assets/help.png"
 
 const Help = () => {
+
   return (
     <HelpContainer>
       <Banner />
