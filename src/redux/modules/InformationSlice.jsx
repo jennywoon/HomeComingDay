@@ -5,10 +5,7 @@ import axios from "axios";
 // const cookies = new Cookies();
 
 const initialState = {
-    informations: [
-      {
-        imgUrl: ""
-      }      
+    informations: [  
     ],
     // insta: null,
     isLoading: false,

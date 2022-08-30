@@ -1,7 +1,12 @@
 import styled from "styled-components"
-import Img from "../assets/naverIcon.png"
+import Img from "../../assets/naverIcon.png"
+import help from "../../assets/help.png"
+import {TiPencil} from "react-icons/ti";
+import { useNavigate } from "react-router-dom";
 
-const FreeTalk = () => {
+const Help = () => {
+  const navigate = useNavigate();
+
   return (
     <HelpContainer>
       <Banner />
@@ -10,12 +15,15 @@ const FreeTalk = () => {
           <option>최신순</option>
           <option>인기순</option>
         </Select>
+        <Iconbox onClick={()=>navigate('/helpform')}>
+          <TiPencil color="white" size="40px"/>
+        </Iconbox>
         <HelpList>
           {/* map돌리기 */}
           <HelpCard>
             <CardHead>
               <HeadImg src={Img} alt='' />
-              <HeadName>여기는 자유토크</HeadName>
+              <HeadName>최형용</HeadName>
               <HeadStudent>14학번</HeadStudent>
               <HeadTime>15분전</HeadTime>
             </CardHead>
@@ -135,21 +143,26 @@ const FreeTalk = () => {
   );
 };
 
-export default FreeTalk;
+export default Help;
 
 const HelpContainer = styled.div`
   gap: 12px;
+  
 `;
 
 const Banner = styled.div`
   height: 120px;
   border: 1px solid gray;
   margin-bottom: 12px;
+  background-image: url(${help});
+  background-position: center;
+  background-size: 100% 100%;
 `
 
 const HelpWrap = styled.div`
   padding: 0 10px;
 `;
+
 const Select = styled.select`
   display: flex;
   margin-left: auto;
@@ -157,6 +170,20 @@ const Select = styled.select`
   padding: 2px 4px;
   border-radius: 10px;
 `;
+
+const Iconbox = styled.div`
+  width:50px;
+  height:50px;
+  background-color: black;
+  border-radius: 30px;
+  position: fixed;
+  bottom: 90px;
+  right: 37%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`
 
 const HelpList = styled.div``;
 

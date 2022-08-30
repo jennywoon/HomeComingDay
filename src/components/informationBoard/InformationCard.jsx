@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
 import styled from 'styled-components';
-import Img from "../assets/naverIcon.png"
-import { __getInformation } from '../redux/modules/InformationSlice';
+import Img from "../../assets/naverIcon.png"
+import { __getInformation } from '../../redux/modules/InformationSlice';
 
 const InformationCard = ({information}) => {
     const dispatch = useDispatch();

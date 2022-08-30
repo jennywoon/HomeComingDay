@@ -8,7 +8,7 @@ export const store = configureStore({
   reducer: {
     user: UserSlice.reducer,
     informations : InformationSlice,
-    helps : HelpSlice
+    help : HelpSlice,
   }
 });
 

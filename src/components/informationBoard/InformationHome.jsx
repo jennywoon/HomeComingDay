@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import BottomTap from './BottomTap';
-import HeaderTap from "./HeaderTap"
+import BottomTap from '../BottomTap';
+import HeaderTap from "../HeaderTap"
 import Information from './Information';
 
 const InformationHome = () => {

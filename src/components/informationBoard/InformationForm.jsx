@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { __getHelp, __postHelp } from '../redux/modules/HelpSlice';
+import styled from 'styled-components';
+import { __getInformation, __postInformation } from '../../redux/modules/InformationSlice';
+import Button from '../elements/Button';
 import {IoIosArrowBack} from 'react-icons/io'
 import {GrImage} from 'react-icons/gr'
-import Button from './elements/Button';
 
-
-
-const HelpForm = () => {
+const InformationForm = () => {
     const dispatch = useDispatch();
-    const [help, setHelp] = useState({
+
+    const [information, setInformation] = useState({
         title: "",
         content: "",
         imageList: [
@@ -18,33 +17,38 @@ const HelpForm = () => {
         ],
     });
 
-    
-
     useEffect(() => {
-        dispatch(__getHelp());
+        dispatch(__getInformation());
     }, [dispatch]);
 
-    const { title, content, imgUrl } = help;
-    console.log(help)
+    const { title, content, imgUrl } = information;
+    console.log(information)
+
+    // const [files, setFiles] = useState([]);
+    // const formdata = new FormData();
+
+    // files.map((img) => (
+    //     formdata.append("imgUrl", img[0])
+    // ))
 
     const onChangeHandler = (e) => {
         const { value, name } = e.target;
-        setHelp({
-            ...help,
+        setInformation({
+            ...information,
             [name]: value,
         })
     }
 
-
-
     const onSubmitHandler = (e) => {
         e.preventDefault();
+
         if (title === "") {
             return alert("제목을 입력해주세요");
         } else if (content === "") {
             return alert("내용을 입력해주세요");
         }
-        dispatch(__postHelp(help));
+        dispatch(__postInformation(information));
+        // dispatch(__postInformation(formdata))
     }
 
     return (
@@ -74,12 +78,10 @@ const HelpForm = () => {
                 </FormFooter>
             </FormWrap>
         </FormContainer>
-       
     );
 };
 
-export default HelpForm;
-
+export default InformationForm;
 
 const FormContainer = styled.div`
   margin: 0 auto;

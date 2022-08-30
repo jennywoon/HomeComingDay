@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import BottomTap from './BottomTap';
-import HeaderTap from "./HeaderTap"
-import Help from './Help';
-import Layout from './Layout';
+import BottomTap from '../BottomTap';
+import HeaderTap from '../HeaderTap';
+import Help from "./Help"
+import Layout from '../Layout';
 
 const Home = () => {
     return (

@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components"
-import Img from "../assets/naverIcon.png"
-import { __getInformation } from "../redux/modules/InformationSlice";
+import Img from "../../assets/naverIcon.png"
+import { __getInformation } from "../../redux/modules/InformationSlice";
 import InformationCard from "./InformationCard";
 
 const Information = () => {

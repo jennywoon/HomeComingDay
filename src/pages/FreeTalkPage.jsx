@@ -1,5 +1,5 @@
 import React from 'react';
-import FreeTalkHome from '../components/FreeTalkHome';
+import FreeTalkHome from '../components/freeTalkBoard/FreeTalkHome';
 import Layout from '../components/Layout';
 
 const FreeTalkPage = () => {

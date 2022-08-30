@@ -1,5 +1,5 @@
 import React from 'react';
-import InformationHome from '../components/InformationHome';
+import InformationHome from '../components/informationBoard/InformationHome';
 import Layout from '../components/Layout';
 
 const InformationPage = () => {

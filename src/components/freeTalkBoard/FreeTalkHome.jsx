@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import BottomTap from './BottomTap';
+import BottomTap from '../BottomTap';
 import FreeTalk from './FreeTalk';
-import HeaderTap from "./HeaderTap"
-import Information from './Information';
+import HeaderTap from "../HeaderTap"
 
 const FreeTalkHome = () => {
     return (

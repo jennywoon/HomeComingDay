@@ -5,15 +5,15 @@ import axios from "axios";
 // const cookies = new Cookies();
 
 const initialState = {
-    help: [ ],
+    help: [],
     // insta: null,
     isLoading: false,
     error: null,
 };
 
-export const __getHelp = createAsyncThunk("Help/getInformation", async (payload, thunkAPI) => {
+export const __getHelp = createAsyncThunk("help/getHelp", async (payload, thunkAPI) => {
     try {
-        const data = await axios.get("http://localhost:3001/Help")
+        const data = await axios.get("http://localhost:3001/help")
         console.log(data.data)
         return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -22,10 +22,10 @@ export const __getHelp = createAsyncThunk("Help/getInformation", async (payload,
     }
 });
 
-export const __postHelp = createAsyncThunk("Help/postInformation", async (payload, thunkAPI) => {
+export const __postHelp = createAsyncThunk("help/postHelp", async (payload, thunkAPI) => {
     console.log('payload', payload)
     try {
-        const data = await axios.post("http://localhost:3001/Help", payload);
+        const data = await axios.post("http://localhost:3001/help", payload);
         console.log('data', data)
         return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -34,7 +34,7 @@ export const __postHelp = createAsyncThunk("Help/postInformation", async (payloa
 });
 
 export const HelpSlice = createSlice({
-    name: "Help",
+    name: "help",
     initialState,
     reducers: {},
     extraReducers: {

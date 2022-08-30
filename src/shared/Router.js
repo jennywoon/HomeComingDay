@@ -5,13 +5,12 @@ import LoginPage from "../pages/LoginPage";
 import SignUpPage from "../pages/SignUpPage";
 import MainPage from "../pages/MainPage"
 
-import HelpForm from "../components/HelpForm";
+import HelpForm from "../components/helpBoard/HelpForm";
 
 import InformationPage from "../pages/InformationPage";
 import FreeTalkPage from "../pages/FreeTalkPage";
 import ScrollTest from "../components/test/ScrollTest"
-import InformationCard from "../components/InformationCard";
-import InformationForm from "../components/InformationForm";
+import InformationForm from "../components/informationBoard/InformationForm";
 import CalendarTest from "../components/test/CalendarTest";
 
 
@@ -33,7 +32,6 @@ const Router = () => {
         <Route path="/test" element={<ScrollTest />} />
         <Route path="/calendar" element={<CalendarTest />} />
         <Route path="/informationtest" element={<InformationForm />} />
-        <Route path="/informationtest2" element={<InformationCard />} />
 
       </Routes>
     </BrowserRouter>
