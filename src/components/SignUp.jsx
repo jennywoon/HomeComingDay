@@ -135,7 +135,7 @@ const SignUp = () => {
             style={{ marginRight: '10px' }}
             onChange={handleChangeEmail}
           />
-          <Button width='40%'>이메일 인증</Button>
+          <Button width='40%'>인증</Button>
         </Flexbox>
         {emailError ? (
           <StErrorMessage>이메일 형식에 맞게 입력하세요</StErrorMessage>

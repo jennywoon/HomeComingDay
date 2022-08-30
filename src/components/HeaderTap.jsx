@@ -15,7 +15,10 @@ const HeaderTap = () => {
                 onClick={() => { navigate("/information") }}
                 style={{ cursor: "pointer" }}
             >정보공유</NavbarTitle>
-            <NavbarTitle>만남일정</NavbarTitle>
+            <NavbarTitle
+                onClick={() => { navigate("/calendar") }}
+                style={{ cursor: "pointer" }}
+            >만남일정</NavbarTitle>
             <NavbarTitle
                 onClick={() => { navigate("/freetalk") }}
                 style={{ cursor: "pointer", paddingRight: "20px" }}

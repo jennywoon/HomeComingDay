@@ -1,11 +1,18 @@
+import { useEffect } from "react";
 import styled from "styled-components"
-import Img from "../../assets/naverIcon.png"
 import help from "../../assets/help.png"
-import {TiPencil} from "react-icons/ti";
-import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { __getHelp } from "../../redux/modules/HelpSlice";
+import HelpCard from "./HelpCard";
 
 const Help = () => {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { helps } = useSelector((state) => state.helps);
+  console.log(helps)
+
+  useEffect(() => {
+    dispatch(__getHelp());
+  },[dispatch])
 
   return (
     <HelpContainer>
@@ -15,128 +22,15 @@ const Help = () => {
           <option>최신순</option>
           <option>인기순</option>
         </Select>
-        <Iconbox onClick={()=>navigate('/helpform')}>
+        {/* <Iconbox onClick={()=>navigate('/helpform')}>
           <TiPencil color="white" size="40px"/>
-        </Iconbox>
+        </Iconbox> */}
         <HelpList>
-          {/* map돌리기 */}
-          <HelpCard>
-            <CardHead>
-              <HeadImg src={Img} alt='' />
-              <HeadName>최형용</HeadName>
-              <HeadStudent>14학번</HeadStudent>
-              <HeadTime>15분전</HeadTime>
-            </CardHead>
-            <CardBody>
-              <BodyTitle>제목인데 어떻습니까</BodyTitle>
-              <BodyContent>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero
-                iure esse ad, dicta asperiores mollitia similique maiores
-                nostrum accusamus unde sed enim voluptatum voluptas soluta error
-                veritatis harum excepturi obcaecati.
-              </BodyContent>
-            </CardBody>
-            <CardFooter>
-              <Views>조회수 1500</Views>
-              <CommentCount>댓글 2700</CommentCount>
-            </CardFooter>
-          </HelpCard>
-        </HelpList>
-        <HelpList>
-          {/* map돌리기 */}
-          <HelpCard>
-            <CardHead>
-              <HeadImg src={Img} alt='' />
-              <HeadName>최형용</HeadName>
-              <HeadStudent>14학번</HeadStudent>
-              <HeadTime>15분전</HeadTime>
-            </CardHead>
-            <CardBody>
-              <BodyTitle>제목인데 어떻습니까</BodyTitle>
-              <BodyContent>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero
-                iure esse ad, dicta asperiores mollitia similique maiores
-                nostrum accusamus unde sed enim voluptatum voluptas soluta error
-                veritatis harum excepturi obcaecati.
-              </BodyContent>
-            </CardBody>
-            <CardFooter>
-              <Views>조회수 1500</Views>
-              <CommentCount>댓글 2700</CommentCount>
-            </CardFooter>
-          </HelpCard>
-        </HelpList>
-        <HelpList>
-          {/* map돌리기 */}
-          <HelpCard>
-            <CardHead>
-              <HeadImg src={Img} alt='' />
-              <HeadName>최형용</HeadName>
-              <HeadStudent>14학번</HeadStudent>
-              <HeadTime>15분전</HeadTime>
-            </CardHead>
-            <CardBody>
-              <BodyTitle>제목인데 어떻습니까</BodyTitle>
-              <BodyContent>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero
-                iure esse ad, dicta asperiores mollitia similique maiores
-                nostrum accusamus unde sed enim voluptatum voluptas soluta error
-                veritatis harum excepturi obcaecati.
-              </BodyContent>
-            </CardBody>
-            <CardFooter>
-              <Views>조회수 1500</Views>
-              <CommentCount>댓글 2700</CommentCount>
-            </CardFooter>
-          </HelpCard>
-        </HelpList>
-        <HelpList>
-          {/* map돌리기 */}
-          <HelpCard>
-            <CardHead>
-              <HeadImg src={Img} alt='' />
-              <HeadName>최형용</HeadName>
-              <HeadStudent>14학번</HeadStudent>
-              <HeadTime>15분전</HeadTime>
-            </CardHead>
-            <CardBody>
-              <BodyTitle>제목인데 어떻습니까</BodyTitle>
-              <BodyContent>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero
-                iure esse ad, dicta asperiores mollitia similique maiores
-                nostrum accusamus unde sed enim voluptatum voluptas soluta error
-                veritatis harum excepturi obcaecati.
-              </BodyContent>
-            </CardBody>
-            <CardFooter>
-              <Views>조회수 1500</Views>
-              <CommentCount>댓글 2700</CommentCount>
-            </CardFooter>
-          </HelpCard>
-        </HelpList>
-        <HelpList>
-          {/* map돌리기 */}
-          <HelpCard>
-            <CardHead>
-              <HeadImg src={Img} alt='' />
-              <HeadName>최형용</HeadName>
-              <HeadStudent>14학번</HeadStudent>
-              <HeadTime>15분전</HeadTime>
-            </CardHead>
-            <CardBody>
-              <BodyTitle>제목인데 어떻습니까</BodyTitle>
-              <BodyContent>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero
-                iure esse ad, dicta asperiores mollitia similique maiores
-                nostrum accusamus unde sed enim voluptatum voluptas soluta error
-                veritatis harum excepturi obcaecati.
-              </BodyContent>
-            </CardBody>
-            <CardFooter>
-              <Views>조회수 1500</Views>
-              <CommentCount>댓글 2700</CommentCount>
-            </CardFooter>
-          </HelpCard>
+          <>
+            {helps?.map((help) => (
+              <HelpCard key={help.id} id={help.id} help={help}/>
+            ))}
+          </>
         </HelpList>
       </HelpWrap>
     </HelpContainer>
@@ -147,7 +41,7 @@ export default Help;
 
 const HelpContainer = styled.div`
   gap: 12px;
-  
+  height: 100vh;
 `;
 
 const Banner = styled.div`
@@ -171,70 +65,12 @@ const Select = styled.select`
   border-radius: 10px;
 `;
 
-const Iconbox = styled.div`
-  width:50px;
-  height:50px;
-  background-color: black;
-  border-radius: 30px;
-  position: fixed;
-  bottom: 90px;
-  right: 37%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-`
-
 const HelpList = styled.div``;
 
-const HelpCard = styled.div`
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-bottom: 20px;
-`;
-
-const CardHead = styled.div`
-    display: flex;
-    align-items: center;
-`
-const HeadImg = styled.img`
-    width:30px;
-`
-const HeadName = styled.h2`
-    font-size: 18px;
-    margin: 0px 5px;
-`
-const HeadStudent = styled.p`
-    font-size: 12px;
-    color:gray;
-`
-const HeadTime = styled.p`
-    font-size: 12px;
-    color:gray;
-    margin-left: auto;
-`
-const CardBody = styled.div`
-`
-const BodyTitle = styled.h3`
-    margin: 5px 0px;
-    font-size: 16px;
-`
-const BodyContent = styled.p`
-    font-size: 12px;
-    margin: 5px 0px;
-`
-const CardFooter = styled.div`
-    display: flex;
-    justify-content: end;
-`
-const Views = styled.div`
-    font-size: 12px;
-    color:gray;
-    margin-right:10px;
-`
-const CommentCount = styled.div`
-    font-size: 12px;
-    color:gray;
-`
+// const HelpCard = styled.div`
+//   padding: 10px;
+//   border: 1px solid #ddd;
+//   border-radius: 10px;
+//   cursor: pointer;
+//   margin-bottom: 20px;
+// `;

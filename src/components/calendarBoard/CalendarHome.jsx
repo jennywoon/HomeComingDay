@@ -1,26 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
 import BottomTap from '../BottomTap';
-import HeaderTap from '../HeaderTap';
-import Help from "./Help"
+import Calendar from "./Calendar"
+import HeaderTap from "../HeaderTap"
 
-const Home = () => {
+const CalendarHome = () => {
     return (
-
         <HomeContainer>
-                <HeaderTap />
-                <Help />
-                <BottomTap />
+            <HeaderTap />
+            <Calendar/>
+            <BottomTap />
         </HomeContainer>
-
     );
 };
 
-export default Home;
+export default CalendarHome;
 
 const HomeContainer = styled.div`
     width: 100%;
-    /* height: 100%; */
+    height: 100%;
     display: flex;
     flex-direction: column;
 `

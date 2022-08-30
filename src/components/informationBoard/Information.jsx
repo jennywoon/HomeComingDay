@@ -4,11 +4,15 @@ import styled from "styled-components"
 import Img from "../../assets/naverIcon.png"
 import { __getInformation } from "../../redux/modules/InformationSlice";
 import InformationCard from "./InformationCard";
+import {TiPencil} from "react-icons/ti";
+import { useNavigate } from "react-router-dom";
 
 const Information = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { informations } = useSelector((state) => state.informations);
+  console.log(informations)
   useEffect(() => {
     dispatch(__getInformation());
   },[dispatch])
@@ -21,6 +25,9 @@ const Information = () => {
           <option>최신순</option>
           <option>인기순</option>
         </Select>
+        {/* <Iconbox onClick={()=>navigate('/informationform')}>
+          <TiPencil color="white" size="40px"/>
+        </Iconbox> */}
         <HelpList>
           <>
             {informations?.map((information) => (
@@ -38,6 +45,7 @@ export default Information;
 
 const HelpContainer = styled.div`
   gap: 12px;
+  height: 100vh;
 `;
 
 const Banner = styled.div`
@@ -58,55 +66,3 @@ const Select = styled.select`
 `;
 
 const HelpList = styled.div``;
-
-const HelpCard = styled.div`
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-bottom: 20px;
-`;
-
-const CardHead = styled.div`
-    display: flex;
-    align-items: center;
-`
-const HeadImg = styled.img`
-    width:30px;
-`
-const HeadName = styled.h2`
-    font-size: 18px;
-    margin: 0px 5px;
-`
-const HeadStudent = styled.p`
-    font-size: 12px;
-    color:gray;
-`
-const HeadTime = styled.p`
-    font-size: 12px;
-    color:gray;
-    margin-left: auto;
-`
-const CardBody = styled.div`
-`
-const BodyTitle = styled.h3`
-    margin: 5px 0px;
-    font-size: 16px;
-`
-const BodyContent = styled.p`
-    font-size: 12px;
-    margin: 5px 0px;
-`
-const CardFooter = styled.div`
-    display: flex;
-    justify-content: end;
-`
-const Views = styled.div`
-    font-size: 12px;
-    color:gray;
-    margin-right:10px;
-`
-const CommentCount = styled.div`
-    font-size: 12px;
-    color:gray;
-`

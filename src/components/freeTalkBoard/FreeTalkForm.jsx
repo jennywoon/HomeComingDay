@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { __getInformation, __postInformation } from '../../redux/modules/InformationSlice';
 import Button from '../elements/Button';
 import {IoIosArrowBack} from 'react-icons/io'
 import {GrImage} from 'react-icons/gr'
+import { __getFreeTalk, __postFreeTalk } from '../../redux/modules/FreeTalkSlice';
 
-const InformationForm = () => {
+const FreeTalkForm = () => {
     const dispatch = useDispatch();
 
-    const [information, setInformation] = useState({
+    const [freeTalk, setFreeTalk] = useState({
         title: "",
         content: "",
         imageList: [
@@ -18,11 +18,11 @@ const InformationForm = () => {
     });
 
     useEffect(() => {
-        dispatch(__getInformation());
+        dispatch(__getFreeTalk());
     }, [dispatch]);
 
-    const { title, content, imgUrl } = information;
-    console.log(information)
+    const { title, content, imgUrl } = freeTalk;
+    console.log(freeTalk)
 
     // const [files, setFiles] = useState([]);
     // const formdata = new FormData();
@@ -33,8 +33,8 @@ const InformationForm = () => {
 
     const onChangeHandler = (e) => {
         const { value, name } = e.target;
-        setInformation({
-            ...information,
+        setFreeTalk({
+            ...freeTalk,
             [name]: value,
         })
     }
@@ -47,7 +47,7 @@ const InformationForm = () => {
         } else if (content === "") {
             return alert("내용을 입력해주세요");
         }
-        dispatch(__postInformation(information));
+        dispatch(__postFreeTalk(freeTalk));
         // dispatch(__postInformation(formdata))
     }
 
@@ -81,7 +81,7 @@ const InformationForm = () => {
     );
 };
 
-export default InformationForm;
+export default FreeTalkForm;
 
 const FormContainer = styled.div`
   margin: 0 auto;

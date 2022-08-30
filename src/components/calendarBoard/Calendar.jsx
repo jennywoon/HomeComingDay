@@ -2,16 +2,16 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components"
 import { __getFreeTalk } from "../../redux/modules/FreeTalkSlice";
-import FreeTalkCard from "./FreeTalkCard"
+// import FreeTalkCard from "./FreeTalkCard"
 
-const FreeTalk = () => {
+const Calendar = () => {
   const dispatch = useDispatch();
-  const { freetalks } = useSelector((state) => state.freetalks);
-  console.log(freetalks)
+//   const { freetalks } = useSelector((state) => state.freetalks);
+//   console.log(freetalks)
 
-  useEffect(() => {
-    dispatch(__getFreeTalk());
-  },[dispatch])
+//   useEffect(() => {
+//     dispatch(__getFreeTalk());
+//   },[dispatch])
 
   return (
     <HelpContainer>
@@ -21,23 +21,19 @@ const FreeTalk = () => {
           <option>최신순</option>
           <option>인기순</option>
         </Select>
-        {/* <Iconbox onClick={()=>navigate('/informationform')}>
-          <TiPencil color="white" size="40px"/>
-        </Iconbox> */}
         <HelpList>
-          <>
+          {/* <>
             {freetalks?.map((freetalk) => (
               <FreeTalkCard key={freetalk.id} id={freetalk.id} freetalk={freetalk}/>
             ))}
-          </>
+          </> */}
         </HelpList>
-
       </HelpWrap>
     </HelpContainer>
   );
 }
 
-export default FreeTalk;
+export default Calendar;
 
 const HelpContainer = styled.div`
   gap: 12px;
