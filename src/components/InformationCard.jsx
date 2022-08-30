@@ -7,6 +7,7 @@ import { __getInformation } from '../redux/modules/InformationSlice';
 
 const InformationCard = () => {
     const dispatch = useDispatch();
+    
     useEffect(() => {
         dispatch(__getInformation());
     }, [dispatch])
