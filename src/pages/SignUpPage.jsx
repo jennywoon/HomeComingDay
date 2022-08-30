@@ -1,11 +1,12 @@
 import React from 'react';
+import JustLayout from '../components/JustLayout';
 import SignUp from '../components/SignUp';
 
 const SignUpPage = () => {
   return (
-    <div>
+    <JustLayout>
       <SignUp />
-    </div>
+    </JustLayout>
   );
 };
 
