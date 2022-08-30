@@ -56,7 +56,7 @@ const InformationForm = () => {
             <FormWrap onSubmit={onSubmitHandler}>
                 <FormHeader>
                     <IoIosArrowBack size="25px" cursor="pointer"/>
-                    <Button type="submit" backgroundColor="white">등록하기</Button>
+                    <Button type="submit" backgroundColor="white">올리기</Button>
                 </FormHeader>
                 <FormBody>
                     <FormSelection name="category">

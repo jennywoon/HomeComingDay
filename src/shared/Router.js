@@ -13,6 +13,10 @@ import SchoolInfoPage from '../pages/SchoolInfoPage';
 import ScrollTest from "../components/test/ScrollTest"
 import InformationForm from "../components/informationBoard/InformationForm";
 import CalendarTest from "../components/test/CalendarTest";
+import HelpCard from "../components/helpBoard/HelpCard";
+import FreeTalkForm from "../components/freeTalkBoard/FreeTalkForm"
+import CalendarPage from "../pages/CalendarPage"
+import CalendarForm from "../components/calendarBoard/CalendarForm";
 
 const Router = () => {
   
@@ -25,12 +29,16 @@ const Router = () => {
         <Route path="/login" element={<LoginPage />}/>
         <Route path="/signup" element={<SignUpPage />}/>
         <Route path="/helpform" element={<HelpForm />}/>
+        <Route path="/informationform" element={<InformationForm />}/>
         <Route path="/information" element={<InformationPage />} />
         <Route path="/freetalk" element={<FreeTalkPage />} />
+        <Route path="/calendar" element={<CalendarPage />} />
         {/* 하단 페이지 추후 정리 */}
         <Route path="/test" element={<ScrollTest />} />
         <Route path="/calendar" element={<CalendarTest />} />
-        <Route path="/informationtest" element={<InformationForm />} />
+        <Route path="/helpcard" element={<HelpCard />} />
+        <Route path="/freetest" element={<FreeTalkForm />} />
+        <Route path="/calendartest" element={<CalendarForm />} />
 
       </Routes>
     </BrowserRouter>

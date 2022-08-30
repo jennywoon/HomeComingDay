@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
-import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { __getHelp, __postHelp } from '../../redux/modules/HelpSlice';
+import styled from 'styled-components';
+import Button from '../elements/Button';
 import {IoIosArrowBack} from 'react-icons/io'
 import {GrImage} from 'react-icons/gr'
-import Button from '../elements/Button';
+import { __getFreeTalk, __postFreeTalk } from '../../redux/modules/FreeTalkSlice';
 
-const HelpForm = () => {
+const FreeTalkForm = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const [help, setHelp] = useState({
+
+    const [freeTalk, setFreeTalk] = useState({
         title: "",
         content: "",
         imageList: [
@@ -18,43 +17,51 @@ const HelpForm = () => {
         ],
     });
 
-
     useEffect(() => {
-        dispatch(__getHelp());
+        dispatch(__getFreeTalk());
     }, [dispatch]);
 
-    const { title, content, imgUrl } = help;
-    console.log(help);
+    const { title, content, imgUrl } = freeTalk;
+    console.log(freeTalk)
+
+    // const [files, setFiles] = useState([]);
+    // const formdata = new FormData();
+
+    // files.map((img) => (
+    //     formdata.append("imgUrl", img[0])
+    // ))
 
     const onChangeHandler = (e) => {
         const { value, name } = e.target;
-        setHelp({
-            ...help,
+        setFreeTalk({
+            ...freeTalk,
             [name]: value,
         })
     }
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
+
         if (title === "") {
             return alert("제목을 입력해주세요");
         } else if (content === "") {
             return alert("내용을 입력해주세요");
         }
-        dispatch(__postHelp(help));
+        dispatch(__postFreeTalk(freeTalk));
+        // dispatch(__postInformation(formdata))
     }
 
     return (
         <FormContainer>
             <FormWrap onSubmit={onSubmitHandler}>
                 <FormHeader>
-                    <IoIosArrowBack size="25px" cursor="pointer" onClick={() => {navigate(-1)}}/>
+                    <IoIosArrowBack size="25px" cursor="pointer"/>
                     <Button type="submit" backgroundColor="white">올리기</Button>
                 </FormHeader>
                 <FormBody>
                     <FormSelection name="category">
                         <option value="">도움요청</option>
-                        <option value="informationform">정보공유</option>
+                        <option value="">정보공유</option>
                         <option value="">만남일정</option>
                         <option value="">자유토크</option>
                     </FormSelection>
@@ -71,12 +78,10 @@ const HelpForm = () => {
                 </FormFooter>
             </FormWrap>
         </FormContainer>
-       
     );
 };
 
-export default HelpForm;
-
+export default FreeTalkForm;
 
 const FormContainer = styled.div`
   margin: 0 auto;
