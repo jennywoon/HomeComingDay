@@ -44,17 +44,18 @@ const Login = () => {
   };
 
   return (
-    <>
+    <LoginContainer>
       {/* 로고 */}
-      <LoginContainer>
-        <Input placeholder='이메일' onChange={onChangeEmailHandler} />
+      <p>로그인</p>
+      <LoginWrap>
+        <Input placeholder='이메일' onChange={onChangeEmailHandler} width='100%' />
         <Input
           placeholder='비밀번호'
           type='password'
-          onChange={onChangePasswordHandler}
+          onChange={onChangePasswordHandler} width='100%'
         />
-        <Button onClickHandler={onClickHandler}>로그인</Button>
-      </LoginContainer>
+        <Button onClickHandler={onClickHandler} width='100%'>로그인</Button>
+      </LoginWrap>
       {/* 네이버 로그인 */}
       <p>
         서비스이름 계정이 없으신가요?
@@ -67,10 +68,12 @@ const Login = () => {
           회원가입
         </span>
       </p>
-    </>
+    </LoginContainer>
   );
 };
 
 export default Login;
 
 const LoginContainer = styled.div``;
+
+const LoginWrap = styled.div``;
