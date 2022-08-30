@@ -1,7 +1,11 @@
 import styled from "styled-components"
 import Img from "../assets/naverIcon.png"
+import {TiPencil} from "react-icons/ti";
+import { useNavigate } from "react-router-dom";
 
 const Help = () => {
+  const navigate = useNavigate();
+
   return (
     <HelpContainer>
       <Banner />
@@ -10,6 +14,9 @@ const Help = () => {
           <option>최신순</option>
           <option>인기순</option>
         </Select>
+        <Iconbox onClick={()=>navigate('/helpform')}>
+          <TiPencil color="white" size="40px"/>
+        </Iconbox>
         <HelpList>
           {/* map돌리기 */}
           <HelpCard>
@@ -139,6 +146,7 @@ export default Help;
 
 const HelpContainer = styled.div`
   gap: 12px;
+  
 `;
 
 const Banner = styled.div`
@@ -150,6 +158,7 @@ const Banner = styled.div`
 const HelpWrap = styled.div`
   padding: 0 10px;
 `;
+
 const Select = styled.select`
   display: flex;
   margin-left: auto;
@@ -157,6 +166,20 @@ const Select = styled.select`
   padding: 2px 4px;
   border-radius: 10px;
 `;
+
+const Iconbox = styled.div`
+  width:50px;
+  height:50px;
+  background-color: black;
+  border-radius: 30px;
+  position: fixed;
+  bottom: 90px;
+  right: 37%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`
 
 const HelpList = styled.div``;
 
