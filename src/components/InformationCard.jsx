@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
 import styled from 'styled-components';
 import Img from "../assets/naverIcon.png"
@@ -8,9 +8,15 @@ import { __getInformation } from '../redux/modules/InformationSlice';
 const InformationCard = () => {
     const dispatch = useDispatch();
     
+    const informations = useSelector((state)=>state.informations)
+
+    console.log(informations)
+
     useEffect(() => {
         dispatch(__getInformation());
     }, [dispatch])
+
+
 
     return (
         <HelpCard>
@@ -23,7 +29,7 @@ const InformationCard = () => {
             <CardBody>
               <BodyTitle></BodyTitle>
               <BodyContent>
-                내용
+                {informations.content}
               </BodyContent>
             </CardBody>
             <CardFooter>
