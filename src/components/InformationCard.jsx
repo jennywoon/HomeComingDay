@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
 import styled from 'styled-components';
 import Img from "../assets/naverIcon.png"
 import { __getInformation } from '../redux/modules/InformationSlice';
 
-const InformationCard = () => {
+const InformationCard = ({information}) => {
     const dispatch = useDispatch();
-    
+    // const param = useParams();
+    // const informations = useSelector((state) => state.informations.informations)
+
     useEffect(() => {
         dispatch(__getInformation());
     }, [dispatch])
@@ -21,9 +23,9 @@ const InformationCard = () => {
               <HeadTime>15분전</HeadTime>
             </CardHead>
             <CardBody>
-              <BodyTitle></BodyTitle>
+              <BodyTitle>{information.title}</BodyTitle>
               <BodyContent>
-                내용
+              {information.content}
               </BodyContent>
             </CardBody>
             <CardFooter>
@@ -66,11 +68,11 @@ const HeadTime = styled.p`
 `
 const CardBody = styled.div`
 `
-const BodyTitle = styled.h3`
+const BodyTitle = styled.div`
     margin: 5px 0px;
     font-size: 16px;
 `
-const BodyContent = styled.p`
+const BodyContent = styled.div`
     font-size: 12px;
     margin: 5px 0px;
 `

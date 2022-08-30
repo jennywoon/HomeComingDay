@@ -1,7 +1,18 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components"
 import Img from "../assets/naverIcon.png"
+import { __getInformation } from "../redux/modules/InformationSlice";
+import InformationCard from "./InformationCard";
 
 const Information = () => {
+  const dispatch = useDispatch();
+
+  const { informations } = useSelector((state) => state.informations);
+  useEffect(() => {
+    dispatch(__getInformation());
+  },[dispatch])
+
   return (
     <HelpContainer>
       <Banner />
@@ -11,129 +22,17 @@ const Information = () => {
           <option>인기순</option>
         </Select>
         <HelpList>
-          {/* map돌리기 */}
-          <HelpCard>
-            <CardHead>
-              <HeadImg src={Img} alt='' />
-              <HeadName>여기는 정보공유</HeadName>
-              <HeadStudent>14학번</HeadStudent>
-              <HeadTime>15분전</HeadTime>
-            </CardHead>
-            <CardBody>
-              <BodyTitle>제목인데 어떻습니까</BodyTitle>
-              <BodyContent>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero
-                iure esse ad, dicta asperiores mollitia similique maiores
-                nostrum accusamus unde sed enim voluptatum voluptas soluta error
-                veritatis harum excepturi obcaecati.
-              </BodyContent>
-            </CardBody>
-            <CardFooter>
-              <Views>조회수 1500</Views>
-              <CommentCount>댓글 2700</CommentCount>
-            </CardFooter>
-          </HelpCard>
+          <>
+            {informations?.map((information) => (
+              <InformationCard key={information.id} id={information.id} information={information}/>
+            ))}
+          </>
         </HelpList>
-        <HelpList>
-          {/* map돌리기 */}
-          <HelpCard>
-            <CardHead>
-              <HeadImg src={Img} alt='' />
-              <HeadName>최형용</HeadName>
-              <HeadStudent>14학번</HeadStudent>
-              <HeadTime>15분전</HeadTime>
-            </CardHead>
-            <CardBody>
-              <BodyTitle>제목인데 어떻습니까</BodyTitle>
-              <BodyContent>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero
-                iure esse ad, dicta asperiores mollitia similique maiores
-                nostrum accusamus unde sed enim voluptatum voluptas soluta error
-                veritatis harum excepturi obcaecati.
-              </BodyContent>
-            </CardBody>
-            <CardFooter>
-              <Views>조회수 1500</Views>
-              <CommentCount>댓글 2700</CommentCount>
-            </CardFooter>
-          </HelpCard>
-        </HelpList>
-        <HelpList>
-          {/* map돌리기 */}
-          <HelpCard>
-            <CardHead>
-              <HeadImg src={Img} alt='' />
-              <HeadName>최형용</HeadName>
-              <HeadStudent>14학번</HeadStudent>
-              <HeadTime>15분전</HeadTime>
-            </CardHead>
-            <CardBody>
-              <BodyTitle>제목인데 어떻습니까</BodyTitle>
-              <BodyContent>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero
-                iure esse ad, dicta asperiores mollitia similique maiores
-                nostrum accusamus unde sed enim voluptatum voluptas soluta error
-                veritatis harum excepturi obcaecati.
-              </BodyContent>
-            </CardBody>
-            <CardFooter>
-              <Views>조회수 1500</Views>
-              <CommentCount>댓글 2700</CommentCount>
-            </CardFooter>
-          </HelpCard>
-        </HelpList>
-        <HelpList>
-          {/* map돌리기 */}
-          <HelpCard>
-            <CardHead>
-              <HeadImg src={Img} alt='' />
-              <HeadName>최형용</HeadName>
-              <HeadStudent>14학번</HeadStudent>
-              <HeadTime>15분전</HeadTime>
-            </CardHead>
-            <CardBody>
-              <BodyTitle>제목인데 어떻습니까</BodyTitle>
-              <BodyContent>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero
-                iure esse ad, dicta asperiores mollitia similique maiores
-                nostrum accusamus unde sed enim voluptatum voluptas soluta error
-                veritatis harum excepturi obcaecati.
-              </BodyContent>
-            </CardBody>
-            <CardFooter>
-              <Views>조회수 1500</Views>
-              <CommentCount>댓글 2700</CommentCount>
-            </CardFooter>
-          </HelpCard>
-        </HelpList>
-        <HelpList>
-          {/* map돌리기 */}
-          <HelpCard>
-            <CardHead>
-              <HeadImg src={Img} alt='' />
-              <HeadName>최형용</HeadName>
-              <HeadStudent>14학번</HeadStudent>
-              <HeadTime>15분전</HeadTime>
-            </CardHead>
-            <CardBody>
-              <BodyTitle>제목인데 어떻습니까</BodyTitle>
-              <BodyContent>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero
-                iure esse ad, dicta asperiores mollitia similique maiores
-                nostrum accusamus unde sed enim voluptatum voluptas soluta error
-                veritatis harum excepturi obcaecati.
-              </BodyContent>
-            </CardBody>
-            <CardFooter>
-              <Views>조회수 1500</Views>
-              <CommentCount>댓글 2700</CommentCount>
-            </CardFooter>
-          </HelpCard>
-        </HelpList>
+
       </HelpWrap>
     </HelpContainer>
   );
-};
+}
 
 export default Information;
 

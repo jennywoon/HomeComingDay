@@ -6,12 +6,14 @@ import Information from './Information';
 
 const InformationForm = () => {
     const dispatch = useDispatch();
+
     const [information, setInformation] = useState({
         title: "",
         content: "",
         imageList: [
             { imgUrl: "" }
         ],
+        // imgUrl: "",
     });
 
     useEffect(() => {
@@ -20,6 +22,13 @@ const InformationForm = () => {
 
     const { title, content, imgUrl } = information;
     console.log(information)
+
+    // const [files, setFiles] = useState([]);
+    // const formdata = new FormData();
+
+    // files.map((img) => (
+    //     formdata.append("imgUrl", img[0])
+    // ))
 
     const onChangeHandler = (e) => {
         const { value, name } = e.target;
@@ -31,13 +40,16 @@ const InformationForm = () => {
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
+
         if (title === "") {
             return alert("제목을 입력해주세요");
         } else if (content === "") {
             return alert("내용을 입력해주세요");
         }
         dispatch(__postInformation(information));
+        // dispatch(__postInformation(formdata))
     }
+
     return (
         <Container onSubmit={onSubmitHandler}>
             <Tap>정보 공유</Tap>
