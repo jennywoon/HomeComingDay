@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { __getHelp, __postHelp } from '../../redux/modules/HelpSlice';
+import { __postFreeTalk } from '../../redux/modules/FreeTalkSlice';
+import { __postInformation } from '../../redux/modules/InformationSlice';
 import {IoIosArrowBack} from 'react-icons/io'
 import {GrImage} from 'react-icons/gr'
 import Button from '../elements/Button';
@@ -91,11 +93,28 @@ const HelpForm = () => {
 
         if (select === "help"){
             dispatch(__postHelp(help));
+            setHelp({
+            title: "",
+            content: "",
+            imgUrl : ""});
         }else if(select === "info"){
-            dispatch(__postHelp(info));
+            dispatch(__postInformation(info));
+            setInfo({
+            infotitle: "",
+            infocontent: "",
+            infoimageUrl:""
+            });
         }else {
-            dispatch(__postHelp(freetalk));
+            dispatch(__postFreeTalk(freetalk));
+            setFreetalk({
+            freetitle: "",
+            freecontent: "",
+            freeimageUrl : ""
+            })
         }
+
+
+
     }
 
     // useEffect(()=>{
@@ -158,15 +177,27 @@ const HelpForm = () => {
                     <GrImage size="24px" />
                     </Filelabel>
                     {(select === "help")? 
+                    <>
                     <Addfile type="file" multiple={true} id="fileUpload" name="imgUrl" value={imgUrl || ""} onChange={onChangeHandler} />
+                    <div style={{fontSize : "12px"}}>이미지 파일: {imgUrl}</div>
+                    </>
                     :
                     (select === "info")? 
+                    <>
                     <Addfile type="file" multiple={true} id="fileUpload" name="infoimageUrl" value={infoimageUrl || ""} onChange={infoonChangeHandler} />
+                    <div style={{fontSize : "12px"}}>이미지 파일: {infoimageUrl}</div>
+                    </>
                     :
                     (select === "freetalk")?
+                    <>
                     <Addfile type="file" multiple={true} id="fileUpload" name="freeimageUrl" value={freeimageUrl || ""} onChange={freeonChangeHandler} />
+                    <div style={{fontSize : "12px"}}>이미지 파일: {freeimageUrl}</div>
+                    </>
                     : null
                     }
+
+                                    
+
                 </FormFooter>
             </FormWrap>
         </FormContainer>
@@ -237,6 +268,7 @@ const FormFooter = styled.div`
     width:100%;
     /* background-color: yellow; */
     border-top: 1px solid gray;
+    align-items: center;
 
 `
 const Filelabel = styled.label`
