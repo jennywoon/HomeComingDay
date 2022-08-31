@@ -1,12 +1,12 @@
 import React from 'react';
 import Header from '../Header';
 import styled from 'styled-components';
-import {IoIosArrowBack} from 'react-icons/io'
-import {AiOutlineMenu} from 'react-icons/ai'
+import { IoIosArrowBack } from 'react-icons/io'
+import { AiOutlineMenu } from 'react-icons/ai'
 import Img from "../../assets/naverIcon.png"
 import Help from "../../assets/help.png"
 import Button from '../elements/Button';
-import DetailComment from './DetailComment';
+import HelpDetailComment from './HelpDetailComment';
 
 const HelpDetail = () => {
     return (
@@ -14,7 +14,7 @@ const HelpDetail = () => {
             <DetailWrap>
                 <Header />
                 <DetailHeader>
-                    <IoIosArrowBack size="25px" cursor="pointer"/>
+                    <IoIosArrowBack size="25px" cursor="pointer" />
                     <HeaderTitle>도움요청</HeaderTitle>
                 </DetailHeader>
                 <DetailBody>
@@ -24,7 +24,7 @@ const HelpDetail = () => {
                             <Txtname>최형용</Txtname>
                             <Txtstudent>14학번 <span> 15분 전 </span></Txtstudent>
                         </Bodytxt>
-                        <AiOutlineMenu size="20px" cursor="pointer" style={{marginLeft : "auto" , cursor : "pointer"}}  />
+                        <AiOutlineMenu size="20px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }} />
                     </Bodytop>
                     <BodyContent>
                         <ContentTitle>선배님 항해99나와서 취업할수 있을까요?</ContentTitle>
@@ -33,16 +33,18 @@ const HelpDetail = () => {
                         <ContentView>조회수 1000회 | 댓글 100개</ContentView>
                     </BodyContent>
                     <BodyCommentBox>
-                        <DetailComment /> {/* 댓글맵돌리기  */}
-                        <DetailComment />
+                        <HelpDetailComment /> {/* 댓글맵돌리기  */}
+                        <HelpDetailComment />
                         <CommentContail>
                             <CommentBox>
-                                <CommentPost placeholder='댓글을 입력해주세요'></CommentPost>
-                                <CommentButton backgroundColor="white">올리기</CommentButton>
+                                <CommentDiv>
+                                    <CommentPost placeholder='댓글을 입력해주세요'></CommentPost>
+                                    <CommentButton>올리기</CommentButton>
+                                </CommentDiv>
                             </CommentBox>
                         </CommentContail>
                     </BodyCommentBox>
-                    
+
                 </DetailBody>
             </DetailWrap>
         </DetailContainer>
@@ -110,7 +112,7 @@ const Bodytxt = styled.div`
     flex-direction: column;
     margin-left: 10px;
     
-`   
+`
 const Txtname = styled.h3`
     margin: 0px;
 `
@@ -119,7 +121,7 @@ const Txtstudent = styled.p`
     font-size: 12px;
     color: gray;
 `
-const BodyContent =styled.div`
+const BodyContent = styled.div`
     padding: 0px 20px;
 `
 const ContentTitle = styled.h3`
@@ -150,31 +152,41 @@ const BodyCommentBox = styled.div`
 
 const CommentContail = styled.div`
     position: fixed;
-    bottom: 10px;
+    bottom: 0;
+    /* bottom: 10px; */
     width:100%;
     max-width:500px;
-    
+    display: flex;    
 `
 
 const CommentBox = styled.div`
     display: flex;
     align-items: center;
     height:40px;
-    width:100%;
+    /* width: 100%; */
 `
 
 const CommentPost = styled.input`
     /* position: fixed; */
-    width:100%;
-    /* height:30px; */
-    /* margin:20px; */
+    width:80%;
     bottom : 0;
     padding:10px;
     background-color: #eeeeee;
+    height: 30px;
     border-radius: 10px;
-    border : 1px solid rgba(0,0,0,0.1);
-
+    /* border : 1px solid rgba(0,0,0,0.1); */
+    border: none;
 `
 const CommentButton = styled.button`
-    
+    border: none;
+    cursor: pointer;
+`
+
+const CommentDiv = styled.div`
+    width : 400px;
+    background-color: #eeeeee;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
 `
