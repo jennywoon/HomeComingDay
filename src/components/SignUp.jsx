@@ -202,6 +202,7 @@ const SignUp = () => {
 export default SignUp;
 
 const SignupContainer = styled.div`
+  height: 100vh;
   font-size: 16px;
 `;
 
