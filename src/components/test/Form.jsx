@@ -22,7 +22,7 @@ const HelpForm = () => {
         //     { imgUrl: "" }
         // ],
         imgUrl : ""
-    });
+    }); 
 
     const [info, setInfo] = useState({
         infotitle: "",
