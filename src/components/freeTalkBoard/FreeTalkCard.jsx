@@ -22,9 +22,9 @@ const FreeTalkCard = ({freetalk}) => {
               <HeadTime>15분전</HeadTime>
             </CardHead>
             <CardBody>
-              <BodyTitle>{freetalk.title}</BodyTitle>
+              <BodyTitle>{freetalk.freetitle}</BodyTitle>
               <BodyContent>
-              {freetalk.content}
+              {freetalk.freecontent}
               </BodyContent>
             </CardBody>
             <CardFooter>
