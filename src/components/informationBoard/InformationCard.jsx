@@ -8,6 +8,8 @@ import { __getInformation } from '../../redux/modules/InformationSlice';
 const InformationCard = ({information}) => {
     const dispatch = useDispatch();
     
+    
+
     useEffect(() => {
         dispatch(__getInformation());
     }, [dispatch])
@@ -23,9 +25,9 @@ const InformationCard = ({information}) => {
               <HeadTime>15분전</HeadTime>
             </CardHead>
             <CardBody>
-              <BodyTitle>{information.title}</BodyTitle>
+              <BodyTitle>{information.infotitle}</BodyTitle>
               <BodyContent>
-              {information.content}
+              {information.infocontent}
               </BodyContent>
             </CardBody>
             <CardFooter>
