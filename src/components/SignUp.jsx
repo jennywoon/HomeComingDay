@@ -14,10 +14,10 @@ const SignUp = () => {
     email: '',
     username: '',
     password: '',
-    passwordcheck: '',
+    passwordCheck: '',
   });
 
-  const { email, username, password, passwordcheck } = inputValue;
+  const { email, username, password, passwordCheck } = inputValue;
 
   const [formError, setFormError] = useState({
     emailError: false,
@@ -27,11 +27,16 @@ const SignUp = () => {
   });
   const { emailError, nameError, passwordError, confirmPasswordError } =
     formError;
+  // 정규식
+  const emailRegex = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+  const nameRegex = /^[A-Za-zㄱ-ㅎ가-힣]{2,12}$/;
+  // const nameRegex = /^(?=.*[a-z가-힣])[a-z가-힣]{2,12}$/;
+  const passwordRegex =
+    /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
+  // const passwordRegex = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 
   // email
   const handleChangeEmail = (e) => {
-    const emailRegex =
-      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     if (!e.target.value || emailRegex.test(e.target.value)) {
       setFormError({ ...formError, emailError: false });
     } else {
@@ -47,7 +52,6 @@ const SignUp = () => {
 
   // username
   const handleChangeusername = (e) => {
-    const nameRegex = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/;
     if (!e.target.value || nameRegex.test(e.target.value)) {
       setFormError({ ...formError, nameError: false });
     } else {
@@ -63,11 +67,9 @@ const SignUp = () => {
 
   // password
   const handleChangePassword = (e) => {
-    const passwordRegex =
-      /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
     if (!e.target.value || passwordRegex.test(e.target.value)) {
       setFormError({ ...formError, passwordError: false });
-    } else if (passwordcheck === e.target.value) {
+    } else if (passwordCheck === e.target.value) {
       setFormError({ ...formError, confirmPasswordError: false });
     } else {
       setFormError({ ...formError, passwordError: true });
@@ -80,7 +82,7 @@ const SignUp = () => {
     });
   };
 
-  // passwordcheck
+  // passwordCheck
   const handleChangeConfirmPassword = (e) => {
     if (password === e.target.value) {
       setFormError({ ...formError, confirmPasswordError: false });
@@ -90,7 +92,7 @@ const SignUp = () => {
     setInputValue((prev) => {
       return {
         ...prev,
-        passwordcheck: e.target.value,
+        passwordCheck: e.target.value,
       };
     });
   };
@@ -106,12 +108,12 @@ const SignUp = () => {
   // 버튼 활성화
   const [isActive, setIsActive] = useState(false);
 
-  useEffect(()=>{
-    if(
-      email !== ''&&
-      username !== ''&&
-      password !== ''&&
-      passwordcheck !== ''&&
+  useEffect(() => {
+    if (
+      email !== '' &&
+      username !== '' &&
+      password !== '' &&
+      passwordCheck !== '' &&
       !emailError &&
       !nameError &&
       !passwordError &&
@@ -119,12 +121,21 @@ const SignUp = () => {
     ) {
       setIsActive(true);
     } else {
-      setIsActive(false)
+      setIsActive(false);
     }
-  }, [email, username, password, passwordcheck, emailError, nameError, passwordError, confirmPasswordError]);
+  }, [
+    email,
+    username,
+    password,
+    passwordCheck,
+    emailError,
+    nameError,
+    passwordError,
+    confirmPasswordError,
+  ]);
 
   return (
-    <SignupContainer>
+    <SignupContainer onSubmit={handleSubmit}>
       {/* 로고 */}
       <p style={{ justifyContent: 'center' }}>회원가입</p>
       <SignupWrap>
@@ -149,9 +160,7 @@ const SignUp = () => {
           onChange={handleChangeusername}
         />
         {nameError ? (
-          <StErrorMessage>
-            2자 이상 16자 이하, 영어 또는 숫자 또는 한글
-          </StErrorMessage>
+          <StErrorMessage>2자 이상 12자 이하, 영어 또는 한글</StErrorMessage>
         ) : null}
       </SignupWrap>
 
@@ -164,7 +173,7 @@ const SignUp = () => {
         />
         {passwordError ? (
           <StErrorMessage>
-            8자 이상 15자 이하의 영어와 숫자, 특수문자 포함
+            8자 이상 16자 이하의 영어와 숫자, 특수문자 포함
           </StErrorMessage>
         ) : null}
       </SignupWrap>
@@ -181,14 +190,14 @@ const SignUp = () => {
         ) : null}
       </SignupWrap>
 
-      <Button width='100%' onClick={handleSubmit} disabled={isActive ? false : true}>
+      <Button width='100%' isDisabled={isActive ? false : true}>
         회원가입
       </Button>
       <p>
         서비스이름 계정이 있으신가요?
         <span
           onClick={() => {
-            navigate('/signup');
+            navigate('/login');
           }}
           style={{ color: 'blue', cursor: 'pointer' }}
         >
@@ -201,13 +210,13 @@ const SignUp = () => {
 
 export default SignUp;
 
-const SignupContainer = styled.div`
+const SignupContainer = styled.form`
   height: 100vh;
   font-size: 16px;
 `;
 
 const SignupWrap = styled.div`
-  box-sizing:border-box;
+  box-sizing: border-box;
   padding: 0;
   margin: 0;
   border: none;

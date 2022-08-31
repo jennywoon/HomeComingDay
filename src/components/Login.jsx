@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -13,6 +13,14 @@ const Login = () => {
     email: '',
     password: '',
   });
+
+  const { email, password } = formValue;
+  const [loginBtn, setLoginBtn] = useState(true);
+  const [isActive, setIsActive] = useState(false);
+
+  const handleCheck = (e) => {
+    setIsActive(e);
+  };
 
   // 이메일
   const onChangeEmailHandler = (e) => {
@@ -43,19 +51,40 @@ const Login = () => {
     });
   };
 
+  useEffect(() => {
+    if (formValue.email !== '' && formValue.password !== '') {
+      handleCheck(true);
+    } else {
+      handleCheck(false);
+    }
+  }, [formValue]);
+
   return (
-    <LoginContainer>
+    <LoginContainer
+      onSubmit={(e) => {
+        e.preventDefault();
+        onClickHandler(formValue);
+      }}
+    >
       {/* 로고 */}
       <p>로그인</p>
       <LoginWrap>
         <label>이메일</label>
-        <Input onChange={onChangeEmailHandler} width='100%' />
+        <Input
+          onChange={onChangeEmailHandler}
+          value={formValue.email}
+          width='100%'
+        />
         <label>비밀번호</label>
         <Input
           type='password'
-          onChange={onChangePasswordHandler} width='100%'
+          onChange={onChangePasswordHandler}
+          value={formValue.password}
+          width='100%'
         />
-        <Button onClickHandler={onClickHandler} width='100%'>로그인</Button>
+        <Button type='submit' width='100%' disabled={isActive ? false : true}>
+          로그인
+        </Button>
       </LoginWrap>
       {/* 네이버 로그인 */}
       <p>
@@ -75,9 +104,8 @@ const Login = () => {
 
 export default Login;
 
-const LoginContainer = styled.div`
+const LoginContainer = styled.form`
   height: 100vh;
-
 `;
 
 const LoginWrap = styled.div``;

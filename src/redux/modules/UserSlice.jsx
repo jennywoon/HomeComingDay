@@ -3,13 +3,13 @@ import axios from 'axios';
 import { getCookie, setCookie } from '../../shared/cookies';
 
 // const BASE_URL = 'http://localhost:3000';
-const BASE_URL = 'http://192.168.35.187:8080';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const config = {
   headers: {
     'Content-Type': 'application/json',
-    authorization: `Bearer ${getCookie("accessToken")}`,
-    username: `${getCookie("username")}`,
+    authorization: `Bearer ${getCookie('accessToken')}`,
+    // username: `${getCookie("username")}`,
   },
 };
 
@@ -18,9 +18,9 @@ export const __loginUser = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.post(`${BASE_URL}/member/login`, payload);
-      setCookie('accessToken', `${data.data.accessToken}`)
-      setCookie('username', `${data.data.username}`)
-      console.log(data)
+      setCookie('accessToken', `${data.data.data.accessToken}`);
+      // setCookie('username', `${data.data.username}`)
+      console.log(data.data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -30,9 +30,10 @@ export const __loginUser = createAsyncThunk(
 
 export const __signupUser = createAsyncThunk(
   'SIGNUP_USER',
-  async(payload, thunkAPI) => {
+  async (payload, thunkAPI) => {
     try {
-      const data = await axios.post(`${BASE_URL}/api/register`, payload);
+      console.log(payload);
+      const data = await axios.post(`${BASE_URL}/member/signup`, payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log('error', error);
@@ -62,7 +63,7 @@ export const UserSlice = createSlice({
     },
     [__loginUser.rejected]: (state, action) => {
       state.isLoading = false;
-      state.error = action.payload.response.data;
+      state.error = action.payload;
     },
     [__signupUser.pending]: (state) => {
       state.isLoading = true;
@@ -75,7 +76,7 @@ export const UserSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-  }
-})
+  },
+});
 
 export default UserSlice;
