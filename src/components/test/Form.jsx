@@ -169,7 +169,7 @@ const HelpForm = () => {
                     <Textarea name="freecontent" value={freecontent} onChange={freeonChangeHandler} placeholder="내용을 입력해주세요"></Textarea>
                  </>
                  :null
-                 }
+                 } 
 
                 </FormBody>
                 <FormFooter>
