@@ -6,9 +6,10 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import CalendarModal from './CalendarModal';
 import TimeRangePicker from '@wojtekmaj/react-timerange-picker';
 import "./TimeRange.css"
+import { __getCalendar, __postCalendar } from '../../redux/modules/CalendarSlice';
 
 const CalendarForm = () => {
-
+    const dispatch = useDispatch();
     const [modalOpen, setModalOpen] = useState(false);
 
     const showModal = (e) => {
@@ -17,11 +18,44 @@ const CalendarForm = () => {
     }
 
     const [value, onChange] = useState(['10:00', '11:00']);
+
+    const [calendar, setCalendar] = useState({
+        calendartitle: "",
+        calendarlocation: "",
+        calendarcontent: "",
+    })
+
+    useEffect(() => {
+        dispatch(__getCalendar());
+    }, [dispatch])
+
+    const { calendartitle, calendarlocation, calendarcontent } = calendar;
+
+    const onChangeHandler = (e) => {
+        const {value, name} = e.target;
+        setCalendar({
+            ...calendar,
+            [name]: value,
+        })
+    }
+
+    const onSubmitHandler = (e) => {
+        e.preventDefault();
+        if(calendartitle === ""){
+            return alert("제목을 입력해주세요");
+        } else if(calendarlocation ===""){
+            return alert("장소를 입력해주세요");
+        } else if(calendarcontent === ""){
+            return alert("내용을 입력해주세요");
+        }
+        dispatch(__postCalendar(calendar));
+    }
+
     return (
         <>
         {modalOpen && <CalendarModal setModalOpen={setModalOpen}/>}
             <FormContainer>
-                <FormWrap>
+                <FormWrap onSubmit={onSubmitHandler}>
                     <FormHeader>
                         <IoIosArrowBack size="25px" cursor="pointer" />
                         <Button type="submit" backgroundColor="white">올리기</Button>
@@ -33,7 +67,7 @@ const CalendarForm = () => {
                             <option value="">만남일정</option>
                             <option value="">자유토크</option>
                         </FormSelection>
-                        <FormInput></FormInput>
+                        <FormInput name="calendartitle" value={calendartitle} onChange={onChangeHandler} placeholder="제목을 입력해주세요"></FormInput>
                         {/* <Textarea></Textarea> */}
                         <CalendarButton onClick={showModal}>
                             <CalendarTitle>날짜</CalendarTitle>
@@ -50,11 +84,11 @@ const CalendarForm = () => {
                         </TimeDiv>
                         <CalendarDiv>
                             <CalendarTitle>장소</CalendarTitle>
-                            <CalendarInput placeholder="내용을 입력해주세요"></CalendarInput>
+                            <CalendarInput name="calendarlocation" value={calendarlocation} onChange={onChangeHandler} placeholder="장소를 입력해주세요"></CalendarInput>
                         </CalendarDiv>
                         <CalendarDiv>
                             <CalendarTitle>내용</CalendarTitle>
-                            <CalendarInput placeholder="내용을 입력해주세요"></CalendarInput>
+                            <CalendarInput name="calendarcontent" value={calendarcontent} onChange={onChangeHandler}placeholder="내용을 입력해주세요"></CalendarInput>
                         </CalendarDiv>
                         {/* <CalendarTest/> */}
                     </FormBody>
@@ -125,12 +159,6 @@ const TimeDiv = styled.div`
 const CalendarTitle = styled.div`
     font-size: 14px;
 `
-
-const DateDiv = styled.div`
-    width: 65%;
-    height: 30px;
-    border: 1px solid red;
-`
 const CalendarDiv = styled.div`
     height: 40px;
     margin-top: 10px;
@@ -173,26 +201,4 @@ const FormInput = styled.input`
     padding: 10px 10px 10px 5px;
     font-weight: bold;
     color: black;
-`
-const Textarea = styled.textarea`
-    width: 100%;
-    height:63vh;
-    border:none;
-    padding: 10px 5px;
-`
-
-const FormFooter = styled.div`
-    display: flex;
-    width:100%;
-    /* background-color: yellow; */
-    border-top: 1px solid gray;
-
-`
-const Filelabel = styled.label`
-    margin : 10px 20px;
-    
-`
-
-const Addfile = styled.input`
-    display: none;
 `

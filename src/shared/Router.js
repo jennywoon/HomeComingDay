@@ -35,9 +35,9 @@ const Router = () => {
         <Route path="/calendar" element={<CalendarPage />} />
         {/* 하단 페이지 추후 정리 */}
         <Route path="/test" element={<ScrollTest />} />
+        <Route path="/calendartest" element={<CalendarForm />} />
         <Route path="/helpcard" element={<HelpCard />} />
         <Route path="/freetest" element={<FreeTalkForm />} />
-        <Route path="/calendartest" element={<CalendarForm />} />
         <Route path="/form" element={<Form />} />
 
       </Routes>

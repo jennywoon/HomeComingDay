@@ -124,7 +124,7 @@ const SignUp = () => {
   }, [email, username, password, passwordcheck, emailError, nameError, passwordError, confirmPasswordError]);
 
   return (
-    <SignupContainer>
+    <SignupContainer onSubmit={handleSubmit}>
       {/* 로고 */}
       <p style={{ justifyContent: 'center' }}>회원가입</p>
       <SignupWrap>
@@ -181,7 +181,9 @@ const SignUp = () => {
         ) : null}
       </SignupWrap>
 
-      <Button width='100%' onClick={handleSubmit} disabled={isActive ? false : true}>
+      <Button width='100%'
+      //  onClick={handleSubmit} 
+       disabled={isActive ? false : true}>
         회원가입
       </Button>
       <p>
@@ -201,7 +203,7 @@ const SignUp = () => {
 
 export default SignUp;
 
-const SignupContainer = styled.div`
+const SignupContainer = styled.form`
   height: 100vh;
   font-size: 16px;
 `;

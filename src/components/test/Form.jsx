@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom"
 import { __getHelp, __postHelp } from '../../redux/modules/HelpSlice';
 import { __postFreeTalk } from '../../redux/modules/FreeTalkSlice';
 import { __postInformation } from '../../redux/modules/InformationSlice';
+import { __getCalendar, __postCalendar } from '../../redux/modules/CalendarSlice';
 import {IoIosArrowBack, IoIosArrowForward} from 'react-icons/io'
 import {GrImage} from 'react-icons/gr'
 import Button from '../elements/Button';
@@ -12,6 +14,7 @@ import TimeRangePicker from '@wojtekmaj/react-timerange-picker';
 
 const HelpForm = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [help, setHelp] = useState({
         title: "",
         content: "",
@@ -39,6 +42,12 @@ const HelpForm = () => {
         freeimageUrl : ""
     });
 
+    const [calendar, setCalendar] = useState({
+        calendartitle: "",
+        calendarlocation: "",
+        calendarcontent: "",
+    })
+
     const [select , setSelect] = useState("help")
 
 
@@ -46,11 +55,15 @@ const HelpForm = () => {
         dispatch(__getHelp());
     }, [dispatch]);
 
+    useEffect(() => {
+        dispatch(__getCalendar());
+    }, [dispatch])
 
 
     const { title, content, imgUrl } = help;
     const { infotitle, infocontent, infoimageUrl } = info;
     const { freetitle, freecontent, freeimageUrl } = freetalk;
+    const { calendartitle, calendarlocation, calendarcontent } = calendar;
 
     // console.log("help", title.length , "info" , info.length , "free" , freetalk.length)
 
@@ -78,6 +91,13 @@ const HelpForm = () => {
         })
     }
 
+    const calendaronChangeHandler = (e) => {
+        const {value, name} = e.target;
+        setCalendar({
+            ...calendar,
+            [name]: value,
+        })
+    }
 
     const handleSelect = (e) =>{
         setSelect(e.target.value)
@@ -86,11 +106,17 @@ const HelpForm = () => {
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
-        if (title.length && infotitle.length && freetitle.length === 0) {
+        if (title.length && infotitle.length && freetitle.length && calendartitle.length === 0) {
             return alert("제목을 입력해주세요");
-        } else if (content.length && infocontent.length && freecontent.length === 0) {
+        } else if (content.length && infocontent.length && freecontent.length && calendarcontent.length === 0) {
             return alert("내용을 입력해주세요");
         }
+
+        // if (title && infotitle && freetitle && calendartitle === "") {
+        //     return alert("제목을 입력해주세요");
+        // } else if (content && infocontent && freecontent && calendarcontent === "") {
+        //     return alert("내용을 입력해주세요");
+        // }
 
         if (select === "help"){
             dispatch(__postHelp(help));
@@ -105,12 +131,19 @@ const HelpForm = () => {
             infocontent: "",
             infoimageUrl:""
             });
-        }else {
+        }else if(select ==="freetalk"){
             dispatch(__postFreeTalk(freetalk));
             setFreetalk({
             freetitle: "",
             freecontent: "",
             freeimageUrl : ""
+            })
+        }else if(select ==="meet"){
+            dispatch(__postCalendar(calendar));
+            setFreetalk({
+                calendartitle: "",
+                calendarlocation: "",
+                calendarcontent : ""
             })
         }
     }
@@ -150,7 +183,7 @@ const HelpForm = () => {
             <FormWrap onSubmit={onSubmitHandler}>
                 <FormHeader>
                     <IoIosArrowBack size="25px" cursor="pointer"/>
-                    <Button type="submit" backgroundColor="white">등록하기</Button>
+                    <Button type="submit" backgroundColor="white" onClick={() => navigate("/")}>올리기</Button>
                 </FormHeader>
                 <FormBody>
                     <FormSelection name="category" onChange={handleSelect}>
@@ -177,7 +210,7 @@ const HelpForm = () => {
                  {modalOpen && <CalendarModal setModalOpen={setModalOpen}/>}
                     {/* 만남일정 게시판 get, post 구현 안되어서 구현되면 input name,value 줄 예정 */}
                     {/* <FormInput name="infotitle" value={infotitle} onChange={infoonChangeHandler} placeholder="제목을 입력해주세요"></FormInput> */}
-                    <FormInput placeholder="제목을 입력해주세요"></FormInput>
+                    <FormInput name="calendartitle" value={calendartitle} onChange={calendaronChangeHandler} placeholder="제목을 입력해주세요"></FormInput>
                     <CalendarButton onClick={showModal}>
                             <CalendarTitle>날짜</CalendarTitle>
                             <IoIosArrowForward />
@@ -193,11 +226,11 @@ const HelpForm = () => {
                         </TimeDiv>
                         <CalendarDiv>
                             <CalendarTitle>장소</CalendarTitle>
-                            <CalendarInput placeholder="내용을 입력해주세요"></CalendarInput>
+                            <CalendarInput name="calendarlocation" value={calendarlocation} onChange={calendaronChangeHandler} placeholder="내용을 입력해주세요"></CalendarInput>
                         </CalendarDiv>
                         <CalendarDiv>
                             <CalendarTitle>내용</CalendarTitle>
-                            <CalendarInput placeholder="내용을 입력해주세요"></CalendarInput>
+                            <CalendarInput name="calendarcontent" value={calendarcontent} onChange={calendaronChangeHandler} placeholder="내용을 입력해주세요"></CalendarInput>
                         </CalendarDiv>
                  </>
                  : 

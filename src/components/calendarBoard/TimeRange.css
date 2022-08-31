@@ -1,11 +1,12 @@
 .react-timerange-picker {
-    /* width: 65%; */
-    max-width: 768px;
+    width: 250px;
+    /* max-width: 768px; */
     /* height: 100%; */
     /* display: inline-flex; */
     display: flex;
     text-align: center;
     position: relative;
+    font-size: 12px;
     /* border: 1px solid red; */
   }
   .react-timerange-picker,

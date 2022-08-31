@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from "react-router-dom";
 import styled from 'styled-components';
-import Img from "../../assets/naverIcon.png"
+import { BsQuestionSquare } from "react-icons/bs";
 import { __getHelp } from '../../redux/modules/HelpSlice';
 
-const HelpCard = ({help}) => {
+const HelpCard = ({ help }) => {
     const dispatch = useDispatch();
     console.log(help.title)
-    
+
     useEffect(() => {
         dispatch(__getHelp());
     }, [dispatch])
@@ -16,22 +15,24 @@ const HelpCard = ({help}) => {
     return (
         <HelpContainer>
             <CardHead>
-              <HeadImg src={Img} alt='' />
-              <HeadName>여기는 정보공유</HeadName>
-              <HeadStudent>14학번</HeadStudent>
-              <HeadTime>15분전</HeadTime>
+                <HeadImg>
+                    <BsQuestionSquare />
+                </HeadImg>
+                <HeadName>이름</HeadName>
+                <HeadStudent>14학번</HeadStudent>
+                <HeadTime>15분전</HeadTime>
             </CardHead>
             <CardBody>
-              <BodyTitle>{help.title}</BodyTitle>
-              <BodyContent>
-              {help.content}
-              </BodyContent>
+                <BodyTitle>{help.title}</BodyTitle>
+                <BodyContent>
+                    {help.content}
+                </BodyContent>
             </CardBody>
             <CardFooter>
-              <Views>조회수 1500</Views>
-              <CommentCount>댓글 2700</CommentCount>
+                <Views>조회수 1500</Views>
+                <CommentCount>댓글 2700</CommentCount>
             </CardFooter>
-          </HelpContainer>
+        </HelpContainer>
     );
 };
 
@@ -49,8 +50,14 @@ const CardHead = styled.div`
     display: flex;
     align-items: center;
 `
-const HeadImg = styled.img`
-    width:30px;
+const HeadImg = styled.div`
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f6bd60;
+    border-radius: 50%;
 `
 const HeadName = styled.h2`
     font-size: 18px;

@@ -32,7 +32,8 @@ export const __signupUser = createAsyncThunk(
   'SIGNUP_USER',
   async(payload, thunkAPI) => {
     try {
-      const data = await axios.post(`${BASE_URL}/api/register`, payload);
+      console.log(payload);
+      const data = await axios.post(`${BASE_URL}/member/signup`, payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log('error', error);
