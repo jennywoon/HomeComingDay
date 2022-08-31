@@ -1,17 +1,16 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components"
-import { __getFreeTalk } from "../../redux/modules/FreeTalkSlice";
-// import FreeTalkCard from "./FreeTalkCard"
+import { __getCalendar } from "../../redux/modules/CalendarSlice";
+import CalendarCard from "./CalendarCard";
 
 const Calendar = () => {
   const dispatch = useDispatch();
-//   const { freetalks } = useSelector((state) => state.freetalks);
-//   console.log(freetalks)
+  const { calendars } = useSelector((state) => state.calendars);
 
-//   useEffect(() => {
-//     dispatch(__getFreeTalk());
-//   },[dispatch])
+  useEffect(() => {
+    dispatch(__getCalendar());
+  },[dispatch])
 
   return (
     <HelpContainer>
@@ -22,11 +21,11 @@ const Calendar = () => {
           <option>인기순</option>
         </Select>
         <HelpList>
-          {/* <>
-            {freetalks?.map((freetalk) => (
-              <FreeTalkCard key={freetalk.id} id={freetalk.id} freetalk={freetalk}/>
+          <>
+            {calendars?.map((calendar) => (
+              <CalendarCard key={calendar.id} id={calendar.id} calendar={calendar}/>
             ))}
-          </> */}
+          </>
         </HelpList>
       </HelpWrap>
     </HelpContainer>

@@ -190,7 +190,9 @@ const SignUp = () => {
         ) : null}
       </SignupWrap>
 
+
       <Button width='100%' isDisabled={isActive ? false : true}>
+
         회원가입
       </Button>
       <p>

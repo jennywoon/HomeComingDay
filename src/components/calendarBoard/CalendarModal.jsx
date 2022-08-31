@@ -8,16 +8,16 @@ const CalendarModal = ({ setModalOpen }) => {
 
     // const [value, onChange] = useState(new Date())
     const [value, setValue] = useState(new Date());
-    const onChange = value => setValue(value);
-
     const modalRef = useRef(null);
 
     const closeModal = (e) => {
         if (!modalRef.current.contains(e.target)) {
             setModalOpen(false);
-            // dispatch(__getInstas())
         }
     };
+
+    const onChange = value => setValue(value);
+    const callDay = (clikedDay) => { console.log(clikedDay)};
 
     return (
         <Background onClick={closeModal}>
@@ -27,7 +27,7 @@ const CalendarModal = ({ setModalOpen }) => {
                         <Calendar
                             onChange={onChange} value={value}
                             formatDay={(locale, date) => dayjs(date).format('DD')}
-                            
+                            onClickDay={callDay}
                         />
                         <CalendarButton
                         // type="submit"
@@ -77,7 +77,8 @@ const Wrap = styled.form`
 
 const CalendarWrap = styled.div`
     /* padding: 0 20px; */
-    width: 460px;
+    /* width: 460px; */
+    width: 100%;
     height: 400px;
     background-color: white;
     display: flex;

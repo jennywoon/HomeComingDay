@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 
-const Button = ({ id, type, className, isDisabled, children, onClickHandler, width, padding, backgroundColor, color }) => {
+const Button = ({ id, type, className, isDisabled, children, onClickHandler, width, padding, backgroundColor, color ,fontSize}) => {
 
 
   return (
@@ -16,6 +16,7 @@ const Button = ({ id, type, className, isDisabled, children, onClickHandler, wid
       width={width}
       backgroundColor={backgroundColor}
       color={color}
+      fontSize={fontSize}
     >
       {children}
     </StyledButton>

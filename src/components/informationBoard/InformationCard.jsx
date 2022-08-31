@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
 import styled from 'styled-components';
 import Img from "../../assets/naverIcon.png"
+import { HiOutlineInformationCircle } from "react-icons/hi";
+import { GrCircleAlert } from "react-icons/gr";
 import { __getInformation } from '../../redux/modules/InformationSlice';
 
-const InformationCard = ({information}) => {
+const InformationCard = ({ information }) => {
     const dispatch = useDispatch();
-    
-    
+
+
 
     useEffect(() => {
         dispatch(__getInformation());
@@ -19,22 +21,24 @@ const InformationCard = ({information}) => {
     return (
         <HelpCard>
             <CardHead>
-              <HeadImg src={Img} alt='' />
-              <HeadName>여기는 정보공유</HeadName>
-              <HeadStudent>14학번</HeadStudent>
-              <HeadTime>15분전</HeadTime>
+                <HeadImg>
+                    <GrCircleAlert size="20"/>
+                </HeadImg>
+                <HeadName>이름</HeadName>
+                <HeadStudent>14학번</HeadStudent>
+                <HeadTime>15분전</HeadTime>
             </CardHead>
             <CardBody>
-              <BodyTitle>{information.infotitle}</BodyTitle>
-              <BodyContent>
-              {information.infocontent}
-              </BodyContent>
+                <BodyTitle>{information.infotitle}</BodyTitle>
+                <BodyContent>
+                    {information.infocontent}
+                </BodyContent>
             </CardBody>
             <CardFooter>
-              <Views>조회수 1500</Views>
-              <CommentCount>댓글 2700</CommentCount>
+                <Views>조회수 1500</Views>
+                <CommentCount>댓글 2700</CommentCount>
             </CardFooter>
-          </HelpCard>
+        </HelpCard>
     );
 };
 
@@ -52,8 +56,14 @@ const CardHead = styled.div`
     display: flex;
     align-items: center;
 `
-const HeadImg = styled.img`
-    width:30px;
+const HeadImg = styled.div`
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f6bd60;
+    border-radius: 50%;
 `
 const HeadName = styled.h2`
     font-size: 18px;

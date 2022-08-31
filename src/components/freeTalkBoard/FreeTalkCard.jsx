@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from "react-router-dom";
 import styled from 'styled-components';
-import Img from "../../assets/naverIcon.png"
+import { BiCommentDetail } from "react-icons/bi";
 import { __getFreeTalk } from '../../redux/modules/FreeTalkSlice';
-import { __getInformation } from '../../redux/modules/InformationSlice';
 
 const FreeTalkCard = ({freetalk}) => {
     const dispatch = useDispatch();
@@ -16,8 +14,10 @@ const FreeTalkCard = ({freetalk}) => {
     return (
         <HelpCard>
             <CardHead>
-              <HeadImg src={Img} alt='' />
-              <HeadName>여기는 정보공유</HeadName>
+            <HeadImg>
+                    <BiCommentDetail />
+                </HeadImg>
+              <HeadName>이름</HeadName>
               <HeadStudent>14학번</HeadStudent>
               <HeadTime>15분전</HeadTime>
             </CardHead>
@@ -49,8 +49,14 @@ const CardHead = styled.div`
     display: flex;
     align-items: center;
 `
-const HeadImg = styled.img`
-    width:30px;
+const HeadImg = styled.div`
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f6bd60;
+    border-radius: 50%;
 `
 const HeadName = styled.h2`
     font-size: 18px;
