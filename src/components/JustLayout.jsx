@@ -4,11 +4,11 @@ import styled from 'styled-components';
 const JustLayout = ({ children }) => {
     
     return (
-        <LayoutContainer>
-            <LayoutWrap>
-                <LayoutContents>{children}</LayoutContents>
-            </LayoutWrap>
-        </LayoutContainer>
+      <LayoutContainer>
+        <LayoutWrap>
+          <LayoutContents>{children}</LayoutContents>
+        </LayoutWrap>
+      </LayoutContainer>
     );
 };
 

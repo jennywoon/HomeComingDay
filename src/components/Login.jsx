@@ -48,9 +48,10 @@ const Login = () => {
       {/* 로고 */}
       <p>로그인</p>
       <LoginWrap>
-        <Input placeholder='이메일' onChange={onChangeEmailHandler} width='100%' />
+        <label>이메일</label>
+        <Input onChange={onChangeEmailHandler} width='100%' />
+        <label>비밀번호</label>
         <Input
-          placeholder='비밀번호'
           type='password'
           onChange={onChangePasswordHandler} width='100%'
         />
@@ -74,6 +75,9 @@ const Login = () => {
 
 export default Login;
 
-const LoginContainer = styled.div``;
+const LoginContainer = styled.div`
+  height: 100vh;
+
+`;
 
 const LoginWrap = styled.div``;
