@@ -12,7 +12,6 @@ import FreeTalkPage from "../pages/FreeTalkPage";
 import SchoolInfoPage from '../pages/SchoolInfoPage';
 import ScrollTest from "../components/test/ScrollTest"
 import InformationForm from "../components/informationBoard/InformationForm";
-import CalendarTest from "../components/test/CalendarTest";
 import HelpCard from "../components/helpBoard/HelpCard";
 import FreeTalkForm from "../components/freeTalkBoard/FreeTalkForm"
 import CalendarPage from "../pages/CalendarPage"
@@ -35,7 +34,6 @@ const Router = () => {
         <Route path="/calendar" element={<CalendarPage />} />
         {/* 하단 페이지 추후 정리 */}
         <Route path="/test" element={<ScrollTest />} />
-        <Route path="/calendar" element={<CalendarTest />} />
         <Route path="/helpcard" element={<HelpCard />} />
         <Route path="/freetest" element={<FreeTalkForm />} />
         <Route path="/calendartest" element={<CalendarForm />} />

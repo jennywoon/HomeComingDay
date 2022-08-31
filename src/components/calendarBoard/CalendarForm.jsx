@@ -3,44 +3,64 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import Button from '../elements/Button';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
+import CalendarModal from './CalendarModal';
+import TimeRangePicker from '@wojtekmaj/react-timerange-picker';
+import "./TimeRange.css"
 
 const CalendarForm = () => {
 
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const showModal = (e) => {
+        e.preventDefault();
+        setModalOpen(true);
+    }
+
+    const [value, onChange] = useState(['10:00', '11:00']);
     return (
-        <FormContainer>
-            <FormWrap>
-                <FormHeader>
-                    <IoIosArrowBack size="25px" cursor="pointer" />
-                    <Button type="submit" backgroundColor="white">올리기</Button>
-                </FormHeader>
-                <FormBody>
-                    <FormSelection name="category">
-                        <option value="">도움요청</option>
-                        <option value="">정보공유</option>
-                        <option value="">만남일정</option>
-                        <option value="">자유토크</option>
-                    </FormSelection>
-                    <FormInput></FormInput>
-                    {/* <Textarea></Textarea> */}
-                    <CalendarButton>
-                        <CalendarTitle>날짜</CalendarTitle>
-                        <IoIosArrowForward />
-                    </CalendarButton>
-                    <CalendarButton>
-                        <CalendarTitle>시간</CalendarTitle>
-                        <IoIosArrowForward />
-                    </CalendarButton>
-                    <CalendarDiv>
-                        <CalendarTitle>장소</CalendarTitle>
-                        <CalendarInput placeholder="내용을 입력해주세요"></CalendarInput>
-                    </CalendarDiv>
-                    <CalendarDiv>
-                        <CalendarTitle>내용</CalendarTitle>
-                        <CalendarInput placeholder="내용을 입력해주세요"></CalendarInput>
-                    </CalendarDiv>
-                </FormBody>
-            </FormWrap>
-        </FormContainer>
+        <>
+        {modalOpen && <CalendarModal setModalOpen={setModalOpen}/>}
+            <FormContainer>
+                <FormWrap>
+                    <FormHeader>
+                        <IoIosArrowBack size="25px" cursor="pointer" />
+                        <Button type="submit" backgroundColor="white">올리기</Button>
+                    </FormHeader>
+                    <FormBody>
+                        <FormSelection name="category">
+                            <option value="">도움요청</option>
+                            <option value="">정보공유</option>
+                            <option value="">만남일정</option>
+                            <option value="">자유토크</option>
+                        </FormSelection>
+                        <FormInput></FormInput>
+                        {/* <Textarea></Textarea> */}
+                        <CalendarButton onClick={showModal}>
+                            <CalendarTitle>날짜</CalendarTitle>
+                            <IoIosArrowForward />
+                            {/* <DateDiv></DateDiv> */}
+                        </CalendarButton>
+                        <TimeDiv>
+                            <CalendarTitle>시간</CalendarTitle>
+                            {/* <IoIosArrowForward /> */}
+                            <TimeRangePicker
+                            onChange={onChange}
+                            value={value}
+                        />
+                        </TimeDiv>
+                        <CalendarDiv>
+                            <CalendarTitle>장소</CalendarTitle>
+                            <CalendarInput placeholder="내용을 입력해주세요"></CalendarInput>
+                        </CalendarDiv>
+                        <CalendarDiv>
+                            <CalendarTitle>내용</CalendarTitle>
+                            <CalendarInput placeholder="내용을 입력해주세요"></CalendarInput>
+                        </CalendarDiv>
+                        {/* <CalendarTest/> */}
+                    </FormBody>
+                </FormWrap>
+            </FormContainer>
+        </>
     );
 };
 
@@ -90,8 +110,26 @@ const CalendarButton = styled.button`
     cursor: pointer;
 `
 
+const TimeDiv = styled.div`
+    height: 40px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 1px solid #9b9999;
+    background-color: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    /* cursor: pointer; */
+`
 const CalendarTitle = styled.div`
     font-size: 14px;
+`
+
+const DateDiv = styled.div`
+    width: 65%;
+    height: 30px;
+    border: 1px solid red;
 `
 const CalendarDiv = styled.div`
     height: 40px;
@@ -105,7 +143,7 @@ const CalendarDiv = styled.div`
     padding: 0 20px;
 `
 const CalendarInput = styled.input`
-    width: 80%;
+    width: 65%;
     height: 30px;
     /* margin-top: 10px; */
     border-radius: 10px;
@@ -115,7 +153,8 @@ const CalendarInput = styled.input`
     justify-content: center;
     align-items: center;
     ::-webkit-input-placeholder{text-align:right}
-    padding-left: 10px;
+    padding: 0 10px;
+    /* outline: none; */
 `
 const FormBody = styled.div`
     display: flex;
