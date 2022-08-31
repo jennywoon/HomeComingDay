@@ -17,7 +17,7 @@ const Layout = ({ children }) => {
       <LayoutWrap>
         <Header />
         <Iconbox 
-        onClick={() => navigate('/helpform')}
+        onClick={() => navigate('/form')}
         >
           <TiPencil color="white" size="40px" />
         </Iconbox>
