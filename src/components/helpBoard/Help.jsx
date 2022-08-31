@@ -42,6 +42,7 @@ export default Help;
 const HelpContainer = styled.div`
   gap: 12px;
   height: 100vh;
+  overflow-y: scroll;
 `;
 
 const Banner = styled.div`
@@ -65,7 +66,9 @@ const Select = styled.select`
   border-radius: 10px;
 `;
 
-const HelpList = styled.div``;
+const HelpList = styled.div`
+  /* height: 100%; */
+`;
 
 // const HelpCard = styled.div`
 //   padding: 10px;

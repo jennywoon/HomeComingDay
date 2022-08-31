@@ -4,9 +4,11 @@ import { useDispatch } from 'react-redux';
 import { __getHelp, __postHelp } from '../../redux/modules/HelpSlice';
 import { __postFreeTalk } from '../../redux/modules/FreeTalkSlice';
 import { __postInformation } from '../../redux/modules/InformationSlice';
-import {IoIosArrowBack} from 'react-icons/io'
+import {IoIosArrowBack, IoIosArrowForward} from 'react-icons/io'
 import {GrImage} from 'react-icons/gr'
 import Button from '../elements/Button';
+import CalendarModal from '../calendarBoard/CalendarModal';
+import TimeRangePicker from '@wojtekmaj/react-timerange-picker';
 
 const HelpForm = () => {
     const dispatch = useDispatch();
@@ -47,7 +49,6 @@ const HelpForm = () => {
 
 
     const { title, content, imgUrl } = help;
-
     const { infotitle, infocontent, infoimageUrl } = info;
     const { freetitle, freecontent, freeimageUrl } = freetalk;
 
@@ -112,10 +113,18 @@ const HelpForm = () => {
             freeimageUrl : ""
             })
         }
-
-
-
     }
+
+    // 모달 구현
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const showModal = (e) => {
+        e.preventDefault();
+        setModalOpen(true);
+    }
+
+    const [value, onChange] = useState(['10:00', '11:00']);
+    //
 
     // useEffect(()=>{
     //     setHelp({
@@ -147,7 +156,7 @@ const HelpForm = () => {
                     <FormSelection name="category" onChange={handleSelect}>
                         <option value="help">도움요청</option>
                         <option value="info">정보공유</option>
-                        <option >만남일정</option>
+                        <option value="meet">만남일정</option>
                         <option value="freetalk">자유토크</option>
                     </FormSelection>
                 
@@ -161,6 +170,35 @@ const HelpForm = () => {
                  <>
                     <FormInput name="infotitle" value={infotitle} onChange={infoonChangeHandler} placeholder="제목을 입력해주세요"></FormInput>
                     <Textarea name="infocontent" value={infocontent} onChange={infoonChangeHandler} placeholder="내용을 입력해주세요"></Textarea>
+                 </>
+                 : 
+                 (select === "meet")?
+                 <>
+                 {modalOpen && <CalendarModal setModalOpen={setModalOpen}/>}
+                    {/* 만남일정 게시판 get, post 구현 안되어서 구현되면 input name,value 줄 예정 */}
+                    {/* <FormInput name="infotitle" value={infotitle} onChange={infoonChangeHandler} placeholder="제목을 입력해주세요"></FormInput> */}
+                    <FormInput placeholder="제목을 입력해주세요"></FormInput>
+                    <CalendarButton onClick={showModal}>
+                            <CalendarTitle>날짜</CalendarTitle>
+                            <IoIosArrowForward />
+                            {/* <DateDiv></DateDiv> */}
+                        </CalendarButton>
+                        <TimeDiv>
+                            <CalendarTitle>시간</CalendarTitle>
+                            {/* <IoIosArrowForward /> */}
+                            <TimeRangePicker
+                            onChange={onChange}
+                            value={value}
+                        />
+                        </TimeDiv>
+                        <CalendarDiv>
+                            <CalendarTitle>장소</CalendarTitle>
+                            <CalendarInput placeholder="내용을 입력해주세요"></CalendarInput>
+                        </CalendarDiv>
+                        <CalendarDiv>
+                            <CalendarTitle>내용</CalendarTitle>
+                            <CalendarInput placeholder="내용을 입력해주세요"></CalendarInput>
+                        </CalendarDiv>
                  </>
                  : 
                  (select === "freetalk")?
@@ -188,6 +226,12 @@ const HelpForm = () => {
                     <div style={{fontSize : "12px"}}>이미지 파일: {infoimageUrl}</div>
                     </>
                     :
+                    (select === "meet")? 
+                    <>
+                    {/* <Addfile type="file" multiple={true} id="fileUpload" name="infoimageUrl" value={infoimageUrl || ""} onChange={infoonChangeHandler} />
+                    <div style={{fontSize : "12px"}}>이미지 파일: {infoimageUrl}</div> */}
+                    </>
+                    :
                     (select === "freetalk")?
                     <>
                     <Addfile type="file" multiple={true} id="fileUpload" name="freeimageUrl" value={freeimageUrl || ""} onChange={freeonChangeHandler} />
@@ -195,9 +239,6 @@ const HelpForm = () => {
                     </>
                     : null
                     }
-
-                                    
-
                 </FormFooter>
             </FormWrap>
         </FormContainer>
@@ -278,4 +319,64 @@ const Filelabel = styled.label`
 
 const Addfile = styled.input`
     display: none;
+`
+
+const CalendarButton = styled.button`
+    height: 40px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 1px solid #9b9999;
+    background-color: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    cursor: pointer;
+`
+
+const TimeDiv = styled.div`
+    height: 40px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 1px solid #9b9999;
+    background-color: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    /* cursor: pointer; */
+`
+const CalendarTitle = styled.div`
+    font-size: 14px;
+`
+
+const DateDiv = styled.div`
+    width: 65%;
+    height: 30px;
+    border: 1px solid red;
+`
+const CalendarDiv = styled.div`
+    height: 40px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 1px solid #9b9999;
+    background-color: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+`
+const CalendarInput = styled.input`
+    width: 65%;
+    height: 30px;
+    /* margin-top: 10px; */
+    border-radius: 10px;
+    border: none;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    ::-webkit-input-placeholder{text-align:right}
+    padding: 0 10px;
+    /* outline: none; */
 `

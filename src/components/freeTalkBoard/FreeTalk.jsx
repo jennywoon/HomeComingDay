@@ -42,6 +42,7 @@ export default FreeTalk;
 const HelpContainer = styled.div`
   gap: 12px;
   height: 100vh;
+  overflow-y: scroll;
 `;
 
 const Banner = styled.div`
