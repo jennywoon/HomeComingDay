@@ -2,13 +2,14 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { getCookie, setCookie } from '../../shared/cookies';
 
-const BASE_URL = 'http://localhost:3000';
+// const BASE_URL = 'http://localhost:3000';
+const BASE_URL = 'http://192.168.35.187:8080';
 
 const config = {
   headers: {
     'Content-Type': 'application/json',
-    authorization: `Bearer ${getCookie("token")}`,
-    userName: `${getCookie("userName")}`,
+    authorization: `Bearer ${getCookie("accessToken")}`,
+    username: `${getCookie("username")}`,
   },
 };
 
@@ -17,8 +18,9 @@ export const __loginUser = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.post(`${BASE_URL}/member/login`, payload);
-      setCookie('token', `${data.data.token}`)
+      setCookie('accessToken', `${data.data.accessToken}`)
       setCookie('username', `${data.data.username}`)
+      console.log(data)
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

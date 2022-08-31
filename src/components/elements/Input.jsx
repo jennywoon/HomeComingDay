@@ -52,6 +52,8 @@ margin: 0.3rem;
 const StyledInput = styled.input`
     width : ${(props) => props.width};
     padding: ${(props) => props.padding};
+    border: none;
+    border-bottom: 1px solid #ccc;
     /* border: 1px solid #ccc; */
     border-radius: 3px;
 `
