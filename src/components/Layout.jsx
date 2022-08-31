@@ -4,7 +4,7 @@ import BottomTap from './BottomTap';
 import Header from './Header';
 import { useMediaQuery } from "react-responsive";
 import HeaderTap from './HeaderTap';
-import {TiPencil} from "react-icons/ti";
+import { TiPencil } from "react-icons/ti";
 import { useNavigate } from 'react-router-dom';
 
 const Layout = ({ children }) => {
@@ -16,11 +16,13 @@ const Layout = ({ children }) => {
     <LayoutContainer>
       <LayoutWrap>
         <Header />
-        <Iconbox 
-        onClick={() => navigate('/form')}
-        >
-          <TiPencil color="white" size="40px" />
-        </Iconbox>
+        <IconWrap>
+          <Iconbox
+            onClick={() => navigate('/form')}
+          >
+            <TiPencil color="white" size="40px" />
+          </Iconbox>
+        </IconWrap>
         <LayoutContents>{children}</LayoutContents>
       </LayoutWrap>
     </LayoutContainer>
@@ -55,10 +57,14 @@ const LayoutWrap = styled.div`
 
 const LayoutContents = styled.div`
     display: flex;
-    justify-content: center;
-    
+    justify-content: center;    
 `
 
+const IconWrap = styled.div`
+  width: 95%;
+  display: flex;
+  justify-content: right;
+`
 const Iconbox = styled.div`
   width:50px;
   height:50px;
@@ -66,7 +72,6 @@ const Iconbox = styled.div`
   border-radius: 30px;
   position: fixed;
   bottom: 90px;
-  right: 37%;
   display: flex;
   align-items: center;
   justify-content: center;
