@@ -156,7 +156,7 @@ const CommentContail = styled.div`
     /* bottom: 10px; */
     width:100%;
     max-width:500px;
-    display: flex;    
+    display: flex;
 `
 
 const CommentBox = styled.div`
