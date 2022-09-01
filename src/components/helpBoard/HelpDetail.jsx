@@ -72,7 +72,7 @@ const HelpDetail = () => {
                         </Bodytxt>
                         <AiOutlineMenu size="20px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }} 
                         onClick={onCilckShow}/>
-
+ 
                     {show ? 
                         <Revisebox>
                             <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
