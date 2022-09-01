@@ -1,9 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-
-const Button = ({ id, type, className, isDisabled, children, onClickHandler, width, padding, backgroundColor, color ,fontSize}) => {
-
+const Button = ({ id, type, className, isDisabled, children, onClickHandler, width, padding, backgroundColor, color ,fontSize, style}) => {
 
   return (
     <StyledButton
@@ -17,24 +15,23 @@ const Button = ({ id, type, className, isDisabled, children, onClickHandler, wid
       backgroundColor={backgroundColor}
       color={color}
       fontSize={fontSize}
+      style={style}
     >
       {children}
     </StyledButton>
-  )
+  );
 }
 
 const StyledButton = styled.button`
-
-
-    margin:1rem 0;
-    cursor: pointer;
-    border:none;
-    width : ${(props) => props.width};
-    font-size: 1rem;
-    padding: ${(props) => props.padding};
-    background: ${(props) => props.backgroundColor};
-    border-radius: var(--button-radius, 5px);
-    color:${(props) => props.color};
+  margin: 1rem 0;
+  cursor: pointer;
+  border: none;
+  width: ${(props) => props.width};
+  font-size: 1rem;
+  padding: ${(props) => props.padding};
+  background: ${(props) => props.backgroundColor};
+  border-radius: var(--button-radius, 5px);
+  color: ${(props) => props.color};
 
   /* &:active,
   &:hover,
@@ -47,6 +44,6 @@ const StyledButton = styled.button`
     opacity: 0.5;
     background: var(--button-bg-color, #ccc);
   }
-`
+`;
 
 export default Button

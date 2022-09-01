@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import Button from './elements/Button';
 import Input from './elements/Input';
 import { __signupUser } from '../redux/modules/UserSlice';
+import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
+import {IoIosArrowBack} from 'react-icons/io';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -97,6 +99,20 @@ const SignUp = () => {
     });
   };
 
+  const handlePasswordType = (e) => {
+    setPasswordType(() => {
+      if (!passwordType.visible) {
+        return { type: 'text', visible: true };
+      }
+      return { type: 'password', visible: false };
+    });
+  };
+
+  const [passwordType, setPasswordType] = useState({
+    type: 'password',
+    visible: false,
+  });
+
   // 회원가입 버튼
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -135,101 +151,169 @@ const SignUp = () => {
   ]);
 
   return (
-    <SignupContainer onSubmit={handleSubmit}>
-      {/* 로고 */}
-      <p style={{ justifyContent: 'center' }}>회원가입</p>
-      <SignupWrap>
-        <Flexbox>
-          <Input
-            placeholder='이메일'
-            width='100%'
-            style={{ marginRight: '10px' }}
-            onChange={handleChangeEmail}
-          />
-          <Button width='40%'>인증</Button>
-        </Flexbox>
-        {emailError ? (
-          <StErrorMessage>이메일 형식에 맞게 입력하세요</StErrorMessage>
-        ) : null}
-      </SignupWrap>
-
-      <SignupWrap>
-        <Input
-          placeholder='이름'
-          width='100%'
-          onChange={handleChangeusername}
-        />
-        {nameError ? (
-          <StErrorMessage>2자 이상 12자 이하, 영어 또는 한글</StErrorMessage>
-        ) : null}
-      </SignupWrap>
-
-      <SignupWrap>
-        <Input
-          placeholder='비밀번호'
-          type='password'
-          width='100%'
-          onChange={handleChangePassword}
-        />
-        {passwordError ? (
-          <StErrorMessage>
-            8자 이상 16자 이하의 영어와 숫자, 특수문자 포함
-          </StErrorMessage>
-        ) : null}
-      </SignupWrap>
-
-      <SignupWrap>
-        <Input
-          placeholder='비밀번호 확인'
-          type='password'
-          width='100%'
-          onChange={handleChangeConfirmPassword}
-        />
-        {confirmPasswordError ? (
-          <StErrorMessage>비밀번호가 일치하지 않습니다.</StErrorMessage>
-        ) : null}
-      </SignupWrap>
-
-
-      <Button width='100%' isDisabled={isActive ? false : true}>
-
-        회원가입
-      </Button>
-      <p>
-        서비스이름 계정이 있으신가요?
-        <span
+    <StSignupContainer onSubmit={handleSubmit}>
+      <StSignupWraps>
+        <IoIosArrowBack
+          size='28'
+          style={{ marginBottom: '20px', cursor: 'pointer' }}
           onClick={() => {
             navigate('/login');
           }}
-          style={{ color: 'blue', cursor: 'pointer' }}
+        />
+        <StSignupTitle style={{ justifyContent: 'center' }}>
+          회원가입
+        </StSignupTitle>
+
+        <StSignupWrap>
+          <Stlabel>이름</Stlabel>
+          <Input
+            width='100%'
+            onChange={handleChangeusername}
+            padding='10px 15px'
+          />
+          {nameError ? (
+            <StErrorMessage>2자 이상 12자 이하, 영어 또는 한글</StErrorMessage>
+          ) : null}
+        </StSignupWrap>
+
+        <StSignupWrap>
+          <Stlabel>이메일</Stlabel>
+          <StFlexbox>
+            <Input
+              width='100%'
+              style={{ marginRight: '10px' }}
+              onChange={handleChangeEmail}
+              padding='10px 15px'
+            />
+            <StEmailConfirm>인증</StEmailConfirm>
+          </StFlexbox>
+          {emailError ? (
+            <StErrorMessage>이메일 형식에 맞게 입력하세요</StErrorMessage>
+          ) : null}
+        </StSignupWrap>
+
+        <StSignupWrap>
+          <Stlabel>비밀번호</Stlabel>
+          <Input
+            type={passwordType.type}
+            width='100%'
+            onChange={handleChangePassword}
+            padding='10px 15px'
+          />
+          <StVisible onClick={handlePasswordType}>
+            {passwordType.visible ? (
+              <span>
+                <AiOutlineEye />
+              </span>
+            ) : (
+              <span>
+                <AiOutlineEyeInvisible />
+              </span>
+            )}
+          </StVisible>
+          {passwordError ? (
+            <StErrorMessage>
+              8자 이상 16자 이하의 영어와 숫자, 특수문자 포함
+            </StErrorMessage>
+          ) : null}
+        </StSignupWrap>
+
+        <StSignupWrap>
+          <Stlabel>비밀번호 확인</Stlabel>
+          <Input
+            type={passwordType.type}
+            width='100%'
+            onChange={handleChangeConfirmPassword}
+            padding='10px 15px'
+          />
+          <StVisible onClick={handlePasswordType}>
+            {passwordType.visible ? (
+              <span>
+                <AiOutlineEye />
+              </span>
+            ) : (
+              <span>
+                <AiOutlineEyeInvisible />
+              </span>
+            )}
+          </StVisible>
+          {confirmPasswordError ? (
+            <StErrorMessage>비밀번호가 일치하지 않습니다.</StErrorMessage>
+          ) : null}
+        </StSignupWrap>
+
+        <Button
+          width='100%'
+          padding='10px 0'
+          isDisabled={isActive ? false : true}
+          style={{ marginTop: '100px' }}
+          onClick={() => {
+            navigate('/schoolinfo');
+          }}
         >
-          로그인
-        </span>
-      </p>
-    </SignupContainer>
+          회원가입
+        </Button>
+      </StSignupWraps>
+    </StSignupContainer>
   );
 };
 
 export default SignUp;
 
-const SignupContainer = styled.form`
+const StSignupContainer = styled.form`
+width: 100%;
   height: 100vh;
-  font-size: 16px;
-`;
-
-const SignupWrap = styled.div`
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-  border: none;
-  align-items: left;
-`;
-
-const Flexbox = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 `;
+
+const StSignupWraps = styled.div`
+  width: 85%;
+`;
+
+const StSignupTitle = styled.p`
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 40px;
+`;
+
+const StSignupWrap = styled.div`
+  box-sizing: border-box;
+  padding: 0;
+  border: none;
+  align-items: left;
+  margin-bottom: 30px;
+  position: relative;
+`;
+
+const Stlabel = styled.label`
+  font-size: 14px;
+`;
+
+const StFlexbox = styled.div`
+  position: relative;
+`;
+
+const StEmailConfirm = styled.button`
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translatey(-50%);
+  background-color: #fff;
+  border: 0.5px solid #eee;
+  border-radius: 50px;
+  padding: 5px 10px;
+  font-size: 10px;
+`;
+
+const StVisible = styled.span`
+  position : absolute;
+  right : 5px;
+  top : 80%;
+  transform : translatey(-50%);
+`
+
 const StErrorMessage = styled.p`
   margin: 0;
   color: red;
