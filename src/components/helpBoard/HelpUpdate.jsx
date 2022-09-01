@@ -34,6 +34,8 @@ const HelpUpdate = () => {
         setEditTitle(e.target.value)
     }
 
+
+    
     const onChangeContent = (e) =>{
         setEditContent(e.target.value)
     }
