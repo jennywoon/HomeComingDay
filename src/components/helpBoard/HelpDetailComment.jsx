@@ -30,6 +30,7 @@ const CommentBox = styled.div`
     display:flex;
     align-items: center;
     padding:20px 20px 0px 20px;
+    margin-bottom: 10px;
 `
 
 const CommentImg = styled.img`
