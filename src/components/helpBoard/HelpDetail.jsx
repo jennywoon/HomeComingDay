@@ -43,15 +43,6 @@ const HelpDetail = () => {
 
     const onClickRevice = () => {
         navigate(`/helpupdate/${id}`)
-        // const edithelpsfind = {
-        //     ...helpsfind ,
-        //     id: id,
-        //     title: EditTitle,
-        //     content: EditContent,
-        //     imgUrl : EditImg
-        // }
-        // dispatch(__updateHelp(edithelpsfind))
-        
     }
 
     return (
