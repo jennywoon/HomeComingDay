@@ -17,6 +17,7 @@ import FreeTalkForm from "../components/freeTalkBoard/FreeTalkForm"
 import CalendarPage from "../pages/CalendarPage"
 import Form from "../components/test/Form"
 import HelpDetail from "../components/helpBoard/HelpDetail";
+import HelpUpdate from "../components/helpBoard/HelpUpdate";
 import SearchPage from "../pages/SearchPage";
 import SearchCard from "../components/searchBoard/SearchCard";
 import ChatPage from "../pages/ChatPage"
@@ -46,7 +47,9 @@ const Router = () => {
         <Route path="/freetest" element={<FreeTalkForm />} />
         <Route path="/searchcard" element={<SearchCard />} />
         <Route path="/form" element={<Form />} />
-        <Route path="/helpdetail" element={<HelpDetail />} />
+        <Route path="/helpdetail/:id" element={<HelpDetail />} />
+
+        <Route path="/helpupdate/:id" element={<HelpUpdate />} />
 
 
       </Routes>

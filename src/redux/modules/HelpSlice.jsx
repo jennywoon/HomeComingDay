@@ -15,10 +15,10 @@ const initialState = {
 export const __getHelp = createAsyncThunk("helps/getHelp", async (payload, thunkAPI) => {
     try {
         const data = await axios.get("http://localhost:3001/helps")
-        console.log(data.data)
+        // console.log(data.data)
         return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-        console.log('error', error);
+        // console.log('error', error);
         return thunkAPI.rejectWithValue(error);
     }
 });
@@ -27,12 +27,37 @@ export const __postHelp = createAsyncThunk("helps/postHelp", async (payload, thu
     console.log('payload', payload)
     try {
         const data = await axios.post("http://localhost:3001/helps", payload);
-        console.log('data', data)
+        // console.log('data', data)
         return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
         return thunkAPI.rejectWithValue(error);
     }
 });
+
+export const __deleteHelp = createAsyncThunk("helps/deleteHelp", async (payload, thunkAPI) => {
+  try {
+    await axios.delete(`http://localhost:3001/helps/${payload}`);
+    // console.log('data', data)
+    // console.log(payload)
+    return thunkAPI.fulfillWithValue(payload);
+  } catch (error) {
+    // console.log('error', error)
+    return thunkAPI.rejectWithValue(error);
+  }
+}
+);
+
+export const __updateHelp = createAsyncThunk("helps/updateHelp", async (payload, thunkAPI) => {
+  try {
+    await axios.put(`http://localhost:3001/helps/${payload.id}`, payload);
+    return thunkAPI.fulfillWithValue(payload);
+  } catch (error) {
+    // console.log('error', error)
+    return thunkAPI.rejectWithValue(error.message);
+  }
+}
+);
+
 
 export const HelpSlice = createSlice({
     name: "helps",
@@ -61,6 +86,42 @@ export const HelpSlice = createSlice({
         state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.
         state.error = action.payload; // catch 된 error 객체를 state.error에 넣습니다.
       },
+
+      [__deleteHelp.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__deleteHelp.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        // console.log(state.camps)
+        // console.log(action)
+        state.helps = state.helps.filter(helps => helps.id !== action.payload)
+      },
+      [__deleteHelp.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+
+      [__updateHelp.pending]: (state) => {
+        state.isLoading = true;
+      },
+  
+      [__updateHelp.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        console.log('action', action)
+        console.log('action.payload', action.payload)
+        state.helps = state.helps.map((help) => {
+          if (help.id === action.payload.id) {
+            help = action.payload;
+          }
+          return help;
+        })
+      },
+      [__updateHelp.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+
+
     },
 });
 

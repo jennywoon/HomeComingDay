@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState ,useEffect} from 'react';
 import Header from '../Header';
 import styled from 'styled-components';
 import { IoIosArrowBack } from 'react-icons/io'
@@ -7,8 +7,53 @@ import Img from "../../assets/naverIcon.png"
 import Help from "../../assets/help.png"
 import Button from '../elements/Button';
 import HelpDetailComment from './HelpDetailComment';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { __deleteHelp, __updateHelp, __getHelp } from '../../redux/modules/HelpSlice';
 
 const HelpDetail = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const {helps} = useSelector((state) => state.helps)
+    const {id} = useParams();
+    const [show , setShow] = useState(false)
+    
+    const helpsfind = helps.find((help)=> help.id === Number(id))
+
+    useEffect(() => {
+        dispatch(__getHelp());
+    }, [dispatch])
+
+    console.log("helps", helps , "helpsfind" , helpsfind)
+    
+    const onCilckShow = () =>{
+        setShow(!show)
+    }
+
+
+    const onClickDelete = () => {
+        const result = window.confirm("정말 삭제하시겠습니까?")
+        if(result){
+            dispatch(__deleteHelp(id))
+            navigate("/")
+        }else{
+            return null
+        }
+    }
+
+    const onClickRevice = () => {
+        navigate(`/helpupdate/${id}`)
+        // const edithelpsfind = {
+        //     ...helpsfind ,
+        //     id: id,
+        //     title: EditTitle,
+        //     content: EditContent,
+        //     imgUrl : EditImg
+        // }
+        // dispatch(__updateHelp(edithelpsfind))
+        
+    }
+
     return (
         <DetailContainer>
             <DetailWrap>
@@ -24,12 +69,22 @@ const HelpDetail = () => {
                             <Txtname>최형용</Txtname>
                             <Txtstudent>14학번 <span> 15분 전 </span></Txtstudent>
                         </Bodytxt>
-                        <AiOutlineMenu size="20px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }} />
+                        <AiOutlineMenu size="20px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }} 
+                        onClick={onCilckShow}/>
+
+                    {show ? 
+                        <Revisebox>
+                            <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
+                            <DeleteButton onClick={onClickDelete}>삭제</DeleteButton>
+                        </Revisebox>
+                    : null
+                    }
+
                     </Bodytop>
                     <BodyContent>
-                        <ContentTitle>선배님 항해99나와서 취업할수 있을까요?</ContentTitle>
-                        <ContentBody>Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, odit consectetur architecto cupiditate illum maxime et, quis delectus repudiandae atque nesciunt earum dolor numquam facere harum dolorum totam quas neque?Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, odit consectetur architecto cupiditate illum maxime et, quis delectus repudiandae atque nesciunt earum dolor numquam facere harum dolorum totam quas neque?</ContentBody>
-                        <ContentImg></ContentImg>
+                        <ContentTitle>{helpsfind && helpsfind.title}</ContentTitle>
+                        <ContentBody>{helpsfind && helpsfind.content}</ContentBody>
+                        <ContentImg src={helpsfind && helpsfind.imgUrl}></ContentImg>
                         <ContentView>조회수 1000회 | 댓글 100개</ContentView>
                     </BodyContent>
                     <BodyCommentBox>
@@ -86,6 +141,44 @@ const DetailHeader = styled.div`
 const HeaderTitle = styled.h3`
     margin:10px auto;
 `
+const Revisebox = styled.div`
+    border: 1px solid #f1f0f0;
+    border-radius: 10px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    right: 0;
+    top:55px;
+    background-color: #fff;
+    box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.05);
+   
+`
+const ReviseButton = styled.button`
+    border:none;
+    border-bottom: 1px solid #f1f0f0;
+    padding:10px 15px;
+    border-radius: 10px 10px 0 0;
+    background-color: #fff;
+    color:gray;
+    cursor:pointer;
+    :hover {
+        color: #000;
+    }
+`
+
+const DeleteButton = styled.button`
+    border:none;
+    background-color: #eee;
+    padding:10px 15px;
+    border-radius: 0 0 10px 10px;
+    background-color: #fff;
+    color:gray;
+    cursor:pointer;
+    :hover {
+        color: #000;
+    }
+`
+
 
 const DetailBody = styled.div`
     border: 1px solid #f1f0f0;
@@ -101,6 +194,8 @@ const Bodytop = styled.div`
     display:flex;
     align-items: center;
     padding:20px 20px 10px 20px;
+    position: relative;
+
 `
 
 const Bodyimg = styled.img`
@@ -125,19 +220,18 @@ const BodyContent = styled.div`
     padding: 0px 20px;
 `
 const ContentTitle = styled.h3`
-    
+    margin:10px 0px;
 `
 const ContentBody = styled.p`
     color:gray;
 `
-const ContentImg = styled.div`
+const ContentImg = styled.img`
     /* border:1px solid gray; */
     height: 200px;
     border-radius: 20px;
     margin : 20px 0px;
-    background-image: url(${Help});
-    background-repeat: no-repeat;
-    background-size: cover;
+    /* background-repeat: no-repeat;
+    background-size: cover; */
 `
 const ContentView = styled.p`
     font-size: 14px;

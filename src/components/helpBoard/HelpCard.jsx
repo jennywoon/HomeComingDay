@@ -3,17 +3,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { BsQuestionSquare } from "react-icons/bs";
 import { __getHelp } from '../../redux/modules/HelpSlice';
+import { useNavigate } from 'react-router-dom';
 
-const HelpCard = ({ help }) => {
+const HelpCard = ({ help , id}) => {
     const dispatch = useDispatch();
-    console.log(help.title)
+    const navigate = useNavigate();
+    
 
     useEffect(() => {
         dispatch(__getHelp());
     }, [dispatch])
 
+    const onClickNavi = () =>{
+        navigate(`/helpdetail/${id}`)
+    }
+
     return (
-        <HelpContainer>
+        <HelpContainer onClick={onClickNavi}>
             <CardHead>
                 <HeadImg>
                     <BsQuestionSquare />
