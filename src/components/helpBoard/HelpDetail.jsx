@@ -59,8 +59,9 @@ const HelpDetail = () => {
             <DetailWrap>
                 <Header />
                 <DetailHeader>
-                    <IoIosArrowBack size="25px" cursor="pointer" />
+                    <IoIosArrowBack size="25px" cursor="pointer"/>
                     <HeaderTitle>도움요청</HeaderTitle>
+                    <div></div>
                 </DetailHeader>
                 <DetailBody>
                     <Bodytop>
@@ -130,16 +131,21 @@ const DetailWrap = styled.form`
   background-color: white;
   display: flex;
   flex-direction: column;
+  border: 1px solid blue;
 `;
 
 const DetailHeader = styled.div`
+    height: 50px;
     display: flex;
     align-items: center;
-    padding:10px;
-    
+    /* padding:10px ; */
+    justify-content: space-between;
+    /* border: 1px solid red; */
 `
-const HeaderTitle = styled.h3`
-    margin:10px auto;
+const HeaderTitle = styled.div`
+    font-weight: 800;
+    /* padding-right: 10px; */
+    /* margin:10px auto; */
 `
 const Revisebox = styled.div`
     border: 1px solid #f1f0f0;
@@ -257,7 +263,6 @@ const CommentBox = styled.div`
     display: flex;
     align-items: center;
     height:40px;
-    /* width: 100%; */
 `
 
 const CommentPost = styled.input`

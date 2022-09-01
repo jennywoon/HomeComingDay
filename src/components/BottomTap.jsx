@@ -2,10 +2,10 @@ import React from 'react';
 import { useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import { AiOutlineHome } from "react-icons/ai";
-import { BsChatLeftDots } from "react-icons/bs";
 import { BiSearch } from "react-icons/bi";
 import { FiUser } from "react-icons/fi";
-
+import { GrChatOption } from "react-icons/gr";
+import { HiOutlineChatAlt2 } from "react-icons/hi";
 
 const BottomTap = () => {
     const navigate = useNavigate()
@@ -16,22 +16,22 @@ const BottomTap = () => {
                 <Tap onClick={() => { navigate("/") }}
                     style={{ paddingLeft: "20px" }}
                 >
-                    <AiOutlineHome size="23" />
-                    <TapTitle>HOME</TapTitle>
+                    <AiOutlineHome size="23"/>
+                    <TapTitle style={{fontWeight:"bold"}}>HOME</TapTitle>
                 </Tap>
                 <Tap onClick={() => { navigate("/search") }}>
-                    <BiSearch size="23" />
-                    <TapTitle>SEARCH</TapTitle>
+                    <BiSearch size="23" color="#696969"/>
+                    <TapTitle style={{color:"#696969"}}>SEARCH</TapTitle>
                 </Tap>
                 <Tap onClick={() => { navigate("/chat")}}>
-                    <BsChatLeftDots size="23" />
-                    <TapTitle>CHAT</TapTitle>
+                    <HiOutlineChatAlt2 size="23" color="#696969"/>
+                    <TapTitle style={{color:"#696969"}}>CHAT</TapTitle>
                 </Tap>
                 <Tap
                     style={{ paddingRight: "20px" }}
                 >
-                    <FiUser size="23" />
-                    <TapTitle>MY</TapTitle>
+                    <FiUser size="23"  color="#696969"/>
+                    <TapTitle style={{color:"#696969"}}>MY</TapTitle>
                 </Tap>
             </Bottom>
         </SecondWrap>

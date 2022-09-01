@@ -10,10 +10,13 @@ const Header = () => {
 
     return (
         <HeaderContainer>
-                <HeaderTitle
-                onClick={() => {navigate("/")}} style={{cursor:"pointer"}}
-                >HomeComing Day</HeaderTitle>
-                <VscBell size="23"/>
+            <div></div>
+            <HeaderTitle
+                onClick={() => { navigate("/") }} style={{ cursor: "pointer" }}
+            >HomeComing Day</HeaderTitle>
+            
+                <VscBell size="25" />
+
         </HeaderContainer>
 
     );

@@ -6,8 +6,6 @@ import {IoIosArrowBack} from 'react-icons/io'
 import {GrImage} from 'react-icons/gr'
 import Button from './elements/Button';
 
-
-
 const HelpForm = () => {
     const dispatch = useDispatch();
     const [help, setHelp] = useState({
@@ -19,7 +17,6 @@ const HelpForm = () => {
     });
 
     
-
     useEffect(() => {
         dispatch(__getHelp());
     }, [dispatch]);
