@@ -142,7 +142,8 @@ const Login = () => {
             width='100%'
             padding='10px 0'
             isDisabled={isActive ? false : true}
-            backgroundColor='#F6BD60'
+            backgroundColor='black'
+            color='white'
             style={{marginTop: '100px'}}
           >
             로그인
@@ -179,7 +180,7 @@ const StLoginWrap = styled.div``;
 
 const StLoginTitle = styled.p`
   text-align: center;
-  font-size: 25px;
+  font-size: 30px;
   font-weight: bold;
   margin-bottom: 100px;
 `;

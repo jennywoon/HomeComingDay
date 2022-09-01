@@ -30,7 +30,7 @@ const StyledButton = styled.button`
   font-size: 1rem;
   padding: ${(props) => props.padding};
   background: ${(props) => props.backgroundColor};
-  border-radius: var(--button-radius, 5px);
+  border-radius: var(--button-radius, 16px);
   color: ${(props) => props.color};
 
   /* &:active,

@@ -20,6 +20,10 @@ const SchoolInfo = () => {
   //     return p.title.replace(" ","").toLocaleLowerCase().includes(search.toLocaleLowerCase())
   // })
 
+  const onClickHandler = () => {
+    navigate('/signupcomplete');
+  }
+
   return (
     <StSchoolInfo>
       <StSchoolInfoWraps>
@@ -31,43 +35,60 @@ const SchoolInfo = () => {
           }}
         />
         <StSchoolTitle style={{ justifyContent: 'center' }}>
-          졸업생 인증
+          대학교 정보 입력
         </StSchoolTitle>
+
         <StSchoolInfoWrap>
           {/* 검색기능 추가 */}
           <Stlabel>학교명</Stlabel>
-          <Input
+          <StInput
             type='text'
             value={search}
             onChange={onChangeSearch}
             width='100%'
-            padding= '10px 15px'
+            padding='10px 15px'
           />
           <StSearch type='button' />
         </StSchoolInfoWrap>
+
         <StSchoolInfoWrap>
-          {/* select 태그로 바꾸기 */}
-          <Stlabel>학과 • 학부명</Stlabel>
-          <Dropdown/>
-          {/* <StSelect>
-            <select>
-              <option value=''>--학과 • 학부명--</option>
-              <option value='경영학과'>경영학과</option>
-              <option value='경제학과'>경제학과</option>
-              <option value='건축학과'>건축학과</option>
-              <option value='국어교육과'>국어교육과</option>
-              <option value='심리학과'>심리학과</option>
-              <option value='의류학과'>의류학과</option>
-              <option value='컴퓨터공학부'>컴퓨터공학부</option>
-            </select>
-          </StSelect> */}
+          <Stlabel>학과 · 학부명</Stlabel>
+          {/* <Dropdown /> */}
+          <StSelect>
+            <option value=''>학과 · 학부명</option>
+            <option value='경영학과'>경영학과</option>
+            <option value='경제학과'>경제학과</option>
+            <option value='건축학과'>건축학과</option>
+            <option value='국어교육과'>국어교육과</option>
+            <option value='심리학과'>심리학과</option>
+            <option value='의류학과'>의류학과</option>
+            <option value='컴퓨터공학부'>컴퓨터공학부</option>
+          </StSelect>
         </StSchoolInfoWrap>
+
         <StSchoolInfoWrap>
-          {/* select 태그로 바꾸기 */}
           <Stlabel>입학년도</Stlabel>
-          <Input width='100%' padding= '10px 15px' />
+          <StSelect>
+            <option value=''>입학년도</option>
+            <option value='2018'>2018년</option>
+            <option value='2017'>2017년</option>
+            <option value='2016'>2016년</option>
+            <option value='2015'>2015년</option>
+            <option value='2014'>2014년</option>
+            <option value='2013'>2013년</option>
+            <option value='2012'>2012년</option>
+          </StSelect>
+          {/* <StInput /> */}
         </StSchoolInfoWrap>
-        <Button width='100%' padding='10px 0' style={{ marginTop: '100px' }}>
+
+        <Button 
+        width='100%' 
+        padding='10px 0' 
+        style={{ marginTop: '100px' }}
+        backgroundColor='black'
+        color='white'
+        onClickHandler={onClickHandler}
+        >
           저장하기
         </Button>
       </StSchoolInfoWraps>
@@ -105,6 +126,16 @@ const StSchoolInfoWrap = styled.div`
 
 const Stlabel = styled.label`
   font-size: 14px;
+  margin-bottom: 10px;
+  display: block;
+`;
+
+const StInput = styled.input`
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px 10px;
+  border-radius: 10px;
+  border: 0.5px solid #ddd;
 `;
 
 const StSearch = styled(FiSearch)`
@@ -112,14 +143,15 @@ const StSearch = styled(FiSearch)`
   right: 5px;
   top: 70%;
   transform: translatey(-50%);
-  background-color: #fff;
-  border: 0.5px solid #eee;
-  border-radius: 50px;
   padding: 5px 10px;
-  font-size: 10px;
+  font-size: 15px;
   cursor: pointer;
 `;
 
-const StSelect=styled.div`
+const StSelect = styled.select`
   width: 100%;
-`
+  border: 0.5px solid #ddd;
+  padding: 10px 10px;
+  border-radius: 10px;
+  box-sizing: border-box;
+`;
