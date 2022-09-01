@@ -146,6 +146,7 @@ const HelpForm = () => {
                 calendarcontent : ""
             })
         }
+        navigate("/")
     }
 
     // 모달 구현
@@ -182,8 +183,8 @@ const HelpForm = () => {
              
             <FormWrap onSubmit={onSubmitHandler}>
                 <FormHeader>
-                    <IoIosArrowBack size="25px" cursor="pointer"/>
-                    <Button type="submit" backgroundColor="white" onClick={() => navigate("/")}>올리기</Button>
+                    <IoIosArrowBack size="25px" cursor="pointer" onClick={() => navigate("/")}/>
+                    <Button type="submit" backgroundColor="white" >올리기</Button>
                 </FormHeader>
                 <FormBody>
                     <FormSelection name="category" onChange={handleSelect}>

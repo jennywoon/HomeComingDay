@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import { AiOutlineHome } from "react-icons/ai";
 import { BsChatLeftDots } from "react-icons/bs";
@@ -12,29 +12,29 @@ const BottomTap = () => {
 
     return (
         <SecondWrap>
-                <Bottom>
-                    <Tap onClick={() => {navigate("/")}}
-                    style={{paddingLeft: "20px"}}
-                    >
-                        <AiOutlineHome size="23"/>
-                        <TapTitle>HOME</TapTitle>
-                    </Tap>
-                    <Tap>
-                        <BsChatLeftDots size="23"/>
-                        <TapTitle>CHAT</TapTitle>
-                    </Tap>
-                    <Tap>
-                        <BiSearch size="23"/>
-                        <TapTitle>SEARCH</TapTitle>
-                    </Tap>
-                    <Tap
-                    style={{paddingRight: "20px"}}
-                    >
-                        <FiUser size="23"/>
-                        <TapTitle>MY</TapTitle>
-                    </Tap>
-                </Bottom>
-            </SecondWrap>
+            <Bottom>
+                <Tap onClick={() => { navigate("/") }}
+                    style={{ paddingLeft: "20px" }}
+                >
+                    <AiOutlineHome size="23" />
+                    <TapTitle>HOME</TapTitle>
+                </Tap>
+                <Tap onClick={() => { navigate("/search") }}>
+                    <BiSearch size="23" />
+                    <TapTitle>SEARCH</TapTitle>
+                </Tap>
+                <Tap onClick={() => { navigate("/chat")}}>
+                    <BsChatLeftDots size="23" />
+                    <TapTitle>CHAT</TapTitle>
+                </Tap>
+                <Tap
+                    style={{ paddingRight: "20px" }}
+                >
+                    <FiUser size="23" />
+                    <TapTitle>MY</TapTitle>
+                </Tap>
+            </Bottom>
+        </SecondWrap>
     );
 };
 

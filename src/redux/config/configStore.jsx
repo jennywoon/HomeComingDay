@@ -4,6 +4,7 @@ import InformationSlice from '../modules/InformationSlice'
 import HelpSlice from "../modules/HelpSlice";
 import FreeTalkSlice from "../modules/FreeTalkSlice";
 import CalendarSlice from "../modules/CalendarSlice";
+import { SearchSlice } from "../modules/SearchSlice";
 
 export const store = configureStore({
   // devTools: process.env.NODE_ENV !== "production",
@@ -13,6 +14,7 @@ export const store = configureStore({
     helps : HelpSlice,
     freetalks : FreeTalkSlice,
     calendars : CalendarSlice,
+    searchs: SearchSlice,
   }
 });
 

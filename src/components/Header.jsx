@@ -6,9 +6,13 @@ import BottomTap from './BottomTap';
 
 const Header = () => {
 
+    const navigate = useNavigate();
+
     return (
         <HeaderContainer>
-                <HeaderTitle>HomeComing Day</HeaderTitle>
+                <HeaderTitle
+                onClick={() => {navigate("/")}} style={{cursor:"pointer"}}
+                >HomeComing Day</HeaderTitle>
                 <VscBell size="23"/>
         </HeaderContainer>
 

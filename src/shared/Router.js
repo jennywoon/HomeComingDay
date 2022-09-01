@@ -17,6 +17,10 @@ import FreeTalkForm from "../components/freeTalkBoard/FreeTalkForm"
 import CalendarPage from "../pages/CalendarPage"
 import Form from "../components/test/Form"
 import HelpDetail from "../components/helpBoard/HelpDetail";
+import SearchPage from "../pages/SearchPage";
+import SearchCard from "../components/searchBoard/SearchCard";
+import ChatPage from "../pages/ChatPage"
+import ChatFormPage from "../pages/ChatFormPage"
 
 const Router = () => {
   
@@ -33,12 +37,17 @@ const Router = () => {
         <Route path="/information" element={<InformationPage />} />
         <Route path="/freetalk" element={<FreeTalkPage />} />
         <Route path="/calendar" element={<CalendarPage />} />
+        <Route path="/search" element={<SearchPage />} />
+        <Route path="/chat" element={<ChatPage />} />
+        <Route path="/chatform" element={<ChatFormPage />} />
         {/* 하단 페이지 추후 정리 */}
         <Route path="/test" element={<ScrollTest />} />
         <Route path="/helpcard" element={<HelpCard />} />
         <Route path="/freetest" element={<FreeTalkForm />} />
+        <Route path="/searchcard" element={<SearchCard />} />
         <Route path="/form" element={<Form />} />
         <Route path="/helpdetail" element={<HelpDetail />} />
+
 
       </Routes>
     </BrowserRouter>
