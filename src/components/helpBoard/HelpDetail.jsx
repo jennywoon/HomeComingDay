@@ -144,7 +144,6 @@ const DetailHeader = styled.div`
 `
 const HeaderTitle = styled.div`
     font-weight: 800;
-    /* padding-right: 10px; */
     /* margin:10px auto; */
 `
 const Revisebox = styled.div`
