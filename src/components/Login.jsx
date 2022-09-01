@@ -66,6 +66,7 @@ const Login = () => {
         onClickHandler(formValue);
       }}
     >
+      <LoginWraps>
       {/* 로고 */}
       <p>로그인</p>
       <LoginWrap>
@@ -98,6 +99,7 @@ const Login = () => {
           회원가입
         </span>
       </p>
+      </LoginWraps>
     </LoginContainer>
   );
 };
@@ -106,6 +108,11 @@ export default Login;
 
 const LoginContainer = styled.form`
   height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
+
+const LoginWraps = styled.div``
 
 const LoginWrap = styled.div``;
