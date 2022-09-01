@@ -20,6 +20,7 @@ const ChatHome = () => {
                         </FirstContainer>
                         <SecondContainer>
                             {/* <ChatContent>시간 언제 괜찮으신가요?</ChatContent> */}
+                            {/* css 수정중 */}
                         </SecondContainer>
                 </ChatContainer>
             </HelpContainer>
