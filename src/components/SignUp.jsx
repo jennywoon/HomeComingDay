@@ -27,15 +27,14 @@ const SignUp = () => {
     passwordError: false,
     confirmPasswordError: false,
   });
-  const { emailError, nameError, passwordError, confirmPasswordError } =
-    formError;
+
+  const { emailError, nameError, passwordError, confirmPasswordError } = formError;
+
   // 정규식
   const emailRegex = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
   const nameRegex = /^[A-Za-zㄱ-ㅎ가-힣]{2,12}$/;
-  // const nameRegex = /^(?=.*[a-z가-힣])[a-z가-힣]{2,12}$/;
   const passwordRegex =
     /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
-  // const passwordRegex = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 
   // email
   const handleChangeEmail = (e) => {
@@ -99,7 +98,8 @@ const SignUp = () => {
     });
   };
 
-  const handlePasswordType = (e) => {
+  // password visible
+  const handlePasswordType = () => {
     setPasswordType(() => {
       if (!passwordType.visible) {
         return { type: 'text', visible: true };
@@ -121,7 +121,7 @@ const SignUp = () => {
     );
   };
 
-  // 버튼 활성화
+  // 회원가입 버튼 활성화
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
@@ -149,6 +149,10 @@ const SignUp = () => {
     passwordError,
     confirmPasswordError,
   ]);
+
+  const onClickHandler= () => {
+    navigate('/schoolinfo')
+  }
 
   return (
     <StSignupContainer onSubmit={handleSubmit}>
@@ -194,23 +198,25 @@ const SignUp = () => {
 
         <StSignupWrap>
           <Stlabel>비밀번호</Stlabel>
-          <Input
-            type={passwordType.type}
-            width='100%'
-            onChange={handleChangePassword}
-            padding='10px 15px'
-          />
-          <StVisible onClick={handlePasswordType}>
-            {passwordType.visible ? (
-              <span>
-                <AiOutlineEye />
-              </span>
-            ) : (
-              <span>
-                <AiOutlineEyeInvisible />
-              </span>
-            )}
-          </StVisible>
+          <StFlexbox>
+            <Input
+              type={passwordType.type}
+              width='100%'
+              onChange={handleChangePassword}
+              padding='10px 15px'
+            />
+            <StVisible onClick={handlePasswordType}>
+              {passwordType.visible ? (
+                <span>
+                  <AiOutlineEye />
+                </span>
+              ) : (
+                <span>
+                  <AiOutlineEyeInvisible />
+                </span>
+              )}
+            </StVisible>
+          </StFlexbox>
           {passwordError ? (
             <StErrorMessage>
               8자 이상 16자 이하의 영어와 숫자, 특수문자 포함
@@ -220,23 +226,25 @@ const SignUp = () => {
 
         <StSignupWrap>
           <Stlabel>비밀번호 확인</Stlabel>
-          <Input
-            type={passwordType.type}
-            width='100%'
-            onChange={handleChangeConfirmPassword}
-            padding='10px 15px'
-          />
-          <StVisible onClick={handlePasswordType}>
-            {passwordType.visible ? (
-              <span>
-                <AiOutlineEye />
-              </span>
-            ) : (
-              <span>
-                <AiOutlineEyeInvisible />
-              </span>
-            )}
-          </StVisible>
+          <StFlexbox>
+            <Input
+              type={passwordType.type}
+              width='100%'
+              onChange={handleChangeConfirmPassword}
+              padding='10px 15px'
+            />
+            <StVisible2 onClick={handlePasswordType}>
+              {passwordType.visible ? (
+                <span>
+                  <AiOutlineEye />
+                </span>
+              ) : (
+                <span>
+                  <AiOutlineEyeInvisible />
+                </span>
+              )}
+            </StVisible2>
+          </StFlexbox>
           {confirmPasswordError ? (
             <StErrorMessage>비밀번호가 일치하지 않습니다.</StErrorMessage>
           ) : null}
@@ -247,9 +255,9 @@ const SignUp = () => {
           padding='10px 0'
           isDisabled={isActive ? false : true}
           style={{ marginTop: '100px' }}
-          onClick={() => {
-            navigate('/schoolinfo');
-          }}
+          onClickHandler={onClickHandler}
+          backgroundColor='black'
+          color='white'
         >
           회원가입
         </Button>
@@ -284,7 +292,7 @@ const StSignupWrap = styled.div`
   border: none;
   align-items: left;
   margin-bottom: 30px;
-  position: relative;
+  /* position: relative; */
 `;
 
 const Stlabel = styled.label`
@@ -310,7 +318,13 @@ const StEmailConfirm = styled.button`
 const StVisible = styled.span`
   position : absolute;
   right : 5px;
-  top : 80%;
+  top : 50%;
+  transform : translatey(-50%);
+`
+const StVisible2 = styled.span`
+  position : absolute;
+  right : 5px;
+  top : 50%;
   transform : translatey(-50%);
 `
 
