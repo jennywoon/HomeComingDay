@@ -48,10 +48,11 @@
 <br/>
 <br/>
 
-## 📕 와이어 프레임
+## 📕 와이어 프레임 및 뷰 구현
 - Figma : [Figma 링크 클릭](https://www.figma.com/file/73hhMPremRjZhBagMjIFgy/Untitled?node-id=7%3A32)
 <br/>
 <br/>
+- 아이콘 : 리액트 아이콘 통일
 
 ## ❓ Trouble Shooting Front-End
 - 반응형 페이지 구성 : 웹을 만들지만 앱 모양으로 만들다보니, 반응형 구현이 너무 어려웠다.. 기능이 들어가지도 않았는데 커밋 갯수가 105개였다.
