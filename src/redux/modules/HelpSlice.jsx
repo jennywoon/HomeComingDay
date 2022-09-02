@@ -5,9 +5,9 @@ import axios from "axios";
 // const cookies = new Cookies();
 
 const initialState = {
-    helps: [
-    ],
-    // insta: null,
+    helps: [],
+    // help: null,
+    comments: [],
     isLoading: false,
     error: null,
 };
@@ -58,6 +58,23 @@ export const __updateHelp = createAsyncThunk("helps/updateHelp", async (payload,
 }
 );
 
+export const __getComment = createAsyncThunk("comments/getComment", async (payload, thunkAPI) => {
+  try {
+    const data = await axios.get('http://localhost:3001/comments');
+    return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+export const __postComment = createAsyncThunk("comments/postComment", async (payload, thunkAPI) => {
+  try {
+    const data = await axios.post('http://localhost:3001/comments', payload);
+    return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+    return thunkAPI.rejectWithValue("ERROR=>", error);
+  }
+});
 
 export const HelpSlice = createSlice({
     name: "helps",
@@ -120,7 +137,28 @@ export const HelpSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       },
-
+      [__getComment.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__getComment.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        state.comments = action.payload;
+      },
+      [__getComment.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+      [__postComment.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__postComment.fulfilled]: (state, action) => {
+        state.isLoading = false; 
+        state.comments.push(action.payload);
+      },
+      [__postComment.rejected]: (state, action) => {
+        state.isLoading = false; 
+        state.error = action.payload;
+      },
 
     },
 });

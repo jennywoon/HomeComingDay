@@ -26,7 +26,6 @@ import ChatPage from "../pages/ChatPage"
 import ChatFormPage from "../pages/ChatFormPage"
 import SignupCompletePage from '../pages/SignupCompletePage';
 import NoticePage from "../pages/NoticePage";
-import SearchModal from "../components/searchBoard/SearchModal";
 
 const Router = () => {
   
@@ -53,7 +52,6 @@ const Router = () => {
         <Route path="/helpcard" element={<HelpCard />} />
         <Route path="/freetest" element={<FreeTalkForm />} />
         <Route path="/searchcard" element={<SearchCard />} />
-        <Route path="/searchmodal" element={<SearchModal />} />
         <Route path="/form" element={<Form2 />} />
         <Route path="/helpdetail/:id" element={<HelpDetail />} />
         <Route path="/helpupdate/:id" element={<HelpUpdate />} />

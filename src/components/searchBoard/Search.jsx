@@ -12,8 +12,9 @@ const Search = () => {
 
     // search post 연습
 
-    const [search, setSearch] = useState({})
-
+    const [search, setSearch] = useState()
+    console.log(search);
+    
     useEffect(() => {
         dispatch(__getSearch());
     }, [dispatch])
@@ -26,7 +27,7 @@ const Search = () => {
         setInputText(e.target.value);
         const { value, name } = e.target;
         setSearch({
-            // ...inputText,
+            ...search,
             [name]: value,
         })
     }

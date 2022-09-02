@@ -9,13 +9,14 @@ import Button from '../elements/Button';
 import HelpDetailComment from './HelpDetailComment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteHelp, __updateHelp, __getHelp } from '../../redux/modules/HelpSlice';
+import { __deleteHelp, __updateHelp, __getHelp, __postComment, __getComments } from '../../redux/modules/HelpSlice';
 
 const HelpDetail = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {helps} = useSelector((state) => state.helps)
     const {id} = useParams();
+    console.log(id)
     const [show , setShow] = useState(false)
     
     const helpsfind = helps.find((help)=> help.id === Number(id))
