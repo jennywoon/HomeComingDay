@@ -49,15 +49,28 @@ const Form2 = () => {
     })
 
     const [select , setSelect] = useState("help")
-    const [selectedImage , setSelectedImage] = useState();
 
-    const imageChange = (e) =>{
-        if (e.target.files && e.target.files.length > 0){
-            setSelectedImage(e.target.files[0]);
+
+    //이미지관련 함수
+    const [selectedImage , setSelectedImage] = useState([]);
+
+    // const imageChange = (e) =>{
+    //     if (e.target.files && e.target.files.length > 0){
+    //         setSelectedImage(e.target.files[0]);
+    //     }
+    // };
+
+    const addImage = (e) =>{
+        const nowSelectImageList = e.target.files;
+        const nowImageURLList = [...selectedImage];
+        for (let i = 0; i < nowSelectImageList.length; i+=1){
+            const nowImageUrl = URL.createObjectURL(nowSelectImageList[i]);
+            nowImageURLList.push(nowImageUrl)
         }
-    };
+        setSelectedImage(nowImageURLList)
+    }
 
-
+    console.log(selectedImage)
 
     useEffect(() => {
         dispatch(__getHelp());
@@ -254,19 +267,33 @@ const Form2 = () => {
                 </FormBody>
                 <FormFooter>
                     <FooterContain>
-                    <Filelabel className="fileUpload-button" htmlFor="fileUpload">
-                    <Imgadd  size="24px" />
-                    </Filelabel>
+                    
+                    
                     {(select === "help")? 
                     <>
-                    <Addfile type="file" multiple={true} id="fileUpload" name="imgUrl" value={imgUrl || ""} onChange={imageChange} accept="image/*"/>
-                    <div style={{fontSize : "12px" , marginLeft:"-10px"}}>이미지 첨부</div>
+                    <Filelabel className="fileUpload-button" htmlFor="fileUpload" onChange={addImage}>
+                    <Imgadd  size="24px" />
+                    <Addfile type="file" multiple="multiple" id="fileUpload"  accept=".jpg,.jpeg,.png"/>
+                    <div style={{fontSize : "12px" , marginLeft:"10px"}}>이미지 첨부</div>
+                    </Filelabel>
+
+                    {/* <ImgContainer>
+                            <ImgContent src={selectedImage} />
+                    </ImgContainer> */}
+
+                    {selectedImage.map((image,id)=>(
+                     <ImgContainer key={id}>
+                        <ImgContent src={image} alt={`${image}-${id}`} />
+                    </ImgContainer> 
+
+                    ))}
+                    
                     </>
                     :
                     (select === "info")? 
                     <>
                     <Addfile type="file" multiple={true} id="fileUpload" name="infoimageUrl" value={infoimageUrl || ""} onChange={infoonChangeHandler} />
-                    <div style={{fontSize : "12px"}}>이미지 첨부</div>
+                    <div style={{fontSize : "12px" }}>이미지 첨부</div>
                     </>
                     :
                     (select === "meet")? 
@@ -286,13 +313,13 @@ const Form2 = () => {
                     
 
                 </FormFooter>
-                     {selectedImage && (
+                     {/* {selectedImage && (
                         <ImgContainer>
                             <ImgContent src={URL.createObjectURL(selectedImage)} 
                                  alt="Thumb"
                             />
                         </ImgContainer>
-                    )}
+                    )} */}
                 
 
             </FormWrap>
@@ -370,7 +397,6 @@ const FormFooter = styled.div`
 const FooterContain = styled.div`
     display: flex;
     align-items: center;
-    width:150px;
     border:1px solid #eee;
     border-radius: 20px;
     
@@ -381,14 +407,17 @@ const Imgadd = styled(GrImage)`
 `
 
 const Filelabel = styled.label`
-    margin : 10px 20px;
+    /* margin : 10px 20px; */
+    display: flex;
+    align-items:center;
+    padding:10px;
     
 `
 
 const Addfile = styled.input`
     display: none;
 `
-const ImgContainer = styled.div`
+const ImgContainer = styled.label`
     display: "flex";
     align-items: center;
     margin:20px 10px;
@@ -429,11 +458,11 @@ const CalendarTitle = styled.div`
     font-size: 14px;
 `
 
-const DateDiv = styled.div`
-    width: 65%;
-    height: 30px;
-    border: 1px solid red;
-`
+// const DateDiv = styled.div`
+//     width: 65%;
+//     height: 30px;
+//     border: 1px solid red;
+// `
 const CalendarDiv = styled.div`
     height: 40px;
     margin-top: 10px;
