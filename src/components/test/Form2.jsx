@@ -172,6 +172,7 @@ const Form2 = () => {
             // infocontent: "",
             // infoimageUrl:""
             // });
+            navigate("/information")
         }else if(select ==="freetalk"){
             const newfreetalk = {
                 title : freetitle,

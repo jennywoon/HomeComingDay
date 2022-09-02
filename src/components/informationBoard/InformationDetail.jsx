@@ -84,7 +84,8 @@ const InformationDetail = () => {
                     </BodyContent>
 
                     <BodyCommentBox>
-                        <InformationDetailComment /> {/* 댓글맵돌리기  */}
+                         {/* 댓글맵돌리기  */}
+                        <InformationDetailComment />
                         <InformationDetailComment />
 
                         <CommentContainer>
