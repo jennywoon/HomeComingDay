@@ -23,14 +23,34 @@ const NaverLogin = () => {
             loginButton: { color: 'green', type: 4, height: 47 },
             callbackHandle: true,
         })
-        naverLogin.init()
+        naverLogin.init();
+        // 네이버 로그인은 계속 유지되는 경우가 있어서, 초기화시 로그아웃 되도록 설정
+        naverLogin.logout();
+        naverLogin.getLoginStatus((status) => {
+            if (status) {
+                console.log("Naver 로그인 상태", naverLogin.user);
+                const { email, name } = naverLogin.user;
+                console.log(email, name);
+
+                // 필수 제공 동의 조건
+                if (name == undefined) {
+                    alert("이름은 필수 동의 입니다. 정보제공을 동의해주세요.");
+                    naverLogin.reprompt();
+                    return;
+                }
+            } else{
+                console.log("Naver 비 로그인 상태");
+            }
+        });
     }
+
 
     const userAccessToken = () => {
         window.location.href.includes('access_token') && getToken()
     }
     const getToken = () => {
         const token = window.location.href.split('=')[1].split('&')[0]
+        console.log(token);
     }
 
     useEffect(() => {

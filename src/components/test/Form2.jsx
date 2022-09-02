@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom"
 import { __getHelp, __postHelp } from '../../redux/modules/HelpSlice';
 import { __postFreeTalk } from '../../redux/modules/FreeTalkSlice';
@@ -12,8 +12,10 @@ import {GrImage} from 'react-icons/gr'
 import Button from '../elements/Button';
 import CalendarModal from '../calendarBoard/CalendarModal';
 import TimeRangePicker from '@wojtekmaj/react-timerange-picker';
+import { __getDate } from '../../redux/modules/DateSlice';
 
 const Form2 = () => {
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [help, setHelp] = useState({
@@ -86,6 +88,9 @@ const Form2 = () => {
         dispatch(__getCalendar());
     }, [dispatch])
 
+    useEffect(() => {
+        dispatch(__getDate());
+    },[dispatch])
 
     const { title, content, imgUrl } = help;
     const { infotitle, infocontent, infoimageUrl } = info;
@@ -158,6 +163,7 @@ const Form2 = () => {
             // title: "",
             // content: "",
             // imgUrl : ""});
+            navigate("/")
         }else if(select === "info"){
             dispatch(__postInformation(info));
             setInfo({
@@ -165,6 +171,7 @@ const Form2 = () => {
             infocontent: "",
             infoimageUrl:""
             });
+            navigate("/information")
         }else if(select ==="freetalk"){
             dispatch(__postFreeTalk(freetalk));
             setFreetalk({
@@ -172,6 +179,7 @@ const Form2 = () => {
             freecontent: "",
             freeimageUrl : ""
             })
+            navigate("/freetalk")
         }else if(select ==="meet"){
             dispatch(__postCalendar(calendar));
             setFreetalk({
@@ -179,8 +187,8 @@ const Form2 = () => {
                 calendarlocation: "",
                 calendarcontent : ""
             })
+            navigate("/calendar")
         }
-        navigate("/")
     }
 
     // 모달 구현
