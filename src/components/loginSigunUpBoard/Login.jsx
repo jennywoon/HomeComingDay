@@ -3,9 +3,9 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import Button from './elements/Button';
-import Input from './elements/Input';
-import { __loginUser } from '../redux/modules/UserSlice';
+import Button from "../../components/elements/Button"
+import Input from "../../components/elements/Input"
+import { __loginUser } from '../../redux/modules/UserSlice';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 
 const Login = () => {

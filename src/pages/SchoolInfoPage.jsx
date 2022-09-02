@@ -1,5 +1,5 @@
 import React from 'react';
-import SchoolInfo from '../components/SchoolInfo';
+import SchoolInfo from '../components/loginSigunUpBoard/SchoolInfo';
 import JustLayout from '../components/JustLayout'
 
 const SchoolInfoPage = () => {

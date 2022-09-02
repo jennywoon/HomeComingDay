@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import NaverLogin from "../components/NaverLogin";
+import NaverLogin from "../components/loginSigunUpBoard/NaverLogin";
 import LoginPage from "../pages/LoginPage";
 import SignUpPage from "../pages/SignUpPage";
 import MainPage from "../pages/MainPage"
@@ -17,7 +17,6 @@ import FreeTalkForm from "../components/freeTalkBoard/FreeTalkForm"
 import CalendarDetail from "../components/calendarBoard/CalendarDetail"
 import CalendarUpdate from "../components/calendarBoard/CalendarUpdate"
 import CalendarPage from "../pages/CalendarPage"
-import Form from "../components/test/Form"
 import Form2 from "../components/test/Form2";
 import HelpDetail from "../components/helpBoard/HelpDetail";
 import HelpUpdate from "../components/helpBoard/HelpUpdate";

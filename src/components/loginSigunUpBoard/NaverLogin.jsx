@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import naverIcon from "../assets/naverIcon.png"
+import naverIcon from "../../assets/naverIcon.png"
 
 const NaverLogin = () => {
 

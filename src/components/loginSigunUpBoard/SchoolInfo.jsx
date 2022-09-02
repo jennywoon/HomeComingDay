@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Button from './elements/Button';
-import Input from './elements/Input';
+import Button from "../../components/elements/Button"
+import Input from "../../components/elements/Input"
 import { IoIosArrowBack } from 'react-icons/io';
 import { FiSearch } from 'react-icons/fi';
-import Dropdown from './test/Dropdown';
+import Dropdown from "../../components/test/Dropdown"
 
 const SchoolInfo = () => {
   const navigate = useNavigate();

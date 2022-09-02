@@ -1,6 +1,6 @@
 import React from 'react';
 import JustLayout from '../components/JustLayout';
-import SignUp from '../components/SignUp';
+import SignUp from "../components/loginSigunUpBoard/SignUp"
 
 const SignUpPage = () => {
   return (

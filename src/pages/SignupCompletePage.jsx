@@ -1,5 +1,5 @@
 import React from 'react';
-import SignupComplete from '../components/SignupComplete';
+import SignupComplete from '../components/loginSigunUpBoard/SignupComplete'
 import JustLayout from '../components/JustLayout';
 
 const SignupCompletePage = () => {

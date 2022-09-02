@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Celebration from '../assets/Celebration.png'
-import Button from '../components/elements/Button'
+import Celebration from "../../assets/Celebration.png"
+import Button from "../../components/elements/Button"
 
 const SignupComplete = () => {
   const navigate = useNavigate();
