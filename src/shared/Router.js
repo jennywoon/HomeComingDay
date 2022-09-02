@@ -20,12 +20,15 @@ import CalendarPage from "../pages/CalendarPage"
 import Form2 from "../components/test/Form2";
 import HelpDetail from "../components/helpBoard/HelpDetail";
 import HelpUpdate from "../components/helpBoard/HelpUpdate";
+import InformationDetail from "../components/informationBoard/InformationDetail";
+import InformationUpdate from "../components/informationBoard/InformationUpdate";
 import SearchPage from "../pages/SearchPage";
 import SearchCard from "../components/searchBoard/SearchCard";
 import ChatPage from "../pages/ChatPage"
 import ChatFormPage from "../pages/ChatFormPage"
 import SignupCompletePage from '../pages/SignupCompletePage';
 import NoticePage from "../pages/NoticePage";
+
 
 const Router = () => {
   
@@ -55,6 +58,8 @@ const Router = () => {
         <Route path="/form" element={<Form2 />} />
         <Route path="/helpdetail/:id" element={<HelpDetail />} />
         <Route path="/helpupdate/:id" element={<HelpUpdate />} />
+        <Route path="/informationdetail/:id" element={<InformationDetail />} />
+        <Route path="/informationupdate/:id" element={<InformationUpdate />} />
         <Route path="/calendardetail/:id" element={<CalendarDetail />} />
         <Route path="/calendarupdate/:id" element={<CalendarUpdate />} />
 

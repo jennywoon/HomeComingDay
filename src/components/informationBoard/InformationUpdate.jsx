@@ -2,21 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { __getHelp, __postHelp } from '../../redux/modules/HelpSlice';
 import {IoIosArrowBack} from 'react-icons/io'
 import {GrImage} from 'react-icons/gr'
 import Button from '../elements/Button';
-import { __updateHelp } from '../../redux/modules/HelpSlice';
 import { useSelector } from 'react-redux';
+import { __getInformation, __updateInformation } from '../../redux/modules/InformationSlice';
 
 
 const HelpUpdate = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {id} = useParams();
-    const {helps} = useSelector((state) => state.helps)
-    const helpsfind = helps.find((help)=> help.id === Number(id))
-    
+    const {informations} = useSelector((state) => state.informations)
+    const informationsfind = informations.find((info)=> info.id === Number(id))
 
     // const [updateHelp, setUpdateHelp] = useState({
     //     title: "",
@@ -27,8 +25,8 @@ const HelpUpdate = () => {
     // const [title, content , imgUrl] = updateHelp
 
     // console.log("helps", helps , "helpsfind" , helpsfind)
-    const [EditTitle, setEditTitle] = useState(helpsfind&&helpsfind.title)
-    const [EditContent, setEditContent] = useState(helpsfind&&helpsfind.content)
+    const [EditTitle, setEditTitle] = useState(informationsfind&&informationsfind.title)
+    const [EditContent, setEditContent] = useState(informationsfind&&informationsfind.content)
     const [EditImg, setEditImg] = useState('')
 
     const onChangeTitle = (e) =>{
@@ -46,20 +44,20 @@ const HelpUpdate = () => {
     }
 
     useEffect(() => {
-        dispatch(__getHelp());
+        dispatch(__getInformation());
     }, [dispatch])
 
     const onUpdateHandler = (e) => {
         e.preventDefault();
-         const edithelpsfind = {
-            ...helpsfind ,
+         const editinformationsfind = {
+            ...informationsfind ,
             id: id,
             title: EditTitle,
             content: EditContent,
-            imgUrl : EditImg
+            imageList : EditImg
         }
-        dispatch(__updateHelp(edithelpsfind))
-        navigate(`/helpdetail/${id}`)
+        dispatch(__updateInformation(editinformationsfind))
+        navigate(`/informationdetail/${id}`)
     } 
 
     
@@ -73,9 +71,9 @@ const HelpUpdate = () => {
                 </FormHeader>
                 <FormBody>
                     <FormSelection name="category">
-                        <option value="">도움요청</option>
-                        {/* <option value="informationform">정보공유</option>
-                        <option value="">만남일정</option>
+                        {/* <option value="">도움요청</option> */}
+                        <option value="informationform">정보공유</option>
+                        {/* <option value="">만남일정</option>
                         <option value="">자유토크</option> */}
                     </FormSelection>
                 <FormInput name="title" value={EditTitle} onChange={onChangeTitle} placeholder="제목을 입력해주세요"></FormInput>
