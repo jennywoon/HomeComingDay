@@ -24,6 +24,8 @@ import SearchCard from "../components/searchBoard/SearchCard";
 import ChatPage from "../pages/ChatPage"
 import ChatFormPage from "../pages/ChatFormPage"
 import SignupCompletePage from '../pages/SignupCompletePage';
+import NoticePage from "../pages/NoticePage";
+import SearchModal from "../components/searchBoard/SearchModal";
 
 const Router = () => {
   
@@ -44,11 +46,13 @@ const Router = () => {
         <Route path="/chat" element={<ChatPage />} />
         <Route path="/chatform" element={<ChatFormPage />} />
         <Route path="/signupcomplete" element={<SignupCompletePage />} />
+        <Route path="/notice" element={<NoticePage />} />
         {/* 하단 페이지 추후 정리 */}
         <Route path="/test" element={<ScrollTest />} />
         <Route path="/helpcard" element={<HelpCard />} />
         <Route path="/freetest" element={<FreeTalkForm />} />
         <Route path="/searchcard" element={<SearchCard />} />
+        <Route path="/searchmodal" element={<SearchModal />} />
         <Route path="/form" element={<Form2 />} />
         <Route path="/helpdetail/:id" element={<HelpDetail />} />
         <Route path="/helpupdate/:id" element={<HelpUpdate />} />

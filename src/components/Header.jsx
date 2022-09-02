@@ -15,7 +15,9 @@ const Header = () => {
                 onClick={() => { navigate("/") }} style={{ cursor: "pointer" }}
             >HomeComing Day</HeaderTitle>
             
-                <VscBell size="25" />
+                <VscBell size="27" color="#696969"
+                    onClick={() => {navigate("/notice")}} style={{cursor: "pointer"}}
+                />
 
         </HeaderContainer>
 
