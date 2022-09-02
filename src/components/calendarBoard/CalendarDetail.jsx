@@ -7,24 +7,49 @@ import { IoIosArrowBack } from 'react-icons/io';
 import { AiOutlineMenu } from 'react-icons/ai';
 import Img from '../../assets/naverIcon.png';
 import CalendarDetailComment from '../calendarBoard/CalendatDetailComment'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import {__getCalendar, __deleteCalendar} from '../../redux/modules/CalendarSlice';
 
 const CalendarDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const {id} = useParams();
   const [show, setShow] = useState(false);
-
+  
+  const { calendars } = useSelector((state) => state.calendars);
+  const calendarfind = calendars.find((calendar) => calendar.id === Number(id))
+  
+  useEffect(()=> {
+    dispatch(__getCalendar());
+  }, [dispatch])
+  
+  // 수정 삭제 모달
   const onCilckShow = () => {
     setShow(!show);
   };
+
+  // 삭제
+  const onClickDelete = () => {
+    const result = window.confirm("정말 삭제하시겠습니까?")
+    if(result){
+        dispatch(__deleteCalendar(id))
+        navigate("/calendar")
+    }else{
+        return null
+    }
+}
+
+// 수정
+const onClickRevice = () => {
+  navigate(`/calendarupdate/${id}`)
+}
   return (
     <DetailContainer>
       <DetailWrap>
         <Header />
         <DetailHeader>
-          <IoIosArrowBack size='25px' cursor='pointer' onClick={()=> {navigate(-1)}} />
+          <IoIosArrowBack size='25px' cursor='pointer' onClick={()=> {navigate('/calendar')}} />
           <HeaderTitle>만남일정</HeaderTitle>
           <div></div>
         </DetailHeader>
@@ -46,13 +71,13 @@ const CalendarDetail = () => {
 
             {show ? (
               <Revisebox>
-                <ReviseButton>수정</ReviseButton>
-                <DeleteButton>삭제</DeleteButton>
+                <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
+                <DeleteButton onClick={onClickDelete}>삭제</DeleteButton>
               </Revisebox>
             ) : null}
           </Bodytop>
           <BodyContent>
-            <ContentTitle>title</ContentTitle>
+            <ContentTitle>{calendarfind&&calendarfind.calendartitle}</ContentTitle>
             <ContentBody>
               <Contentget>
                 <ContentgetTitle>날짜 </ContentgetTitle>8월 30일 화요일
@@ -61,11 +86,10 @@ const CalendarDetail = () => {
                 <ContentgetTitle>시간 </ContentgetTitle>오후 8:00
               </Contentget>
               <Contentget>
-                <ContentgetTitle>장소 </ContentgetTitle>서대문 고구려
+                <ContentgetTitle>장소 </ContentgetTitle>{calendarfind&&calendarfind.calendarlocation}
               </Contentget>
               <Contentget>
-                <ContentgetTitle>내용 </ContentgetTitle>간단하게 식사하면서
-                대화나눠요
+                <ContentgetTitle>내용 </ContentgetTitle>{calendarfind&&calendarfind.calendarcontent}
               </Contentget>
             </ContentBody>
             <ContentImg src=''></ContentImg>
@@ -197,6 +221,7 @@ const Txtstudent = styled.p`
   margin: 0px;
   font-size: 12px;
   color: gray;
+  word-wrap: wrap;
 `;
 const BodyContent = styled.div`
   padding: 0px 20px;
@@ -204,7 +229,7 @@ const BodyContent = styled.div`
 const ContentTitle = styled.h3`
   margin: 20px 0 35px 0;
 `;
-const ContentBody = styled.p``;
+const ContentBody = styled.div``;
 
 const Contentget = styled.p`
   margin-bottom: 15px;
