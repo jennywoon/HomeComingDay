@@ -4,16 +4,22 @@ import styled from 'styled-components';
 import Img from "../../assets/naverIcon.png"
 import { BsCalendarCheck } from "react-icons/bs";
 import { __getCalendar } from '../../redux/modules/CalendarSlice';
+import { useNavigate } from 'react-router-dom';
 
-const CalendarCard = ({ calendar }) => {
+const CalendarCard = ({ calendar, id }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(__getCalendar());
     }, [dispatch])
 
+    const onClickHandler = () => {
+        navigate(`/calendardetail/${id}`)
+    }
+
     return (
-        <HelpCard>
+        <StCalendarCard onClick={onClickHandler} >
             <CardHead>
                 <HeadImg>
                     <BsCalendarCheck/>
@@ -32,13 +38,13 @@ const CalendarCard = ({ calendar }) => {
                 <Views>조회수 1500</Views>
                 <CommentCount>댓글 2700</CommentCount>
             </CardFooter>
-        </HelpCard>
+        </StCalendarCard>
     );
 };
 
 export default CalendarCard;
 
-const HelpCard = styled.div`
+const StCalendarCard = styled.div`
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 10px;

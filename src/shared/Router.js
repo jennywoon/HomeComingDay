@@ -15,6 +15,7 @@ import InformationForm from "../components/informationBoard/InformationForm";
 import HelpCard from "../components/helpBoard/HelpCard";
 import FreeTalkForm from "../components/freeTalkBoard/FreeTalkForm"
 import CalendarDetail from "../components/calendarBoard/CalendarDetail"
+import CalendarUpdate from "../components/calendarBoard/CalendarUpdate"
 import CalendarPage from "../pages/CalendarPage"
 import Form from "../components/test/Form"
 import Form2 from "../components/test/Form2";
@@ -56,6 +57,7 @@ const Router = () => {
         <Route path="/helpdetail/:id" element={<HelpDetail />} />
         <Route path="/helpupdate/:id" element={<HelpUpdate />} />
         <Route path="/calendardetail/:id" element={<CalendarDetail />} />
+        <Route path="/calendarupdate/:id" element={<CalendarUpdate />} />
 
 
       </Routes>

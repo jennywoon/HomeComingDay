@@ -88,7 +88,7 @@ const CalendarForm = () => {
                         </CalendarDiv>
                         <CalendarDiv>
                             <CalendarTitle>내용</CalendarTitle>
-                            <CalendarInput name="calendarcontent" value={calendarcontent} onChange={onChangeHandler}placeholder="내용을 입력해주세요"></CalendarInput>
+                            <CalendarTextarea name="calendarcontent" value={calendarcontent} onChange={onChangeHandler}placeholder="내용을 입력해주세요"></CalendarTextarea>
                         </CalendarDiv>
                         {/* <CalendarTest/> */}
                     </FormBody>
@@ -171,6 +171,20 @@ const CalendarDiv = styled.div`
     padding: 0 20px;
 `
 const CalendarInput = styled.input`
+    width: 65%;
+    height: 30px;
+    /* margin-top: 10px; */
+    border-radius: 10px;
+    border: none;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    ::-webkit-input-placeholder{text-align:right}
+    padding: 0 10px;
+    /* outline: none; */
+`
+const CalendarTextarea = styled.textarea`
     width: 65%;
     height: 30px;
     /* margin-top: 10px; */
