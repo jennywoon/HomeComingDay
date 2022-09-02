@@ -7,6 +7,7 @@ import Button from "../../components/elements/Button"
 import Input from "../../components/elements/Input"
 import { __loginUser } from '../../redux/modules/UserSlice';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
+import NaverLogin from './NaverLogin';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -108,7 +109,7 @@ const Login = () => {
               onChange={onChangeEmailHandler}
               value={formValue.email}
               width='100%'
-              padding= '10px 15px'
+              padding='10px 15px'
             />
           </StEmail>
           <StPassword>
@@ -119,7 +120,7 @@ const Login = () => {
                 onChange={onChangePasswordHandler}
                 value={formValue.password}
                 width='100%'
-                padding= '10px 15px'
+                padding='10px 15px'
               />
               <StVisible onClick={handlePasswordType}>
                 {passwordType.visible ? (
@@ -144,19 +145,22 @@ const Login = () => {
             isDisabled={isActive ? false : true}
             backgroundColor='black'
             color='white'
-            style={{marginTop: '100px'}}
+            style={{ marginTop: '100px' }}
           >
             로그인
           </Button>
         </StLoginWrap>
         {/* 네이버 로그인 */}
-          <StGoToSignup
-            onClick={() => {
-              navigate('/signup');
-            }}
-          >
-            이메일로 회원가입
-          </StGoToSignup>
+        <NaverContainer>
+          <NaverLogin />
+        </NaverContainer>
+        <StGoToSignup
+          onClick={() => {
+            navigate('/signup');
+          }}
+        >
+          이메일로 회원가입
+        </StGoToSignup>
       </StLoginWraps>
     </StLoginContainer>
   );
@@ -221,3 +225,13 @@ const StErrorMessage = styled.p`
   margin-bottom: 20px;
   font-size: 12px;
 `;
+
+const NaverContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+`

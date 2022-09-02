@@ -7,7 +7,6 @@ import axios from "axios";
 const initialState = {
     calendars: [
     ],
-    // insta: null,
     isLoading: false,
     error: null,
 };
@@ -116,6 +115,7 @@ export const CalendarSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       },
+
     },
 });
 

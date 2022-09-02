@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom"
 import { __getHelp, __postHelp } from '../../redux/modules/HelpSlice';
 import { __postFreeTalk } from '../../redux/modules/FreeTalkSlice';
@@ -12,34 +12,27 @@ import {GrImage} from 'react-icons/gr'
 import Button from '../elements/Button';
 import CalendarModal from '../calendarBoard/CalendarModal';
 import TimeRangePicker from '@wojtekmaj/react-timerange-picker';
+import { __getDate } from '../../redux/modules/DateSlice';
 
 const Form2 = () => {
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [help, setHelp] = useState({
         title: "",
         content: "",
-        // imageList: [
-        //     { imgUrl: "" }
-        // ],
         imgUrl : ""
     }); 
 
     const [info, setInfo] = useState({
         infotitle: "",
         infocontent: "",
-        // infoimageList: [
-        //     { imgUrl: "" }
-        // ],
         infoimageUrl:""
     });
 
     const [freetalk, setFreetalk] = useState({
         freetitle: "",
         freecontent: "",
-        // freeimageList: [
-        //     { imgUrl: "" }
-        // ],
         freeimageUrl : ""
     });
 
@@ -61,20 +54,26 @@ const Form2 = () => {
         const nowImageURLList = [...selectedImage];
         for (let i = 0; i < nowSelectImageList.length; i+=1){
             const nowImageUrl = URL.createObjectURL(nowSelectImageList[i]);
+            // const nowImageobject = {imgUrl : nowImageUrl}
             nowImageURLList.push(nowImageUrl)
         }
         setSelectedImage(nowImageURLList)
     }
     //이미지프리뷰삭제
     const deleteImage = (id) =>{
-    //    console.log(selectedImage[id])
-    //    const deleteImageURLList = [...selectedImage];
-    //     for (let i = 0; i < deleteImageURLList.length; i+=1){
-    //    const deleteImageURLLists = selectedImage.filter((image)=> image[i] === id)
-    //    console.log(deleteImageURLLists)}
-    // //    const deleteImageUrl = URL.revokeObjectURL(selectedImage[id]);
-       
-    }   
+        // console.log(id)
+        // console.log(selectedImage)
+        setSelectedImage(selectedImage.filter((_,index)=>index !== id))
+        }
+        
+
+
+        // selectedImage.filter((img,id)=>{
+        //     URL.revokeObjectURL(img);
+        // })
+        // setSelectedImage([])
+
+    
 
     // console.log(selectedImage)
 
@@ -86,6 +85,9 @@ const Form2 = () => {
         dispatch(__getCalendar());
     }, [dispatch])
 
+    useEffect(() => {
+        dispatch(__getDate());
+    },[dispatch])
 
     const { title, content, imgUrl } = help;
     const { infotitle, infocontent, infoimageUrl } = info;
@@ -147,10 +149,9 @@ const Form2 = () => {
 
         if (select === "help"){
             const newhelp = {
-                ...help,
                 title : title,
                 content:content,
-                imgUrl:selectedImage
+                imageList:selectedImage
             }
             dispatch(__postHelp(newhelp));
 
@@ -158,20 +159,32 @@ const Form2 = () => {
             // title: "",
             // content: "",
             // imgUrl : ""});
+            navigate("/")
         }else if(select === "info"){
-            dispatch(__postInformation(info));
-            setInfo({
-            infotitle: "",
-            infocontent: "",
-            infoimageUrl:""
-            });
+            const newinfo = {
+                title : infotitle,
+                content : infocontent,
+                imageList : selectedImage
+            }
+            dispatch(__postInformation(newinfo));
+            // setInfo({
+            // infotitle: "",
+            // infocontent: "",
+            // infoimageUrl:""
+            // });
         }else if(select ==="freetalk"){
-            dispatch(__postFreeTalk(freetalk));
-            setFreetalk({
-            freetitle: "",
-            freecontent: "",
-            freeimageUrl : ""
-            })
+            const newfreetalk = {
+                title : freetitle,
+                content : freecontent,
+                imageList : selectedImage
+            }
+            dispatch(__postFreeTalk(newfreetalk));
+            // setFreetalk({
+            // freetitle: "",
+            // freecontent: "",
+            // freeimageUrl : ""
+            // })
+            navigate("/freetalk")
         }else if(select ==="meet"){
             dispatch(__postCalendar(calendar));
             setFreetalk({
@@ -179,8 +192,8 @@ const Form2 = () => {
                 calendarlocation: "",
                 calendarcontent : ""
             })
+            navigate("/calendar")
         }
-        navigate("/")
     }
 
     // 모달 구현
@@ -281,18 +294,13 @@ const Form2 = () => {
                 <FormFooter>
                     <FooterContain>
                     
-                    
-                    {(select === "help")? 
+                    {(select === "help" || select === "info" || select === "freetalk")? 
                     <>
                     <Filelabel className="fileUpload-button" htmlFor="fileUpload" onChange={addImage}>
                     <Imgadd  size="24px" />
                     <Addfile type="file" multiple="multiple" id="fileUpload"  accept=".jpg,.jpeg,.png"/>
                     <div style={{fontSize : "12px" , marginLeft:"10px"}}>이미지 첨부</div>
                     </Filelabel>
-
-                    {/* <ImgContainer>
-                            <ImgContent src={selectedImage} />
-                    </ImgContainer> */}
 
                     {selectedImage.map((image,id)=>(
                      <ImgContainer key={id}>
@@ -301,25 +309,6 @@ const Form2 = () => {
                     </ImgContainer>
 
                     ))}
-                    
-                    </>
-                    :
-                    (select === "info")? 
-                    <>
-                    <Addfile type="file" multiple={true} id="fileUpload" name="infoimageUrl" value={infoimageUrl || ""} onChange={infoonChangeHandler} />
-                    <div style={{fontSize : "12px" }}>이미지 첨부</div>
-                    </>
-                    :
-                    (select === "meet")? 
-                    <>
-                    {/* <Addfile type="file" multiple={true} id="fileUpload" name="infoimageUrl" value={infoimageUrl || ""} onChange={infoonChangeHandler} />
-                    <div style={{fontSize : "12px"}}>이미지 파일: {infoimageUrl}</div> */}
-                    </>
-                    :
-                    (select === "freetalk")?
-                    <>
-                    <Addfile type="file" multiple={true} id="fileUpload" name="freeimageUrl" value={freeimageUrl || ""} onChange={freeonChangeHandler} />
-                    <div style={{fontSize : "12px"}}>이미지 첨부</div>
                     </>
                     : null
                     }

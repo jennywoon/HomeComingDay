@@ -34,6 +34,32 @@ export const __postInformation = createAsyncThunk("informations/postInformation"
     }
 });
 
+export const __deleteInformation = createAsyncThunk("informations/deleteHelp", async (payload, thunkAPI) => {
+  try {
+    await axios.delete(`http://localhost:3001/informations/${payload}`);
+    // console.log('data', data)
+    // console.log(payload)
+    return thunkAPI.fulfillWithValue(payload);
+  } catch (error) {
+    // console.log('error', error)
+    return thunkAPI.rejectWithValue(error);
+  }
+}
+);
+
+export const __updateInformation = createAsyncThunk("informations/updateHelp", async (payload, thunkAPI) => {
+  try {
+    await axios.put(`http://localhost:3001/informations/${payload.id}`, payload);
+    return thunkAPI.fulfillWithValue(payload);
+  } catch (error) {
+    // console.log('error', error)
+    return thunkAPI.rejectWithValue(error.message);
+  }
+}
+);
+
+
+
 export const InformationSlice = createSlice({
     name: "informations",
     initialState,
@@ -60,6 +86,40 @@ export const InformationSlice = createSlice({
       [__postInformation.rejected]: (state, action) => {
         state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.
         state.error = action.payload; // catch 된 error 객체를 state.error에 넣습니다.
+      },
+
+      [__deleteInformation.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__deleteInformation.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        // console.log(state.camps)
+        // console.log(action)
+        state.informations = state.informations.filter(info => info.id !== action.payload)
+      },
+      [__deleteInformation.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+
+      [__updateInformation.pending]: (state) => {
+        state.isLoading = true;
+      },
+  
+      [__updateInformation.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        console.log('action', action)
+        console.log('action.payload', action.payload)
+        state.informations = state.informations.map((info) => {
+          if (info.id === action.payload.id) {
+            info = action.payload;
+          }
+          return info;
+        })
+      },
+      [__updateInformation.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       },
     },
 });

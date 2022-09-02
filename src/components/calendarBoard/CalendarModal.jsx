@@ -1,14 +1,26 @@
 import React, { useRef, useState } from 'react';
+import { useDispatch,useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Calendar from 'react-calendar';
 import "./CalendarModal.css"
 import dayjs from 'dayjs';
+import moment from 'moment';
+import { __postCalendar } from '../../redux/modules/CalendarSlice';
+import { __postDate } from '../../redux/modules/DateSlice';
 
 const CalendarModal = ({ setModalOpen }) => {
-
+    const dispatch = useDispatch();
     // const [value, onChange] = useState(new Date())
-    const [value, setValue] = useState(new Date());
+    const [date, setDate] = useState({
+        calendar : "",
+    });
+    const {calendar} = date;
+    const realCalendar = date.toString();
+
     const modalRef = useRef(null);
+
+    // const {realcalendars} = useSelector((state) => state.realcalendars);
+    // console.log(realcalendars);
 
     const closeModal = (e) => {
         if (!modalRef.current.contains(e.target)) {
@@ -16,8 +28,18 @@ const CalendarModal = ({ setModalOpen }) => {
         }
     };
 
-    const onChange = value => setValue(value);
-    const callDay = (clikedDay) => { console.log(clikedDay)};
+    const onChange = value => setDate(value);
+
+    // const callDay = (clikedDay) => { 
+    //     console.log(clikedDay)
+    // };
+
+    // const {clikedDay} = value;
+
+    const onsubmitHandler = (e) =>{
+        e.preventDefault();
+        dispatch(__postDate(date.toString()));
+    }
 
     return (
         <Background onClick={closeModal}>
@@ -25,13 +47,15 @@ const CalendarModal = ({ setModalOpen }) => {
                 <Wrap>
                     <CalendarWrap ref={modalRef}>
                         <Calendar
-                            onChange={onChange} value={value}
+                            onChange={onChange}
+                            calendar={calendar} name="calendar" value={calendar}
                             formatDay={(locale, date) => dayjs(date).format('DD')}
-                            onClickDay={callDay}
                         />
                         <CalendarButton
-                        // type="submit"
+                        type="submit"
+                        onClick={onsubmitHandler}
                         >확인</CalendarButton>
+                        {moment(date).format("YYYY년 MM월 DD일")}
                     </CalendarWrap>
                 </Wrap>
             </Container>
