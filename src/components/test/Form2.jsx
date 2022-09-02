@@ -7,6 +7,7 @@ import { __postFreeTalk } from '../../redux/modules/FreeTalkSlice';
 import { __postInformation } from '../../redux/modules/InformationSlice';
 import { __getCalendar, __postCalendar } from '../../redux/modules/CalendarSlice';
 import {IoIosArrowBack, IoIosArrowForward} from 'react-icons/io'
+import {TiDelete} from 'react-icons/ti'
 import {GrImage} from 'react-icons/gr'
 import Button from '../elements/Button';
 import CalendarModal from '../calendarBoard/CalendarModal';
@@ -54,12 +55,7 @@ const Form2 = () => {
     //이미지관련 함수
     const [selectedImage , setSelectedImage] = useState([]);
 
-    // const imageChange = (e) =>{
-    //     if (e.target.files && e.target.files.length > 0){
-    //         setSelectedImage(e.target.files[0]);
-    //     }
-    // };
-
+    //이미지프리뷰 추가
     const addImage = (e) =>{
         const nowSelectImageList = e.target.files;
         const nowImageURLList = [...selectedImage];
@@ -69,8 +65,18 @@ const Form2 = () => {
         }
         setSelectedImage(nowImageURLList)
     }
+    //이미지프리뷰삭제
+    const deleteImage = (id) =>{
+    //    console.log(selectedImage[id])
+    //    const deleteImageURLList = [...selectedImage];
+    //     for (let i = 0; i < deleteImageURLList.length; i+=1){
+    //    const deleteImageURLLists = selectedImage.filter((image)=> image[i] === id)
+    //    console.log(deleteImageURLLists)}
+    // //    const deleteImageUrl = URL.revokeObjectURL(selectedImage[id]);
+       
+    }   
 
-    console.log(selectedImage)
+    // console.log(selectedImage)
 
     useEffect(() => {
         dispatch(__getHelp());
@@ -140,11 +146,18 @@ const Form2 = () => {
         // }
 
         if (select === "help"){
-            dispatch(__postHelp(help));
-            setHelp({
-            title: "",
-            content: "",
-            imgUrl : ""});
+            const newhelp = {
+                ...help,
+                title : title,
+                content:content,
+                imgUrl:selectedImage
+            }
+            dispatch(__postHelp(newhelp));
+
+            // setHelp({
+            // title: "",
+            // content: "",
+            // imgUrl : ""});
         }else if(select === "info"){
             dispatch(__postInformation(info));
             setInfo({
@@ -284,7 +297,8 @@ const Form2 = () => {
                     {selectedImage.map((image,id)=>(
                      <ImgContainer key={id}>
                         <ImgContent src={image} alt={`${image}-${id}`} />
-                    </ImgContainer> 
+                        <DeleteButton size="25px" onClick={()=>deleteImage(id)}/>
+                    </ImgContainer>
 
                     ))}
                     
@@ -309,18 +323,10 @@ const Form2 = () => {
                     </>
                     : null
                     }
-                    </FooterContain>
                     
-
+                    
+                    </FooterContain>
                 </FormFooter>
-                     {/* {selectedImage && (
-                        <ImgContainer>
-                            <ImgContent src={URL.createObjectURL(selectedImage)} 
-                                 alt="Thumb"
-                            />
-                        </ImgContainer>
-                    )} */}
-                
 
             </FormWrap>
         </FormContainer>
@@ -387,7 +393,7 @@ const Textarea = styled.textarea`
 `
 
 const FormFooter = styled.div`
-    display: flex;
+    
     width:100%;
     /* background-color: yellow; */
     border-top: 1px solid gray;
@@ -395,22 +401,23 @@ const FormFooter = styled.div`
 `
 
 const FooterContain = styled.div`
-    display: flex;
-    align-items: center;
-    border:1px solid #eee;
-    border-radius: 20px;
-    
+
 `
 
 const Imgadd = styled(GrImage)`
-    opacity: 0.5;
+    opacity: 0.3;
 `
 
 const Filelabel = styled.label`
     /* margin : 10px 20px; */
     display: flex;
     align-items:center;
-    padding:10px;
+    justify-content: center;
+    width:120px;
+    height:50px;
+    border:1px solid #eee;
+    border-radius: 20px;
+    margin:15px;
     
 `
 
@@ -421,11 +428,21 @@ const ImgContainer = styled.label`
     display: "flex";
     align-items: center;
     margin:20px 10px;
+    position:relative;
 `
 
 const ImgContent = styled.img`
     width:100px;
     height:100px;
+    position:relative;
+    
+`
+const DeleteButton = styled(TiDelete)`
+    position: absolute;
+    /* size:50px; */
+    right:1px;
+    color:white;
+    cursor:pointer;
 `
 
 
