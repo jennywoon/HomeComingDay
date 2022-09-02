@@ -50,7 +50,7 @@ const HelpDetail = () => {
             <DetailWrap>
                 <Header />
                 <DetailHeader>
-                    <IoIosArrowBack size="25px" cursor="pointer"/>
+                    <IoIosArrowBack size="25px" cursor="pointer" onClick={()=> {navigate(-1)}}/>
                     <HeaderTitle>도움요청</HeaderTitle>
                     <div></div>
                 </DetailHeader>
@@ -79,17 +79,19 @@ const HelpDetail = () => {
                         <ContentImg src={helpsfind && helpsfind.imgUrl}></ContentImg>
                         <ContentView>조회수 1000회 | 댓글 100개</ContentView>
                     </BodyContent>
+
                     <BodyCommentBox>
                         <HelpDetailComment /> {/* 댓글맵돌리기  */}
                         <HelpDetailComment />
-                        <CommentContail>
+
+                        <CommentContainer>
                             <CommentBox>
                                 <CommentDiv>
                                     <CommentPost placeholder='댓글을 입력해주세요'></CommentPost>
                                     <CommentButton>올리기</CommentButton>
                                 </CommentDiv>
                             </CommentBox>
-                        </CommentContail>
+                        </CommentContainer>
                     </BodyCommentBox>
 
                 </DetailBody>
@@ -122,21 +124,18 @@ const DetailWrap = styled.form`
   background-color: white;
   display: flex;
   flex-direction: column;
-  border: 1px solid blue;
 `;
 
 const DetailHeader = styled.div`
     height: 50px;
     display: flex;
     align-items: center;
-    /* padding:10px ; */
     justify-content: space-between;
-    /* border: 1px solid red; */
 `
 const HeaderTitle = styled.div`
-    font-weight: 800;
-    /* margin:10px auto; */
-`
+  font-weight: 800;
+  /* margin:10px auto; */
+`;
 const Revisebox = styled.div`
     border: 1px solid #f1f0f0;
     border-radius: 10px;
@@ -146,8 +145,7 @@ const Revisebox = styled.div`
     right: 0;
     top:55px;
     background-color: #fff;
-    box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.05);
-   
+    /* box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.05); */
 `
 const ReviseButton = styled.button`
     border:none;
@@ -182,8 +180,8 @@ const DetailBody = styled.div`
     border-radius: 20px;
     height:100vh;
     box-sizing: border-box;
-    box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.05);
-    overflow: scroll;
+    /* box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.05); */
+    /* overflow: scroll; */
 `
 
 const Bodytop = styled.div`
@@ -240,7 +238,7 @@ const BodyCommentBox = styled.div`
     position:relative;
 `
 
-const CommentContail = styled.div`
+const CommentContainer = styled.div`
     position: fixed;
     bottom: 0;
     /* bottom: 10px; */
@@ -255,27 +253,26 @@ const CommentBox = styled.div`
     height:40px;
 `
 
+const CommentDiv = styled.div`
+    width : 400px;
+    padding: 10px;
+    background-color: #eeeeee;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    justify-content: space-between;
+`
+
 const CommentPost = styled.input`
-    /* position: fixed; */
     width:80%;
     bottom : 0;
-    padding:10px;
     background-color: #eeeeee;
     height: 30px;
     border-radius: 10px;
-    /* border : 1px solid rgba(0,0,0,0.1); */
     border: none;
 `
 const CommentButton = styled.button`
     border: none;
     cursor: pointer;
-`
-
-const CommentDiv = styled.div`
-    width : 400px;
-    background-color: #eeeeee;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
 `
