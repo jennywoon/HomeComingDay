@@ -6,26 +6,28 @@ import { AiOutlineMenu } from 'react-icons/ai'
 import Img from "../../assets/naverIcon.png"
 import Help from "../../assets/help.png"
 import Button from '../elements/Button';
-import HelpDetailComment from './HelpDetailComment';
+import InformationDetailComment from './InformationDetailComment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteHelp, __updateHelp, __getHelp, __postComment, __getComments } from '../../redux/modules/HelpSlice';
+import { __deleteInformation, __getInformation, __postInformation, __updateInformation } from '../../redux/modules/InformationSlice';
 
-const HelpDetail = () => {
+
+const InformationDetail = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {helps} = useSelector((state) => state.helps)
+    const {informations} = useSelector((state) => state.informations)
     const {id} = useParams();
     console.log(id)
     const [show , setShow] = useState(false)
     
-    const helpsfind = helps.find((help)=> help.id === Number(id))
+
+    const informationsfind = informations.find((info)=> info.id === Number(id))
 
     useEffect(() => {
-        dispatch(__getHelp());
+        dispatch(__getInformation());
     }, [dispatch])
 
-    console.log("helps", helps , "helpsfind" , helpsfind)
+    console.log("information", informations , "informationsfind" , informationsfind)
     
     const onCilckShow = () =>{
         setShow(!show)
@@ -35,7 +37,7 @@ const HelpDetail = () => {
     const onClickDelete = () => {
         const result = window.confirm("정말 삭제하시겠습니까?")
         if(result){
-            dispatch(__deleteHelp(id))
+            dispatch(__deleteInformation(id))
             navigate("/")
         }else{
             return null
@@ -43,7 +45,7 @@ const HelpDetail = () => {
     }
 
     const onClickRevice = () => {
-        navigate(`/helpupdate/${id}`)
+        navigate(`/informationupdate/${id}`)
     }
 
     return (
@@ -52,7 +54,7 @@ const HelpDetail = () => {
                 <Header />
                 <DetailHeader>
                     <IoIosArrowBack size="25px" cursor="pointer" onClick={()=> {navigate(-1)}}/>
-                    <HeaderTitle>도움요청</HeaderTitle>
+                    <HeaderTitle>정보공유</HeaderTitle>
                     <div></div>
                 </DetailHeader>
                 <DetailBody>
@@ -75,15 +77,15 @@ const HelpDetail = () => {
 
                     </Bodytop>
                     <BodyContent>
-                        <ContentTitle>{helpsfind && helpsfind.title}</ContentTitle>
-                        <ContentBody>{helpsfind && helpsfind.content}</ContentBody>
-                        <ContentImg src={helpsfind && helpsfind.imageList[0]}></ContentImg>
+                        <ContentTitle>{informationsfind && informationsfind.title}</ContentTitle>
+                        <ContentBody>{informationsfind && informationsfind.content}</ContentBody>
+                        <ContentImg src={informationsfind && informationsfind.imageList[0]}></ContentImg>
                         <ContentView>조회수 1000회 | 댓글 100개</ContentView>
                     </BodyContent>
 
                     <BodyCommentBox>
-                        <HelpDetailComment /> {/* 댓글맵돌리기  */}
-                        <HelpDetailComment />
+                        <InformationDetailComment /> {/* 댓글맵돌리기  */}
+                        <InformationDetailComment />
 
                         <CommentContainer>
                             <CommentBox>
@@ -101,7 +103,7 @@ const HelpDetail = () => {
     );
 };
 
-export default HelpDetail;
+export default InformationDetail;
 
 
 const DetailContainer = styled.div`

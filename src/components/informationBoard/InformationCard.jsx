@@ -1,50 +1,52 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from 'styled-components';
 import Img from "../../assets/naverIcon.png"
 import { HiOutlineInformationCircle } from "react-icons/hi";
 import { GrCircleAlert } from "react-icons/gr";
+import { BsQuestionSquare } from "react-icons/bs";
 import { __getInformation } from '../../redux/modules/InformationSlice';
 
-const InformationCard = ({ information }) => {
+const InformationCard = ({ information,id }) => {
     const dispatch = useDispatch();
-
-
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(__getInformation());
     }, [dispatch])
 
-
+    const onClickNavi = () => {
+        navigate(`/informationdetail/${id}`)
+    }
 
     return (
-        <HelpCard>
+        <InformationContainer onClick={onClickNavi}>
             <CardHead>
                 <HeadImg>
-                    <GrCircleAlert size="20"/>
+                    <BsQuestionSquare />
                 </HeadImg>
                 <HeadName>이름</HeadName>
                 <HeadStudent>14학번</HeadStudent>
                 <HeadTime>15분전</HeadTime>
             </CardHead>
             <CardBody>
-                <BodyTitle>{information.infotitle}</BodyTitle>
+                <BodyTitle>{information.title}</BodyTitle>
                 <BodyContent>
-                    {information.infocontent}
+                    {information.content}
                 </BodyContent>
             </CardBody>
             <CardFooter>
                 <Views>조회수 1500</Views>
                 <CommentCount>댓글 2700</CommentCount>
             </CardFooter>
-        </HelpCard>
+        </InformationContainer>
     );
 };
 
 export default InformationCard;
 
-const HelpCard = styled.div`
+const InformationContainer = styled.div`
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 10px;
