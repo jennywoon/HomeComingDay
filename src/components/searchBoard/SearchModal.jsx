@@ -9,7 +9,6 @@ const SearchModal = () => {
     return (
         <RecentWrap>
         <RecentTitle>최근 검색어</RecentTitle>
-        {/* search card 맵 돌릴 예정 */}
 
     </RecentWrap>
     );
