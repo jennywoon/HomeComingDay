@@ -1,25 +1,38 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Button from "../../components/elements/Button"
-import Input from "../../components/elements/Input"
 import { IoIosArrowBack } from 'react-icons/io';
-import { FiSearch } from 'react-icons/fi';
-import Dropdown from "../../components/test/Dropdown"
+import Select from "react-dropdown-select";
+import './search.css'
+import { __getSchoolSearch, __getDepartmentSearch } from '../../redux/modules/SchoolInfoSlice';
 
 const SchoolInfo = () => {
   const navigate = useNavigate();
-  const [search, setSearch] = useState('');
+  const dispatch = useDispatch();
 
-  const onChangeSearch = (e) => {
-    e.preventDefault();
-    setSearch(e.target.value);
-  };
+  // 학교 정보 검색
+  const schoolSearch = useSelector((state)=> state.schoolSearchs.schoolSearchs)
+  // console.log(schoolSearch)
 
-  //   const filterSchool = schoolName.filter((p) => {
-  //     return p.title.replace(" ","").toLocaleLowerCase().includes(search.toLocaleLowerCase())
-  // })
+  useEffect(()=> {
+    dispatch(__getSchoolSearch())
+  },[dispatch])
 
+  const [selectedschoolSearch, setSelectedschoolSearch] = useState([]);
+
+    // 학과 정보 검색
+    const departmentSearch = useSelector((state)=> state.departmentSearchs.departmentSearchs)
+    console.log(departmentSearch)
+
+    useEffect(()=> {
+      dispatch(__getDepartmentSearch())
+    },[dispatch])
+
+    const [selectedOptions, setSelectedOptions] = useState([]);
+
+  // 저장하기 버튼
   const onClickHandler = () => {
     navigate('/signupcomplete');
   }
@@ -39,22 +52,22 @@ const SchoolInfo = () => {
         </StSchoolTitle>
 
         <StSchoolInfoWrap>
-          {/* 검색기능 추가 */}
           <Stlabel>학교명</Stlabel>
-          <StInput
-            type='text'
-            value={search}
-            onChange={onChangeSearch}
-            width='100%'
-            padding='10px 15px'
-          />
-          <StSearch type='button' />
+          <Select
+          options={schoolSearch.map((item, index) => {
+            return { value: item.seq, label: item.schoolName};
+          })}
+          values={selectedschoolSearch}
+          style={{ maxHeight: "20px" }}
+          maxMenuHeight={10}
+          onChange={(values) => setSelectedschoolSearch([...values])}
+          // placeholder='학교명'
+        />
         </StSchoolInfoWrap>
 
         <StSchoolInfoWrap>
           <Stlabel>학과 · 학부명</Stlabel>
-          {/* <Dropdown /> */}
-          <StSelect>
+          {/* <StSelect>
             <option value=''>학과 · 학부명</option>
             <option value='경영학과'>경영학과</option>
             <option value='경제학과'>경제학과</option>
@@ -63,7 +76,17 @@ const SchoolInfo = () => {
             <option value='심리학과'>심리학과</option>
             <option value='의류학과'>의류학과</option>
             <option value='컴퓨터공학부'>컴퓨터공학부</option>
-          </StSelect>
+          </StSelect> */}
+          <Select
+          options={departmentSearch.map((item, index) => {
+            return { value: item.seq, label: item.mclass};
+          })}
+          values={selectedOptions}
+          style={{ maxHeight: "20px" }}
+          maxMenuHeight={10}
+          onChange={(values) => setSelectedOptions([...values])}
+          // placeholder='학교명'
+        />
         </StSchoolInfoWrap>
 
         <StSchoolInfoWrap>
@@ -81,13 +104,13 @@ const SchoolInfo = () => {
           {/* <StInput /> */}
         </StSchoolInfoWrap>
 
-        <Button 
-        width='100%' 
-        padding='10px 0' 
-        style={{ marginTop: '100px' }}
-        backgroundColor='black'
-        color='white'
-        onClickHandler={onClickHandler}
+        <Button
+          width='100%'
+          padding='10px 0'
+          style={{ marginTop: '100px' }}
+          backgroundColor='black'
+          color='white'
+          onClickHandler={onClickHandler}
         >
           저장하기
         </Button>
@@ -128,24 +151,6 @@ const Stlabel = styled.label`
   font-size: 14px;
   margin-bottom: 10px;
   display: block;
-`;
-
-const StInput = styled.input`
-  box-sizing: border-box;
-  width: 100%;
-  padding: 10px 10px;
-  border-radius: 10px;
-  border: 0.5px solid #ddd;
-`;
-
-const StSearch = styled(FiSearch)`
-  position: absolute;
-  right: 5px;
-  top: 70%;
-  transform: translatey(-50%);
-  padding: 5px 10px;
-  font-size: 15px;
-  cursor: pointer;
 `;
 
 const StSelect = styled.select`
