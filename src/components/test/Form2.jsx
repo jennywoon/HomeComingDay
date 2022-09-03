@@ -300,7 +300,7 @@ const Form2 = () => {
                   {moment(getLastArrItem.calendar).format("YYYY년 MM월 DD일")}
                   </DateDiv>
                   <IoIosArrowForward />
-                </CalendarButton>
+                </CalendarButton> 
                 <TimeDiv>
                   <CalendarTitle>시간</CalendarTitle>
                   {/* <IoIosArrowForward /> */}
