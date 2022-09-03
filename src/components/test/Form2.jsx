@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { __getHelp, __postHelp } from '../../redux/modules/HelpSlice';
 import { __postFreeTalk } from '../../redux/modules/FreeTalkSlice';
 import { __postInformation } from '../../redux/modules/InformationSlice';
@@ -15,6 +15,11 @@ import TimeRangePicker from '@wojtekmaj/react-timerange-picker';
 import { __getDate } from '../../redux/modules/DateSlice';
 
 const Form2 = () => {
+
+    const {dates} = useSelector((state) => state.dates)
+    console.log(dates);
+    const param = useParams();
+    const date = dates.find((date) => date.id === parseInt(param.id))
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
