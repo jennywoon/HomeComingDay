@@ -209,10 +209,10 @@ const Form2 = () => {
     const [value, onChange] = useState(['10:00', '11:00']);
     
     const getArrItem = useSelector((state) => state.dates.dates)
-    console.log(getArrItem)
+    // console.log(getArrItem)
 
     const getLastArrItem = getArrItem[getArrItem.length-1]
-    console.log(getLastArrItem)
+    // console.log(getLastArrItem)
 
     // useEffect(()=>{
     //     setHelp({

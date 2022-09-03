@@ -6,15 +6,15 @@ import {IoIosArrowBack} from 'react-icons/io'
 import {GrImage} from 'react-icons/gr'
 import Button from '../elements/Button';
 import { useSelector } from 'react-redux';
-import { __getInformation, __updateInformation } from '../../redux/modules/InformationSlice';
+import { __getFreeTalk, __updateFreeTalk } from '../../redux/modules/FreeTalkSlice';
 
 
-const InformationUpdate = () => {
+const FreeTalkUpdate = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {id} = useParams();
-    const {informations} = useSelector((state) => state.informations)
-    const informationsfind = informations.find((info)=> info.id === Number(id))
+    const {freetalks} = useSelector((state) => state.freetalks)
+    const freetalksfind = freetalks.find((freetalk)=> freetalk.id === Number(id))
 
     // const [updateHelp, setUpdateHelp] = useState({
     //     title: "",
@@ -25,8 +25,8 @@ const InformationUpdate = () => {
     // const [title, content , imgUrl] = updateHelp
 
     // console.log("helps", helps , "helpsfind" , helpsfind)
-    const [EditTitle, setEditTitle] = useState(informationsfind&&informationsfind.title)
-    const [EditContent, setEditContent] = useState(informationsfind&&informationsfind.content)
+    const [EditTitle, setEditTitle] = useState(freetalksfind&&freetalksfind.title)
+    const [EditContent, setEditContent] = useState(freetalksfind&&freetalksfind.content)
     const [EditImg, setEditImg] = useState('')
 
     const onChangeTitle = (e) =>{
@@ -44,20 +44,20 @@ const InformationUpdate = () => {
     }
 
     useEffect(() => {
-        dispatch(__getInformation());
+        dispatch(__getFreeTalk());
     }, [dispatch])
 
     const onUpdateHandler = (e) => {
         e.preventDefault();
-         const editinformationsfind = {
-            ...informationsfind ,
+         const editfreetalksfind = {
+            ...freetalksfind ,
             id: id,
             title: EditTitle,
             content: EditContent,
             imageList : EditImg
         }
-        dispatch(__updateInformation(editinformationsfind))
-        navigate(`/informationdetail/${id}`)
+        dispatch(__updateFreeTalk(editfreetalksfind))
+        navigate(`/freetalkdetail/${id}`)
     } 
 
     
@@ -71,10 +71,10 @@ const InformationUpdate = () => {
                 </FormHeader>
                 <FormBody>
                     <FormSelection name="category">
-                        {/* <option value="">도움요청</option> */}
+                        {/* <option value="">도움요청</option>
                         <option value="informationform">정보공유</option>
-                        {/* <option value="">만남일정</option>
-                        <option value="">자유토크</option> */}
+                        <option value="">만남일정</option> */}
+                        <option value="">자유토크</option>
                     </FormSelection>
                 <FormInput name="title" value={EditTitle} onChange={onChangeTitle} placeholder="제목을 입력해주세요"></FormInput>
                 <Textarea name="content" value={EditContent} onChange={onChangeContent} placeholder="내용을 입력해주세요"></Textarea>
@@ -93,7 +93,7 @@ const InformationUpdate = () => {
     );
 };
 
-export default InformationUpdate;
+export default FreeTalkUpdate;
 
 
 const FormContainer = styled.div`

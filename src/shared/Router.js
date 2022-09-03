@@ -22,6 +22,8 @@ import HelpDetail from "../components/helpBoard/HelpDetail";
 import HelpUpdate from "../components/helpBoard/HelpUpdate";
 import InformationDetail from "../components/informationBoard/InformationDetail";
 import InformationUpdate from "../components/informationBoard/InformationUpdate";
+import FreeTalkDetail from "../components/freeTalkBoard/FreeTalkDetail"
+import FreeTalkUpdate from "../components/freeTalkBoard/FreeTalkUpdate"
 import SearchPage from "../pages/SearchPage";
 import SearchCard from "../components/searchBoard/SearchCard";
 import ChatPage from "../pages/ChatPage"
@@ -59,6 +61,8 @@ const Router = () => {
         <Route path="/helpupdate/:id" element={<HelpUpdate />} />
         <Route path="/informationdetail/:id" element={<InformationDetail />} />
         <Route path="/informationupdate/:id" element={<InformationUpdate />} />
+        <Route path="/freetalkdetail/:id" element={<FreeTalkDetail />} />
+        <Route path="/freetalkupdate/:id" element={<FreeTalkUpdate />} />
         <Route path="/calendardetail/:id" element={<CalendarDetail />} />
         <Route path="/calendarupdate/:id" element={<CalendarUpdate />} />
 
