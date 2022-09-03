@@ -17,9 +17,9 @@ const CalendarModal = ({ setModalOpen }) => {
 
 
     const [date, setDate] = useState({
-        calendar : "",
+        calendarDate : "",
     });
-    const {calendar} = date;
+    const {calendarDate} = date;
     const realCalendar = date.toString();
 
     const modalRef = useRef(null);
@@ -43,7 +43,8 @@ const CalendarModal = ({ setModalOpen }) => {
 
     const onsubmitHandler = (e) =>{
         e.preventDefault();
-        dispatch(__postDate(date.toString()));
+        const dates = {calendarDate : realCalendar}
+        dispatch(__postDate(dates));
     }
 
     return (
@@ -53,7 +54,7 @@ const CalendarModal = ({ setModalOpen }) => {
                     <CalendarWrap ref={modalRef}>
                         <Calendar
                             onChange={onChange}
-                            calendar={calendar} name="calendar" value={calendar}
+                            calendarDate={calendarDate} name="calendarDate" value={calendarDate}
                             formatDay={(locale, date) => dayjs(date).format('DD')}
                         />
                         <CalendarButton

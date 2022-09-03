@@ -36,7 +36,7 @@ const CalendarCard = ({ calendar, id }) => {
             <CardBody>
                 <BodyTitle>{calendar.calendartitle}</BodyTitle>
                 <BodyContent>
-                {moment(getLastArrItem.calendar).format("YYYY년 MM월 DD일")}
+                {moment(getLastArrItem.calendarDate).format("YYYY년 MM월 DD일")}
                 </BodyContent>
                 <BodyContent>
                     {calendar.calendarcontent}

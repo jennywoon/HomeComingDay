@@ -86,7 +86,7 @@ const onClickRevice = () => {
             <ContentBody>
               <Contentget>
                 <ContentgetTitle>날짜 </ContentgetTitle>
-                {moment(getLastArrItem.calendar).format("YYYY년 MM월 DD일")}
+                {moment(getLastArrItem.calendarDate).format("YYYY년 MM월 DD일")}
               </Contentget>
               <Contentget>
                 <ContentgetTitle>시간 </ContentgetTitle>오후 8:00

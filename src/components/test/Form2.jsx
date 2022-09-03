@@ -298,7 +298,7 @@ const Form2 = () => {
                 <CalendarButton onClick={showModal}>
                   <CalendarTitle>날짜</CalendarTitle>
                   <DateDiv>
-                  {moment(getLastArrItem.calendar).format("YYYY년 MM월 DD일")}
+                  {moment(getLastArrItem.calendarDate).format("YYYY년 MM월 DD일")}
                   </DateDiv>
                   <IoIosArrowForward />
                 </CalendarButton> 
