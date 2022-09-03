@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Button from "../../components/elements/Button"
 import { IoIosArrowBack } from 'react-icons/io';
 import Select from "react-dropdown-select";
-import './search.css'
+// import './search.css'
 import { __getSchoolSearch, __getDepartmentSearch } from '../../redux/modules/SchoolInfoSlice';
 
 const SchoolInfo = () => {
@@ -53,16 +53,16 @@ const SchoolInfo = () => {
 
         <StSchoolInfoWrap>
           <Stlabel>학교명</Stlabel>
-          <Select
-          options={schoolSearch.map((item, index) => {
-            return { value: item.seq, label: item.schoolName};
-          })}
-          values={selectedschoolSearch}
-          style={{ maxHeight: "20px" }}
-          maxMenuHeight={10}
-          onChange={(values) => setSelectedschoolSearch([...values])}
-          // placeholder='학교명'
-        />
+          <StyledSelect
+            options={schoolSearch.map((item, index) => {
+              return { value: item.seq, label: item.schoolName };
+            })}
+            values={selectedschoolSearch}
+            style={{ maxHeight: '20px', borderRadius: '16px', border: '1px solid #ddd', fontSize: '14px', padding:'0 10px'  }}
+            maxMenuHeight={10}
+            onChange={(values) => setSelectedschoolSearch([...values])}
+            placeholder='학교명 '
+          />
         </StSchoolInfoWrap>
 
         <StSchoolInfoWrap>
@@ -78,15 +78,15 @@ const SchoolInfo = () => {
             <option value='컴퓨터공학부'>컴퓨터공학부</option>
           </StSelect> */}
           <Select
-          options={departmentSearch.map((item, index) => {
-            return { value: item.seq, label: item.mclass};
-          })}
-          values={selectedOptions}
-          style={{ maxHeight: "20px" }}
-          maxMenuHeight={10}
-          onChange={(values) => setSelectedOptions([...values])}
-          // placeholder='학교명'
-        />
+            options={departmentSearch.map((item, index) => {
+              return { value: item.seq, label: item.mclass };
+            })}
+            values={selectedOptions}
+            style={{ maxHeight: '20px', borderRadius: '16px', border: '1px solid #ddd', fontSize: '14px', padding:'0 10px' }}
+            maxMenuHeight={10}
+            onChange={(values) => setSelectedOptions([...values])}
+            placeholder='학과 · 학부명 '
+          />
         </StSchoolInfoWrap>
 
         <StSchoolInfoWrap>
@@ -153,10 +153,15 @@ const Stlabel = styled.label`
   display: block;
 `;
 
+const StyledSelect = styled(Select)`
+  background: #fff;
+  font-size: 14px;
+`
+
 const StSelect = styled.select`
   width: 100%;
-  border: 0.5px solid #ddd;
+  border: 1px solid #ddd;
   padding: 10px 10px;
-  border-radius: 10px;
+  border-radius: 16px;
   box-sizing: border-box;
 `;
