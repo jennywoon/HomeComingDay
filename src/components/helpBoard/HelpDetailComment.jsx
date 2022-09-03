@@ -3,7 +3,10 @@ import styled from 'styled-components';
 import {AiOutlineMenu} from 'react-icons/ai'
 import Img from "../../assets/naverIcon.png"
 
-const DetailComment = () => {
+const DetailComment = ({comment}) => {
+
+    console.log(comment)
+
     return (
         <CommentContain>
         <CommentBox>
@@ -14,7 +17,7 @@ const DetailComment = () => {
             </CommentTxt>
             <AiOutlineMenu size="18px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }} />
         </CommentBox>
-        <Comment>취업할수있겟냐</Comment>
+        <Comment>{comment.comment}</Comment>
         </CommentContain>
     );
 };
