@@ -207,7 +207,12 @@ const Form2 = () => {
     }
 
     const [value, onChange] = useState(['10:00', '11:00']);
-    //
+    
+    const getArrItem = useSelector((state) => state.dates.dates)
+    console.log(getArrItem)
+
+    const getLastArrItem = getArrItem[getArrItem.length-1]
+    console.log(getLastArrItem)
 
     // useEffect(()=>{
     //     setHelp({
@@ -228,100 +233,151 @@ const Form2 = () => {
     // },[handleSelect])
 
     return (
-        <FormContainer>
-             
-            <FormWrap onSubmit={onSubmitHandler}>
-                <FormHeader>
-                    <IoIosArrowBack size="25px" cursor="pointer" onClick={() => navigate("/")}/>
-                    <Button type="submit" backgroundColor="white" >올리기</Button>
-                </FormHeader>
-                <FormBody>
-                    <FormSelection name="category" onChange={handleSelect}>
-                        <option value="help">도움요청</option>
-                        <option value="info">정보공유</option>
-                        <option value="meet">만남일정</option>
-                        <option value="freetalk">자유토크</option>
-                    </FormSelection>
-                
-                {(select === "help")? 
-                    <>
-                    <FormInput name="title" value={title} onChange={onChangeHandler} placeholder="제목을 입력해주세요"></FormInput>
-                    <Textarea name="content" value={content} onChange={onChangeHandler} placeholder="내용을 입력해주세요"></Textarea>
-                    </>
-                 : 
-                 (select === "info")?
-                 <>
-                    <FormInput name="infotitle" value={infotitle} onChange={infoonChangeHandler} placeholder="제목을 입력해주세요"></FormInput>
-                    <Textarea name="infocontent" value={infocontent} onChange={infoonChangeHandler} placeholder="내용을 입력해주세요"></Textarea>
-                 </>
-                 : 
-                 (select === "meet")?
-                 <>
-                 {modalOpen && <CalendarModal setModalOpen={setModalOpen}/>}
-                    {/* 만남일정 게시판 get, post 구현 안되어서 구현되면 input name,value 줄 예정 */}
-                    {/* <FormInput name="infotitle" value={infotitle} onChange={infoonChangeHandler} placeholder="제목을 입력해주세요"></FormInput> */}
-                    <FormInput name="calendartitle" value={calendartitle} onChange={calendaronChangeHandler} placeholder="제목을 입력해주세요"></FormInput>
-                    <CalendarButton onClick={showModal}>
-                            <CalendarTitle>날짜</CalendarTitle>
-                            <IoIosArrowForward />
-                            {/* <DateDiv></DateDiv> */}
-                        </CalendarButton>
-                        <TimeDiv>
-                            <CalendarTitle>시간</CalendarTitle>
-                            {/* <IoIosArrowForward /> */}
-                            <TimeRangePicker
-                            onChange={onChange}
-                            value={value}
-                        />
-                        </TimeDiv>
-                        <CalendarDiv>
-                            <CalendarTitle>장소</CalendarTitle>
-                            <CalendarInput name="calendarlocation" value={calendarlocation} onChange={calendaronChangeHandler} placeholder="내용을 입력해주세요"></CalendarInput>
-                        </CalendarDiv>
-                        <CalendarDiv>
-                            <CalendarTitle>내용</CalendarTitle>
-                            <CalendarInput name="calendarcontent" value={calendarcontent} onChange={calendaronChangeHandler} placeholder="내용을 입력해주세요"></CalendarInput>
-                        </CalendarDiv>
-                 </>
-                 : 
-                 (select === "freetalk")?
-                 <>
-                    <FormInput name="freetitle" value={freetitle} onChange={freeonChangeHandler} placeholder="제목을 입력해주세요"></FormInput>
-                    <Textarea name="freecontent" value={freecontent} onChange={freeonChangeHandler} placeholder="내용을 입력해주세요"></Textarea>
-                 </>
-                 :null
-                 } 
+      <FormContainer>
+        <FormWrap onSubmit={onSubmitHandler}>
+          <FormHeader>
+            <IoIosArrowBack
+              size='25px'
+              cursor='pointer'
+              onClick={() => navigate('/')}
+            />
+            <Button type='submit' backgroundColor='white'>
+              올리기
+            </Button>
+          </FormHeader>
+          <FormBody>
+            <FormSelection name='category' onChange={handleSelect}>
+              <option value='help'>도움요청</option>
+              <option value='info'>정보공유</option>
+              <option value='meet'>만남일정</option>
+              <option value='freetalk'>자유토크</option>
+            </FormSelection>
 
-                </FormBody>
-                <FormFooter>
-                    <FooterContain>
-                    
-                    {(select === "help" || select === "info" || select === "freetalk")? 
-                    <>
-                    <Filelabel className="fileUpload-button" htmlFor="fileUpload" onChange={addImage}>
-                    <Imgadd  size="24px" />
-                    <Addfile type="file" multiple="multiple" id="fileUpload"  accept=".jpg,.jpeg,.png"/>
-                    <div style={{fontSize : "12px" , marginLeft:"10px"}}>이미지 첨부</div>
-                    </Filelabel>
+            {select === 'help' ? (
+              <>
+                <FormInput
+                  name='title'
+                  value={title}
+                  onChange={onChangeHandler}
+                  placeholder='제목을 입력해주세요'
+                ></FormInput>
+                <Textarea
+                  name='content'
+                  value={content}
+                  onChange={onChangeHandler}
+                  placeholder='내용을 입력해주세요'
+                ></Textarea>
+              </>
+            ) : select === 'info' ? (
+              <>
+                <FormInput
+                  name='infotitle'
+                  value={infotitle}
+                  onChange={infoonChangeHandler}
+                  placeholder='제목을 입력해주세요'
+                ></FormInput>
+                <Textarea
+                  name='infocontent'
+                  value={infocontent}
+                  onChange={infoonChangeHandler}
+                  placeholder='내용을 입력해주세요'
+                ></Textarea>
+              </>
+            ) : select === 'meet' ? (
+              <>
+                {modalOpen && <CalendarModal setModalOpen={setModalOpen} />}
+                {/* 만남일정 게시판 get, post 구현 안되어서 구현되면 input name,value 줄 예정 */}
+                {/* <FormInput name="infotitle" value={infotitle} onChange={infoonChangeHandler} placeholder="제목을 입력해주세요"></FormInput> */}
+                <FormInput
+                  name='calendartitle'
+                  value={calendartitle}
+                  onChange={calendaronChangeHandler}
+                  placeholder='제목을 입력해주세요'
+                ></FormInput>
+                <CalendarButton onClick={showModal}>
+                  <CalendarTitle>날짜</CalendarTitle>
+                  <DateDiv>{getLastArrItem.calendar}</DateDiv>
+                  <IoIosArrowForward />
+                </CalendarButton>
+                <TimeDiv>
+                  <CalendarTitle>시간</CalendarTitle>
+                  {/* <IoIosArrowForward /> */}
+                  <TimeRangePicker onChange={onChange} value={value} />
+                </TimeDiv>
+                <CalendarDiv>
+                  <CalendarTitle>장소</CalendarTitle>
+                  <CalendarInput
+                    name='calendarlocation'
+                    value={calendarlocation}
+                    onChange={calendaronChangeHandler}
+                    placeholder='내용을 입력해주세요'
+                  ></CalendarInput>
+                </CalendarDiv>
+                <CalendarDiv>
+                  <CalendarTitle>내용</CalendarTitle>
+                  <CalendarInput
+                    name='calendarcontent'
+                    value={calendarcontent}
+                    onChange={calendaronChangeHandler}
+                    placeholder='내용을 입력해주세요'
+                  ></CalendarInput>
+                </CalendarDiv>
+              </>
+            ) : select === 'freetalk' ? (
+              <>
+                <FormInput
+                  name='freetitle'
+                  value={freetitle}
+                  onChange={freeonChangeHandler}
+                  placeholder='제목을 입력해주세요'
+                ></FormInput>
+                <Textarea
+                  name='freecontent'
+                  value={freecontent}
+                  onChange={freeonChangeHandler}
+                  placeholder='내용을 입력해주세요'
+                ></Textarea>
+              </>
+            ) : null}
+          </FormBody>
+          <FormFooter>
+            <FooterContain>
+              {select === 'help' ||
+              select === 'info' ||
+              select === 'freetalk' ? (
+                <>
+                  <Filelabel
+                    className='fileUpload-button'
+                    htmlFor='fileUpload'
+                    onChange={addImage}
+                  >
+                    <Imgadd size='24px' />
+                    <Addfile
+                      type='file'
+                      multiple='multiple'
+                      id='fileUpload'
+                      accept='.jpg,.jpeg,.png'
+                    />
+                    <div style={{ fontSize: '12px', marginLeft: '10px' }}>
+                      이미지 첨부
+                    </div>
+                  </Filelabel>
 
-                    {selectedImage.map((image,id)=>(
-                     <ImgContainer key={id}>
-                        <ImgContent src={image} alt={`${image}-${id}`} />
-                        <DeleteButton size="25px" onClick={()=>deleteImage(id)}/>
+                  {selectedImage.map((image, id) => (
+                    <ImgContainer key={id}>
+                      <ImgContent src={image} alt={`${image}-${id}`} />
+                      <DeleteButton
+                        size='25px'
+                        onClick={() => deleteImage(id)}
+                      />
                     </ImgContainer>
-
-                    ))}
-                    </>
-                    : null
-                    }
-                    
-                    
-                    </FooterContain>
-                </FormFooter>
-
-            </FormWrap>
-        </FormContainer>
-       
+                  ))}
+                </>
+              ) : null}
+            </FooterContain>
+          </FormFooter>
+        </FormWrap>
+      </FormContainer>
     );
 };
 
@@ -436,6 +492,7 @@ const DeleteButton = styled(TiDelete)`
     cursor:pointer;
 `
 
+const DateDiv = styled.div``
 
 const CalendarButton = styled.button`
     height: 40px;
