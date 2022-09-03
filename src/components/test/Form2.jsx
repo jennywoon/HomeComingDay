@@ -210,10 +210,19 @@ const Form2 = () => {
     const [value, onChange] = useState(['10:00', '11:00']);
     
     const getArrItem = useSelector((state) => state.dates.dates)
-    // console.log(getArrItem)
+    // console.log(getArrItem[0].calendarDate)
+    console.log(getArrItem)
+    // const getLastArrItem = getArrItem[0].calendarDate
 
-    const getLastArrItem = getArrItem[getArrItem.length-1]
-    // console.log(getLastArrItem)
+    const getLastArrItem = getArrItem[getArrItem.length-1];
+    // const getLastArrItem = () => {
+    //     if((getArrItem.length-1) === 0){
+    //         return getArrItem[getArrItem.length+1].calendarDate;
+    //     }else{
+    //         return getArrItem[getArrItem.length-1].calendarDate;
+    //     }
+    // }
+    
 
     // useEffect(()=>{
     //     setHelp({
@@ -299,6 +308,7 @@ const Form2 = () => {
                   <CalendarTitle>날짜</CalendarTitle>
                   <DateDiv>
                   {moment(getLastArrItem.calendarDate).format("YYYY년 MM월 DD일")}
+                  {/* {moment(getLastArrItem).format("YYYY년 MM월 DD일")} */}
                   </DateDiv>
                   <IoIosArrowForward />
                 </CalendarButton> 

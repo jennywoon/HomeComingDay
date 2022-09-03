@@ -54,7 +54,9 @@ const CalendarModal = ({ setModalOpen }) => {
                     <CalendarWrap ref={modalRef}>
                         <Calendar
                             onChange={onChange}
-                            // calendarDate={calendarDate} name="calendarDate" value={calendarDate}
+                            // calendarDate={calendarDate} 
+                            // name="calendarDate"
+                            // value={calendarDate}
                             formatDay={(locale, date) => dayjs(date).format('DD')}
                         />
                         <CalendarButton
