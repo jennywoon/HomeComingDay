@@ -3,16 +3,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { BiCommentDetail } from "react-icons/bi";
 import { __getFreeTalk } from '../../redux/modules/FreeTalkSlice';
+import { useNavigate } from 'react-router-dom';
 
-const FreeTalkCard = ({freetalk}) => {
+const FreeTalkCard = ({freetalk , id}) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     
     useEffect(() => {
         dispatch(__getFreeTalk());
     }, [dispatch])
 
+    const onClickNavi = () =>{
+        navigate(`/freetalkdetail/${id}`)
+    }
+
     return (
-        <HelpCard>
+        <FreeTalkContainer onClick={onClickNavi}>
             <CardHead>
             <HeadImg>
                     <BiCommentDetail />
@@ -22,22 +28,22 @@ const FreeTalkCard = ({freetalk}) => {
               <HeadTime>15분전</HeadTime>
             </CardHead>
             <CardBody>
-              <BodyTitle>{freetalk.freetitle}</BodyTitle>
+              <BodyTitle>{freetalk.title}</BodyTitle>
               <BodyContent>
-              {freetalk.freecontent}
+              {freetalk.content}
               </BodyContent>
             </CardBody>
             <CardFooter>
               <Views>조회수 1500</Views>
               <CommentCount>댓글 2700</CommentCount>
             </CardFooter>
-          </HelpCard>
+          </FreeTalkContainer>
     );
 };
 
 export default FreeTalkCard;
 
-const HelpCard = styled.div`
+const FreeTalkContainer = styled.div`
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 10px;
