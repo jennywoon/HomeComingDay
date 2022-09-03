@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../Header';
 import styled from 'styled-components';
 import { IoIosArrowBack } from 'react-icons/io'
@@ -10,21 +10,22 @@ import HelpDetailComment from './HelpDetailComment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { __deleteHelp, __updateHelp, __getHelp, __getComments, __getHelpComment, __postHelpComment } from '../../redux/modules/HelpSlice';
+import Layout from '../Layout';
 
 const HelpDetail = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {helps} = useSelector((state) => state.helps)
-    const {helpcomments} = useSelector((state)=>state.helps)
+    const { helps } = useSelector((state) => state.helps)
+    const { helpcomments } = useSelector((state) => state.helps)
     console.log(helpcomments)
-    const {id} = useParams();
-    const [show , setShow] = useState(false)
-    const [comment , setComment] = useState("")
-    const onChangePostHandler = (e) =>{
+    const { id } = useParams();
+    const [show, setShow] = useState(false)
+    const [comment, setComment] = useState("")
+    const onChangePostHandler = (e) => {
         setComment(e.target.value)
     }
-    
-    const helpsfind = helps.find((help)=> help.id === Number(id))
+
+    const helpsfind = helps.find((help) => help.id === Number(id))
 
     useEffect(() => {
         dispatch(__getHelp());
@@ -32,18 +33,18 @@ const HelpDetail = () => {
     }, [dispatch])
 
     // console.log("helps", helps , "helpsfind" , helpsfind)
-    
-    const onCilckShow = () =>{
+
+    const onCilckShow = () => {
         setShow(!show)
     }
 
 
     const onClickDelete = () => {
         const result = window.confirm("정말 삭제하시겠습니까?")
-        if(result){
+        if (result) {
             dispatch(__deleteHelp(id))
             navigate("/")
-        }else{
+        } else {
             return null
         }
     }
@@ -52,10 +53,10 @@ const HelpDetail = () => {
         navigate(`/helpupdate/${id}`)
     }
 
-    const onClickPostComment = (e) =>{
+    const onClickPostComment = (e) => {
         const newcomment = {
-            comment : comment,
-            articleid : id
+            comment: comment,
+            articleid: id
         }
         dispatch(__postHelpComment(newcomment))
     }
@@ -63,12 +64,14 @@ const HelpDetail = () => {
     return (
         <DetailContainer>
             <DetailWrap>
-                <Header/>
-                <DetailHeader>
-                    <IoIosArrowBack size="25px" cursor="pointer" onClick={()=> {navigate(-1)}}/>
-                    <HeaderTitle>도움요청</HeaderTitle>
-                    <div></div>
-                </DetailHeader>
+                <FirstWrap>
+                    <Header />
+                    <DetailHeader>
+                        <IoIosArrowBack size="25px" cursor="pointer" onClick={() => { navigate(-1) }} />
+                        <HeaderTitle>도움요청</HeaderTitle>
+                        <div></div>
+                    </DetailHeader>
+                </FirstWrap>
                 <DetailBody>
                     <Bodytop>
                         <Bodyimg src={Img} alt="" />
@@ -76,16 +79,16 @@ const HelpDetail = () => {
                             <Txtname>최형용</Txtname>
                             <Txtstudent>14학번 <span> 15분 전 </span></Txtstudent>
                         </Bodytxt>
-                        <AiOutlineMenu size="20px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }} 
-                        onClick={onCilckShow}/>
- 
-                    {show ? 
-                        <Revisebox>
-                            <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
-                            <DeleteButton onClick={onClickDelete}>삭제</DeleteButton>
-                        </Revisebox>
-                    : null
-                    }
+                        <AiOutlineMenu size="20px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }}
+                            onClick={onCilckShow} />
+
+                        {show ?
+                            <Revisebox>
+                                <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
+                                <DeleteButton onClick={onClickDelete}>삭제</DeleteButton>
+                            </Revisebox>
+                            : null
+                        }
 
                     </Bodytop>
                     <BodyContent>
@@ -96,22 +99,18 @@ const HelpDetail = () => {
                     </BodyContent>
 
                     <BodyCommentBox>
-                        {helpcomments && helpcomments.map((comment)=>(
-                            <HelpDetailComment key={comment.id} comment={comment}/>
+                        {helpcomments && helpcomments.map((comment) => (
+                            <HelpDetailComment key={comment.id} comment={comment} />
                         ))}
-                       
-                        
-
                         <CommentContainer>
                             <CommentBox>
                                 <CommentDiv>
                                     <CommentPost placeholder='댓글을 입력해주세요' value={comment} onChange={onChangePostHandler} ></CommentPost>
-                                    <CommentButton type="button"onClick={onClickPostComment}>올리기</CommentButton>
+                                    <CommentButton type="button" onClick={onClickPostComment}>올리기</CommentButton>
                                 </CommentDiv>
                             </CommentBox>
                         </CommentContainer>
                     </BodyCommentBox>
-
                 </DetailBody>
             </DetailWrap>
         </DetailContainer>
@@ -138,14 +137,21 @@ const DetailContainer = styled.div`
 
 const DetailWrap = styled.form`
   width: 500px;
-  /* height:100vh; */
+  height:100%;
   /* overflow-y: scroll; */
   background-color: white;
   display: flex;
   flex-direction: column;
+  position: sticky;
 `;
 
+const FirstWrap = styled.div`
+    display: flex;
+    flex-direction: column;
+    /* border:1px solid blue; */
+`
 const DetailHeader = styled.div`
+    /* width: 100%; */
     height: 50px;
     display: flex;
     align-items: center;
@@ -195,9 +201,10 @@ const DeleteButton = styled.button`
 
 const DetailBody = styled.div`
     border: 1px solid #f1f0f0;
+    /* border: 1px solid red; */
     margin: 10px 20px;
     border-radius: 20px;
-    height:100vh;
+    /* height:100vh; */
     box-sizing: border-box;
     /* box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.05); */
     /* overflow: scroll; */
@@ -254,7 +261,10 @@ const ContentView = styled.p`
 const BodyCommentBox = styled.div`
     border-top : 1px solid rgba(0,0,0,0.1);
     margin:20px;
-    position:relative;
+    /* overflow-y: scroll; */
+    /* height: 100%; */
+    /* position:relative; */
+    height: 70%;
 `
 
 const CommentContainer = styled.div`
