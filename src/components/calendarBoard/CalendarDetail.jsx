@@ -22,8 +22,12 @@ const CalendarDetail = () => {
   const calendarfind = calendars.find((calendar) => calendar.id === Number(id))
 
   const getArrItem = useSelector((state) => state.dates.dates)
-  const getLastArrItem =getArrItem.find((getArrItem) => getArrItem.id === Number(id))
-  // const getLastArrItem = getArrItem[getArrItem.length-1]
+
+  // const getLastArrItem =getArrItem.find((getArrItem) => getArrItem.id === Number(id))
+  // const getLastArrItem = getArrItem.find((getTest) => getTest.id === Number(id))
+  const getTest = (getArrItem.length)-1
+  console.log(getTest)
+  const getLastArrItem = getArrItem.find((getTest) => getTest.id === Number(id))
   
   useEffect(()=> {
     dispatch(__getCalendar());

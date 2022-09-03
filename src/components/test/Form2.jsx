@@ -93,7 +93,7 @@ const Form2 = () => {
     const { title, content, imgUrl } = help;
     const { infotitle, infocontent, infoimageUrl } = info;
     const { freetitle, freecontent, freeimageUrl } = freetalk;
-    const { calendartitle, calendarlocation, calendarcontent } = calendar;
+    const { calendartitle, calendarlocation, calendarcontent} = calendar;
 
     // console.log("help", title.length , "info" , info.length , "free" , freetalk.length)
 
@@ -189,12 +189,12 @@ const Form2 = () => {
             navigate("/freetalk")
         }else if(select ==="meet"){
             dispatch(__postCalendar(calendar));
-            setFreetalk({
-                calendartitle: "",
-                calendarlocation: "",
-                calendarcontent : "",
-                getLastArrItem: ""
-            })
+            // setFreetalk({
+            //     calendartitle: "",
+            //     calendarlocation: "",
+            //     calendarcontent : "",
+            //     getLastArrItem: ""
+            // })
             navigate("/calendar")
         }
     }
@@ -214,15 +214,7 @@ const Form2 = () => {
     console.log(getArrItem)
     // const getLastArrItem = getArrItem[0].calendarDate
 
-    const getLastArrItem = getArrItem[getArrItem.length-1];
-    // let getLastArrItem = () => {
-    //     if((getArrItem.length-1) === 0){
-    //         return getArrItem[getArrItem.length+1].calendarDate;
-    //     }else{
-    //         return getArrItem[getArrItem.length-1].calendarDate;
-    //     }
-    // }
-    
+    const getLastArrItem = getArrItem[getArrItem.length-1];  
 
     // useEffect(()=>{
     //     setHelp({
@@ -308,7 +300,6 @@ const Form2 = () => {
                   <CalendarTitle>날짜</CalendarTitle>
                   <DateDiv>
                   {getLastArrItem&&moment(getLastArrItem.calendarDate).format("YYYY년 MM월 DD일")}
-                  {/* {moment(getLastArrItem).format("YYYY년 MM월 DD일")} */}
                   </DateDiv>
                   <IoIosArrowForward />
                 </CalendarButton> 

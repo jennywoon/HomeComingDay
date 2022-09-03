@@ -13,6 +13,8 @@ const CalendarCard = ({ calendar, id }) => {
     const navigate = useNavigate();
 
     const getArrItem = useSelector((state) => state.dates.dates)
+    console.log(getArrItem)
+    // const getTest = getArrItem[getArrItem.length-1]
     // const getLastArrItem = getArrItem[getArrItem.length-1]
     const getLastArrItem = getArrItem.find((getArrItem) => getArrItem.id === Number(id))
 

@@ -5,8 +5,7 @@ import axios from "axios";
 // const cookies = new Cookies();
 
 const initialState = {
-    calendars: [
-    ],
+    calendars: [],
     isLoading: false,
     error: null,
 };
@@ -115,7 +114,6 @@ export const CalendarSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       },
-
     },
 });
 

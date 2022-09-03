@@ -5,7 +5,7 @@ import Calendar from 'react-calendar';
 import "./CalendarModal.css"
 import dayjs from 'dayjs';
 import moment from 'moment';
-import { __postCalendar } from '../../redux/modules/CalendarSlice';
+// import { __postCalendar } from '../../redux/modules/CalendarSlice';
 import { __postDate } from '../../redux/modules/DateSlice';
 
 const CalendarModal = ({ setModalOpen }) => {
@@ -60,7 +60,6 @@ const CalendarModal = ({ setModalOpen }) => {
                             formatDay={(locale, date) => dayjs(date).format('DD')}
                         />
                         <CalendarButton
-                        type="submit"
                         onClick={onsubmitHandler}
                         >확인</CalendarButton>
                         {moment(date).format("YYYY년 MM월 DD일")}
@@ -98,7 +97,7 @@ const Container = styled.div`
   }
 `
 
-const Wrap = styled.div`
+const Wrap = styled.form`
     width: 500px;
     /* height: 100vh; */
     display: flex;
