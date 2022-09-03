@@ -20,8 +20,7 @@ export const store = configureStore({
     calendars : CalendarSlice,
     dates: DateSlice,
     searchs: SearchSlice,
-    schoolSearchs: SchoolInfoSlice,
-    departmentSearchs: SchoolInfoSlice,
+    schoolInfo: SchoolInfoSlice,
   }
 });
 
