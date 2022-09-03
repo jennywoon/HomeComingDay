@@ -37,7 +37,7 @@ const CalendarModal = ({ setModalOpen }) => {
     const onsubmitHandler = (e) =>{
         e.preventDefault();
         const dates = {calendar : realCalendar}
-        dispatch(__postCalendar(dates));
+        dispatch(__postDate(dates));
     }
 
     return (
@@ -56,7 +56,7 @@ const CalendarModal = ({ setModalOpen }) => {
                         type="submit"
                         onClick={onsubmitHandler}
                         >확인</CalendarButton>
-                        {moment(date).format("YYYY년 MM월 DD일")}
+                        {/* {moment(date).format("YYYY년 MM월 DD일")} */}
                     </CalendarWrap>
                 </Wrap>
             </Container>

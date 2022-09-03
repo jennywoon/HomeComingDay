@@ -296,7 +296,9 @@ const Form2 = () => {
                 ></FormInput>
                 <CalendarButton onClick={showModal}>
                   <CalendarTitle>날짜</CalendarTitle>
-                  <DateDiv>{getLastArrItem.calendar}</DateDiv>
+                  <DateDiv>
+                  {moment(getLastArrItem.calendar).format("YYYY년 MM월 DD일")}
+                  </DateDiv>
                   <IoIosArrowForward />
                 </CalendarButton>
                 <TimeDiv>
@@ -492,7 +494,7 @@ const DeleteButton = styled(TiDelete)`
     cursor:pointer;
 `
 
-const DateDiv = styled.div``
+// const DateDiv = styled.div``
 
 const CalendarButton = styled.button`
     height: 40px;
@@ -526,10 +528,11 @@ const CalendarTitle = styled.div`
 const DateDiv = styled.div`
     width: 65%;
     height: 30px;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     display: flex;
-    justify-content: center;
+    justify-content: right;
     align-items: center;
+    font-size: 14px;
 `
 const CalendarDiv = styled.div`
     height: 40px;
