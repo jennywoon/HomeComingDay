@@ -9,23 +9,29 @@ import Button from '../elements/Button';
 import HelpDetailComment from './HelpDetailComment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteHelp, __updateHelp, __getHelp, __postComment, __getComments } from '../../redux/modules/HelpSlice';
+import { __deleteHelp, __updateHelp, __getHelp, __getComments, __getHelpComment, __postHelpComment } from '../../redux/modules/HelpSlice';
 
 const HelpDetail = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {helps} = useSelector((state) => state.helps)
+    const {helpcomments} = useSelector((state)=>state.helps)
+    console.log(helpcomments)
     const {id} = useParams();
-    console.log(id)
     const [show , setShow] = useState(false)
+    const [comment , setComment] = useState("")
+    const onChangePostHandler = (e) =>{
+        setComment(e.target.value)
+    }
     
     const helpsfind = helps.find((help)=> help.id === Number(id))
 
     useEffect(() => {
         dispatch(__getHelp());
+        dispatch(__getHelpComment())
     }, [dispatch])
 
-    console.log("helps", helps , "helpsfind" , helpsfind)
+    // console.log("helps", helps , "helpsfind" , helpsfind)
     
     const onCilckShow = () =>{
         setShow(!show)
@@ -46,8 +52,12 @@ const HelpDetail = () => {
         navigate(`/helpupdate/${id}`)
     }
 
-    const onClickPostComment = () =>{
-        dispatch(__deleteHelp(id))
+    const onClickPostComment = (e) =>{
+        const newcomment = {
+            comment : comment,
+            articleid : id
+        }
+        dispatch(__postHelpComment(newcomment))
     }
 
     return (
@@ -86,14 +96,17 @@ const HelpDetail = () => {
                     </BodyContent>
 
                     <BodyCommentBox>
-                        <HelpDetailComment /> {/* 댓글맵돌리기  */}
-                        <HelpDetailComment />
+                        {helpcomments && helpcomments.map((comment)=>(
+                            <HelpDetailComment key={comment.id} comment={comment}/>
+                        ))}
+                       
+                        
 
                         <CommentContainer>
                             <CommentBox>
                                 <CommentDiv>
-                                    <CommentPost placeholder='댓글을 입력해주세요'></CommentPost>
-                                    <CommentButton onClick = {onClickPostComment}>올리기</CommentButton>
+                                    <CommentPost placeholder='댓글을 입력해주세요' value={comment} onChange={onChangePostHandler} ></CommentPost>
+                                    <CommentButton type="button"onClick={onClickPostComment}>올리기</CommentButton>
                                 </CommentDiv>
                             </CommentBox>
                         </CommentContainer>

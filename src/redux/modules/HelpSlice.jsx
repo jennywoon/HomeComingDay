@@ -6,8 +6,7 @@ import axios from "axios";
 
 const initialState = {
     helps: [],
-    // help: null,
-    comments: [],
+    helpcomments: [],
     isLoading: false,
     error: null,
 };
@@ -60,24 +59,27 @@ export const __updateHelp = createAsyncThunk("helps/updateHelp", async (payload,
 
 export const __getHelpComment = createAsyncThunk("comments/getHelpComment", async (payload, thunkAPI) => {
   try {
-    const data = await axios.get(`http://localhost:3001/comments/${payload}`);
+    const data = await axios.get(`http://localhost:3001/helpcomments`);
     return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }
 });
 
-export const __postHelpComment = createAsyncThunk("comments/getHelpComment", async (payload, thunkAPI) => {
+export const __postHelpComment = createAsyncThunk("comments/postHelpComment", async (payload, thunkAPI) => {
   try {
-    const data = await axios.post(`http://localhost:3001/comments/${payload}`, payload);
+    console.log("payload" , payload)
+    const data = await axios.post(`http://localhost:3001/helpcomments`, payload);
+    console.log(data)
     return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
-    return thunkAPI.rejectWithValue("ERROR=>", error);
+    
+    return thunkAPI.rejectWithValue(error);
   }
 });
 
 export const HelpSlice = createSlice({
-    name: "helps",
+    name: "comments", 
     initialState,
     reducers: {},
     extraReducers: {
@@ -142,7 +144,7 @@ export const HelpSlice = createSlice({
       },
       [__getHelpComment.fulfilled]: (state, action) => {
         state.isLoading = false;
-        state.comments = action.payload;
+        state.helpcomments = action.payload;
       },
       [__getHelpComment.rejected]: (state, action) => {
         state.isLoading = false;
@@ -153,7 +155,8 @@ export const HelpSlice = createSlice({
       },
       [__postHelpComment.fulfilled]: (state, action) => {
         state.isLoading = false; 
-        state.comments.push(action.payload);
+        console.log(action.payload)
+        state.helpcomments.push(action.payload);
       },
       [__postHelpComment.rejected]: (state, action) => {
         state.isLoading = false; 

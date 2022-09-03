@@ -56,3 +56,6 @@
 
 ## ❓ Trouble Shooting Front-End
 - 반응형 페이지 구성 : 웹을 만들지만 앱 모양으로 만들다보니, 반응형 구현이 너무 어려웠다.. 기능이 들어가지도 않았는데 커밋 갯수가 105개였다.
+- 달력 라이브러리 get, post : 디자인상 라이브러리를 모달로 만들어서 사용해야 했기 때문에, 같은 module을 사용할 수 없어 두 개의 모듈을 구성해서 만들었다. useSelector로 다른 컴포넌트에서 데이터값을 찾아 입력하려고 했는데 여기서 문제가 발생했다. 두 가지의 모듈이 달라 데이터를 일치시킬 수 없어서 달력에 찍힌 값을 length-1로 구해 찾아보려고 했으나, db.json에 데이터가 한 개도 없을 경우, 오류가 발생하였고 이 부분을 해결하기 위해 하루종일을 썼는데,,, 아주 쉽게 해결 할 수 있었다.
+-> 에러 : {moment(getLastArrItem.calendarDate).format("YYYY년 MM월 DD일")} : 이렇게 사용하면 db가 없을 경우 에러가 뜬다.
+-> 올바른 코드 : {getLastArrItem&&moment(getLastArrItem.calendarDate).format("YYYY년 MM월 DD일")} : 정의한 값 && 이것만 넣어줘도 에러가 해결된다 ㅠㅡㅠ
