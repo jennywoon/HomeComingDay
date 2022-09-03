@@ -11,6 +11,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { __deleteHelp, __updateHelp, __getHelp, __getComments, __getHelpComment, __postHelpComment } from '../../redux/modules/HelpSlice';
 import Layout from '../Layout';
+import SearchLayout from '../SearchLayout';
 
 const HelpDetail = () => {
     const dispatch = useDispatch();
@@ -62,10 +63,9 @@ const HelpDetail = () => {
     }
 
     return (
-        <DetailContainer>
+        <SearchLayout>
             <DetailWrap>
                 <FirstWrap>
-                    <Header />
                     <DetailHeader>
                         <IoIosArrowBack size="25px" cursor="pointer" onClick={() => { navigate(-1) }} />
                         <HeaderTitle>도움요청</HeaderTitle>
@@ -113,12 +113,11 @@ const HelpDetail = () => {
                     </BodyCommentBox>
                 </DetailBody>
             </DetailWrap>
-        </DetailContainer>
+        </SearchLayout>
     );
 };
 
 export default HelpDetail;
-
 
 const DetailContainer = styled.div`
   margin: 0 auto;
@@ -135,20 +134,26 @@ const DetailContainer = styled.div`
   }
 `;
 
+const StLayout = styled.div`
+    height: 100%;
+    border: 1px solid green;
+`
 const DetailWrap = styled.form`
-  width: 500px;
-  height:100%;
+  /* width: 500px; */
+  width: 100%;
+  /* height:100%; */
   /* overflow-y: scroll; */
   background-color: white;
   display: flex;
   flex-direction: column;
-  position: sticky;
+  /* position: sticky; */
 `;
 
 const FirstWrap = styled.div`
     display: flex;
     flex-direction: column;
-    /* border:1px solid blue; */
+    border:1px solid blue;
+    height: 100%;
 `
 const DetailHeader = styled.div`
     /* width: 100%; */
@@ -201,20 +206,21 @@ const DeleteButton = styled.button`
 
 const DetailBody = styled.div`
     border: 1px solid #f1f0f0;
-    /* border: 1px solid red; */
-    margin: 10px 20px;
+    border: 1px solid red;
+    /* margin: 10px 20px; */
     border-radius: 20px;
     /* height:100vh; */
     box-sizing: border-box;
     /* box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.05); */
     /* overflow: scroll; */
+    width: 100%;
 `
 
 const Bodytop = styled.div`
     display:flex;
     align-items: center;
     padding:20px 20px 10px 20px;
-    position: relative;
+    /* position: relative; */
 
 `
 
