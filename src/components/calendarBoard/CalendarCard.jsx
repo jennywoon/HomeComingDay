@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Img from "../../assets/naverIcon.png"
 import { BsCalendarCheck } from "react-icons/bs";
 import { __getCalendar } from '../../redux/modules/CalendarSlice';
+import { __getDate } from '../../redux/modules/DateSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 
@@ -12,11 +13,12 @@ const CalendarCard = ({ calendar, id }) => {
     const navigate = useNavigate();
 
     const getArrItem = useSelector((state) => state.dates.dates)
-    const getLastArrItem = getArrItem[getArrItem.length-1]
-    // const getLastArrItem = getArrItem.find((getArrItem) => getArrItem.id === Number(id))
+    // const getLastArrItem = getArrItem[getArrItem.length-1]
+    const getLastArrItem = getArrItem.find((getArrItem) => getArrItem.id === Number(id))
 
     useEffect(() => {
         dispatch(__getCalendar());
+        dispatch(__getDate());
     }, [dispatch])
 
     const onClickHandler = () => {
@@ -36,7 +38,7 @@ const CalendarCard = ({ calendar, id }) => {
             <CardBody>
                 <BodyTitle>{calendar.calendartitle}</BodyTitle>
                 <BodyContent>
-                {moment(getLastArrItem.calendarDate).format("YYYY년 MM월 DD일")}
+                {getLastArrItem && moment(getLastArrItem.calendarDate).format("YYYY년 MM월 DD일")}
                 </BodyContent>
                 <BodyContent>
                     {calendar.calendarcontent}

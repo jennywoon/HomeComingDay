@@ -12,8 +12,8 @@ const CalendarModal = ({ setModalOpen }) => {
     const dispatch = useDispatch();
     // const [value, onChange] = useState(new Date())
 
-    const {dates} = useSelector((state) => state.dates)
-    console.log(dates);
+    // const {dates} = useSelector((state) => state.dates)
+    // console.log(dates);
 
 
     const [date, setDate] = useState({
@@ -54,7 +54,7 @@ const CalendarModal = ({ setModalOpen }) => {
                     <CalendarWrap ref={modalRef}>
                         <Calendar
                             onChange={onChange}
-                            calendarDate={calendarDate} name="calendarDate" value={calendarDate}
+                            // calendarDate={calendarDate} name="calendarDate" value={calendarDate}
                             formatDay={(locale, date) => dayjs(date).format('DD')}
                         />
                         <CalendarButton
@@ -96,7 +96,7 @@ const Container = styled.div`
   }
 `
 
-const Wrap = styled.form`
+const Wrap = styled.div`
     width: 500px;
     /* height: 100vh; */
     display: flex;

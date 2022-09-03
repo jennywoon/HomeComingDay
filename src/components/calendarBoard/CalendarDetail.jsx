@@ -22,8 +22,8 @@ const CalendarDetail = () => {
   const calendarfind = calendars.find((calendar) => calendar.id === Number(id))
 
   const getArrItem = useSelector((state) => state.dates.dates)
-  // const getLastArrItem =getArrItem.find((getArrItem) => getArrItem.id === Number(id))
-  const getLastArrItem = getArrItem[getArrItem.length-1]
+  const getLastArrItem =getArrItem.find((getArrItem) => getArrItem.id === Number(id))
+  // const getLastArrItem = getArrItem[getArrItem.length-1]
   
   useEffect(()=> {
     dispatch(__getCalendar());
@@ -86,7 +86,7 @@ const onClickRevice = () => {
             <ContentBody>
               <Contentget>
                 <ContentgetTitle>날짜 </ContentgetTitle>
-                {moment(getLastArrItem.calendarDate).format("YYYY년 MM월 DD일")}
+                {getLastArrItem && moment(getLastArrItem.calendarDate).format("YYYY년 MM월 DD일")}
               </Contentget>
               <Contentget>
                 <ContentgetTitle>시간 </ContentgetTitle>오후 8:00
