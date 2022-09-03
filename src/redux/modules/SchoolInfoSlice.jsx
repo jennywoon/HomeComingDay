@@ -7,6 +7,8 @@ import axios from "axios";
 const initialState = {
     schoolSearchs:[],
     departmentSearchs:[],
+    admissions:[],
+    schoolInfos:[],
     isLoading: false,
     error: null,
 };
@@ -24,7 +26,7 @@ export const __getSchoolSearch = createAsyncThunk("getSchoolSearch", async (payl
 
 // 학과정보 검색
 export const __getDepartmentSearch = createAsyncThunk("getDepartmentSearch", async (payload, thunkAPI) => {
-  console.log('payload', payload)
+  // console.log('payload', payload)
   try {
       const data = await axios.get("http://localhost:3001/departmentSearchs");
       // console.log('data', data)
@@ -33,6 +35,31 @@ export const __getDepartmentSearch = createAsyncThunk("getDepartmentSearch", asy
       return thunkAPI.rejectWithValue(error);
   }
 });
+
+// 입학년도 검색
+export const __getAdmissions = createAsyncThunk("getAdmissions", async (payload, thunkAPI) => {
+  // console.log('payload', payload)
+  try {
+      const data = await axios.get("http://localhost:3001/admissions");
+      // console.log('data', data)
+      return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+  }
+});
+
+// 학교 정보 post
+export const __postSchoolInfo = createAsyncThunk(
+  'postSchoolInfo',
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.post(`http://localhost:3001/schoolInfos`, payload);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 export const SchoolInfoSlice = createSlice({
     name: "SchoolInfoSlice",
@@ -58,6 +85,28 @@ export const SchoolInfoSlice = createSlice({
         state.departmentSearchs = action.payload;
       },
       [__getDepartmentSearch.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+      [__getAdmissions.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__getAdmissions.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        state.admissions = action.payload;
+      },
+      [__getAdmissions.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+      [__postSchoolInfo.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__postSchoolInfo.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        state.schoolInfos.push(action.payload);
+      },
+      [__postSchoolInfo.rejected]: (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       },
