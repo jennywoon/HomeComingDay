@@ -107,8 +107,22 @@ const SignUp = () => {
       return { type: 'password', visible: false };
     });
   };
-
+  
   const [passwordType, setPasswordType] = useState({
+    type: 'password',
+    visible: false,
+  });
+  
+  const handlePasswordConfirmType = () => {
+    setPasswordConfirmType(() => {
+      if (!passwordConfirmType.visible) {
+        return { type: 'text', visible: true };
+      }
+      return { type: 'password', visible: false };
+    });
+  }
+
+  const [passwordConfirmType, setPasswordConfirmType] = useState({
     type: 'password',
     visible: false,
   });
@@ -233,8 +247,8 @@ const SignUp = () => {
               onChange={handleChangeConfirmPassword}
               padding='10px 15px'
             />
-            <StVisible2 onClick={handlePasswordType}>
-              {passwordType.visible ? (
+            <StVisible onClick={handlePasswordConfirmType}>
+              {passwordConfirmType.visible ? (
                 <span>
                   <AiOutlineEye />
                 </span>
@@ -243,7 +257,7 @@ const SignUp = () => {
                   <AiOutlineEyeInvisible />
                 </span>
               )}
-            </StVisible2>
+            </StVisible>
           </StFlexbox>
           {confirmPasswordError ? (
             <StErrorMessage>비밀번호가 일치하지 않습니다.</StErrorMessage>
@@ -316,12 +330,6 @@ const StEmailConfirm = styled.button`
 `;
 
 const StVisible = styled.span`
-  position : absolute;
-  right : 5px;
-  top : 50%;
-  transform : translatey(-50%);
-`
-const StVisible2 = styled.span`
   position : absolute;
   right : 5px;
   top : 50%;
