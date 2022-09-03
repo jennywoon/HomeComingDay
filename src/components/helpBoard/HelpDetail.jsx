@@ -63,7 +63,7 @@ const HelpDetail = () => {
     return (
         <DetailContainer>
             <DetailWrap>
-                <Header />
+                <Header/>
                 <DetailHeader>
                     <IoIosArrowBack size="25px" cursor="pointer" onClick={()=> {navigate(-1)}}/>
                     <HeaderTitle>도움요청</HeaderTitle>
@@ -138,7 +138,8 @@ const DetailContainer = styled.div`
 
 const DetailWrap = styled.form`
   width: 500px;
-  height:100vh;
+  /* height:100vh; */
+  /* overflow-y: scroll; */
   background-color: white;
   display: flex;
   flex-direction: column;
