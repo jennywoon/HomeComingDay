@@ -4,11 +4,16 @@ import styled from 'styled-components';
 import Img from "../../assets/naverIcon.png"
 import { BsCalendarCheck } from "react-icons/bs";
 import { __getCalendar } from '../../redux/modules/CalendarSlice';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import moment from 'moment';
 
 const CalendarCard = ({ calendar, id }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const getArrItem = useSelector((state) => state.dates.dates)
+    const getLastArrItem = getArrItem[getArrItem.length-1]
+    // const getLastArrItem = getArrItem.find((getArrItem) => getArrItem.id === Number(id))
 
     useEffect(() => {
         dispatch(__getCalendar());
@@ -30,6 +35,9 @@ const CalendarCard = ({ calendar, id }) => {
             </CardHead>
             <CardBody>
                 <BodyTitle>{calendar.calendartitle}</BodyTitle>
+                <BodyContent>
+                {moment(getLastArrItem.calendar).format("YYYY년 MM월 DD일")}
+                </BodyContent>
                 <BodyContent>
                     {calendar.calendarcontent}
                 </BodyContent>

@@ -192,7 +192,8 @@ const Form2 = () => {
             setFreetalk({
                 calendartitle: "",
                 calendarlocation: "",
-                calendarcontent : ""
+                calendarcontent : "",
+                getLastArrItem: ""
             })
             navigate("/calendar")
         }

@@ -56,7 +56,7 @@ const CalendarModal = ({ setModalOpen }) => {
                         type="submit"
                         onClick={onsubmitHandler}
                         >확인</CalendarButton>
-                        {/* {moment(date).format("YYYY년 MM월 DD일")} */}
+                        {moment(date).format("YYYY년 MM월 DD일")}
                     </CalendarWrap>
                 </Wrap>
             </Container>
@@ -104,7 +104,7 @@ const CalendarWrap = styled.div`
     /* padding: 0 20px; */
     /* width: 460px; */
     width: 100%;
-    height: 400px;
+    height: 450x;
     background-color: white;
     display: flex;
     flex-direction: column;

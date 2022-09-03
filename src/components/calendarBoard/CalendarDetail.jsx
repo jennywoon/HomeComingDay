@@ -10,6 +10,7 @@ import CalendarDetailComment from '../calendarBoard/CalendatDetailComment'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {__getCalendar, __deleteCalendar} from '../../redux/modules/CalendarSlice';
+import moment from 'moment';
 
 const CalendarDetail = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,10 @@ const CalendarDetail = () => {
   
   const { calendars } = useSelector((state) => state.calendars);
   const calendarfind = calendars.find((calendar) => calendar.id === Number(id))
+
+  const getArrItem = useSelector((state) => state.dates.dates)
+  // const getLastArrItem =getArrItem.find((getArrItem) => getArrItem.id === Number(id))
+  const getLastArrItem = getArrItem[getArrItem.length-1]
   
   useEffect(()=> {
     dispatch(__getCalendar());
@@ -80,7 +85,8 @@ const onClickRevice = () => {
             <ContentTitle>{calendarfind&&calendarfind.calendartitle}</ContentTitle>
             <ContentBody>
               <Contentget>
-                <ContentgetTitle>날짜 </ContentgetTitle>8월 30일 화요일
+                <ContentgetTitle>날짜 </ContentgetTitle>
+                {moment(getLastArrItem.calendar).format("YYYY년 MM월 DD일")}
               </Contentget>
               <Contentget>
                 <ContentgetTitle>시간 </ContentgetTitle>오후 8:00
