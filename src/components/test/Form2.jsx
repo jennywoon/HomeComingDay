@@ -215,7 +215,7 @@ const Form2 = () => {
     // const getLastArrItem = getArrItem[0].calendarDate
 
     const getLastArrItem = getArrItem[getArrItem.length-1];
-    // const getLastArrItem = () => {
+    // let getLastArrItem = () => {
     //     if((getArrItem.length-1) === 0){
     //         return getArrItem[getArrItem.length+1].calendarDate;
     //     }else{
@@ -307,7 +307,7 @@ const Form2 = () => {
                 <CalendarButton onClick={showModal}>
                   <CalendarTitle>날짜</CalendarTitle>
                   <DateDiv>
-                  {moment(getLastArrItem.calendarDate).format("YYYY년 MM월 DD일")}
+                  {getLastArrItem&&moment(getLastArrItem.calendarDate).format("YYYY년 MM월 DD일")}
                   {/* {moment(getLastArrItem).format("YYYY년 MM월 DD일")} */}
                   </DateDiv>
                   <IoIosArrowForward />
