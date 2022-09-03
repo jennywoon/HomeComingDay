@@ -4,28 +4,29 @@ import styled from 'styled-components';
 import { IoIosArrowBack } from 'react-icons/io'
 import { AiOutlineMenu } from 'react-icons/ai'
 import Img from "../../assets/naverIcon.png"
-import Help from "../../assets/help.png"
-import Button from '../elements/Button';
-import HelpDetailComment from './HelpDetailComment';
+import FreeTalkDetailComment from './FreeTalkDetailComment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteHelp, __updateHelp, __getHelp, __postComment, __getComments } from '../../redux/modules/HelpSlice';
+import { __deleteInformation, __getInformation, __postInformation, __updateInformation } from '../../redux/modules/InformationSlice';
+import { __deleteFreeTalk, __getFreeTalk } from '../../redux/modules/FreeTalkSlice';
 
-const HelpDetail = () => {
+
+const FreeTalkDetail = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {helps} = useSelector((state) => state.helps)
+    const {freetalks} = useSelector((state) => state.freetalks)
     const {id} = useParams();
     console.log(id)
     const [show , setShow] = useState(false)
     
-    const helpsfind = helps.find((help)=> help.id === Number(id))
+
+    const freetalksfind = freetalks.find((freetalk)=> freetalk.id === Number(id))
 
     useEffect(() => {
-        dispatch(__getHelp());
+        dispatch(__getFreeTalk());
     }, [dispatch])
 
-    console.log("helps", helps , "helpsfind" , helpsfind)
+    console.log("freetalks", freetalks , "freetalksfind" , freetalksfind)
     
     const onCilckShow = () =>{
         setShow(!show)
@@ -35,7 +36,7 @@ const HelpDetail = () => {
     const onClickDelete = () => {
         const result = window.confirm("정말 삭제하시겠습니까?")
         if(result){
-            dispatch(__deleteHelp(id))
+            dispatch(__deleteFreeTalk(id))
             navigate("/")
         }else{
             return null
@@ -43,11 +44,7 @@ const HelpDetail = () => {
     }
 
     const onClickRevice = () => {
-        navigate(`/helpupdate/${id}`)
-    }
-
-    const onClickPostComment = () =>{
-        dispatch(__deleteHelp(id))
+        navigate(`/freetalkupdate/${id}`)
     }
 
     return (
@@ -56,7 +53,7 @@ const HelpDetail = () => {
                 <Header />
                 <DetailHeader>
                     <IoIosArrowBack size="25px" cursor="pointer" onClick={()=> {navigate(-1)}}/>
-                    <HeaderTitle>도움요청</HeaderTitle>
+                    <HeaderTitle>자유토크</HeaderTitle>
                     <div></div>
                 </DetailHeader>
                 <DetailBody>
@@ -79,21 +76,22 @@ const HelpDetail = () => {
 
                     </Bodytop>
                     <BodyContent>
-                        <ContentTitle>{helpsfind && helpsfind.title}</ContentTitle>
-                        <ContentBody>{helpsfind && helpsfind.content}</ContentBody>
-                        <ContentImg src={helpsfind && helpsfind.imageList[0]}></ContentImg>
+                        <ContentTitle>{freetalksfind && freetalksfind.title}</ContentTitle>
+                        <ContentBody>{freetalksfind && freetalksfind.content}</ContentBody>
+                        <ContentImg src={freetalksfind && freetalksfind.imageList[0]}></ContentImg>
                         <ContentView>조회수 1000회 | 댓글 100개</ContentView>
                     </BodyContent>
 
                     <BodyCommentBox>
-                        <HelpDetailComment /> {/* 댓글맵돌리기  */}
-                        <HelpDetailComment />
+                         {/* 댓글맵돌리기  */}
+                        <FreeTalkDetailComment />
+                        <FreeTalkDetailComment />
 
                         <CommentContainer>
                             <CommentBox>
                                 <CommentDiv>
                                     <CommentPost placeholder='댓글을 입력해주세요'></CommentPost>
-                                    <CommentButton onClick = {onClickPostComment}>올리기</CommentButton>
+                                    <CommentButton>올리기</CommentButton>
                                 </CommentDiv>
                             </CommentBox>
                         </CommentContainer>
@@ -105,7 +103,7 @@ const HelpDetail = () => {
     );
 };
 
-export default HelpDetail;
+export default FreeTalkDetail;
 
 
 const DetailContainer = styled.div`

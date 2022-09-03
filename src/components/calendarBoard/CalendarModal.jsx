@@ -11,16 +11,21 @@ import { __postDate } from '../../redux/modules/DateSlice';
 const CalendarModal = ({ setModalOpen }) => {
     const dispatch = useDispatch();
     // const [value, onChange] = useState(new Date())
+
     const {dates} = useSelector((state) => state.dates)
     console.log(dates);
 
+
     const [date, setDate] = useState({
-        calendar: "",
+        calendar : "",
     });
-    // const {calendar} = date;
+    const {calendar} = date;
     const realCalendar = date.toString();
 
     const modalRef = useRef(null);
+
+    // const {realcalendars} = useSelector((state) => state.realcalendars);
+    // console.log(realcalendars);
 
     const closeModal = (e) => {
         if (!modalRef.current.contains(e.target)) {
@@ -28,16 +33,17 @@ const CalendarModal = ({ setModalOpen }) => {
         }
     };
 
-    const onChange = (value) => setDate(value)
+    const onChange = value => setDate(value);
 
     // const callDay = (clikedDay) => { 
     //     console.log(clikedDay)
     // };
 
+    // const {clikedDay} = value;
+
     const onsubmitHandler = (e) =>{
         e.preventDefault();
-        const dates = {calendar : realCalendar}
-        dispatch(__postDate(dates));
+        dispatch(__postDate(date.toString()));
     }
 
     return (
@@ -47,9 +53,7 @@ const CalendarModal = ({ setModalOpen }) => {
                     <CalendarWrap ref={modalRef}>
                         <Calendar
                             onChange={onChange}
-                            // calendar={calendar}
-                            // name="calendar"
-                            // value={calendar}
+                            calendar={calendar} name="calendar" value={calendar}
                             formatDay={(locale, date) => dayjs(date).format('DD')}
                         />
                         <CalendarButton
@@ -91,7 +95,7 @@ const Container = styled.div`
   }
 `
 
-const Wrap = styled.div`
+const Wrap = styled.form`
     width: 500px;
     /* height: 100vh; */
     display: flex;
