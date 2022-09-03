@@ -30,7 +30,7 @@ const Information = () => {
         </Iconbox> */}
         <HelpList>
           <>
-            {informations?.map((information) => (
+            {informations.slice(0).reverse().map((information) => (
               <InformationCard key={information.id} id={information.id} information={information}/>
             ))}
           </>
