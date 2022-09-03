@@ -13,7 +13,7 @@ const CalendarModal = ({ setModalOpen }) => {
     // const [value, onChange] = useState(new Date())
     const {dates} = useSelector((state) => state.dates)
     console.log(dates);
-    
+
     const [date, setDate] = useState({
         calendar: "",
     });
@@ -37,7 +37,7 @@ const CalendarModal = ({ setModalOpen }) => {
     const onsubmitHandler = (e) =>{
         e.preventDefault();
         const dates = {calendar : realCalendar}
-        dispatch(__postDate(dates));
+        dispatch(__postCalendar(dates));
     }
 
     return (

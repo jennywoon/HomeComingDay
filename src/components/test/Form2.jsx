@@ -13,13 +13,9 @@ import Button from '../elements/Button';
 import CalendarModal from '../calendarBoard/CalendarModal';
 import TimeRangePicker from '@wojtekmaj/react-timerange-picker';
 import { __getDate } from '../../redux/modules/DateSlice';
+import moment from 'moment';
 
 const Form2 = () => {
-
-    const {dates} = useSelector((state) => state.dates)
-    console.log(dates);
-    const param = useParams();
-    const date = dates.find((date) => date.id === parseInt(param.id))
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -470,11 +466,14 @@ const CalendarTitle = styled.div`
     font-size: 14px;
 `
 
-// const DateDiv = styled.div`
-//     width: 65%;
-//     height: 30px;
-//     border: 1px solid red;
-// `
+const DateDiv = styled.div`
+    width: 65%;
+    height: 30px;
+    border: 1px solid red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
 const CalendarDiv = styled.div`
     height: 40px;
     margin-top: 10px;

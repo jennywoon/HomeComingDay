@@ -29,7 +29,6 @@ import ChatFormPage from "../pages/ChatFormPage"
 import SignupCompletePage from '../pages/SignupCompletePage';
 import NoticePage from "../pages/NoticePage";
 
-
 const Router = () => {
   
   return (
@@ -62,7 +61,6 @@ const Router = () => {
         <Route path="/informationupdate/:id" element={<InformationUpdate />} />
         <Route path="/calendardetail/:id" element={<CalendarDetail />} />
         <Route path="/calendarupdate/:id" element={<CalendarUpdate />} />
-
 
       </Routes>
     </BrowserRouter>
