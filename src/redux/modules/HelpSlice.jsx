@@ -5,8 +5,8 @@ import axios from "axios";
 // const cookies = new Cookies();
 
 const initialState = {
-    helps: [],
-    helpcomments: [],
+    helpComments : [],
+    helps : [],
     isLoading: false,
     error: null,
 };
@@ -77,6 +77,31 @@ export const __postHelpComment = createAsyncThunk("comments/postHelpComment", as
     return thunkAPI.rejectWithValue(error);
   }
 });
+
+export const __deleteHelpComment = createAsyncThunk("comments/deleteHelpComment", async (payload, thunkAPI) => {
+  try {
+    console.log(payload)
+    const data = await axios.delete(`http://localhost:3001/helpcomments/${payload}`);
+  //   console.log(payload)
+    return thunkAPI.fulfillWithValue(payload);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+}
+);
+
+export const __updateHelpComment = createAsyncThunk("comment/updateHelpComment", async (payload, thunkAPI) => {
+  try {
+    await axios.patch(`http://localhost:3001/helpcomments/${payload.id}`, payload);
+    console.log("payload",payload)
+    return thunkAPI.fulfillWithValue(payload);
+  } catch (error) {
+    console.log(payload)
+    return thunkAPI.rejectWithValue(error);
+  }
+}
+);
+
 
 export const HelpSlice = createSlice({
     name: "comments", 
@@ -162,7 +187,43 @@ export const HelpSlice = createSlice({
         state.isLoading = false; 
         state.error = action.payload;
       },
- 
+
+      [__deleteHelpComment.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__deleteHelpComment.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        // console.log(state.comment)
+        console.log(action)
+        state.helpcomments = state.helpcomments.filter(comment => comment.id !== action.payload)
+      },
+      [__deleteHelpComment.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+  
+      // updateComment
+      [__updateHelpComment.pending]: (state) => {
+        state.isLoading = true;
+      },
+  
+      [__updateHelpComment.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        console.log('action', action)
+        console.log('comment', state.helpcomments)
+        state.helpcomments = state.helpcomments.map((comment) => {
+          if (comment.id === action.payload.id) {
+            comment.comment = action.payload.comment;
+          }
+          return comment;
+        })
+  
+      },
+      [__updateHelpComment.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+
     },
 });
 
