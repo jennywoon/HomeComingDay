@@ -15,7 +15,6 @@ import { __getDate } from '../../redux/modules/DateSlice';
 // import TimeRangePicker from '@wojtekmaj/react-timerange-picker';
 import moment from 'moment';
 import { TimePicker } from 'antd';
-// import 'antd/dist/antd.css';
 import '../calendarBoard/TimePicker.css';
 
 
@@ -49,6 +48,7 @@ const Form2 = () => {
     })
 
     const [select , setSelect] = useState("help")
+    const [selectedTime, setSelectedTime] = useState("00:00");
 
 
     //이미지관련 함수
@@ -84,12 +84,12 @@ const Form2 = () => {
     // console.log(selectedImage)
 
     useEffect(() => {
-        dispatch(__getHelp());
+      dispatch(__getHelp());
     }, [dispatch]);
 
     useEffect(() => {
         dispatch(__getCalendar());
-    }, [dispatch])
+      }, [dispatch])
 
     useEffect(() => {
         dispatch(__getDate());
@@ -132,6 +132,16 @@ const Form2 = () => {
             ...calendar,
             [name]: value,
         })
+    }
+
+    const calendarTimeChangeHandler = (e) => {
+      // console.log('time',time, 'timeString',timeString);
+      const {value, name} = e.target;
+      setCalendar({
+          ...calendar,
+          [name]: value,
+      })
+      console.log(e.target)
     }
 
     const handleSelect = (e) =>{
@@ -213,13 +223,13 @@ const Form2 = () => {
     }
 
     // calendar 시간
-    const [value, onChange] = useState(['10:00', '11:00']);
-    const showSecond = true;
-const str = showSecond ? 'HH:mm:ss' : 'HH:mm';
+    // const [value, onChange] = useState(['10:00', '11:00']);
+    //     const showSecond = true;
+    // const str = showSecond ? 'HH:mm:ss' : 'HH:mm';
     
     const getArrItem = useSelector((state) => state.dates.dates)
     // console.log(getArrItem[0].calendarDate)
-    console.log(getArrItem)
+    // console.log(getArrItem)
     // const getLastArrItem = getArrItem[0].calendarDate
 
     const getLastArrItem = getArrItem[getArrItem.length-1];  
@@ -316,7 +326,19 @@ const str = showSecond ? 'HH:mm:ss' : 'HH:mm';
                 </CalendarButton>
                 <TimeDiv>
                   <CalendarTitle>시간</CalendarTitle>
-                  <StTimePicker use12Hours format='h:mm a' onChange={onchange} placeholder='시간을 선택해주세요' />
+                  <StTimePicker
+                    use12Hours
+                    format='h:mm a'
+                    name='calendartime'
+                    // value={calendartime}
+                    onChange={calendarTimeChangeHandler}
+                    placeholder='시간을 선택해주세요'
+                    showNow={false}
+                    value={moment(selectedTime, "HH:mm")}
+                    onSelect={(value) => {
+                      const timeString = moment(value).format("HH:mm");
+                      setSelectedTime(timeString)}}
+                  />
                   {/* <IoIosArrowForward /> */}
                 </TimeDiv>
                 <CalendarDiv>
@@ -594,9 +616,9 @@ const CalendarInput = styled.input`
 const StTimePicker = styled(TimePicker)`
   width: 160px;
   justify-content: space-between;
-  border:none;
-  color:orange;
+  border: none;
+  color: orange;
   input::placeholder {
-  color: gray;
-}
-`
+    color: gray;
+  }
+`;

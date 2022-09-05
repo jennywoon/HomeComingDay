@@ -97,7 +97,7 @@ const Container = styled.div`
   }
 `
 
-const Wrap = styled.form`
+const Wrap = styled.div`
     width: 500px;
     /* height: 100vh; */
     display: flex;
