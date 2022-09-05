@@ -11,9 +11,13 @@ import {TiDelete} from 'react-icons/ti'
 import {GrImage} from 'react-icons/gr'
 import Button from '../elements/Button';
 import CalendarModal from '../calendarBoard/CalendarModal';
-import TimeRangePicker from '@wojtekmaj/react-timerange-picker';
 import { __getDate } from '../../redux/modules/DateSlice';
+// import TimeRangePicker from '@wojtekmaj/react-timerange-picker';
 import moment from 'moment';
+import { TimePicker } from 'antd';
+// import 'antd/dist/antd.css';
+import '../calendarBoard/TimePicker.css';
+
 
 const Form2 = () => {
 
@@ -39,6 +43,7 @@ const Form2 = () => {
 
     const [calendar, setCalendar] = useState({
         calendartitle: "",
+        calendartime:"",
         calendarlocation: "",
         calendarcontent: "",
     })
@@ -93,7 +98,7 @@ const Form2 = () => {
     const { title, content, imgUrl } = help;
     const { infotitle, infocontent, infoimageUrl } = info;
     const { freetitle, freecontent, freeimageUrl } = freetalk;
-    const { calendartitle, calendarlocation, calendarcontent} = calendar;
+    const { calendartitle,calendartime, calendarlocation, calendarcontent} = calendar;
 
     // console.log("help", title.length , "info" , info.length , "free" , freetalk.length)
 
@@ -207,7 +212,10 @@ const Form2 = () => {
         setModalOpen(true);
     }
 
+    // calendar 시간
     const [value, onChange] = useState(['10:00', '11:00']);
+    const showSecond = true;
+const str = showSecond ? 'HH:mm:ss' : 'HH:mm';
     
     const getArrItem = useSelector((state) => state.dates.dates)
     // console.log(getArrItem[0].calendarDate)
@@ -299,14 +307,17 @@ const Form2 = () => {
                 <CalendarButton onClick={showModal}>
                   <CalendarTitle>날짜</CalendarTitle>
                   <DateDiv>
-                  {getLastArrItem&&moment(getLastArrItem.calendarDate).format("YYYY년 MM월 DD일")}
+                    {getLastArrItem &&
+                      moment(getLastArrItem.calendarDate).format(
+                        'YYYY년 MM월 DD일'
+                      )}
                   </DateDiv>
                   <IoIosArrowForward />
-                </CalendarButton> 
+                </CalendarButton>
                 <TimeDiv>
                   <CalendarTitle>시간</CalendarTitle>
+                  <StTimePicker use12Hours format='h:mm a' onChange={onchange} placeholder='시간을 선택해주세요' />
                   {/* <IoIosArrowForward /> */}
-                  <TimeRangePicker onChange={onChange} value={value} />
                 </TimeDiv>
                 <CalendarDiv>
                   <CalendarTitle>장소</CalendarTitle>
@@ -314,7 +325,7 @@ const Form2 = () => {
                     name='calendarlocation'
                     value={calendarlocation}
                     onChange={calendaronChangeHandler}
-                    placeholder='내용을 입력해주세요'
+                    placeholder='장소를 입력해주세요'
                   ></CalendarInput>
                 </CalendarDiv>
                 <CalendarDiv>
@@ -569,4 +580,14 @@ const CalendarInput = styled.input`
     ::-webkit-input-placeholder{text-align:right}
     padding: 0 10px;
     /* outline: none; */
+`
+
+const StTimePicker = styled(TimePicker)`
+  width: 160px;
+  justify-content: space-between;
+  border:none;
+  color:orange;
+  input::placeholder {
+  color: gray;
+}
 `
