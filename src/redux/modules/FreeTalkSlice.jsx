@@ -5,8 +5,8 @@ import axios from "axios";
 // const cookies = new Cookies();
 
 const initialState = {
-    freetalks: [
-    ],
+    freetalks: [],
+    freeComments:[],
     // insta: null,
     isLoading: false,
     error: null,
@@ -54,6 +54,51 @@ export const __updateFreeTalk = createAsyncThunk("freetalks/updateHelp", async (
   } catch (error) {
     // console.log('error', error)
     return thunkAPI.rejectWithValue(error.message);
+  }
+}
+);
+
+export const __getFreeComment = createAsyncThunk("comments/getInfoComment", async (payload, thunkAPI) => {
+  try {
+    const data = await axios.get(`http://localhost:3001/freeComments`);
+    return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+export const __postFreeComment = createAsyncThunk("comments/postInfoComment", async (payload, thunkAPI) => {
+  try {
+    console.log("payload" , payload)
+    const data = await axios.post(`http://localhost:3001/freeComments`, payload);
+    console.log(data)
+    return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+    
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+export const __deleteFreeComment = createAsyncThunk("comments/deleteInfoComment", async (payload, thunkAPI) => {
+  try {
+    // console.log(payload)
+    const data = await axios.delete(`http://localhost:3001/freeComments/${payload}`);
+  //   console.log(payload)
+    return thunkAPI.fulfillWithValue(payload);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+}
+);
+
+export const __updateFreeComment = createAsyncThunk("comment/updateInfoComment", async (payload, thunkAPI) => {
+  try {
+    await axios.patch(`http://localhost:3001/freeComments/${payload.id}`, payload);
+    console.log("payload",payload)
+    return thunkAPI.fulfillWithValue(payload);
+  } catch (error) {
+    console.log(payload)
+    return thunkAPI.rejectWithValue(error);
   }
 }
 );
@@ -120,6 +165,67 @@ export const FreeTalkSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       },
+
+      [__getFreeComment.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__getFreeComment.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        state.freeComments = action.payload;
+      },
+      [__getFreeComment.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+      [__postFreeComment.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__postFreeComment.fulfilled]: (state, action) => {
+        state.isLoading = false; 
+        console.log(action.payload)
+        state.freeComments.push(action.payload);
+      },
+      [__postFreeComment.rejected]: (state, action) => {
+        state.isLoading = false; 
+        state.error = action.payload;
+      },
+
+      [__deleteFreeComment.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__deleteFreeComment.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        // console.log(state.comment)
+        console.log(action)
+        state.freeComments = state.freeComments.filter(comment => comment.id !== action.payload)
+      },
+      [__deleteFreeComment.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+  
+      // updateComment
+      [__updateFreeComment.pending]: (state) => {
+        state.isLoading = true;
+      },
+  
+      [__updateFreeComment.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        console.log('action', action)
+        console.log('comment', state.freeComments)
+        state.freeComments = state.freeComments.map((comment) => {
+          if (comment.id === action.payload.id) {
+            comment.comment = action.payload.comment;
+          }
+          return comment;
+        })
+  
+      },
+      [__updateFreeComment.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+
 
     },
 });

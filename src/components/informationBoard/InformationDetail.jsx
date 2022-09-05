@@ -1,33 +1,38 @@
-import React, { useState ,useEffect} from 'react';
+import React, { useState ,useEffect, useRef} from 'react';
 import Header from '../Header';
 import styled from 'styled-components';
 import { IoIosArrowBack } from 'react-icons/io'
 import { AiOutlineMenu } from 'react-icons/ai'
 import Img from "../../assets/naverIcon.png"
-import Help from "../../assets/help.png"
-import Button from '../elements/Button';
 import InformationDetailComment from './InformationDetailComment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteInformation, __getInformation, __postInformation, __updateInformation } from '../../redux/modules/InformationSlice';
+import { __deleteInformation, __getInfoComment, __getInformation, __postInfoComment, __postInformation, __updateInformation } from '../../redux/modules/InformationSlice';
 
 
 const InformationDetail = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {informations} = useSelector((state) => state.informations)
+    const {infoComments} = useSelector((state)=>state.informations)
     const {id} = useParams();
-    console.log(id)
+    // console.log(infoComments)
     const [show , setShow] = useState(false)
-    
+    const [comment, setComment] = useState("")
+    const modalRef = useRef(null);
+
+    const onChangePostHandler = (e) => {
+        setComment(e.target.value)
+    }
 
     const informationsfind = informations.find((info)=> info.id === Number(id))
 
     useEffect(() => {
         dispatch(__getInformation());
+        dispatch(__getInfoComment());
     }, [dispatch])
 
-    console.log("information", informations , "informationsfind" , informationsfind)
+    // console.log("information", informations , "informationsfind" , informationsfind)
     
     const onCilckShow = () =>{
         setShow(!show)
@@ -48,9 +53,24 @@ const InformationDetail = () => {
         navigate(`/informationupdate/${id}`)
     }
 
+    const onClickPostComment = (e) => {
+        const newcomment = {
+            comment: comment,
+            articleid: id
+        }
+        dispatch(__postInfoComment(newcomment));
+        setComment("");
+    }
+    const closeModal = (e) => {
+        if (!modalRef.current.contains(e.target)) {
+            setShow(false);
+        }
+    };
+
+
     return (
         <DetailContainer>
-            <DetailWrap>
+            <DetailWrap onClick={closeModal}>
                 <Header />
                 <DetailHeader>
                     <IoIosArrowBack size="25px" cursor="pointer" onClick={()=> {navigate(-1)}}/>
@@ -68,7 +88,7 @@ const InformationDetail = () => {
                         onClick={onCilckShow}/>
  
                     {show ? 
-                        <Revisebox>
+                        <Revisebox ref={modalRef}>
                             <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
                             <DeleteButton onClick={onClickDelete}>삭제</DeleteButton>
                         </Revisebox>
@@ -85,14 +105,15 @@ const InformationDetail = () => {
 
                     <BodyCommentBox>
                          {/* 댓글맵돌리기  */}
-                        <InformationDetailComment />
-                        <InformationDetailComment />
+                         {infoComments && infoComments.map((comment) => (
+                           Number(comment.articleid) === informationsfind.id ? <InformationDetailComment key={comment.id} comment={comment} informationsfind={informationsfind} modalRef={modalRef} /> : null
+                        ))}
 
                         <CommentContainer>
                             <CommentBox>
                                 <CommentDiv>
-                                    <CommentPost placeholder='댓글을 입력해주세요'></CommentPost>
-                                    <CommentButton>올리기</CommentButton>
+                                <CommentPost placeholder='댓글을 입력해주세요' value={comment} onChange={onChangePostHandler} ></CommentPost>
+                                    <CommentButton type="button" onClick={onClickPostComment}>올리기</CommentButton>
                                 </CommentDiv>
                             </CommentBox>
                         </CommentContainer>

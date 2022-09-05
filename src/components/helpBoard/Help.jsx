@@ -9,7 +9,7 @@ const Help = () => {
 
   const dispatch = useDispatch();
   const { helps } = useSelector((state) => state.helps);
-  console.log(helps)
+  // console.log(helps)
 
   useEffect(() => {
     dispatch(__getHelp());
