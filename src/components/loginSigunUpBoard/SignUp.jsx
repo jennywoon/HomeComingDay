@@ -169,6 +169,7 @@ const SignUp = () => {
   }
 
   return (
+    <FormContainer>
       <StSignupContainer onSubmit={handleSubmit}>
         <StSignupWraps>
           <FisrtWrap>
@@ -179,7 +180,7 @@ const SignUp = () => {
               navigate('/login');
             }}
           />
-          <StSignupTitle style={{ justifyContent: 'center' }}>
+          <StSignupTitle style={{ justifyContent: 'center'}}>
             회원가입
           </StSignupTitle>
 
@@ -279,11 +280,18 @@ const SignUp = () => {
           </FisrtWrap>
         </StSignupWraps>
       </StSignupContainer>
+      </FormContainer>
   );
 };
 
 export default SignUp;
 
+const FormContainer = styled.div`
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow-y: hidden;
+`
 
 const StSignupContainer = styled.form`
   width: 100%;
@@ -292,11 +300,11 @@ const StSignupContainer = styled.form`
   display: flex;
   justify-content: center;
   align-items: center;
+  /* border: 1px solid red; */
 `;
 
 const StSignupWraps = styled.div`
   width: 85%;
-  /* width: 100%; */
   height: 100%;
   /* border: 1px solid red; */
 `;
@@ -309,10 +317,11 @@ const FisrtWrap = styled.div`
   justify-content: center;
 `
 
-const StSignupTitle = styled.p`
+const StSignupTitle = styled.div`
   font-size: 25px;
   font-weight: bold;
   margin-bottom: 40px;
+  /* border: 1px solid blue; */
 `;
 
 const StSignupWrap = styled.div`
@@ -320,8 +329,8 @@ const StSignupWrap = styled.div`
   padding: 0;
   border: none;
   align-items: left;
-  margin-bottom: 30px;
-  /* position: relative; */
+  /* margin-bottom: 30px; */
+  position: relative;
 `;
 
 const Stlabel = styled.label`

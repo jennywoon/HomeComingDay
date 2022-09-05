@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 const SignUpPage = () => {
   return (
-    // <JustLayout>
     <Container>
       <SignUp />
     </Container>
