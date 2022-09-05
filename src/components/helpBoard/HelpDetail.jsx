@@ -17,12 +17,12 @@ const HelpDetail = () => {
     const navigate = useNavigate();
     const { helps } = useSelector((state) => state.helps)
     const { helpcomments } = useSelector((state) => state.helps)
-    
+
     const { id } = useParams();
     const [show, setShow] = useState(false)
     const [comment, setComment] = useState("")
     const modalRef = useRef(null);
-    
+
     const onChangePostHandler = (e) => {
         setComment(e.target.value)
     }
@@ -66,7 +66,7 @@ const HelpDetail = () => {
         setComment("");
     }
 
-    
+
 
     const closeModal = (e) => {
         if (!modalRef.current.contains(e.target)) {
@@ -76,93 +76,85 @@ const HelpDetail = () => {
 
 
     return (
-        <SearchLayout >
-            <DetailWrap onClick={closeModal}>
-                <FirstWrap>
-                    <DetailHeader>
-                        <IoIosArrowBack size="25px" cursor="pointer" onClick={() => { navigate(-1) }} />
-                        <HeaderTitle>도움요청</HeaderTitle>
-                        <div></div>
-                    </DetailHeader>
-                </FirstWrap>
-                <DetailBody>
-                    <Bodytop>
-                        <Bodyimg src={Img} alt="" />
-                        <Bodytxt>
-                            <Txtname>최형용</Txtname>
-                            <Txtstudent>14학번 <span> 15분 전 </span></Txtstudent>
-                        </Bodytxt>
-                        <AiOutlineMenu size="20px" style={{ marginLeft: "auto", cursor: "pointer" }}
-                            onClick={onCilckShow} />
+        <SearchLayout>
+            <HelpContainer >
+                <HelpWrap>
+                    <DetailWrap onClick={closeModal}>
+                        <FirstWrap>
+                            <DetailHeader>
+                                <IoIosArrowBack size="25px" cursor="pointer" onClick={() => { navigate("/") }} />
+                                <HeaderTitle>도움요청</HeaderTitle>
+                                <div></div>
+                            </DetailHeader>
+                        </FirstWrap>
+                        <DetailBody>
+                            <Bodytop>
+                                <Bodyimg src={Img} alt="" />
+                                <Bodytxt>
+                                    <Txtname>최형용</Txtname>
+                                    <Txtstudent>14학번 <span> 15분 전 </span></Txtstudent>
+                                </Bodytxt>
+                                <AiOutlineMenu size="20px" style={{ marginLeft: "auto", cursor: "pointer" }}
+                                    onClick={onCilckShow} />
 
-                        {show ?
-                            <Revisebox ref={modalRef}>
-                                <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
-                                <DeleteButton onClick={onClickDelete}>삭제</DeleteButton>
-                            </Revisebox>
-                            : null
-                        }
+                                {show ?
+                                    <Revisebox ref={modalRef}>
+                                        <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
+                                        <DeleteButton onClick={onClickDelete}>삭제</DeleteButton>
+                                    </Revisebox>
+                                    : null
+                                }
 
-                    </Bodytop>
-                    <BodyContent>
-                        <ContentTitle>{helpsfind && helpsfind.title}</ContentTitle>
-                        <ContentBody>{helpsfind && helpsfind.content}</ContentBody>
-                        <ContentImg src={helpsfind && helpsfind.imageList[0]}></ContentImg>
-                        <ContentView>조회수 1000회 | 댓글 100개</ContentView>
-                    </BodyContent>
+                            </Bodytop>
+                            <BodyContent>
+                                <ContentTitle>{helpsfind && helpsfind.title}</ContentTitle>
+                                <ContentBody>{helpsfind && helpsfind.content}</ContentBody>
+                                <ContentImg src={helpsfind && helpsfind.imageList[0]}></ContentImg>
+                                <ContentView>조회수 1000회 | 댓글 100개</ContentView>
+                            </BodyContent>
 
-                    <BodyCommentBox>
+                            <BodyCommentBox>
 
-                        
-                        {helpcomments && helpcomments.map((comment) => (
-                           Number(comment.articleid) === helpsfind.id ? <HelpDetailComment key={comment.id} comment={comment} helpsfind={helpsfind} modalRef={modalRef} /> : null
-                        ))}
 
-                        <CommentContainer>
-                            <CommentBox>
-                                <CommentDiv>
-                                    <CommentPost placeholder='댓글을 입력해주세요' value={comment} onChange={onChangePostHandler} ></CommentPost>
-                                    <CommentButton type="button" onClick={onClickPostComment}>올리기</CommentButton>
-                                </CommentDiv>
-                            </CommentBox>
-                        </CommentContainer>
-                    </BodyCommentBox>
-                </DetailBody>
-            </DetailWrap>
+                                {helpcomments && helpcomments.map((comment) => (
+                                    Number(comment.articleid) === helpsfind.id ? <HelpDetailComment key={comment.id} comment={comment} helpsfind={helpsfind} modalRef={modalRef} /> : null
+                                ))}
+
+                                <CommentContainer>
+                                    <CommentBox>
+                                        <CommentDiv>
+                                            <CommentPost placeholder='댓글을 입력해주세요' value={comment} onChange={onChangePostHandler} ></CommentPost>
+                                            <CommentButton type="button" onClick={onClickPostComment}>올리기</CommentButton>
+                                        </CommentDiv>
+                                    </CommentBox>
+                                </CommentContainer>
+                            </BodyCommentBox>
+                        </DetailBody>
+                    </DetailWrap>
+                </HelpWrap>
+            </HelpContainer>
         </SearchLayout>
     );
 };
 
 export default HelpDetail;
 
-const DetailContainer = styled.div`
-  margin: 0 auto;
-  width: 100%;
-  height: 100%;
-  background-color: #f7ede2;
-  display: flex;
-  justify-content: center;
-  @media only screen and (max-width: 768px) {
+const HelpContainer = styled.div`
     width: 100%;
     height: 100%;
-    display: flex;
-    justify-content: center;
-  }
-`;
-
-const StLayout = styled.div`
-    height: 100%;
     border: 1px solid green;
+    /* display: flex; */
+`
+
+const HelpWrap = styled.div`
+    width: 100%;
 `
 const DetailWrap = styled.form`
-  /* width: 500px; */
   width: 100%;
-  /* height:100%; */
-  /* overflow-y: scroll; */
+  height:100%;
   background-color: white;
   display: flex;
   flex-direction: column;
-  /* position: sticky; */
 `;
 
 const FirstWrap = styled.div`
@@ -177,6 +169,7 @@ const DetailHeader = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: sticky;
 `
 const HeaderTitle = styled.div`
   font-weight: 800;
@@ -225,7 +218,7 @@ const DetailBody = styled.div`
     border: 1px solid red;
     /* margin: 10px 20px; */
     border-radius: 20px;
-    /* height:100vh; */
+    height:100%;
     box-sizing: border-box;
     /* box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.05); */
     /* overflow: scroll; */
@@ -284,7 +277,7 @@ const BodyCommentBox = styled.div`
     border-top : 1px solid rgba(0,0,0,0.1);
     margin:20px;
     /* overflow-y: scroll; */
-    /* height: 100%; */
+    height: 100%;
     /* position:relative; */
     height: 70%;
 `

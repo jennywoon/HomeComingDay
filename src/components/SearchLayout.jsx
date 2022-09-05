@@ -27,7 +27,8 @@ export default SearchLayout;
 const LayoutContainer = styled.div`
   margin: 0 auto;
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
+  height: 950px;
   background-color: #f7ede2;
   display: flex;
   justify-content: center;
@@ -42,6 +43,7 @@ const LayoutContainer = styled.div`
 const LayoutWrap = styled.div`
   width: 500px;
   /* height: 100vh; */
+  height: 100%;
   background-color: white;
   display: flex;
   flex-direction: column;

@@ -1,14 +1,23 @@
 import React from 'react';
 import ChatHome from "../components/chatBoard/ChatHome"
-import SearchLayout from "../components/SearchLayout"
+import styled from 'styled-components';
+import Header from '../components/Header';
 
 const FreeTalkPage = () => {
 
     return (
-        <SearchLayout>
-            <ChatHome/>
-        </SearchLayout>
+        <Container>
+             <Header />
+            <ChatHome />
+        </Container>
     );
 };
 
 export default FreeTalkPage;
+
+const Container = styled.div`
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow-y: hidden;
+`

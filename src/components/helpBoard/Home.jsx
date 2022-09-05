@@ -8,6 +8,8 @@ import { AiOutlineHome } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
 import { FiUser } from "react-icons/fi";
 import { HiOutlineChatAlt2 } from "react-icons/hi";
+import { TiPencil } from "react-icons/ti";
+import Header from "../../components/Header";
 
 const Home = () => {
     const navigate = useNavigate();
@@ -15,11 +17,10 @@ const Home = () => {
     return (
 
         <HomeContainer>
-            {/* <HeaderTap/> */}
             <Navbar>
                 <NavbarTitle
                     onClick={() => { navigate("/") }}
-                    style={{ cursor: "pointer", paddingLeft: "20px", fontWeight:"800", textDecoration:"underline"}}
+                    style={{ cursor: "pointer", paddingLeft: "20px", fontWeight: "800", textDecoration: "underline" }}
                 >도움요청</NavbarTitle>
                 <NavbarTitle
                     onClick={() => { navigate("/information") }}
@@ -35,6 +36,13 @@ const Home = () => {
                 >자유토크</NavbarTitle>
             </Navbar>
             <Help />
+            <IconWrap>
+                <Iconbox
+                    onClick={() => navigate('/form')}
+                >
+                    <TiPencil color="white" size="40px" />
+                </Iconbox>
+            </IconWrap>
             <SecondWrap>
                 <Bottom>
                     <Tap onClick={() => { navigate("/") }}
@@ -68,11 +76,10 @@ export default Home;
 
 const HomeContainer = styled.div`
     width: 100%;
-    /* height: 100vh; */
+    height: 100%;
     display: flex;
     flex-direction: column;
 `
-
 const Navbar = styled.div`
     width: 100%;
     height: 40px;
@@ -80,16 +87,14 @@ const Navbar = styled.div`
     justify-content: space-between;
     align-items: center;
     font-size: 15px;
-    /* font-weight: bold; */
     ;
 `
-
 const NavbarTitle = styled.div``
 const SecondWrap = styled.div`
     width: 100%;
     position: sticky;
     background-color: #eee;
-    bottom: 0;
+    bottom:0;
 `
 const Bottom = styled.div`
     height: 60px;
@@ -106,4 +111,22 @@ const Tap = styled.div`
 `
 const TapTitle = styled.div`
     font-size: 12px;
+`
+
+const IconWrap = styled.div`
+  width: 95%;
+  display: flex;
+  justify-content: right;
+`
+const Iconbox = styled.div`
+  width:50px;
+  height:50px;
+  background-color: black;
+  border-radius: 30px;
+  position: fixed;
+  bottom: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 `

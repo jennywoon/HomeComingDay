@@ -6,6 +6,7 @@ import { AiOutlineHome } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
 import { FiUser } from "react-icons/fi";
 import { HiOutlineChatAlt2 } from "react-icons/hi";
+import { TiPencil } from "react-icons/ti";
 
 const CalendarHome = () => {
     const navigate = useNavigate();
@@ -31,7 +32,13 @@ const CalendarHome = () => {
                 >자유토크</NavbarTitle>
             </Navbar>
             <Calendar />
-            {/* <BottomTap /> */}
+            <IconWrap>
+                <Iconbox
+                    onClick={() => navigate('/form')}
+                >
+                    <TiPencil color="white" size="40px" />
+                </Iconbox>
+            </IconWrap>
             <SecondWrap>
                 <Bottom>
                     <Tap onClick={() => { navigate("/") }}
@@ -102,4 +109,21 @@ const Tap = styled.div`
 `
 const TapTitle = styled.div`
     font-size: 12px;
+`
+const IconWrap = styled.div`
+  width: 95%;
+  display: flex;
+  justify-content: right;
+`
+const Iconbox = styled.div`
+  width:50px;
+  height:50px;
+  background-color: black;
+  border-radius: 30px;
+  position: fixed;
+  bottom: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 `

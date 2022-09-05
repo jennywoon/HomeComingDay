@@ -73,7 +73,7 @@ const FreeTalkDetail = () => {
             <DetailWrap onClick={closeModal}>
                 <Header />
                 <DetailHeader>
-                    <IoIosArrowBack size="25px" cursor="pointer" onClick={()=> {navigate(-1)}}/>
+                    <IoIosArrowBack size="25px" cursor="pointer" onClick={()=> {navigate("/freetalk")}}/>
                     <HeaderTitle>자유토크</HeaderTitle>
                     <div></div>
                 </DetailHeader>

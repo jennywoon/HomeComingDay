@@ -41,14 +41,17 @@ const Help = () => {
 export default Help;
 
 const HelpContainer = styled.div`
+  width: 100%;
+  height: 100%;
   gap: 12px;
-  height: 100vh;
+  /* border: 1px solid red; */
+  /* height: 100vh; */
   overflow-y: scroll;
 `;
 
 const Banner = styled.div`
   height: 120px;
-  border: 1px solid gray;
+  /* border: 1px solid gray; */
   margin-bottom: 12px;
   background-image: url(${help});
   background-position: center;
@@ -56,7 +59,11 @@ const Banner = styled.div`
 `
 
 const HelpWrap = styled.div`
-  padding: 0 10px;
+  width: 100%;
+  /* height: 100%; */
+  /* border: 1px solid blue; */
+  /* padding: 0 10px; */
+  /* height: 100%; */
 `;
 
 const Select = styled.select`
@@ -68,7 +75,10 @@ const Select = styled.select`
 `;
 
 const HelpList = styled.div`
+  /* height: 100vh; */
   /* height: 100%; */
+  /* border: 1px solid green; */
+  /* overflow-y: scroll; */
 `;
 
 // const HelpCard = styled.div`

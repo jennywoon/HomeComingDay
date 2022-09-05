@@ -27,16 +27,18 @@ const Header = () => {
 export default Header;
 
 const HeaderContainer = styled.div`
-    position: sticky;
-    top: 0;
+    /* position: sticky;
+    top: 0; */
     background-color: #eee;
+    width: 100%;
     height: 60px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    /* padding: 0 20px; */
     font-size: 20px;
     font-weight: bold;
+    /* border: 1px solid green; */
 `
 
 const HeaderTitle = styled.div`

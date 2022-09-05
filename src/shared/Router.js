@@ -30,7 +30,6 @@ import ChatPage from "../pages/ChatPage"
 import ChatFormPage from "../pages/ChatFormPage"
 import SignupCompletePage from '../pages/SignupCompletePage';
 import NoticePage from "../pages/NoticePage";
-// import HelpDetailTest from "../components/helpBoard/HelpDetailTest";
 
 const Router = () => {
   
@@ -59,7 +58,6 @@ const Router = () => {
         <Route path="/searchcard" element={<SearchCard />} />
         <Route path="/form" element={<Form2 />} />
         <Route path="/helpdetail/:id" element={<HelpDetail />} />
-        {/* <Route path="/helpdetail/:id" element={<HelpDetailTest />} /> */}
         <Route path="/helpupdate/:id" element={<HelpUpdate />} />
         <Route path="/informationdetail/:id" element={<InformationDetail />} />
         <Route path="/informationupdate/:id" element={<InformationUpdate />} />

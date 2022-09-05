@@ -388,24 +388,32 @@ const Form2 = () => {
 export default Form2;
 
 
+// const FormContainer = styled.div`
+//   margin: 0 auto;
+//   width: 100%;
+//   height: 100%;
+//   background-color: #f7ede2;
+//   display: flex;
+//   justify-content: center;
+//   @media only screen and (max-width: 768px) {
+//     width: 100%;
+//     height: 100%;
+//     display: flex;
+//     justify-content: center;
+//   }
+// `;
+
 const FormContainer = styled.div`
-  margin: 0 auto;
-  width: 100%;
-  height: 100%;
-  background-color: #f7ede2;
-  display: flex;
-  justify-content: center;
-  @media only screen and (max-width: 768px) {
+    position: relative;
     width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-  }
-`;
+    height: 100vh;
+    overflow-y: hidden;
+`
 
 const FormWrap = styled.form`
   width: 500px;
-  height:100vh;
+  /* height:100vh; */
+  /* height: 100%; */
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -421,7 +429,7 @@ const FormHeader = styled.div`
 const FormBody = styled.div`
     display: flex;
     flex-direction: column;
-    padding : 10px 20px;
+    /* padding : 10px 20px; */
 `
 const FormSelection = styled.select`
     border:none;
@@ -438,7 +446,8 @@ const FormInput =styled.input`
 `
 const Textarea = styled.textarea`
     width: 100%;
-    height:40vh;
+    /* height:40vh; */
+    height: 400px;
     border:none;
     padding: 10px 5px;
 `

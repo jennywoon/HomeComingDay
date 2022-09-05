@@ -1,14 +1,23 @@
 import React from 'react';
 import CalendarHome from "../components/calendarBoard/CalendarHome"
-import Layout from '../components/Layout';
+import styled from 'styled-components';
+import Header from '../components/Header';
 
 const FreeTalkPage = () => {
 
     return (
-        <Layout>
-            <CalendarHome/>
-        </Layout>
+        <Container>
+            <Header />
+            <CalendarHome />
+        </Container>
     );
 };
 
 export default FreeTalkPage;
+
+const Container = styled.div`
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow-y: hidden;
+`

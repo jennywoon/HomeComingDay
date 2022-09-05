@@ -8,6 +8,7 @@ import { AiOutlineHome } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
 import { FiUser } from "react-icons/fi";
 import { HiOutlineChatAlt2 } from "react-icons/hi";
+import { TiPencil } from "react-icons/ti";
 
 const InformationHome = () => {
     const navigate = useNavigate();
@@ -17,11 +18,11 @@ const InformationHome = () => {
             <Navbar>
                 <NavbarTitle
                     onClick={() => { navigate("/") }}
-                    style={{ cursor: "pointer", paddingLeft: "20px"}}
+                    style={{ cursor: "pointer", paddingLeft: "20px" }}
                 >도움요청</NavbarTitle>
                 <NavbarTitle
                     onClick={() => { navigate("/information") }}
-                    style={{ cursor: "pointer", fontWeight:"800", textDecoration:"underline" }}
+                    style={{ cursor: "pointer", fontWeight: "800", textDecoration: "underline" }}
                 >정보공유</NavbarTitle>
                 <NavbarTitle
                     onClick={() => { navigate("/calendar") }}
@@ -33,6 +34,13 @@ const InformationHome = () => {
                 >자유토크</NavbarTitle>
             </Navbar>
             <Information />
+            <IconWrap>
+                <Iconbox
+                    onClick={() => navigate('/form')}
+                >
+                    <TiPencil color="white" size="40px" />
+                </Iconbox>
+            </IconWrap>
             <SecondWrap>
                 <Bottom>
                     <Tap onClick={() => { navigate("/") }}
@@ -69,6 +77,7 @@ const HomeContainer = styled.div`
     display: flex;
     flex-direction: column;
 `
+
 const Navbar = styled.div`
     width: 100%;
     height: 40px;
@@ -87,6 +96,7 @@ const SecondWrap = styled.div`
     background-color: #eee;
     bottom: 0;
 `
+
 const Bottom = styled.div`
     height: 60px;
     display: flex;
@@ -102,4 +112,21 @@ const Tap = styled.div`
 `
 const TapTitle = styled.div`
     font-size: 12px;
+`
+const IconWrap = styled.div`
+  width: 95%;
+  display: flex;
+  justify-content: right;
+`
+const Iconbox = styled.div`
+  width:50px;
+  height:50px;
+  background-color: black;
+  border-radius: 30px;
+  position: fixed;
+  bottom: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 `
