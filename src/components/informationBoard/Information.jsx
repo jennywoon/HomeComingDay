@@ -45,7 +45,9 @@ export default Information;
 
 const HelpContainer = styled.div`
   gap: 12px;
-  height: 100vh;
+  /* height: 100vh; */
+  width: 100%;
+  height: 100%;
   overflow-y: scroll;
 `;
 
@@ -56,7 +58,8 @@ const Banner = styled.div`
 `
 
 const HelpWrap = styled.div`
-  padding: 0 10px;
+  /* padding: 0 10px; */
+  width: 100%;
 `;
 const Select = styled.select`
   display: flex;

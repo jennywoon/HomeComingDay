@@ -4,6 +4,7 @@ import Layout from '../components/Layout';
 import Header from '../components/Header';
 import styled from 'styled-components';
 import { useNavigate } from "react-router-dom"
+import { TiPencil } from "react-icons/ti";
 
 const MainPage = () => {
 
@@ -12,7 +13,7 @@ const MainPage = () => {
     return (
         <Container>
             <Header />
-            <Home />
+            <Home/>
         </Container>
     );
 };
@@ -25,13 +26,21 @@ const Container = styled.div`
     height: 100vh;
     overflow-y: hidden;
 `
-const Navbar = styled.div`
-    width: 100%;
-    height: 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 15px;
-    ;
+const IconWrap = styled.div`
+  width: 95%;
+  display: flex;
+  justify-content: right;
 `
-const NavbarTitle = styled.div``
+const Iconbox = styled.div`
+  width:50px;
+  height:50px;
+  background-color: black;
+  border-radius: 30px;
+  position: fixed;
+  /* bottom: 90px; */
+  bottom: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`
