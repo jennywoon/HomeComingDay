@@ -5,8 +5,8 @@ import axios from "axios";
 // const cookies = new Cookies();
 
 const initialState = {
-    informations: [  
-    ],
+    infoComments:[],
+    informations : [],
     // insta: null,
     isLoading: false,
     error: null,
@@ -54,6 +54,51 @@ export const __updateInformation = createAsyncThunk("informations/updateHelp", a
   } catch (error) {
     // console.log('error', error)
     return thunkAPI.rejectWithValue(error.message);
+  }
+}
+);
+
+export const __getInfoComment = createAsyncThunk("comments/getInfoComment", async (payload, thunkAPI) => {
+  try {
+    const data = await axios.get(`http://localhost:3001/infoComments`);
+    return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+export const __postInfoComment = createAsyncThunk("comments/postInfoComment", async (payload, thunkAPI) => {
+  try {
+    console.log("payload" , payload)
+    const data = await axios.post(`http://localhost:3001/infoComments`, payload);
+    console.log(data)
+    return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+    
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+export const __deleteInfoComment = createAsyncThunk("comments/deleteInfoComment", async (payload, thunkAPI) => {
+  try {
+    // console.log(payload)
+    const data = await axios.delete(`http://localhost:3001/infoComments/${payload}`);
+  //   console.log(payload)
+    return thunkAPI.fulfillWithValue(payload);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+}
+);
+
+export const __updateInfoComment = createAsyncThunk("comment/updateInfoComment", async (payload, thunkAPI) => {
+  try {
+    await axios.patch(`http://localhost:3001/infoComments/${payload.id}`, payload);
+    console.log("payload",payload)
+    return thunkAPI.fulfillWithValue(payload);
+  } catch (error) {
+    console.log(payload)
+    return thunkAPI.rejectWithValue(error);
   }
 }
 );
@@ -121,6 +166,66 @@ export const InformationSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       },
+      [__getInfoComment.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__getInfoComment.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        state.infoComments = action.payload;
+      },
+      [__getInfoComment.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+      [__postInfoComment.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__postInfoComment.fulfilled]: (state, action) => {
+        state.isLoading = false; 
+        console.log(action.payload)
+        state.infoComments.push(action.payload);
+      },
+      [__postInfoComment.rejected]: (state, action) => {
+        state.isLoading = false; 
+        state.error = action.payload;
+      },
+
+      [__deleteInfoComment.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__deleteInfoComment.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        // console.log(state.comment)
+        console.log(action)
+        state.infoComments = state.infoComments.filter(comment => comment.id !== action.payload)
+      },
+      [__deleteInfoComment.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+  
+      // updateComment
+      [__updateInfoComment.pending]: (state) => {
+        state.isLoading = true;
+      },
+  
+      [__updateInfoComment.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        console.log('action', action)
+        console.log('comment', state.helpcomments)
+        state.infoComments = state.infoComments.map((comment) => {
+          if (comment.id === action.payload.id) {
+            comment.comment = action.payload.comment;
+          }
+          return comment;
+        })
+  
+      },
+      [__updateInfoComment.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+
     },
 });
 

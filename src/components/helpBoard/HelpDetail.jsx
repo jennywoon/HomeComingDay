@@ -4,30 +4,33 @@ import styled from 'styled-components';
 import { IoIosArrowBack } from 'react-icons/io'
 import { AiOutlineMenu } from 'react-icons/ai'
 import Img from "../../assets/naverIcon.png"
-import Help from "../../assets/help.png"
-import Button from '../elements/Button';
 import HelpDetailComment from './HelpDetailComment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { __deleteHelp, __updateHelp, __getHelp, __getComments, __getHelpComment, __postHelpComment } from '../../redux/modules/HelpSlice';
 import Layout from '../Layout';
 import SearchLayout from '../SearchLayout';
+import { useRef } from 'react';
 
 const HelpDetail = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { helps } = useSelector((state) => state.helps)
     const { helpcomments } = useSelector((state) => state.helps)
-    console.log(helpcomments)
+    
     const { id } = useParams();
     const [show, setShow] = useState(false)
     const [comment, setComment] = useState("")
+    const modalRef = useRef(null);
+    
     const onChangePostHandler = (e) => {
         setComment(e.target.value)
     }
 
     const helpsfind = helps.find((help) => help.id === Number(id))
 
+    console.log(helpcomments)
+    console.log(helpsfind)
     useEffect(() => {
         dispatch(__getHelp());
         dispatch(__getHelpComment())
@@ -59,12 +62,22 @@ const HelpDetail = () => {
             comment: comment,
             articleid: id
         }
-        dispatch(__postHelpComment(newcomment))
+        dispatch(__postHelpComment(newcomment));
+        setComment("");
     }
 
+    
+
+    const closeModal = (e) => {
+        if (!modalRef.current.contains(e.target)) {
+            setShow(false);
+        }
+    };
+
+
     return (
-        <SearchLayout>
-            <DetailWrap>
+        <SearchLayout >
+            <DetailWrap onClick={closeModal}>
                 <FirstWrap>
                     <DetailHeader>
                         <IoIosArrowBack size="25px" cursor="pointer" onClick={() => { navigate(-1) }} />
@@ -79,11 +92,11 @@ const HelpDetail = () => {
                             <Txtname>최형용</Txtname>
                             <Txtstudent>14학번 <span> 15분 전 </span></Txtstudent>
                         </Bodytxt>
-                        <AiOutlineMenu size="20px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }}
+                        <AiOutlineMenu size="20px" style={{ marginLeft: "auto", cursor: "pointer" }}
                             onClick={onCilckShow} />
 
                         {show ?
-                            <Revisebox>
+                            <Revisebox ref={modalRef}>
                                 <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
                                 <DeleteButton onClick={onClickDelete}>삭제</DeleteButton>
                             </Revisebox>
@@ -99,9 +112,12 @@ const HelpDetail = () => {
                     </BodyContent>
 
                     <BodyCommentBox>
+
+                        
                         {helpcomments && helpcomments.map((comment) => (
-                            <HelpDetailComment key={comment.id} comment={comment} />
+                           Number(comment.articleid) === helpsfind.id ? <HelpDetailComment key={comment.id} comment={comment} helpsfind={helpsfind} modalRef={modalRef} /> : null
                         ))}
+
                         <CommentContainer>
                             <CommentBox>
                                 <CommentDiv>
@@ -220,7 +236,7 @@ const Bodytop = styled.div`
     display:flex;
     align-items: center;
     padding:20px 20px 10px 20px;
-    /* position: relative; */
+    position: relative;
 
 `
 

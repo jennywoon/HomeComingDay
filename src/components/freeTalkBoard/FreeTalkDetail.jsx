@@ -7,23 +7,29 @@ import Img from "../../assets/naverIcon.png"
 import FreeTalkDetailComment from './FreeTalkDetailComment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteInformation, __getInformation, __postInformation, __updateInformation } from '../../redux/modules/InformationSlice';
-import { __deleteFreeTalk, __getFreeTalk } from '../../redux/modules/FreeTalkSlice';
-
+import { __deleteFreeTalk, __getFreeTalk ,__getFreeComment, __postFreeComment} from '../../redux/modules/FreeTalkSlice';
+import { useRef } from 'react';
 
 const FreeTalkDetail = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {freetalks} = useSelector((state) => state.freetalks)
+    const {freeComments} = useSelector((state)=>state.freetalks)
     const {id} = useParams();
-    console.log(id)
+    // console.log(id)
     const [show , setShow] = useState(false)
-    
+    const [comment, setComment] = useState("")
+    const modalRef = useRef(null);
+
+    const onChangePostHandler = (e) => {
+        setComment(e.target.value)
+    }
 
     const freetalksfind = freetalks.find((freetalk)=> freetalk.id === Number(id))
 
     useEffect(() => {
         dispatch(__getFreeTalk());
+        dispatch(__getFreeComment());
     }, [dispatch])
 
     console.log("freetalks", freetalks , "freetalksfind" , freetalksfind)
@@ -47,9 +53,24 @@ const FreeTalkDetail = () => {
         navigate(`/freetalkupdate/${id}`)
     }
 
+    const onClickPostComment = (e) => {
+        const newcomment = {
+            comment: comment,
+            articleid: id
+        }
+        dispatch(__postFreeComment(newcomment));
+        setComment("");
+    }
+    const closeModal = (e) => {
+        if (!modalRef.current.contains(e.target)) {
+            setShow(false);
+        }
+    };
+
+
     return (
         <DetailContainer>
-            <DetailWrap>
+            <DetailWrap onClick={closeModal}>
                 <Header />
                 <DetailHeader>
                     <IoIosArrowBack size="25px" cursor="pointer" onClick={()=> {navigate(-1)}}/>
@@ -67,7 +88,7 @@ const FreeTalkDetail = () => {
                         onClick={onCilckShow}/>
  
                     {show ? 
-                        <Revisebox>
+                        <Revisebox ref={modalRef}>
                             <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
                             <DeleteButton onClick={onClickDelete}>삭제</DeleteButton>
                         </Revisebox>
@@ -84,14 +105,15 @@ const FreeTalkDetail = () => {
 
                     <BodyCommentBox>
                          {/* 댓글맵돌리기  */}
-                        <FreeTalkDetailComment />
-                        <FreeTalkDetailComment />
+                         {freeComments && freeComments.map((comment) => (
+                           Number(comment.articleid) === freetalksfind.id ? <FreeTalkDetailComment key={comment.id} comment={comment} freetalksfind={freetalksfind} modalRef={modalRef} /> : null
+                        ))}
 
                         <CommentContainer>
                             <CommentBox>
                                 <CommentDiv>
-                                    <CommentPost placeholder='댓글을 입력해주세요'></CommentPost>
-                                    <CommentButton>올리기</CommentButton>
+                                    <CommentPost placeholder='댓글을 입력해주세요' value={comment} onChange={onChangePostHandler} ></CommentPost>
+                                    <CommentButton type="button" onClick={onClickPostComment}>올리기</CommentButton>
                                 </CommentDiv>
                             </CommentBox>
                         </CommentContainer>
