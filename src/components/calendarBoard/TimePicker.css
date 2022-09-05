@@ -4562,8 +4562,9 @@ li:last-child > .ant-breadcrumb-separator {
 .ant-btn-primary:hover,
 .ant-btn-primary:focus {
   color: #fff;
-  border-color: #40a9ff;
-  background: #40a9ff;
+  /* css */
+  border-color: rgb(255, 145, 0);
+  background: rgb(255, 145, 0);
 }
 .ant-btn-primary:hover > a:only-child,
 .ant-btn-primary:focus > a:only-child {
@@ -8385,6 +8386,8 @@ tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover-start:last-child::afte
   height: 56px;
 }
 .ant-picker-footer {
+  /* css */
+  /* display: none; */
   width: -webkit-min-content;
   width: -moz-min-content;
   width: min-content;
