@@ -64,7 +64,7 @@ const Select = styled.select`
 `;
 
 const HelpList = styled.div`
-  border: 1px solid red;
+  /* border: 1px solid red; */
 `;
 
 const IconWrap = styled.div`

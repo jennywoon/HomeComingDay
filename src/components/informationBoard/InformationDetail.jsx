@@ -1,4 +1,4 @@
-import React, { useState ,useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Header from '../Header';
 import styled from 'styled-components';
 import { IoIosArrowBack } from 'react-icons/io'
@@ -13,11 +13,11 @@ import { __deleteInformation, __getInfoComment, __getInformation, __postInfoComm
 const InformationDetail = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {informations} = useSelector((state) => state.informations)
-    const {infoComments} = useSelector((state)=>state.informations)
-    const {id} = useParams();
+    const { informations } = useSelector((state) => state.informations)
+    const { infoComments } = useSelector((state) => state.informations)
+    const { id } = useParams();
     // console.log(infoComments)
-    const [show , setShow] = useState(false)
+    const [show, setShow] = useState(false)
     const [comment, setComment] = useState("")
     const modalRef = useRef(null);
 
@@ -25,7 +25,7 @@ const InformationDetail = () => {
         setComment(e.target.value)
     }
 
-    const informationsfind = informations.find((info)=> info.id === Number(id))
+    const informationsfind = informations.find((info) => info.id === Number(id))
 
     useEffect(() => {
         dispatch(__getInformation());
@@ -33,18 +33,18 @@ const InformationDetail = () => {
     }, [dispatch])
 
     // console.log("information", informations , "informationsfind" , informationsfind)
-    
-    const onCilckShow = () =>{
+
+    const onCilckShow = () => {
         setShow(!show)
     }
 
 
     const onClickDelete = () => {
         const result = window.confirm("정말 삭제하시겠습니까?")
-        if(result){
+        if (result) {
             dispatch(__deleteInformation(id))
             navigate("/")
-        }else{
+        } else {
             return null
         }
     }
@@ -69,93 +69,114 @@ const InformationDetail = () => {
 
 
     return (
-        <DetailContainer>
-            <DetailWrap onClick={closeModal}>
-                <Header />
-                <DetailHeader>
-                    <IoIosArrowBack size="25px" cursor="pointer" onClick={()=> {navigate("/information")}}/>
-                    <HeaderTitle>정보공유</HeaderTitle>
-                    <div></div>
-                </DetailHeader>
-                <DetailBody>
-                    <Bodytop>
-                        <Bodyimg src={Img} alt="" />
-                        <Bodytxt>
-                            <Txtname>최형용</Txtname>
-                            <Txtstudent>14학번 <span> 15분 전 </span></Txtstudent>
-                        </Bodytxt>
-                        <AiOutlineMenu size="20px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }} 
-                        onClick={onCilckShow}/>
- 
-                    {show ? 
-                        <Revisebox ref={modalRef}>
-                            <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
-                            <DeleteButton onClick={onClickDelete}>삭제</DeleteButton>
-                        </Revisebox>
-                    : null
-                    }
+        <Container>
+            <Header />
+            <DetailContainer>
+            <HelpWrap>
+                <DetailWrap onClick={closeModal}>
+                    <FirstWrap>
+                        <DetailHeader>
+                            <IoIosArrowBack size="25px" cursor="pointer" onClick={() => { navigate("/information") }} />
+                            <HeaderTitle>정보공유</HeaderTitle>
+                            <div></div>
+                        </DetailHeader>
+                    </FirstWrap>
+                    <DetailBody>
+                        <Bodytop>
+                            <Bodyimg src={Img} alt="" />
+                            <Bodytxt>
+                                <Txtname>최형용</Txtname>
+                                <Txtstudent>14학번 <span> 15분 전 </span></Txtstudent>
+                            </Bodytxt>
+                            <AiOutlineMenu size="20px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }}
+                                onClick={onCilckShow} />
 
-                    </Bodytop>
-                    <BodyContent>
-                        <ContentTitle>{informationsfind && informationsfind.title}</ContentTitle>
-                        <ContentBody>{informationsfind && informationsfind.content}</ContentBody>
-                        <ContentImg src={informationsfind && informationsfind.imageList[0]}></ContentImg>
-                        <ContentView>조회수 1000회 | 댓글 100개</ContentView>
-                    </BodyContent>
+                            {show ?
+                                <Revisebox ref={modalRef}>
+                                    <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
+                                    <DeleteButton onClick={onClickDelete}>삭제</DeleteButton>
+                                </Revisebox>
+                                : null
+                            }
 
-                    <BodyCommentBox>
-                         {/* 댓글맵돌리기  */}
-                         {infoComments && infoComments.map((comment) => (
-                           Number(comment.articleid) === informationsfind.id ? <InformationDetailComment key={comment.id} comment={comment} informationsfind={informationsfind} modalRef={modalRef} /> : null
-                        ))}
+                        </Bodytop>
+                        <BodyContent>
+                            <ContentTitle>{informationsfind && informationsfind.title}</ContentTitle>
+                            <ContentBody>{informationsfind && informationsfind.content}</ContentBody>
+                            <ContentImg src={informationsfind && informationsfind.imageList[0]}></ContentImg>
+                            <ContentView>조회수 1000회 | 댓글 100개</ContentView>
+                        </BodyContent>
 
-                        <CommentContainer>
-                            <CommentBox>
-                                <CommentDiv>
-                                <CommentPost placeholder='댓글을 입력해주세요' value={comment} onChange={onChangePostHandler} ></CommentPost>
-                                    <CommentButton type="button" onClick={onClickPostComment}>올리기</CommentButton>
-                                </CommentDiv>
-                            </CommentBox>
-                        </CommentContainer>
-                    </BodyCommentBox>
+                        <BodyCommentBox>
+                            {/* 댓글맵돌리기  */}
+                            {infoComments && infoComments.map((comment) => (
+                                Number(comment.articleid) === informationsfind.id ? <InformationDetailComment key={comment.id} comment={comment} informationsfind={informationsfind} modalRef={modalRef} /> : null
+                            ))}
 
-                </DetailBody>
-            </DetailWrap>
-        </DetailContainer>
+                        </BodyCommentBox>
+                    </DetailBody>
+                </DetailWrap>
+                </HelpWrap>
+                <CommentContainer>
+                    <CommentBox>
+                        <CommentDiv>
+                            <CommentPost placeholder='댓글을 입력해주세요' value={comment} onChange={onChangePostHandler} ></CommentPost>
+                            <CommentButton type="button" onClick={onClickPostComment}>올리기</CommentButton>
+                        </CommentDiv>
+                    </CommentBox>
+                </CommentContainer>
+            </DetailContainer>
+        </Container>
     );
 };
 
 export default InformationDetail;
 
+const Container = styled.div`
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow-y: hidden;
+`
 
 const DetailContainer = styled.div`
-  margin: 0 auto;
-  width: 100%;
-  height: 100%;
-  background-color: #f7ede2;
-  display: flex;
-  justify-content: center;
-  @media only screen and (max-width: 768px) {
     width: 100%;
     height: 100%;
+    /* border: 1px solid green; */
     display: flex;
-    justify-content: center;
-  }
+    flex-direction: column;
 `;
 
+const HelpWrap = styled.div`
+    width: 100%;
+    height: 100%;
+    /* border: 1px solid blue; */
+    overflow-y: scroll;
+`
+
 const DetailWrap = styled.form`
-  width: 500px;
-  height:100vh;
+  width: 100%;
+  /* height:100%; */
   background-color: white;
   display: flex;
   flex-direction: column;
 `;
 
+const FirstWrap = styled.div`
+    display: flex;
+    flex-direction: column;
+    /* border:1px solid blue; */
+    width: 100%;
+    height: 100%;
+`
+
 const DetailHeader = styled.div`
+    width: 100%;
     height: 50px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: sticky;
 `
 const HeaderTitle = styled.div`
   font-weight: 800;
@@ -200,11 +221,14 @@ const DeleteButton = styled.button`
 
 
 const DetailBody = styled.div`
-    border: 1px solid #f1f0f0;
+    /* border: 1px solid #f1f0f0;
     margin: 10px 20px;
     border-radius: 20px;
     height:100vh;
-    box-sizing: border-box;
+    box-sizing: border-box; */
+    border-radius: 20px;
+    width: 100%;
+    height:100%;
     /* box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.05); */
     /* overflow: scroll; */
 `
@@ -228,18 +252,20 @@ const Bodytxt = styled.div`
     
 `
 const Txtname = styled.h3`
-    margin: 0px;
+    /* margin: 0px; */
 `
 const Txtstudent = styled.p`
-    margin: 0px;
+    /* margin: 0px; */
     font-size: 12px;
     color: gray;
 `
 const BodyContent = styled.div`
     padding: 0px 20px;
+    width: 100%;
+    height: 300px;
 `
 const ContentTitle = styled.h3`
-    margin:10px 0px;
+    /* margin:10px 0px; */
 `
 const ContentBody = styled.p`
     color:gray;
@@ -248,50 +274,61 @@ const ContentImg = styled.img`
     /* border:1px solid gray; */
     height: 200px;
     border-radius: 20px;
-    margin : 20px 0px;
+    /* margin : 20px 0px; */
     /* background-repeat: no-repeat;
     background-size: cover; */
 `
 const ContentView = styled.p`
     font-size: 14px;
-    margin:30px 0px 10px;
+    /* margin:30px 0px 10px; */
     color: gray;
 `
 const BodyCommentBox = styled.div`
     border-top : 1px solid rgba(0,0,0,0.1);
-    margin:20px;
-    position:relative;
+    /* margin:20px;
+    position:relative; */
+    height: 100%;
+    width: 100%;
 `
 
 const CommentContainer = styled.div`
-    position: fixed;
+    /* position: fixed;
     bottom: 0;
-    /* bottom: 10px; */
     width:100%;
     max-width:500px;
+    display: flex; */
+    position: sticky;
+    bottom: 0;
+    bottom: 10px;
+    width: 100%;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 `
 
 const CommentBox = styled.div`
     display: flex;
+    justify-content: center;
     align-items: center;
-    height:40px;
+    width: 95%;
 `
 
 const CommentDiv = styled.div`
-    width : 400px;
+    /* width : 400px; */
+    width: 100%;
     padding: 10px;
     background-color: #eeeeee;
     border-radius: 16px;
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     justify-content: space-between;
 `
 
 const CommentPost = styled.input`
     width:80%;
-    bottom : 0;
+    /* bottom : 0; */
     background-color: #eeeeee;
     height: 30px;
     border-radius: 10px;
