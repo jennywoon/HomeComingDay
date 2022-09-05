@@ -58,6 +58,7 @@ const HelpDetail = () => {
     }
 
     const onClickPostComment = (e) => {
+        e.preventDefault();
         const newcomment = {
             comment: comment,
             articleid: id
@@ -76,7 +77,8 @@ const HelpDetail = () => {
 
 
     return (
-        <SearchLayout>
+        <Container>
+            <Header />
             <HelpContainer >
                 <HelpWrap>
                     <DetailWrap onClick={closeModal}>
@@ -112,42 +114,51 @@ const HelpDetail = () => {
                                 <ContentImg src={helpsfind && helpsfind.imageList[0]}></ContentImg>
                                 <ContentView>조회수 1000회 | 댓글 100개</ContentView>
                             </BodyContent>
-
-                            <BodyCommentBox>
-
-
-                                {helpcomments && helpcomments.map((comment) => (
-                                    Number(comment.articleid) === helpsfind.id ? <HelpDetailComment key={comment.id} comment={comment} helpsfind={helpsfind} modalRef={modalRef} /> : null
-                                ))}
-
-                                <CommentContainer>
-                                    <CommentBox>
-                                        <CommentDiv>
-                                            <CommentPost placeholder='댓글을 입력해주세요' value={comment} onChange={onChangePostHandler} ></CommentPost>
-                                            <CommentButton type="button" onClick={onClickPostComment}>올리기</CommentButton>
-                                        </CommentDiv>
-                                    </CommentBox>
-                                </CommentContainer>
-                            </BodyCommentBox>
+                            <BodyContainer>
+                                <BodyCommentBox>
+                                    {helpcomments && helpcomments.map((comment) => (
+                                        Number(comment.articleid) === helpsfind.id ? <HelpDetailComment key={comment.id} comment={comment} helpsfind={helpsfind} modalRef={modalRef} /> : null
+                                    ))}
+                                </BodyCommentBox>
+                            </BodyContainer>
                         </DetailBody>
                     </DetailWrap>
                 </HelpWrap>
+                <CommentContainer onSubmit={onClickPostComment}>
+                    <CommentBox>
+                        <CommentDiv>
+                            <CommentPost placeholder='댓글을 입력해주세요' value={comment} onChange={onChangePostHandler} ></CommentPost>
+                            <CommentButton type="submit" >올리기</CommentButton>
+                        </CommentDiv>
+                    </CommentBox>
+                </CommentContainer>
             </HelpContainer>
-        </SearchLayout>
+        </Container>
     );
 };
 
 export default HelpDetail;
 
+const Container = styled.div`
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow-y: hidden;
+`
+
 const HelpContainer = styled.div`
     width: 100%;
     height: 100%;
-    border: 1px solid green;
-    /* display: flex; */
+    /* border: 1px solid green; */
+    display: flex;
+    flex-direction: column;
 `
 
 const HelpWrap = styled.div`
     width: 100%;
+    height: 100%;
+    /* border: 1px solid blue; */
+    overflow-y: scroll;
 `
 const DetailWrap = styled.form`
   width: 100%;
@@ -160,11 +171,12 @@ const DetailWrap = styled.form`
 const FirstWrap = styled.div`
     display: flex;
     flex-direction: column;
-    border:1px solid blue;
+    /* border:1px solid blue; */
+    width: 100%;
     height: 100%;
 `
 const DetailHeader = styled.div`
-    /* width: 100%; */
+    width: 100%;
     height: 50px;
     display: flex;
     align-items: center;
@@ -212,17 +224,16 @@ const DeleteButton = styled.button`
     }
 `
 
-
 const DetailBody = styled.div`
-    border: 1px solid #f1f0f0;
-    border: 1px solid red;
+    /* border: 1px solid #f1f0f0; */
+    /* border: 1px solid red; */
     /* margin: 10px 20px; */
     border-radius: 20px;
-    height:100%;
-    box-sizing: border-box;
-    /* box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.05); */
-    /* overflow: scroll; */
     width: 100%;
+    height:100%;
+    /* box-sizing: border-box; */
+    /* box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.05); */
+    /* overflow-y: scroll; */
 `
 
 const Bodytop = styled.div`
@@ -230,7 +241,6 @@ const Bodytop = styled.div`
     align-items: center;
     padding:20px 20px 10px 20px;
     position: relative;
-
 `
 
 const Bodyimg = styled.img`
@@ -241,76 +251,101 @@ const Bodytxt = styled.div`
     display: flex;
     flex-direction: column;
     margin-left: 10px;
-    
 `
 const Txtname = styled.h3`
-    margin: 0px;
+    /* margin: 0px; */
 `
 const Txtstudent = styled.p`
-    margin: 0px;
+    /* margin: 0px; */
     font-size: 12px;
     color: gray;
 `
 const BodyContent = styled.div`
     padding: 0px 20px;
+    /* border: 1px solid red; */
+    width: 100%;
+    height: 300px;
 `
 const ContentTitle = styled.h3`
-    margin:10px 0px;
+    /* margin:10px 0px; */
 `
 const ContentBody = styled.p`
+/* border: 1px solid blue; */
     color:gray;
 `
 const ContentImg = styled.img`
     /* border:1px solid gray; */
     height: 200px;
     border-radius: 20px;
-    margin : 20px 0px;
+    /* margin : 20px 0px; */
     /* background-repeat: no-repeat;
     background-size: cover; */
 `
 const ContentView = styled.p`
     font-size: 14px;
-    margin:30px 0px 10px;
+    /* margin:30px 0px 10px; */
     color: gray;
+    /* border: 1px solid blue; */
+    
+`
+
+const BodyContainer = styled.div`
+    width: 100%;
+    height: 100%;
+    /* border: 1px solid green; */
+    /* overflow-y: scroll; */
 `
 const BodyCommentBox = styled.div`
     border-top : 1px solid rgba(0,0,0,0.1);
-    margin:20px;
+    /* margin:20px; */
     /* overflow-y: scroll; */
     height: 100%;
+    width: 100%;
     /* position:relative; */
-    height: 70%;
+    /* height: 70%; */
+    /* border: 1px solid orangered; */
 `
 
-const CommentContainer = styled.div`
-    position: fixed;
+const CommentContainer = styled.form`
+    position: sticky;
     bottom: 0;
-    /* bottom: 10px; */
-    width:100%;
-    max-width:500px;
+    bottom: 10px;
+    width: 100%;
+    /* height: 100%; */
+    /* border: 1px solid blue; */
+    /* max-width:500px; */
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 `
 
 const CommentBox = styled.div`
     display: flex;
+    justify-content: center;
     align-items: center;
-    height:40px;
+    /* height: 60px; */
+    width: 95%;
+    /* border: 1px solid red; */
 `
 
 const CommentDiv = styled.div`
-    width : 400px;
+    /* width : 370px; */
+    width: 100%;
+    /* height: 50px; */
     padding: 10px;
     background-color: #eeeeee;
     border-radius: 16px;
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     justify-content: space-between;
 `
 
 const CommentPost = styled.input`
     width:80%;
-    bottom : 0;
+    /* width: 100%; */
+    /* bottom : 0; */
     background-color: #eeeeee;
     height: 30px;
     border-radius: 10px;

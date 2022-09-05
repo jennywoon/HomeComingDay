@@ -16,59 +16,58 @@ const Home = () => {
 
     return (
 
-        <HomeContainer>
-            <Navbar>
-                <NavbarTitle
-                    onClick={() => { navigate("/") }}
-                    style={{ cursor: "pointer", paddingLeft: "20px", fontWeight: "800", textDecoration: "underline" }}
-                >도움요청</NavbarTitle>
-                <NavbarTitle
-                    onClick={() => { navigate("/information") }}
-                    style={{ cursor: "pointer" }}
-                >정보공유</NavbarTitle>
-                <NavbarTitle
-                    onClick={() => { navigate("/calendar") }}
-                    style={{ cursor: "pointer" }}
-                >만남일정</NavbarTitle>
-                <NavbarTitle
-                    onClick={() => { navigate("/freetalk") }}
-                    style={{ cursor: "pointer", paddingRight: "20px" }}
-                >자유토크</NavbarTitle>
-            </Navbar>
-            <Help />
-            <IconWrap>
-                <Iconbox
-                    onClick={() => navigate('/form')}
-                >
-                    <TiPencil color="white" size="40px" />
-                </Iconbox>
-            </IconWrap>
-            <SecondWrap>
-                <Bottom>
-                    <Tap onClick={() => { navigate("/") }}
-                        style={{ paddingLeft: "20px" }}
+            <HomeContainer>
+                <Navbar>
+                    <NavbarTitle
+                        onClick={() => { navigate("/") }}
+                        style={{ cursor: "pointer", paddingLeft: "20px", fontWeight: "800", textDecoration: "underline" }}
+                    >도움요청</NavbarTitle>
+                    <NavbarTitle
+                        onClick={() => { navigate("/information") }}
+                        style={{ cursor: "pointer" }}
+                    >정보공유</NavbarTitle>
+                    <NavbarTitle
+                        onClick={() => { navigate("/calendar") }}
+                        style={{ cursor: "pointer" }}
+                    >만남일정</NavbarTitle>
+                    <NavbarTitle
+                        onClick={() => { navigate("/freetalk") }}
+                        style={{ cursor: "pointer", paddingRight: "20px" }}
+                    >자유토크</NavbarTitle>
+                </Navbar>
+                <Help />
+                <IconWrap>
+                    <Iconbox
+                        onClick={() => navigate('/form')}
                     >
-                        <AiOutlineHome size="23" />
-                        <TapTitle style={{ fontWeight: "bold" }}>HOME</TapTitle>
-                    </Tap>
-                    <Tap onClick={() => { navigate("/search") }}>
-                        <BiSearch size="23" color="#696969" />
-                        <TapTitle style={{ color: "#696969" }}>SEARCH</TapTitle>
-                    </Tap>
-                    <Tap onClick={() => { navigate("/chat") }}>
-                        <HiOutlineChatAlt2 size="23" color="#696969" />
-                        <TapTitle style={{ color: "#696969" }}>CHAT</TapTitle>
-                    </Tap>
-                    <Tap
-                        style={{ paddingRight: "20px" }}
-                    >
-                        <FiUser size="23" color="#696969" />
-                        <TapTitle style={{ color: "#696969" }}>MY</TapTitle>
-                    </Tap>
-                </Bottom>
-            </SecondWrap>
-        </HomeContainer>
-
+                        <TiPencil color="white" size="40px" />
+                    </Iconbox>
+                </IconWrap>
+                <SecondWrap>
+                    <Bottom>
+                        <Tap onClick={() => { navigate("/") }}
+                            style={{ paddingLeft: "20px" }}
+                        >
+                            <AiOutlineHome size="23" />
+                            <TapTitle style={{ fontWeight: "bold" }}>HOME</TapTitle>
+                        </Tap>
+                        <Tap onClick={() => { navigate("/search") }}>
+                            <BiSearch size="23" color="#696969" />
+                            <TapTitle style={{ color: "#696969" }}>SEARCH</TapTitle>
+                        </Tap>
+                        <Tap onClick={() => { navigate("/chat") }}>
+                            <HiOutlineChatAlt2 size="23" color="#696969" />
+                            <TapTitle style={{ color: "#696969" }}>CHAT</TapTitle>
+                        </Tap>
+                        <Tap
+                            style={{ paddingRight: "20px" }}
+                        >
+                            <FiUser size="23" color="#696969" />
+                            <TapTitle style={{ color: "#696969" }}>MY</TapTitle>
+                        </Tap>
+                    </Bottom>
+                </SecondWrap>
+            </HomeContainer>
     );
 };
 
