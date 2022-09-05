@@ -1,13 +1,20 @@
 import React from 'react';
 import SignupComplete from '../components/loginSigunUpBoard/SignupComplete'
-import JustLayout from '../components/JustLayout';
+import styled from 'styled-components';
 
 const SignupCompletePage = () => {
   return (
-    <JustLayout>
+    <Container>
       <SignupComplete />
-    </JustLayout>
+    </Container>
   );
 };
 
 export default SignupCompletePage;
+
+const Container = styled.div`
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow-y: hidden;
+`

@@ -1,13 +1,21 @@
 import React from 'react';
-import JustLayout from '../components/JustLayout';
 import SignUp from "../components/loginSigunUpBoard/SignUp"
+import styled from 'styled-components';
 
 const SignUpPage = () => {
   return (
-    <JustLayout>
+    // <JustLayout>
+    <Container>
       <SignUp />
-    </JustLayout>
+    </Container>
   );
 };
 
 export default SignUpPage;
+
+const Container = styled.div`
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow-y: hidden;
+`

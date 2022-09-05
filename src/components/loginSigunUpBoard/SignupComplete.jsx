@@ -14,28 +14,30 @@ const SignupComplete = () => {
   return (
     <StSignupComplete>
       <StCompleteWrap>
-        <StImg>
-          <CelebrationImg src={Celebration} alt='Celebration' />
-        </StImg>
-        <StText>
-          <p style={{ fontSize: '24px' }}>
-            <strong>조수정</strong>님,
-          </p>
-          <p style={{ fontSize: '24px', marginBottom: '25px' }}>
-            홈커밍데이 가입을 환영합니다!
-          </p>
-          <p>모교 선후배들과 소통을 이어가보세요</p>
-        </StText>
-        <Button 
-        width='100%' 
-        padding='10px 0' 
-        style={{ marginTop: '100px' }}
-        backgroundColor='black'
-        color='white'
-        onClickHandler={onClickHandler}
-        >
-          시작하기
-        </Button>
+        <FisrtWrap>
+          <StImg>
+            <CelebrationImg src={Celebration} alt='Celebration' />
+          </StImg>
+          <StText>
+            <p style={{ fontSize: '24px' }}>
+              <strong>조수정</strong>님,
+            </p>
+            <p style={{ fontSize: '24px', marginBottom: '25px' }}>
+              홈커밍데이 가입을 환영합니다!
+            </p>
+            <p>모교 선후배들과 소통을 이어가보세요</p>
+          </StText>
+          <Button
+            width='100%'
+            padding='10px 0'
+            style={{ marginTop: '100px' }}
+            backgroundColor='black'
+            color='white'
+            onClickHandler={onClickHandler}
+          >
+            시작하기
+          </Button>
+        </FisrtWrap>
       </StCompleteWrap>
     </StSignupComplete>
   );
@@ -45,7 +47,7 @@ export default SignupComplete;
 
 const StSignupComplete = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -53,7 +55,16 @@ const StSignupComplete = styled.div`
 
 const StCompleteWrap = styled.div`
   width: 85%;
+  height: 100%;
 `;
+
+const FisrtWrap = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`
 
 const StImg = styled.div`
   display: flex;
