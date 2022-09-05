@@ -422,7 +422,9 @@ const FormContainer = styled.div`
 `
 
 const FormWrap = styled.form`
-  width: 500px;
+  /* width: 500px; */
+  width: 100%;
+  /* height: 100%; */
   /* height:100vh; */
   /* height: 100%; */
   background-color: white;
@@ -431,13 +433,18 @@ const FormWrap = styled.form`
   
 `;
 const FormHeader = styled.div`
+    width: 100%;
+    /* height: 100%; */
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 80px;
-    padding : 10px 20px;
+    /* padding : 10px 20px; */
 `
 const FormBody = styled.div`
+    width: 100%;
+    /* height: 100%; */
     display: flex;
     flex-direction: column;
     /* padding : 10px 20px; */
@@ -464,15 +471,17 @@ const Textarea = styled.textarea`
 `
 
 const FormFooter = styled.div`
-    
     width:100%;
+    height: 100%;
     /* background-color: yellow; */
     border-top: 1px solid gray;
     align-items: center;
 `
 
 const FooterContain = styled.div`
-
+    width: 100%;
+    /* height: 100%; */
+    /* border: 1px solid red; */
 `
 
 const Imgadd = styled(GrImage)`

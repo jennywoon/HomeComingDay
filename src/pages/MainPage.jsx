@@ -26,21 +26,3 @@ const Container = styled.div`
     height: 100vh;
     overflow-y: hidden;
 `
-const IconWrap = styled.div`
-  width: 95%;
-  display: flex;
-  justify-content: right;
-`
-const Iconbox = styled.div`
-  width:50px;
-  height:50px;
-  background-color: black;
-  border-radius: 30px;
-  position: fixed;
-  /* bottom: 90px; */
-  bottom: 10%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-`
