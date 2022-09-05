@@ -39,8 +39,8 @@ const Search = () => {
         e.preventDefault();
         dispatch(__postSearch(search))
     }
-    return (
 
+    return (
         <HelpContainer onSubmit={onSubmitHandler}>
             {/* <Banner /> */}
             <HelpWrap>

@@ -12,7 +12,6 @@ const SearchHome = () => {
 
     return (
         <HomeContainer>
-            {/* <HeaderTap /> */}
             <Search/>
             <SecondWrap>
                 <Bottom>
