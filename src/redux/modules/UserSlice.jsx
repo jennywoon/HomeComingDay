@@ -17,7 +17,7 @@ export const __loginUser = createAsyncThunk(
   'LOGIN_USER',
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.post(`${BASE_URL}/member/login`, payload);
+      const data = await axios.post(`${BASE_URL}/login`, payload);
       setCookie('accessToken', `${data.data.data.accessToken}`);
       // setCookie('username', `${data.data.username}`)
       console.log(data.data);
@@ -33,7 +33,7 @@ export const __signupUser = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       console.log(payload);
-      const data = await axios.post(`${BASE_URL}/member/signup`, payload);
+      const data = await axios.post(`${BASE_URL}/signup`, payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log('error', error);

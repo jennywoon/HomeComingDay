@@ -20,6 +20,9 @@ import { __getDate } from '../../redux/modules/DateSlice';
 import moment from 'moment';
 import { TimePicker } from 'antd';
 import '../calendarBoard/TimePicker.css';
+import Calendar from 'react-calendar';
+import "../calendarBoard/CalendarModal.css"
+import dayjs from 'dayjs';
 
 const Form2 = () => {
   const dispatch = useDispatch();
@@ -125,6 +128,10 @@ const Form2 = () => {
 
   const { calendartitle, calendartime, calendarlocation, calendarcontent } =
   calendar;
+
+  const [date, setDate] = useState({
+    calendarDate: "",
+});
 
   const [selectedTime, setSelectedTime] = useState('00:00');
   const calendaronChangeHandler = (e) => {
@@ -324,12 +331,21 @@ const Form2 = () => {
               ></FormInput>
               <CalendarButton onClick={showModal}>
                 <CalendarTitle>날짜</CalendarTitle>
-                <DateDiv>
+                <Calendar
+                  onChange={(value) => {
+                    setDate(value);
+                  }}
+                  // calendarDate={calendarDate}
+                  // name="calendarDate"
+                  // value={calendarDate}
+                  formatDay={(locale, date) => dayjs(date).format('DD')}
+                />
+                {/* <DateDiv>
                   {getLastArrItem &&
                     moment(getLastArrItem.calendarDate).format(
                       'YYYY년 MM월 DD일'
                     )}
-                </DateDiv>
+                </DateDiv> */}
                 <IoIosArrowForward />
               </CalendarButton>
               <TimeDiv>
