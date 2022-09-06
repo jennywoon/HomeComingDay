@@ -8,6 +8,7 @@ import Input from "../../components/elements/Input"
 import { __loginUser } from '../../redux/modules/UserSlice';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import NaverLogin from './NaverLogin';
+import logoname from "../../assets/logoname.png"
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -101,7 +102,9 @@ const Login = () => {
     >
       <StLoginWraps>
         {/* 로고 */}
-        <StLoginTitle>homecoming day.</StLoginTitle>
+        <StLoginTitle onClick={() => {
+          navigate("/")
+        }}>Homecoming Day</StLoginTitle>
         <StLoginWrap>
           <StEmail>
             <Stlabel>이메일</Stlabel>

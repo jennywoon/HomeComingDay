@@ -1,8 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { AiOutlineCamera } from "react-icons/ai";
+import { removeCookie } from '../../shared/cookies';
+import { useNavigate } from 'react-router-dom';
 
 const MyPageUser = () => {
+
+    const navigate = useNavigate();
+
     return (
         <UserContainer>
             <UserImgWrap>
@@ -26,7 +31,14 @@ const MyPageUser = () => {
                     </UserEmail>
                 </FirstWrap>
                 <SecondWrap>
-                    <LogoutButton>
+                    <LogoutButton
+                    onClick={()=>{
+                        removeCookie("accessToken")
+                        removeCookie("refreshToken")
+                        removeCookie("userName")
+                        navigate("/login")
+                    }}
+                    >
                         <LogoutTitle>로그아웃</LogoutTitle>
                     </LogoutButton>
                 </SecondWrap>

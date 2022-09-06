@@ -36,7 +36,7 @@ const NaverLogin = () => {
         })
         naverLogin.init();
         // 네이버 로그인은 계속 유지되는 경우가 있어서, 초기화시 로그아웃 되도록 설정
-        naverLogin.logout();
+        // naverLogin.logout();
         naverLogin.getLoginStatus((status) => {
             if (status) {
                 console.log("Naver 로그인 상태", naverLogin.user);
