@@ -9,18 +9,18 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const initialState = {
     helpComments : [],
-    helps : [],
+    help : [],
     isLoading: false,
     error: null,
 };
 
 export const __getHelp = createAsyncThunk("helps/getHelp", async (payload, thunkAPI) => {
     try {
-        const data = await axios.get(`${BASE_URL}/helps`)
+        const data = await axios.get(`${BASE_URL}/article/help`)
         // console.log(data.data)
         return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-        // console.log('error', error);
+        console.log('error', error);
         return thunkAPI.rejectWithValue(error);
     }
 });
@@ -39,17 +39,18 @@ export const __postHelp = createAsyncThunk(
           Authorization: `Bearer ${getCookie("accessToken")}`,
         }
       }
-        const data = await axios.post("http://localhost:3001/helps", payload , config);
+        const data = await axios.post(`${BASE_URL}/article/help`, payload);
         // console.log('data', data)
         return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
+      console.log('error', error);
         return thunkAPI.rejectWithValue(error);
     }
 });
 
 export const __deleteHelp = createAsyncThunk("helps/deleteHelp", async (payload, thunkAPI) => {
   try {
-    await axios.delete(`http://localhost:3001/helps/${payload}`);
+    await axios.delete(`${BASE_URL}/article/help/${payload}`);
     // console.log('data', data)
     // console.log(payload)
     return thunkAPI.fulfillWithValue(payload);
@@ -62,7 +63,7 @@ export const __deleteHelp = createAsyncThunk("helps/deleteHelp", async (payload,
 
 export const __updateHelp = createAsyncThunk("helps/updateHelp", async (payload, thunkAPI) => {
   try {
-    await axios.put(`http://localhost:3001/helps/${payload.id}`, payload);
+    await axios.put(`http://localhost:3001/help/${payload.id}`, payload);
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
     // console.log('error', error)
