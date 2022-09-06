@@ -8,11 +8,13 @@ import CalendarSlice from "../modules/CalendarSlice";
 import SearchSlice from "../modules/SearchSlice";
 import SchoolInfoSlice from "../modules/SchoolInfoSlice";
 import DateSlice from "../modules/DateSlice";
+import NaverSlice from "../modules/NaverSlice"
 
 
 export const store = configureStore({
   // devTools: process.env.NODE_ENV !== "production",
   reducer: {
+    naver: NaverSlice.reducer,
     user: UserSlice.reducer,
     informations : InformationSlice,
     helps : HelpSlice,

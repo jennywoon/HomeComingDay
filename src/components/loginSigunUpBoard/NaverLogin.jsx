@@ -2,12 +2,14 @@ import { useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import naverIcon from "../../assets/naverIcon.png"
-import { __naverSignup } from '../../redux/modules/UserSlice'
+import { __naverLogin } from "../../redux/modules/NaverSlice"
 import axios from 'axios';
+import { getCookie, setCookie } from '../../shared/cookies';
 
 const NaverLogin = () => {
 
     const dispatch = useDispatch();
+    // const location = useLocation();
     // useRef 를 선언 해준다. 
     const naverRef = useRef()
     const { naver } = window
@@ -16,8 +18,8 @@ const NaverLogin = () => {
     const NAVER_CALLBACK_URL = process.env.REACT_APP_NAVER_CALLBACK_URL
     const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-    const code = new URL(window.location.href).searchParams.get("code");
-    const state = new URL(window.location.href).searchParams.get("state")
+    // const code = new URL(window.location.href).searchParams.get("code");
+    // const state = new URL(window.location.href).searchParams.get("state")
 
     const initializeNaverLogin = () => {
         const naverLogin = new naver.LoginWithNaverId({
@@ -56,21 +58,14 @@ const NaverLogin = () => {
         window.location.href.includes('access_token') && getToken()
     }
     const getToken = () => {
+        // if(!location.hash) return;
         const token = window.location.href.split('=')[1].split('&')[0]
         console.log(token);
-        // dispatch(__naverSignup(token))
-    //     await axios.post(`${BASE_URL}/member/naverUserInfo?code=${code}&state=${state}`,{
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             authorization: `Bearer ${getCookie('accessToken')}`,
-    //             // username: `${getCookie("username")}`,
-    //           }
-    //     } )
-    //     .then((res)=> {
-    //         window.location.replace('/')
-    //       //서버측에서 로직이 완료되면 홈으로 보내준다
-    //     })
+        // localStorage.setItem("access_token", token)
+        // setCookie(token)
+        dispatch(__naverLogin({token}))
     }
+        
 
     useEffect(() => {
         initializeNaverLogin()
