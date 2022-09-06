@@ -5,8 +5,8 @@ import axios from "axios";
 // const cookies = new Cookies();
 
 const initialState = {
-    dates: [
-    ],
+    dates: [],
+    times: [],
     isLoading: false,
     error: null,
 };
@@ -33,6 +33,18 @@ export const __postDate = createAsyncThunk("dates/postDate", async (payload, thu
     }
 });
 
+// 시간
+export const __postTime = createAsyncThunk("times/postTime", async (payload, thunkAPI) => {
+  console.log('payload', payload)
+  try {
+      const data = await axios.post("http://localhost:3001/times", payload);
+      console.log('data', data)
+      return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+  }
+});
+
 export const DateSlice = createSlice({
     name: "dates",
     initialState,
@@ -57,6 +69,17 @@ export const DateSlice = createSlice({
         state.dates.push(action.payload);
       },
       [__postDate.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+      [__postTime.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__postTime.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        state.dates.push(action.payload);
+      },
+      [__postTime.rejected]: (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       },

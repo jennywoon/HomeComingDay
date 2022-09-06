@@ -11,7 +11,7 @@ import {TiDelete} from 'react-icons/ti'
 import {GrImage} from 'react-icons/gr'
 import Button from '../elements/Button';
 import CalendarModal from '../calendarBoard/CalendarModal';
-import { __getDate } from '../../redux/modules/DateSlice';
+import { __getDate, __postTime } from '../../redux/modules/DateSlice';
 // import TimeRangePicker from '@wojtekmaj/react-timerange-picker';
 import moment from 'moment';
 import { TimePicker } from 'antd';
@@ -42,7 +42,7 @@ const Form2 = () => {
 
     const [calendar, setCalendar] = useState({
         calendartitle: "",
-        calendartime:"",
+        // calendartime:"",
         calendarlocation: "",
         calendarcontent: "",
     })
@@ -204,6 +204,7 @@ const Form2 = () => {
             navigate("/freetalk")
         }else if(select ==="meet"){
             dispatch(__postCalendar(calendar));
+            dispatch(__postTime(calendar));
             // setFreetalk({
             //     calendartitle: "",
             //     calendarlocation: "",
