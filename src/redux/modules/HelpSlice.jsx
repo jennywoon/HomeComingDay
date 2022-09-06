@@ -5,6 +5,8 @@ import { getCookie, setCookie } from '../../shared/cookies';
 
 // const cookies = new Cookies();
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 const initialState = {
     helpComments : [],
     helps : [],
@@ -14,7 +16,7 @@ const initialState = {
 
 export const __getHelp = createAsyncThunk("helps/getHelp", async (payload, thunkAPI) => {
     try {
-        const data = await axios.get("http://localhost:3001/helps")
+        const data = await axios.get(`${BASE_URL}/helps`)
         // console.log(data.data)
         return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {

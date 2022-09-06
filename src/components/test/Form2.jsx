@@ -174,7 +174,7 @@ const Form2 = () => {
     ) {
       return alert('내용을 입력해주세요');
     }
-
+    
     // if (title && infotitle && freetitle && calendartitle === "") {
     //     return alert("제목을 입력해주세요");
     // } else if (content && infocontent && freecontent && calendarcontent === "") {
@@ -229,7 +229,7 @@ const Form2 = () => {
 
       dispatch(__postFreeTalk(formdata));
       navigate('/freetalk');
-      
+
     } else if (select === 'meet') {
       const newcalendar = {
         calendartitle: calendartitle,
