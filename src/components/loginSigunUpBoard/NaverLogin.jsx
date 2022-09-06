@@ -1,19 +1,26 @@
 import { useEffect, useRef } from 'react'
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import naverIcon from "../../assets/naverIcon.png"
+import { __naverSignup } from '../../redux/modules/UserSlice'
+import axios from 'axios';
 
 const NaverLogin = () => {
 
+    const dispatch = useDispatch();
     // useRef 를 선언 해준다. 
     const naverRef = useRef()
     const { naver } = window
 
     const NAVER_CLIENT_ID = process.env.REACT_APP_NAVER_CLIENT_ID
     const NAVER_CALLBACK_URL = process.env.REACT_APP_NAVER_CALLBACK_URL
+    const BASE_URL = process.env.REACT_APP_BASE_URL;
+
+    const code = new URL(window.location.href).searchParams.get("code");
+    const state = new URL(window.location.href).searchParams.get("state")
 
     const initializeNaverLogin = () => {
         const naverLogin = new naver.LoginWithNaverId({
-
             // 위에 Client Id 랑 Callback Url 적었는데 ? 라고 혹시 생각한다면
             // 변수 처리를 해준 것이기에 그냥 넘어가면 된다.
             clientId: NAVER_CLIENT_ID,
@@ -51,11 +58,24 @@ const NaverLogin = () => {
     const getToken = () => {
         const token = window.location.href.split('=')[1].split('&')[0]
         console.log(token);
+        // dispatch(__naverSignup(token))
+    //     await axios.post(`${BASE_URL}/member/naverUserInfo?code=${code}&state=${state}`,{
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             authorization: `Bearer ${getCookie('accessToken')}`,
+    //             // username: `${getCookie("username")}`,
+    //           }
+    //     } )
+    //     .then((res)=> {
+    //         window.location.replace('/')
+    //       //서버측에서 로직이 완료되면 홈으로 보내준다
+    //     })
     }
 
     useEffect(() => {
         initializeNaverLogin()
         userAccessToken()
+        // getToken()
     }, [])
 
     // handleClick 함수 onClick 이벤트 발생 시 useRef 를 통해 지정한 naverRef 항목이 클릭 된다.
