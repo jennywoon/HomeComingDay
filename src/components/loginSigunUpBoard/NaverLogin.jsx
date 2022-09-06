@@ -47,7 +47,7 @@ const NaverLogin = () => {
                     naverLogin.reprompt();
                     return;
                 }
-            } else{
+            } else {
                 console.log("Naver 비 로그인 상태");
             }
         });
@@ -61,11 +61,16 @@ const NaverLogin = () => {
         // if(!location.hash) return;
         const token = window.location.href.split('=')[1].split('&')[0]
         console.log(token);
-        // localStorage.setItem("access_token", token)
-        // setCookie(token)
-        dispatch(__naverLogin({token}))
+        axios.post(`${BASE_URL}/naverUserInfo`, token, {
+            headers: {
+                'Content-Type': 'application/json',
+                // Authorization: `Bearer ${getCookie('accessToken')}`,
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        // dispatch(__naverLogin({ token }))
     }
-        
+
     useEffect(() => {
         initializeNaverLogin()
         userAccessToken()
