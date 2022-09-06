@@ -57,6 +57,7 @@ const ChatHome = () => {
                     </Tap>
                     <Tap
                         style={{ paddingRight: "20px" }}
+                        onClick={() => { navigate("/mypage") }}
                     >
                         <FiUser size="23" color="#696969" />
                         <TapTitle style={{ color: "#696969" }}>MY</TapTitle>
