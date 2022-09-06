@@ -165,7 +165,7 @@ const SignUp = () => {
   ]);
 
   const onClickHandler = () => {
-    navigate('/schoolinfo')
+    navigate('/login')
   }
 
   return (

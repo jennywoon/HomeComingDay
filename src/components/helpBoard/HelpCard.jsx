@@ -30,9 +30,9 @@ const HelpCard = ({ help , id}) => {
             </CardHead>
             <CardBody>
                 <BodyTitle>{help.title}</BodyTitle>
-                <BodyContent>
+                {/* <BodyContent>
                     {help.content}
-                </BodyContent>
+                </BodyContent> */}
             </CardBody>
             <CardFooter>
                 <Views>조회수 1500</Views>

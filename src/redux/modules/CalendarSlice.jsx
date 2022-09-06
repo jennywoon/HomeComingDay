@@ -57,6 +57,29 @@ export const __updateCalendar = createAsyncThunk("calendars/updateCalendar", asy
 }
 );
 
+  // 시간
+  export const __getTime = createAsyncThunk("calendars/getTime", async (payload, thunkAPI) => {
+    try {
+        const data = await axios.get("http://localhost:3001/calendars")
+        // console.log(data.data)
+        return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      console.log('error', error);
+      return thunkAPI.rejectWithValue(error);
+    }
+});
+
+export const __postTime = createAsyncThunk("calendars/postTime", async (payload, thunkAPI) => {
+console.log('payload', payload)
+try {
+    const data = await axios.post("http://localhost:3001/calendars", payload);
+    console.log('data', data)
+    return thunkAPI.fulfillWithValue(data.data);
+} catch (error) {
+    return thunkAPI.rejectWithValue(error);
+}
+});
+
 export const CalendarSlice = createSlice({
     name: "calendars",
     initialState,
@@ -111,6 +134,28 @@ export const CalendarSlice = createSlice({
         })
       },
       [__updateCalendar.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+      [__getTime.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__getTime.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        state.calendars = action.payload;
+      },
+      [__getTime.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+      [__postTime.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__postTime.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        state.calendars.push(action.payload);
+      },
+      [__postTime.rejected]: (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       },
