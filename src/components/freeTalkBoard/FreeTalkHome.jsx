@@ -64,7 +64,7 @@ const FreeTalkHome = () => {
                     </Tap>
                 </Bottom>
             </SecondWrap>
-        </HomeContainer>
+        </HomeContainer> 
     );
 };
 
