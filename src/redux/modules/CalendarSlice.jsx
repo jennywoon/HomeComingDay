@@ -57,7 +57,31 @@ export const __updateCalendar = createAsyncThunk("calendars/updateCalendar", asy
 }
 );
 
-  // 시간
+// 날짜 - get
+export const __getDate = createAsyncThunk("dates/getDate", async (payload, thunkAPI) => {
+  try {
+      const data = await axios.get("http://localhost:3001/dates")
+      // console.log(data.data)
+      return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+      console.log('error', error);
+      return thunkAPI.rejectWithValue(error);
+  }
+});
+
+// 날짜 - post
+export const __postDate = createAsyncThunk("dates/postDate", async (payload, thunkAPI) => {
+  console.log('payload', payload)
+  try {
+    const data = await axios.post("http://localhost:3001/dates", payload);
+    console.log('data', data)
+    return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+  // 시간 - get
   export const __getTime = createAsyncThunk("calendars/getTime", async (payload, thunkAPI) => {
     try {
         const data = await axios.get("http://localhost:3001/calendars")
@@ -69,6 +93,7 @@ export const __updateCalendar = createAsyncThunk("calendars/updateCalendar", asy
     }
 });
 
+  // 시간 - post
 export const __postTime = createAsyncThunk("calendars/postTime", async (payload, thunkAPI) => {
 console.log('payload', payload)
 try {
@@ -137,6 +162,32 @@ export const CalendarSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       },
+
+      // 날짜
+      [__getDate.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__getDate.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        state.dates = action.payload;
+      },
+      [__getDate.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+      [__postDate.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__postDate.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        state.dates.push(action.payload);
+      },
+      [__postDate.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+
+      // 시간
       [__getTime.pending]: (state) => {
         state.isLoading = true;
       },
