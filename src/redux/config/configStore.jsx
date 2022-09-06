@@ -14,7 +14,7 @@ import NaverSlice from "../modules/NaverSlice"
 export const store = configureStore({
   // devTools: process.env.NODE_ENV !== "production",
   reducer: {
-    naver: NaverSlice.reducer,
+    // naver: NaverSlice.reducer,
     user: UserSlice.reducer,
     informations : InformationSlice,
     helps : HelpSlice,

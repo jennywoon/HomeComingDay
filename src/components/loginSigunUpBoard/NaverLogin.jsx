@@ -2,13 +2,15 @@ import { useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import naverIcon from "../../assets/naverIcon.png"
-import { __naverLogin } from "../../redux/modules/NaverSlice"
+// import { __naverLogin } from "../../redux/modules/NaverSlice"
 import axios from 'axios';
-import { getCookie, setCookie } from '../../shared/cookies';
+import { setCookie } from '../../shared/cookies';
+import Cookies from "universal-cookie"
 
 const NaverLogin = () => {
 
     const dispatch = useDispatch();
+    const cookies = new Cookies();
     // const location = useLocation();
     // useRef 를 선언 해준다. 
     const naverRef = useRef()
@@ -57,18 +59,21 @@ const NaverLogin = () => {
     const userAccessToken = () => {
         window.location.href.includes('access_token') && getToken()
     }
-    const getToken = () => {
-        // if(!location.hash) return;
+    const getToken = async() => {
         const token = window.location.href.split('=')[1].split('&')[0]
         console.log(token);
-        axios.post(`${BASE_URL}/naverUserInfo`, token, {
+        const data = await axios.post(`${BASE_URL}/naverUserInfo`, token, {
             headers: {
                 'Content-Type': 'application/json',
-                // Authorization: `Bearer ${getCookie('accessToken')}`,
                 Authorization: `Bearer ${token}`,
             },
         });
-        // dispatch(__naverLogin({ token }))
+        setCookie("accessToken", `${data.data.accessToken}`)
+        setCookie("refreshToken", `${data.data.refreshToken}`)
+        setCookie("userName", `${data.data.username}`)
+        // window.location.replace("/")
+        console.log(data.data.accessToken);
+        console.log(data.data.username)
     }
 
     useEffect(() => {
