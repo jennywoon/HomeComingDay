@@ -97,7 +97,7 @@ const CalendarDetail = () => {
                   {getLastArrItem && moment(getLastArrItem.calendarDate).format("YYYY년 MM월 DD일")}
                 </Contentget>
                 <Contentget>
-                  <ContentgetTitle>시간 </ContentgetTitle>오후 8:00
+                  <ContentgetTitle>시간 </ContentgetTitle>{calendarfind && calendarfind.calendartime}
                 </Contentget>
                 <Contentget>
                   <ContentgetTitle>장소 </ContentgetTitle>{calendarfind && calendarfind.calendarlocation}

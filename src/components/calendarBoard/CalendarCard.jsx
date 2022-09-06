@@ -39,12 +39,12 @@ const CalendarCard = ({ calendar, id }) => {
             </CardHead>
             <CardBody>
                 <BodyTitle>{calendar.calendartitle}</BodyTitle>
-                <BodyContent>
+                {/* <BodyContent>
                 {getLastArrItem && moment(getLastArrItem.calendarDate).format("YYYY년 MM월 DD일")}
                 </BodyContent>
                 <BodyContent>
                     {calendar.calendarcontent}
-                </BodyContent>
+                </BodyContent> */}
             </CardBody>
             <CardFooter>
                 <Views>조회수 1500</Views>
