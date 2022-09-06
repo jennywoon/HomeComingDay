@@ -174,7 +174,7 @@ const Form2 = () => {
     ) {
       return alert('내용을 입력해주세요');
     }
-    
+
     // if (title && infotitle && freetitle && calendartitle === "") {
     //     return alert("제목을 입력해주세요");
     // } else if (content && infocontent && freecontent && calendarcontent === "") {
@@ -219,15 +219,15 @@ const Form2 = () => {
         content: freecontent,
         // imageUrl: selectedImage,
       };
-      selectedImage.map((image)=>{
-        formdata.append("multipartFile" , image)
-      });
-      formdata.append(
-        "articlesDto",
-        new Blob([JSON.stringify(newfreetalk)], { type: "application/json" })
-      );
+      // selectedImage.map((image)=>{
+      //   formdata.append("multipartFile" , image)
+      // });
+      // formdata.append(
+      //   "articlesDto",
+      //   new Blob([JSON.stringify(newfreetalk)], { type: "application/json" })
+      // );
 
-      dispatch(__postFreeTalk(formdata));
+      dispatch(__postFreeTalk(newfreetalk));
       navigate('/freetalk');
 
     } else if (select === 'meet') {

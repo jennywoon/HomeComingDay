@@ -4,6 +4,8 @@ import axios from "axios";
 
 // const cookies = new Cookies();
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 const initialState = {
     freetalks: [],
     freeComments:[],
@@ -14,7 +16,7 @@ const initialState = {
 
 export const __getFreeTalk = createAsyncThunk("freetalks/getFreeTalk", async (payload, thunkAPI) => {
     try {
-        const data = await axios.get("http://localhost:3001/freetalks")
+        const data = await axios.get(`${BASE_URL}/article/free`)
         console.log(data.data)
         return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -26,7 +28,7 @@ export const __getFreeTalk = createAsyncThunk("freetalks/getFreeTalk", async (pa
 export const __postFreeTalk = createAsyncThunk("freetalks/postFreeTalk", async (payload, thunkAPI) => {
     console.log('payload', payload)
     try {
-        const data = await axios.post("http://localhost:3001/freetalks", payload);
+        const data = await axios.post(`${BASE_URL}/article/free`, payload);
         console.log('data', data)
         return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -36,7 +38,7 @@ export const __postFreeTalk = createAsyncThunk("freetalks/postFreeTalk", async (
 
 export const __deleteFreeTalk = createAsyncThunk("freetalks/deleteHelp", async (payload, thunkAPI) => {
   try {
-    await axios.delete(`http://localhost:3001/freetalks/${payload}`);
+    await axios.delete(`${BASE_URL}/article/free/${payload}`);
     // console.log('data', data)
     // console.log(payload)
     return thunkAPI.fulfillWithValue(payload);
@@ -49,7 +51,7 @@ export const __deleteFreeTalk = createAsyncThunk("freetalks/deleteHelp", async (
 
 export const __updateFreeTalk = createAsyncThunk("freetalks/updateHelp", async (payload, thunkAPI) => {
   try {
-    await axios.put(`http://localhost:3001/freetalks/${payload.id}`, payload);
+    await axios.put(`${BASE_URL}/article/free/${payload.id}`, payload);
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
     // console.log('error', error)
