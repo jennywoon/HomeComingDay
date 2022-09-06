@@ -6,6 +6,7 @@ import { BiSearch } from "react-icons/bi";
 import { IoCloseCircle } from "react-icons/io5";
 import SearchCard from "./SearchCard";
 import { __getSearch, __postSearch } from "../../redux/modules/SearchSlice";
+import { __getHelp } from "../../redux/modules/HelpSlice";
 
 const Search = () => {
     const dispatch = useDispatch();
@@ -13,11 +14,16 @@ const Search = () => {
     // search post 연습
 
     const [search, setSearch] = useState()
-    console.log(search);
+    const searchs = useSelector((state)=>state)
     
+    console.log(searchs)
+
     useEffect(() => {
         dispatch(__getSearch());
+        dispatch(__getHelp())
     }, [dispatch])
+
+    
 
     // input 안 x버튼 클릭할 때, input 내용 없어지도록 구현 + post 기능 추가
 
@@ -49,7 +55,14 @@ const Search = () => {
                         <BiSearch size="25" style={{ paddingLeft: "20px" }} />
                         <SearchInput
                             type="text" name="inputText" value={inputText} onChange={onChangeInput}
-                            placeholder="검색어를 입력해주세요" />
+                            placeholder="검색어를 입력해주세요" 
+                            onKeyPress={(e) => {
+                                if (e.key === 'Enter') {
+                                  dispatch(__getSearch(inputText))
+                                  
+                                }
+                              }}
+                            />
                         <IoCloseCircle
                             onClick={onReset}
                             size="25" style={{ paddingRight: "20px", cursor: "pointer" }} />
@@ -66,6 +79,8 @@ const Search = () => {
                         </> */}
                         {/* <SearchCard/> */}
                     </RecentWrap>
+                    
+
                 </RecentSearch>
             </HelpWrap>
         </HelpContainer>
