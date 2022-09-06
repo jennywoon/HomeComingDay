@@ -124,7 +124,7 @@ const ChatContainer = styled.div`
 const HeadImg = styled.div`
     width: 50px;
     height: 50px;
-    background-color: #d9d9d9;
+    background-color: #f7931e;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -155,7 +155,7 @@ const ChatContent = styled.div`
 const BottomTapWrap = styled.div`
     width: 100%;
     position: sticky;
-    background-color: #eee;
+    background-color: #ffffff;
     bottom: 0;
 `
 const Bottom = styled.div`

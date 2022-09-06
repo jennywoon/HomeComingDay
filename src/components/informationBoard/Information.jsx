@@ -52,13 +52,12 @@ const HelpContainer = styled.div`
 `;
 
 const Banner = styled.div`
-  height: 120px;
+  height: 160px;
   border: 1px solid gray;
   margin-bottom: 12px;
 `
 
 const HelpWrap = styled.div`
-  /* padding: 0 10px; */
   width: 100%;
 `;
 const Select = styled.select`
@@ -67,6 +66,12 @@ const Select = styled.select`
   margin-bottom: 10px;
   padding: 2px 4px;
   border-radius: 10px;
+  border: 1px solid #f7931e;
+  color: #f7931e;
+  width: 70px;
+  font-weight: 500;
+  font-size: 12px;
+  outline: none;
 `;
 
 const HelpList = styled.div``;

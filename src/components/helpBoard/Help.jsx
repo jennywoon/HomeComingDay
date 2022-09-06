@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import styled from "styled-components"
-import help from "../../assets/help.png"
+import helptest from "../../assets/helptest.png"
 import { useSelector, useDispatch } from "react-redux";
 import { __getHelp } from "../../redux/modules/HelpSlice";
 import HelpCard from "./HelpCard";
@@ -50,10 +50,10 @@ const HelpContainer = styled.div`
 `;
 
 const Banner = styled.div`
-  height: 120px;
+  height: 160px;
   /* border: 1px solid gray; */
   margin-bottom: 12px;
-  background-image: url(${help});
+  background-image: url(${helptest});
   background-position: center;
   background-size: 100% 100%;
 `
@@ -72,6 +72,12 @@ const Select = styled.select`
   margin-bottom: 10px;
   padding: 2px 4px;
   border-radius: 10px;
+  border: 1px solid #f7931e;
+  color: #f7931e;
+  width: 70px;
+  font-weight: 500;
+  font-size: 12px;
+  outline: none;
 `;
 
 const HelpList = styled.div`
@@ -80,11 +86,3 @@ const HelpList = styled.div`
   /* border: 1px solid green; */
   /* overflow-y: scroll; */
 `;
-
-// const HelpCard = styled.div`
-//   padding: 10px;
-//   border: 1px solid #ddd;
-//   border-radius: 10px;
-//   cursor: pointer;
-//   margin-bottom: 20px;
-// `;

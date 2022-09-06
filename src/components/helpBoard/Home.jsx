@@ -20,19 +20,17 @@ const Home = () => {
                 <Navbar>
                     <NavbarTitle
                         onClick={() => { navigate("/") }}
-                        style={{ cursor: "pointer", paddingLeft: "20px", fontWeight: "800", textDecoration: "underline" }}
+                        style={{paddingLeft: "20px", fontWeight: "800", textDecoration: "underline", color: "#f7931e" }}
                     >도움요청</NavbarTitle>
                     <NavbarTitle
                         onClick={() => { navigate("/information") }}
-                        style={{ cursor: "pointer" }}
                     >정보공유</NavbarTitle>
                     <NavbarTitle
                         onClick={() => { navigate("/calendar") }}
-                        style={{ cursor: "pointer" }}
                     >만남일정</NavbarTitle>
                     <NavbarTitle
                         onClick={() => { navigate("/freetalk") }}
-                        style={{ cursor: "pointer", paddingRight: "20px" }}
+                        style={{ paddingRight: "20px" }}
                     >자유토크</NavbarTitle>
                 </Navbar>
                 <Help />
@@ -40,13 +38,13 @@ const Home = () => {
                     <Iconbox
                         onClick={() => navigate('/form')}
                     >
-                        <TiPencil color="white" size="40px" />
+                        <TiPencil color="white" size="32" />
                     </Iconbox>
                 </IconWrap>
                 <SecondWrap>
                     <Bottom>
                         <Tap onClick={() => { navigate("/") }}
-                            style={{ paddingLeft: "20px" }}
+                            style={{ paddingLeft: "20px", color:"#f7931e" }}
                         >
                             <AiOutlineHome size="23" />
                             <TapTitle style={{ fontWeight: "bold" }}>HOME</TapTitle>
@@ -82,18 +80,19 @@ const HomeContainer = styled.div`
 `
 const Navbar = styled.div`
     width: 100%;
-    height: 40px;
+    height: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 15px;
-    ;
 `
-const NavbarTitle = styled.div``
+const NavbarTitle = styled.div`
+    cursor: pointer;
+`
 const SecondWrap = styled.div`
     width: 100%;
     position: sticky;
-    background-color: #eee;
+    background-color: #ffffff;
     bottom:0;
 `
 const Bottom = styled.div`
@@ -101,6 +100,7 @@ const Bottom = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-weight: 600;
 `
 
 const Tap = styled.div`
@@ -121,7 +121,7 @@ const IconWrap = styled.div`
 const Iconbox = styled.div`
   width:50px;
   height:50px;
-  background-color: black;
+  background-color: #f7931e;
   border-radius: 30px;
   position: fixed;
   bottom: 90px;

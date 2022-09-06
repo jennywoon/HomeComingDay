@@ -16,19 +16,19 @@ const FreeTalkHome = () => {
             <Navbar>
                 <NavbarTitle
                     onClick={() => { navigate("/") }}
-                    style={{ cursor: "pointer", paddingLeft: "20px"}}
+                    style={{ paddingLeft: "20px"}}
                 >도움요청</NavbarTitle>
                 <NavbarTitle
                     onClick={() => { navigate("/information") }}
-                    style={{ cursor: "pointer"}}
+                    style={{}}
                 >정보공유</NavbarTitle>
                 <NavbarTitle
                     onClick={() => { navigate("/calendar") }}
-                    style={{ cursor: "pointer"}}
+                    style={{}}
                 >만남일정</NavbarTitle>
                 <NavbarTitle
                     onClick={() => { navigate("/freetalk") }}
-                    style={{ cursor: "pointer", paddingRight: "20px", fontWeight:"800", textDecoration:"underline"}}
+                    style={{paddingRight: "20px", fontWeight:"800", textDecoration:"underline", color:"#f7931e"}}
                 >자유토크</NavbarTitle>
             </Navbar>
             <FreeTalk/>
@@ -42,7 +42,7 @@ const FreeTalkHome = () => {
             <SecondWrap>
                 <Bottom>
                     <Tap onClick={() => { navigate("/") }}
-                        style={{ paddingLeft: "20px" }}
+                        style={{ paddingLeft: "20px", color:"#f7931e" }}
                     >
                         <AiOutlineHome size="23" />
                         <TapTitle style={{ fontWeight: "bold" }}>HOME</TapTitle>
@@ -80,7 +80,7 @@ const HomeContainer = styled.div`
 
 const Navbar = styled.div`
     width: 100%;
-    height: 40px;
+    height: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -89,11 +89,13 @@ const Navbar = styled.div`
     ;
 `
 
-const NavbarTitle = styled.div``
+const NavbarTitle = styled.div`
+    cursor: pointer;
+`
 const SecondWrap = styled.div`
     width: 100%;
     position: sticky;
-    background-color: #eee;
+    background-color: #ffffff;
     bottom: 0;
 `
 const Bottom = styled.div`
@@ -101,6 +103,7 @@ const Bottom = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-weight: 600;
 `
 
 const Tap = styled.div`
@@ -121,7 +124,7 @@ const IconWrap = styled.div`
 const Iconbox = styled.div`
   width:50px;
   height:50px;
-  background-color: black;
+  background-color: #f7931e;
   border-radius: 30px;
   position: fixed;
   bottom: 90px;
