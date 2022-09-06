@@ -164,9 +164,9 @@ const SignUp = () => {
     confirmPasswordError,
   ]);
 
-  const onClickHandler = () => {
-    navigate('/login')
-  }
+  // const onClickHandler = () => {
+  //   navigate('/schoolinfo')
+  // }
 
   return (
     <FormContainer>
@@ -271,7 +271,7 @@ const SignUp = () => {
             padding='10px 0'
             isDisabled={isActive ? false : true}
             style={{ marginTop: '100px' }}
-            onClickHandler={onClickHandler}
+            // onClickHandler={onClickHandler}
             backgroundColor='black'
             color='white'
           >
