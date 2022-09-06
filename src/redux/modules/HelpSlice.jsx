@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { getCookie, setCookie } from '../../shared/cookies';
 // import Cookies from "universal-cookie"
 
 // const cookies = new Cookies();
@@ -22,10 +23,21 @@ export const __getHelp = createAsyncThunk("helps/getHelp", async (payload, thunk
     }
 });
 
-export const __postHelp = createAsyncThunk("helps/postHelp", async (payload, thunkAPI) => {
+export const __postHelp = createAsyncThunk(
+  "helps/postHelp", async (payload, thunkAPI) => {
     console.log('payload', payload)
+      for (var value of payload.values()) {
+        console.log("formdata value", value);
+      }
     try {
-        const data = await axios.post("http://localhost:3001/helps", payload);
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          responseType: "blob",
+          Authorization: `Bearer ${getCookie("accessToken")}`,
+        }
+      }
+        const data = await axios.post("http://localhost:3001/helps", payload , config);
         // console.log('data', data)
         return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {

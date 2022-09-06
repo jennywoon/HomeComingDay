@@ -154,7 +154,10 @@ const Form2 = () => {
     setSelect(e.target.value);
   };
 
+  const formdata = new FormData();
+  //등록하기
   const onSubmitHandler = (e) => {
+
     e.preventDefault();
     if (
       title.length &&
@@ -182,41 +185,51 @@ const Form2 = () => {
       const newhelp = {
         title: title,
         content: content,
-        imageList: selectedImage,
+        // imageUrl: selectedImage,
       };
-      dispatch(__postHelp(newhelp));
-
-      // setHelp({
-      // title: "",
-      // content: "",
-      // imgUrl : ""});
+      selectedImage.map((image)=>{
+        formdata.append("multipartFile" , image)
+      });
+      formdata.append(
+        "articlesDto",
+        new Blob([JSON.stringify(newhelp)], { type: "application/json" })
+      );
+      dispatch(__postHelp(formdata));
       navigate('/');
+
     } else if (select === 'info') {
       const newinfo = {
         title: infotitle,
         content: infocontent,
-        imageList: selectedImage,
+        // imageUrl: selectedImage,
       };
-      dispatch(__postInformation(newinfo));
-      // setInfo({
-      // infotitle: "",
-      // infocontent: "",
-      // infoimageUrl:""
-      // });
+      selectedImage.map((image)=>{
+        formdata.append("multipartFile" , image)
+      });
+      formdata.append(
+        "articlesDto",
+        new Blob([JSON.stringify(newinfo)], { type: "application/json" })
+      );
+      dispatch(__postInformation(formdata));
       navigate('/information');
+
     } else if (select === 'freetalk') {
       const newfreetalk = {
         title: freetitle,
         content: freecontent,
-        imageList: selectedImage,
+        // imageUrl: selectedImage,
       };
-      dispatch(__postFreeTalk(newfreetalk));
-      // setFreetalk({
-      // freetitle: "",
-      // freecontent: "",
-      // freeimageUrl : ""
-      // })
+      selectedImage.map((image)=>{
+        formdata.append("multipartFile" , image)
+      });
+      formdata.append(
+        "articlesDto",
+        new Blob([JSON.stringify(newfreetalk)], { type: "application/json" })
+      );
+
+      dispatch(__postFreeTalk(formdata));
       navigate('/freetalk');
+      
     } else if (select === 'meet') {
       const newcalendar = {
         calendartitle: calendartitle,
