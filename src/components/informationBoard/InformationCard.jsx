@@ -32,9 +32,9 @@ const InformationCard = ({ information,id }) => {
             </CardHead>
             <CardBody>
                 <BodyTitle>{information.title}</BodyTitle>
-                <BodyContent>
+                {/* <BodyContent>
                     {information.content}
-                </BodyContent>
+                </BodyContent> */}
             </CardBody>
             <CardFooter>
                 <Views>조회수 1500</Views>

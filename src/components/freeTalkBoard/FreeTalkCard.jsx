@@ -29,9 +29,9 @@ const FreeTalkCard = ({freetalk , id}) => {
             </CardHead>
             <CardBody>
               <BodyTitle>{freetalk.title}</BodyTitle>
-              <BodyContent>
+              {/* <BodyContent>
               {freetalk.content}
-              </BodyContent>
+              </BodyContent> */}
             </CardBody>
             <CardFooter>
               <Views>조회수 1500</Views>

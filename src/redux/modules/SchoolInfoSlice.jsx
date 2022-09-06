@@ -4,6 +4,8 @@ import axios from "axios";
 
 // const cookies = new Cookies();
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 const initialState = {
     schoolSearchs:[],
     departmentSearchs:[],
@@ -16,7 +18,7 @@ const initialState = {
 // 학교정보 검색
 export const __getSchoolSearch = createAsyncThunk("getSchoolSearch", async (payload, thunkAPI) => {
   try {
-      const data = await axios.get("http://localhost:3001/schoolSearchs");
+      const data = await axios.get(`${BASE_URL}/schoolSearchs`);
       // console.log('data', data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
@@ -28,7 +30,7 @@ export const __getSchoolSearch = createAsyncThunk("getSchoolSearch", async (payl
 export const __getDepartmentSearch = createAsyncThunk("getDepartmentSearch", async (payload, thunkAPI) => {
   // console.log('payload', payload)
   try {
-      const data = await axios.get("http://localhost:3001/departmentSearchs");
+      const data = await axios.get(`${BASE_URL}/departmentSearchs`);
       // console.log('data', data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
@@ -40,7 +42,7 @@ export const __getDepartmentSearch = createAsyncThunk("getDepartmentSearch", asy
 export const __getAdmissions = createAsyncThunk("getAdmissions", async (payload, thunkAPI) => {
   // console.log('payload', payload)
   try {
-      const data = await axios.get("http://localhost:3001/admissions");
+      const data = await axios.get(`${BASE_URL}/admissions`);
       // console.log('data', data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
@@ -53,7 +55,7 @@ export const __postSchoolInfo = createAsyncThunk(
   'postSchoolInfo',
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.post(`http://localhost:3001/schoolInfos`, payload);
+      const data = await axios.post(`${BASE_URL}/schoolInfos`, payload);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
