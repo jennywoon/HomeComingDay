@@ -66,7 +66,6 @@ const NaverLogin = () => {
         dispatch(__naverLogin({token}))
     }
         
-
     useEffect(() => {
         initializeNaverLogin()
         userAccessToken()
