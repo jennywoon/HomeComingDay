@@ -1,21 +1,22 @@
 import { useEffect } from "react";
 import styled from "styled-components"
-import helptest from "../../assets/helptest.png"
 import { useSelector, useDispatch } from "react-redux";
 import { __getHelp } from "../../redux/modules/HelpSlice";
 import HelpCard from "./HelpCard";
 import Loading from "../test/Loading";
+import helporange from "../../assets/helporange.png"
+import helpwhite from "../../assets/helpwhite.png"
 const Help = () => {
 
   const dispatch = useDispatch();
   const { helps } = useSelector((state) => state.helps);
-  const {isLoading} = useSelector((state)=>state.helps)
+  const { isLoading } = useSelector((state) => state.helps)
   console.log(isLoading)
   // console.log(helps)
 
   useEffect(() => {
     dispatch(__getHelp());
-  },[dispatch])
+  }, [dispatch])
 
   // if (isLoading) {
   //   return <Loading />;
@@ -23,7 +24,9 @@ const Help = () => {
 
   return (
     <HelpContainer>
-      <Banner />
+      <BannerWrap>
+        <Banner />
+      </BannerWrap>
       <HelpWrap>
         <Select name='state'>
           <option>최신순</option>
@@ -35,8 +38,8 @@ const Help = () => {
         </Iconbox> */}
         <HelpList>
           <>
-            {helps&&helps.slice(0).reverse().map((help) => (
-              <HelpCard key={help.id} id={help.id} help={help}/>
+            {helps && helps.slice(0).reverse().map((help) => (
+              <HelpCard key={help.id} id={help.id} help={help} />
             ))}
           </>
         </HelpList>
@@ -44,7 +47,7 @@ const Help = () => {
     </HelpContainer>
   );
 };
- 
+
 export default Help;
 
 const HelpContainer = styled.div`
@@ -53,23 +56,38 @@ const HelpContainer = styled.div`
   gap: 12px;
   /* border: 1px solid red; */
   /* height: 100vh; */
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 `;
 
-const Banner = styled.div`
-  height: 160px;
-  /* border: 1px solid gray; */
+const BannerWrap = styled.div`
+  width: 100%;
+  height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f7931e;
   margin-bottom: 12px;
-  background-image: url(${helptest});
+  position: absolute;
+`
+const Banner = styled.div`
+  height: 180px;
+  width: 95%;
+  /* border: 1px solid red; */
+  background-image: url(${helporange});
+  /* background-image: url(${helpwhite}); */
   background-position: center;
   background-size: 100% 100%;
 `
 
 const HelpWrap = styled.div`
+  position: relative;
+  top: 170px;
   width: 100%;
+  border-radius: 20px;
   /* height: 100%; */
   /* border: 1px solid blue; */
-  /* padding: 0 10px; */
+  background-color: white;
+  padding: 10px 5px 10px 5px;
   /* height: 100%; */
 `;
 
