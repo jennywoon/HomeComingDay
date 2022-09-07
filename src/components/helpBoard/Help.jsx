@@ -4,16 +4,22 @@ import helptest from "../../assets/helptest.png"
 import { useSelector, useDispatch } from "react-redux";
 import { __getHelp } from "../../redux/modules/HelpSlice";
 import HelpCard from "./HelpCard";
-
+import Loading from "../test/Loading";
 const Help = () => {
 
   const dispatch = useDispatch();
   const { helps } = useSelector((state) => state.helps);
+  const {isLoading} = useSelector((state)=>state.helps)
+  console.log(isLoading)
   // console.log(helps)
 
   useEffect(() => {
     dispatch(__getHelp());
   },[dispatch])
+
+  // if (isLoading) {
+  //   return <Loading />;
+  // }
 
   return (
     <HelpContainer>
@@ -23,6 +29,7 @@ const Help = () => {
           <option>최신순</option>
           <option>인기순</option>
         </Select>
+        <Loading />
         {/* <Iconbox onClick={()=>navigate('/helpform')}>
           <TiPencil color="white" size="40px"/>
         </Iconbox> */}
