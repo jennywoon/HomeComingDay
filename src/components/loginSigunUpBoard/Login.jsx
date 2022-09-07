@@ -171,7 +171,7 @@ const Login = () => {
             style={{ marginTop: '50px', backgroundColor:"#f7931e" }}
           >
             <ButtonTitle
-            onClick={showModal}
+            // onClick={showModal}
             >로그인</ButtonTitle>
           </Button>
         </StLoginWrap>

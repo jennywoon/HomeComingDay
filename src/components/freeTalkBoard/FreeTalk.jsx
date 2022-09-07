@@ -29,7 +29,7 @@ const FreeTalk = () => {
         </Iconbox> */}
         <HelpList>
           <>
-            {freetalks.slice(0).reverse().map((freetalk) => (
+            {freetalks.slice(0).map((freetalk) => (
               <FreeTalkCard key={freetalk.id} id={freetalk.id} freetalk={freetalk} />
             ))}
           </>

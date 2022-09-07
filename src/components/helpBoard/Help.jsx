@@ -38,7 +38,7 @@ const Help = () => {
         </Iconbox> */}
         <HelpList>
           <>
-            {helps && helps.slice(0).reverse().map((help) => (
+            {helps && helps.slice(0).map((help) => (
               <HelpCard key={help.id} id={help.articleId} help={help} />
             ))}
           </>

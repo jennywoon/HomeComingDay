@@ -27,7 +27,7 @@ const Calendar = () => {
         </Select>
         <HelpList>
           <>
-            {calendars.slice(0).reverse().map((calendar) => (
+            {calendars.slice(0).map((calendar) => (
               <CalendarCard key={calendar.id} id={calendar.id} calendar={calendar} />
             ))}
           </>
