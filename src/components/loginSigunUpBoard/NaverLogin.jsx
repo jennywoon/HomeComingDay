@@ -75,6 +75,7 @@ const NaverLogin = () => {
         // window.location.replace("/")
         console.log(data.data.accessToken);
         console.log(data.data.username)
+        console.log(data.data.schoolInfo)
     }
 
     useEffect(() => {

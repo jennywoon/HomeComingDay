@@ -30,7 +30,7 @@ const Login = () => {
   // 이메일
   const onChangeEmailHandler = (e) => {
     setFormValue((prev) => {
-      console.log(e.target.value);
+      // console.log(e.target.value);
       return {
         ...prev,
         email: e.target.value,
@@ -41,7 +41,7 @@ const Login = () => {
   // 비밀번호
   const onChangePasswordHandler = (e) => {
     setFormValue((prev) => {
-      console.log(e.target.value);
+      // console.log(e.target.value);
       return {
         ...prev,
         password: e.target.value,
@@ -63,15 +63,20 @@ const Login = () => {
     visible: false,
   });
 
-  const loginSchoolInfo = useSelector((state) => state)
+  const loginSchoolInfo = useSelector((state) => state.user.user.headers.schoolinfo)
   console.log(loginSchoolInfo)
-
+  
   // 로그인버튼
   const onSubmitHandler = async (formValue) => {
     dispatch(__loginUser(formValue))
     .then(() => {
-      
+      // console.log(loginSchoolInfo)
+      if (loginSchoolInfo===true) {
+        navigate('/schoolinfo');
+      } 
+      else if (loginSchoolInfo!==true){
       navigate('/');
+      }
     });
   };
 
