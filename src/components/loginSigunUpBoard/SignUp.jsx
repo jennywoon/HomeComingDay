@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import Button from "../../components/elements/Button"
 import Input from "../../components/elements/Input"
-import { __signupUser } from '../../redux/modules/UserSlice';
+import { __postSendEmail, __signupUser } from '../../redux/modules/UserSlice';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import { IoIosArrowBack } from 'react-icons/io';
 
@@ -50,6 +50,15 @@ const SignUp = () => {
       };
     });
   };
+
+  // email 인증
+  const [disabled, setDisabled] = useState(false);
+  const [emailConfirm, setEmailConfirm] = useState(false);
+  const handleEmailConfirm = () => {
+    dispatch(__postSendEmail(email));
+    setDisabled(true);
+    setEmailConfirm(true);
+  }
 
   // username
   const handleChangeusername = (e) => {
@@ -173,114 +182,129 @@ const SignUp = () => {
       <StSignupContainer onSubmit={handleSubmit}>
         <StSignupWraps>
           <FisrtWrap>
-          <IoIosArrowBack
-            size='28'
-            style={{ marginBottom: '20px', cursor: 'pointer' }}
-            onClick={() => {
-              navigate('/login');
-            }}
-          />
-          <StSignupTitle style={{ justifyContent: 'center'}}>
-            회원가입
-          </StSignupTitle>
-
-          <StSignupWrap>
-            <Stlabel>이름</Stlabel>
-            <Input
-              width='100%'
-              onChange={handleChangeusername}
-              padding='10px 15px'
+            <IoIosArrowBack
+              size='28'
+              style={{ marginBottom: '20px', cursor: 'pointer' }}
+              onClick={() => {
+                navigate('/login');
+              }}
             />
-            {nameError ? (
-              <StErrorMessage>2자 이상 12자 이하, 영어 또는 한글</StErrorMessage>
-            ) : null}
-          </StSignupWrap>
+            <StSignupTitle style={{ justifyContent: 'center' }}>
+              회원가입
+            </StSignupTitle>
 
-          <StSignupWrap>
-            <Stlabel>이메일</Stlabel>
-            <StFlexbox>
+            <StSignupWrap>
+              <Stlabel>이름</Stlabel>
+              <Input
+                width='100%'
+                onChange={handleChangeusername}
+                padding='10px 15px'
+              />
+              {nameError ? (
+                <StErrorMessage>
+                  2자 이상 12자 이하, 영어 또는 한글
+                </StErrorMessage>
+              ) : null}
+            </StSignupWrap>
+
+            <StSignupWrap>
+              <Stlabel>이메일</Stlabel>
+              <StFlexbox>
+                <Input
+                  width='100%'
+                  style={{ marginRight: '10px' }}
+                  onChange={handleChangeEmail}
+                  padding='10px 15px'
+                />
+                <StEmailConfirm onClick={handleEmailConfirm}>
+                  {disabled ? '인증완료' : '인증'}
+                </StEmailConfirm>
+              </StFlexbox>
+              {emailError ? (
+                <StErrorMessage>이메일 형식에 맞게 입력하세요</StErrorMessage>
+              ) : null}
+              {emailConfirm ? (
+                <>
+                <Stlabel>인증번호</Stlabel>
               <Input
                 width='100%'
                 style={{ marginRight: '10px' }}
                 onChange={handleChangeEmail}
                 padding='10px 15px'
-              />
-              <StEmailConfirm>인증</StEmailConfirm>
-            </StFlexbox>
-            {emailError ? (
-              <StErrorMessage>이메일 형식에 맞게 입력하세요</StErrorMessage>
-            ) : null}
-          </StSignupWrap>
+                /> 
+                </>
+              ) : null}
+            </StSignupWrap>
 
-          <StSignupWrap>
-            <Stlabel>비밀번호</Stlabel>
-            <StFlexbox>
-              <Input
-                type={passwordType.type}
-                width='100%'
-                onChange={handleChangePassword}
-                padding='10px 15px'
-              />
-              <StVisible onClick={handlePasswordType}>
-                {passwordType.visible ? (
-                  <span>
-                    <AiOutlineEye />
-                  </span>
-                ) : (
-                  <span>
-                    <AiOutlineEyeInvisible />
-                  </span>
-                )}
-              </StVisible>
-            </StFlexbox>
-            {passwordError ? (
-              <StErrorMessage>
-                8자 이상 16자 이하의 영어와 숫자, 특수문자 포함
-              </StErrorMessage>
-            ) : null}
-          </StSignupWrap>
+            <StSignupWrap>
+              <Stlabel>비밀번호</Stlabel>
+              <StFlexbox>
+                <Input
+                  type={passwordType.type}
+                  width='100%'
+                  onChange={handleChangePassword}
+                  padding='10px 15px'
+                />
+                <StVisible onClick={handlePasswordType}>
+                  {passwordType.visible ? (
+                    <span>
+                      <AiOutlineEye />
+                    </span>
+                  ) : (
+                    <span>
+                      <AiOutlineEyeInvisible />
+                    </span>
+                  )}
+                </StVisible>
+              </StFlexbox>
+              {passwordError ? (
+                <StErrorMessage>
+                  8자 이상 16자 이하의 영어와 숫자, 특수문자 포함
+                </StErrorMessage>
+              ) : null}
+            </StSignupWrap>
 
-          <StSignupWrap>
-            <Stlabel>비밀번호 확인</Stlabel>
-            <StFlexbox>
-              <Input
-                type={passwordType.type}
-                width='100%'
-                onChange={handleChangeConfirmPassword}
-                padding='10px 15px'
-              />
-              <StVisible onClick={handlePasswordConfirmType}>
-                {passwordConfirmType.visible ? (
-                  <span>
-                    <AiOutlineEye />
-                  </span>
-                ) : (
-                  <span>
-                    <AiOutlineEyeInvisible />
-                  </span>
-                )}
-              </StVisible>
-            </StFlexbox>
-            {confirmPasswordError ? (
-              <StErrorMessage>비밀번호가 일치하지 않습니다.</StErrorMessage>
-            ) : null}
-          </StSignupWrap>
+            <StSignupWrap>
+              <Stlabel>비밀번호 확인</Stlabel>
+              <StFlexbox>
+                <Input
+                  type={passwordConfirmType.type}
+                  width='100%'
+                  onChange={handleChangeConfirmPassword}
+                  padding='10px 15px'
+                />
+                <StVisible onClick={handlePasswordConfirmType}>
+                  {passwordConfirmType.visible ? (
+                    <span>
+                      <AiOutlineEye />
+                    </span>
+                  ) : (
+                    <span>
+                      <AiOutlineEyeInvisible />
+                    </span>
+                  )}
+                </StVisible>
+              </StFlexbox>
+              {confirmPasswordError ? (
+                <StErrorMessage>비밀번호가 일치하지 않습니다.</StErrorMessage>
+              ) : null}
+            </StSignupWrap>
 
-          <Button
-            width='100%'
-            padding='10px 0'
-            isDisabled={isActive ? false : true}
-            style={{ marginTop: '100px' }}
-            // onClickHandler={onClickHandler}
-            backgroundColor='black'
-            color='white'
-          >
-            회원가입
-          </Button>
+            <Button
+              width='100%'
+              padding='10px 0'
+              isDisabled={isActive ? false : true}
+              style={{ marginTop: '100px' }}
+              // onClickHandler={onClickHandler}
+              backgroundColor='black'
+              color='white'
+            >
+              회원가입
+            </Button>
           </FisrtWrap>
         </StSignupWraps>
       </StSignupContainer>
-      </FormContainer>
+    </FormContainer>
   );
 };
 
