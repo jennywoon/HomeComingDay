@@ -63,9 +63,14 @@ const Login = () => {
     visible: false,
   });
 
+  const loginSchoolInfo = useSelector((state) => state)
+  console.log(loginSchoolInfo)
+
   // 로그인버튼
-  const onClickHandler = async (formValue) => {
-    dispatch(__loginUser(formValue)).then(() => {
+  const onSubmitHandler = async (formValue) => {
+    dispatch(__loginUser(formValue))
+    .then(() => {
+      
       navigate('/');
     });
   };
@@ -97,7 +102,7 @@ const Login = () => {
     <StLoginContainer
       onSubmit={(e) => {
         e.preventDefault();
-        onClickHandler(formValue);
+        onSubmitHandler(formValue);
       }}
     >
       <StLoginWraps>
