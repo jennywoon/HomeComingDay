@@ -17,7 +17,7 @@ const HelpCard = ({ help , id}) => {
     const onClickNavi = () =>{
         navigate(`/helpdetail/${id}`)
     }
-
+   
     return (
         <HelpContainer onClick={onClickNavi}>
             <CardHead>
