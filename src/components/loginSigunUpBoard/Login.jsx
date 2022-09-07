@@ -101,10 +101,10 @@ const Login = () => {
       }}
     >
       <StLoginWraps>
-        {/* 로고 */}
-        <StLoginTitle onClick={() => {
-          navigate("/")
-        }}>Homecoming Day</StLoginTitle>
+        <StLoginTitle>
+          {/* 로고 */}
+          <LogoImg/>
+        </StLoginTitle>
         <StLoginWrap>
           <StEmail>
             <Stlabel>이메일</Stlabel>
@@ -144,13 +144,13 @@ const Login = () => {
           <Button
             type='submit'
             width='100%'
-            padding='10px 0'
+            height="100%"
+            // padding='10px 0'
             isDisabled={isActive ? false : true}
-            backgroundColor='black'
             color='white'
-            style={{ marginTop: '100px' }}
+            style={{ marginTop: '50px', backgroundColor:"#f7931e" }}
           >
-            로그인
+            <ButtonTitle>로그인</ButtonTitle>
           </Button>
         </StLoginWrap>
         {/* 네이버 로그인 */}
@@ -186,13 +186,25 @@ const StLoginWraps = styled.div`
 
 const StLoginWrap = styled.div``;
 
-const StLoginTitle = styled.p`
+const StLoginTitle = styled.div`
   text-align: center;
   font-size: 30px;
   font-weight: bold;
-  margin-bottom: 100px;
+  margin-bottom: 50px;
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
+const LogoImg = styled.div`
+  width: 220px;
+  height: 160px;
+  background-image: url(${logoname});
+  background-position: center;
+  background-size: 100% 100%;
+  /* border: 1px solid blue; */
+`
 const StEmail = styled.div`
   margin-bottom: 30px;
 `;
@@ -221,6 +233,8 @@ const StGoToSignup = styled.p`
   cursor: pointer;
   text-align: center;
   font-size: 14px;
+  font-weight: 500;
+  text-decoration: underline;
 `
 
 const StErrorMessage = styled.p`
@@ -237,5 +251,13 @@ const NaverContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+`
+
+const ButtonTitle = styled.div`
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `

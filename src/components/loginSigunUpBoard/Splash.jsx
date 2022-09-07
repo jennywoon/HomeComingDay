@@ -9,7 +9,7 @@ const Splash = () => {
         useEffect(() => {
             const interval = setTimeout(() => {
                 setFlag((value) => !value);
-            }, 2000);
+            }, 3000);
             return () => {
                 clearTimeout(interval);
             };
@@ -22,9 +22,7 @@ const Splash = () => {
             {!flag ? (
             <HomeContainer>
                 <LogoWrap>
-                    <LogoNameImg>
-                    {/* 안녕 */}
-                    </LogoNameImg>
+                    <LogoNameImg/>
                 </LogoWrap>
             </HomeContainer>
             ) : (
@@ -58,8 +56,8 @@ const LogoWrap = styled.div`
 `
 
 const LogoNameImg = styled.div`
-    width: 300px;
-    height: 200px;
+    width: 250px;
+    height: 170px;
     background-image: url(${logo3});
     background-position: center;
     background-size: 100% 100%;

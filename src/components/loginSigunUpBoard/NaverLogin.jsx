@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import naverIcon from "../../assets/naverIcon.png"
+import whtienaversquare from "../../assets/whitenaversquare.png"
 // import { __naverLogin } from "../../redux/modules/NaverSlice"
 import axios from 'axios';
 import { setCookie } from '../../shared/cookies';
@@ -59,7 +60,7 @@ const NaverLogin = () => {
     const userAccessToken = () => {
         window.location.href.includes('access_token') && getToken()
     }
-    const getToken = async() => {
+    const getToken = async () => {
         const token = window.location.href.split('=')[1].split('&')[0]
         console.log(token);
         const data = await axios.post(`${BASE_URL}/naverUserInfo`, token, {
@@ -90,13 +91,14 @@ const NaverLogin = () => {
 
     return (
         <>
-
-            {/* <NaverIdLogin ref={naverRef} id="naverIdLogin" />
+            <NaverIdLogin ref={naverRef} id="naverIdLogin" />
             <NaverLoginBtn onClick={handleNaverLogin}>
-                <NaverIcon alt="navericon" />
-                <NaverLoginTitle>네이버로 로그인</NaverLoginTitle>
-            </NaverLoginBtn> */}
-            <div id="naverIdLogin"></div>
+                <NaverWrap>
+                    <NaverIcon />
+                    <NaverLoginTitle>네이버로 로그인</NaverLoginTitle>
+                    <div style={{ width: "30px", height: "30px" }}></div>
+                </NaverWrap>
+            </NaverLoginBtn>
         </>
     )
 }
@@ -112,30 +114,35 @@ const NaverIdLogin = styled.div`
 const NaverLoginBtn = styled.button`
 	display: flex;
 	align-items: center;
-	width: 360px;
-	height: 56px;
-	background-color: #03c75a;
-	border-radius: 6px;
+    justify-content: center;
+	background-color: #ffffff;
+	border-radius: 16px;
+    width: 100%;
+    border: 1px solid #ddd;
+    /* border: 1px solid blue; */
 `
 
 // 로그인 버튼 사용가이드 링크를 들어가면 이미지를 받아 이렇게 적용이 가능하다 ! 
 const NaverIcon = styled.div`
-	width: 30px;
-	height: 30px;
-	margin-left: 10px;
-	background: url('/images/Login/navericon.png') no-repeat center;
-    /* background-image: url(${naverIcon}); */
-	background-size: 30px;
+	width: 40px;
+	height: 40px;
+	background: url(${whtienaversquare}) no-repeat center;
+    background-size: 100% 100%;
+    border: none;
 `
 
-const NaverLoginTitle = styled.span`
-	margin-left: 90px;
+const NaverLoginTitle = styled.div`
 	color: ${({ theme }) => theme.White};
-	font-weight: 400;
-	font-size: 14px;
+	font-weight: 500;
+	font-size: 16px;
 	line-height: 24px;
+    color: #bebebe;
 `
-
-const NaverRoundIcon = styled.div`
-      background-image: url(${naverIcon});
+const NaverWrap = styled.div`
+    width: 80%;
+    height: 40px;
+    /* border: 1px solid red; */
+    display: flex;
+	align-items: center;
+    justify-content: space-between;
 `

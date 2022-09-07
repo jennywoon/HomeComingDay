@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Button = ({ id, type, className, isDisabled, children, onClickHandler, width, padding, backgroundColor, color ,fontSize, style}) => {
+const Button = ({ id, type, className, isDisabled, children, onClickHandler, width, height, padding, backgroundColor, color ,fontSize, style}) => {
 
   return (
     <StyledButton
@@ -12,6 +12,7 @@ const Button = ({ id, type, className, isDisabled, children, onClickHandler, wid
       onClick={onClickHandler}
       padding={padding}
       width={width}
+      height={height}
       backgroundColor={backgroundColor}
       color={color}
       fontSize={fontSize}
@@ -27,9 +28,10 @@ const StyledButton = styled.button`
   cursor: pointer;
   border: none;
   width: ${(props) => props.width};
+  height: ${(props) => props.height};
   font-size: 1rem;
   padding: ${(props) => props.padding};
-  background: ${(props) => props.backgroundColor};
+  background-color: ${(props) => props.backgroundColor};
   border-radius: var(--button-radius, 16px);
   color: ${(props) => props.color};
 
