@@ -13,13 +13,15 @@ const config = {
   },
 };
 
+// 로그안
 export const __loginUser = createAsyncThunk(
   'LOGIN_USER',
   async (payload, thunkAPI) => {
     try {
       const data = await axios.post(`${BASE_URL}/login`, payload);
       setCookie('accessToken', `${data.data.data.accessToken}`);
-      // console.log(data.data);
+      // setCookie('schoolInfo', `${data.data.schoolInfo}`);
+      // console.log(data.data.schoolInfo);
       // console.log(data)
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
@@ -28,6 +30,7 @@ export const __loginUser = createAsyncThunk(
   }
 );
 
+// 회원가입
 export const __signupUser = createAsyncThunk(
   'SIGNUP_USER',
   async (payload, thunkAPI) => {
@@ -42,6 +45,7 @@ export const __signupUser = createAsyncThunk(
   }
 );
 
+// 이메일보내기
 export const __postSendEmail = createAsyncThunk("sendEmail", async (payload, thunkAPI) => {
   try {
       const data = await axios.post(`${BASE_URL}/signup/sendEmail`, payload);
@@ -52,6 +56,7 @@ export const __postSendEmail = createAsyncThunk("sendEmail", async (payload, thu
   }
 });
 
+// 인증번호보내기
 export const __postCheckEmail = createAsyncThunk("checkEmail", async (payload, thunkAPI) => {
   try {
       const data = await axios.post(`${BASE_URL}/checkEmail`, payload);
