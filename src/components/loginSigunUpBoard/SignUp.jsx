@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import Button from "../../components/elements/Button"
 import Input from "../../components/elements/Input"
-import { __postSendEmail, __signupUser } from '../../redux/modules/UserSlice';
+import { __postSendEmail, __postCheckEmail, __signupUser } from '../../redux/modules/UserSlice';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import { IoIosArrowBack } from 'react-icons/io';
 
@@ -57,21 +57,37 @@ const SignUp = () => {
   const [emailSend, setEmailSend] = useState({
     email:''
   })
-  const handleEmailConfirm = (e) => {
-    e.preventDefault();
-    setEmailSend({email: e.target.value})
-    setDisabled(true);
-    setEmailConfirm(true);
-    dispatch(__postSendEmail(emailSend));
-  }
-  // console.log(emailSend)
-
-  // email 인증번호
   const [emailCheck, setEmailCheck] = useState({
     email: '',
     authKey: ''
   });
+  const handleEmailConfirm = (e) => {
+    e.preventDefault();
+    setEmailSend((prev) => {
+      return {
+        ...prev,
+        email: e.target.value,
+      };
+    });
+    // setEmailSend({email: e.target.value})
+    setDisabled(true);
+    setEmailConfirm(true);
+    dispatch(__postSendEmail(emailSend));
+  }
+
+  // email 인증번호
   const handleChangeEmailConfirm = (e) =>{
+    e.preventDefault();
+    setEmailCheck((prev) => {
+      return {
+        ...prev,
+        authKey: e.target.value,
+      };
+    });
+    dispatch(__postCheckEmail(emailCheck))
+  }
+
+  const handleEmailCheck = () => {
 
   }
 
@@ -248,7 +264,7 @@ const SignUp = () => {
                       onChange={handleChangeEmailConfirm}
                       padding='10px 15px'
                     />
-                    <StEmailCheck>
+                    <StEmailCheck onClick={handleEmailCheck}>
                       {disabled ? '인증완료' : '인증'}
                     </StEmailCheck>
                   </StFlexbox>
