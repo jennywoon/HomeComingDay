@@ -54,10 +54,25 @@ const SignUp = () => {
   // email 인증
   const [disabled, setDisabled] = useState(false);
   const [emailConfirm, setEmailConfirm] = useState(false);
-  const handleEmailConfirm = () => {
-    dispatch(__postSendEmail(email));
+  const [emailSend, setEmailSend] = useState({
+    email:''
+  })
+  const handleEmailConfirm = (e) => {
+    e.preventDefault();
+    setEmailSend({email: e.target.value})
     setDisabled(true);
     setEmailConfirm(true);
+    dispatch(__postSendEmail(emailSend));
+  }
+  // console.log(emailSend)
+
+  // email 인증번호
+  const [emailCheck, setEmailCheck] = useState({
+    email: '',
+    authKey: ''
+  });
+  const handleChangeEmailConfirm = (e) =>{
+
   }
 
   // username
@@ -217,7 +232,7 @@ const SignUp = () => {
                   padding='10px 15px'
                 />
                 <StEmailConfirm onClick={handleEmailConfirm}>
-                  {disabled ? '인증완료' : '인증'}
+                  {disabled ? '인증완료' : '인증하기'}
                 </StEmailConfirm>
               </StFlexbox>
               {emailError ? (
@@ -225,13 +240,18 @@ const SignUp = () => {
               ) : null}
               {emailConfirm ? (
                 <>
-                <Stlabel>인증번호</Stlabel>
-              <Input
-                width='100%'
-                style={{ marginRight: '10px' }}
-                onChange={handleChangeEmail}
-                padding='10px 15px'
-                /> 
+                  <Stlabel>인증번호</Stlabel>
+                  <StFlexbox>
+                    <Input
+                      width='100%'
+                      style={{ marginRight: '10px' }}
+                      onChange={handleChangeEmailConfirm}
+                      padding='10px 15px'
+                    />
+                    <StEmailCheck>
+                      {disabled ? '인증완료' : '인증'}
+                    </StEmailCheck>
+                  </StFlexbox>
                 </>
               ) : null}
             </StSignupWrap>
@@ -375,6 +395,20 @@ const StEmailConfirm = styled.button`
   border-radius: 50px;
   padding: 5px 10px;
   font-size: 10px;
+  cursor: pointer;
+`;
+
+const StEmailCheck = styled.button`
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translatey(-50%);
+  background-color: #fff;
+  border: 0.5px solid #eee;
+  border-radius: 50px;
+  padding: 5px 10px;
+  font-size: 10px;
+  cursor: pointer;
 `;
 
 const StVisible = styled.span`
