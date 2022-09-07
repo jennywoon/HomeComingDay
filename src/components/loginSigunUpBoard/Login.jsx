@@ -122,7 +122,7 @@ const Login = () => {
               onChange={onChangeEmailHandler}
               value={formValue.email}
               width='100%'
-              padding='10px 15px'
+              // padding='10px 15px'
             />
           </StEmail>
           <StPassword>
@@ -133,7 +133,7 @@ const Login = () => {
                 onChange={onChangePasswordHandler}
                 value={formValue.password}
                 width='100%'
-                padding='10px 15px'
+                // padding='10px 15px'
               />
               <StVisible onClick={handlePasswordType}>
                 {passwordType.visible ? (

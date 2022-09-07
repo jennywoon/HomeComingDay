@@ -45,9 +45,25 @@ export const __signupUser = createAsyncThunk(
   }
 );
 
+// 이메일 중복확인
+export const __emailCheck = createAsyncThunk(
+  'emailCheck',
+  async (payload, thunkAPI) => {
+    try {
+      console.log(payload);
+      const data = await axios.post(`${BASE_URL}/emailCheck`, payload);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      // console.log('error', error);
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 // 이메일보내기
 export const __postSendEmail = createAsyncThunk("sendEmail", async (payload, thunkAPI) => {
   try {
+    console.log(payload);
       const data = await axios.post(`${BASE_URL}/signup/sendEmail`, payload);
       // console.log('data', data)
       return thunkAPI.fulfillWithValue(data.data);
@@ -59,6 +75,7 @@ export const __postSendEmail = createAsyncThunk("sendEmail", async (payload, thu
 // 인증번호보내기
 export const __postCheckEmail = createAsyncThunk("checkEmail", async (payload, thunkAPI) => {
   try {
+    console.log(payload);
       const data = await axios.post(`${BASE_URL}/checkEmail`, payload);
       // console.log('data', data)
       return thunkAPI.fulfillWithValue(data.data);
