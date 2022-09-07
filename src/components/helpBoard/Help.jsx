@@ -56,7 +56,7 @@ const HelpContainer = styled.div`
   gap: 12px;
   /* border: 1px solid red; */
   /* height: 100vh; */
-  /* overflow-y: scroll; */
+  overflow-y: scroll;
 `;
 
 const BannerWrap = styled.div`

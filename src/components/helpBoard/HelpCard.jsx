@@ -24,9 +24,9 @@ const HelpCard = ({ help , id}) => {
                 <HeadImg>
                     <BsQuestionSquare />
                 </HeadImg>
-                <HeadName>이름</HeadName>
-                <HeadStudent>14학번</HeadStudent>
-                <HeadTime>15분전</HeadTime>
+                <HeadName>{help.username}</HeadName>
+                <HeadStudent>{help.admission}</HeadStudent>
+                <HeadTime>{help.createdAt}</HeadTime>
             </CardHead>
             <CardBody>
                 <BodyTitle>{help.title}</BodyTitle>
@@ -35,8 +35,8 @@ const HelpCard = ({ help , id}) => {
                 </BodyContent> */}
             </CardBody>
             <CardFooter>
-                <Views>조회수 1500</Views>
-                <CommentCount>댓글 2700</CommentCount>
+                <Views>조회수 {help.views}</Views>
+                <CommentCount>댓글 {help.commentCnt}</CommentCount>
             </CardFooter>
         </HelpContainer>
     );
