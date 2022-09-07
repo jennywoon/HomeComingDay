@@ -15,7 +15,6 @@ const Home = () => {
     const navigate = useNavigate();
 
     return (
-
             <HomeContainer>
                 <Navbar>
                     <NavbarTitle

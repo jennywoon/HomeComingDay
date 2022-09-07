@@ -18,9 +18,9 @@ const Help = () => {
     dispatch(__getHelp());
   }, [dispatch])
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  // if (isLoading) {
+  //   return <Loading />;
+  // }
 
   return (
     <HelpContainer>
