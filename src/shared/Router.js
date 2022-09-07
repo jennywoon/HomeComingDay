@@ -31,6 +31,7 @@ import ChatFormPage from "../pages/ChatFormPage"
 import SignupCompletePage from '../pages/SignupCompletePage';
 import NoticePage from "../pages/NoticePage";
 import MyPage from "../pages/MyPage";
+import Splash from "../components/loginSigunUpBoard/Splash";
 
 const Router = () => {
   
@@ -53,6 +54,7 @@ const Router = () => {
         <Route path="/signupcomplete" element={<SignupCompletePage />} />
         <Route path="/notice" element={<NoticePage />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/splash" element={<Splash />} />
         {/* 하단 페이지 추후 정리 */}
         <Route path="/test" element={<ScrollTest />} />
         <Route path="/helpcard" element={<HelpCard />} />

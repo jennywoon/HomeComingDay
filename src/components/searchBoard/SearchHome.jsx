@@ -21,7 +21,9 @@ const SearchHome = () => {
                         <AiOutlineHome size="23" color="#696969"/>
                         <TapTitle style={{ color: "#696969" }}>HOME</TapTitle>
                     </Tap>
-                    <Tap onClick={() => { navigate("/search") }}>
+                    <Tap onClick={() => { navigate("/search") }}
+                        style={{ color:"#f7931e" }}
+                    >
                         <BiSearch size="23"/>
                         <TapTitle style={{ fontWeight: "bold" }}>SEARCH</TapTitle>
                     </Tap>
@@ -53,7 +55,7 @@ const HomeContainer = styled.div`
 const SecondWrap = styled.div`
     width: 100%;
     position: sticky;
-    background-color: #eee;
+    background-color: #ffffff;
     bottom: 0;
 `
 const Bottom = styled.div`
@@ -61,6 +63,7 @@ const Bottom = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-weight: 600;
 `
 
 const Tap = styled.div`

@@ -42,7 +42,7 @@ const MyPageHome = () => {
                         <TapTitle style={{ color: "#696969" }}>CHAT</TapTitle>
                     </Tap>
                     <Tap
-                        style={{ paddingRight: "20px" }}
+                        style={{ paddingRight: "20px", color:"#f7931e" }}
                         onClick={() => { navigate("/mypage") }}
                     >
                         <FiUser size="23" />
@@ -94,7 +94,7 @@ const MyPostTitle = styled.div`
 const SecondWrap = styled.div`
     width: 100%;
     position: sticky;
-    background-color: #eee;
+    background-color: #ffffff;
     bottom:0;
 `
 const Bottom = styled.div`

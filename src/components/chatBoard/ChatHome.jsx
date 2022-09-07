@@ -63,7 +63,9 @@ const ChatHome = () => {
                         <BiSearch size="23" color="#696969" />
                         <TapTitle style={{ color: "#696969" }}>SEARCH</TapTitle>
                     </Tap>
-                    <Tap onClick={() => { navigate("/chat") }}>
+                    <Tap onClick={() => { navigate("/chat") }}
+                        style={{ color:"#f7931e" }}
+                    >
                         <HiOutlineChatAlt2 size="23"/>
                         <TapTitle style={{ fontWeight: "bold" }}>CHAT</TapTitle>
                     </Tap>
@@ -164,7 +166,7 @@ const ChatContent = styled.div`
 const BottomTapWrap = styled.div`
     width: 100%;
     position: sticky;
-    background-color: #eee;
+    background-color: #ffffff;
     bottom: 0;
 `
 const Bottom = styled.div`
@@ -172,6 +174,7 @@ const Bottom = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-weight: 600;
 `
 
 const Tap = styled.div`
