@@ -48,15 +48,17 @@ Input.defaultValue = {
 export default Input;
 
 const StyledButtonField = styled.div`
-  margin: 0.3rem 0;
+  /* margin: 0.3rem 0; */
 `;
 const StyledInput = styled.input`
+  font-size: 16px;
+  outline: none;
   box-sizing: border-box;
-    width : ${(props) => props.width};
-    padding: ${(props) => props.padding};
-    border: none;
-    border-bottom: 1px solid #ccc;
-    /* border: 1px solid #ccc; */
-    /* border-radius: 3px; */
-`
+  width: ${(props) => props.width};
+  padding: ${(props) => props.padding};
+  border: none;
+  border-bottom: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
+  /* border-radius: 3px; */
+`;
 const StyledText = styled.div``
