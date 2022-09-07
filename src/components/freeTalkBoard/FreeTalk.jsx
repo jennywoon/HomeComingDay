@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components"
 import { __getFreeTalk } from "../../redux/modules/FreeTalkSlice";
 import FreeTalkCard from "./FreeTalkCard"
+import freetalkorange from "../../assets/freetalkorange.png"
 
 const FreeTalk = () => {
   const dispatch = useDispatch();
@@ -11,11 +12,13 @@ const FreeTalk = () => {
 
   useEffect(() => {
     dispatch(__getFreeTalk());
-  },[dispatch])
+  }, [dispatch])
 
   return (
     <HelpContainer>
-      <Banner />
+      <BannerWrap>
+        <Banner />
+      </BannerWrap>
       <HelpWrap>
         <Select name='state'>
           <option>최신순</option>
@@ -27,7 +30,7 @@ const FreeTalk = () => {
         <HelpList>
           <>
             {freetalks.slice(0).reverse().map((freetalk) => (
-              <FreeTalkCard key={freetalk.id} id={freetalk.id} freetalk={freetalk}/>
+              <FreeTalkCard key={freetalk.id} id={freetalk.id} freetalk={freetalk} />
             ))}
           </>
         </HelpList>
@@ -44,17 +47,35 @@ const HelpContainer = styled.div`
   /* height: 100vh; */
   width: 100%;
   height: 100%;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 `;
 
-const Banner = styled.div`
-  height: 160px;
-  border: 1px solid gray;
+const BannerWrap = styled.div`
+  width: 100%;
+  height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f7931e;
   margin-bottom: 12px;
+  position: absolute;
+`
+const Banner = styled.div`
+  height: 180px;
+  width: 95%;
+  /* border: 1px solid red; */
+  background-image: url(${freetalkorange});
+  background-position: center;
+  background-size: 100% 100%;
 `
 
 const HelpWrap = styled.div`
+  position: relative;
+  top: 170px;
   width: 100%;
+  border-radius: 20px;
+  background-color: white;
+  padding: 10px 5px 10px 5px;
 `;
 const Select = styled.select`
   display: flex;

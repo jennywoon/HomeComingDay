@@ -84,11 +84,8 @@ const HelpWrap = styled.div`
   top: 170px;
   width: 100%;
   border-radius: 20px;
-  /* height: 100%; */
-  /* border: 1px solid blue; */
   background-color: white;
   padding: 10px 5px 10px 5px;
-  /* height: 100%; */
 `;
 
 const Select = styled.select`

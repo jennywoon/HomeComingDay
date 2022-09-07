@@ -9,6 +9,7 @@ import { __loginUser } from '../../redux/modules/UserSlice';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import NaverLogin from './NaverLogin';
 import logoname from "../../assets/logoname.png"
+import LoginErrorModal from './LoginErrorModal';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -103,7 +104,16 @@ const Login = () => {
   //   }
   // }, [error]);
 
+  // 모달 구현중
+  const [modalOpen, setModalOpen] = useState(false);
+  const showModal = (e) => {
+    e.preventDefault();
+    setModalOpen(true);
+  }
+
   return (
+    <>
+    {modalOpen && <LoginErrorModal setModalOpen={setModalOpen}/>}
     <StLoginContainer
       onSubmit={(e) => {
         e.preventDefault();
@@ -160,7 +170,9 @@ const Login = () => {
             color='white'
             style={{ marginTop: '50px', backgroundColor:"#f7931e" }}
           >
-            <ButtonTitle>로그인</ButtonTitle>
+            <ButtonTitle
+            onClick={showModal}
+            >로그인</ButtonTitle>
           </Button>
         </StLoginWrap>
         {/* 네이버 로그인 */}
@@ -176,6 +188,7 @@ const Login = () => {
         </StGoToSignup>
       </StLoginWraps>
     </StLoginContainer>
+    </>
   );
 };
 

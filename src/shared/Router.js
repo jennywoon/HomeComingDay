@@ -32,6 +32,7 @@ import SignupCompletePage from '../pages/SignupCompletePage';
 import NoticePage from "../pages/NoticePage";
 import MyPage from "../pages/MyPage";
 import Splash from "../components/loginSigunUpBoard/Splash";
+// import LoginErrorModal from "../components/loginSigunUpBoard/LoginErrorModal";
 
 const Router = () => {
   
@@ -69,6 +70,7 @@ const Router = () => {
         <Route path="/freetalkupdate/:id" element={<FreeTalkUpdate />} />
         <Route path="/calendardetail/:id" element={<CalendarDetail />} />
         <Route path="/calendarupdate/:id" element={<CalendarUpdate />} />
+        {/* <Route path="/loginerrormodal" element={<LoginErrorModal />} /> */}
 
       </Routes>
     </BrowserRouter>

@@ -1,7 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import BottomTap from '../BottomTap';
-import HeaderTap from '../HeaderTap';
 import { useNavigate } from "react-router-dom"
 import Help from "./Help"
 import { AiOutlineHome } from "react-icons/ai";
@@ -9,7 +7,6 @@ import { BiSearch } from "react-icons/bi";
 import { FiUser } from "react-icons/fi";
 import { HiOutlineChatAlt2 } from "react-icons/hi";
 import { TiPencil } from "react-icons/ti";
-import Header from "../../components/Header";
 
 const Home = () => {
     const navigate = useNavigate();

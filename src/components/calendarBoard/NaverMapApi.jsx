@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { RenderAfterNavermapsLoaded, NaverMap, Marker } from "react-naver-maps" 
 
-const NaverMapApi = (props) => {
+export const NaverMapApi = (props) => {
 
     return (
         <RenderAfterNavermapsLoaded

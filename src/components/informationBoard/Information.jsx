@@ -4,8 +4,9 @@ import styled from "styled-components"
 import Img from "../../assets/naverIcon.png"
 import { __getInformation } from "../../redux/modules/InformationSlice";
 import InformationCard from "./InformationCard";
-import {TiPencil} from "react-icons/ti";
+import { TiPencil } from "react-icons/ti";
 import { useNavigate } from "react-router-dom";
+import informationorange from "../../assets/informationorange.png"
 
 const Information = () => {
   const dispatch = useDispatch();
@@ -15,11 +16,13 @@ const Information = () => {
   console.log(informations)
   useEffect(() => {
     dispatch(__getInformation());
-  },[dispatch])
+  }, [dispatch])
 
   return (
     <HelpContainer>
-      <Banner />
+      <BannerWrap>
+        <Banner />
+      </BannerWrap>
       <HelpWrap>
         <Select name='state'>
           <option>최신순</option>
@@ -31,7 +34,7 @@ const Information = () => {
         <HelpList>
           <>
             {informations.slice(0).reverse().map((information) => (
-              <InformationCard key={information.id} id={information.id} information={information}/>
+              <InformationCard key={information.id} id={information.id} information={information} />
             ))}
           </>
         </HelpList>
@@ -48,17 +51,36 @@ const HelpContainer = styled.div`
   /* height: 100vh; */
   width: 100%;
   height: 100%;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 `;
 
-const Banner = styled.div`
-  height: 160px;
-  border: 1px solid gray;
+const BannerWrap = styled.div`
+  width: 100%;
+  height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f7931e;
   margin-bottom: 12px;
+  position: absolute;
+`
+
+const Banner = styled.div`
+  height: 180px;
+  width: 95%;
+  /* border: 1px solid red; */
+  background-image: url(${informationorange});
+  background-position: center;
+  background-size: 100% 100%;
 `
 
 const HelpWrap = styled.div`
+  position: relative;
+  top: 170px;
   width: 100%;
+  border-radius: 20px;
+  background-color: white;
+  padding: 10px 5px 10px 5px;
 `;
 const Select = styled.select`
   display: flex;

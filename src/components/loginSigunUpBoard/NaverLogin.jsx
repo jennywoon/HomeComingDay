@@ -76,6 +76,12 @@ const NaverLogin = () => {
         console.log(data.data.accessToken);
         console.log(data.data.username)
         console.log(data.data.schoolInfo)
+        const schoolInfo = data.data.schoolInfo
+        if(schoolInfo === true) {
+            window.location.replace("/")
+        }else{
+            window.location.replace("/schoolinfo")
+        }
     }
 
     useEffect(() => {

@@ -1,14 +1,17 @@
 import React from 'react';
 import Home from '../components/helpBoard/Home';
-import Layout from '../components/Layout';
 import Header from '../components/Header';
 import styled from 'styled-components';
-import { useNavigate } from "react-router-dom"
-import { TiPencil } from "react-icons/ti";
+import { useSelector } from "react-redux";
+import Loading from "../components/test/Loading";
 
 const MainPage = () => {
 
-    const navigate = useNavigate();
+    // const { isLoading } = useSelector((state) => state.helps)
+
+    // if (isLoading) {
+    //     return <Loading />;
+    //   }
 
     return (
         <Container>

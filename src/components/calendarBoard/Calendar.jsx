@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { __getCalendar } from "../../redux/modules/CalendarSlice";
 import CalendarCard from "./CalendarCard";
-import { TiPencil } from "react-icons/ti";
+import calendarorange from "../../assets/calendarorange.png"
 
 const Calendar = () => {
   const dispatch = useDispatch();
@@ -13,11 +13,13 @@ const Calendar = () => {
 
   useEffect(() => {
     dispatch(__getCalendar());
-  },[dispatch])
+  }, [dispatch])
 
   return (
     <HelpContainer>
-      <Banner />
+      <BannerWrap>
+        <Banner />
+      </BannerWrap>
       <HelpWrap>
         <Select name='state'>
           <option>최신순</option>
@@ -26,7 +28,7 @@ const Calendar = () => {
         <HelpList>
           <>
             {calendars.slice(0).reverse().map((calendar) => (
-              <CalendarCard key={calendar.id} id={calendar.id} calendar={calendar}/>
+              <CalendarCard key={calendar.id} id={calendar.id} calendar={calendar} />
             ))}
           </>
         </HelpList>
@@ -42,18 +44,36 @@ const HelpContainer = styled.div`
   /* height: 100vh; */
   width: 100%;
   height: 100%;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 `;
 
-const Banner = styled.div`
-  height: 160px;
-  border: 1px solid gray;
+const BannerWrap = styled.div`
+  width: 100%;
+  height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f7931e;
   margin-bottom: 12px;
+  position: absolute;
+`
+
+const Banner = styled.div`
+  height: 180px;
+  width: 95%;
+  /* border: 1px solid red; */
+  background-image: url(${calendarorange});
+  background-position: center;
+  background-size: 100% 100%;
 `
 
 const HelpWrap = styled.div`
-  /* padding: 0 10px; */
+  position: relative;
+  top: 170px;
   width: 100%;
+  border-radius: 20px;
+  background-color: white;
+  padding: 10px 5px 10px 5px;
 `;
 const Select = styled.select`
   display: flex;
