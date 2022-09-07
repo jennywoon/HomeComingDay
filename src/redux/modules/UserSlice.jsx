@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { getCookie, setCookie } from '../../shared/cookies';
 
-const BASE_URL = 'http://localhost:3000';
-// const BASE_URL = process.env.REACT_APP_BASE_URL;
+// const BASE_URL = 'http://localhost:3000';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const config = {
   headers: {
@@ -53,7 +53,7 @@ export const __postSendEmail = createAsyncThunk("sendEmail", async (payload, thu
 
 export const __postCheckEmail = createAsyncThunk("checkEmail", async (payload, thunkAPI) => {
   try {
-      const data = await axios.post(`${BASE_URL}/signup/checkEmail`, payload);
+      const data = await axios.post(`${BASE_URL}/checkEmail`, payload);
       // console.log('data', data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
