@@ -17,9 +17,9 @@ const Help = () => {
     dispatch(__getHelp());
   },[dispatch])
 
-  // if (isLoading) {
-  //   return <Loading />;
-  // }
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <HelpContainer>
@@ -29,7 +29,7 @@ const Help = () => {
           <option>최신순</option>
           <option>인기순</option>
         </Select>
-        <Loading />
+        {/* <Loading /> */}
         {/* <Iconbox onClick={()=>navigate('/helpform')}>
           <TiPencil color="white" size="40px"/>
         </Iconbox> */}

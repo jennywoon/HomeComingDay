@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { getCookie, setCookie } from '../../shared/cookies';
 // import Cookies from "universal-cookie"
 
 // const cookies = new Cookies();
@@ -14,10 +15,26 @@ const initialState = {
     error: null,
 };
 
+// const config = {
+//   headers: {
+//     'Content-Type': 'application/json',
+//     authorization: `Bearer ${getCookie('accessToken' , data.headers.authorization)}`,
+//     // username: `${getCookie("username")}`,
+//   },
+// };
+
 export const __getFreeTalk = createAsyncThunk("freetalks/getFreeTalk", async (payload, thunkAPI) => {
     try {
-        const data = await axios.get(`${BASE_URL}/article/free`)
-        console.log(data.data)
+      // const config = {
+      //   headers: {
+      //     authorization: `Bearer ${getCookie('accessToken' , data.headers.authorization)}`
+      //   },
+      // };
+        const data = await axios.get(`${BASE_URL}/article/free`
+        // ,config
+        )
+        console.log(data)
+        // getCookie('accessToken', `Bearer ${data.config.headers.authorization}`);
         return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
         console.log('error', error);
