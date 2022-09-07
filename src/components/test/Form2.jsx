@@ -344,7 +344,7 @@ const Form2 = () => {
               ></FormInput>
               <CalendarButton onClick={showModal}>
                 <CalendarTitle>날짜</CalendarTitle>
-                <Calendar
+                {/* <Calendar
                   onChange={(value) => {
                     setDate(value);
                   }}
@@ -352,13 +352,13 @@ const Form2 = () => {
                   // name="calendarDate"
                   // value={calendarDate}
                   formatDay={(locale, date) => dayjs(date).format('DD')}
-                />
-                {/* <DateDiv>
+                /> */}
+                <DateDiv>
                   {getLastArrItem &&
                     moment(getLastArrItem.calendarDate).format(
                       'YYYY년 MM월 DD일'
                     )}
-                </DateDiv> */}
+                </DateDiv>
                 <IoIosArrowForward />
               </CalendarButton>
               <TimeDiv>
