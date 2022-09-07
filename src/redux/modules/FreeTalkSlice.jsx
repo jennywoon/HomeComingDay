@@ -15,24 +15,19 @@ const initialState = {
     error: null,
 };
 
-// const config = {
-//   headers: {
-//     'Content-Type': 'application/json',
-//     authorization: `Bearer ${getCookie('accessToken' , data.headers.authorization)}`,
-//     // username: `${getCookie("username")}`,
-//   },
-// };
+const config = {
+  headers: {
+    'Content-Type': 'application/json',
+    authorization: `Bearer ${getCookie('accessToken')}`,
+    RefreshToken : `${getCookie('refreshToken')}`
+    // username: `${getCookie("username")}`,
+  },
+};
 
 export const __getFreeTalk = createAsyncThunk("freetalks/getFreeTalk", async (payload, thunkAPI) => {
     try {
-      // const config = {
-      //   headers: {
-      //     authorization: `Bearer ${getCookie('accessToken' , data.headers.authorization)}`
-      //   },
-      // };
-        const data = await axios.get(`${BASE_URL}/article/free`
-        // ,config
-        )
+
+        const data = await axios.get(`${BASE_URL}/article/freeTalk`,config)
         console.log(data)
         // getCookie('accessToken', `Bearer ${data.config.headers.authorization}`);
         return thunkAPI.fulfillWithValue(data.data);
@@ -45,17 +40,18 @@ export const __getFreeTalk = createAsyncThunk("freetalks/getFreeTalk", async (pa
 export const __postFreeTalk = createAsyncThunk("freetalks/postFreeTalk", async (payload, thunkAPI) => {
     console.log('payload', payload)
     try {
-        const data = await axios.post(`${BASE_URL}/article/free`, payload);
+        const data = await axios.post(`${BASE_URL}/article/freeTalk`, payload ,config );
         console.log('data', data)
         return thunkAPI.fulfillWithValue(data.data);
-    } catch (error) {
+    } catch (error) { 
+      console.log('error', error)
         return thunkAPI.rejectWithValue(error);
     }
 });
 
 export const __deleteFreeTalk = createAsyncThunk("freetalks/deleteHelp", async (payload, thunkAPI) => {
   try {
-    await axios.delete(`${BASE_URL}/article/free/${payload}`);
+    await axios.delete(`${BASE_URL}/article/freeTalk/${payload}`);
     // console.log('data', data)
     // console.log(payload)
     return thunkAPI.fulfillWithValue(payload);
@@ -68,7 +64,7 @@ export const __deleteFreeTalk = createAsyncThunk("freetalks/deleteHelp", async (
 
 export const __updateFreeTalk = createAsyncThunk("freetalks/updateHelp", async (payload, thunkAPI) => {
   try {
-    await axios.put(`${BASE_URL}/article/free/${payload.id}`, payload);
+    await axios.put(`${BASE_URL}/article/freeTalk/${payload.id}`, payload);
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
     // console.log('error', error)
@@ -89,7 +85,7 @@ export const __getFreeComment = createAsyncThunk("comments/getInfoComment", asyn
 export const __postFreeComment = createAsyncThunk("comments/postInfoComment", async (payload, thunkAPI) => {
   try {
     console.log("payload" , payload)
-    const data = await axios.post(`http://localhost:3001/freeComments`, payload);
+    const data = await axios.post(`${BASE_URL}/article/freeTalk/comment/${payload.id}`, payload);
     console.log(data)
     return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
