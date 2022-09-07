@@ -11,7 +11,7 @@ const Help = () => {
   const dispatch = useDispatch();
   const { helps } = useSelector((state) => state.helps);
   const { isLoading } = useSelector((state) => state.helps)
-  console.log(isLoading)
+  // console.log(isLoading)
   // console.log(helps)
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const Help = () => {
         <HelpList>
           <>
             {helps && helps.slice(0).reverse().map((help) => (
-              <HelpCard key={help.id} id={help.id} help={help} />
+              <HelpCard key={help.id} id={help.articleId} help={help} />
             ))}
           </>
         </HelpList>

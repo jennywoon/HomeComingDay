@@ -22,6 +22,7 @@ import { TimePicker } from 'antd';
 import '../calendarBoard/TimePicker.css';
 import Calendar from 'react-calendar';
 import "../calendarBoard/CalendarModal.css"
+import '../calendarBoard/Calendar.css'; 
 import dayjs from 'dayjs';
 
 const Form2 = () => {
@@ -45,7 +46,13 @@ const Form2 = () => {
     freeimageUrl: '',
   });
 
+  const [valueDate , onChageDate] = useState(new Date())
+  const [isActive , setIsActive] = useState(false);
   const [select, setSelect] = useState('help');
+
+  const onClickDate =()=>{
+    setIsActive(current => !current)
+  }
 
   //이미지관련 함수
   const [selectedImage, setSelectedImage] = useState([]);
@@ -63,8 +70,6 @@ const Form2 = () => {
   };
   //이미지프리뷰삭제
   const deleteImage = (id) => {
-    // console.log(id)
-    // console.log(selectedImage)
     setSelectedImage(selectedImage.filter((_, index) => index !== id));
   };
 
@@ -185,13 +190,13 @@ const Form2 = () => {
       const newhelp = {
         title: title,
         content: content,
-        // imageUrl: selectedImage,
+        // imageList: selectedImage,
       };
-      selectedImage.map((image)=>{
-        formdata.append("multipartFile" , image)
+      selectedImage.map((imageList)=>{
+        formdata.append("multipartFile" , imageList)
       });
       formdata.append(
-        "articlesDto",
+        "articleRequestDto",
         new Blob([JSON.stringify(newhelp)], { type: "application/json" })
       );
       dispatch(__postHelp(formdata));
@@ -204,10 +209,10 @@ const Form2 = () => {
         // imageUrl: selectedImage,
       };
       selectedImage.map((image)=>{
-        formdata.append("multipartFile" , image)
+        formdata.append("files" , image)
       });
       formdata.append(
-        "articlesDto",
+        "articleRequestDto",
         new Blob([JSON.stringify(newinfo)], { type: "application/json" })
       );
       dispatch(__postInformation(formdata));
@@ -219,13 +224,13 @@ const Form2 = () => {
         content: freecontent,
         // imageUrl: selectedImage,
       };
-      // selectedImage.map((image)=>{
-      //   formdata.append("multipartFile" , image)
-      // });
-      // formdata.append(
-      //   "articlesDto",
-      //   new Blob([JSON.stringify(newfreetalk)], { type: "application/json" })
-      // );
+      selectedImage.map((image)=>{
+        formdata.append("files" , image)
+      });
+      formdata.append(
+        "articleRequestDto",
+        new Blob([JSON.stringify(newfreetalk)], { type: "application/json" })
+      );
 
       dispatch(__postFreeTalk(newfreetalk));
       navigate('/freetalk');
@@ -333,7 +338,7 @@ const Form2 = () => {
             </>
           ) : select === 'meet' ? (
             <>
-              {modalOpen && <CalendarModal setModalOpen={setModalOpen} />}
+              {/* {modalOpen && <CalendarModal setModalOpen={setModalOpen} />} */}
               {/* 만남일정 게시판 get, post 구현 안되어서 구현되면 input name,value 줄 예정 */}
               {/* <FormInput name="infotitle" value={infotitle} onChange={infoonChangeHandler} placeholder="제목을 입력해주세요"></FormInput> */}
               <FormInput
@@ -344,6 +349,10 @@ const Form2 = () => {
               ></FormInput>
               <CalendarButton onClick={showModal}>
                 <CalendarTitle>날짜</CalendarTitle>
+                  <Calendar onClick={onClickDate} value={valueDate} onChange={onChageDate} />
+                  <div className="text-gray-500 mt-4">
+                  {moment(valueDate).format("YYYY년 MM월 DD일")} 
+                  </div>
                 {/* <Calendar
                   onChange={(value) => {
                     setDate(value);
@@ -353,12 +362,13 @@ const Form2 = () => {
                   // value={calendarDate}
                   formatDay={(locale, date) => dayjs(date).format('DD')}
                 /> */}
-                <DateDiv>
+
+                {/* <DateDiv>
                   {getLastArrItem &&
                     moment(getLastArrItem.calendarDate).format(
                       'YYYY년 MM월 DD일'
                     )}
-                </DateDiv>
+                </DateDiv> */}
                 <IoIosArrowForward />
               </CalendarButton>
               <TimeDiv>
@@ -667,3 +677,4 @@ const StTimePicker = styled(TimePicker)`
     color: gray;
   }
 `;
+

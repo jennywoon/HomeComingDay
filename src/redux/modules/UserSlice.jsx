@@ -8,7 +8,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 const config = {
   headers: {
     'Content-Type': 'application/json',
-    authorization: `Bearer ${getCookie('accessToken')}`,
+    authorization: [`Bearer ${getCookie('accessToken')}` , `${getCookie('refreshToken')}`]
     // username: `${getCookie("username")}`,
   },
 };
@@ -20,6 +20,7 @@ export const __loginUser = createAsyncThunk(
     try {
       const data = await axios.post(`${BASE_URL}/login`, payload);
       setCookie('accessToken', `${data.data.data.accessToken}`);
+      setCookie('refreshToken', `${data.data.data.refreshToken}`);
       // setCookie('schoolInfo', `${data.data.schoolInfo}`);
       // console.log(data.data.schoolInfo);
       // console.log(data)

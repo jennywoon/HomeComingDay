@@ -27,10 +27,10 @@ const HelpDetail = () => {
         setComment(e.target.value)
     }
 
-    const helpsfind = helps.find((help) => help.id === Number(id))
-
-    console.log(helpcomments)
+    const helpsfind = helps.find((help) => help.articleId === Number(id))
+    console.log(helps)
     console.log(helpsfind)
+
     useEffect(() => {
         dispatch(__getHelp());
         dispatch(__getHelpComment())
@@ -46,7 +46,7 @@ const HelpDetail = () => {
     const onClickDelete = () => {
         const result = window.confirm("정말 삭제하시겠습니까?")
         if (result) {
-            dispatch(__deleteHelp(id))
+            dispatch(__deleteHelp(helpsfind.articleId))
             navigate("/")
         } else {
             return null
@@ -93,8 +93,8 @@ const HelpDetail = () => {
                             <Bodytop>
                                 <Bodyimg src={Img} alt="" />
                                 <Bodytxt>
-                                    <Txtname>최형용</Txtname>
-                                    <Txtstudent>14학번 <span> 15분 전 </span></Txtstudent>
+                                    <Txtname>{helpsfind&&helpsfind.username}</Txtname>
+                                    <Txtstudent>{helpsfind&&helpsfind.admissin} <span> {helpsfind&&helpsfind.createAt} </span></Txtstudent>
                                 </Bodytxt>
                                 <AiOutlineMenu size="20px" style={{ marginLeft: "auto", cursor: "pointer" }}
                                     onClick={onCilckShow} />
@@ -110,8 +110,8 @@ const HelpDetail = () => {
                             </Bodytop>
                             <BodyContent>
                                 <ContentTitle>{helpsfind && helpsfind.title}</ContentTitle>
-                                <ContentBody>{helpsfind && helpsfind.content}</ContentBody>
-                                <ContentImg src={helpsfind && helpsfind.imageList[0]}></ContentImg>
+                                {/* <ContentBody>{helpsfind && helpsfind.content}</ContentBody>
+                                <ContentImg src={helpsfind && helpsfind.imageList[0]}></ContentImg> */}
                                 <ContentView>조회수 1000회 | 댓글 100개</ContentView>
                             </BodyContent>
                             <BodyContainer>

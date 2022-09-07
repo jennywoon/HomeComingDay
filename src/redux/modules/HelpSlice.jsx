@@ -9,15 +9,27 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const initialState = {
     helpComments : [],
-    help : [],
+    helps : [],
     isLoading: false,
     error: null,
 };
 
+const config = {
+  
+  headers: {
+    'Content-Type': 'application/json',
+    authorization : `Bearer ${getCookie('accessToken')}`,
+    RefreshToken : `${getCookie('refreshToken')}`
+    // headers:`${getCookie('refreshToken')}`
+    // username: `${getCookie("username")}`,
+  },
+};
+
+
 export const __getHelp = createAsyncThunk("helps/getHelp", async (payload, thunkAPI) => {
     try {
-        const data = await axios.get(`${BASE_URL}/article/help`)
-        // console.log(data.data)
+        const data = await axios.get(`${BASE_URL}/article/help` , config)
+        console.log(data)
         return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
         console.log('error', error);
@@ -32,14 +44,15 @@ export const __postHelp = createAsyncThunk(
         console.log("formdata value", value);
       }
     try {
-      const config = {
+      const configs = {
         headers: {
           "Content-Type": "multipart/form-data",
           responseType: "blob",
           Authorization: `Bearer ${getCookie("accessToken")}`,
+          RefreshToken : `${getCookie("refreshToken")}`
         }
       }
-        const data = await axios.post(`${BASE_URL}/article/help`, payload);
+        const data = await axios.post(`${BASE_URL}/article/help`, payload, configs);
         // console.log('data', data)
         return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -52,7 +65,7 @@ export const __deleteHelp = createAsyncThunk("helps/deleteHelp", async (payload,
   try {
     await axios.delete(`${BASE_URL}/article/help/${payload}`);
     // console.log('data', data)
-    // console.log(payload)
+    console.log(payload)
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
     // console.log('error', error)
@@ -63,7 +76,7 @@ export const __deleteHelp = createAsyncThunk("helps/deleteHelp", async (payload,
 
 export const __updateHelp = createAsyncThunk("helps/updateHelp", async (payload, thunkAPI) => {
   try {
-    await axios.put(`http://localhost:3001/help/${payload.id}`, payload);
+    await axios.put(`${BASE_URL}/article/help/${payload.id}`, payload);
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
     // console.log('error', error)
