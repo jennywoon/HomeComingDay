@@ -28,14 +28,17 @@ const SignupComplete = () => {
             <p>모교 선후배들과 소통을 이어가보세요</p>
           </StText>
           <Button
+          type='submit'
             width='100%'
-            padding='10px 0'
+            // padding='10px 0'
             style={{ marginTop: '100px' }}
             backgroundColor='#f7931e'
             color='white'
             onClickHandler={onClickHandler}
           >
+            <ButtonTitle>
             시작하기
+            </ButtonTitle>
           </Button>
         </FisrtWrap>
       </StCompleteWrap>
@@ -79,4 +82,12 @@ const CompleteImg = styled.img`
 
 const StText = styled.div`
   text-align: center;
+`
+
+const ButtonTitle = styled.div`
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
