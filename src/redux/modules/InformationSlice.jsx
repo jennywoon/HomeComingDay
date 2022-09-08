@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-// import Cookies from "universal-cookie"
+import { getCookie, setCookie } from '../../shared/cookies';
 
-// const cookies = new Cookies();
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const initialState = {
     infoComments:[],
@@ -12,9 +12,20 @@ const initialState = {
     error: null,
 };
 
+const config = {
+  
+  headers: {
+    'Content-Type': 'application/json',
+    authorization : `Bearer ${getCookie('accessToken')}`,
+    RefreshToken : `${getCookie('refreshToken')}`
+    // headers:`${getCookie('refreshToken')}`
+    // username: `${getCookie("username")}`,
+  },
+};
+
 export const __getInformation = createAsyncThunk("informations/getInformation", async (payload, thunkAPI) => {
     try {
-        const data = await axios.get("http://localhost:3001/informations")
+        const data = await axios.get(`${BASE_URL}/article/information` , config)
         console.log(data.data)
         return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -24,9 +35,21 @@ export const __getInformation = createAsyncThunk("informations/getInformation", 
 });
 
 export const __postInformation = createAsyncThunk("informations/postInformation", async (payload, thunkAPI) => {
-    console.log('payload', payload)
+  
+  console.log('payload', payload)
+  for (var value of payload.values()) {
+    console.log("formdata value", value);
+  }
     try {
-        const data = await axios.post("http://localhost:3001/informations", payload);
+      const configs = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          responseType: "blob",
+          Authorization: `Bearer ${getCookie("accessToken")}`,
+          RefreshToken : `${getCookie("refreshToken")}`
+        }
+      }
+        const data = await axios.post(`${BASE_URL}/article/information`, payload, configs);
         console.log('data', data)
         return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -36,7 +59,7 @@ export const __postInformation = createAsyncThunk("informations/postInformation"
 
 export const __deleteInformation = createAsyncThunk("informations/deleteHelp", async (payload, thunkAPI) => {
   try {
-    await axios.delete(`http://localhost:3001/informations/${payload}`);
+    await axios.delete(`${BASE_URL}/article/information/${payload}`);
     // console.log('data', data)
     // console.log(payload)
     return thunkAPI.fulfillWithValue(payload);
@@ -49,7 +72,7 @@ export const __deleteInformation = createAsyncThunk("informations/deleteHelp", a
 
 export const __updateInformation = createAsyncThunk("informations/updateHelp", async (payload, thunkAPI) => {
   try {
-    await axios.put(`http://localhost:3001/informations/${payload.id}`, payload);
+    await axios.put(`${BASE_URL}/article/information/${payload.id}`, payload, payload);
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
     // console.log('error', error)
@@ -82,7 +105,7 @@ export const __postInfoComment = createAsyncThunk("comments/postInfoComment", as
 export const __deleteInfoComment = createAsyncThunk("comments/deleteInfoComment", async (payload, thunkAPI) => {
   try {
     // console.log(payload)
-    const data = await axios.delete(`http://localhost:3001/infoComments/${payload}`);
+    const data = await axios.delete(`${BASE_URL}/article/information/${payload.articleId}/comment/${payload.commentId}`);
   //   console.log(payload)
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
@@ -93,7 +116,7 @@ export const __deleteInfoComment = createAsyncThunk("comments/deleteInfoComment"
 
 export const __updateInfoComment = createAsyncThunk("comment/updateInfoComment", async (payload, thunkAPI) => {
   try {
-    await axios.patch(`http://localhost:3001/infoComments/${payload.id}`, payload);
+    await axios.patch(`${BASE_URL}/article/information/${payload.articleId}/comment/${payload.commentId}`, payload);
     console.log("payload",payload)
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {

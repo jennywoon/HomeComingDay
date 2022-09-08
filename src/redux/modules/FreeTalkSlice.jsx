@@ -20,7 +20,6 @@ const config = {
     'Content-Type': 'application/json',
     authorization: `Bearer ${getCookie('accessToken')}`,
     RefreshToken : `${getCookie('refreshToken')}`
-    // username: `${getCookie("username")}`,
   },
 };
 
@@ -97,7 +96,7 @@ export const __postFreeComment = createAsyncThunk("comments/postInfoComment", as
 export const __deleteFreeComment = createAsyncThunk("comments/deleteInfoComment", async (payload, thunkAPI) => {
   try {
     // console.log(payload)
-    const data = await axios.delete(`http://localhost:3001/freeComments/${payload}`);
+    const data = await axios.delete(`${BASE_URL}/article/freeTalk/${payload.articleId}/comment/${payload.commentId}`);
   //   console.log(payload)
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
@@ -108,7 +107,7 @@ export const __deleteFreeComment = createAsyncThunk("comments/deleteInfoComment"
 
 export const __updateFreeComment = createAsyncThunk("comment/updateInfoComment", async (payload, thunkAPI) => {
   try {
-    await axios.patch(`http://localhost:3001/freeComments/${payload.id}`, payload);
+    await axios.put(`${BASE_URL}/article/freeTalk/${payload.articleId}/comment/${payload.commentId}`, payload);
     console.log("payload",payload)
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {

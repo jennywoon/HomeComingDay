@@ -20,8 +20,7 @@ const config = {
     'Content-Type': 'application/json',
     authorization : `Bearer ${getCookie('accessToken')}`,
     RefreshToken : `${getCookie('refreshToken')}`
-    // headers:`${getCookie('refreshToken')}`
-    // username: `${getCookie("username")}`,
+  
   },
 };
 
@@ -110,7 +109,7 @@ export const __getHelpComment = createAsyncThunk("comments/getHelpComment", asyn
 export const __postHelpComment = createAsyncThunk("comments/postHelpComment", async (payload, thunkAPI) => {
   try {
     console.log("payload" , payload)
-    const data = await axios.post(`http://localhost:3001/helpcomments`, payload);
+    const data = await axios.post(`${BASE_URL}/article/help/comment/${payload.id}`, payload);
     console.log(data)
     return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
@@ -122,7 +121,7 @@ export const __postHelpComment = createAsyncThunk("comments/postHelpComment", as
 export const __deleteHelpComment = createAsyncThunk("comments/deleteHelpComment", async (payload, thunkAPI) => {
   try {
     console.log(payload)
-    const data = await axios.delete(`http://localhost:3001/helpcomments/${payload}`);
+    const data = await axios.delete(`${BASE_URL}/article/help/${payload.articleId}/comment/${payload.commentId}`);
   //   console.log(payload)
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
@@ -133,7 +132,7 @@ export const __deleteHelpComment = createAsyncThunk("comments/deleteHelpComment"
 
 export const __updateHelpComment = createAsyncThunk("comment/updateHelpComment", async (payload, thunkAPI) => {
   try {
-    await axios.patch(`http://localhost:3001/helpcomments/${payload.id}`, payload);
+    await axios.put(`${BASE_URL}/article/help/${payload.articleId}/comment/${payload.commentId}`, payload);
     console.log("payload",payload)
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
@@ -165,7 +164,7 @@ export const HelpSlice = createSlice({
       },
       [__postHelp.fulfilled]: (state, action) => {
         state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
-        state.helps.push(action.payload); // Store에 있는 todos에 서버에서 가져온 todos를 넣습니다.
+        // state.helps.push(action.payload); // Store에 있는 todos에 서버에서 가져온 todos를 넣습니다.
       },
       [__postHelp.rejected]: (state, action) => {
         state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.

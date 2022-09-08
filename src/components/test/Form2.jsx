@@ -31,7 +31,7 @@ const Form2 = () => {
   const [help, setHelp] = useState({
     title: '',
     content: '',
-    imgUrl: '',
+    imageList: '',
   });
 
   const [info, setInfo] = useState({
@@ -80,19 +80,19 @@ const Form2 = () => {
 
   // console.log(selectedImage)
 
-  useEffect(() => {
-    dispatch(__getHelp());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(__getHelp());
+  // }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(__getCalendar());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(__getCalendar());
+  // }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(__getDate());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(__getDate());
+  // }, [dispatch]);
 
-  const { title, content, imgUrl } = help;
+  const { title, content, imageList } = help;
   const { infotitle, infocontent, infoimageUrl } = info;
   const { freetitle, freecontent, freeimageUrl } = freetalk;
 
@@ -193,7 +193,7 @@ const Form2 = () => {
         // imageList: selectedImage,
       };
       selectedImage.map((imageList)=>{
-        formdata.append("multipartFile" , imageList)
+        formdata.append("files" , imageList)
       });
       formdata.append(
         "articleRequestDto",
@@ -434,9 +434,9 @@ const Form2 = () => {
                   <Imgadd size='24px' />
                   <Addfile
                     type='file'
-                    multiple='multiple'
                     id='fileUpload'
-                    accept='.jpg,.jpeg,.png'
+                    accept="image/jpg, image/png, image/jpeg"
+                    onChange={onChangeHandler}
                   />
                   <div style={{ fontSize: '12px', marginLeft: '10px' }}>
                     이미지 첨부
