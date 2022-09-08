@@ -7,7 +7,7 @@ import Img from "../../assets/naverIcon.png"
 import HelpDetailComment from './HelpDetailComment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteHelp, __updateHelp, __getHelp, __getComments, __getHelpComment, __postHelpComment } from '../../redux/modules/HelpSlice';
+import { __deleteHelp, __updateHelp, __getHelp, __getComments, __getHelpComment, __postHelpComment ,__getDetailHelp} from '../../redux/modules/HelpSlice';
 import Layout from '../Layout';
 import SearchLayout from '../SearchLayout';
 import { useRef } from 'react';
@@ -32,7 +32,7 @@ const HelpDetail = () => {
     console.log(helpsfind)
 
     useEffect(() => {
-        dispatch(__getHelp());
+        dispatch(__getDetailHelp(helpsfind.articleId));
         dispatch(__getHelpComment())
     }, [dispatch])
 
@@ -94,7 +94,7 @@ const HelpDetail = () => {
                                 <Bodyimg src={Img} alt="" />
                                 <Bodytxt>
                                     <Txtname>{helpsfind&&helpsfind.username}</Txtname>
-                                    <Txtstudent>{helpsfind&&helpsfind.admissin} <span> {helpsfind&&helpsfind.createAt} </span></Txtstudent>
+                                    <Txtstudent>{helpsfind&&helpsfind.admission} <span> {helpsfind&&helpsfind.createAt} </span></Txtstudent>
                                 </Bodytxt>
                                 <AiOutlineMenu size="20px" style={{ marginLeft: "auto", cursor: "pointer" }}
                                     onClick={onCilckShow} />

@@ -37,6 +37,19 @@ export const __getHelp = createAsyncThunk("helps/getHelp", async (payload, thunk
     }
 });
 
+export const __getDetailHelp = createAsyncThunk("helps/getDetailHelp", async (payload, thunkAPI) => {
+  try {
+      console.log(payload)
+      const data = await axios.get(`${BASE_URL}/article/help/${payload}` , config)
+      console.log(data)
+      return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+      console.log('error', error);
+      return thunkAPI.rejectWithValue(error);
+  }
+});
+
+
 export const __postHelp = createAsyncThunk(
   "helps/postHelp", async (payload, thunkAPI) => {
     console.log('payload', payload)

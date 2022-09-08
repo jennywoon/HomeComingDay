@@ -38,7 +38,7 @@ const Help = () => {
         </Iconbox> */}
         <HelpList>
           <>
-            {helps && helps.slice(0).reverse().map((help) => (
+            {helps && helps.slice(0).map((help) => (
               <HelpCard key={help.id} id={help.articleId} help={help} />
             ))}
           </>
@@ -56,7 +56,7 @@ const HelpContainer = styled.div`
   gap: 12px;
   /* border: 1px solid red; */
   /* height: 100vh; */
-  /* overflow-y: scroll; */
+  overflow-y: scroll;
 `;
 
 const BannerWrap = styled.div`
