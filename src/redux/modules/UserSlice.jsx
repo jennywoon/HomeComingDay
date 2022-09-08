@@ -8,12 +8,12 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 const config = {
   headers: {
     'Content-Type': 'application/json',
-    authorization: [`Bearer ${getCookie('accessToken')}` , `${getCookie('refreshToken')}`]
-    // username: `${getCookie("username")}`,
+    authorization: `Bearer ${getCookie('accessToken')}`, 
+    RefreshToken : `${getCookie('refreshToken')}`
   },
 };
 
-// 로그안
+// 로그인
 export const __loginUser = createAsyncThunk(
   'LOGIN_USER',
   async (payload, thunkAPI) => {
@@ -87,6 +87,7 @@ export const __postCheckEmail = createAsyncThunk("checkEmail", async (payload, t
 
 const initialState = {
   user: config,
+  emailCheck: [],
   sendEmail: [],
   checkEmail: [],
   isLogin: false,
@@ -98,6 +99,7 @@ export const UserSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    // 로그인
     [__loginUser.pending]: (state) => {
       state.isLoading = true;
     },
@@ -110,6 +112,8 @@ export const UserSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+
+    // 회원가입
     [__signupUser.pending]: (state) => {
       state.isLoading = true;
     },
@@ -122,6 +126,20 @@ export const UserSlice = createSlice({
       state.error = action.payload;
     },
 
+    // 이메일 중복
+    [__emailCheck.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__emailCheck.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.emailCheck.push(action.payload);
+    },
+    [__emailCheck.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
+    // 이메일 보내기
     [__postSendEmail.pending]: (state) => {
       state.isLoading = true;
     },
@@ -133,6 +151,8 @@ export const UserSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+
+    // 이메일 인증번호 보내기
     [__postCheckEmail.pending]: (state) => {
       state.isLoading = true;
     },

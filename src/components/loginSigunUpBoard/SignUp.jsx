@@ -7,10 +7,17 @@ import Input from "../../components/elements/Input"
 import { __postSendEmail, __postCheckEmail, __signupUser, __emailCheck } from '../../redux/modules/UserSlice';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import { IoIosArrowBack } from 'react-icons/io';
+import axios from 'axios';
 
 const SignUp = () => {
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  // const [email, setEmail] = useState('');
+  // const [username, setUsername] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [passwordCheck, setPasswordCheck] = useState('')
 
   const [inputValue, setInputValue] = useState({
     email: '',
@@ -40,10 +47,8 @@ const SignUp = () => {
     const handleChangeEmail = (e) => {
       if (!e.target.value || emailRegex.test(e.target.value)) {
         setFormError({ ...formError, emailError: false });
-        // setIsOnCheck(true);
       } else {
         setFormError({ ...formError, emailError: true });
-        // setIsOnCheck(false);
       }
       setInputValue((prev) => {
         return {
@@ -55,12 +60,38 @@ const SignUp = () => {
 
   // 이메일 중복확인
   const [isOnCheck, setIsOnCheck] = useState(false);
-  const handleChangeEmailCheck = () => {
-      const newEmail = {
-        email: email,
-      };
-      dispatch(__emailCheck(newEmail));
-      setIsOnCheck(true);
+  // const handleChangeEmailCheck = () => {
+  //     const newEmail = {
+  //       email: email,
+  //     };
+  //     dispatch(__emailCheck(newEmail));
+  //     setIsOnCheck(true);
+  // };
+
+  const [emailMessage, setEmailMessage] = useState("");
+  const [emailDBCheck, setEmailDBCheck] = useState(false);
+  const handleChangeEmailCheck = async () => {
+    const newEmail = {
+      email: email,
+    };
+    try {
+      const data = await axios.post(
+        BASE_URL + "/emailCheck",
+        newEmail
+      );
+      console.log(data);
+      if (data.data) {
+        setEmailMessage("사용할 수 있는 이메일입니다");
+        setEmailDBCheck(true);
+        setIsOnCheck(true);
+      } else {
+        setEmailMessage("중복되는 이메일입니다.");
+        setEmailDBCheck(false);
+        setIsOnCheck(false);
+      }
+    } catch (error) {
+      console.log("error ", error);
+    }
   };
 
   // 이메일 인증
@@ -90,7 +121,14 @@ const SignUp = () => {
   }
 
   // 이메일 인증번호
-  const handleChangeEmailConfirm = () =>{}
+  const handleChangeEmailConfirm = (e) =>{
+    setEmailCheck((prev) => {
+      return {
+        ...prev,
+        authKey: e.target.value
+      }
+    })
+  }
   
   // 이메일 인증번호 확인
   const handleEmailCheck = (e) => {
@@ -98,11 +136,11 @@ const SignUp = () => {
     setEmailCheck((prev) => {
       return {
         ...prev,
+        email: e.target.value,
         authKey: e.target.value,
       };
     });
     dispatch(__postCheckEmail(emailCheck))
-
   }
 
   // 이름 유효성검사
@@ -225,7 +263,7 @@ const SignUp = () => {
 
   return (
     <FormContainer>
-      <StSignupContainer onSubmit={handleSubmit}>
+      <StSignupContainer>
         <StSignupWraps>
           <FisrtWrap>
             <IoIosArrowBack
@@ -257,9 +295,11 @@ const SignUp = () => {
               <Stlabel>이메일</Stlabel>
               <StFlexbox>
                 <Input
+                  type='email'
                   width='100%'
                   style={{ marginBottom: '10px' }}
                   onChange={handleChangeEmail}
+                  text={emailMessage}
                   // padding='10px 15px'
                 />
                 <StEmailConfirm
@@ -353,17 +393,16 @@ const SignUp = () => {
             </StSignupWrap>
 
             <Button
-            type='submit'
+              // type='submit'
               width='100%'
               // height="100%"
               isDisabled={isActive ? false : true}
-              style={{ marginTop: '50px', backgroundColor:"#f7931e" }}
+              style={{ marginTop: '50px', backgroundColor: '#f7931e' }}
               // onClickHandler={onClickHandler}
               color='white'
+              onClick={handleSubmit}
             >
-              <ButtonTitle>
-              회원가입
-              </ButtonTitle>
+              <ButtonTitle>회원가입</ButtonTitle>
             </Button>
           </FisrtWrap>
         </StSignupWraps>
