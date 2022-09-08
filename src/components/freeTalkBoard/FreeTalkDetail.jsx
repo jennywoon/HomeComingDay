@@ -9,6 +9,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { __deleteFreeTalk, __getFreeTalk, __getFreeComment, __postFreeComment } from '../../redux/modules/FreeTalkSlice';
 import { useRef } from 'react';
+import { BiDotsVerticalRounded } from "react-icons/bi";
 
 const FreeTalkDetail = () => {
     const dispatch = useDispatch();
@@ -88,7 +89,10 @@ const FreeTalkDetail = () => {
                                     <Txtname>최형용</Txtname>
                                     <Txtstudent>14학번 <span> 15분 전 </span></Txtstudent>
                                 </Bodytxt>
-                                <AiOutlineMenu size="20px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }}
+                                {/* <AiOutlineMenu size="20px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }}
+                                    onClick={onCilckShow} /> */}
+                                <BiDotsVerticalRounded
+                                    size="20px" style={{ marginLeft: "auto", cursor: "pointer" }}
                                     onClick={onCilckShow} />
 
                                 {show ?

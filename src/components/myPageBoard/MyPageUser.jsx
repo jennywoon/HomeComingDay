@@ -135,16 +135,10 @@ const LogoutButton = styled.div`
     justify-content: center;
     align-items: center;
     bottom: 0;
-    :hover{
-        border: 1px solid #f7931e;
-    }
     cursor: pointer;
 `
 const LogoutTitle = styled.div`
     font-size: 13px;
     font-weight: 500;
     color: white;
-    :hover{
-        color: #f7931e;
-    }
 `
