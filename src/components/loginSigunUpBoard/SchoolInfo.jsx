@@ -95,7 +95,7 @@ const SchoolInfo = () => {
                   maxHeight: '20px',
                   borderRadius: '16px',
                   border: '1px solid #ddd',
-                  fontSize: '14px',
+                  fontSize: '16px',
                   padding: '0 10px',
                 }}
                 maxMenuHeight={10}
@@ -116,7 +116,7 @@ const SchoolInfo = () => {
                   maxHeight: '20px',
                   borderRadius: '16px',
                   border: '1px solid #ddd',
-                  fontSize: '14px',
+                  fontSize: '16px',
                   padding: '0 10px',
                 }}
                 maxMenuHeight={10}
@@ -137,7 +137,7 @@ const SchoolInfo = () => {
                   maxHeight: '20px',
                   borderRadius: '16px',
                   border: '1px solid #ddd',
-                  fontSize: '14px',
+                  fontSize: '16px',
                   padding: '0 10px',
                 }}
                 maxMenuHeight={10}
@@ -149,12 +149,13 @@ const SchoolInfo = () => {
             <Button
               type='submit'
               width='100%'
-              padding='10px 0'
               style={{ marginTop: '100px' }}
               backgroundColor='#f7931e'
               color='white'
             >
+              <ButtonTitle>
               저장하기
+              </ButtonTitle>
             </Button>
           </FisrtWrap>
         </StSchoolInfoWraps>
@@ -198,6 +199,7 @@ const StSchoolTitle = styled.p`
   font-weight: bold;
   margin-bottom: 40px;
 `;
+
 const StSchoolInfoWrap = styled.div`
   box-sizing: border-box;
   padding: 0;
@@ -209,6 +211,7 @@ const StSchoolInfoWrap = styled.div`
 
 const Stlabel = styled.label`
   font-size: 14px;
+  font-weight: 600;
   margin-bottom: 10px;
   display: block;
 `;
@@ -216,15 +219,16 @@ const Stlabel = styled.label`
 const StyledSelect = styled(Select)`
   background: #fff;
   font-size: 14px;
-  &:focus {
-    /* border-color: #f7931e; */
+  /* outline-color: #f7931e; */
+  &:focu-within {
+    color: #f7931e;
   }
 `
 
-// const StSelect = styled.select`
-//   width: 100%;
-//   border: 1px solid #ddd;
-//   padding: 10px 10px;
-//   border-radius: 16px;
-//   box-sizing: border-box;
-// `;
+const ButtonTitle = styled.div`
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`

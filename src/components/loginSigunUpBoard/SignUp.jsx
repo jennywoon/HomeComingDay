@@ -356,11 +356,9 @@ const SignUp = () => {
             type='submit'
               width='100%'
               // height="100%"
-              // padding='10px 0'
               isDisabled={isActive ? false : true}
               style={{ marginTop: '50px', backgroundColor:"#f7931e" }}
               // onClickHandler={onClickHandler}
-              backgroundColor='black'
               color='white'
             >
               <ButtonTitle>
