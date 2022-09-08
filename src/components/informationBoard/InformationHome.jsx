@@ -15,24 +15,6 @@ const InformationHome = () => {
 
     return (
         <HomeContainer>
-            <Navbar>
-                <NavbarTitle
-                    onClick={() => { navigate("/") }}
-                    style={{ paddingLeft: "20px" }}
-                >도움요청</NavbarTitle>
-                <NavbarTitle
-                    onClick={() => { navigate("/information") }}
-                    style={{ fontWeight: "800", textDecoration: "underline", color:"#f7931e" }}
-                >정보공유</NavbarTitle>
-                <NavbarTitle
-                    onClick={() => { navigate("/calendar") }}
-                    style={{  }}
-                >만남일정</NavbarTitle>
-                <NavbarTitle
-                    onClick={() => { navigate("/freetalk") }}
-                    style={{ paddingRight: "20px" }}
-                >자유토크</NavbarTitle>
-            </Navbar>
             <Information />
             <IconWrap>
                 <Iconbox

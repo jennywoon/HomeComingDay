@@ -13,22 +13,6 @@ const Home = () => {
 
     return (
             <HomeContainer>
-                <Navbar>
-                    <NavbarTitle
-                        onClick={() => { navigate("/") }}
-                        style={{paddingLeft: "20px", fontWeight: "800", textDecoration: "underline", color: "#f7931e" }}
-                    >도움요청</NavbarTitle>
-                    <NavbarTitle
-                        onClick={() => { navigate("/information") }}
-                    >정보공유</NavbarTitle>
-                    <NavbarTitle
-                        onClick={() => { navigate("/calendar") }}
-                    >만남일정</NavbarTitle>
-                    <NavbarTitle
-                        onClick={() => { navigate("/freetalk") }}
-                        style={{ paddingRight: "20px" }}
-                    >자유토크</NavbarTitle>
-                </Navbar>
                 <Help />
                 <IconWrap>
                     <Iconbox

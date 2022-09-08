@@ -13,24 +13,6 @@ const FreeTalkHome = () => {
 
     return (
         <HomeContainer>
-            <Navbar>
-                <NavbarTitle
-                    onClick={() => { navigate("/") }}
-                    style={{ paddingLeft: "20px"}}
-                >도움요청</NavbarTitle>
-                <NavbarTitle
-                    onClick={() => { navigate("/information") }}
-                    style={{}}
-                >정보공유</NavbarTitle>
-                <NavbarTitle
-                    onClick={() => { navigate("/calendar") }}
-                    style={{}}
-                >만남일정</NavbarTitle>
-                <NavbarTitle
-                    onClick={() => { navigate("/freetalk") }}
-                    style={{paddingRight: "20px", fontWeight:"800", textDecoration:"underline", color:"#f7931e"}}
-                >자유토크</NavbarTitle>
-            </Navbar>
             <FreeTalk/>
             <IconWrap>
                     <Iconbox
