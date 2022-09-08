@@ -7,7 +7,7 @@ import Img from "../../assets/naverIcon.png"
 import HelpDetailComment from './HelpDetailComment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteHelp, __updateHelp, __getHelp, __getComments, __getHelpComment, __postHelpComment ,__getDetailHelp} from '../../redux/modules/HelpSlice';
+import { __deleteHelp, __updateHelp, __getHelp, __getComments, __getHelpComment, __postHelpComment} from '../../redux/modules/HelpSlice';
 import Layout from '../Layout';
 import SearchLayout from '../SearchLayout';
 import { useRef } from 'react';
@@ -31,10 +31,9 @@ const HelpDetail = () => {
     console.log(helps)
     console.log(helpsfind)
 
-    useEffect(() => {
-        dispatch(__getDetailHelp(helpsfind.articleId));
-        dispatch(__getHelpComment())
-    }, [dispatch])
+    // useEffect(() => {
+    //     dispatch(__getDetailHelp(helpsfind.articleId));
+    // }, [dispatch])
 
     // console.log("helps", helps , "helpsfind" , helpsfind)
 
@@ -48,8 +47,6 @@ const HelpDetail = () => {
         if (result) {
             dispatch(__deleteHelp(helpsfind.articleId))
             navigate("/")
-        } else {
-            return null
         }
     }
 
