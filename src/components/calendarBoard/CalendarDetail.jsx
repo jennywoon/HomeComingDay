@@ -11,6 +11,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { __getCalendar, __deleteCalendar } from '../../redux/modules/CalendarSlice';
 import moment from 'moment';
+import { BiDotsVerticalRounded } from "react-icons/bi";
 
 const CalendarDetail = () => {
   const dispatch = useDispatch();
@@ -58,74 +59,76 @@ const CalendarDetail = () => {
       <Header />
       <DetailContainer>
         <HelpWrap>
-        <DetailWrap>
-          <FirstWrap>
-            <DetailHeader>
-              <IoIosArrowBack size='25px' cursor='pointer' onClick={() => { navigate('/calendar') }} />
-              <HeaderTitle>만남일정</HeaderTitle>
-              <div></div>
-            </DetailHeader>
-          </FirstWrap>
-          <DetailBody>
-            <Bodytop>
-              <Bodyimg src={Img} alt='' />
-              <Bodytxt>
-                <Txtname>조수정</Txtname>
-                <Txtstudent>
-                  17학번 <span> 15분 전 </span>
-                </Txtstudent>
-              </Bodytxt>
-              <AiOutlineMenu
+          <DetailWrap>
+            <FirstWrap>
+              <DetailHeader>
+                <IoIosArrowBack size='25px' cursor='pointer' onClick={() => { navigate('/calendar') }} />
+                <HeaderTitle>만남일정</HeaderTitle>
+                <div></div>
+              </DetailHeader>
+            </FirstWrap>
+            <DetailBody>
+              <Bodytop>
+                <Bodyimg src={Img} alt='' />
+                <Bodytxt>
+                  <Txtname>조수정</Txtname>
+                  <Txtstudent>
+                    17학번 <span> 15분 전 </span>
+                  </Txtstudent>
+                </Bodytxt>
+                {/* <AiOutlineMenu
                 size='20px'
                 cursor='pointer'
                 style={{ marginLeft: 'auto', cursor: 'pointer' }}
                 onClick={onCilckShow}
-              />
+              /> */}
+                <BiDotsVerticalRounded
+                  size="20px" style={{ marginLeft: "auto", cursor: "pointer" }}
+                  onClick={onCilckShow} />
+                {show ? (
+                  <Revisebox>
+                    <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
+                    <DeleteButton onClick={onClickDelete}>삭제</DeleteButton>
+                  </Revisebox>
+                ) : null}
+              </Bodytop>
+              <BodyContent>
+                <ContentTitle>{calendarfind && calendarfind.calendartitle}</ContentTitle>
+                <ContentBody>
+                  <Contentget>
+                    <ContentgetTitle>날짜 </ContentgetTitle>
+                    {getLastArrItem && moment(getLastArrItem.calendarDate).format("YYYY년 MM월 DD일")}
+                  </Contentget>
+                  <Contentget>
+                    <ContentgetTitle>시간 </ContentgetTitle>{calendarfind && calendarfind.calendartime}
+                  </Contentget>
+                  <Contentget>
+                    <ContentgetTitle>장소 </ContentgetTitle>{calendarfind && calendarfind.calendarlocation}
+                  </Contentget>
+                  <Contentget>
+                    <ContentgetTitle>내용 </ContentgetTitle>{calendarfind && calendarfind.calendarcontent}
+                  </Contentget>
+                </ContentBody>
+                <ContentImg src=''></ContentImg>
+                <ContentView>조회수 1000회 | 댓글 100개</ContentView>
+              </BodyContent>
 
-              {show ? (
-                <Revisebox>
-                  <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
-                  <DeleteButton onClick={onClickDelete}>삭제</DeleteButton>
-                </Revisebox>
-              ) : null}
-            </Bodytop>
-            <BodyContent>
-              <ContentTitle>{calendarfind && calendarfind.calendartitle}</ContentTitle>
-              <ContentBody>
-                <Contentget>
-                  <ContentgetTitle>날짜 </ContentgetTitle>
-                  {getLastArrItem && moment(getLastArrItem.calendarDate).format("YYYY년 MM월 DD일")}
-                </Contentget>
-                <Contentget>
-                  <ContentgetTitle>시간 </ContentgetTitle>{calendarfind && calendarfind.calendartime}
-                </Contentget>
-                <Contentget>
-                  <ContentgetTitle>장소 </ContentgetTitle>{calendarfind && calendarfind.calendarlocation}
-                </Contentget>
-                <Contentget>
-                  <ContentgetTitle>내용 </ContentgetTitle>{calendarfind && calendarfind.calendarcontent}
-                </Contentget>
-              </ContentBody>
-              <ContentImg src=''></ContentImg>
-              <ContentView>조회수 1000회 | 댓글 100개</ContentView>
-            </BodyContent>
-
-            <BodyCommentBox>
-              {/* 댓글맵돌리기  */}
-              <CalendarDetailComment />
-              <CalendarDetailComment />
-            </BodyCommentBox>
-          </DetailBody>
-        </DetailWrap>
+              <BodyCommentBox>
+                {/* 댓글맵돌리기  */}
+                <CalendarDetailComment />
+                <CalendarDetailComment />
+              </BodyCommentBox>
+            </DetailBody>
+          </DetailWrap>
         </HelpWrap>
         <CommentContainer>
-                <CommentBox>
-                  <CommentDiv>
-                    <CommentPost placeholder='댓글을 입력해주세요'></CommentPost>
-                    <CommentButton>올리기</CommentButton>
-                  </CommentDiv>
-                </CommentBox>
-              </CommentContainer>
+          <CommentBox>
+            <CommentDiv>
+              <CommentPost placeholder='댓글을 입력해주세요'></CommentPost>
+              <CommentButton>올리기</CommentButton>
+            </CommentDiv>
+          </CommentBox>
+        </CommentContainer>
       </DetailContainer>
     </Container>
   );

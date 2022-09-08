@@ -7,10 +7,9 @@ import Img from "../../assets/naverIcon.png"
 import HelpDetailComment from './HelpDetailComment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteHelp, __updateHelp, __getHelp, __getComments, __getHelpComment, __postHelpComment} from '../../redux/modules/HelpSlice';
-import Layout from '../Layout';
-import SearchLayout from '../SearchLayout';
+import { __deleteHelp, __updateHelp, __getHelp, __getComments, __getHelpComment, __postHelpComment } from '../../redux/modules/HelpSlice';
 import { useRef } from 'react';
+import { BiDotsVerticalRounded } from "react-icons/bi";
 
 const HelpDetail = () => {
     const dispatch = useDispatch();
@@ -83,27 +82,28 @@ const HelpDetail = () => {
                             <DetailHeader>
                                 <IoIosArrowBack size="25px" cursor="pointer" onClick={() => { navigate("/") }} />
                                 <HeaderTitle>도움요청</HeaderTitle>
-                                <div></div>
+                                <div style={{ width: "25px", height: "25px" }}></div>
                             </DetailHeader>
                         </FirstWrap>
                         <DetailBody>
                             <Bodytop>
                                 <Bodyimg src={Img} alt="" />
                                 <Bodytxt>
-                                    <Txtname>{helpsfind&&helpsfind.username}</Txtname>
-                                    <Txtstudent>{helpsfind&&helpsfind.admission} <span> {helpsfind&&helpsfind.createAt} </span></Txtstudent>
+                                    <Txtname>{helpsfind && helpsfind.username}</Txtname>
+                                    <Txtstudent>{helpsfind && helpsfind.admission} <span> {helpsfind && helpsfind.createAt} </span></Txtstudent>
                                 </Bodytxt>
-                                <AiOutlineMenu size="20px" style={{ marginLeft: "auto", cursor: "pointer" }}
-                                    onClick={onCilckShow} />
-
-                                {show ?
-                                    <Revisebox ref={modalRef}>
-                                        <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
-                                        <DeleteButton onClick={onClickDelete}>삭제</DeleteButton>
-                                    </Revisebox>
-                                    : null
-                                }
-
+                                {/* <AiOutlineMenu size="20px" style={{ marginLeft: "auto", cursor: "pointer" }}
+                                    onClick={onCilckShow} /> */}
+                                <BiDotsVerticalRounded
+                                size="20px" style={{ marginLeft: "auto", cursor: "pointer" }}
+                                onClick={onCilckShow}/>
+                                    {show ?
+                                        <Revisebox ref={modalRef}>
+                                            <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
+                                            <DeleteButton onClick={onClickDelete}>삭제</DeleteButton>
+                                        </Revisebox>
+                                        : null
+                                    }
                             </Bodytop>
                             <BodyContent>
                                 <ContentTitle>{helpsfind && helpsfind.title}</ContentTitle>

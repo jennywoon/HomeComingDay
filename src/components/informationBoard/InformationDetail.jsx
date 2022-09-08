@@ -8,6 +8,7 @@ import InformationDetailComment from './InformationDetailComment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { __deleteInformation, __getInfoComment, __getInformation, __postInfoComment, __postInformation, __updateInformation } from '../../redux/modules/InformationSlice';
+import { BiDotsVerticalRounded } from "react-icons/bi";
 
 
 const InformationDetail = () => {
@@ -72,50 +73,53 @@ const InformationDetail = () => {
         <Container>
             <Header />
             <DetailContainer>
-            <HelpWrap>
-                <DetailWrap onClick={closeModal}>
-                    <FirstWrap>
-                        <DetailHeader>
-                            <IoIosArrowBack size="25px" cursor="pointer" onClick={() => { navigate("/information") }} />
-                            <HeaderTitle>정보공유</HeaderTitle>
-                            <div></div>
-                        </DetailHeader>
-                    </FirstWrap>
-                    <DetailBody>
-                        <Bodytop>
-                            <Bodyimg src={Img} alt="" />
-                            <Bodytxt>
-                                <Txtname>최형용</Txtname>
-                                <Txtstudent>14학번 <span> 15분 전 </span></Txtstudent>
-                            </Bodytxt>
-                            <AiOutlineMenu size="20px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }}
-                                onClick={onCilckShow} />
+                <HelpWrap>
+                    <DetailWrap onClick={closeModal}>
+                        <FirstWrap>
+                            <DetailHeader>
+                                <IoIosArrowBack size="25px" cursor="pointer" onClick={() => { navigate("/information") }} />
+                                <HeaderTitle>정보공유</HeaderTitle>
+                                <div></div>
+                            </DetailHeader>
+                        </FirstWrap>
+                        <DetailBody>
+                            <Bodytop>
+                                <Bodyimg src={Img} alt="" />
+                                <Bodytxt>
+                                    <Txtname>최형용</Txtname>
+                                    <Txtstudent>14학번 <span> 15분 전 </span></Txtstudent>
+                                </Bodytxt>
+                                {/* <AiOutlineMenu size="20px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }}
+                                onClick={onCilckShow} /> */}
+                                <BiDotsVerticalRounded
+                                    size="20px" style={{ marginLeft: "auto", cursor: "pointer" }}
+                                    onClick={onCilckShow} />
 
-                            {show ?
-                                <Revisebox ref={modalRef}>
-                                    <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
-                                    <DeleteButton onClick={onClickDelete}>삭제</DeleteButton>
-                                </Revisebox>
-                                : null
-                            }
+                                {show ?
+                                    <Revisebox ref={modalRef}>
+                                        <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
+                                        <DeleteButton onClick={onClickDelete}>삭제</DeleteButton>
+                                    </Revisebox>
+                                    : null
+                                }
 
-                        </Bodytop>
-                        <BodyContent>
-                            <ContentTitle>{informationsfind && informationsfind.title}</ContentTitle>
-                            <ContentBody>{informationsfind && informationsfind.content}</ContentBody>
-                            <ContentImg src={informationsfind && informationsfind.imageList[0]}></ContentImg>
-                            <ContentView>조회수 1000회 | 댓글 100개</ContentView>
-                        </BodyContent>
+                            </Bodytop>
+                            <BodyContent>
+                                <ContentTitle>{informationsfind && informationsfind.title}</ContentTitle>
+                                <ContentBody>{informationsfind && informationsfind.content}</ContentBody>
+                                <ContentImg src={informationsfind && informationsfind.imageList[0]}></ContentImg>
+                                <ContentView>조회수 1000회 | 댓글 100개</ContentView>
+                            </BodyContent>
 
-                        <BodyCommentBox>
-                            {/* 댓글맵돌리기  */}
-                            {infoComments && infoComments.map((comment) => (
-                                Number(comment.articleid) === informationsfind.id ? <InformationDetailComment key={comment.id} comment={comment} informationsfind={informationsfind} modalRef={modalRef} /> : null
-                            ))}
+                            <BodyCommentBox>
+                                {/* 댓글맵돌리기  */}
+                                {infoComments && infoComments.map((comment) => (
+                                    Number(comment.articleid) === informationsfind.id ? <InformationDetailComment key={comment.id} comment={comment} informationsfind={informationsfind} modalRef={modalRef} /> : null
+                                ))}
 
-                        </BodyCommentBox>
-                    </DetailBody>
-                </DetailWrap>
+                            </BodyCommentBox>
+                        </DetailBody>
+                    </DetailWrap>
                 </HelpWrap>
                 <CommentContainer>
                     <CommentBox>
