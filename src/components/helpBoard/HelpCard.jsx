@@ -5,28 +5,35 @@ import { BsQuestionSquare } from "react-icons/bs";
 import { __getHelp } from '../../redux/modules/HelpSlice';
 import { useNavigate } from 'react-router-dom';
 
-const HelpCard = ({ help , id}) => {
+const HelpCard = ({ help, id }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
+
 
     useEffect(() => {
         dispatch(__getHelp());
     }, [dispatch])
 
-    const onClickNavi = () =>{
+    const onClickNavi = () => {
         navigate(`/helpdetail/${id}`)
     }
-   
+
     return (
         <HelpContainer onClick={onClickNavi}>
             <CardHead>
                 <HeadImg>
                     <BsQuestionSquare />
                 </HeadImg>
-                <HeadName>{help.username}</HeadName>
-                <HeadStudent>{help.admission}</HeadStudent>
-                <HeadTime>{help.createdAt}</HeadTime>
+                <HeadUser>
+                    <HeadTop>
+                        <HeadName>{help.username}</HeadName>
+                        <HeadTime>{help.createdAt}</HeadTime>
+                    </HeadTop>
+                    <HeadBottom>
+                        <HeadDepartment>경영학과</HeadDepartment>
+                        <HeadStudent>· {help.admission}</HeadStudent>
+                    </HeadBottom>
+                </HeadUser>
             </CardHead>
             <CardBody>
                 <BodyTitle>{help.title}</BodyTitle>
@@ -65,13 +72,33 @@ const HeadImg = styled.div`
     background-color: #f6bd60;
     border-radius: 50%;
 `
-const HeadName = styled.h2`
-    font-size: 18px;
+
+const HeadUser = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
     margin: 0px 5px;
 `
-const HeadStudent = styled.p`
+const HeadTop = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    /* border: 1px solid red; */
+`
+const HeadBottom = styled.div`
+    display: flex;
     font-size: 12px;
     color:gray;
+    gap: 5px;
+`
+const HeadDepartment = styled.div``
+const HeadName = styled.h2`
+    font-size: 18px;
+    /* margin: 0px 5px; */
+`
+const HeadStudent = styled.p`
+
 `
 const HeadTime = styled.p`
     font-size: 12px;

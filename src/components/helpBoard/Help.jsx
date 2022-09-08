@@ -11,7 +11,7 @@ const Help = () => {
 
   const dispatch = useDispatch();
   const { helps } = useSelector((state) => state.helps);
-  const { isLoading } = useSelector((state) => state.helps)
+  const { isLoading } = useSelector((state) => state.helps);
   // console.log(isLoading)
   // console.log(helps)
 
@@ -40,7 +40,7 @@ const Help = () => {
         <HelpList>
           <>
             {helps && helps.slice(0).map((help) => (
-              <HelpCard key={help.id} id={help.articleId} help={help} />
+              <HelpCard key={help.articleId} id={help.articleId} help={help} />
             ))}
           </>
         </HelpList>
@@ -82,8 +82,8 @@ const HelpWrap = styled.div`
   position: relative;
   top: 170px;
   width: 100%;
-  /* height: 100vh; */
-  height: 100%;
+  height: 100vh;
+  /* height: 100%; */
   border-radius: 20px;
   background-color: white;
   padding: 10px 5px 10px 5px;

@@ -73,10 +73,10 @@ const Login = () => {
     .then(() => {
       // console.log(loginSchoolInfo)
       if (loginSchoolInfo===true) {
-        navigate('/schoolinfo');
+        // navigate('/schoolinfo');
       } 
       else if (loginSchoolInfo!==true){
-      navigate('/');
+      // navigate('/');
       }
     });
   };
