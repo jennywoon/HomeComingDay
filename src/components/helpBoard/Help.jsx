@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components"
 import { useSelector, useDispatch } from "react-redux";
 import { __getHelp } from "../../redux/modules/HelpSlice";
@@ -6,6 +6,7 @@ import HelpCard from "./HelpCard";
 import Loading from "../test/Loading";
 import helporange from "../../assets/helporange.png"
 import helpwhite from "../../assets/helpwhite.png"
+import axios from "axios";
 const Help = () => {
 
   const dispatch = useDispatch();
@@ -52,11 +53,9 @@ export default Help;
 
 const HelpContainer = styled.div`
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
+  height: 100vh;
   gap: 12px;
-  /* border: 1px solid red; */
-  /* height: 100vh; */
-  overflow-y: scroll;
 `;
 
 const BannerWrap = styled.div`
@@ -83,9 +82,12 @@ const HelpWrap = styled.div`
   position: relative;
   top: 170px;
   width: 100%;
+  /* height: 100vh; */
+  height: 100%;
   border-radius: 20px;
   background-color: white;
   padding: 10px 5px 10px 5px;
+  /* border: 1px solid red; */
 `;
 
 const Select = styled.select`
@@ -103,8 +105,21 @@ const Select = styled.select`
 `;
 
 const HelpList = styled.div`
-  /* height: 100vh; */
+  height: 100%;
+  width: 100%;
   /* height: 100%; */
   /* border: 1px solid green; */
-  /* overflow-y: scroll; */
+  overflow-y: scroll;
+  /* overflow-y: auto; */
+  ::-webkit-scrollbar{
+    width: 0px;
+    /* height: 100vh; */
+  }
+  /* ::-webkit-scrollbar-thumb{
+    background: #f7931e;
+    height: 100%;
+  }
+  ::-webkit-scrollbar-track{
+    background: #f7931e;
+  } */
 `;
