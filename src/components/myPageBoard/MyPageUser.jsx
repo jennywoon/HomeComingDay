@@ -24,7 +24,7 @@ const MyPageUser = () => {
                     </UserUniversity>
                     <UserWrap>
                         <UserName>나청운</UserName>
-                        <UserAdmission>14학번</UserAdmission>
+                        <UserAdmission>| 14학번</UserAdmission>
                     </UserWrap>
                     <UserEmail>
                         cjaeks0394@naver.com
@@ -68,7 +68,7 @@ const UserImg = styled.div`
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background-color: #B4DEDB;
+    background-color: #f9f9f9;
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
@@ -78,7 +78,7 @@ const UserImgUpload = styled.div`
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    background-color: #f7931e;
+    background-color: black;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -116,17 +116,20 @@ const UserName = styled.div`
     font-weight: 700;
     font-size: 20px;
 `
-const UserAdmission = styled.div``
+const UserAdmission = styled.div`
+    color: white;
+`
 const UserEmail = styled.div`
     font-weight: 500;
     font-size: 12px;
-    color: #f7931e;
+    /* color: #f7931e; */
+    color: white;
 `
 const LogoutButton = styled.div`
     width: 76px;
     height: 22px;
     /* height: 100%; */
-    border: 1px solid #b3b3b3;
+    border: 1px solid white;
     border-radius: 16px;
     display: flex;
     justify-content: center;
@@ -140,7 +143,7 @@ const LogoutButton = styled.div`
 const LogoutTitle = styled.div`
     font-size: 13px;
     font-weight: 500;
-    color: #b3b3b3;
+    color: white;
     :hover{
         color: #f7931e;
     }

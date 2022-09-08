@@ -19,7 +19,10 @@ const MyPageHome = () => {
             </MyPageTop>
             <MyPageBottom>
                 <BottomWrap>
-                    <MyPostTitle>내가 쓴 게시글 14</MyPostTitle>
+                    <TitleWrap>
+                        <MyPostTitle>내가 쓴 게시글</MyPostTitle>
+                        <PostCount>14</PostCount>
+                    </TitleWrap>
                     {/* card 맵 돌리기 */}
                     <MyPageCard />
                     <MyPageCard />
@@ -42,7 +45,7 @@ const MyPageHome = () => {
                         <TapTitle style={{ color: "#696969" }}>CHAT</TapTitle>
                     </Tap>
                     <Tap
-                        style={{ paddingRight: "20px", color:"#f7931e" }}
+                        style={{ paddingRight: "20px", color: "#f7931e" }}
                         onClick={() => { navigate("/mypage") }}
                     >
                         <FiUser size="23" />
@@ -61,6 +64,7 @@ const HomeContainer = styled.div`
     height: 100%;
     display: flex;
     flex-direction: column;
+    /* background-color: #f7931e; */
 `
 
 const MyPageTop = styled.div`
@@ -69,6 +73,7 @@ const MyPageTop = styled.div`
     display: flex;
     justify-content: center; 
     align-items: center;
+    background-color: #f7931e;
     /* border: 1px solid red; */
 `
 
@@ -77,19 +82,27 @@ const MyPageBottom = styled.div`
     height: 100%;
     display: flex;
     justify-content: center;
-    background-color: #f7931e;
+    /* background-color: #f7931e; */
 `
 
 const BottomWrap = styled.div`
     /* border: 1px solid red; */
     width: 90%;
 `
-
-const MyPostTitle = styled.div`
-    color: white;
+const TitleWrap = styled.div`
+    display: flex;
+    align-items: center;
     font-size: 16px;
     font-weight: 600;
     margin: 20px 0 15px 0;
+    gap: 10px;
+`
+const MyPostTitle = styled.div`
+    color: #bebebe;
+`
+
+const PostCount = styled.div`
+    color: #f7931e;
 `
 const SecondWrap = styled.div`
     width: 100%;
