@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Button from "../../components/elements/Button"
 import Input from "../../components/elements/Input"
@@ -8,7 +8,6 @@ import { __postSendEmail, __postCheckEmail, __signupUser, __emailCheck } from '.
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import { IoIosArrowBack } from 'react-icons/io';
 import axios from 'axios';
-import { useSelect } from 'react-select-search';
 
 const SignUp = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -61,32 +60,39 @@ const SignUp = () => {
 
   // 이메일 중복확인
   const [isOnCheck, setIsOnCheck] = useState(false);
-  // const handleChangeEmailCheck = () => {
-  //       const newEmail = {
-  //           email: email,
-  //         };
-  //         dispatch(__emailCheck(newEmail));
-  //         setIsOnCheck(true);
-  // };
-  // const [emailMessage, setEmailMessage] = useState("");
+    // const emailcheck = useSelector((state) => state.user.emailCheck)
+    // console.log(emailcheck);
+    // const handleChangeEmailCheck = () => {
+    //   const newEmail = {
+    //     email: email,
+    //   };
+    //   if (!emailError) {
+    //     dispatch(__emailCheck(newEmail));
+    //     setIsOnCheck(true);
+    //   }
+    // };
+  const [emailMessage, setEmailMessage] = useState("");
   const [emailDBCheck, setEmailDBCheck] = useState(false);
   const handleChangeEmailCheck = async () => {
     const newEmail = {
       email: email,
     };
     try {
-      const data = await axios.post(`${BASE_URL}/emailCheck`,
-        newEmail
-      );
-      console.log(data.data);
-      if (data.data.success===true && !emailError) {
-        // setEmailMessage("사용할 수 있는 이메일입니다");
-        // setEmailDBCheck(true);
-        setIsOnCheck(true);
-      } else if (data.data.success===false && emailError) {
-        // setEmailMessage("중복되는 이메일입니다.");
-        // setEmailDBCheck(false);
-        setIsOnCheck(false);
+      if (!emailError) {
+        const data = await axios.post(`${BASE_URL}/emailCheck`,
+          newEmail
+        );
+        console.log(data.data);
+        if (data.data.success===true) {
+          // setEmailMessage("사용할 수 있는 이메일입니다");
+          // setEmailDBCheck(true);
+          setIsOnCheck(true);
+          setEmailConfirm(true);
+        } else if (data.data.success===false) {
+          // setEmailMessage("중복되는 이메일입니다.");
+          // setEmailDBCheck(false);
+          setIsOnCheck(false);
+        }
       }
     } catch (error) {
       console.log("error ", error);
@@ -109,7 +115,6 @@ const SignUp = () => {
     // });
     setEmailSend({email: e.target.value})
     setDisabled(true);
-    setEmailConfirm(true);
     dispatch(__postSendEmail(emailSend));
   }
   
