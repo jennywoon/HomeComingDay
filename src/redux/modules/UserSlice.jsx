@@ -7,7 +7,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const config = {
   headers: {
-    'Content-Type': 'application/json',
+    // 'Content-Type': 'application/json',
     authorization: `Bearer ${getCookie('accessToken')}`, 
     RefreshToken : `${getCookie('refreshToken')}`
   },
