@@ -58,6 +58,7 @@ const SignUp = () => {
     });
   };
 
+  
   // 이메일 중복확인
   const [isOnCheck, setIsOnCheck] = useState(false);
   // const handleChangeEmailCheck = () => {
@@ -67,7 +68,6 @@ const SignUp = () => {
   //     dispatch(__emailCheck(newEmail));
   //     setIsOnCheck(true);
   // };
-
   const [emailMessage, setEmailMessage] = useState("");
   const [emailDBCheck, setEmailDBCheck] = useState(false);
   const handleChangeEmailCheck = async () => {
@@ -94,52 +94,51 @@ const SignUp = () => {
     }
   };
 
-  // 이메일 인증
+  // 이메일 보내기
   const [disabled, setDisabled] = useState(false);
   const [emailConfirm, setEmailConfirm] = useState(false);
   const [emailSend, setEmailSend] = useState({
     email:''
   })
-  const [emailCheck, setEmailCheck] = useState({
-    email: '',
-    authKey: ''
-  });
-
-  // 이메일 보내기
   const handleEmailConfirm = (e) => {
     e.preventDefault();
-    setEmailSend((prev) => {
-      return {
-        ...prev,
-        email: e.target.value,
-      };
-    });
-    // setEmailSend({email: e.target.value})
+    // setEmailSend((prev) => {
+    //   return {
+    //     ...prev,
+    //     email: e.target.value,
+    //   };
+    // });
+    setEmailSend({email: e.target.value})
     setDisabled(true);
     setEmailConfirm(true);
     dispatch(__postSendEmail(emailSend));
   }
-
+  
   // 이메일 인증번호
+  const [emailCheck, setEmailCheck] = useState({
+    email: '',
+    authKey: ''
+  });
   const handleChangeEmailConfirm = (e) =>{
-    setEmailCheck((prev) => {
-      return {
-        ...prev,
-        authKey: e.target.value
-      }
-    })
+    // setEmailCheck((prev) => {
+    //   return {
+    //     ...prev,
+    //     authKey: e.target.value
+    //   }
+    // })
+    setEmailCheck({email: e.target.value, authKey: e.target.value})
   }
   
   // 이메일 인증번호 확인
   const handleEmailCheck = (e) => {
     e.preventDefault();
-    setEmailCheck((prev) => {
-      return {
-        ...prev,
-        email: e.target.value,
-        authKey: e.target.value,
-      };
-    });
+    // setEmailCheck((prev) => {
+    //   return {
+    //     ...prev,
+    //     email: e.target.value,
+    //     authKey: e.target.value,
+    //   };
+    // });
     dispatch(__postCheckEmail(emailCheck))
   }
 
