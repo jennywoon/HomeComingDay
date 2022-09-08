@@ -56,6 +56,12 @@ const Form2 = () => {
     setIsActive(current => !current)
   }
 
+  //캘린더
+  const [showCalendar, setShowCalendar] = useState(false);
+  const handleChange = value => {
+    setDate(value);
+    setShowCalendar(false);
+  };
   //이미지관련 함수
   const [selectedImage, setSelectedImage] = useState([]);
 
@@ -218,10 +224,10 @@ const Form2 = () => {
           content: content,
         };
         files.map((image) => {
-          formdata.append("multipartFile", image);
+          formdata.append("files", image);
         });
         formdata.append(
-          "articlesDto",
+          "articleRequestDto",
           new Blob([JSON.stringify(newhelp)], { type: "application/json" })
         );
         for (var value of formdata.values()) {
@@ -229,21 +235,7 @@ const Form2 = () => {
         }
         console.log(value)
         dispatch(__postHelp(formdata));
-      
-      // const newhelp = {
-      //   title: title,
-      //   content: content,
-      //   // imageList: selectedImage,
-      // };
-      // selectedImage.map((imageList)=>{
-      //   formdata.append("files" , imageList)
-      // });
-      // formdata.append(
-      //   "articleRequestDto",
-      //   new Blob([JSON.stringify(newhelp)], { type: "application/json" })
-      // );
-      // dispatch(__postHelp(formdata));
-      // navigate('/');
+        navigate('/')
 
     } else if (select === 'info') {
       const newinfo = {
@@ -472,33 +464,8 @@ const Form2 = () => {
         </FormBody>
         <FormFooter>
           <FooterContain>
-            {/* {select === 'help' || select === 'info' || select === 'freetalk' ? (
-              <>
-                <Filelabel
-                  className='fileUpload-button'
-                  htmlFor='fileUpload'
-                  onChange={addImage}
-                >
-                  <Imgadd size='24px' />
-                  <Addfile
-                    type='file'
-                    id='fileUpload'
-                    accept="image/jpg, image/png, image/jpeg"
-                  />
-                  <div style={{ fontSize: '12px', marginLeft: '10px' }}>
-                    이미지 첨부
-                  </div>
-                </Filelabel>
-
-                {selectedImage.map((image, id) => (
-                  <ImgContainer key={id}>
-                    <ImgContent src={image} alt={`${image}-${id}`} />
-                    <DeleteButton size='25px' onClick={() => deleteImage(id)} />
-                  </ImgContainer>
-                ))}
-              </>
-            ) : null} */}
-
+            {select === 'help' || select === 'info' || select === 'freetalk' ? (
+                  <>
                   <GetRootProps {...getRootProps({ className: "dropzone" })}>
                   <input
                     {...getInputProps()}
@@ -540,6 +507,8 @@ const Form2 = () => {
                       </div>
                     ))}
                 </StImgContainer>
+                </> )
+                 : null}
           </FooterContain>
         </FormFooter>
       </FormWrap>

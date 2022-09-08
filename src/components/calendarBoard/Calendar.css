@@ -9,10 +9,6 @@
     position: absolute;
     bottom:100px;
     right: 0;
-  }
-
-  .react-calendar :visited{
-    position: absolute;
     bottom: -500px;
   }
 
