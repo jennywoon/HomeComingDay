@@ -470,11 +470,13 @@ const Form2 = () => {
                   <input
                     {...getInputProps()}
                   />
+                  <StImaBox>
                    <StImgUpload>
-                   <Imgadd size='24px' />
-                    <p>사진과 동영상을 여기에 끌어다 놓으세요</p>
-                    <button width="300px" text="컴퓨터에서 선택" />
+                     <Imgadd size='24px' />
+                     <p>이미지 첨부</p>
+                    {/* <button width="300px" text="컴퓨터에서 선택" /> */}
                   </StImgUpload>
+                  </StImaBox>
                   </GetRootProps>
                   <StImgContainer>
                   {files.length !== 0 &&
@@ -745,13 +747,17 @@ const GetRootProps = styled.div`
   justify-content: center;
 `;
 
+const StImaBox = styled.div`
+  display: flex;
+  width:100%;
+  
+`
 
 const StImgUpload = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
   align-items: center;
   position: relative;
   padding: 0.5rem;
