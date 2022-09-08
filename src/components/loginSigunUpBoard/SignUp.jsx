@@ -59,7 +59,6 @@ const SignUp = () => {
     });
   };
 
-  
   // 이메일 중복확인
   const [isOnCheck, setIsOnCheck] = useState(false);
   // const handleChangeEmailCheck = () => {
@@ -67,7 +66,6 @@ const SignUp = () => {
   //           email: email,
   //         };
   //         dispatch(__emailCheck(newEmail));
-          
   //         setIsOnCheck(true);
   // };
   // const [emailMessage, setEmailMessage] = useState("");
@@ -81,14 +79,14 @@ const SignUp = () => {
         newEmail
       );
       console.log(data.data);
-      if (data.data.success===true) {
+      if (data.data.success===true && !emailError) {
         // setEmailMessage("사용할 수 있는 이메일입니다");
         // setEmailDBCheck(true);
         setIsOnCheck(true);
-      } else {
+      } else if (data.data.success===false && emailError) {
         // setEmailMessage("중복되는 이메일입니다.");
-        setEmailDBCheck(false);
-        // setIsOnCheck(false);
+        // setEmailDBCheck(false);
+        setIsOnCheck(false);
       }
     } catch (error) {
       console.log("error ", error);
