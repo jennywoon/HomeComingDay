@@ -15,23 +15,22 @@ const MyPage = () => {
     return (
         <Container>
             <HeaderContainer>
-            <HeaderWrap>
-                <Logo onClick={() => { navigate("/") }} style={{ cursor: "pointer" }} />
-                {/* <HeaderTitle
+                <HeaderWrap>
+                    <Logo onClick={() => { navigate("/") }} style={{ cursor: "pointer" }} />
+                    {/* <HeaderTitle
                 onClick={() => { navigate("/") }} style={{ cursor: "pointer" }}
             >HomeComing Day</HeaderTitle> */}
-                <IconWrap>
-                    <VscBell size="27"
-                        onClick={() => { navigate("/notice") }} style={{ cursor: "pointer" }}
-                    />
-                    <NewDiv>
-                        <NewTitle>N</NewTitle>
-                    </NewDiv>
-                </IconWrap>
-            </HeaderWrap>
-
-        </HeaderContainer>
-            <MyPageHome/>
+                    <IconWrap>
+                        <VscBell size="27"
+                            onClick={() => { navigate("/notice") }} style={{ cursor: "pointer" }}
+                        />
+                        <NewDiv>
+                            <NewTitle>N</NewTitle>
+                        </NewDiv>
+                    </IconWrap>
+                </HeaderWrap>
+            </HeaderContainer>
+            <MyPageHome />
         </Container>
     );
 };
