@@ -8,6 +8,7 @@ import { __postSendEmail, __postCheckEmail, __signupUser, __emailCheck } from '.
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import { IoIosArrowBack } from 'react-icons/io';
 import axios from 'axios';
+import { useSelect } from 'react-select-search';
 
 const SignUp = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -62,32 +63,32 @@ const SignUp = () => {
   // 이메일 중복확인
   const [isOnCheck, setIsOnCheck] = useState(false);
   // const handleChangeEmailCheck = () => {
-  //     const newEmail = {
-  //       email: email,
-  //     };
-  //     dispatch(__emailCheck(newEmail));
-  //     setIsOnCheck(true);
+  //       const newEmail = {
+  //           email: email,
+  //         };
+  //         dispatch(__emailCheck(newEmail));
+          
+  //         setIsOnCheck(true);
   // };
-  const [emailMessage, setEmailMessage] = useState("");
+  // const [emailMessage, setEmailMessage] = useState("");
   const [emailDBCheck, setEmailDBCheck] = useState(false);
   const handleChangeEmailCheck = async () => {
     const newEmail = {
       email: email,
     };
     try {
-      const data = await axios.post(
-        BASE_URL + "/emailCheck",
+      const data = await axios.post(`${BASE_URL}/emailCheck`,
         newEmail
       );
-      console.log(data);
-      if (data.data) {
-        setEmailMessage("사용할 수 있는 이메일입니다");
-        setEmailDBCheck(true);
+      console.log(data.data);
+      if (data.data.success===true) {
+        // setEmailMessage("사용할 수 있는 이메일입니다");
+        // setEmailDBCheck(true);
         setIsOnCheck(true);
       } else {
-        setEmailMessage("중복되는 이메일입니다.");
+        // setEmailMessage("중복되는 이메일입니다.");
         setEmailDBCheck(false);
-        setIsOnCheck(false);
+        // setIsOnCheck(false);
       }
     } catch (error) {
       console.log("error ", error);
@@ -262,7 +263,7 @@ const SignUp = () => {
 
   return (
     <FormContainer>
-      <StSignupContainer>
+      <StSignupContainer onSubmit={handleSubmit}>
         <StSignupWraps>
           <FisrtWrap>
             <IoIosArrowBack
@@ -298,11 +299,13 @@ const SignUp = () => {
                   width='100%'
                   style={{ marginBottom: '10px' }}
                   onChange={handleChangeEmail}
-                  text={emailMessage}
+                  // text={emailMessage}
                   // padding='10px 15px'
                 />
                 <StEmailConfirm
+                  type='button'
                   isOnCheck={isOnCheck}
+                  // emailDBCheck={emailDBCheck}
                   // disabled={!isOnCheck ? true : false}
                   onClick={handleChangeEmailCheck}
                 >
@@ -326,6 +329,7 @@ const SignUp = () => {
                       // padding='10px 15px'
                     />
                     <StEmailConfirm
+                      type='button'
                       isOnCheck={isOnCheck}
                       // disabled={!isOnCheck ? true : false}
                       onClick={handleEmailCheck}
@@ -392,14 +396,13 @@ const SignUp = () => {
             </StSignupWrap>
 
             <Button
-              // type='submit'
+              type='submit'
               width='100%'
               // height="100%"
               isDisabled={isActive ? false : true}
               style={{ marginTop: '50px', backgroundColor: '#f7931e' }}
               // onClickHandler={onClickHandler}
               color='white'
-              onClick={handleSubmit}
             >
               <ButtonTitle>회원가입</ButtonTitle>
             </Button>
@@ -477,6 +480,7 @@ const StEmailConfirm = styled.button`
   border: none;
   /* border: 0.5px solid #eee; */
   color: ${({ isOnCheck }) => (isOnCheck ? "#03C75A" : "#b3b3b3")};
+  /* color: ${({ isOnCheck, emailDBCheck }) => (emailDBCheck ? "#03C75A" : "red")}; */
   border-radius: 50px;
   padding: 5px 10px;
   font-size: 14px;
