@@ -23,7 +23,9 @@ import '../calendarBoard/TimePicker.css';
 import Calendar from 'react-calendar';
 import "../calendarBoard/CalendarModal.css"
 import '../calendarBoard/Calendar.css'; 
+import { useDropzone } from "react-dropzone";
 import dayjs from 'dayjs';
+
 
 const Form2 = () => {
   const dispatch = useDispatch();
@@ -72,6 +74,29 @@ const Form2 = () => {
   const deleteImage = (id) => {
     setSelectedImage(selectedImage.filter((_, index) => index !== id));
   };
+
+  //이미지 Dropzone -추가
+  const [files, setFiles] = useState([]);
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: {
+      "image/png": [".png"],
+      "image/jpg": [".jpg"],
+      "image/jpeg": [".jpeg"],
+    },
+    maxFiles: 4,
+    onDrop: (acceptedFiles) => {
+      // console.log(files.length);
+      setFiles(
+        acceptedFiles.map((file) =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          })
+        )
+      );
+    },
+  });
+
+  
 
   // selectedImage.filter((img,id)=>{
   //     URL.revokeObjectURL(img);
@@ -186,27 +211,45 @@ const Form2 = () => {
     //     return alert("내용을 입력해주세요");
     // }
 
+    //-추가
     if (select === 'help') {
       const newhelp = {
-        title: title,
-        content: content,
-        // imageList: selectedImage,
-      };
-      selectedImage.map((imageList)=>{
-        formdata.append("files" , imageList)
-      });
-      formdata.append(
-        "articleRequestDto",
-        new Blob([JSON.stringify(newhelp)], { type: "application/json" })
-      );
-      dispatch(__postHelp(formdata));
-      navigate('/');
+          title: title,
+          content: content,
+        };
+        files.map((image) => {
+          formdata.append("multipartFile", image);
+        });
+        formdata.append(
+          "articlesDto",
+          new Blob([JSON.stringify(newhelp)], { type: "application/json" })
+        );
+        for (var value of formdata.values()) {
+          console.log("formdata value", value);
+        }
+        console.log(value)
+        dispatch(__postHelp(formdata));
+      
+      // const newhelp = {
+      //   title: title,
+      //   content: content,
+      //   // imageList: selectedImage,
+      // };
+      // selectedImage.map((imageList)=>{
+      //   formdata.append("files" , imageList)
+      // });
+      // formdata.append(
+      //   "articleRequestDto",
+      //   new Blob([JSON.stringify(newhelp)], { type: "application/json" })
+      // );
+      // dispatch(__postHelp(formdata));
+      // navigate('/');
 
     } else if (select === 'info') {
       const newinfo = {
         title: infotitle,
         content: infocontent,
-        // imageUrl: selectedImage,
+        
       };
       selectedImage.map((image)=>{
         formdata.append("files" , image)
@@ -222,7 +265,7 @@ const Form2 = () => {
       const newfreetalk = {
         title: freetitle,
         content: freecontent,
-        // imageUrl: selectedImage,
+        
       };
       selectedImage.map((image)=>{
         formdata.append("files" , image)
@@ -246,6 +289,11 @@ const Form2 = () => {
       navigate('/calendar');
     }
   };
+
+  useEffect(() => {
+    return () =>
+      files && files.forEach((file) => URL.revokeObjectURL(file.preview));
+  }, []);
 
   // 모달 구현
   const [modalOpen, setModalOpen] = useState(false);
@@ -349,7 +397,7 @@ const Form2 = () => {
               ></FormInput>
               <CalendarButton onClick={showModal}>
                 <CalendarTitle>날짜</CalendarTitle>
-                  <Calendar onClick={onClickDate} value={valueDate} onChange={onChageDate} />
+                  <Calendar  value={valueDate} onChange={onChageDate} />
                   <div className="text-gray-500 mt-4">
                   {moment(valueDate).format("YYYY년 MM월 DD일")} 
                   </div>
@@ -424,7 +472,7 @@ const Form2 = () => {
         </FormBody>
         <FormFooter>
           <FooterContain>
-            {select === 'help' || select === 'info' || select === 'freetalk' ? (
+            {/* {select === 'help' || select === 'info' || select === 'freetalk' ? (
               <>
                 <Filelabel
                   className='fileUpload-button'
@@ -449,7 +497,49 @@ const Form2 = () => {
                   </ImgContainer>
                 ))}
               </>
-            ) : null}
+            ) : null} */}
+
+                  <GetRootProps {...getRootProps({ className: "dropzone" })}>
+                  <input
+                    {...getInputProps()}
+                  />
+                   <StImgUpload>
+                   <Imgadd size='24px' />
+                    <p>사진과 동영상을 여기에 끌어다 놓으세요</p>
+                    <button width="300px" text="컴퓨터에서 선택" />
+                  </StImgUpload>
+                  </GetRootProps>
+                  <StImgContainer>
+                  {files.length !== 0 &&
+                    files.map((file, index) => (
+                      // console.log("file!!!!!!!", file)
+                      <div key={index} style={{ display: "flex" }}>
+                        <div
+                          style={{
+                            width: "150px",
+                            height: "150px",
+                            overflow: "hidden",
+                          }}
+                        >
+                          <img
+                            src={file.preview}
+                            style={{
+                              width: "100px",
+                              height: "100px",
+                              backgroundSize: "cover",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              objectFit: "cover"
+                            }}
+                            onLoad={() => {
+                              URL.revokeObjectURL(file.preview);
+                            }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                </StImgContainer>
           </FooterContain>
         </FormFooter>
       </FormWrap>
@@ -677,3 +767,33 @@ const StTimePicker = styled(TimePicker)`
   }
 `;
 
+
+//Dropzone추가
+const GetRootProps = styled.div`
+  width: 100%;
+  /* height: 300px; */
+  display: flex;
+  justify-content: center;
+`;
+
+
+const StImgUpload = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 0.5rem;
+`;
+
+const StImgContainer = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100px;
+  box-sizing: border-box;
+  background: #fff;
+  scrollbar-width: none;
+  
+`;

@@ -26,6 +26,7 @@
     "react-device-detect": "^2.2.2",
     "react-dom": "^18.2.0",
     "react-dropdown-select": "^4.9.0",
+    "react-dropzone": "^14.2.2",
     "react-icons": "^4.4.0",
     "react-naver-maps": "^0.0.13",
     "react-query": "^3.39.2",
