@@ -16,6 +16,7 @@
     "dayjs": "^1.11.5",
     "dotenv": "^16.0.1",
     "ejs": "^3.1.8",
+    "express": "^4.18.1",
     "json-server": "^0.17.0",
     "moment": "^2.29.4",
     "nodemailer": "^6.7.8",
@@ -37,7 +38,7 @@
     "react-timeit": "^1.2.12",
     "react-timepicker-c": "^1.1.2",
     "redux": "^4.2.0",
-    "socket.io": "^4.5.1",
+    "socket.io": "^4.5.2",
     "styled-components": "^5.3.5",
     "universal-cookie": "^4.0.4",
     "web-vitals": "^2.1.0"
