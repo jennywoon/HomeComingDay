@@ -31,7 +31,7 @@ const Form2 = () => {
   const [help, setHelp] = useState({
     title: '',
     content: '',
-    imageList: '',
+    imgUrl: '',
   });
 
   const [info, setInfo] = useState({
@@ -80,9 +80,9 @@ const Form2 = () => {
 
   // console.log(selectedImage)
 
-  // useEffect(() => {
-  //   dispatch(__getHelp());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(__getHelp());
+  }, [dispatch]);
 
   // useEffect(() => {
   //   dispatch(__getCalendar());
@@ -92,7 +92,7 @@ const Form2 = () => {
   //   dispatch(__getDate());
   // }, [dispatch]);
 
-  const { title, content, imageList } = help;
+  const { title, content, imgUrl } = help;
   const { infotitle, infocontent, infoimageUrl } = info;
   const { freetitle, freecontent, freeimageUrl } = freetalk;
 
@@ -436,7 +436,6 @@ const Form2 = () => {
                     type='file'
                     id='fileUpload'
                     accept="image/jpg, image/png, image/jpeg"
-                    onChange={onChangeHandler}
                   />
                   <div style={{ fontSize: '12px', marginLeft: '10px' }}>
                     이미지 첨부

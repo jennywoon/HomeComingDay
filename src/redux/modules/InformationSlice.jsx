@@ -16,7 +16,7 @@ const config = {
   
   headers: {
     'Content-Type': 'application/json',
-    authorization : `Bearer ${getCookie('accessToken')}`,
+    Authorization : `Bearer ${getCookie('accessToken')}`,
     RefreshToken : `${getCookie('refreshToken')}`
     // headers:`${getCookie('refreshToken')}`
     // username: `${getCookie("username")}`,
