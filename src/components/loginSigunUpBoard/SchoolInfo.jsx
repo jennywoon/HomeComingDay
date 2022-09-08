@@ -64,80 +64,98 @@ const SchoolInfo = () => {
   // 저장하기 버튼
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    dispatch(__postSchoolInfo(schoolInfos)).then(navigate('/signupcomplete'));
+    dispatch(__postSchoolInfo(schoolInfos)).then(navigate('/'));
   }
 
   return (
     <FormContainer>
       <StSchoolInfo>
         <StSchoolInfoWraps onSubmit={onSubmitHandler}>
-        <FisrtWrap>
-          <IoIosArrowBack
-            size='28'
-            style={{ marginBottom: '20px', cursor: 'pointer' }}
-            onClick={() => {
-              navigate('/login');
-            }}
-          />
-          <StSchoolTitle style={{ justifyContent: 'center' }}>
-            대학교 정보 입력
-          </StSchoolTitle>
-
-          <StSchoolInfoWrap>
-            <Stlabel>학교명</Stlabel>
-            <StyledSelect
-              options={schoolSearch.map((item, index) => {
-                return { value: item.seq, label: item.schoolName };
-              })}
-              value={school}
-              values={selectedschoolSearch}
-              style={{ maxHeight: '20px', borderRadius: '16px', border: '1px solid #ddd', fontSize: '14px', padding: '0 10px' }}
-              maxMenuHeight={10}
-              onChange={onChangeSchool}
-              placeholder='학교명 '
+          <FisrtWrap>
+            <IoIosArrowBack
+              size='28'
+              style={{ marginBottom: '20px', cursor: 'pointer' }}
+              onClick={() => {
+                navigate('/login');
+              }}
             />
-          </StSchoolInfoWrap>
+            <StSchoolTitle style={{ justifyContent: 'center' }}>
+              대학교 정보 입력
+            </StSchoolTitle>
 
-          <StSchoolInfoWrap>
-            <Stlabel>학과 · 학부명</Stlabel>
-            <Select
-              options={departmentSearch.map((item, index) => {
-                return { value: item.seq, label: item.mclass };
-              })}
-              value={department}
-              values={selectedOptions}
-              style={{ maxHeight: '20px', borderRadius: '16px', border: '1px solid #ddd', fontSize: '14px', padding: '0 10px' }}
-              maxMenuHeight={10}
-              onChange={onChangeDepartment}
-              placeholder='학과 · 학부명 '
-            />
-          </StSchoolInfoWrap>
+            <StSchoolInfoWrap>
+              <Stlabel>학교명</Stlabel>
+              <StyledSelect
+                options={schoolSearch.map((item, index) => {
+                  return { value: item.seq, label: item.schoolName };
+                })}
+                value={school}
+                values={selectedschoolSearch}
+                style={{
+                  maxHeight: '20px',
+                  borderRadius: '16px',
+                  border: '1px solid #ddd',
+                  fontSize: '14px',
+                  padding: '0 10px',
+                }}
+                maxMenuHeight={10}
+                onChange={onChangeSchool}
+                placeholder='학교명 '
+              />
+            </StSchoolInfoWrap>
 
-          <StSchoolInfoWrap>
-            <Stlabel>입학년도</Stlabel>
-            <Select
-              options={admissionSearch.map((item, index) => {
-                return { value: item.id, label: item.admission };
-              })}
-              value={admission}
-              values={selectedAdmission}
-              style={{ maxHeight: '20px', borderRadius: '16px', border: '1px solid #ddd', fontSize: '14px', padding: '0 10px' }}
-              maxMenuHeight={10}
-              onChange={onChangeAdmission}
-              placeholder='입학년도 '
-            />
-          </StSchoolInfoWrap>
+            <StSchoolInfoWrap>
+              <Stlabel>학과 · 학부명</Stlabel>
+              <Select
+                options={departmentSearch.map((item, index) => {
+                  return { value: item.seq, label: item.mclass };
+                })}
+                value={department}
+                values={selectedOptions}
+                style={{
+                  maxHeight: '20px',
+                  borderRadius: '16px',
+                  border: '1px solid #ddd',
+                  fontSize: '14px',
+                  padding: '0 10px',
+                }}
+                maxMenuHeight={10}
+                onChange={onChangeDepartment}
+                placeholder='학과 · 학부명 '
+              />
+            </StSchoolInfoWrap>
 
-          <Button
-            type='submit'
-            width='100%'
-            padding='10px 0'
-            style={{ marginTop: '100px' }}
-            backgroundColor='black'
-            color='white'
-          >
-            저장하기
-          </Button>
+            <StSchoolInfoWrap>
+              <Stlabel>입학년도</Stlabel>
+              <Select
+                options={admissionSearch.map((item, index) => {
+                  return { value: item.id, label: item.admission };
+                })}
+                value={admission}
+                values={selectedAdmission}
+                style={{
+                  maxHeight: '20px',
+                  borderRadius: '16px',
+                  border: '1px solid #ddd',
+                  fontSize: '14px',
+                  padding: '0 10px',
+                }}
+                maxMenuHeight={10}
+                onChange={onChangeAdmission}
+                placeholder='입학년도 '
+              />
+            </StSchoolInfoWrap>
+
+            <Button
+              type='submit'
+              width='100%'
+              padding='10px 0'
+              style={{ marginTop: '100px' }}
+              backgroundColor='#f7931e'
+              color='white'
+            >
+              저장하기
+            </Button>
           </FisrtWrap>
         </StSchoolInfoWraps>
       </StSchoolInfo>
@@ -198,6 +216,9 @@ const Stlabel = styled.label`
 const StyledSelect = styled(Select)`
   background: #fff;
   font-size: 14px;
+  &:focus {
+    /* border-color: #f7931e; */
+  }
 `
 
 // const StSelect = styled.select`

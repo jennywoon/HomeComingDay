@@ -186,7 +186,7 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(__signupUser(inputValue)).then(
-      (res) => !res.error && navigate('/login')
+      (res) => !res.error && navigate('/signupcomplete')
     );
   };
 
@@ -291,7 +291,7 @@ const SignUp = () => {
                       // disabled={!isOnCheck ? true : false}
                       onClick={handleEmailCheck}
                     >
-                      {isOnCheck ? '확인완료' : '확인하기'}
+                      {isOnCheck ? '확인완료' : '인증확인'}
                     </StEmailConfirm>
                   </StFlexbox>
                 </>
@@ -353,15 +353,19 @@ const SignUp = () => {
             </StSignupWrap>
 
             <Button
+            type='submit'
               width='100%'
-              padding='10px 0'
+              // height="100%"
+              // padding='10px 0'
               isDisabled={isActive ? false : true}
-              style={{ marginTop: '100px' }}
+              style={{ marginTop: '50px', backgroundColor:"#f7931e" }}
               // onClickHandler={onClickHandler}
               backgroundColor='black'
               color='white'
             >
+              <ButtonTitle>
               회원가입
+              </ButtonTitle>
             </Button>
           </FisrtWrap>
         </StSignupWraps>
@@ -404,8 +408,8 @@ const FisrtWrap = styled.div`
 `
 
 const StSignupTitle = styled.div`
-  font-size: 25px;
-  font-weight: bold;
+  font-size: 24px;
+  font-weight: 700;
   margin-bottom: 40px;
   /* border: 1px solid blue; */
 `;
@@ -470,3 +474,11 @@ const StErrorMessage = styled.p`
   margin-bottom: 10px;
   font-size: 12px;
 `;
+
+const ButtonTitle = styled.div`
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Celebration from "../../assets/Celebration.png"
+import Complete from "../../assets/Complete.png"
 import Button from "../../components/elements/Button"
 
 const SignupComplete = () => {
@@ -16,7 +16,7 @@ const SignupComplete = () => {
       <StCompleteWrap>
         <FisrtWrap>
           <StImg>
-            <CelebrationImg src={Celebration} alt='Celebration' />
+            <CompleteImg src={Complete} alt='Complete' />
           </StImg>
           <StText>
             <p style={{ fontSize: '24px' }}>
@@ -31,7 +31,7 @@ const SignupComplete = () => {
             width='100%'
             padding='10px 0'
             style={{ marginTop: '100px' }}
-            backgroundColor='black'
+            backgroundColor='#f7931e'
             color='white'
             onClickHandler={onClickHandler}
           >
@@ -73,8 +73,8 @@ const StImg = styled.div`
   margin-bottom: 65px;
 `;
 
-const CelebrationImg = styled.img`
-  width: 150px;
+const CompleteImg = styled.img`
+  width: 100%;
 `;
 
 const StText = styled.div`
