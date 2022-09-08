@@ -57,7 +57,7 @@ const HelpDetail = () => {
         e.preventDefault();
         const newcomment = {
             comment: comment,
-            articleid: id
+            articleId: id
         }
         dispatch(__postHelpComment(newcomment));
         setComment("");

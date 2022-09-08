@@ -98,9 +98,6 @@ export const __deleteHelp = createAsyncThunk("helps/deleteHelp", async (payload,
         Authorization: `Bearer ${getCookie("accessToken")}`,
       },
     });
-    // await axios.delete(`${BASE_URL}/article/help/${payload}`);
-    // // console.log('data', data)
-    // console.log(payload)
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
     // console.log('error', error)
@@ -120,10 +117,8 @@ export const __updateHelp = createAsyncThunk("helps/updateHelp", async (payload,
       },
       data: payload
     });
-
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
-    // console.log('error', error)
     return thunkAPI.rejectWithValue(error.message);
   }
 }
@@ -140,20 +135,35 @@ export const __getHelpComment = createAsyncThunk("comments/getHelpComment", asyn
 
 export const __postHelpComment = createAsyncThunk("comments/postHelpComment", async (payload, thunkAPI) => {
   try {
+    const data = await axios({
+      method: 'post',
+      url: `${BASE_URL}/article/help/comment/${payload.articleId}`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+      },
+      data: payload
+    });
     console.log("payload" , payload)
-    const data = await axios.post(`${BASE_URL}/article/help/comment/${payload.id}`, payload);
     console.log(data)
     return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
-    
     return thunkAPI.rejectWithValue(error);
   }
 });
 
 export const __deleteHelpComment = createAsyncThunk("comments/deleteHelpComment", async (payload, thunkAPI) => {
   try {
+    const data = await axios({
+      method: 'delete',
+      url: `${BASE_URL}/article/help/${payload.articleId}/comment/${payload.commentId}`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+      },
+      data: payload
+    });
     console.log(payload)
-    const data = await axios.delete(`${BASE_URL}/article/help/${payload.articleId}/comment/${payload.commentId}`);
   //   console.log(payload)
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
@@ -164,7 +174,15 @@ export const __deleteHelpComment = createAsyncThunk("comments/deleteHelpComment"
 
 export const __updateHelpComment = createAsyncThunk("comment/updateHelpComment", async (payload, thunkAPI) => {
   try {
-    await axios.put(`${BASE_URL}/article/help/${payload.articleId}/comment/${payload.commentId}`, payload);
+    const data = await axios({
+      method: 'put',
+      url: `${BASE_URL}/article/help/${payload.articleId}/comment/${payload.commentId}`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+      },
+      data: payload
+    });
     console.log("payload",payload)
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
