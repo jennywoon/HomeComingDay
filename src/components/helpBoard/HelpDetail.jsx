@@ -7,10 +7,14 @@ import Img from "../../assets/naverIcon.png"
 import HelpDetailComment from './HelpDetailComment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteHelp, __updateHelp, __getHelp, __getComments, __getHelpComment, __postHelpComment } from '../../redux/modules/HelpSlice';
+import { __deleteHelp, __updateHelp, __getHelp, __getComments, __getHelpComment, __postHelpComment ,__getDetailHelp} from '../../redux/modules/HelpSlice';
 import { useRef } from 'react';
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 SwiperCore.use([Navigation, Pagination]);
 
@@ -18,6 +22,7 @@ const HelpDetail = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { helps } = useSelector((state) => state.helps)
+    // console.log(helps)
     // const commentList = useSelector((state) => state.helps.helps)
 
     const { id } = useParams();
@@ -28,6 +33,12 @@ const HelpDetail = () => {
     const onChangePostHandler = (e) => {
         setComment(e.target.value)
     }
+
+    // useEffect(() => {
+    //     dispatch(__getDetailHelp(id));
+    // }, [dispatch])
+
+
 
     const helpsfind = helps.find((help) => help.articleId === Number(id))
     // const helpscomment = helpsfind.commentList
@@ -44,6 +55,7 @@ const HelpDetail = () => {
         setShow(!show)
     }
 
+    
 
     const onClickDelete = () => {
         const result = window.confirm("정말 삭제하시겠습니까?")
@@ -82,7 +94,6 @@ const HelpDetail = () => {
     const swiperStyle ={
         width:"450px",
         height:"181px",
-        display:"flex"
     }
 
     return (
@@ -128,7 +139,7 @@ const HelpDetail = () => {
                                     spaceBetween={50}
                                     slidesPerView={1}
                                     navigation
-                                    pagination={{ clickable: true }}
+                                    // pagination={{ clickable: true }}
                                 >
                                     {helpsfind && helpsfind.imageList.map((image)=> {
                                         console.log(image)
@@ -145,9 +156,9 @@ const HelpDetail = () => {
                             <BodyContainer>
                                 <BodyCommentBox>
                                     {helpsfind && helpsfind.commentList.map((comment) => (
-                                        // comment.articleId === helpsfind.articleId ? 
+                                        comment.articleId === helpsfind.articleId ? 
                                         <HelpDetailComment key={comment.commentId} comment={comment} helpsfind={helpsfind} modalRef={modalRef} />
-                                        //  : null
+                                         : null
                                     ))}
                                 </BodyCommentBox>
                             </BodyContainer>
@@ -307,16 +318,16 @@ const ContentBody = styled.p`
 const ContentImgBox = styled.div`
     width:100%;
     height:100%;
-    object-fit: cover;
     display:flex;
-    flex-direction: column;
+    flex-direction: row;
     background-color: red;
     
 `
 const ContentImg = styled.img`
     /* border:1px solid gray; */
-    width: 80%;
-
+    width: 20%;
+    display:flex;
+    flex-direction: row;
     border-radius: 20px;
     /* margin : 20px 0px; */
     /* background-repeat: no-repeat;
