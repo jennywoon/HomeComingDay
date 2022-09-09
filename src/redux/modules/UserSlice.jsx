@@ -23,7 +23,9 @@ export const __loginUser = createAsyncThunk(
       // setCookie('schoolinfo', `${data.data.headers.schoolinfo}`);
       console.log(data)
       return thunkAPI.fulfillWithValue(data);
+      
     } catch (error) {
+      console.log("error",error)
       return thunkAPI.rejectWithValue(error);
     }
   }
