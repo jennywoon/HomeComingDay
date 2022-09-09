@@ -11,6 +11,7 @@ import {
   __postTime,
 } from '../../redux/modules/CalendarSlice';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { MdCancel} from 'react-icons/md';
 import { TiDelete } from 'react-icons/ti';
 import { GrImage } from 'react-icons/gr';
 import Button from '../elements/Button';
@@ -62,24 +63,8 @@ const Form2 = () => {
     setDate(value);
     setShowCalendar(false);
   };
-  //이미지관련 함수
-  const [selectedImage, setSelectedImage] = useState([]);
-
-  //이미지프리뷰 추가
-  const addImage = (e) => {
-    const nowSelectImageList = e.target.files;
-    const nowImageURLList = [...selectedImage];
-    for (let i = 0; i < nowSelectImageList.length; i += 1) {
-      const nowImageUrl = URL.createObjectURL(nowSelectImageList[i]);
-      // const nowImageobject = {imgUrl : nowImageUrl}
-      nowImageURLList.push(nowImageUrl);
-    }
-    setSelectedImage(nowImageURLList);
-  };
-  //이미지프리뷰삭제
-  const deleteImage = (id) => {
-    setSelectedImage(selectedImage.filter((_, index) => index !== id));
-  };
+  
+ 
 
   //이미지 Dropzone -추가
   const [files, setFiles] = useState([]);
@@ -89,7 +74,7 @@ const Form2 = () => {
       "image/jpg": [".jpg"],
       "image/jpeg": [".jpeg"],
     },
-    maxFiles: 4,
+    maxFiles: 3,
     onDrop: (acceptedFiles) => {
       // console.log(files.length);
       setFiles(
@@ -102,6 +87,12 @@ const Form2 = () => {
     },
   });
 
+ //이미지프리뷰삭제
+ const deleteImage = (i) => {
+  let deleteList = files.filter((_, id) => id !== i);
+  setFiles(deleteList)
+  return;
+};
   
 
   // selectedImage.filter((img,id)=>{
@@ -243,7 +234,7 @@ const Form2 = () => {
         content: infocontent,
         
       };
-      selectedImage.map((image)=>{
+      files.map((image)=>{
         formdata.append("files" , image)
       });
       formdata.append(
@@ -259,7 +250,7 @@ const Form2 = () => {
         content: freecontent,
         
       };
-      selectedImage.map((image)=>{
+      files.map((image)=>{
         formdata.append("files" , image)
       });
       formdata.append(
@@ -473,21 +464,25 @@ const Form2 = () => {
                   <StImaBox>
                    <StImgUpload>
                      <Imgadd size='24px' />
-                     <p>이미지 첨부</p>
+                     <Imgtxt>이미지 첨부</Imgtxt>
                     {/* <button width="300px" text="컴퓨터에서 선택" /> */}
                   </StImgUpload>
                   </StImaBox>
                   </GetRootProps>
                   <StImgContainer>
                   {files.length !== 0 &&
-                    files.map((file, index) => (
+                    files.map((file, i) => (
                       // console.log("file!!!!!!!", file)
-                      <div key={index} style={{ display: "flex" }}>
+                      <div key={i} style={{ display: "flex" }}>
                         <div
                           style={{
-                            width: "150px",
-                            height: "150px",
+                            width: "120px",
+                            height: "110px",
                             overflow: "hidden",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            position:"relative"
                           }}
                         >
                           <img
@@ -496,15 +491,16 @@ const Form2 = () => {
                               width: "100px",
                               height: "100px",
                               backgroundSize: "cover",
-                              display: "flex",
                               justifyContent: "center",
-                              alignItems: "center",
-                              objectFit: "cover"
+                              objectFit: "cover",
+                              borderRadius:"16px",
+                              
                             }}
-                            onLoad={() => {
-                              URL.revokeObjectURL(file.preview);
-                            }}
+                            // onLoad={() => {
+                            //   URL.revokeObjectURL(file.preview);
+                            // }}
                           />
+                          <CancelBtn onClick={()=>deleteImage(i)}size="20px" style={{color:"#F7931E",position:"absolute", right:"5px" ,top:"0px" ,cursor:"pointer"}}/>
                         </div>
                       </div>
                     ))}
@@ -750,17 +746,22 @@ const GetRootProps = styled.div`
 const StImaBox = styled.div`
   display: flex;
   width:100%;
-  
+  height: 36px;
+  margin:10px;
+  cursor: pointer;
 `
 
 const StImgUpload = styled.div`
   display: flex;
-  width: 100%;
+  width:111px;
   height: 100%;
+  justify-content: center;
   flex-direction: row;
   align-items: center;
   position: relative;
   padding: 0.5rem;
+  border:1px solid #e3e3e3;
+  border-radius: 20px;
 `;
 
 const StImgContainer = styled.div`
@@ -770,5 +771,13 @@ const StImgContainer = styled.div`
   box-sizing: border-box;
   background: #fff;
   scrollbar-width: none;
-  
 `;
+const Imgtxt = styled.div`
+  width:80px;
+  text-align: center;
+`
+const CancelBtn = styled(MdCancel)`
+  position:absolute;
+  right:0;
+
+`

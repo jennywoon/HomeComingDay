@@ -15,7 +15,7 @@ const HelpUpdate = () => {
     const navigate = useNavigate();
     const {id} = useParams();
     const {helps} = useSelector((state) => state.helps)
-    const helpsfind = helps.find((help)=> help.id === Number(id))
+    const helpsfind = helps.find((help)=> help.articleId === Number(id))
     
 
     // const [updateHelp, setUpdateHelp] = useState({

@@ -33,7 +33,7 @@ const Information = () => {
         </Iconbox> */}
         <HelpList>
           <>
-            {informations.slice(0).map((information) => (
+            {informations && informations.slice(0).map((information) => (
               <InformationCard key={information.id} id={information.id} information={information} />
             ))}
           </>
