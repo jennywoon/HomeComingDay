@@ -2,8 +2,6 @@ import React, { Fragment, useEffect } from "react";
 import Router from "./shared/Router";
 import './App.css'
 import styled from "styled-components";
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
 
 function App() {
 

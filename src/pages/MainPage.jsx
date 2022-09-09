@@ -7,13 +7,13 @@ import { useSelector } from "react-redux";
 import Loading from "../components/test/Loading";
 
 const MainPage = () => {
+    const navigate = useNavigate();
 
     // const { isLoading } = useSelector((state) => state.helps)
 
     // if (isLoading) {
     //     return <Loading />;
     //   }
-    const navigate = useNavigate();
 
     return (
         <Container>

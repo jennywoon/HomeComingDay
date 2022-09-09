@@ -526,6 +526,9 @@ const FormSelection = styled.select`
         border: none;
         margin-bottom: 25px;
         width: 75px;
+        color: #f7931e;
+        font-size: 14px;
+        font-weight: 600;
         `;
 const FormInput = styled.input`
         font-size: 20px;
@@ -616,6 +619,8 @@ const TimeDiv = styled.div`
         `;
 const CalendarTitle = styled.div`
         font-size: 14px;
+        color: #f7931e;
+        font-weight: 600;
         `;
 
 const DateDiv = styled.div`
@@ -742,4 +747,8 @@ const CancelBtn = styled(MdCancel)`
         right:0;
 
         `
-const CalendarWrap = styled.div``
+const CalendarWrap = styled.div`
+  display: flex;
+  justify-content: right;
+  /* padding-right: 10px; */
+`

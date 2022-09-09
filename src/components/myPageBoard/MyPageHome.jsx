@@ -16,6 +16,7 @@ const MyPageHome = () => {
     const dispatch = useDispatch();
 
     const myarticles = useSelector((state) => state.mypages.myarticles.content)
+    console.log(myarticles)
 
     useEffect(() => {
         dispatch(__getMyArticle())
@@ -31,11 +32,11 @@ const MyPageHome = () => {
                     <TitleWrap>
                         <MyPostTitle>내가 쓴 게시글</MyPostTitle>
                         <PostCount>
-                            {myarticles.length}
+                            {myarticles && myarticles.length}
                         </PostCount>
                     </TitleWrap>
                     <>
-                        {myarticles.length > 0 ? (
+                        { myarticles && myarticles.length > 0 ? (
                             <div>
                                 {myarticles && myarticles.slice(0).map((myarticle) => (
                                     <MyPageCard key={myarticle.articleId} id={myarticle.articleId} myarticle={myarticle} />
@@ -85,7 +86,6 @@ const HomeContainer = styled.div`
     height: 100%;
     display: flex;
     flex-direction: column;
-    /* background-color: #f7931e; */
 `
 
 const MyPageTop = styled.div`
