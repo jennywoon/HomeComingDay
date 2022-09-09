@@ -14,11 +14,11 @@ import LoginErrorModal from './LoginErrorModal';
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { error, isLogin } = useSelector((state) => state.user);
   const [formValue, setFormValue] = useState({
     email: '',
     password: '',
   });
-
   const { email, password } = formValue;
   const [isActive, setIsActive] = useState(false);
   const [loginFail, setLoginFail] = useState('');
@@ -65,20 +65,24 @@ const Login = () => {
   });
 
   const loginSchoolInfo = useSelector((state) => state.user.user.headers.schoolinfo)
-  console.log(loginSchoolInfo)
+  // console.log(loginSchoolInfo)
   
   // 로그인버튼
+    const [modalOpen, setModalOpen] = useState(false);
   const onSubmitHandler = async (formValue) => {
-    dispatch(__loginUser(formValue))
-    .then(() => {
-      // console.log(loginSchoolInfo)
-      if (loginSchoolInfo===true) {
-        navigate('/schoolinfo');
-      } 
-      else if (loginSchoolInfo!==true){
-      navigate('/');
-      }
-    });
+    if (error && !isLogin) {
+      setModalOpen(true);
+    } else {
+      dispatch(__loginUser(formValue))
+      .then(() => {
+        if (loginSchoolInfo===true) {
+          navigate('/schoolinfo');
+        } 
+        else if (loginSchoolInfo!==true){
+          navigate('/');
+        }
+      });
+    }
   };
 
   useEffect(() => {
@@ -89,40 +93,17 @@ const Login = () => {
     }
   }, [formValue]);
 
-  // useEffect(() => {
-  //   if (error && !isLogin) {
-  //     setLoginFail('이메일과 비밀번호를 확인해주세요');
-  //   } else if (error === null && isLogin) {
-  //     setLoginFail('');
-  //     navigate('/');
-  //   }
-  // }, [email, password, isLogin, error]);
-
-  // useEffect(() => {
-  //   if (error) {
-  //     alert(error.result.msg);
-  //   }
-  // }, [error]);
-
-  // 모달 구현중
-  const [modalOpen, setModalOpen] = useState(false);
-  const showModal = (e) => {
-    e.preventDefault();
-    setModalOpen(true);
-  }
-
   return (
     <>
-    {modalOpen && <LoginErrorModal setModalOpen={setModalOpen}/>}
     <StLoginContainer
       onSubmit={(e) => {
         e.preventDefault();
         onSubmitHandler(formValue);
       }}
-    >
+      >
+      {modalOpen && <LoginErrorModal setModalOpen={setModalOpen}/>}
       <StLoginWraps>
         <StLoginTitle>
-          {/* 로고 */}
           <LogoImg/>
         </StLoginTitle>
         <StLoginWrap>
@@ -132,7 +113,6 @@ const Login = () => {
               onChange={onChangeEmailHandler}
               value={formValue.email}
               width='100%'
-              // padding='10px 15px'
             />
           </StEmail>
           <StPassword>
@@ -143,7 +123,6 @@ const Login = () => {
                 onChange={onChangePasswordHandler}
                 value={formValue.password}
                 width='100%'
-                // padding='10px 15px'
               />
               <StVisible onClick={handlePasswordType}>
                 {passwordType.visible ? (
@@ -158,9 +137,6 @@ const Login = () => {
               </StVisible>
             </StPasswordInput>
           </StPassword>
-          {/* {LoginError ? (
-            <StErrorMessage>이메일 혹은 비밀번호가 틀렸습니다.</StErrorMessage>
-          ) : null} */}
           <Button
             type='submit'
             width='100%'
@@ -171,11 +147,9 @@ const Login = () => {
             style={{ marginTop: '50px', backgroundColor:"#f7931e" }}
           >
             <ButtonTitle
-            // onClick={showModal}
             >로그인</ButtonTitle>
           </Button>
         </StLoginWrap>
-        {/* 네이버 로그인 */}
         <NaverContainer>
           <NaverLogin />
         </NaverContainer>
@@ -196,7 +170,6 @@ export default Login;
 
 const StLoginContainer = styled.form`
   width: 100%;
-  /* height: 100vh; */
   height: 100%;
   display: flex;
   justify-content: center;
@@ -204,7 +177,7 @@ const StLoginContainer = styled.form`
 `;
 
 const StLoginWraps = styled.div`
-  width: 85%;
+  width: 80%;
 `;
 
 const StLoginWrap = styled.div``;
@@ -214,7 +187,6 @@ const StLoginTitle = styled.div`
   font-size: 30px;
   font-weight: bold;
   margin-bottom: 50px;
-  /* border: 1px solid red; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -226,7 +198,6 @@ const LogoImg = styled.div`
   background-image: url(${logoname});
   background-position: center;
   background-size: 100% 100%;
-  /* border: 1px solid blue; */
 `
 const StEmail = styled.div`
   margin-bottom: 30px;
@@ -271,7 +242,6 @@ const StErrorMessage = styled.p`
 const NaverContainer = styled.div`
   width: 100%;
   height: 100%;
-  /* border: 1px solid red; */
   display: flex;
   justify-content: center;
   align-items: center;
