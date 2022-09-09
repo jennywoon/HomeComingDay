@@ -2,9 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import Button from "../../components/elements/Button"
-import Input from "../../components/elements/Input"
-import { __postSendEmail, __postCheckEmail, __signupUser, __emailCheck } from '../../redux/modules/UserSlice';
+import Button from '../../components/elements/Button';
+import Input from '../../components/elements/Input';
+import {
+  __postSendEmail,
+  __postCheckEmail,
+  __signupUser,
+  __emailCheck,
+} from '../../redux/modules/UserSlice';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import { IoIosArrowBack } from 'react-icons/io';
 import axios from 'axios';
@@ -15,11 +20,6 @@ const SignUp = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  // const [email, setEmail] = useState('');
-  // const [username, setUsername] = useState('');
-  // const [password, setPassword] = useState('');
-  // const [passwordCheck, setPasswordCheck] = useState('')
 
   const [inputValue, setInputValue] = useState({
     email: '',
@@ -37,117 +37,14 @@ const SignUp = () => {
     confirmPasswordError: false,
   });
 
-  const { emailError, nameError, passwordError, confirmPasswordError } = formError;
+  const { emailError, nameError, passwordError, confirmPasswordError } =
+    formError;
 
   // 정규식(이메일, 이름, 비밀번호)
   const emailRegex = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
   const nameRegex = /^[A-Za-zㄱ-ㅎ가-힣]{2,12}$/;
   const passwordRegex =
     /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
-    
-    // 이메일 유효성검사
-    const handleChangeEmail = (e) => {
-      if (!e.target.value || emailRegex.test(e.target.value)) {
-        setFormError({ ...formError, emailError: false });
-      } else {
-        setFormError({ ...formError, emailError: true });
-      }
-      setInputValue((prev) => {
-        return {
-          ...prev,
-          email: e.target.value,
-      };
-    });
-  };
-
-  // 이메일 중복확인
-  const [isOnCheck, setIsOnCheck] = useState(false);
-    // const emailcheck = useSelector((state) => state.user.emailCheck)
-    // console.log(emailcheck);
-    // const handleChangeEmailCheck = () => {
-    //   const newEmail = {
-    //     email: email,
-    //   };
-    //   if (!emailError) {
-    //     dispatch(__emailCheck(newEmail));
-    //     setIsOnCheck(true);
-    //   }
-    // };
-  const [emailMessage, setEmailMessage] = useState("");
-  const [emailDBCheck, setEmailDBCheck] = useState(false);
-  const handleChangeEmailCheck = async () => {
-    const newEmail = {
-      email: email,
-    };
-    try {
-      if (!emailError) {
-        const data = await axios.post(`${BASE_URL}/emailCheck`,
-          newEmail
-        );
-        console.log(data.data);
-        if (data.data.success===true) {
-          // setEmailMessage("사용할 수 있는 이메일입니다");
-          // setEmailDBCheck(true);
-          setIsOnCheck(true);
-          setEmailConfirm(true);
-        } else if (data.data.success===false) {
-          // setEmailMessage("중복되는 이메일입니다.");
-          // setEmailDBCheck(false);
-          setIsOnCheck(false);
-        }
-      }
-      
-    } catch (error) {
-      console.log("error ", error);
-    }
-  };
-
-  // 이메일 보내기
-  const [disabled, setDisabled] = useState(false);
-  const [emailConfirm, setEmailConfirm] = useState(false);
-  const [emailSend, setEmailSend] = useState({
-    email:''
-  })
-  const handleEmailConfirm = (e) => {
-    e.preventDefault();
-    // setEmailSend((prev) => {
-    //   return {
-    //     ...prev,
-    //     email: e.target.value,
-    //   };
-    // });
-    setEmailSend({email: e.target.value})
-    setDisabled(true);
-    dispatch(__postSendEmail(emailSend));
-  }
-  
-  // 이메일 인증번호
-  const [emailCheck, setEmailCheck] = useState({
-    email: '',
-    authKey: ''
-  });
-  const handleChangeEmailConfirm = (e) =>{
-    // setEmailCheck((prev) => {
-    //   return {
-    //     ...prev,
-    //     authKey: e.target.value
-    //   }
-    // })
-    setEmailCheck({email: e.target.value, authKey: e.target.value})
-  }
-  
-  // 이메일 인증번호 확인
-  const handleEmailCheck = (e) => {
-    e.preventDefault();
-    // setEmailCheck((prev) => {
-    //   return {
-    //     ...prev,
-    //     email: e.target.value,
-    //     authKey: e.target.value,
-    //   };
-    // });
-    dispatch(__postCheckEmail(emailCheck))
-  }
 
   // 이름 유효성검사
   const handleChangeusername = (e) => {
@@ -162,6 +59,103 @@ const SignUp = () => {
         username: e.target.value,
       };
     });
+  };
+
+  // 이메일 유효성검사
+  const handleChangeEmail = (e) => {
+    if (!e.target.value || emailRegex.test(e.target.value)) {
+      setFormError({ ...formError, emailError: false });
+    } else {
+      setFormError({ ...formError, emailError: true });
+    }
+    setInputValue((prev) => {
+      return {
+        ...prev,
+        email: e.target.value,
+      };
+    });
+  };
+
+  // 이메일 중복확인
+  const [isOnCheck, setIsOnCheck] = useState(false);
+  const [emailConfirm, setEmailConfirm] = useState(false);
+  const handleChangeEmailCheck = async () => {
+    const newEmail = {
+      email: email,
+    };
+    try {
+      if (!emailError) {
+      const data = await axios.post(`${BASE_URL}/emailCheck`, newEmail);
+      console.log(data.data);
+      if (data.data.success === true) {
+        setIsOnCheck(true);
+        setEmailConfirm(true);
+      } else if (data.data.success === false) {
+        setIsOnCheck(false);
+      }
+      }
+      
+    } catch (error) {
+      console.log('error ', error);
+    }
+  };
+
+  // 이메일 보내기
+  const [disabled, setDisabled] = useState(false);
+  // const [emailSend, setEmailSend] = useState({
+  //   email: '',
+  // });
+  // const handleSendEmail = (e) => {
+  //   e.preventDefault();
+  //   // setEmailSend((prev) => {
+  //   //   return {
+  //   //     ...prev,
+  //   //     email: e.target.value,
+  //   //   };
+  //   // });
+  //   setEmailSend({email: e.target.value})
+  //   setDisabled(true);
+  //   dispatch(__postSendEmail(emailSend));
+  // }
+  const handleSendEmail = async () => {
+    const sendEmail = {
+      email: email,
+    };
+    try {
+      const data = await axios.post(`${BASE_URL}/signup/sendEmail`, sendEmail);
+      console.log(data.data);
+    } catch (error) {
+      console.log('error ', error);
+    }
+  };
+
+  // 이메일 인증번호
+  const [emailCheck, setEmailCheck] = useState({
+    email: '',
+    authKey: '',
+  });
+  const handleChangeAuthKey = (e) => {
+    // setEmailCheck((prev) => {
+    //   return {
+    //     ...prev,
+    //     authKey: e.target.value
+    //   }
+    // })
+    setEmailCheck({ email: e.target.value, authKey: e.target.value });
+  };
+
+  // 이메일 인증번호 확인
+  const [isCheck, setIsCheck] = useState(false);
+  const handleCheckEmail = (e) => {
+    e.preventDefault();
+    // setEmailCheck((prev) => {
+    //   return {
+    //     ...prev,
+    //     email: e.target.value,
+    //     authKey: e.target.value,
+    //   };
+    // });
+    dispatch(__postCheckEmail(emailCheck));
   };
 
   // 비밀번호 유효성검사
@@ -219,7 +213,7 @@ const SignUp = () => {
       }
       return { type: 'password', visible: false };
     });
-  }
+  };
 
   const [passwordConfirmType, setPasswordConfirmType] = useState({
     type: 'password',
@@ -285,11 +279,7 @@ const SignUp = () => {
 
             <StSignupWrap>
               <Stlabel>이름</Stlabel>
-              <Input
-                width='100%'
-                onChange={handleChangeusername}
-                // padding='10px 15px'
-              />
+              <Input width='100%' onChange={handleChangeusername} />
               {nameError ? (
                 <StErrorMessage>
                   2자 이상 12자 이하, 영어 또는 한글
@@ -306,9 +296,8 @@ const SignUp = () => {
                   style={{ marginBottom: '10px' }}
                   onChange={handleChangeEmail}
                   // text={emailMessage}
-                  // padding='10px 15px'
                 />
-                <StEmailConfirm
+                <StEmailButton
                   type='button'
                   isOnCheck={isOnCheck}
                   // emailDBCheck={emailDBCheck}
@@ -316,32 +305,31 @@ const SignUp = () => {
                   onClick={handleChangeEmailCheck}
                 >
                   {isOnCheck ? '확인완료' : '중복확인'}
-                </StEmailConfirm>
+                </StEmailButton>
               </StFlexbox>
               {emailError ? (
                 <StErrorMessage>이메일 형식에 맞게 입력하세요</StErrorMessage>
               ) : null}
               {emailConfirm ? (
                 <>
-                  <StEmailCheck onClick={handleEmailConfirm}>
+                  <StSendEmailButton type='button' onClick={handleSendEmail}>
                     해당 이메일로 인증번호 발송
-                  </StEmailCheck>
+                  </StSendEmailButton>
                   <Stlabel>인증번호</Stlabel>
                   <StFlexbox>
                     <Input
                       width='100%'
                       style={{ marginRight: '10px' }}
-                      onChange={handleChangeEmailConfirm}
-                      // padding='10px 15px'
+                      onChange={handleChangeAuthKey}
                     />
-                    <StEmailConfirm
+                    <StEmailButton
                       type='button'
-                      isOnCheck={isOnCheck}
+                      isCheck={isCheck}
                       // disabled={!isOnCheck ? true : false}
-                      onClick={handleEmailCheck}
+                      onClick={handleCheckEmail}
                     >
                       {isOnCheck ? '확인완료' : '인증확인'}
-                    </StEmailConfirm>
+                    </StEmailButton>
                   </StFlexbox>
                 </>
               ) : null}
@@ -354,7 +342,6 @@ const SignUp = () => {
                   type={passwordType.type}
                   width='100%'
                   onChange={handleChangePassword}
-                  // padding='10px 15px'
                 />
                 <StVisible onClick={handlePasswordType}>
                   {passwordType.visible ? (
@@ -382,7 +369,6 @@ const SignUp = () => {
                   type={passwordConfirmType.type}
                   width='100%'
                   onChange={handleChangeConfirmPassword}
-                  // padding='10px 15px'
                 />
                 <StVisible onClick={handlePasswordConfirmType}>
                   {passwordConfirmType.visible ? (
@@ -422,11 +408,11 @@ const SignUp = () => {
 export default SignUp;
 
 const FormContainer = styled.div`
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow-y: hidden;
-`
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow-y: hidden;
+`;
 
 const StSignupContainer = styled.form`
   width: 100%;
@@ -450,7 +436,7 @@ const FisrtWrap = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-`
+`;
 
 const StSignupTitle = styled.div`
   font-size: 24px;
@@ -477,7 +463,7 @@ const StFlexbox = styled.div`
   position: relative;
 `;
 
-const StEmailConfirm = styled.button`
+const StEmailButton = styled.button`
   position: absolute;
   right: 0;
   top: 40%;
@@ -485,16 +471,16 @@ const StEmailConfirm = styled.button`
   background-color: transparent;
   border: none;
   /* border: 0.5px solid #eee; */
-  color: ${({ isOnCheck }) => (isOnCheck ? "#03C75A" : "#b3b3b3")};
-  /* color: ${({ isOnCheck, emailDBCheck }) => (emailDBCheck ? "#03C75A" : "red")}; */
+  color: ${({ isOnCheck }) => (isOnCheck ? '#03C75A' : '#b3b3b3')};
   border-radius: 50px;
   padding: 5px 10px;
   font-size: 14px;
   font-weight: 600;
+  /* cursor: ${({ emailError }) => (emailError ? 'none' : 'pointer')} */
   cursor: pointer;
 `;
 
-const StEmailCheck = styled.button`
+const StSendEmailButton = styled.button`
   width: 100%;
   color: #b3b3b3;
   background-color: #fff;
@@ -508,11 +494,11 @@ const StEmailCheck = styled.button`
 `;
 
 const StVisible = styled.span`
-  position : absolute;
-  right : 5px;
-  top : 50%;
-  transform : translatey(-50%);
-`
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translatey(-50%);
+`;
 
 const StErrorMessage = styled.p`
   margin: 0;
@@ -527,4 +513,4 @@ const ButtonTitle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
