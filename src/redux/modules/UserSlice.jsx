@@ -20,6 +20,8 @@ export const __loginUser = createAsyncThunk(
       const data = await axios.post(`${BASE_URL}/login`, payload);
       setCookie('accessToken', `${data.data.data.accessToken}`);
       setCookie('refreshToken', `${data.data.data.refreshToken}`);
+      // setCookie('schoolinfo', `${data.data.headers.schoolinfo}`);
+      console.log(data)
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -92,7 +94,13 @@ const initialState = {
 export const UserSlice = createSlice({
   name: 'userSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    getUser: (state, action) =>
+    (action.payload = {
+      user: getCookie('nickname'),
+      isLogin: getCookie('accessToken') ? true : false,
+    }),
+  },
   extraReducers: {
     // 로그인
     [__loginUser.pending]: (state) => {
@@ -162,4 +170,5 @@ export const UserSlice = createSlice({
   },
 });
 
+export const { getUser } = UserSlice.actions;
 export default UserSlice;
