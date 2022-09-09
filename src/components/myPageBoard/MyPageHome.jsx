@@ -1,16 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from "react-router-dom"
 import styled from 'styled-components';
+import MyPageUser from './MyPageUser';
+import MyPageCard from './MyPageCard';
+import { __getMyArticle } from '../../redux/modules/MyPageSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import { AiOutlineHome } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
 import { FiUser } from "react-icons/fi";
 import { HiOutlineChatAlt2 } from "react-icons/hi";
-import MyPageUser from './MyPageUser';
-import MyPageCard from './MyPageCard';
 
 const MyPageHome = () => {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const myarticles = useSelector((state) => state.mypages.myarticles.content)
+    const { isLoading } = useSelector((state) => state.mypages.myarticles)
+
+    // console.log(myarticles.length)
+    // console.log(myarticles.articleId)
+
+    useEffect(() => {
+        dispatch(__getMyArticle())
+    }, [dispatch])
 
     return (
         <HomeContainer>
@@ -21,11 +34,23 @@ const MyPageHome = () => {
                 <BottomWrap>
                     <TitleWrap>
                         <MyPostTitle>내가 쓴 게시글</MyPostTitle>
-                        <PostCount>14</PostCount>
+                        <PostCount>
+                            {myarticles.length}
+                        </PostCount>
                     </TitleWrap>
-                    {/* card 맵 돌리기 */}
-                    <MyPageCard />
-                    <MyPageCard />
+                    <>
+                        {isLoading && myarticles.length > 0 ? (
+                            <>
+                                {myarticles && myarticles.slice(0).map((myarticle) => (
+                                    <MyPageCard key={myarticle.id} id={myarticle.id} myarticle={myarticle} />
+                                ))}
+                            </>
+                        ) : (
+                            <NoneData>
+                            <p>내가 쓴 게시글이 없습니다</p>
+                            </NoneData>
+                        )}
+                    </>
                 </BottomWrap>
             </MyPageBottom>
             <SecondWrap>
@@ -82,11 +107,10 @@ const MyPageBottom = styled.div`
     height: 100%;
     display: flex;
     justify-content: center;
-    /* background-color: #f7931e; */
+    /* border: 1px solid blue; */
 `
 
 const BottomWrap = styled.div`
-    /* border: 1px solid red; */
     width: 90%;
 `
 const TitleWrap = styled.div`
@@ -96,6 +120,16 @@ const TitleWrap = styled.div`
     font-weight: 600;
     margin: 20px 0 15px 0;
     gap: 10px;
+`
+const NoneData = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #b3b3b3;
+    font-weight: 500;
+    font-size: 16px;
 `
 const MyPostTitle = styled.div`
     color: #bebebe;

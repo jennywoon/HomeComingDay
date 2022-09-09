@@ -3,17 +3,21 @@ import styled from 'styled-components';
 import { AiOutlineCamera } from "react-icons/ai";
 import { removeCookie } from '../../shared/cookies';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Cookies from "universal-cookie";
+import { useEffect } from 'react';
+import { __getMyPage } from '../../redux/modules/MyPageSlice';
 
 const MyPageUser = () => {
 
     const navigate = useNavigate();
-    const mypages = useSelector((state) => state.mypages);
-    const {myarticles} = useSelector((state) => state.mypages.myarticles);
+    const dispatch = useDispatch();
+    const mypages = useSelector((state) => state.mypages.mypages);
     console.log(mypages);
-    console.log(myarticles);
-    const cookies = new Cookies();
+
+    useEffect(() => {
+        dispatch(__getMyPage())
+    }, [dispatch])
 
     return (
         <UserContainer>
@@ -26,25 +30,24 @@ const MyPageUser = () => {
             </UserImgWrap>
             <UserInfo>
                 <FirstWrap>
-                    <UserUniversity>
-                        한국대학교
-                    </UserUniversity>
                     <UserWrap>
-                        <UserName>{cookies.get("username")}</UserName>
-                        <UserAdmission>| 14학번</UserAdmission>
+                        <UserName>{mypages.username}</UserName>
+                        <UserAdmission>| {mypages.admission}</UserAdmission>
                     </UserWrap>
-                    <UserEmail>
-                        cjaeks0394@naver.com
-                    </UserEmail>
+                    <UserWrap>
+                        <UserUniversity>{mypages.schoolName}</UserUniversity>
+                        <UserDepartment>{mypages.departmentName}</UserDepartment>
+                    </UserWrap>
+                    <UserEmail>{mypages.email}</UserEmail>
                 </FirstWrap>
                 <SecondWrap>
                     <LogoutButton
-                    onClick={()=>{
-                        removeCookie("accessToken")
-                        removeCookie("refreshToken")
-                        removeCookie("userName")
-                        navigate("/login")
-                    }}
+                        onClick={() => {
+                            removeCookie("accessToken")
+                            removeCookie("refreshToken")
+                            removeCookie("userName")
+                            navigate("/login")
+                        }}
                     >
                         <LogoutTitle>로그아웃</LogoutTitle>
                     </LogoutButton>
@@ -112,7 +115,12 @@ const SecondWrap = styled.div`
 
 const UserUniversity = styled.div`
     font-weight: 600;
-    font-size: 15px;
+    font-size: 16px;
+`
+
+const UserDepartment = styled.div`
+    font-weight: 600;
+    font-size: 16px;
 `
 const UserWrap = styled.div`
     display: flex;
@@ -130,7 +138,7 @@ const UserEmail = styled.div`
     font-weight: 500;
     font-size: 12px;
     /* color: #f7931e; */
-    color: white;
+    color: #fff4cc;
 `
 const LogoutButton = styled.div`
     width: 76px;

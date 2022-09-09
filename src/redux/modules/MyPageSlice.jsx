@@ -22,7 +22,7 @@ export const __getMyPage = createAsyncThunk("mypages/getMyPage", async (payload,
           // RefreshToken : getCookie('refreshToken')
         },
       });
-        console.log(data)
+        console.log(data.data)
         return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
         console.log('error', error);
@@ -41,7 +41,7 @@ export const __getMyArticle = createAsyncThunk("myarticles/getMyArticles", async
           // RefreshToken : getCookie('refreshToken')
         },
       });
-        console.log(data)
+        console.log(data.data)
         return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
         console.log('error', error);
@@ -59,7 +59,7 @@ export const MyPageSlice = createSlice({
       },
       [__getMyPage.fulfilled]: (state, action) => {
         state.isLoading = false;
-        state.helps = action.payload;
+        state.mypages = action.payload;
       },
       [__getMyPage.rejected]: (state, action) => {
         state.isLoading = false;
@@ -70,7 +70,7 @@ export const MyPageSlice = createSlice({
       },
       [__getMyArticle.fulfilled]: (state, action) => {
         state.isLoading = false;
-        state.helps = action.payload;
+        state.myarticles = action.payload;
       },
       [__getMyArticle.rejected]: (state, action) => {
         state.isLoading = false;
