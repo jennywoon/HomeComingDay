@@ -16,10 +16,6 @@ const MyPageHome = () => {
     const dispatch = useDispatch();
 
     const myarticles = useSelector((state) => state.mypages.myarticles.content)
-    const { isLoading } = useSelector((state) => state.mypages.myarticles)
-
-    // console.log(myarticles.length)
-    // console.log(myarticles.articleId)
 
     useEffect(() => {
         dispatch(__getMyArticle())
@@ -39,7 +35,7 @@ const MyPageHome = () => {
                         </PostCount>
                     </TitleWrap>
                     <>
-                        {myarticles.length >= 0 ? (
+                        {myarticles.length > 0 ? (
                             <div>
                                 {myarticles && myarticles.slice(0).map((myarticle) => (
                                     <MyPageCard key={myarticle.articleId} id={myarticle.articleId} myarticle={myarticle} />
