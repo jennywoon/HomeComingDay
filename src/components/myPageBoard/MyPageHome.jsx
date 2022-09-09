@@ -39,15 +39,15 @@ const MyPageHome = () => {
                         </PostCount>
                     </TitleWrap>
                     <>
-                        {isLoading && myarticles.length > 0 ? (
-                            <>
+                        {myarticles.length >= 0 ? (
+                            <div>
                                 {myarticles && myarticles.slice(0).map((myarticle) => (
-                                    <MyPageCard key={myarticle.id} id={myarticle.id} myarticle={myarticle} />
+                                    <MyPageCard key={myarticle.articleId} id={myarticle.articleId} myarticle={myarticle} />
                                 ))}
-                            </>
+                            </div>
                         ) : (
                             <NoneData>
-                            <p>내가 쓴 게시글이 없습니다</p>
+                                <p>내가 쓴 게시글이 없습니다</p>
                             </NoneData>
                         )}
                     </>
