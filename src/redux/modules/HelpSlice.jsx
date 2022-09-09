@@ -44,24 +44,24 @@ export const __getHelp = createAsyncThunk("helps/getHelp", async (payload, thunk
     }
 });
 
-// export const __getDetailHelp = createAsyncThunk("helps/getDetailHelp", async (payload, thunkAPI) => {
-//   try {
-//     const data = await axios({
-//       method: 'get',
-//       url: `${BASE_URL}/article/help`,
-//       headers: {
-//         'Content-Type': 'application/json',
-//         Authorization: `Bearer ${getCookie("accessToken")}`,
-//         // RefreshToken : getCookie('refreshToken')
-//       },
-//     });
-     
-//       return thunkAPI.fulfillWithValue(data.data);
-//   } catch (error) {
-//       console.log('error', error);
-//       return thunkAPI.rejectWithValue(error);
-//   }
-// });
+export const __getDetailHelp = createAsyncThunk("helps/getDetailHelp", async (payload, thunkAPI) => {
+  try {
+    const data = await axios({
+      method: 'get',
+      url: `${BASE_URL}/article/help/${payload}`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+        // RefreshToken : getCookie('refreshToken')
+      },
+    });
+    console.log(data)
+      return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+      console.log('error', error);
+      return thunkAPI.rejectWithValue(error);
+  }
+});
 
 
 export const __postHelp = createAsyncThunk(
