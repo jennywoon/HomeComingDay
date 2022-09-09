@@ -17,12 +17,13 @@ export const __loginUser = createAsyncThunk(
   'LOGIN_USER',
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.post(`${BASE_URL}/login`, payload);
+      const data = await axios.post(`${BASE_URL}/login`, payload, config);
       setCookie('accessToken', `${data.data.data.accessToken}`);
       setCookie('refreshToken', `${data.data.data.refreshToken}`);
       // setCookie('schoolinfo', `${data.data.headers.schoolinfo}`);
-      console.log(data)
-      return thunkAPI.fulfillWithValue(data);
+      console.log(data.data.success)
+      console.log(data.data)
+      return thunkAPI.fulfillWithValue(data.data);
       
     } catch (error) {
       console.log("error",error)
@@ -85,11 +86,12 @@ export const __postCheckEmail = createAsyncThunk("checkEmail", async (payload, t
 });
 
 const initialState = {
-  user: config,
+  user: [],
   emailCheck: [],
   sendEmail: [],
   checkEmail: [],
   isLogin: false,
+  schoolInfo: false,
   error: null,
 };
 
@@ -110,8 +112,10 @@ export const UserSlice = createSlice({
     },
     [__loginUser.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.user = action.payload;
-      state.isLogin = true;
+      console.log(action.payload)
+      state.isLogin = action.payload.success;
+      state.schoolInfo = action.payload.data['schoolInfo'];
+      // state.user.isLogin = true;
     },
     [__loginUser.rejected]: (state, action) => {
       state.isLoading = false;

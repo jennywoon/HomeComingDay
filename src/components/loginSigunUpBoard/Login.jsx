@@ -15,7 +15,9 @@ import { getUser } from '../../redux/modules/UserSlice';
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { error, isLogin } = useSelector((state) => state.user);
+  const { isLogin, schoolInfo, error } = useSelector((state)=> state.user)
+  console.log(isLogin)
+  console.log(schoolInfo)
   const [formValue, setFormValue] = useState({
     email: '',
     password: '',
@@ -64,30 +66,32 @@ const Login = () => {
     type: 'password',
     visible: false,
   });
-
-  // const loginSchoolInfo = useSelector((state) => state.user.user.headers.schoolinfo)
-  // console.log(loginSchoolInfo)
   
   // 로그인버튼
   const [modalOpen, setModalOpen] = useState(false);
-  const onSubmitHandler = async (formValue) => {
-    dispatch(__loginUser(formValue))
-    await dispatch(getUser());
+
+  const loginCheck = () => {
+    console.log('isLogin!!!!!!!!!', isLogin)
     if (isLogin) {
-      // if (loginSchoolInfo === "true") {
+      if (schoolInfo === true) {
         navigate('/');
-      // } else if (loginSchoolInfo === "false") {
-        // navigate('/schoolinfo');
+      } else if (schoolInfo === false) {
+        navigate('/schoolinfo');
       }
-    // }
-     else if (!isLogin) {
+    }
+     else {
       setModalOpen(true);
     }
+  }
+
+  const onSubmitHandler = async (formValue) => {
+    await dispatch(__loginUser(formValue))
+    console.log('dispatch', isLogin)
+    // dispatch(getUser());
+    loginCheck();
   };
 
-  const onClickLogin = () => {
-  };
-  
+  const [isLoginCheck, setIsLoginCheck] =useState(false)
   useEffect(() => {
     if (formValue.email !== '' && formValue.password !== '') {
       handleCheck(true);
@@ -96,12 +100,13 @@ const Login = () => {
     }
   },[formValue])
 
-  console.log(isLogin)
-  console.log(error)
-  // useEffect(()=>{
-  // }, [dispatch]);
+  // console.log('93', isLogin)
+  // console.log(error)
+  useEffect(()=>{
+    dispatch(getUser());
+    setIsLoginCheck(isLogin)
+  }, [dispatch, isLoginCheck]);
 
-  
   return (
     <>
     <StLoginContainer
@@ -155,7 +160,7 @@ const Login = () => {
             color='white'
             style={{ marginTop: '50px', backgroundColor:"#f7931e" }}
           >
-            <ButtonTitle onClick={onClickLogin}>로그인</ButtonTitle>
+            <ButtonTitle>로그인</ButtonTitle>
           </Button>
         </StLoginWrap>
         <NaverContainer>
