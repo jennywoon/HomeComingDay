@@ -1,15 +1,16 @@
-import React from 'react';
+import React , { useEffect }from 'react';
 import styled from 'styled-components';
 import {AiOutlineMenu} from 'react-icons/ai'
 import Img from "../../assets/naverIcon.png"
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { __deleteHelpComment, __updateHelpComment } from '../../redux/modules/HelpSlice';
+import { __deleteHelpComment, __updateHelpComment , __getHelp} from '../../redux/modules/HelpSlice';
 import Input from "../elements/Input";
 
 
 const DetailComment = ({comment ,closeModal, modalRef }) => {
     const dispatch = useDispatch();
+    
     console.log(comment)
 
     const [showComment, setShowComment] = useState(false)
@@ -28,7 +29,7 @@ const DetailComment = ({comment ,closeModal, modalRef }) => {
     const onClickDelete = () => {
         const result = window.confirm("정말 삭제하시겠습니까?")
         if (result) {
-            dispatch(__deleteHelpComment(comment.id))
+            dispatch(__deleteHelpComment(comment.commentId))
         } else {
             return null
         }
@@ -46,17 +47,20 @@ const DetailComment = ({comment ,closeModal, modalRef }) => {
         dispatch(__updateHelpComment(editcomment))
         setIsEdit(!isEdit)
     }
+    // useEffect(() => {
+    //     dispatch(__getHelp());
+    // }, [dispatch])
+
 
 
     return (
         
         <CommentContain >
-        <CommentNoneBox>작성한 댓글이 없습니다 <br /> 첫번째 댓글을 남겨보세요</CommentNoneBox>
         <CommentBox >
             <CommentImg src={Img} alt="" />
             <CommentTxt>
-                <TxtName>최형용</TxtName>
-                <TxtStudent>14학번 <span> 15분 전 </span></TxtStudent>
+                <TxtName>{comment.username}</TxtName>
+                <TxtStudent>{comment.admission} <span> {comment.createdAt}</span></TxtStudent>
             </CommentTxt>
             <AiOutlineMenu size="18px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }} onClick={onCilckShow}/>
 
@@ -75,7 +79,7 @@ const DetailComment = ({comment ,closeModal, modalRef }) => {
             <ReviseButtonChange type="button" onClick={onClickReviceChange} >수정완료</ReviseButtonChange>
         </EditBox>
         :
-        <Comment>{comment.comment}</Comment>
+        <Comment>{comment.content}</Comment>
         
         }   
         </CommentContain>
@@ -87,6 +91,7 @@ export default DetailComment;
 
 const CommentContain = styled.div`
     margin: 5px 0px;
+
 `
 
 const CommentBox = styled.div`
@@ -172,8 +177,4 @@ const TxtStudent = styled.p`
 const Comment = styled.p`
     padding: 0px 20px;
     font-size:14px;
-`
-const CommentNoneBox = styled.div`
-    
-
 `

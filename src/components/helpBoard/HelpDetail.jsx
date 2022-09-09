@@ -9,13 +9,15 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { __deleteHelp, __updateHelp, __getHelp, __getComments, __getHelpComment, __postHelpComment } from '../../redux/modules/HelpSlice';
 import { useRef } from 'react';
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 
 const HelpDetail = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { helps } = useSelector((state) => state.helps)
-    const { helpcomments } = useSelector((state) => state.helps)
+    // const commentList = useSelector((state) => state.helps.helps)
 
     const { id } = useParams();
     const [show, setShow] = useState(false)
@@ -27,9 +29,10 @@ const HelpDetail = () => {
     }
 
     const helpsfind = helps.find((help) => help.articleId === Number(id))
-    console.log(helps)
-    console.log(helpsfind)
-
+    const helpscomment = helpsfind.commentList
+    // console.log(commentList)
+    console.log("helpsfind",helpsfind)
+    console.log("helpscomment",helpscomment)
     // useEffect(() => {
     //     dispatch(__getDetailHelp(helpsfind.articleId));
     // }, [dispatch])
@@ -58,14 +61,12 @@ const HelpDetail = () => {
     const onClickPostComment = (e) => {
         e.preventDefault();
         const newcomment = {
-            comment: comment,
+            content: comment,
             articleId: id
         }
         dispatch(__postHelpComment(newcomment));
         setComment("");
     }
-
-
 
     const closeModal = (e) => {
         if (!modalRef.current.contains(e.target)) {
@@ -73,6 +74,13 @@ const HelpDetail = () => {
         }
     };
 
+    useEffect(() => {
+        dispatch(__getHelp());
+    }, [dispatch])
+
+    const swiperStyle ={
+        border:"1px solid red;"
+    }
 
     return (
         <Container>
@@ -110,13 +118,31 @@ const HelpDetail = () => {
                             <BodyContent>
                                 <ContentTitle>{helpsfind && helpsfind.title}</ContentTitle>
                                 <ContentBody>{helpsfind && helpsfind.content}</ContentBody>
-                                <ContentImg src={helpsfind && helpsfind.imageList[0].imgUrl}></ContentImg>
+                                <ContentImgBox>
+                                <Swiper
+                                    style={swiperStyle}
+                                    className='banner'
+                                    spaceBetween={50}
+                                    slidesPerView={1}
+                                    navigation
+                                    pagination={{ clickable: true }}
+                                >
+                                    {helpsfind && helpsfind.imageList.map((image)=> {
+                                    return(
+                                    <SwiperSlide key={image.id}>
+                                    <ContentImg  src={image.imgUrl}></ContentImg>
+                                    </SwiperSlide>)
+                                    })}
+                                </Swiper>
+                                </ContentImgBox>
                                 <ContentView>조회수 1000회 | 댓글 100개</ContentView>
                             </BodyContent>
                             <BodyContainer>
                                 <BodyCommentBox>
-                                    {helpcomments && helpcomments.map((comment) => (
-                                        Number(comment.articleid) === helpsfind.id ? <HelpDetailComment key={comment.id} comment={comment} helpsfind={helpsfind} modalRef={modalRef} /> : null
+                                    {helpsfind && helpsfind.commentList.map((comment) => (
+                                        // comment.commentId === helpsfind. ? 
+                                        <HelpDetailComment key={comment.commentId} comment={comment} helpsfind={helpsfind} modalRef={modalRef} />
+                                        //  : null
                                     ))}
                                 </BodyCommentBox>
                             </BodyContainer>
@@ -271,6 +297,11 @@ const ContentTitle = styled.h3`
 const ContentBody = styled.p`
 /* border: 1px solid blue; */
     color:gray;
+`
+
+const ContentImgBox = styled.div`
+    width:100%;
+    
 `
 const ContentImg = styled.img`
     /* border:1px solid gray; */

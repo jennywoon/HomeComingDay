@@ -8,7 +8,7 @@ import { getCookie, setCookie } from '../../shared/cookies';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const initialState = {
-    helpComments : [],
+    commentList : [],
     helps : [],
     isLoading: false,
     error: null,
@@ -108,6 +108,7 @@ export const __deleteHelp = createAsyncThunk("helps/deleteHelp", async (payload,
 
 export const __updateHelp = createAsyncThunk("helps/updateHelp", async (payload, thunkAPI) => {
   try {
+    console.log("payload" , payload)
     const data = await axios({
       method: 'put',
       url: `${BASE_URL}/article/help/${payload.id}`,
@@ -135,6 +136,7 @@ export const __getHelpComment = createAsyncThunk("comments/getHelpComment", asyn
 
 export const __postHelpComment = createAsyncThunk("comments/postHelpComment", async (payload, thunkAPI) => {
   try {
+    console.log("payload" , payload)
     const data = await axios({
       method: 'post',
       url: `${BASE_URL}/article/help/comment/${payload.articleId}`,
@@ -144,7 +146,7 @@ export const __postHelpComment = createAsyncThunk("comments/postHelpComment", as
       },
       data: payload
     });
-    console.log("payload" , payload)
+    
     console.log(data)
     return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
@@ -271,7 +273,7 @@ export const HelpSlice = createSlice({
       [__postHelpComment.fulfilled]: (state, action) => {
         state.isLoading = false; 
         console.log(action.payload)
-        state.helpcomments.push(action.payload);
+        // state.comment.push(action.payload);
       },
       [__postHelpComment.rejected]: (state, action) => {
         state.isLoading = false; 
