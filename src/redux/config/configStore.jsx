@@ -9,7 +9,7 @@ import SearchSlice from "../modules/SearchSlice";
 import SchoolInfoSlice from "../modules/SchoolInfoSlice";
 import DateSlice from "../modules/DateSlice";
 import NaverSlice from "../modules/NaverSlice"
-
+import { getDefaultMiddleware } from "@reduxjs/toolkit";
 
 export const store = configureStore({
   // devTools: process.env.NODE_ENV !== "production",
@@ -23,7 +23,10 @@ export const store = configureStore({
     dates: DateSlice,
     searchs: SearchSlice,
     schoolInfo: SchoolInfoSlice,
-  }
+  },
+  middleware: getDefaultMiddleware({
+    serializableCheck: false,
+}),
 });
 
 export default store;

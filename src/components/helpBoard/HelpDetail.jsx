@@ -46,6 +46,8 @@ const HelpDetail = () => {
         if (result) {
             dispatch(__deleteHelp(helpsfind.articleId))
             navigate("/")
+        }else {
+            return
         }
     }
 
@@ -107,8 +109,8 @@ const HelpDetail = () => {
                             </Bodytop>
                             <BodyContent>
                                 <ContentTitle>{helpsfind && helpsfind.title}</ContentTitle>
-                                {/* <ContentBody>{helpsfind && helpsfind.content}</ContentBody>
-                                <ContentImg src={helpsfind && helpsfind.imageList[0]}></ContentImg> */}
+                                <ContentBody>{helpsfind && helpsfind.content}</ContentBody>
+                                <ContentImg src={helpsfind && helpsfind.imageList[0].imgUrl}></ContentImg>
                                 <ContentView>조회수 1000회 | 댓글 100개</ContentView>
                             </BodyContent>
                             <BodyContainer>

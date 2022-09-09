@@ -51,6 +51,7 @@ const DetailComment = ({comment ,closeModal, modalRef }) => {
     return (
         
         <CommentContain >
+        <CommentNoneBox>작성한 댓글이 없습니다 <br /> 첫번째 댓글을 남겨보세요</CommentNoneBox>
         <CommentBox >
             <CommentImg src={Img} alt="" />
             <CommentTxt>
@@ -171,4 +172,8 @@ const TxtStudent = styled.p`
 const Comment = styled.p`
     padding: 0px 20px;
     font-size:14px;
+`
+const CommentNoneBox = styled.div`
+    
+
 `
