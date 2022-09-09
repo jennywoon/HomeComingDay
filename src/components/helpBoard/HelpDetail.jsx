@@ -12,6 +12,7 @@ import { useRef } from 'react';
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 import { BiDotsVerticalRounded } from "react-icons/bi";
+SwiperCore.use([Navigation, Pagination]);
 
 const HelpDetail = () => {
     const dispatch = useDispatch();
@@ -29,10 +30,10 @@ const HelpDetail = () => {
     }
 
     const helpsfind = helps.find((help) => help.articleId === Number(id))
-    const helpscomment = helpsfind.commentList
+    // const helpscomment = helpsfind.commentList
     // console.log(commentList)
     console.log("helpsfind",helpsfind)
-    console.log("helpscomment",helpscomment)
+    // console.log("helpscomment",helpscomment)
     // useEffect(() => {
     //     dispatch(__getDetailHelp(helpsfind.articleId));
     // }, [dispatch])
@@ -79,7 +80,9 @@ const HelpDetail = () => {
     }, [dispatch])
 
     const swiperStyle ={
-        border:"1px solid red;"
+        width:"450px",
+        height:"181px",
+        display:"flex"
     }
 
     return (
@@ -128,19 +131,21 @@ const HelpDetail = () => {
                                     pagination={{ clickable: true }}
                                 >
                                     {helpsfind && helpsfind.imageList.map((image)=> {
+                                        console.log(image)
                                     return(
                                     <SwiperSlide key={image.id}>
-                                    <ContentImg  src={image.imgUrl}></ContentImg>
+                                        <ContentImg  src={image.imgUrl}></ContentImg>
                                     </SwiperSlide>)
                                     })}
                                 </Swiper>
                                 </ContentImgBox>
+                                
                                 <ContentView>조회수 1000회 | 댓글 100개</ContentView>
                             </BodyContent>
                             <BodyContainer>
                                 <BodyCommentBox>
                                     {helpsfind && helpsfind.commentList.map((comment) => (
-                                        // comment.commentId === helpsfind. ? 
+                                        // comment.articleId === helpsfind.articleId ? 
                                         <HelpDetailComment key={comment.commentId} comment={comment} helpsfind={helpsfind} modalRef={modalRef} />
                                         //  : null
                                     ))}
@@ -301,11 +306,17 @@ const ContentBody = styled.p`
 
 const ContentImgBox = styled.div`
     width:100%;
+    height:100%;
+    object-fit: cover;
+    display:flex;
+    flex-direction: column;
+    background-color: red;
     
 `
 const ContentImg = styled.img`
     /* border:1px solid gray; */
-    height: 200px;
+    width: 80%;
+
     border-radius: 20px;
     /* margin : 20px 0px; */
     /* background-repeat: no-repeat;

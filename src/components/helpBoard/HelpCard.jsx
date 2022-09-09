@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { BsQuestionSquare } from "react-icons/bs";
-import { __getHelp } from '../../redux/modules/HelpSlice';
+import { __getHelp , __postHelp} from '../../redux/modules/HelpSlice';
 import { useNavigate } from 'react-router-dom';
 
 const HelpCard = ({ help, id }) => {
@@ -11,6 +11,7 @@ const HelpCard = ({ help, id }) => {
 
 
     useEffect(() => {
+        dispatch(__postHelp());
         dispatch(__getHelp());
     }, [dispatch])
 
