@@ -10,6 +10,7 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import NaverLogin from './NaverLogin';
 import logoname from "../../assets/logoname.png"
 import LoginErrorModal from './LoginErrorModal';
+import { getUser } from '../../redux/modules/UserSlice';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -64,35 +65,43 @@ const Login = () => {
     visible: false,
   });
 
-  const loginSchoolInfo = useSelector((state) => state.user.user.headers.schoolinfo)
+  // const loginSchoolInfo = useSelector((state) => state.user.user.headers.schoolinfo)
   // console.log(loginSchoolInfo)
   
   // 로그인버튼
-    const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const onSubmitHandler = async (formValue) => {
-    if (error && !isLogin) {
+    dispatch(__loginUser(formValue))
+    await dispatch(getUser());
+    if (isLogin) {
+      // if (loginSchoolInfo === "true") {
+        navigate('/');
+      // } else if (loginSchoolInfo === "false") {
+        // navigate('/schoolinfo');
+      }
+    // }
+     else if (!isLogin) {
       setModalOpen(true);
-    } else {
-      dispatch(__loginUser(formValue))
-      .then(() => {
-        if (loginSchoolInfo===true) {
-          navigate('/schoolinfo');
-        } 
-        else if (loginSchoolInfo!==true){
-          navigate('/');
-        }
-      });
     }
   };
 
+  const onClickLogin = () => {
+  };
+  
   useEffect(() => {
     if (formValue.email !== '' && formValue.password !== '') {
       handleCheck(true);
     } else {
       handleCheck(false);
     }
-  }, [formValue]);
+  },[formValue])
 
+  console.log(isLogin)
+  console.log(error)
+  // useEffect(()=>{
+  // }, [dispatch]);
+
+  
   return (
     <>
     <StLoginContainer
@@ -146,8 +155,7 @@ const Login = () => {
             color='white'
             style={{ marginTop: '50px', backgroundColor:"#f7931e" }}
           >
-            <ButtonTitle
-            >로그인</ButtonTitle>
+            <ButtonTitle onClick={onClickLogin}>로그인</ButtonTitle>
           </Button>
         </StLoginWrap>
         <NaverContainer>

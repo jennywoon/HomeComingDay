@@ -1,21 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BsQuestionSquare } from "react-icons/bs";
+import { useEffect } from 'react';
+import { __getMyPage, __getMyArticle } from '../../redux/modules/MyPageSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
+const MyPageCard = ({myarticle}) => {
+    const dispatch = useDispatch();
 
-const MyPageCard = () => {
+    useEffect(() => {
+        dispatch(__getMyArticle())
+    }, [dispatch])
 
     return (
         <Container>
             <TotalWrap>
-                <PostTitle>마케팅 신입인데 뭘 해야하나요? 선배님들의 조언이 필요합니다.</PostTitle>
+                <PostTitle>{myarticle.title}</PostTitle>
                 <BottomWrap>
                     <FirstWrap>
-                        <PostView>조회수 24</PostView>
+                        <PostView>조회수 {myarticle.views}</PostView>
                         <div>|</div>
-                        <CommentCount>댓글 16</CommentCount>
+                        <CommentCount>댓글 {myarticle.commentCnt}</CommentCount>
                     </FirstWrap>
-                    <PostTime>16분 전</PostTime>
+                    <PostTime>{myarticle.createdAt}</PostTime>
                 </BottomWrap>
             </TotalWrap>
         </Container>
