@@ -8,7 +8,7 @@ import CalendarSlice from "../modules/CalendarSlice";
 import SearchSlice from "../modules/SearchSlice";
 import SchoolInfoSlice from "../modules/SchoolInfoSlice";
 import DateSlice from "../modules/DateSlice";
-import NaverSlice from "../modules/NaverSlice"
+import MyPageSlice from "../modules/MyPageSlice";
 import { getDefaultMiddleware } from "@reduxjs/toolkit";
 
 export const store = configureStore({
@@ -18,6 +18,7 @@ export const store = configureStore({
     user: UserSlice.reducer,
     informations : InformationSlice,
     helps : HelpSlice,
+    mypages: MyPageSlice,
     freetalks : FreeTalkSlice,
     calendars : CalendarSlice,
     dates: DateSlice,

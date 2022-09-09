@@ -3,10 +3,17 @@ import styled from 'styled-components';
 import { AiOutlineCamera } from "react-icons/ai";
 import { removeCookie } from '../../shared/cookies';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import Cookies from "universal-cookie";
 
 const MyPageUser = () => {
 
     const navigate = useNavigate();
+    const mypages = useSelector((state) => state.mypages);
+    const {myarticles} = useSelector((state) => state.mypages.myarticles);
+    console.log(mypages);
+    console.log(myarticles);
+    const cookies = new Cookies();
 
     return (
         <UserContainer>
@@ -23,7 +30,7 @@ const MyPageUser = () => {
                         한국대학교
                     </UserUniversity>
                     <UserWrap>
-                        <UserName>나청운</UserName>
+                        <UserName>{cookies.get("username")}</UserName>
                         <UserAdmission>| 14학번</UserAdmission>
                     </UserWrap>
                     <UserEmail>
