@@ -22,14 +22,6 @@ const CalendarDetail = () => {
   const { calendars } = useSelector((state) => state.calendars);
   const calendarfind = calendars.find((calendar) => calendar.id === Number(id))
 
-  const getArrItem = useSelector((state) => state.dates.dates)
-
-  // const getLastArrItem =getArrItem.find((getArrItem) => getArrItem.id === Number(id))
-  // const getLastArrItem = getArrItem.find((getTest) => getTest.id === Number(id))
-  const getTest = (getArrItem.length) - 1
-  console.log(getTest)
-  const getLastArrItem = getArrItem.find((getTest) => getTest.id === Number(id))
-
   useEffect(() => {
     dispatch(__getCalendar());
   }, [dispatch])
@@ -76,12 +68,6 @@ const CalendarDetail = () => {
                     17학번 <span> 15분 전 </span>
                   </Txtstudent>
                 </Bodytxt>
-                {/* <AiOutlineMenu
-                size='20px'
-                cursor='pointer'
-                style={{ marginLeft: 'auto', cursor: 'pointer' }}
-                onClick={onCilckShow}
-              /> */}
                 <BiDotsVerticalRounded
                   size="20px" style={{ marginLeft: "auto", cursor: "pointer" }}
                   onClick={onCilckShow} />
@@ -93,23 +79,23 @@ const CalendarDetail = () => {
                 ) : null}
               </Bodytop>
               <BodyContent>
-                <ContentTitle>{calendarfind && calendarfind.calendartitle}</ContentTitle>
                 <ContentBody>
+                  <ContentTitle>{calendarfind && calendarfind.title}</ContentTitle>
                   <Contentget>
                     <ContentgetTitle>날짜 </ContentgetTitle>
-                    {getLastArrItem && moment(getLastArrItem.calendarDate).format("YYYY년 MM월 DD일")}
+                    {calendarfind && calendarfind.calendarDate}
                   </Contentget>
                   <Contentget>
-                    <ContentgetTitle>시간 </ContentgetTitle>{calendarfind && calendarfind.calendartime}
+                    <ContentgetTitle>시간 </ContentgetTitle>{calendarfind && calendarfind.calendarTime}
                   </Contentget>
                   <Contentget>
-                    <ContentgetTitle>장소 </ContentgetTitle>{calendarfind && calendarfind.calendarlocation}
+                    <ContentgetTitle>장소 </ContentgetTitle>{calendarfind && calendarfind.calendarLocation}
                   </Contentget>
                   <Contentget>
-                    <ContentgetTitle>내용 </ContentgetTitle>{calendarfind && calendarfind.calendarcontent}
+                    <ContentgetTitle>내용 </ContentgetTitle>{calendarfind && calendarfind.content}
                   </Contentget>
                 </ContentBody>
-                <ContentImg src=''></ContentImg>
+                {/* <ContentImg src=''></ContentImg> */}
                 <ContentView>조회수 1000회 | 댓글 100개</ContentView>
               </BodyContent>
 
@@ -146,7 +132,6 @@ const Container = styled.div`
 const DetailContainer = styled.div`
     width: 100%;
     height: 100%;
-    /* border: 1px solid green; */
     display: flex;
     flex-direction: column;
 `;
@@ -154,13 +139,11 @@ const DetailContainer = styled.div`
 const HelpWrap = styled.div`
     width: 100%;
     height: 100%;
-    /* border: 1px solid blue; */
     overflow-y: scroll;
 `
 
 const DetailWrap = styled.form`
   width: 100%;
-  /* height:100%; */
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -169,7 +152,6 @@ const DetailWrap = styled.form`
 const FirstWrap = styled.div`
     display: flex;
     flex-direction: column;
-    /* border:1px solid blue; */
     width: 100%;
     height: 100%;
 `
@@ -184,7 +166,6 @@ const DetailHeader = styled.div`
 `;
 const HeaderTitle = styled.div`
   font-weight: 800;
-  /* margin:10px auto; */
 `;
 const Revisebox = styled.div`
   border: 1px solid #f1f0f0;
@@ -195,7 +176,6 @@ const Revisebox = styled.div`
   right: 0;
   top: 55px;
   background-color: #fff;
-  /* box-shadow: 5px 5px 5px -2px rgba(0, 0, 0, 0.05); */
 `;
 const ReviseButton = styled.button`
   border: none;
@@ -224,16 +204,9 @@ const DeleteButton = styled.button`
 `;
 
 const DetailBody = styled.div`
-  /* border: 1px solid #f1f0f0;
-  margin: 10px 20px;
-  border-radius: 20px;
-  height: 100vh;
-  box-sizing: border-box; */
   border-radius: 20px;
     width: 100%;
     height:100%;
-  /* box-shadow: 5px 5px 5px -2px rgba(0, 0, 0, 0.05); */
-  /* overflow: scroll; */
 `;
 
 const Bodytop = styled.div`
@@ -253,29 +226,26 @@ const Bodytxt = styled.div`
   margin-left: 10px;
 `;
 const Txtname = styled.h3`
-  /* margin: 0px; */
 `;
 const Txtstudent = styled.p`
-  /* margin: 0px; */
   font-size: 12px;
   color: gray;
-  /* word-wrap: wrap; */
 `;
 const BodyContent = styled.div`
   padding: 0px 20px;
   width: 100%;
-    height: 300px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 const ContentTitle = styled.h3`
-  /* margin: 20px 0 35px 0; */
 `;
 const ContentBody = styled.div`
   color:gray;
 `;
 
 const Contentget = styled.p`
-  /* margin-bottom: 15px; */
-  /* border: 1px solie red; */
 `
 
 const ContentgetTitle = styled.span`
@@ -283,33 +253,21 @@ const ContentgetTitle = styled.span`
   font-weight: bold;
 `
 const ContentImg = styled.img`
-  /* border:1px solid gray; */
   height: 200px;
   border-radius: 20px;
-  /* margin: 20px 0px; */
-  /* background-repeat: no-repeat;
-    background-size: cover; */
 `;
 const ContentView = styled.p`
   font-size: 14px;
-  /* margin: 30px 0px 10px; */
   color: gray;
+  margin-bottom: 10px;
 `;
 const BodyCommentBox = styled.div`
   border-top: 1px solid rgba(0, 0, 0, 0.1);
-  /* margin: 20px;
-  position: relative; */
   height: 100%;
     width: 100%;
 `;
 
 const CommentContainer = styled.div`
-  /* position: fixed;
-  bottom: 0;
-  bottom: 10px;
-  width: 100%;
-  max-width: 500px;
-  display: flex; */
   position: sticky;
     bottom: 0;
     bottom: 10px;
@@ -325,24 +283,20 @@ const CommentBox = styled.div`
   align-items: center;
   align-items: center;
     width: 95%;
-  /* height: 40px; */
 `;
 
 const CommentDiv = styled.div`
-  /* width: 400px; */
   width: 100%;
   padding: 10px;
   background-color: #eeeeee;
   border-radius: 16px;
   display: flex;
   align-items: center;
-  /* margin-bottom: 20px; */
   justify-content: space-between;
 `;
 
 const CommentPost = styled.input`
   width: 80%;
-  /* bottom: 0; */
   background-color: #eeeeee;
   height: 30px;
   border-radius: 10px;

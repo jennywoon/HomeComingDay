@@ -5,6 +5,7 @@ import styled from "styled-components"
 import { __getCalendar } from "../../redux/modules/CalendarSlice";
 import CalendarCard from "./CalendarCard";
 import calendarorange from "../../assets/calendarorange.png"
+import "./CalendarModal.css"
 
 const Calendar = () => {
   const dispatch = useDispatch();
@@ -92,21 +93,3 @@ const Select = styled.select`
 const HelpList = styled.div`
   /* border: 1px solid red; */
 `;
-
-const IconWrap = styled.div`
-  width: 95%;
-  display: flex;
-  justify-content: right;
-`
-const Iconbox = styled.div`
-  width:50px;
-  height:50px;
-  background-color: black;
-  border-radius: 30px;
-  position: fixed;
-  bottom: 90px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-`

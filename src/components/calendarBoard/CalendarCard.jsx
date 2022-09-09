@@ -12,12 +12,6 @@ const CalendarCard = ({ calendar, id }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const getArrItem = useSelector((state) => state.dates.dates)
-    console.log(getArrItem)
-    // const getTest = getArrItem[getArrItem.length-1]
-    // const getLastArrItem = getArrItem[getArrItem.length-1]
-    const getLastArrItem = getArrItem.find((getArrItem) => getArrItem.id === Number(id))
-
     useEffect(() => {
         dispatch(__getCalendar());
         dispatch(__getDate());
@@ -38,13 +32,10 @@ const CalendarCard = ({ calendar, id }) => {
                 <HeadTime>15분전</HeadTime>
             </CardHead>
             <CardBody>
-                <BodyTitle>{calendar.calendartitle}</BodyTitle>
-                {/* <BodyContent>
-                {getLastArrItem && moment(getLastArrItem.calendarDate).format("YYYY년 MM월 DD일")}
-                </BodyContent>
+                <BodyTitle>{calendar.title}</BodyTitle>
                 <BodyContent>
-                    {calendar.calendarcontent}
-                </BodyContent> */}
+                    {calendar.content}
+                </BodyContent>
             </CardBody>
             <CardFooter>
                 <Views>조회수 1500</Views>
