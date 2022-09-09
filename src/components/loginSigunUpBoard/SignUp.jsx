@@ -129,32 +129,49 @@ const SignUp = () => {
 
   // 이메일 인증번호
   const [emailCheck, setEmailCheck] = useState({
-    email: '',
     authKey: '',
   });
+  const { authKey } = emailCheck;
   const handleChangeAuthKey = (e) => {
-    // setEmailCheck((prev) => {
-    //   return {
-    //     ...prev,
-    //     authKey: e.target.value
-    //   }
-    // })
-    setEmailCheck({ email: e.target.value, authKey: e.target.value });
+    setEmailCheck((prev) => {
+      return {
+        ...prev,
+        authKey: e.target.value
+      }
+    })
+    // setEmailCheck({ email: e.target.value, authKey: e.target.value });
   };
 
   // 이메일 인증번호 확인
   const [isCheck, setIsCheck] = useState(false);
-  const handleCheckEmail = (e) => {
-    e.preventDefault();
-    // setEmailCheck((prev) => {
-    //   return {
-    //     ...prev,
-    //     email: e.target.value,
-    //     authKey: e.target.value,
-    //   };
-    // });
-    dispatch(__postCheckEmail(emailCheck));
-  };
+  const handleCheckEmail = async () => {
+    const checkEmail = {
+      email: email,
+      authKey: authKey
+    };
+    try {
+      const data = await axios.post(`${BASE_URL}/signup/checkEmail`, checkEmail);
+      console.log(data.data);
+      if (data.data.success === true) {
+        setIsCheck(true);
+      } else if (data.data.success === false) {
+        setIsCheck(false);
+      }
+    } catch (error) {
+      console.log('error ', error);
+    }
+  }
+  // const handleCheckEmail = (e) => {
+  //   e.preventDefault();
+  //   // setEmailCheck((prev) => {
+  //   //   return {
+  //   //     ...prev,
+  //   //     email: e.target.value,
+  //   //     authKey: e.target.value,
+  //   //   };
+  //   // });
+  //   dispatch(__postCheckEmail(emailCheck));
+  // };
 
   // 비밀번호 유효성검사
   const handleChangePassword = (e) => {
@@ -423,7 +440,7 @@ const StSignupContainer = styled.form`
 `;
 
 const StSignupWraps = styled.div`
-  width: 85%;
+  width: 80%;
   height: 100%;
   /* border: 1px solid red; */
 `;

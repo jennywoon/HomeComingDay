@@ -7,7 +7,6 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const config = {
   headers: {
-    // 'Content-Type': 'application/json',
     authorization: `Bearer ${getCookie('accessToken')}`, 
     RefreshToken : `${getCookie('refreshToken')}`
   },
@@ -21,9 +20,6 @@ export const __loginUser = createAsyncThunk(
       const data = await axios.post(`${BASE_URL}/login`, payload);
       setCookie('accessToken', `${data.data.data.accessToken}`);
       setCookie('refreshToken', `${data.data.data.refreshToken}`);
-      // setCookie('schoolInfo', `${data.data.schoolInfo}`);
-      // console.log(data.data.schoolInfo);
-      // console.log(data)
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -40,7 +36,6 @@ export const __signupUser = createAsyncThunk(
       const data = await axios.post(`${BASE_URL}/signup`, payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      // console.log('error', error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -77,7 +72,7 @@ export const __postSendEmail = createAsyncThunk("sendEmail", async (payload, thu
 export const __postCheckEmail = createAsyncThunk("checkEmail", async (payload, thunkAPI) => {
   try {
     console.log(payload);
-      const data = await axios.post(`${BASE_URL}/checkEmail`, payload);
+      const data = await axios.post(`${BASE_URL}/signup/checkEmail`, payload);
       // console.log('data', data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
