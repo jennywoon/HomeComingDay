@@ -13,8 +13,6 @@ import {
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import { IoIosArrowBack } from 'react-icons/io';
 import axios from 'axios';
-import { useSelect } from 'react-select-search';
-import { current } from '@reduxjs/toolkit';
 
 const SignUp = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
