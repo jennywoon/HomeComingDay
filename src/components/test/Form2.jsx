@@ -264,7 +264,7 @@ const Form2 = () => {
         new Blob([JSON.stringify(newfreetalk)], { type: "application/json" })
       );
 
-      dispatch(__postFreeTalk(newfreetalk));
+      dispatch(__postFreeTalk(formdata));
       navigate('/freetalk');
 
     } else if (select === 'meet') {

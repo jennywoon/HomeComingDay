@@ -45,11 +45,8 @@ const HelpUpdate = () => {
         setEditImg(e.target.value)
     }
 
-    useEffect(() => {
-        dispatch(__getHelp());
-    }, [dispatch])
-
-    const onUpdateHandler = (e) => {
+   
+    const onUpdateHandler = async(e) => {
         e.preventDefault();
          const edithelpsfind = {
             ...helpsfind ,
@@ -58,7 +55,8 @@ const HelpUpdate = () => {
             content: EditContent,
             imgUrl : EditImg
         }
-        dispatch(__updateHelp(edithelpsfind))
+    await  dispatch(__updateHelp(edithelpsfind))
+    await  dispatch(__getHelp());
         navigate(`/helpdetail/${id}`)
     } 
 

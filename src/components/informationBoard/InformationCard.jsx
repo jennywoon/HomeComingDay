@@ -6,13 +6,14 @@ import Img from "../../assets/naverIcon.png"
 import { HiOutlineInformationCircle } from "react-icons/hi";
 import { GrCircleAlert } from "react-icons/gr";
 import { BsQuestionSquare } from "react-icons/bs";
-import { __getInformation } from '../../redux/modules/InformationSlice';
+import { __getInformation ,__postInformation} from '../../redux/modules/InformationSlice';
 
 const InformationCard = ({ information,id }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
+        dispatch(__postInformation());
         dispatch(__getInformation());
     }, [dispatch])
 
@@ -26,9 +27,16 @@ const InformationCard = ({ information,id }) => {
                 <HeadImg>
                     <BsQuestionSquare />
                 </HeadImg>
-                <HeadName>이름</HeadName>
-                <HeadStudent>14학번</HeadStudent>
-                <HeadTime>15분전</HeadTime>
+                <HeadUser>
+                    <HeadTop>
+                        <HeadName>{information.username}</HeadName>
+                        <HeadTime>{information.createdAt}</HeadTime>
+                    </HeadTop>
+                    <HeadBottom>
+                        <HeadDepartment>{information.departmentName}</HeadDepartment>
+                        <HeadStudent>· {information.admission}</HeadStudent>
+                    </HeadBottom>
+                </HeadUser>
             </CardHead>
             <CardBody>
                 <BodyTitle>{information.title}</BodyTitle>
@@ -37,8 +45,8 @@ const InformationCard = ({ information,id }) => {
                 </BodyContent> */}
             </CardBody>
             <CardFooter>
-                <Views>조회수 1500</Views>
-                <CommentCount>댓글 2700</CommentCount>
+                <Views>조회수 {information.views}</Views>
+                <CommentCount>댓글 {information.commentCnt}</CommentCount>
             </CardFooter>
         </InformationContainer>
     );
@@ -67,13 +75,33 @@ const HeadImg = styled.div`
     background-color: #f6bd60;
     border-radius: 50%;
 `
-const HeadName = styled.h2`
-    font-size: 18px;
+const HeadUser = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
     margin: 0px 5px;
 `
-const HeadStudent = styled.p`
+const HeadTop = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    /* border: 1px solid red; */
+`
+const HeadBottom = styled.div`
+    display: flex;
     font-size: 12px;
     color:gray;
+    gap: 5px;
+`
+const HeadDepartment = styled.div``
+
+const HeadName = styled.h2`
+    font-size: 18px;
+    /* margin: 0px 5px; */
+`
+const HeadStudent = styled.p`
+    
 `
 const HeadTime = styled.p`
     font-size: 12px;

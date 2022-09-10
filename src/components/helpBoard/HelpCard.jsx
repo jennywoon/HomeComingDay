@@ -31,7 +31,7 @@ const HelpCard = ({ help, id }) => {
                         <HeadTime>{help.createdAt}</HeadTime>
                     </HeadTop>
                     <HeadBottom>
-                        <HeadDepartment>경영학과</HeadDepartment>
+                        <HeadDepartment>{help.departmentName}</HeadDepartment>
                         <HeadStudent>· {help.admission}</HeadStudent>
                     </HeadBottom>
                 </HeadUser>
