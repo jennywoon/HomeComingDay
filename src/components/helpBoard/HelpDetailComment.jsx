@@ -3,33 +3,26 @@ import styled from 'styled-components';
 import {AiOutlineMenu} from 'react-icons/ai'
 import Img from "../../assets/naverIcon.png"
 import { useState } from 'react';
-import { useDispatch ,useSelector} from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { __deleteHelpComment, __updateHelpComment , __getHelp, __getDetailHelp,__postHelpComment} from '../../redux/modules/HelpSlice';
 import Input from "../elements/Input";
 import { useParams } from 'react-router-dom';
 
 
-const DetailComment = ({comment ,closeModal, modalRef ,helpsfind}) => {
+const DetailComment = ({comment , modalRef ,helpsfind}) => {
     const dispatch = useDispatch();
     const { id } = useParams();
-    // const commentId = useSelector((state) => state.helps.helps)
-    const helps = useSelector((state) => state.helps)
-    // console.log("helps" , helps)
+    
+    const {commentId} = helpsfind.commentList.find((commentmap)=> commentmap.commentId === comment.commentId)
 
-    console.log(id)
-    console.log(helps)
-    console.log(helpsfind)
-    console.log(comment)
-    const commentId = helpsfind.commentList.find((comment)=> comment.commentId)
+    console.log("commentId",commentId)
 
-    console.log(commentId)
 
     const [showComment, setShowComment] = useState(false)
     const [isEdit, setIsEdit] = useState(false)
     const [editComment , setEditComment] = useState("")
     
     // useEffect(() => {
-    //     dispatch(__getHelp());
     //     dispatch(__postHelpComment());
     //     dispatch(__getDetailHelp(id))
     // }, [dispatch])
@@ -42,16 +35,18 @@ const DetailComment = ({comment ,closeModal, modalRef ,helpsfind}) => {
         setShowComment(!showComment)
     }
 
-    const onClickDelete = () => {
-        // const commentDelete = {
-        //     articleId : 
-        //     commentId : 
-        // }
+    const onClickDelete = async() => {
+        const commentDelete = {
+            articleId : Number(id),
+            commentId : commentId
+        }
         const result = window.confirm("정말 삭제하시겠습니까?")
         if (result) {
-            dispatch(__deleteHelpComment(comment.commentId))
+      await dispatch(__deleteHelpComment(commentDelete))
+      await dispatch(__getHelp());
+            setShowComment(false)
         } else {
-            return null
+            return
         }
     }
 
@@ -59,12 +54,14 @@ const DetailComment = ({comment ,closeModal, modalRef ,helpsfind}) => {
         setShowComment(!showComment)
         setIsEdit(!isEdit)
     }
-    const onClickReviceChange = () =>{
+    const onClickReviceChange = async() =>{
         const editcomment = {
-            id : comment.id,
-            comment : editComment
+            articleId : Number(id),
+            commentId : commentId,
+            content : editComment
         }
-        dispatch(__updateHelpComment(editcomment))
+        await dispatch(__updateHelpComment(editcomment))
+        await dispatch(__getHelp());
         setIsEdit(!isEdit)
     }
    

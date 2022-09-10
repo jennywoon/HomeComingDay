@@ -39,6 +39,25 @@ export const __getInformation = createAsyncThunk("informations/getInformation", 
     }
 });
 
+export const __getDetailInformation = createAsyncThunk("informations/getDetailinformations", async (payload, thunkAPI) => {
+  try {
+    const data = await axios({
+      method: 'get',
+      url: `${BASE_URL}/article/information/${payload}`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+        // RefreshToken : getCookie('refreshToken')
+      },
+    });
+    console.log(data)
+      return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+      console.log('error', error);
+      return thunkAPI.rejectWithValue(error);
+  }
+});
+
 export const __postInformation = createAsyncThunk("informations/postInformation", async (payload, thunkAPI) => {
   
   console.log('payload', payload)
@@ -138,7 +157,6 @@ export const __deleteInfoComment = createAsyncThunk("comments/deleteInfoComment"
         'Content-Type': 'application/json',
         Authorization: `Bearer ${getCookie("accessToken")}`,
       },
-      data: payload
     });
   //   console.log(payload)
     return thunkAPI.fulfillWithValue(payload);
@@ -280,7 +298,7 @@ export const InformationSlice = createSlice({
         console.log('comment', state.helpcomments)
         state.infoComments = state.infoComments.map((comment) => {
           if (comment.id === action.payload.id) {
-            comment.comment = action.payload.comment;
+            comment.comment = action.payload.content;
           }
           return comment;
         })

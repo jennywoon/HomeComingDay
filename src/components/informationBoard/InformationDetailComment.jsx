@@ -5,10 +5,14 @@ import Img from "../../assets/naverIcon.png"
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Input from "../elements/Input";
-import { __deleteInfoComment, __updateInfoComment } from '../../redux/modules/InformationSlice';
+import { __deleteInfoComment, __updateInfoComment , __getInformation, __getDetailInformation,__postInformation} from '../../redux/modules/InformationSlice';
+import { useParams } from 'react-router-dom';
 
-const InformationComment = ({comment,closeModal,modalRef}) => {
+const InformationComment = ({comment,informationsfind,modalRef}) => {
     const dispatch = useDispatch();
+    const { id } = useParams();
+
+    const {commentId} = informationsfind.commentList.find((commentmap)=> commentmap.commentId === comment.commentId)
 
     const [showComment, setShowComment] = useState(false)
     const [isEdit, setIsEdit] = useState(false)
@@ -22,12 +26,19 @@ const InformationComment = ({comment,closeModal,modalRef}) => {
         setShowComment(!showComment)
     }
 
-    const onClickDelete = () => {
+    
+    const onClickDelete = async() => {
+        const commentDelete = {
+            articleId : Number(id),
+            commentId : commentId
+        }
         const result = window.confirm("정말 삭제하시겠습니까?")
         if (result) {
-            dispatch(__deleteInfoComment(comment.id))
+      await dispatch(__deleteInfoComment(commentDelete))
+      await dispatch(__getInformation());
+            setShowComment(false)
         } else {
-            return null
+            return
         }
     }
 
@@ -35,12 +46,14 @@ const InformationComment = ({comment,closeModal,modalRef}) => {
         setShowComment(!showComment)
         setIsEdit(!isEdit)
     }
-    const onClickReviceChange = () =>{
+    const onClickReviceChange = async() =>{
         const editcomment = {
-            id : comment.id,
-            comment : editComment
+            articleId : Number(id),
+            commentId : commentId,
+            content : editComment
         }
-        dispatch(__updateInfoComment(editcomment))
+        await dispatch(__updateInfoComment(editcomment))
+        await dispatch(__getInformation());
         setIsEdit(!isEdit)
     }
 
@@ -49,8 +62,8 @@ const InformationComment = ({comment,closeModal,modalRef}) => {
         <CommentBox>
             <CommentImg src={Img} alt="" />
             <CommentTxt>
-                <TxtName>최형용</TxtName>
-                <TxtStudent>14학번 <span> 15분 전 </span></TxtStudent>
+            <TxtName>{comment.username}</TxtName>
+                <TxtStudent>{comment.admission} <span> {comment.createdAt}</span></TxtStudent>
             </CommentTxt>
             <AiOutlineMenu size="18px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }} onClick={onCilckShow} />
             {showComment ?
@@ -68,7 +81,7 @@ const InformationComment = ({comment,closeModal,modalRef}) => {
             <ReviseButtonChange type="button" onClick={onClickReviceChange} >수정완료</ReviseButtonChange>
         </EditBox>
         :
-        <Comment>{comment.comment}</Comment>
+        <Comment>{comment.content}</Comment>
         
         }   
         </CommentContain>

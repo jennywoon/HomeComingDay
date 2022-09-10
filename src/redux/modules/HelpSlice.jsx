@@ -156,6 +156,7 @@ export const __postHelpComment = createAsyncThunk("comments/postHelpComment", as
 
 export const __deleteHelpComment = createAsyncThunk("comments/deleteHelpComment", async (payload, thunkAPI) => {
   try {
+    console.log(payload)
     const data = await axios({
       method: 'delete',
       url: `${BASE_URL}/article/help/${payload.articleId}/comment/${payload.commentId}`,
@@ -163,9 +164,8 @@ export const __deleteHelpComment = createAsyncThunk("comments/deleteHelpComment"
         'Content-Type': 'application/json',
         Authorization: `Bearer ${getCookie("accessToken")}`,
       },
-      data: payload
+
     });
-    console.log(payload)
   //   console.log(payload)
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
@@ -287,7 +287,7 @@ export const HelpSlice = createSlice({
         state.isLoading = false;
         // console.log(state.comment)
         console.log(action)
-        state.commentList = state.helpcomments.filter(comment => comment.id !== action.payload)
+        state.commentList = state.commentList.filter(comment => comment.id !== action.payload)
       },
       [__deleteHelpComment.rejected]: (state, action) => {
         state.isLoading = false;

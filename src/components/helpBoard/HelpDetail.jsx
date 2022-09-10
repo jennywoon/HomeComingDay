@@ -10,10 +10,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { __deleteHelp, __updateHelp, __getHelp, __getComments, __getHelpComment, __postHelpComment ,__getDetailHelp} from '../../redux/modules/HelpSlice';
 import { useRef } from 'react';
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import SwiperCore, { Navigation} from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
-import "swiper/css/pagination";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { GrFormPrevious ,GrFormNext} from "react-icons/gr";
 
@@ -70,7 +69,9 @@ const HelpDetail = () => {
             dispatch(__deleteHelp(helpsfind.articleId))
             navigate("/")
         }else {
-            return
+            navigate("/")
+            return 
+            
         }
     }
 
@@ -78,15 +79,15 @@ const HelpDetail = () => {
         navigate(`/helpupdate/${id}`)
     }
 
-    const onClickPostComment = (e) => {
+    const onClickPostComment = async(e) => {
         e.preventDefault();
         const newcomment = {
             content: comment,
             articleId: id
         }
-        dispatch(__postHelpComment(newcomment));
+      await dispatch(__postHelpComment(newcomment));
+      await dispatch(__getHelp());
         setComment("");
-        dispatch(__getDetailHelp(id));
     }
 
     // const closeModal = (e) => {
@@ -96,19 +97,20 @@ const HelpDetail = () => {
     // };
 
     // useEffect(() => {
-    //     dispatch(__getHelp());
+    //     dispatch(__postHelpComment());
+    //     dispatch(__getDetailHelp(id))
     // }, [dispatch])
 
     //swiper 옵션
-    SwiperCore.use([Navigation, Pagination]);
+    SwiperCore.use(Navigation);
     const [swiper , setSwiper] = useState(null)
     const [mainImageIndex , setMainImageIndex] = useState(0);
     const navigationPrevRef = useRef(null)
     const navigationNextRef = useRef(null)
-
+    
     const swiperParams = {
         navigation : {prevEl : navigationPrevRef.current , nextEl: navigationNextRef.current},
-        onBeforeInit : (swiper) => {
+         onBeforeInit : (swiper) => {
             swiper.params.navigation.prevEl = navigationPrevRef.current;
             swiper.params.navigation.nextEl = navigationNextRef.current;
             swiper.activeIndex = setMainImageIndex;
@@ -117,6 +119,7 @@ const HelpDetail = () => {
         onSwiper : setSwiper,
         onSlideChange: (e) => setMainImageIndex(e.activeIndex)
     }
+   
 
     return (
         <Container>
@@ -164,23 +167,20 @@ const HelpDetail = () => {
                                 <Swiper
                                     {...swiperParams}
                                     ref={setSwiper}
-                                    className='banner'
                                     spaceBetween={50}
                                     slidesPerView={1}
-                                    
-                                    // pagination={{ clickable: true }}
                                 >
                                     {helpsfind && helpsfind.imageList.map((image)=> {
                                     return(
-                                    <SwiperSlide key={image.id}>
+                                    <SwiperSlide key={image.imageId}>
                                         <ContentImg  src={image.imgUrl}></ContentImg>
                                     </SwiperSlide>)
                                     })}
                                     <PrevButton ref={navigationPrevRef}>
-                                        <GrFormPrevious />
+                                        <PreviousBtn />
                                     </PrevButton>
                                     <NextButton ref={navigationNextRef}>
-                                        <GrFormNext />
+                                        <NextBtn />
                                     </NextButton>
                                 </Swiper>
                                 </ContentImgBox>
@@ -201,9 +201,7 @@ const HelpDetail = () => {
                                 :
                                 <>
                                 {helpsfind && helpsfind.commentList.map((comment) => (
-                                    // Number(id) === helpsfind.articleId ? 
                                 <HelpDetailComment key={comment.commentId} comment={comment} helpsfind={helpsfind} modalRef={modalRef} />
-                                        //  : null
                                     ))}
                                 </>
                                 }
@@ -402,8 +400,7 @@ const ContentImgBox = styled.div`
     width:100%;
     height:250px;
     border-radius: 20px;
-
-    
+    position:relative;
 `
 const ContentImg = styled.img`
     /* border:1px solid gray; */
@@ -415,6 +412,38 @@ const ContentImg = styled.img`
     /* background-repeat: no-repeat;
     background-size: cover; */
 `
+const PrevButton =styled.button`
+    font-size: 20px;
+    display: flex;
+    position:absolute;
+    border:none;
+    border-radius: 20px;
+    top:50%;
+    left:0;
+    z-index: 2;
+    transform: translatey(-50%);
+    
+`
+const NextButton =styled.button`
+    font-size: 20px;
+    display: flex;
+    position:absolute;
+    border:none;
+    border-radius: 20px;
+    top:50%;
+    right:0;
+    z-index: 2;
+    transform: translatey(-50%);
+`
+
+const PreviousBtn = styled(GrFormPrevious)`
+    
+`
+const NextBtn = styled(GrFormNext)`
+   
+`
+
+
 const ContentView = styled.p`
     
     font-size: 14px;
@@ -512,10 +541,4 @@ const BodyComment = styled.div`
     height:100px;
     width:100%;
     text-align: center;
-`
-const PrevButton =styled.button`
-
-`
-const NextButton =styled.button`
-
 `
