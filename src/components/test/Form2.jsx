@@ -20,7 +20,8 @@ import { __getDate } from '../../redux/modules/DateSlice';
 // import TimeRangePicker from '@wojtekmaj/react-timerange-picker';
 import moment from 'moment';
 import { TimePicker } from 'antd';
-import '../calendarBoard/TimePicker.css';
+import '../calendarBoard/Time.css';
+// import '../calendarBoard/TimePicker.css';
 import Calendar from 'react-calendar';
 import "../calendarBoard/CalendarModal.css"
 // import '../calendarBoard/Calendar.css'; 
