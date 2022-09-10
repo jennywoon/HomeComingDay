@@ -216,7 +216,7 @@ export const HelpSlice = createSlice({
       },
       [__postHelp.fulfilled]: (state, action) => {
         state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
-        // state.helps.push(action.payload); // Store에 있는 todos에 서버에서 가져온 todos를 넣습니다.
+        state.helps.push(action.payload); // Store에 있는 todos에 서버에서 가져온 todos를 넣습니다.
       },
       [__postHelp.rejected]: (state, action) => {
         state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.
@@ -261,7 +261,7 @@ export const HelpSlice = createSlice({
       },
       [__getHelpComment.fulfilled]: (state, action) => {
         state.isLoading = false;
-        state.helpcomments = action.payload;
+        state.commentList = action.payload;
       },
       [__getHelpComment.rejected]: (state, action) => {
         state.isLoading = false;
@@ -273,7 +273,7 @@ export const HelpSlice = createSlice({
       [__postHelpComment.fulfilled]: (state, action) => {
         state.isLoading = false; 
         console.log(action.payload)
-        // state.comment.push(action.payload);
+        state.commentList.push(action.payload);
       },
       [__postHelpComment.rejected]: (state, action) => {
         state.isLoading = false; 
@@ -287,7 +287,7 @@ export const HelpSlice = createSlice({
         state.isLoading = false;
         // console.log(state.comment)
         console.log(action)
-        state.helpcomments = state.helpcomments.filter(comment => comment.id !== action.payload)
+        state.commentList = state.helpcomments.filter(comment => comment.id !== action.payload)
       },
       [__deleteHelpComment.rejected]: (state, action) => {
         state.isLoading = false;
@@ -302,8 +302,8 @@ export const HelpSlice = createSlice({
       [__updateHelpComment.fulfilled]: (state, action) => {
         state.isLoading = false;
         console.log('action', action)
-        console.log('comment', state.helpcomments)
-        state.helpcomments = state.helpcomments.map((comment) => {
+        console.log('comment', state.commentList)
+        state.commentList = state.commentList.map((comment) => {
           if (comment.id === action.payload.id) {
             comment.comment = action.payload.comment;
           }
