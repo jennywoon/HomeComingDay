@@ -320,9 +320,9 @@ const Form2 = () => {
             cursor='pointer'
             onClick={() => navigate('/')}
           />
-          <Button type='submit' backgroundColor='white'>
+          {/* <Button type='submit' backgroundColor='white'>
             올리기
-          </Button>
+          </Button> */}
         </FormHeader>
         <FormBody>
           <FormSelection name='category' onChange={handleSelect}>
@@ -488,6 +488,11 @@ const Form2 = () => {
               </>)
               : null}
           </FooterContain>
+          <FooterBtn>
+            <Button type='submit' backgroundColor='#F7931E' width="90%" height="40px" color="white" style={{display:"block", margin:"15px auto"}}>
+              <div style={{fontWeight: "500", fontSize: "16px"}}>올리기</div>
+            </Button>
+          </FooterBtn>
         </FormFooter>
       </FormWrap>
     </FormContainer>
@@ -559,6 +564,13 @@ const FooterContain = styled.div`
 const Imgadd = styled(GrImage)`
         opacity: 0.3;
         `;
+
+const FooterBtn = styled.div`
+        margin:0 auto;
+        width:100%;
+        
+`
+
 
 const Filelabel = styled.label`
         display: flex;

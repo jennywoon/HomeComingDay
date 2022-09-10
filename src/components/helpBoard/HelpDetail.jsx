@@ -14,30 +14,35 @@ import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "swiper/css/scrollbar";
 import { BiDotsVerticalRounded } from "react-icons/bi";
-SwiperCore.use([Navigation, Pagination]);
+import { GrFormPrevious ,GrFormNext} from "react-icons/gr";
+
 
 const HelpDetail = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { helps } = useSelector((state) => state.helps)
-    // console.log(helps)
+    // const commentList = useSelector((state) => state.helps)
+    // console.log(commentList)
     // const commentList = useSelector((state) => state.helps.helps)
 
     const { id } = useParams();
     const [show, setShow] = useState(false)
+    const [showChaet, setShowChaet] = useState(false)
     const [comment, setComment] = useState("")
     const modalRef = useRef(null);
 
+    
+   
     const onChangePostHandler = (e) => {
         setComment(e.target.value)
     }
 
     // useEffect(() => {
-    //     dispatch(__getDetailHelp(id));
+    //     dispatch(__getHelp());
+    //     dispatch(__postHelpComment());
+    //     dispatch(__getDetailHelp(id))
     // }, [dispatch])
-
 
 
     const helpsfind = helps.find((help) => help.articleId === Number(id))
@@ -54,7 +59,9 @@ const HelpDetail = () => {
     const onCilckShow = () => {
         setShow(!show)
     }
-
+    const onCilckChaetShow = () => {
+        setShowChaet(!showChaet)
+    }
     
 
     const onClickDelete = () => {
@@ -79,21 +86,36 @@ const HelpDetail = () => {
         }
         dispatch(__postHelpComment(newcomment));
         setComment("");
+        dispatch(__getDetailHelp(id));
     }
 
-    const closeModal = (e) => {
-        if (!modalRef.current.contains(e.target)) {
-            setShow(false);
-        }
-    };
+    // const closeModal = (e) => {
+    //     if (!modalRef.current.contains(e.target)) {
+    //         setShow(false);
+    //     }
+    // };
 
-    useEffect(() => {
-        dispatch(__getHelp());
-    }, [dispatch])
+    // useEffect(() => {
+    //     dispatch(__getHelp());
+    // }, [dispatch])
 
-    const swiperStyle ={
-        width:"450px",
-        height:"181px",
+    //swiper 옵션
+    SwiperCore.use([Navigation, Pagination]);
+    const [swiper , setSwiper] = useState(null)
+    const [mainImageIndex , setMainImageIndex] = useState(0);
+    const navigationPrevRef = useRef(null)
+    const navigationNextRef = useRef(null)
+
+    const swiperParams = {
+        navigation : {prevEl : navigationPrevRef.current , nextEl: navigationNextRef.current},
+        onBeforeInit : (swiper) => {
+            swiper.params.navigation.prevEl = navigationPrevRef.current;
+            swiper.params.navigation.nextEl = navigationNextRef.current;
+            swiper.activeIndex = setMainImageIndex;
+            swiper.navigation.update();
+        },
+        onSwiper : setSwiper,
+        onSlideChange: (e) => setMainImageIndex(e.activeIndex)
     }
 
     return (
@@ -101,7 +123,7 @@ const HelpDetail = () => {
             <Header />
             <HelpContainer >
                 <HelpWrap>
-                    <DetailWrap onClick={closeModal}>
+                    <DetailWrap>
                         <FirstWrap>
                             <DetailHeader>
                                 <IoIosArrowBack size="25px" cursor="pointer" onClick={() => { navigate("/") }} />
@@ -113,9 +135,14 @@ const HelpDetail = () => {
                             <Bodytop>
                                 <Bodyimg src={Img} alt="" />
                                 <Bodytxt>
-                                    <Txtname>{helpsfind && helpsfind.username}</Txtname>
-                                    <Txtstudent>{helpsfind && helpsfind.admission} <span> {helpsfind && helpsfind.createAt} </span></Txtstudent>
+                                    <Txtname onClick={onCilckChaetShow}>{helpsfind && helpsfind.username}</Txtname>
+                                    <Txtstudent>{helpsfind && helpsfind.departmentName} <span> {helpsfind && helpsfind.admission} </span></Txtstudent>
+                                    {showChaet ?
+                                    <ChaetingBox>1:1채팅</ChaetingBox>
+                                    : null
+                                    }
                                 </Bodytxt>
+                                
                                 {/* <AiOutlineMenu size="20px" style={{ marginLeft: "auto", cursor: "pointer" }}
                                     onClick={onCilckShow} /> */}
                                 <BiDotsVerticalRounded
@@ -132,34 +159,54 @@ const HelpDetail = () => {
                             <BodyContent>
                                 <ContentTitle>{helpsfind && helpsfind.title}</ContentTitle>
                                 <ContentBody>{helpsfind && helpsfind.content}</ContentBody>
+                                {helpsfind && helpsfind.imageList.length > 0 ?
                                 <ContentImgBox>
                                 <Swiper
-                                    style={swiperStyle}
+                                    {...swiperParams}
+                                    ref={setSwiper}
                                     className='banner'
                                     spaceBetween={50}
                                     slidesPerView={1}
-                                    navigation
+                                    
                                     // pagination={{ clickable: true }}
                                 >
                                     {helpsfind && helpsfind.imageList.map((image)=> {
-                                        console.log(image)
                                     return(
                                     <SwiperSlide key={image.id}>
                                         <ContentImg  src={image.imgUrl}></ContentImg>
                                     </SwiperSlide>)
                                     })}
+                                    <PrevButton ref={navigationPrevRef}>
+                                        <GrFormPrevious />
+                                    </PrevButton>
+                                    <NextButton ref={navigationNextRef}>
+                                        <GrFormNext />
+                                    </NextButton>
                                 </Swiper>
                                 </ContentImgBox>
-                                
+                                : null}
+                                <BodyTxtBox>
                                 <ContentView>조회수 1000회 | 댓글 100개</ContentView>
+                                <ContentTime>15분전</ContentTime>
+                                </BodyTxtBox>
                             </BodyContent>
+                                
+                            
+
                             <BodyContainer>
+
                                 <BodyCommentBox>
-                                    {helpsfind && helpsfind.commentList.map((comment) => (
-                                        comment.articleId === helpsfind.articleId ? 
-                                        <HelpDetailComment key={comment.commentId} comment={comment} helpsfind={helpsfind} modalRef={modalRef} />
-                                         : null
+                                {helpsfind && helpsfind.commentList.length === 0 ?
+                                    <BodyComment>작성한 댓글이 없습니다 <br></br> 첫번째 댓글을 남겨보세요 </BodyComment>
+                                :
+                                <>
+                                {helpsfind && helpsfind.commentList.map((comment) => (
+                                    // Number(id) === helpsfind.articleId ? 
+                                <HelpDetailComment key={comment.commentId} comment={comment} helpsfind={helpsfind} modalRef={modalRef} />
+                                        //  : null
                                     ))}
+                                </>
+                                }
                                 </BodyCommentBox>
                             </BodyContainer>
                         </DetailBody>
@@ -177,6 +224,9 @@ const HelpDetail = () => {
         </Container>
     );
 };
+
+
+
 
 export default HelpDetail;
 
@@ -230,6 +280,7 @@ const HeaderTitle = styled.div`
 `;
 const Revisebox = styled.div`
     border: 1px solid #f1f0f0;
+    z-index: 5;
     border-radius: 10px;
     position: absolute;
     display: flex;
@@ -237,6 +288,8 @@ const Revisebox = styled.div`
     right: 0;
     top:55px;
     background-color: #fff;
+    box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
+    border-radius: 16px;
     /* box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.05); */
 `
 const ReviseButton = styled.button`
@@ -292,8 +345,11 @@ const Bodytxt = styled.div`
     display: flex;
     flex-direction: column;
     margin-left: 10px;
+    position:relative;
 `
+
 const Txtname = styled.h3`
+    cursor:pointer;
     /* margin: 0px; */
 `
 const Txtstudent = styled.p`
@@ -301,44 +357,84 @@ const Txtstudent = styled.p`
     font-size: 12px;
     color: gray;
 `
+const ChaetingBox = styled.div`
+    border: 1px solid #f1f0f0;
+    border-radius: 16px;
+    position: absolute;
+    text-align: center;
+    line-height: 30px;
+    top:25px;
+    z-index: 1;
+    width:60px;
+    height:30px;
+    background-color: #fff;
+    cursor:pointer;
+    box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
+    color:gray;
+    cursor:pointer;
+    :hover {
+        color: #000;
+    }
+`
+
 const BodyContent = styled.div`
     padding: 0px 20px;
     /* border: 1px solid red; */
     width: 100%;
-    height: 300px;
+    
 `
 const ContentTitle = styled.h3`
     /* margin:10px 0px; */
+    font-weight: 600;
+    font-size: 18px;
+    width:100%;
 `
 const ContentBody = styled.p`
 /* border: 1px solid blue; */
     color:gray;
+    font-size: 16px;
+    font-weight: 400;
+    width:100%;
+    margin-bottom: 10px;
 `
 
 const ContentImgBox = styled.div`
     width:100%;
-    height:100%;
-    display:flex;
-    flex-direction: row;
-    background-color: red;
+    height:250px;
+    border-radius: 20px;
+
     
 `
 const ContentImg = styled.img`
     /* border:1px solid gray; */
-    width: 20%;
+    width: 100%;
+    height:250px;
     display:flex;
-    flex-direction: row;
     border-radius: 20px;
     /* margin : 20px 0px; */
     /* background-repeat: no-repeat;
     background-size: cover; */
 `
 const ContentView = styled.p`
+    
     font-size: 14px;
+    line-height: 40px;
+    height:40px;
     /* margin:30px 0px 10px; */
     color: gray;
     /* border: 1px solid blue; */
     
+`
+const BodyTxtBox = styled.div`
+    display: flex;
+    width:100%;
+    align-items: center;
+`
+const ContentTime = styled.div`
+      color: gray;
+      font-size: 14px;
+      margin-left: auto;
+      
 `
 
 const BodyContainer = styled.div`
@@ -406,4 +502,20 @@ const CommentPost = styled.input`
 const CommentButton = styled.button`
     border: none;
     cursor: pointer;
+`
+const BodyComment = styled.div`
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    color:#B3B3B3;
+    height:100px;
+    width:100%;
+    text-align: center;
+`
+const PrevButton =styled.button`
+
+`
+const NextButton =styled.button`
+
 `
