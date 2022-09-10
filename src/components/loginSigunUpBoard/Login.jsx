@@ -18,6 +18,8 @@ const Login = () => {
   const { isLogin, schoolInfo, error } = useSelector((state)=> state.user)
   console.log(isLogin)
   console.log(schoolInfo)
+  const state = useSelector((state)=> state)
+  console.log(state)
   const [formValue, setFormValue] = useState({
     email: '',
     password: '',
@@ -25,7 +27,6 @@ const Login = () => {
   const { email, password } = formValue;
   const [isActive, setIsActive] = useState(false);
   const [loginFail, setLoginFail] = useState('');
-  // const { error, isLogin } = useSelector((state) => state.users);
 
   const handleCheck = (e) => {
     setIsActive(e);
@@ -34,7 +35,6 @@ const Login = () => {
   // 이메일
   const onChangeEmailHandler = (e) => {
     setFormValue((prev) => {
-      // console.log(e.target.value);
       return {
         ...prev,
         email: e.target.value,
@@ -45,7 +45,6 @@ const Login = () => {
   // 비밀번호
   const onChangePasswordHandler = (e) => {
     setFormValue((prev) => {
-      // console.log(e.target.value);
       return {
         ...prev,
         password: e.target.value,
@@ -69,29 +68,22 @@ const Login = () => {
   
   // 로그인버튼
   const [modalOpen, setModalOpen] = useState(false);
-
-  const loginCheck = () => {
-    console.log('isLogin!!!!!!!!!', isLogin)
-    if (isLogin) {
-      if (schoolInfo === true) {
+  const [isLoginCheck, setIsLoginCheck] =useState(false)
+  const onSubmitHandler = async (formValue) => {
+    const response = await dispatch(__loginUser(formValue))
+    // console.log(response)
+    if (response.payload.success === true) {
+      if (response.payload.data.schoolInfo === true) {
         navigate('/');
-      } else if (schoolInfo === false) {
+      } else if (response.payload.data.schoolInfo === false) {
         navigate('/schoolinfo');
       }
     }
-     else {
+     else if(response.error) {
       setModalOpen(true);
     }
-  }
-
-  const onSubmitHandler = async (formValue) => {
-    await dispatch(__loginUser(formValue))
-    console.log('dispatch', isLogin)
-    // dispatch(getUser());
-    loginCheck();
   };
 
-  const [isLoginCheck, setIsLoginCheck] =useState(false)
   useEffect(() => {
     if (formValue.email !== '' && formValue.password !== '') {
       handleCheck(true);
@@ -100,12 +92,10 @@ const Login = () => {
     }
   },[formValue])
 
-  // console.log('93', isLogin)
-  // console.log(error)
   useEffect(()=>{
-    dispatch(getUser());
     setIsLoginCheck(isLogin)
-  }, [dispatch, isLoginCheck]);
+    dispatch(getUser());
+  }, [dispatch, isLogin]);
 
   return (
     <>
@@ -155,7 +145,6 @@ const Login = () => {
             type='submit'
             width='100%'
             height="100%"
-            // padding='10px 0'
             isDisabled={isActive ? false : true}
             color='white'
             style={{ marginTop: '50px', backgroundColor:"#f7931e" }}
