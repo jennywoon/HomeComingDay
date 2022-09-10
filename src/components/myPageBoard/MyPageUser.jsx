@@ -1,12 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import { AiOutlineCamera } from "react-icons/ai";
-import { removeCookie } from '../../shared/cookies';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import Cookies from "universal-cookie";
 import { useEffect } from 'react';
 import { __getMyPage } from '../../redux/modules/MyPageSlice';
+import MyPageLogoutModal from "./MyPageLogoutModal"
 
 const MyPageUser = () => {
 
@@ -19,7 +18,14 @@ const MyPageUser = () => {
         dispatch(__getMyPage())
     }, [dispatch])
 
+    const [modalOpen, setModalOpen] = useState(false);
+    const showModal = (e) => {
+        e.preventDefault();
+        setModalOpen(true);
+    }
     return (
+        <StLoginContainer>
+        {modalOpen && <MyPageLogoutModal setModalOpen={setModalOpen}/>}
         <UserContainer>
             <UserImgWrap>
                 <UserImg>
@@ -42,21 +48,26 @@ const MyPageUser = () => {
                 </FirstWrap>
                 <SecondWrap>
                     <LogoutButton
-                        onClick={() => {
-                            removeCookie("accessToken")
-                            removeCookie("refreshToken")
-                            navigate("/login")
-                        }}
+                        onClick={showModal}
                     >
                         <LogoutTitle>로그아웃</LogoutTitle>
                     </LogoutButton>
                 </SecondWrap>
             </UserInfo>
         </UserContainer>
+        </StLoginContainer>
     );
 };
 
 export default MyPageUser;
+
+const StLoginContainer = styled.form`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const UserContainer = styled.div`
     width: 90%;

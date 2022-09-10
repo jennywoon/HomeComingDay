@@ -18,3 +18,8 @@ export const getCookie = (name) => {
 export const removeCookie = (name) => {
   return cookies.remove(name);
 };
+
+export function logout(){
+  cookies.remove("accessToken", {path: "/"})
+  cookies.remove("refreshToken", {path: "/"})
+}

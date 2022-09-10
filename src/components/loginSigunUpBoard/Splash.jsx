@@ -9,7 +9,7 @@ const Splash = () => {
         useEffect(() => {
             const interval = setTimeout(() => {
                 setFlag((value) => !value);
-            }, 3000);
+            }, 2000);
             return () => {
                 clearTimeout(interval);
             };

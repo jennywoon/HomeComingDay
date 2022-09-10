@@ -10,9 +10,6 @@ import { BiSearch } from "react-icons/bi";
 import { FiUser } from "react-icons/fi";
 import { HiOutlineChatAlt2 } from "react-icons/hi";
 import nonedatasquare from "../../assets/nonedatasquare.png"
-import { useInView } from 'react-intersection-observer';
-import { useCallback } from 'react';
-import axios from 'axios';
 
 const MyPageHome = () => {
 
@@ -115,10 +112,13 @@ const MyPageBottom = styled.div`
     /* border: 1px solid blue; */
 `
 const ArticleWrap = styled.div`
-    height: 100%;
+    height: 85%;
+    /* height: 100%; */
+    /* border: 1px solid red; */
     overflow-y: scroll;
     ::-webkit-scrollbar{
         width: 0px;
+        /* background-color: red; */
     }
 `
 const BottomWrap = styled.div`

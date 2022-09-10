@@ -10,10 +10,6 @@ import { __postDate } from '../../redux/modules/DateSlice';
 
 const CalendarModal = ({ setModalOpen }) => {
     const dispatch = useDispatch();
-    // const [value, onChange] = useState(new Date())
-
-    // const {dates} = useSelector((state) => state.dates)
-    // console.log(dates);
 
     const [date, setDate] = useState({
         calendarDate: "",
@@ -23,9 +19,6 @@ const CalendarModal = ({ setModalOpen }) => {
 
     const modalRef = useRef(null);
 
-    // const {realcalendars} = useSelector((state) => state.realcalendars);
-    // console.log(realcalendars);
-
     const closeModal = (e) => {
         if (!modalRef.current.contains(e.target)) {
             setModalOpen(false);
@@ -33,12 +26,6 @@ const CalendarModal = ({ setModalOpen }) => {
     };
 
     const onChange = value => setDate(value);
-
-    // const callDay = (clikedDay) => { 
-    //     console.log(clikedDay)
-    // };
-
-    // const {clikedDay} = value;
 
     const onsubmitHandler = (e) => {
         e.preventDefault();

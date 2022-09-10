@@ -34,7 +34,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  /* height: 100vh; */
+  height: 100vh;
   background-color: #f7ede2;
   overflow: hidden;
   @media screen and (max-width: 1024px) {
