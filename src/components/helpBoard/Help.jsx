@@ -6,7 +6,7 @@ import HelpCard from "./HelpCard";
 import Loading from "../test/Loading";
 import helporange from "../../assets/helporange.png"
 import helpwhite from "../../assets/helpwhite.png"
-import axios from "axios";
+import nonedatasquare from "../../assets/nonedatasquare.png"
 
 const Help = () => {
 
@@ -35,14 +35,20 @@ const Help = () => {
           <option>인기순</option>
         </Select>
         {/* <Loading /> */}
-        {/* <Iconbox onClick={()=>navigate('/helpform')}>
-          <TiPencil color="white" size="40px"/>
-        </Iconbox> */}
         <HelpList>
           <>
-            {helps && helps.slice(0).map((help) => (
-              <HelpCard key={help.articleId} id={help.articleId} help={help} />
-            ))}
+            {helps && helps.length > 0 ? (
+              <div>
+                {helps && helps.slice(0).map((help) => (
+                  <HelpCard key={help.articleId} id={help.articleId} help={help} />
+                ))}
+              </div>
+            ) : (
+              <NoneData>
+                <NoneDataImg></NoneDataImg>
+                <p>내가 쓴 게시글이 없습니다</p>
+              </NoneData>
+            )}
           </>
         </HelpList>
       </HelpWrap>
@@ -62,6 +68,7 @@ const HelpContainer = styled.div`
 const BannerWrap = styled.div`
   width: 100%;
   height: 180px;
+  /* height: 20% */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -71,6 +78,7 @@ const BannerWrap = styled.div`
 `
 const Banner = styled.div`
   height: 180px;
+  /* height: 20% */
   width: 95%;
   /* border: 1px solid red; */
   background-image: url(${helporange});
@@ -84,7 +92,7 @@ const HelpWrap = styled.div`
   top: 170px;
   width: 100%;
   height: 100vh;
-  /* height: 100%; */
+  /* height: 63%; */
   border-radius: 20px;
   background-color: white;
   padding: 10px 5px 10px 5px;
@@ -106,9 +114,9 @@ const Select = styled.select`
 `;
 
 const HelpList = styled.div`
-  height: 100%;
-  width: 100%;
   /* height: 100%; */
+  width: 100%;
+  height: 97%;
   /* border: 1px solid green; */
   overflow-y: scroll;
   /* overflow-y: auto; */
@@ -124,3 +132,22 @@ const HelpList = styled.div`
     background: #f7931e;
   } */
 `;
+
+const NoneData = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #b3b3b3;
+    font-weight: 500;
+    font-size: 16px;
+`
+const NoneDataImg = styled.div`
+    width: 50px;
+    height: 50px;
+    background-image: url(${nonedatasquare});
+    background-position: center;
+    background-size: 100% 100%;
+`

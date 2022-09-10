@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom"
 import styled from 'styled-components';
 import MyPageUser from './MyPageUser';
@@ -9,18 +9,24 @@ import { AiOutlineHome } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
 import { FiUser } from "react-icons/fi";
 import { HiOutlineChatAlt2 } from "react-icons/hi";
+import nonedatasquare from "../../assets/nonedatasquare.png"
+import { useInView } from 'react-intersection-observer';
+import { useCallback } from 'react';
+import axios from 'axios';
 
 const MyPageHome = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const myarticles = useSelector((state) => state.mypages.myarticles.content)
+    const myarticles = useSelector((state) => state.mypages.myarticles)
     console.log(myarticles)
 
     useEffect(() => {
         dispatch(__getMyArticle())
     }, [dispatch])
+
+    // 무한 스크롤
 
     return (
         <HomeContainer>
@@ -35,19 +41,20 @@ const MyPageHome = () => {
                             {myarticles && myarticles.length}
                         </PostCount>
                     </TitleWrap>
-                    <>
+                    <ArticleWrap>
                         { myarticles && myarticles.length > 0 ? (
                             <div>
-                                {myarticles && myarticles.slice(0).map((myarticle) => (
+                                {myarticles && myarticles.slice(0).reverse().map((myarticle) => (
                                     <MyPageCard key={myarticle.articleId} id={myarticle.articleId} myarticle={myarticle} />
                                 ))}
                             </div>
                         ) : (
                             <NoneData>
+                                <NoneDataImg/>
                                 <p>내가 쓴 게시글이 없습니다</p>
                             </NoneData>
                         )}
-                    </>
+                    </ArticleWrap>
                 </BottomWrap>
             </MyPageBottom>
             <SecondWrap>
@@ -90,7 +97,8 @@ const HomeContainer = styled.div`
 
 const MyPageTop = styled.div`
     width: 100%;
-    height: 200px;
+    /* height: 200px; */
+    height: 22%;
     display: flex;
     justify-content: center; 
     align-items: center;
@@ -100,14 +108,22 @@ const MyPageTop = styled.div`
 
 const MyPageBottom = styled.div`
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
+    height: 78%;
     display: flex;
     justify-content: center;
     /* border: 1px solid blue; */
 `
-
+const ArticleWrap = styled.div`
+    height: 100%;
+    overflow-y: scroll;
+    ::-webkit-scrollbar{
+        width: 0px;
+    }
+`
 const BottomWrap = styled.div`
     width: 90%;
+    height: 100%;
 `
 const TitleWrap = styled.div`
     display: flex;
@@ -121,12 +137,22 @@ const NoneData = styled.div`
     width: 100%;
     height: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     color: #b3b3b3;
     font-weight: 500;
     font-size: 16px;
 `
+
+const NoneDataImg = styled.div`
+    width: 50px;
+    height: 50px;
+    background-image: url(${nonedatasquare});
+    background-position: center;
+    background-size: 100% 100%;
+`
+
 const MyPostTitle = styled.div`
     color: #bebebe;
 `

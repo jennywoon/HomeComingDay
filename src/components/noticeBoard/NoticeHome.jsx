@@ -27,7 +27,7 @@ const ChatHome = () => {
                         <TbBellRinging size="32" color="white" />
                     </HeadImg>
                     <ChatContainer>
-                        {/* map 돌릴 예정 */}
+                        {/* map 돌릴 예정, 맵 돌리고 게시글 없을때 이미지 추가 */}
                         <FirstContainer>
                             <UserName>[마케팅 신입인데 뭘 해야...]게시글에 댓글(2)이 달렸습니다</UserName>
                             <ChatContent>15분 전</ChatContent>

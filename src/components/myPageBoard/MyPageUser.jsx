@@ -45,7 +45,6 @@ const MyPageUser = () => {
                         onClick={() => {
                             removeCookie("accessToken")
                             removeCookie("refreshToken")
-                            removeCookie("userName")
                             navigate("/login")
                         }}
                     >
@@ -62,6 +61,7 @@ export default MyPageUser;
 const UserContainer = styled.div`
     width: 90%;
     height: 78%;
+    /* height: 200px; */
     display: flex;
     /* border: 1px solid green; */
 `
