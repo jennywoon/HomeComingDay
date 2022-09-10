@@ -20,7 +20,6 @@ export const __loginUser = createAsyncThunk(
       const data = await axios.post(`${BASE_URL}/login`, payload, config);
       setCookie('accessToken', `${data.data.data.accessToken}`);
       setCookie('refreshToken', `${data.data.data.refreshToken}`);
-      // setCookie('schoolinfo', `${data.data.headers.schoolinfo}`);
       console.log(data.data.success)
       console.log(data.data)
       return thunkAPI.fulfillWithValue(data.data);
@@ -90,8 +89,7 @@ const initialState = {
   emailCheck: [],
   sendEmail: [],
   checkEmail: [],
-  isLogin: false,
-  schoolInfo: false,
+  isLoading: false,
   error: null,
 };
 
@@ -101,7 +99,6 @@ export const UserSlice = createSlice({
   reducers: {
     getUser: (state, action) =>
     (action.payload = {
-      user: getCookie('nickname'),
       isLogin: getCookie('accessToken') ? true : false,
     }),
   },
@@ -115,7 +112,6 @@ export const UserSlice = createSlice({
       console.log(action.payload)
       state.isLogin = action.payload.success;
       state.schoolInfo = action.payload.data['schoolInfo'];
-      // state.user.isLogin = true;
     },
     [__loginUser.rejected]: (state, action) => {
       state.isLoading = false;
