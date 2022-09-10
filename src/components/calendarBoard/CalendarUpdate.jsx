@@ -6,7 +6,6 @@ import { __getHelp, __postHelp } from '../../redux/modules/HelpSlice';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import CalendarModal from './CalendarModal';
 import TimeRangePicker from '@wojtekmaj/react-timerange-picker';
-import "./TimeRange.css"
 import Button from '../elements/Button';
 import {
   __getCalendar,
