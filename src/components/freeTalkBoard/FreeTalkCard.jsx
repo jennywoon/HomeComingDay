@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { BiCommentDetail } from "react-icons/bi";
-import { __getFreeTalk } from '../../redux/modules/FreeTalkSlice';
+import { BsQuestionSquare } from "react-icons/bs";
+import { __getFreeTalk , __postFreeTalk} from '../../redux/modules/FreeTalkSlice';
 import { useNavigate } from 'react-router-dom';
 
 const FreeTalkCard = ({freetalk , id}) => {
@@ -10,6 +10,7 @@ const FreeTalkCard = ({freetalk , id}) => {
     const navigate = useNavigate();
     
     useEffect(() => {
+        dispatch(__postFreeTalk());
         dispatch(__getFreeTalk());
     }, [dispatch])
 
@@ -20,24 +21,31 @@ const FreeTalkCard = ({freetalk , id}) => {
     return (
         <FreeTalkContainer onClick={onClickNavi}>
             <CardHead>
-            <HeadImg>
-                    <BiCommentDetail />
+                <HeadImg>
+                    <BsQuestionSquare />
                 </HeadImg>
-              <HeadName>이름</HeadName>
-              <HeadStudent>14학번</HeadStudent>
-              <HeadTime>15분전</HeadTime>
+                <HeadUser>
+                    <HeadTop>
+                        <HeadName>{freetalk.username}</HeadName>
+                        <HeadTime>{freetalk.createdAt}</HeadTime>
+                    </HeadTop>
+                    <HeadBottom>
+                        <HeadDepartment>{freetalk.departmentName}</HeadDepartment>
+                        <HeadStudent>· {freetalk.admission}</HeadStudent>
+                    </HeadBottom>
+                </HeadUser>
             </CardHead>
             <CardBody>
-              <BodyTitle>{freetalk.title}</BodyTitle>
-              {/* <BodyContent>
-              {freetalk.content}
-              </BodyContent> */}
+                <BodyTitle>{freetalk.title}</BodyTitle>
+                {/* <BodyContent>
+                    {help.content}
+                </BodyContent> */}
             </CardBody>
             <CardFooter>
-              <Views>조회수 1500</Views>
-              <CommentCount>댓글 2700</CommentCount>
+                <Views>조회수 {freetalk.views}</Views>
+                <CommentCount>댓글 {freetalk.commentCnt}</CommentCount>
             </CardFooter>
-          </FreeTalkContainer>
+        </FreeTalkContainer>
     );
 };
 
@@ -64,13 +72,33 @@ const HeadImg = styled.div`
     background-color: #f6bd60;
     border-radius: 50%;
 `
-const HeadName = styled.h2`
-    font-size: 18px;
+
+const HeadUser = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
     margin: 0px 5px;
 `
-const HeadStudent = styled.p`
+const HeadTop = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    /* border: 1px solid red; */
+`
+const HeadBottom = styled.div`
+    display: flex;
     font-size: 12px;
     color:gray;
+    gap: 5px;
+`
+const HeadDepartment = styled.div``
+const HeadName = styled.h2`
+    font-size: 18px;
+    /* margin: 0px 5px; */
+`
+const HeadStudent = styled.p`
+
 `
 const HeadTime = styled.p`
     font-size: 12px;
