@@ -89,6 +89,7 @@ const SignUp = () => {
       if (data.data.success === true) {
         setIsOnCheck(true);
         setEmailConfirm(true);
+        setEmailDuplicated(false)
       } else if (data.data.success === false) {
         setIsOnCheck(false);
         setEmailDuplicated(true)
@@ -128,11 +129,11 @@ const SignUp = () => {
         authKey: e.target.value
       }
     })
-    // setEmailCheck({ email: e.target.value, authKey: e.target.value });
   };
 
   // 이메일 인증번호 확인
   const [isCheck, setIsCheck] = useState(false);
+  const [emailChecked, setEmailChecked] = useState(false)
   const handleCheckEmail = async () => {
     const checkEmail = {
       email: email,
@@ -143,24 +144,15 @@ const SignUp = () => {
       console.log(data.data);
       if (data.data.success === true) {
         setIsCheck(true);
+        setEmailChecked(false)
       } else if (data.data.success === false) {
         setIsCheck(false);
+        setEmailChecked(true)
       }
     } catch (error) {
       console.log('error ', error);
     }
   }
-  // const handleCheckEmail = (e) => {
-  //   e.preventDefault();
-  //   // setEmailCheck((prev) => {
-  //   //   return {
-  //   //     ...prev,
-  //   //     email: e.target.value,
-  //   //     authKey: e.target.value,
-  //   //   };
-  //   // });
-  //   dispatch(__postCheckEmail(emailCheck));
-  // };
 
   // 비밀번호 유효성검사
   const handleChangePassword = (e) => {
@@ -244,7 +236,11 @@ const SignUp = () => {
       !emailError &&
       !nameError &&
       !passwordError &&
-      !confirmPasswordError
+      !confirmPasswordError &&
+      !isOnCheck &&
+      !emailDuplicated &&
+      !emailConfirm &&
+      !isCheck
     ) {
       setIsActive(true);
     } else {
@@ -259,11 +255,11 @@ const SignUp = () => {
     nameError,
     passwordError,
     confirmPasswordError,
+    isOnCheck,
+    emailDuplicated,
+    emailConfirm,
+    isCheck
   ]);
-
-  // const onClickHandler = () => {
-  //   navigate('/schoolinfo')
-  // }
 
   return (
     <FormContainer>
@@ -297,9 +293,7 @@ const SignUp = () => {
                 <Input
                   type='email'
                   width='100%'
-                  style={{ marginBottom: '10px' }}
                   onChange={handleChangeEmail}
-                  // text={emailMessage}
                 />
                 <StEmailButton
                   type='button'
@@ -312,7 +306,7 @@ const SignUp = () => {
               {emailError ? (
                 <StErrorMessage>이메일 형식에 맞게 입력하세요</StErrorMessage>
               ) : null}
-              {emailDuplicated ? (<StErrorMessage>중복된 이메일입니다</StErrorMessage>) : null}
+              {emailDuplicated ? (<StErrorMessage>동일한 이메일이 존재합니다.</StErrorMessage>) : null}
               {emailConfirm ? (
                 <>
                   <StSendEmailButton type='button' onClick={handleSendEmail} isSend={isSend}>
@@ -328,12 +322,12 @@ const SignUp = () => {
                     <StEmailCheckButton
                       type='button'
                       isCheck={isCheck}
-                      // disabled={!isOnCheck ? true : false}
                       onClick={handleCheckEmail}
                     >
                       {isCheck ? '확인완료' : '인증확인'}
                     </StEmailCheckButton>
                   </StFlexbox>
+                  {emailChecked ? (<StErrorMessage>인증번호가 일치하지 않습니다.</StErrorMessage>) : null}
                 </>
               ) : null}
             </StSignupWrap>
@@ -496,22 +490,20 @@ const StEmailCheckButton = styled.button`
   padding: 5px 10px;
   font-size: 14px;
   font-weight: 600;
-  /* cursor: ${({ emailError }) => (emailError ? 'none' : 'pointer')} */
   cursor: pointer;
   `;
 
 const StSendEmailButton = styled.button`
   width: 100%;
-  color: #b3b3b3;
-  background-color: '#fff';
-  border: '1px solid #b3b3b3';
-  /* border: ${({ isSend }) => (isSend ? '1px solid #f7931e' : '1px solid #b3b3b3')}; */
+  color: ${({ isSend }) => (isSend ? '#f7931e' : '#b3b3b3')};
+  background-color: #fff;
+  border: 1px solid #b3b3b3;
   border-radius: 16px;
   padding: 5px 10px;
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
-  margin-bottom: 10px;
+  margin: 10px 0;
 `;
 
 const StVisible = styled.span`

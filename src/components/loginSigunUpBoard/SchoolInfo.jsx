@@ -52,7 +52,7 @@ const SchoolInfo = () => {
 
   // 입학년도 검색
   const admissionSearch = useSelector((state) => state.schoolInfo.admissions)
-  // console.log(admissionSearch)
+  console.log(admissionSearch)
 
   const [selectedAdmission, setSelectedAdmission] = useState([]);
 
