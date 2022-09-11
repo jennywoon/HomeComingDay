@@ -15,10 +15,11 @@ const FreeTalkDetail = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { freetalks } = useSelector((state) => state.freetalks)
-    const { freeComments } = useSelector((state) => state.freetalks)
+    // const { freeComments } = useSelector((state) => state.freetalks)
     const { id } = useParams();
     // console.log(id)
     const [show, setShow] = useState(false)
+    const [showChaet, setShowChaet] = useState(false)
     const [comment, setComment] = useState("")
     const modalRef = useRef(null);
 
@@ -26,13 +27,13 @@ const FreeTalkDetail = () => {
         setComment(e.target.value)
     }
 
+ // useEffect(() => {
+    //     dispatch(__getFreeTalk());
+    //     dispatch(__getFreeComment());
+    // }, [dispatch])
+
     const freetalksfind = freetalks.find((freetalk) => freetalk.id === Number(id))
-
-    useEffect(() => {
-        dispatch(__getFreeTalk());
-        dispatch(__getFreeComment());
-    }, [dispatch])
-
+   
     console.log("freetalks", freetalks, "freetalksfind", freetalksfind)
 
     const onCilckShow = () => {
@@ -113,7 +114,7 @@ const FreeTalkDetail = () => {
 
                             <BodyCommentBox>
                                 {/* 댓글맵돌리기  */}
-                                {freeComments && freeComments.map((comment) => (
+                                {freetalksfind && freetalksfind.map((comment) => (
                                     Number(comment.articleid) === freetalksfind.id ? <FreeTalkDetailComment key={comment.id} comment={comment} freetalksfind={freetalksfind} modalRef={modalRef} /> : null
                                 ))}
 
