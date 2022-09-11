@@ -76,6 +76,7 @@ const SignUp = () => {
 
   // 이메일 중복확인
   const [isOnCheck, setIsOnCheck] = useState(false);
+  const [emailDuplicated, setEmailDuplicated]  = useState(false)
   const [emailConfirm, setEmailConfirm] = useState(false);
   const handleChangeEmailCheck = async () => {
     const newEmail = {
@@ -90,6 +91,7 @@ const SignUp = () => {
         setEmailConfirm(true);
       } else if (data.data.success === false) {
         setIsOnCheck(false);
+        setEmailDuplicated(true)
       }
       }
       
@@ -99,28 +101,15 @@ const SignUp = () => {
   };
 
   // 이메일 보내기
+  const [isSend, setIsSend] = useState(false)
   const [disabled, setDisabled] = useState(false);
-  // const [emailSend, setEmailSend] = useState({
-  //   email: '',
-  // });
-  // const handleSendEmail = (e) => {
-  //   e.preventDefault();
-  //   // setEmailSend((prev) => {
-  //   //   return {
-  //   //     ...prev,
-  //   //     email: e.target.value,
-  //   //   };
-  //   // });
-  //   setEmailSend({email: e.target.value})
-  //   setDisabled(true);
-  //   dispatch(__postSendEmail(emailSend));
-  // }
   const handleSendEmail = async () => {
     const sendEmail = {
       email: email,
     };
     try {
       const data = await axios.post(`${BASE_URL}/signup/sendEmail`, sendEmail);
+      setIsSend(true)
       console.log(data.data);
     } catch (error) {
       console.log('error ', error);
@@ -315,8 +304,6 @@ const SignUp = () => {
                 <StEmailButton
                   type='button'
                   isOnCheck={isOnCheck}
-                  // emailDBCheck={emailDBCheck}
-                  // disabled={!isOnCheck ? true : false}
                   onClick={handleChangeEmailCheck}
                 >
                   {isOnCheck ? '확인완료' : '중복확인'}
@@ -325,10 +312,11 @@ const SignUp = () => {
               {emailError ? (
                 <StErrorMessage>이메일 형식에 맞게 입력하세요</StErrorMessage>
               ) : null}
+              {emailDuplicated ? (<StErrorMessage>중복된 이메일입니다</StErrorMessage>) : null}
               {emailConfirm ? (
                 <>
-                  <StSendEmailButton type='button' onClick={handleSendEmail}>
-                    해당 이메일로 인증번호 발송
+                  <StSendEmailButton type='button' onClick={handleSendEmail} isSend={isSend}>
+                  {isSend ? '해당 이메일로 인증번호 발송 완료' : '해당 이메일로 인증번호 발송'}
                   </StSendEmailButton>
                   <Stlabel>인증번호</Stlabel>
                   <StFlexbox>
@@ -337,14 +325,14 @@ const SignUp = () => {
                       style={{ marginRight: '10px' }}
                       onChange={handleChangeAuthKey}
                     />
-                    <StEmailButton
+                    <StEmailCheckButton
                       type='button'
                       isCheck={isCheck}
                       // disabled={!isOnCheck ? true : false}
                       onClick={handleCheckEmail}
                     >
-                      {isOnCheck ? '확인완료' : '인증확인'}
-                    </StEmailButton>
+                      {isCheck ? '확인완료' : '인증확인'}
+                    </StEmailCheckButton>
                   </StFlexbox>
                 </>
               ) : null}
@@ -493,13 +481,31 @@ const StEmailButton = styled.button`
   font-weight: 600;
   /* cursor: ${({ emailError }) => (emailError ? 'none' : 'pointer')} */
   cursor: pointer;
-`;
+  `;
+
+const StEmailCheckButton = styled.button`
+  position: absolute;
+  right: 0;
+  top: 40%;
+  transform: translatey(-50%);
+  background-color: transparent;
+  border: none;
+  /* border: 0.5px solid #eee; */
+  color: ${({ isCheck }) => (isCheck ? '#03C75A' : '#b3b3b3')};
+  border-radius: 50px;
+  padding: 5px 10px;
+  font-size: 14px;
+  font-weight: 600;
+  /* cursor: ${({ emailError }) => (emailError ? 'none' : 'pointer')} */
+  cursor: pointer;
+  `;
 
 const StSendEmailButton = styled.button`
   width: 100%;
   color: #b3b3b3;
-  background-color: #fff;
-  border: 1px solid #b3b3b3;
+  background-color: '#fff';
+  border: '1px solid #b3b3b3';
+  /* border: ${({ isSend }) => (isSend ? '1px solid #f7931e' : '1px solid #b3b3b3')}; */
   border-radius: 16px;
   padding: 5px 10px;
   font-size: 12px;
