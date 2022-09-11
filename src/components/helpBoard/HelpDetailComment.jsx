@@ -8,6 +8,7 @@ import { __deleteHelpComment, __updateHelpComment, __getHelp, __getDetailHelp, _
 import Input from "../elements/Input";
 import { useParams } from 'react-router-dom';
 import { BiDotsVerticalRounded } from "react-icons/bi";
+import HelpCommentDeleteModal from './HelpCommentDeleteModal';
 
 
 const DetailComment = ({ comment, modalRef, helpsfind }) => {
@@ -66,12 +67,17 @@ const DetailComment = ({ comment, modalRef, helpsfind }) => {
         setIsEdit(!isEdit)
     }
 
-
-
+    //모달
+    const [modalOpen, setModalOpen] = useState(false);
+    const showModal = (e) => {
+        e.preventDefault();
+        setModalOpen(true);
+    }
 
     return (
 
         <CommentContain >
+            {modalOpen && <HelpCommentDeleteModal setModalOpen={setModalOpen} />}
             <CommentBox >
                 <CommentImg src={Img} alt="" />
                 <CommentTxt>
@@ -85,7 +91,7 @@ const DetailComment = ({ comment, modalRef, helpsfind }) => {
                 {showComment ?
                     <Revisebox ref={modalRef}>
                         <ReviseButton onClick={onClickRevice} type="button">수정</ReviseButton>
-                        <DeleteButton onClick={onClickDelete} type="button">삭제</DeleteButton>
+                        <DeleteButton onClick={showModal} type="button">삭제</DeleteButton>
                     </Revisebox>
                     : null}
 

@@ -15,6 +15,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
+import HelpDeleteModal from './HelpDeleteModal';
 
 
 const HelpDetail = () => {
@@ -62,19 +63,6 @@ const HelpDetail = () => {
         setShowChaet(!showChaet)
     }
 
-
-    const onClickDelete = () => {
-        const result = window.confirm("정말 삭제하시겠습니까?")
-        if (result) {
-            dispatch(__deleteHelp(helpsfind.articleId))
-            navigate("/")
-        } else {
-            navigate("/")
-            return
-
-        }
-    }
-
     const onClickRevice = () => {
         navigate(`/helpupdate/${id}`)
     }
@@ -120,9 +108,17 @@ const HelpDetail = () => {
         onSlideChange: (e) => setMainImageIndex(e.activeIndex)
     }
 
+    //모달
+    const [modalOpen, setModalOpen] = useState(false);
+    const showModal = (e) => {
+        e.preventDefault();
+        setModalOpen(true);
+    }
 
     return (
+
         <Container>
+            {modalOpen && <HelpDeleteModal setModalOpen={setModalOpen} />}
             <Header />
             <HelpContainer >
                 <HelpWrap>
@@ -145,16 +141,13 @@ const HelpDetail = () => {
                                         : null
                                     }
                                 </Bodytxt>
-
-                                {/* <AiOutlineMenu size="20px" style={{ marginLeft: "auto", cursor: "pointer" }}
-                                    onClick={onCilckShow} /> */}
                                 <BiDotsVerticalRounded
                                     size="20px" style={{ marginLeft: "auto", cursor: "pointer" }}
                                     onClick={onCilckShow} />
                                 {show ?
                                     <Revisebox ref={modalRef}>
                                         <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
-                                        <DeleteButton onClick={onClickDelete}>삭제</DeleteButton>
+                                        <DeleteButton onClick={showModal}>삭제</DeleteButton>
                                     </Revisebox>
                                     : null
                                 }
@@ -235,7 +228,6 @@ const Container = styled.div`
     height: 100vh;
     overflow-y: hidden;
 `
-
 const HelpContainer = styled.div`
     width: 100%;
     height: 100%;

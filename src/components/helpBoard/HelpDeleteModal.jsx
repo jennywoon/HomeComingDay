@@ -1,15 +1,23 @@
 import React, { useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { logout } from '../../shared/cookies';
+import { useDispatch, useSelector } from 'react-redux';
+import { __deleteHelp } from '../../redux/modules/HelpSlice';
 
-const MyPageLogoutModal = ({ setModalOpen }) => {
+const HelpDeleteModal = ({ setModalOpen }) => {
+
+  const dispatch = useDispatch();
   const closeModal = () => {
     setModalOpen(false);
   };
 
   const navigate = useNavigate();
+  const { helps } = useSelector((state) => state.helps)
+  const { id } = useParams();
+  const helpsfind = helps.find((help) => help.articleId === Number(id))
+
 
   return (
     <Container>
@@ -18,15 +26,15 @@ const MyPageLogoutModal = ({ setModalOpen }) => {
           <FirstWrap>
             <ModalTop>
               <AiOutlineInfoCircle style={{ color: '#f7931e' }} size='28' />
-              <TopTitle>정말 로그아웃 하시겠습니까?</TopTitle>
+              <TopTitle>해당 게시글을 삭제하시겠습니까?</TopTitle>
             </ModalTop>
             <ModalBottom onClick={closeModal}>
               <BottomTitle
               onClick={() => {
-                logout();
-                navigate("/splash")
+                dispatch(__deleteHelp(helpsfind.articleId))
+                navigate("/")
               }}
-              >로그아웃</BottomTitle>
+              >삭제하기</BottomTitle>
               <BottomTitle>돌아가기</BottomTitle>
             </ModalBottom>
           </FirstWrap>
@@ -36,25 +44,25 @@ const MyPageLogoutModal = ({ setModalOpen }) => {
   );
 };
 
-export default MyPageLogoutModal;
+export default HelpDeleteModal;
 
 const Container = styled.div`
   position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   width: 100%;
   z-index: 10;
   overflow: hidden;
-  bottom: 0;
+  /* bottom: 0; */
   @media screen and (max-width: 1024px) {
     background-image: none;
   }
   // 모바일 뷰
   .wrap {
     position: relative;
-    width: 80%;
+    width: 100%;
     max-height: 1202px;
     max-width: 420px;
     margin: auto;
@@ -69,7 +77,9 @@ const Container = styled.div`
 `;
 
 const Wrap = styled.div`
+position: relative;
   width: 100%;
+  /* width: 420px; */
   max-width: 420px;
   height: 100vh;
   /* height: 100%; */
