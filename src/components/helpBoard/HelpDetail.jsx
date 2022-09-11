@@ -101,7 +101,7 @@ const HelpDetail = () => {
         onBeforeInit: (swiper) => {
             swiper.params.navigation.prevEl = navigationPrevRef.current;
             swiper.params.navigation.nextEl = navigationNextRef.current;
-            swiper.activeIndex = setMainImageIndex;
+            // swiper.activeIndex = setMainImageIndex;
             swiper.navigation.update();
         },
         onSwiper: setSwiper,

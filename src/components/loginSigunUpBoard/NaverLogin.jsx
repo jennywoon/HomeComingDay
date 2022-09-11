@@ -126,6 +126,7 @@ const NaverLoginBtn = styled.button`
 	border-radius: 16px;
     width: 100%;
     border: 1px solid #ddd;
+    cursor: pointer;
     /* border: 1px solid blue; */
 `
 

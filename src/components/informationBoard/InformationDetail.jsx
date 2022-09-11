@@ -15,6 +15,7 @@ import SwiperCore, { Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
+import InformationDetailModal from './InformationDetailModal';
 
 const InformationDetail = () => {
     const dispatch = useDispatch();
@@ -92,15 +93,23 @@ const InformationDetail = () => {
         onBeforeInit: (swiper) => {
             swiper.params.navigation.prevEl = navigationPrevRef.current;
             swiper.params.navigation.nextEl = navigationNextRef.current;
-            swiper.activeIndex = setMainImageIndex;
+            // swiper.activeIndex = setMainImageIndex;
             swiper.navigation.update();
         },
         onSwiper: setSwiper,
         onSlideChange: (e) => setMainImageIndex(e.activeIndex)
     }
 
+    //모달
+    const [modalOpen, setModalOpen] = useState(false);
+    const showModal = (e) => {
+        e.preventDefault();
+        setModalOpen(true);
+    }
+
     return (
         <Container>
+            {modalOpen && <InformationDetailModal setModalOpen={setModalOpen} />}
             <Header />
             <InformationContainer>
                 <InformationWrap>
@@ -132,7 +141,7 @@ const InformationDetail = () => {
                                 {show ?
                                     <Revisebox ref={modalRef}>
                                         <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
-                                        <DeleteButton onClick={onClickDelete}>삭제</DeleteButton>
+                                        <DeleteButton onClick={showModal}>삭제</DeleteButton>
                                     </Revisebox>
                                     : null
                                 }

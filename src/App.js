@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import Router from "./shared/Router";
 import './App.css'
 import styled from "styled-components";
+import background from "./assets/background.png"
 
 function App() {
 
@@ -17,10 +18,14 @@ function App() {
 
   return (
     <Container>
+      <TitleWrap>
+        <SiteContent>대학교 졸업생 동문 사이트</SiteContent>
+        <SiteTitle>Homecoming Day</SiteTitle>
+      </TitleWrap>
       <div className='wrap' >
         <Router />
       </div>
-      <GoogleForm>안녕</GoogleForm>
+      {/* <GoogleForm>안녕</GoogleForm> */}
     </Container>
   )
 
@@ -35,8 +40,12 @@ const Container = styled.div`
   justify-content: flex-start;
   align-items: center;
   height: 100vh;
-  background-color: #f7ede2;
+  /* background: linear-gradient(0deg, #FFF4CC 2.36%, #FFFFFF 55.35%); */
+  background-image: url(${background});
+  background-size: 100% 100%;
+  background-position: center;
   overflow: hidden;
+  box-shadow: 0px 0px 12px 2px rgba(0, 0, 0, 0.15);
   @media screen and (max-width: 1024px) {
     background-image: none;
   }
@@ -61,12 +70,31 @@ const Container = styled.div`
   }
 `;
 
-const GoogleForm = styled.div`
-    position: fixed;
-  bottom: 10%;
-  right: 10%;
-  cursor: pointer;
-  @media screen and (max-width: 1400px) {
-    display: none;
-  }
+const TitleWrap = styled.div`
+  position: fixed;
+  left: 10%;
+  width: 305px;
+  height: 37px;
+  left: 61px;
+  /* top: 100px; */
+  top: 70px;
+
 `
+const SiteContent = styled.div`
+  color: #f7931e;
+  font-size: 20px;
+  font-weight: 700;
+`
+const SiteTitle = styled.div`
+  font-size: 30px;
+  font-weight: 700;
+`
+// const GoogleForm = styled.div`
+//     position: fixed;
+//   bottom: 10%;
+//   right: 10%;
+//   cursor: pointer;
+//   @media screen and (max-width: 1400px) {
+//     display: none;
+//   }
+// `

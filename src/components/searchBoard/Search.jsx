@@ -52,7 +52,7 @@ const Search = () => {
             <HelpWrap>
                 <SearchWrap>
                     <SearchDiv>
-                        <BiSearch size="25" style={{ paddingLeft: "20px" }} />
+                        <BiSearch size="37" style={{ paddingLeft: "20px" }} />
                         <SearchInput
                             type="text" name="inputText" value={inputText} onChange={onChangeInput}
                             placeholder="검색어를 입력해주세요" 
@@ -65,7 +65,7 @@ const Search = () => {
                             />
                         <IoCloseCircle
                             onClick={onReset}
-                            size="25" style={{ paddingRight: "20px", cursor: "pointer" }} />
+                            size="37" style={{ paddingRight: "20px", cursor: "pointer" }} />
                     </SearchDiv>
                 </SearchWrap>
                 <RecentSearch>

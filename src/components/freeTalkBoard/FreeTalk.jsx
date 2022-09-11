@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components"
 import { __getFreeTalk } from "../../redux/modules/FreeTalkSlice";
 import FreeTalkCard from "./FreeTalkCard"
-import helporange from "../../assets/helporange.png"
-import helpwhite from "../../assets/helpwhite.png"
+import freetalkorange from "../../assets/freetalkorange.png"
 import nonedatasquare from "../../assets/nonedatasquare.png"
 
 const FreeTalk = () => {
@@ -76,8 +75,7 @@ const Banner = styled.div`
   /* height: 20% */
   width: 95%;
   /* border: 1px solid red; */
-  background-image: url(${helporange});
-  /* background-image: url(${helpwhite}); */
+  background-image: url(${freetalkorange});
   background-position: center;
   background-size: 100% 100%;
 `
