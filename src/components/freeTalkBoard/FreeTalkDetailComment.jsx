@@ -5,10 +5,16 @@ import Img from "../../assets/naverIcon.png"
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Input from "../elements/Input";
-import { __deleteFreeComment ,__updateFreeComment} from '../../redux/modules/FreeTalkSlice';
+import { __deleteFreeTalkComment ,__getFreeTalk,__updateFreeTalkComment} from '../../redux/modules/FreeTalkSlice';
+import { useParams } from 'react-router-dom';
+import { BiDotsVerticalRounded } from "react-icons/bi";
+import FreeTalkCommentDeleteModal from './FreeTalkCommentDeleteModal';
 
-const FreeTalkDetailComment = ({comment,closeModal,modalRef}) => {
+const FreeTalkDetailComment = ({comment,freetalksfind,modalRef}) => {
     const dispatch = useDispatch();
+    const { id } = useParams();
+
+    const {commentId} = freetalksfind.commentList.find((commentmap)=> commentmap.commentId === comment.commentId)
 
     const [showComment, setShowComment] = useState(false)
     const [isEdit, setIsEdit] = useState(false)
@@ -22,12 +28,18 @@ const FreeTalkDetailComment = ({comment,closeModal,modalRef}) => {
         setShowComment(!showComment)
     }
 
-    const onClickDelete = () => {
+    const onClickDelete = async() => {
+        const commentDelete = {
+            articleId : Number(id),
+            commentId : commentId
+        }
         const result = window.confirm("정말 삭제하시겠습니까?")
         if (result) {
-            dispatch(__deleteFreeComment(comment.id))
+      await dispatch(__deleteFreeTalkComment(commentDelete))
+      await dispatch(__getFreeTalk());
+            setShowComment(false)
         } else {
-            return null
+            return
         }
     }
 
@@ -35,28 +47,41 @@ const FreeTalkDetailComment = ({comment,closeModal,modalRef}) => {
         setShowComment(!showComment)
         setIsEdit(!isEdit)
     }
-    const onClickReviceChange = () =>{
+    const onClickReviceChange = async() =>{
         const editcomment = {
-            id : comment.id,
-            comment : editComment
+            articleId : Number(id),
+            commentId : commentId,
+            content : editComment
         }
-        dispatch(__updateFreeComment(editcomment))
+        await dispatch(__updateFreeTalkComment(editcomment))
+        await dispatch(__getFreeTalk());
         setIsEdit(!isEdit)
     }
 
+      //모달
+      const [modalOpen, setModalOpen] = useState(false);
+      const showModal = (e) => {
+          e.preventDefault();
+          setModalOpen(true);
+      }
+
     return (
         <CommentContain>
+            {modalOpen && <FreeTalkCommentDeleteModal setModalOpen={setModalOpen} comment={comment}/>}
         <CommentBox>
             <CommentImg src={Img} alt="" />
             <CommentTxt>
-                <TxtName>최형용</TxtName>
-                <TxtStudent>14학번 <span> 15분 전 </span></TxtStudent>
+                <TxtName>{comment.username}</TxtName>
+                <TxtStudent>{comment.admission} <span> {comment.createdAt} </span></TxtStudent>
             </CommentTxt>
-            <AiOutlineMenu size="18px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }} onClick={onCilckShow}/>
+            {/* <AiOutlineMenu size="18px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }} onClick={onCilckShow}/> */}
+            <BiDotsVerticalRounded
+                    size="20px" style={{ marginLeft: "auto", cursor: "pointer" }}
+                    onClick={onCilckShow} />
             {showComment ?
             <Revisebox ref={modalRef}>
                 <ReviseButton onClick={onClickRevice} type="button">수정</ReviseButton>
-                <DeleteButton onClick={onClickDelete} type="button">삭제</DeleteButton>
+                <DeleteButton onClick={showModal} type="button">삭제</DeleteButton>
             </Revisebox>
             : null}
         </CommentBox>
@@ -66,7 +91,7 @@ const FreeTalkDetailComment = ({comment,closeModal,modalRef}) => {
             <ReviseButtonChange type="button" onClick={onClickReviceChange} >수정완료</ReviseButtonChange>
         </EditBox>
         :
-        <Comment>{comment.comment}</Comment>
+        <Comment>{comment.content}</Comment>
         
         }   
         </CommentContain>
@@ -95,8 +120,8 @@ const CommentImg = styled.img`
 const CommentTxt = styled.div`
     display: flex;
     flex-direction: column;
-    margin-left: 10px;
-`   
+    margin-left: 10px;   
+`
 const Revisebox = styled.div`
     border: 1px solid #f1f0f0;
     border-radius: 10px;
@@ -142,12 +167,15 @@ const ReviseButtonChange = styled.button`
     border:1px solid gray;
     cursor:pointer;
     border-radius: 10px;
+    
 `
 const EditBox = styled.div`
     display: flex;
     align-items: center;
     padding: 0px 20px;
 `
+
+
 const TxtName = styled.h3`
     margin: 0px;
     font-size:14px;

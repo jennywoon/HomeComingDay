@@ -42,6 +42,25 @@ export const __getFreeTalk = createAsyncThunk("freetalks/getFreeTalk", async (pa
     }
 });
 
+export const __getDetailFreeTalk = createAsyncThunk("freetalks/getDetailFreeTalk", async (payload, thunkAPI) => {
+  try {
+    const data = await axios({
+      method: 'get',
+      url: `${BASE_URL}/article/freeTalk/${payload}`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+        // RefreshToken : getCookie('refreshToken')
+      },
+    });
+    console.log(data)
+      return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+      console.log('error', error);
+      return thunkAPI.rejectWithValue(error);
+  }
+});
+
 export const __postFreeTalk = createAsyncThunk(
   "freetalks/postFreeTalk", async (payload, thunkAPI) => {
     console.log('payload', payload)
@@ -103,7 +122,7 @@ export const __updateFreeTalk = createAsyncThunk("freetalks/updateHelp", async (
 }
 );
 
-export const __getFreeComment = createAsyncThunk("comments/getInfoComment", async (payload, thunkAPI) => {
+export const __getFreeTalkComment = createAsyncThunk("comments/getInfoComment", async (payload, thunkAPI) => {
   try {
     const data = await axios.get(`http://localhost:3001/freeComments`);
     return thunkAPI.fulfillWithValue(data.data);
@@ -112,7 +131,7 @@ export const __getFreeComment = createAsyncThunk("comments/getInfoComment", asyn
   }
 });
 
-export const __postFreeComment = createAsyncThunk("comments/postInfoComment", async (payload, thunkAPI) => {
+export const __postFreeTalkComment = createAsyncThunk("comments/postInfoComment", async (payload, thunkAPI) => {
   try {
     const data = await axios({
       method: 'post',
@@ -132,7 +151,7 @@ export const __postFreeComment = createAsyncThunk("comments/postInfoComment", as
   }
 });
 
-export const __deleteFreeComment = createAsyncThunk("comments/deleteInfoComment", async (payload, thunkAPI) => {
+export const __deleteFreeTalkComment = createAsyncThunk("comments/deleteInfoComment", async (payload, thunkAPI) => {
   try {
     const data = await axios({
       method: 'delete',
@@ -152,7 +171,7 @@ export const __deleteFreeComment = createAsyncThunk("comments/deleteInfoComment"
 }
 );
 
-export const __updateFreeComment = createAsyncThunk("comment/updateInfoComment", async (payload, thunkAPI) => {
+export const __updateFreeTalkComment = createAsyncThunk("comment/updateInfoComment", async (payload, thunkAPI) => {
   try {
     const data = await axios({
       method: 'put',
@@ -235,50 +254,50 @@ export const FreeTalkSlice = createSlice({
         state.error = action.payload;
       },
 
-      [__getFreeComment.pending]: (state) => {
+      [__getFreeTalkComment.pending]: (state) => {
         state.isLoading = true;
       },
-      [__getFreeComment.fulfilled]: (state, action) => {
+      [__getFreeTalkComment.fulfilled]: (state, action) => {
         state.isLoading = false;
         state.freeComments = action.payload;
       },
-      [__getFreeComment.rejected]: (state, action) => {
+      [__getFreeTalkComment.rejected]: (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       },
-      [__postFreeComment.pending]: (state) => {
+      [__postFreeTalkComment.pending]: (state) => {
         state.isLoading = true;
       },
-      [__postFreeComment.fulfilled]: (state, action) => {
+      [__postFreeTalkComment.fulfilled]: (state, action) => {
         state.isLoading = false; 
         console.log(action.payload)
         state.freeComments.push(action.payload);
       },
-      [__postFreeComment.rejected]: (state, action) => {
+      [__postFreeTalkComment.rejected]: (state, action) => {
         state.isLoading = false; 
         state.error = action.payload;
       },
 
-      [__deleteFreeComment.pending]: (state) => {
+      [__deleteFreeTalkComment.pending]: (state) => {
         state.isLoading = true;
       },
-      [__deleteFreeComment.fulfilled]: (state, action) => {
+      [__deleteFreeTalkComment.fulfilled]: (state, action) => {
         state.isLoading = false;
         // console.log(state.comment)
         console.log(action)
         state.freeComments = state.freeComments.filter(comment => comment.id !== action.payload)
       },
-      [__deleteFreeComment.rejected]: (state, action) => {
+      [__deleteFreeTalkComment.rejected]: (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       },
   
       // updateComment
-      [__updateFreeComment.pending]: (state) => {
+      [__updateFreeTalkComment.pending]: (state) => {
         state.isLoading = true;
       },
   
-      [__updateFreeComment.fulfilled]: (state, action) => {
+      [__updateFreeTalkComment.fulfilled]: (state, action) => {
         state.isLoading = false;
         console.log('action', action)
         console.log('comment', state.freeComments)
@@ -290,7 +309,7 @@ export const FreeTalkSlice = createSlice({
         })
   
       },
-      [__updateFreeComment.rejected]: (state, action) => {
+      [__updateFreeTalkComment.rejected]: (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       },
