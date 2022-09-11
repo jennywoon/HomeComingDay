@@ -6,8 +6,7 @@ import { __getInformation } from "../../redux/modules/InformationSlice";
 import InformationCard from "./InformationCard";
 import { TiPencil } from "react-icons/ti";
 import { useNavigate } from "react-router-dom";
-import helporange from "../../assets/helporange.png"
-import helpwhite from "../../assets/helpwhite.png"
+import informationorange from "../../assets/informationorange.png"
 import nonedatasquare from "../../assets/nonedatasquare.png"
 
 const Information = () => {
@@ -78,8 +77,7 @@ const Banner = styled.div`
   /* height: 20% */
   width: 95%;
   /* border: 1px solid red; */
-  background-image: url(${helporange});
-  /* background-image: url(${helpwhite}); */
+  background-image: url(${informationorange});
   background-position: center;
   background-size: 100% 100%;
 `

@@ -4,27 +4,27 @@ import styled from 'styled-components';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { logout } from '../../shared/cookies';
 import { useDispatch, useSelector } from 'react-redux';
-import { __getHelp, __deleteHelpComment } from '../../redux/modules/HelpSlice';
+import { __deleteInfoComment, __getInformation } from '../../redux/modules/InformationSlice';
 
-const HelpCommentDeleteModal = ({ setModalOpen, comment, setShowComment}) => {
+const InfoCommentDeleteModal = ({ setModalOpen, comment, setShowComment}) => {
 
   const dispatch = useDispatch();
   const closeModal = () => {
     setModalOpen(false);
   };
 
-  const { helps } = useSelector((state) => state.helps)
+  const { informations } = useSelector((state) => state.informations)
   const { id } = useParams();
-  const helpsfind = helps.find((help) => help.articleId === Number(id))
-  const { commentId } = helpsfind.commentList.find((commentmap) => commentmap.commentId === comment.commentId)
+  const informationsfind = informations.find((info) => info.articleId === Number(id))
+  const { commentId } = informationsfind.commentList.find((commentmap) => commentmap.commentId === comment.commentId)
 
     const onClickDelete = async () => {
         const commentDelete = {
             articleId: Number(id),
             commentId: commentId
         }
-       await dispatch(__deleteHelpComment(commentDelete))
-       await dispatch(__getHelp())
+       await dispatch(__deleteInfoComment(commentDelete))
+       await dispatch(__getInformation())
     }
   return (
     <Container>
@@ -48,7 +48,7 @@ const HelpCommentDeleteModal = ({ setModalOpen, comment, setShowComment}) => {
   );
 };
 
-export default HelpCommentDeleteModal;
+export default InfoCommentDeleteModal;
 
 const Container = styled.div`
   position: fixed;

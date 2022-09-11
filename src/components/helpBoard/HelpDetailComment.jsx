@@ -37,20 +37,20 @@ const DetailComment = ({ comment, modalRef, helpsfind }) => {
         setShowComment(!showComment)
     }
 
-    const onClickDelete = async () => {
-        const commentDelete = {
-            articleId: Number(id),
-            commentId: commentId
-        }
-        const result = window.confirm("정말 삭제하시겠습니까?")
-        if (result) {
-            await dispatch(__deleteHelpComment(commentDelete))
-            await dispatch(__getHelp());
-            setShowComment(false)
-        } else {
-            return
-        }
-    }
+    // const onClickDelete = async () => {
+    //     const commentDelete = {
+    //         articleId: Number(id),
+    //         commentId: commentId
+    //     }
+    //     const result = window.confirm("정말 삭제하시겠습니까?")
+    //     if (result) {
+    //         await dispatch(__deleteHelpComment(commentDelete))
+    //         await dispatch(__getHelp());
+    //         setShowComment(false)
+    //     } else {
+    //         return
+    //     }
+    // }
 
     const onClickRevice = () => {
         setShowComment(!showComment)
@@ -77,7 +77,7 @@ const DetailComment = ({ comment, modalRef, helpsfind }) => {
     return (
 
         <CommentContain >
-            {modalOpen && <HelpCommentDeleteModal setModalOpen={setModalOpen} />}
+            {modalOpen && <HelpCommentDeleteModal setModalOpen={setModalOpen} comment={comment}/>}
             <CommentBox >
                 <CommentImg src={Img} alt="" />
                 <CommentTxt>

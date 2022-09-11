@@ -1,25 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
-import {AiOutlineMenu} from 'react-icons/ai'
+import { AiOutlineMenu } from 'react-icons/ai'
 import Img from "../../assets/naverIcon.png"
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Input from "../elements/Input";
-import { __deleteInfoComment, __updateInfoComment , __getInformation, __getDetailInformation,__postInformation} from '../../redux/modules/InformationSlice';
+import { __deleteInfoComment, __updateInfoComment, __getInformation, __getDetailInformation, __postInformation } from '../../redux/modules/InformationSlice';
 import { useParams } from 'react-router-dom';
 import { BiDotsVerticalRounded } from "react-icons/bi";
+import InfoCommentDeleteModal from './InfoCommentDeleteModal';
 
-const InformationComment = ({comment,informationsfind,modalRef}) => {
+const InformationComment = ({ comment, informationsfind, modalRef }) => {
     const dispatch = useDispatch();
     const { id } = useParams();
 
-    const {commentId} = informationsfind.commentList.find((commentmap)=> commentmap.commentId === comment.commentId)
+    const { commentId } = informationsfind.commentList.find((commentmap) => commentmap.commentId === comment.commentId)
 
     const [showComment, setShowComment] = useState(false)
     const [isEdit, setIsEdit] = useState(false)
-    const [editComment , setEditComment] = useState("")
-    
-    const onChangeEdit = (e) =>{
+    const [editComment, setEditComment] = useState("")
+
+    const onChangeEdit = (e) => {
         setEditComment(e.target.value)
     }
 
@@ -27,67 +28,59 @@ const InformationComment = ({comment,informationsfind,modalRef}) => {
         setShowComment(!showComment)
     }
 
-    
-    const onClickDelete = async() => {
-        const commentDelete = {
-            articleId : Number(id),
-            commentId : commentId
-        }
-        const result = window.confirm("정말 삭제하시겠습니까?")
-        if (result) {
-      await dispatch(__deleteInfoComment(commentDelete))
-      await dispatch(__getInformation());
-            setShowComment(false)
-        } else {
-            return
-        }
-    }
-
     const onClickRevice = () => {
         setShowComment(!showComment)
         setIsEdit(!isEdit)
     }
-    const onClickReviceChange = async() =>{
+    const onClickReviceChange = async () => {
         const editcomment = {
-            articleId : Number(id),
-            commentId : commentId,
-            content : editComment
+            articleId: Number(id),
+            commentId: commentId,
+            content: editComment
         }
         await dispatch(__updateInfoComment(editcomment))
         await dispatch(__getInformation());
         setIsEdit(!isEdit)
     }
 
+    //모달
+    const [modalOpen, setModalOpen] = useState(false);
+    const showModal = (e) => {
+        e.preventDefault();
+        setModalOpen(true);
+    }
+
     return (
         <CommentContain>
-        <CommentBox>
-            <CommentImg src={Img} alt="" />
-            <CommentTxt>
-            <TxtName>{comment.username}</TxtName>
-                <TxtStudent>{comment.admission} <span> {comment.createdAt}</span></TxtStudent>
-            </CommentTxt>
-            {/* <AiOutlineMenu size="18px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }} onClick={onCilckShow} /> */}
-            <BiDotsVerticalRounded
+            {modalOpen && <InfoCommentDeleteModal setModalOpen={setModalOpen} comment={comment}/>}
+            <CommentBox>
+                <CommentImg src={Img} alt="" />
+                <CommentTxt>
+                    <TxtName>{comment.username}</TxtName>
+                    <TxtStudent>{comment.admission} <span> {comment.createdAt}</span></TxtStudent>
+                </CommentTxt>
+                {/* <AiOutlineMenu size="18px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }} onClick={onCilckShow} /> */}
+                <BiDotsVerticalRounded
                     size="20px" style={{ marginLeft: "auto", cursor: "pointer" }}
                     onClick={onCilckShow} />
-            {showComment ?
-            <Revisebox ref={modalRef}>
-                <ReviseButton onClick={onClickRevice} type="button">수정</ReviseButton>
-                <DeleteButton onClick={onClickDelete} type="button">삭제</DeleteButton>
-            </Revisebox>
-            : null}
+                {showComment ?
+                    <Revisebox ref={modalRef}>
+                        <ReviseButton onClick={onClickRevice} type="button">수정</ReviseButton>
+                        <DeleteButton onClick={showModal} type="button">삭제</DeleteButton>
+                    </Revisebox>
+                    : null}
 
-        </CommentBox>
-        
-        {isEdit ? 
-        <EditBox>
-            <Input onChange={onChangeEdit} value={editComment}/>
-            <ReviseButtonChange type="button" onClick={onClickReviceChange} >수정완료</ReviseButtonChange>
-        </EditBox>
-        :
-        <Comment>{comment.content}</Comment>
-        
-        }   
+            </CommentBox>
+
+            {isEdit ?
+                <EditBox>
+                    <Input onChange={onChangeEdit} value={editComment} />
+                    <ReviseButtonChange type="button" onClick={onClickReviceChange} >수정완료</ReviseButtonChange>
+                </EditBox>
+                :
+                <Comment>{comment.content}</Comment>
+
+            }
         </CommentContain>
     );
 };

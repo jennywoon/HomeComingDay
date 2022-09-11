@@ -4,28 +4,21 @@ import styled from 'styled-components';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { logout } from '../../shared/cookies';
 import { useDispatch, useSelector } from 'react-redux';
-import { __getHelp, __deleteHelpComment } from '../../redux/modules/HelpSlice';
+import { __deleteHelp } from '../../redux/modules/HelpSlice';
 
-const HelpCommentDeleteModal = ({ setModalOpen, comment, setShowComment}) => {
+const InformationDetailModal = ({ setModalOpen }) => {
 
   const dispatch = useDispatch();
   const closeModal = () => {
     setModalOpen(false);
   };
 
-  const { helps } = useSelector((state) => state.helps)
+  const navigate = useNavigate();
+  const { informations } = useSelector((state) => state.informations)
   const { id } = useParams();
-  const helpsfind = helps.find((help) => help.articleId === Number(id))
-  const { commentId } = helpsfind.commentList.find((commentmap) => commentmap.commentId === comment.commentId)
+  const informationsfind = informations.find((info) => info.articleId === Number(id))
 
-    const onClickDelete = async () => {
-        const commentDelete = {
-            articleId: Number(id),
-            commentId: commentId
-        }
-       await dispatch(__deleteHelpComment(commentDelete))
-       await dispatch(__getHelp())
-    }
+
   return (
     <Container>
       <Wrap>
@@ -33,11 +26,14 @@ const HelpCommentDeleteModal = ({ setModalOpen, comment, setShowComment}) => {
           <FirstWrap>
             <ModalTop>
               <AiOutlineInfoCircle style={{ color: '#f7931e' }} size='28' />
-              <TopTitle>해당 댓글을 삭제하시겠습니까?</TopTitle>
+              <TopTitle>해당 게시글을 삭제하시겠습니까?</TopTitle>
             </ModalTop>
             <ModalBottom onClick={closeModal}>
               <BottomTitle
-            onClick={onClickDelete}
+              onClick={() => {
+                dispatch(__deleteHelp(informationsfind.articleId))
+                navigate("/information")
+              }}
               >삭제하기</BottomTitle>
               <BottomTitle>돌아가기</BottomTitle>
             </ModalBottom>
@@ -48,7 +44,7 @@ const HelpCommentDeleteModal = ({ setModalOpen, comment, setShowComment}) => {
   );
 };
 
-export default HelpCommentDeleteModal;
+export default InformationDetailModal;
 
 const Container = styled.div`
   position: fixed;
@@ -60,7 +56,6 @@ const Container = styled.div`
   z-index: 10;
   overflow: hidden;
   /* bottom: 0; */
-  top: 0;
   @media screen and (max-width: 1024px) {
     background-image: none;
   }
