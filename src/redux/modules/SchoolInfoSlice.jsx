@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { getCookie, setCookie } from '../../shared/cookies';
 // import Cookies from "universal-cookie"
 
 // const cookies = new Cookies();
@@ -55,7 +56,15 @@ export const __postSchoolInfo = createAsyncThunk(
   'postSchoolInfo',
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.post(`${BASE_URL}/schoolInfos`, payload);
+      const data = await axios({
+        method: 'post',
+        url: `${BASE_URL}/schoolInfos`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+      },
+      data: payload
+    });
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
