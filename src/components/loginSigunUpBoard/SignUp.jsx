@@ -33,9 +33,11 @@ const SignUp = () => {
     nameError: false,
     passwordError: false,
     confirmPasswordError: false,
+    emailDuplicated: false,
+    emailChecked: false
   });
 
-  const { emailError, nameError, passwordError, confirmPasswordError } =
+  const { emailError, nameError, passwordError, confirmPasswordError, emailDuplicated, emailChecked } =
     formError;
 
   // 정규식(이메일, 이름, 비밀번호)
@@ -76,7 +78,7 @@ const SignUp = () => {
 
   // 이메일 중복확인
   const [isOnCheck, setIsOnCheck] = useState(false);
-  const [emailDuplicated, setEmailDuplicated]  = useState(false)
+  // const [emailDuplicated, setEmailDuplicated] = useState(false);
   const [emailConfirm, setEmailConfirm] = useState(false);
   const handleChangeEmailCheck = async () => {
     const newEmail = {
@@ -84,25 +86,24 @@ const SignUp = () => {
     };
     try {
       if (!emailError) {
-      const data = await axios.post(`${BASE_URL}/emailCheck`, newEmail);
-      console.log(data.data);
-      if (data.data.success === true) {
-        setIsOnCheck(true);
-        setEmailConfirm(true);
-        setEmailDuplicated(false)
-      } else if (data.data.success === false) {
-        setIsOnCheck(false);
-        setEmailDuplicated(true)
+        const data = await axios.post(`${BASE_URL}/emailCheck`, newEmail);
+        console.log(data.data);
+        if (data.data.success === true) {
+          setIsOnCheck(true);
+          setEmailConfirm(true);
+          setFormError({ ...formError, emailDuplicated: false });
+        } else if (data.data.success === false) {
+          setIsOnCheck(false);
+          setFormError({ ...formError, emailDuplicated: true });
+        }
       }
-      }
-      
     } catch (error) {
       console.log('error ', error);
     }
   };
 
   // 이메일 보내기
-  const [isSend, setIsSend] = useState(false)
+  const [isSend, setIsSend] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const handleSendEmail = async () => {
     const sendEmail = {
@@ -110,7 +111,7 @@ const SignUp = () => {
     };
     try {
       const data = await axios.post(`${BASE_URL}/signup/sendEmail`, sendEmail);
-      setIsSend(true)
+      setIsSend(true);
       console.log(data.data);
     } catch (error) {
       console.log('error ', error);
@@ -126,33 +127,36 @@ const SignUp = () => {
     setEmailCheck((prev) => {
       return {
         ...prev,
-        authKey: e.target.value
-      }
-    })
+        authKey: e.target.value,
+      };
+    });
   };
 
   // 이메일 인증번호 확인
   const [isCheck, setIsCheck] = useState(false);
-  const [emailChecked, setEmailChecked] = useState(false)
+  // const [emailChecked, setEmailChecked] = useState(false);
   const handleCheckEmail = async () => {
     const checkEmail = {
       email: email,
-      authKey: authKey
+      authKey: authKey,
     };
     try {
-      const data = await axios.post(`${BASE_URL}/signup/checkEmail`, checkEmail);
+      const data = await axios.post(
+        `${BASE_URL}/signup/checkEmail`,
+        checkEmail
+      );
       console.log(data.data);
       if (data.data.success === true) {
         setIsCheck(true);
-        setEmailChecked(false)
+        setFormError({ ...formError, emailChecked: false });
       } else if (data.data.success === false) {
         setIsCheck(false);
-        setEmailChecked(true)
+        setFormError({ ...formError, emailChecked: true });
       }
     } catch (error) {
       console.log('error ', error);
     }
-  }
+  };
 
   // 비밀번호 유효성검사
   const handleChangePassword = (e) => {
@@ -237,10 +241,9 @@ const SignUp = () => {
       !nameError &&
       !passwordError &&
       !confirmPasswordError &&
-      !isOnCheck &&
+      authKey !== '' &&
       !emailDuplicated &&
-      !emailConfirm &&
-      !isCheck
+      !emailChecked
     ) {
       setIsActive(true);
     } else {
@@ -255,10 +258,8 @@ const SignUp = () => {
     nameError,
     passwordError,
     confirmPasswordError,
-    isOnCheck,
     emailDuplicated,
-    emailConfirm,
-    isCheck
+    emailChecked
   ]);
 
   return (
@@ -290,11 +291,7 @@ const SignUp = () => {
             <StSignupWrap>
               <Stlabel>이메일</Stlabel>
               <StFlexbox>
-                <Input
-                  type='email'
-                  width='100%'
-                  onChange={handleChangeEmail}
-                />
+                <Input type='email' width='100%' onChange={handleChangeEmail} />
                 <StEmailButton
                   type='button'
                   isOnCheck={isOnCheck}
@@ -306,11 +303,19 @@ const SignUp = () => {
               {emailError ? (
                 <StErrorMessage>이메일 형식에 맞게 입력하세요</StErrorMessage>
               ) : null}
-              {emailDuplicated ? (<StErrorMessage>동일한 이메일이 존재합니다.</StErrorMessage>) : null}
+              {emailDuplicated ? (
+                <StErrorMessage>동일한 이메일이 존재합니다.</StErrorMessage>
+              ) : null}
               {emailConfirm ? (
                 <>
-                  <StSendEmailButton type='button' onClick={handleSendEmail} isSend={isSend}>
-                  {isSend ? '해당 이메일로 인증번호 발송 완료' : '해당 이메일로 인증번호 발송'}
+                  <StSendEmailButton
+                    type='button'
+                    onClick={handleSendEmail}
+                    isSend={isSend}
+                  >
+                    {isSend
+                      ? '해당 이메일로 인증번호 발송 완료'
+                      : '해당 이메일로 인증번호 발송'}
                   </StSendEmailButton>
                   <Stlabel>인증번호</Stlabel>
                   <StFlexbox>
@@ -327,7 +332,11 @@ const SignUp = () => {
                       {isCheck ? '확인완료' : '인증확인'}
                     </StEmailCheckButton>
                   </StFlexbox>
-                  {emailChecked ? (<StErrorMessage>인증번호가 일치하지 않습니다.</StErrorMessage>) : null}
+                  {emailChecked ? (
+                    <StErrorMessage>
+                      인증번호가 일치하지 않습니다.
+                    </StErrorMessage>
+                  ) : null}
                 </>
               ) : null}
             </StSignupWrap>
@@ -387,10 +396,8 @@ const SignUp = () => {
             <Button
               type='submit'
               width='100%'
-              // height="100%"
               isDisabled={isActive ? false : true}
               style={{ marginTop: '50px', backgroundColor: '#f7931e' }}
-              // onClickHandler={onClickHandler}
               color='white'
             >
               <ButtonTitle>회원가입</ButtonTitle>
@@ -475,7 +482,7 @@ const StEmailButton = styled.button`
   font-weight: 600;
   /* cursor: ${({ emailError }) => (emailError ? 'none' : 'pointer')} */
   cursor: pointer;
-  `;
+`;
 
 const StEmailCheckButton = styled.button`
   position: absolute;
@@ -491,7 +498,7 @@ const StEmailCheckButton = styled.button`
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  `;
+`;
 
 const StSendEmailButton = styled.button`
   width: 100%;

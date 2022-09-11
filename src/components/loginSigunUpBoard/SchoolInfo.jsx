@@ -2,45 +2,52 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import Button from "../../components/elements/Button"
+import Button from '../../components/elements/Button';
 import { IoIosArrowBack } from 'react-icons/io';
-import Select from "react-dropdown-select";
+import Select from 'react-dropdown-select';
 // import './search.css'
-import { __getSchoolSearch, __getDepartmentSearch, __getAdmissions, __postSchoolInfo } from '../../redux/modules/SchoolInfoSlice';
+import {
+  __getSchoolSearch,
+  __getDepartmentSearch,
+  __getAdmissions,
+  __postSchoolInfo,
+} from '../../redux/modules/SchoolInfoSlice';
 
 const SchoolInfo = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [school, setSchool] = useState('')
-  const [department, setDepartment] = useState('')
-  const [admission, setAdmission] = useState('')
+  const [school, setSchool] = useState('');
+  const [department, setDepartment] = useState('');
+  const [admission, setAdmission] = useState('');
 
   const schoolInfos = {
     schoolName: school,
     departmentName: department,
-    admission: admission
-  }
+    admission: admission,
+  };
 
   // 학교 정보 검색
-  const schoolSearch = useSelector((state) => state.schoolInfo.schoolSearchs)
+  const schoolSearch = useSelector((state) => state.schoolInfo.schoolSearchs);
   // console.log(schoolSearch)
 
   useEffect(() => {
     dispatch(__getSchoolSearch());
     dispatch(__getDepartmentSearch());
     dispatch(__getAdmissions());
-  }, [dispatch])
+  }, [dispatch]);
 
   const [selectedschoolSearch, setSelectedschoolSearch] = useState([]);
 
   const onChangeSchool = (values) => {
-    setSelectedschoolSearch([...values])
-    setSchool(values[0].label)
-  }
+    setSelectedschoolSearch([...values]);
+    setSchool(values[0].label);
+  };
 
   // 학과 정보 검색
-  const departmentSearch = useSelector((state) => state.schoolInfo.departmentSearchs)
+  const departmentSearch = useSelector(
+    (state) => state.schoolInfo.departmentSearchs
+  );
   // console.log(departmentSearch)
 
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -48,24 +55,35 @@ const SchoolInfo = () => {
   const onChangeDepartment = (values) => {
     setSelectedOptions([...values]);
     setDepartment(values[0].label);
-  }
+  };
 
   // 입학년도 검색
-  const admissionSearch = useSelector((state) => state.schoolInfo.admissions)
-  console.log(admissionSearch)
+  const admissionSearch = useSelector((state) => state.schoolInfo.admissions);
+  console.log(admissionSearch);
 
   const [selectedAdmission, setSelectedAdmission] = useState([]);
 
   const onChangeAdmission = (values) => {
     setSelectedAdmission([...values]);
     setAdmission(values[0].label);
-  }
+  };
 
   // 저장하기 버튼
   const onSubmitHandler = (e) => {
     e.preventDefault();
     dispatch(__postSchoolInfo(schoolInfos)).then(navigate('/'));
-  }
+  };
+
+  // 저장하기 버튼 활성화
+  const [isActive, setIsActive] = useState(false);
+
+  useEffect(() => {
+    if (school !== '' && department !== '' && admission !== '') {
+      setIsActive(true);
+    } else {
+      setIsActive(false);
+    }
+  }, [school, department, admission]);
 
   return (
     <FormContainer>
@@ -85,7 +103,7 @@ const SchoolInfo = () => {
 
             <StSchoolInfoWrap>
               <Stlabel>학교명</Stlabel>
-              <StyledSelect
+              <Select
                 options={schoolSearch.map((item, index) => {
                   return { value: item.seq, label: item.schoolName };
                 })}
@@ -94,13 +112,13 @@ const SchoolInfo = () => {
                 style={{
                   maxHeight: '20px',
                   borderRadius: '16px',
-                  border: '1px solid #ddd',
-                  fontSize: '16px',
+                  border: '1px solid #f7931e',
+                  fontSize: '14px',
                   padding: '0 10px',
                 }}
-                maxMenuHeight={10}
                 onChange={onChangeSchool}
                 placeholder='학교명 '
+                dropdownHeight='200px'
               />
             </StSchoolInfoWrap>
 
@@ -115,13 +133,13 @@ const SchoolInfo = () => {
                 style={{
                   maxHeight: '20px',
                   borderRadius: '16px',
-                  border: '1px solid #ddd',
-                  fontSize: '16px',
+                  border: '1px solid #f7931e',
+                  fontSize: '14px',
                   padding: '0 10px',
                 }}
-                maxMenuHeight={10}
                 onChange={onChangeDepartment}
                 placeholder='학과 · 학부명 '
+                dropdownHeight='200px'
               />
             </StSchoolInfoWrap>
 
@@ -136,26 +154,24 @@ const SchoolInfo = () => {
                 style={{
                   maxHeight: '20px',
                   borderRadius: '16px',
-                  border: '1px solid #ddd',
-                  fontSize: '16px',
+                  border: '1px solid #f7931e',
+                  fontSize: '14px',
                   padding: '0 10px',
                 }}
-                maxMenuHeight={10}
                 onChange={onChangeAdmission}
                 placeholder='입학년도 '
+                dropdownHeight='200px'
               />
             </StSchoolInfoWrap>
 
             <Button
               type='submit'
               width='100%'
-              style={{ marginTop: '100px' }}
-              backgroundColor='#f7931e'
+              isDisabled={isActive ? false : true}
+              style={{ marginTop: '100px', backgroundColor: '#f7931e' }}
               color='white'
             >
-              <ButtonTitle>
-              저장하기
-              </ButtonTitle>
+              <ButtonTitle>저장하기</ButtonTitle>
             </Button>
           </FisrtWrap>
         </StSchoolInfoWraps>
@@ -167,11 +183,11 @@ const SchoolInfo = () => {
 export default SchoolInfo;
 
 const FormContainer = styled.div`
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow-y: hidden;
-`
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow-y: hidden;
+`;
 
 const StSchoolInfo = styled.div`
   width: 100%;
@@ -192,7 +208,7 @@ const FisrtWrap = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-`
+`;
 
 const StSchoolTitle = styled.p`
   font-size: 25px;
@@ -216,19 +232,10 @@ const Stlabel = styled.label`
   display: block;
 `;
 
-const StyledSelect = styled(Select)`
-  background: #fff;
-  font-size: 14px;
-  /* outline-color: #f7931e; */
-  &:focu-within {
-    color: #f7931e;
-  }
-`
-
 const ButtonTitle = styled.div`
   width: 100%;
   height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;

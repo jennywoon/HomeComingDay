@@ -156,6 +156,7 @@ const Login = () => {
           <NaverLogin />
         </NaverContainer>
         <StGoToSignup
+          type='button'
           onClick={() => {
             navigate('/signup');
           }}
