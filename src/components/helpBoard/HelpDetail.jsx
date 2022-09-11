@@ -7,14 +7,14 @@ import Img from "../../assets/naverIcon.png"
 import HelpDetailComment from './HelpDetailComment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteHelp, __updateHelp, __getHelp, __getComments, __getHelpComment, __postHelpComment ,__getDetailHelp} from '../../redux/modules/HelpSlice';
+import { __deleteHelp, __updateHelp, __getHelp, __getComments, __getHelpComment, __postHelpComment, __getDetailHelp } from '../../redux/modules/HelpSlice';
 import { useRef } from 'react';
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Navigation} from "swiper";
+import SwiperCore, { Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import { BiDotsVerticalRounded } from "react-icons/bi";
-import { GrFormPrevious ,GrFormNext} from "react-icons/gr";
+import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 
 
 const HelpDetail = () => {
@@ -31,8 +31,8 @@ const HelpDetail = () => {
     const [comment, setComment] = useState("")
     const modalRef = useRef(null);
 
-    
-   
+
+
     const onChangePostHandler = (e) => {
         setComment(e.target.value)
     }
@@ -47,7 +47,7 @@ const HelpDetail = () => {
     const helpsfind = helps.find((help) => help.articleId === Number(id))
     // const helpscomment = helpsfind.commentList
     // console.log(commentList)
-    console.log("helpsfind",helpsfind)
+    console.log("helpsfind", helpsfind)
     // console.log("helpscomment",helpscomment)
     // useEffect(() => {
     //     dispatch(__getDetailHelp(helpsfind.articleId));
@@ -61,17 +61,17 @@ const HelpDetail = () => {
     const onCilckChaetShow = () => {
         setShowChaet(!showChaet)
     }
-    
+
 
     const onClickDelete = () => {
         const result = window.confirm("정말 삭제하시겠습니까?")
         if (result) {
             dispatch(__deleteHelp(helpsfind.articleId))
             navigate("/")
-        }else {
+        } else {
             navigate("/")
-            return 
-            
+            return
+
         }
     }
 
@@ -79,14 +79,14 @@ const HelpDetail = () => {
         navigate(`/helpupdate/${id}`)
     }
 
-    const onClickPostComment = async(e) => {
+    const onClickPostComment = async (e) => {
         e.preventDefault();
         const newcomment = {
             content: comment,
             articleId: id
         }
-      await dispatch(__postHelpComment(newcomment));
-      await dispatch(__getHelp());
+        await dispatch(__postHelpComment(newcomment));
+        await dispatch(__getHelp());
         setComment("");
     }
 
@@ -103,23 +103,23 @@ const HelpDetail = () => {
 
     //swiper 옵션
     SwiperCore.use(Navigation);
-    const [swiper , setSwiper] = useState(null)
-    const [mainImageIndex , setMainImageIndex] = useState(0);
+    const [swiper, setSwiper] = useState(null)
+    const [mainImageIndex, setMainImageIndex] = useState(0);
     const navigationPrevRef = useRef(null)
     const navigationNextRef = useRef(null)
-    
+
     const swiperParams = {
-        navigation : {prevEl : navigationPrevRef.current , nextEl: navigationNextRef.current},
-         onBeforeInit : (swiper) => {
+        navigation: { prevEl: navigationPrevRef.current, nextEl: navigationNextRef.current },
+        onBeforeInit: (swiper) => {
             swiper.params.navigation.prevEl = navigationPrevRef.current;
             swiper.params.navigation.nextEl = navigationNextRef.current;
             swiper.activeIndex = setMainImageIndex;
             swiper.navigation.update();
         },
-        onSwiper : setSwiper,
+        onSwiper: setSwiper,
         onSlideChange: (e) => setMainImageIndex(e.activeIndex)
     }
-   
+
 
     return (
         <Container>
@@ -141,70 +141,71 @@ const HelpDetail = () => {
                                     <Txtname onClick={onCilckChaetShow}>{helpsfind && helpsfind.username}</Txtname>
                                     <Txtstudent>{helpsfind && helpsfind.departmentName} <span> {helpsfind && helpsfind.admission} </span></Txtstudent>
                                     {showChaet ?
-                                    <ChaetingBox>1:1채팅</ChaetingBox>
-                                    : null
+                                        <ChaetingBox>1:1채팅</ChaetingBox>
+                                        : null
                                     }
                                 </Bodytxt>
-                                
+
                                 {/* <AiOutlineMenu size="20px" style={{ marginLeft: "auto", cursor: "pointer" }}
                                     onClick={onCilckShow} /> */}
                                 <BiDotsVerticalRounded
-                                size="20px" style={{ marginLeft: "auto", cursor: "pointer" }}
-                                onClick={onCilckShow}/>
-                                    {show ?
-                                        <Revisebox ref={modalRef}>
-                                            <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
-                                            <DeleteButton onClick={onClickDelete}>삭제</DeleteButton>
-                                        </Revisebox>
-                                        : null
-                                    }
+                                    size="20px" style={{ marginLeft: "auto", cursor: "pointer" }}
+                                    onClick={onCilckShow} />
+                                {show ?
+                                    <Revisebox ref={modalRef}>
+                                        <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
+                                        <DeleteButton onClick={onClickDelete}>삭제</DeleteButton>
+                                    </Revisebox>
+                                    : null
+                                }
                             </Bodytop>
                             <BodyContent>
                                 <ContentTitle>{helpsfind && helpsfind.title}</ContentTitle>
                                 <ContentBody>{helpsfind && helpsfind.content}</ContentBody>
                                 {helpsfind && helpsfind.imageList.length > 0 ?
-                                <ContentImgBox>
-                                <Swiper
-                                    {...swiperParams}
-                                    ref={setSwiper}
-                                    spaceBetween={50}
-                                    slidesPerView={1}
-                                >
-                                    {helpsfind && helpsfind.imageList.map((image)=> {
-                                    return(
-                                    <SwiperSlide key={image.imageId}>
-                                        <ContentImg  src={image.imgUrl}></ContentImg>
-                                    </SwiperSlide>)
-                                    })}
-                                    <PrevButton ref={navigationPrevRef}>
-                                        <PreviousBtn />
-                                    </PrevButton>
-                                    <NextButton ref={navigationNextRef}>
-                                        <NextBtn />
-                                    </NextButton>
-                                </Swiper>
-                                </ContentImgBox>
-                                : null}
+                                    <ContentImgBox>
+                                        <Swiper
+                                            {...swiperParams}
+                                            ref={setSwiper}
+                                            spaceBetween={50}
+                                            slidesPerView={1}
+                                        >
+                                            {helpsfind && helpsfind.imageList.map((image) => {
+                                                return (
+                                                    <SwiperSlide key={image.imageId}>
+                                                        <ContentImg src={image.imgUrl}></ContentImg>
+                                                    </SwiperSlide>
+                                                )
+                                            })}
+                                            <PrevButton ref={navigationPrevRef}>
+                                                <PreviousBtn />
+                                            </PrevButton>
+                                            <NextButton ref={navigationNextRef}>
+                                                <NextBtn />
+                                            </NextButton>
+                                        </Swiper>
+                                    </ContentImgBox>
+                                    : null}
                                 <BodyTxtBox>
-                                <ContentView>조회수 1000회 | 댓글 100개</ContentView>
-                                <ContentTime>15분전</ContentTime>
+                                    <ContentView>조회수 1000회 | 댓글 100개</ContentView>
+                                    <ContentTime>15분전</ContentTime>
                                 </BodyTxtBox>
                             </BodyContent>
-                                
-                            
+
+
 
                             <BodyContainer>
 
                                 <BodyCommentBox>
-                                {helpsfind && helpsfind.commentList.length === 0 ?
-                                    <BodyComment>작성한 댓글이 없습니다 <br></br> 첫번째 댓글을 남겨보세요 </BodyComment>
-                                :
-                                <>
-                                {helpsfind && helpsfind.commentList.map((comment) => (
-                                <HelpDetailComment key={comment.commentId} comment={comment} helpsfind={helpsfind} modalRef={modalRef} />
-                                    ))}
-                                </>
-                                }
+                                    {helpsfind && helpsfind.commentList.length === 0 ?
+                                        <BodyComment>작성한 댓글이 없습니다 <br></br> 첫번째 댓글을 남겨보세요 </BodyComment>
+                                        :
+                                        <>
+                                            {helpsfind && helpsfind.commentList.map((comment) => (
+                                                <HelpDetailComment key={comment.commentId} comment={comment} helpsfind={helpsfind} modalRef={modalRef} />
+                                            ))}
+                                        </>
+                                    }
                                 </BodyCommentBox>
                             </BodyContainer>
                         </DetailBody>
@@ -379,7 +380,10 @@ const BodyContent = styled.div`
     padding: 0px 20px;
     /* border: 1px solid red; */
     width: 100%;
-    
+    height: 350px;
+    display: flex;
+     flex-direction: column;
+    justify-content: space-between;
 `
 const ContentTitle = styled.h3`
     /* margin:10px 0px; */
@@ -412,7 +416,7 @@ const ContentImg = styled.img`
     /* background-repeat: no-repeat;
     background-size: cover; */
 `
-const PrevButton =styled.button`
+const PrevButton = styled.button`
     font-size: 20px;
     display: flex;
     position:absolute;
@@ -424,7 +428,7 @@ const PrevButton =styled.button`
     transform: translatey(-50%);
     
 `
-const NextButton =styled.button`
+const NextButton = styled.button`
     font-size: 20px;
     display: flex;
     position:absolute;

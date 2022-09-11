@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import Input from "../elements/Input";
 import { __deleteInfoComment, __updateInfoComment , __getInformation, __getDetailInformation,__postInformation} from '../../redux/modules/InformationSlice';
 import { useParams } from 'react-router-dom';
+import { BiDotsVerticalRounded } from "react-icons/bi";
 
 const InformationComment = ({comment,informationsfind,modalRef}) => {
     const dispatch = useDispatch();
@@ -65,7 +66,10 @@ const InformationComment = ({comment,informationsfind,modalRef}) => {
             <TxtName>{comment.username}</TxtName>
                 <TxtStudent>{comment.admission} <span> {comment.createdAt}</span></TxtStudent>
             </CommentTxt>
-            <AiOutlineMenu size="18px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }} onClick={onCilckShow} />
+            {/* <AiOutlineMenu size="18px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }} onClick={onCilckShow} /> */}
+            <BiDotsVerticalRounded
+                    size="20px" style={{ marginLeft: "auto", cursor: "pointer" }}
+                    onClick={onCilckShow} />
             {showComment ?
             <Revisebox ref={modalRef}>
                 <ReviseButton onClick={onClickRevice} type="button">수정</ReviseButton>

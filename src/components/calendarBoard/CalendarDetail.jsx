@@ -56,7 +56,7 @@ const CalendarDetail = () => {
               <DetailHeader>
                 <IoIosArrowBack size='25px' cursor='pointer' onClick={() => { navigate('/calendar') }} />
                 <HeaderTitle>만남일정</HeaderTitle>
-                <div></div>
+                <div style={{ width: "25px", height: "25px" }}></div>
               </DetailHeader>
             </FirstWrap>
             <DetailBody>
@@ -234,7 +234,7 @@ const Txtstudent = styled.p`
 const BodyContent = styled.div`
   padding: 0px 20px;
   width: 100%;
-  height: 300px;
+  height: 350px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

@@ -11,10 +11,10 @@ import { __deleteInformation, __getInfoComment, __getInformation, __postInfoComm
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { useRef } from 'react';
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Navigation} from "swiper";
+import SwiperCore, { Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
-import { GrFormPrevious ,GrFormNext} from "react-icons/gr";
+import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 
 const InformationDetail = () => {
     const dispatch = useDispatch();
@@ -39,7 +39,7 @@ const InformationDetail = () => {
     //     dispatch(__getInfoComment());
     // }, [dispatch])
 
-    console.log("information", informations , "informationsfind" , informationsfind)
+    console.log("information", informations, "informationsfind", informationsfind)
 
     const onCilckShow = () => {
         setShow(!show)
@@ -56,7 +56,7 @@ const InformationDetail = () => {
             navigate("/information")
         } else {
             navigate("/information")
-            return 
+            return
         }
     }
 
@@ -64,14 +64,14 @@ const InformationDetail = () => {
         navigate(`/informationupdate/${id}`)
     }
 
-    const onClickPostComment = async(e) => {
+    const onClickPostComment = async (e) => {
         e.preventDefault();
         const newcomment = {
             content: comment,
             articleId: id
         }
-      await dispatch(__postInfoComment(newcomment));
-      await dispatch(__getInformation());
+        await dispatch(__postInfoComment(newcomment));
+        await dispatch(__getInformation());
         setComment("");
     }
     // const closeModal = (e) => {
@@ -82,20 +82,20 @@ const InformationDetail = () => {
 
     //swiper 옵션
     SwiperCore.use(Navigation);
-    const [swiper , setSwiper] = useState(null)
-    const [mainImageIndex , setMainImageIndex] = useState(0);
+    const [swiper, setSwiper] = useState(null)
+    const [mainImageIndex, setMainImageIndex] = useState(0);
     const navigationPrevRef = useRef(null)
     const navigationNextRef = useRef(null)
-    
+
     const swiperParams = {
-        navigation : {prevEl : navigationPrevRef.current , nextEl: navigationNextRef.current},
-         onBeforeInit : (swiper) => {
+        navigation: { prevEl: navigationPrevRef.current, nextEl: navigationNextRef.current },
+        onBeforeInit: (swiper) => {
             swiper.params.navigation.prevEl = navigationPrevRef.current;
             swiper.params.navigation.nextEl = navigationNextRef.current;
             swiper.activeIndex = setMainImageIndex;
             swiper.navigation.update();
         },
-        onSwiper : setSwiper,
+        onSwiper: setSwiper,
         onSlideChange: (e) => setMainImageIndex(e.activeIndex)
     }
 
@@ -119,8 +119,8 @@ const InformationDetail = () => {
                                     <Txtname onClick={onCilckChaetShow}>{informationsfind && informationsfind.username}</Txtname>
                                     <Txtstudent>{informationsfind && informationsfind.departmentName} <span> {informationsfind && informationsfind.admission} </span></Txtstudent>
                                     {showChaet ?
-                                    <ChaetingBox>1:1채팅</ChaetingBox>
-                                    : null
+                                        <ChaetingBox>1:1채팅</ChaetingBox>
+                                        : null
                                     }
                                 </Bodytxt>
                                 {/* <AiOutlineMenu size="20px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }}
@@ -142,48 +142,48 @@ const InformationDetail = () => {
                                 <ContentTitle>{informationsfind && informationsfind.title}</ContentTitle>
                                 <ContentBody>{informationsfind && informationsfind.content}</ContentBody>
                                 {informationsfind && informationsfind.imageList.length > 0 ?
-                                <ContentImgBox>
-                                <Swiper
-                                    {...swiperParams}
-                                    ref={setSwiper}
-                                    spaceBetween={50}
-                                    slidesPerView={1}
-                                >
-                                    {informationsfind && informationsfind.imageList.map((image)=> {
-                                    return(
-                                    <SwiperSlide key={image.imageId}>
-                                        <ContentImg  src={image.imgUrl}></ContentImg>
-                                    </SwiperSlide>)
-                                    })}
-                                    <PrevButton ref={navigationPrevRef}>
-                                        <PreviousBtn />
-                                    </PrevButton>
-                                    <NextButton ref={navigationNextRef}>
-                                        <NextBtn />
-                                    </NextButton>
-                                </Swiper>
-                                </ContentImgBox>
-                                : null}
+                                    <ContentImgBox>
+                                        <Swiper
+                                            {...swiperParams}
+                                            ref={setSwiper}
+                                            spaceBetween={50}
+                                            slidesPerView={1}
+                                        >
+                                            {informationsfind && informationsfind.imageList.map((image) => {
+                                                return (
+                                                    <SwiperSlide key={image.imageId}>
+                                                        <ContentImg src={image.imgUrl}></ContentImg>
+                                                    </SwiperSlide>)
+                                            })}
+                                            <PrevButton ref={navigationPrevRef}>
+                                                <PreviousBtn />
+                                            </PrevButton>
+                                            <NextButton ref={navigationNextRef}>
+                                                <NextBtn />
+                                            </NextButton>
+                                        </Swiper>
+                                    </ContentImgBox>
+                                    : null}
                                 <BodyTxtBox>
-                                <ContentView>조회수 1000회 | 댓글 100개</ContentView>
-                                <ContentTime>15분전</ContentTime>
+                                    <ContentView>조회수 1000회 | 댓글 100개</ContentView>
+                                    <ContentTime>15분전</ContentTime>
                                 </BodyTxtBox>
                             </BodyContent>
-                                
-                            
+
+
 
                             <BodyContainer>
 
                                 <BodyCommentBox>
-                                {informationsfind && informationsfind.commentList.length === 0 ?
-                                    <BodyComment>작성한 댓글이 없습니다 <br></br> 첫번째 댓글을 남겨보세요 </BodyComment>
-                                :
-                                <>
-                                {informationsfind && informationsfind.commentList.map((comment) => (
-                                <InformationDetailComment key={comment.commentId} comment={comment} informationsfind={informationsfind} modalRef={modalRef} />
-                                    ))}
-                                </>
-                                }
+                                    {informationsfind && informationsfind.commentList.length === 0 ?
+                                        <BodyComment>작성한 댓글이 없습니다 <br></br> 첫번째 댓글을 남겨보세요 </BodyComment>
+                                        :
+                                        <>
+                                            {informationsfind && informationsfind.commentList.map((comment) => (
+                                                <InformationDetailComment key={comment.commentId} comment={comment} informationsfind={informationsfind} modalRef={modalRef} />
+                                            ))}
+                                        </>
+                                    }
                                 </BodyCommentBox>
                             </BodyContainer>
                         </DetailBody>
@@ -352,9 +352,12 @@ const ChaetingBox = styled.div`
 `
 
 const BodyContent = styled.div`
-    padding: 0px 20px;
-    /* border: 1px solid red; */
-    width: 100%;
+  padding: 0px 20px;
+  width: 100%;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
     
 `
 const ContentTitle = styled.h3`
@@ -388,7 +391,7 @@ const ContentImg = styled.img`
     /* background-repeat: no-repeat;
     background-size: cover; */
 `
-const PrevButton =styled.button`
+const PrevButton = styled.button`
     font-size: 20px;
     display: flex;
     position:absolute;
@@ -400,7 +403,7 @@ const PrevButton =styled.button`
     transform: translatey(-50%);
     
 `
-const NextButton =styled.button`
+const NextButton = styled.button`
     font-size: 20px;
     display: flex;
     position:absolute;
