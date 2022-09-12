@@ -50,6 +50,8 @@ const Form2 = () => {
     freeimageUrl: '',
   });
 
+  
+
   const [valueDate, onChageDate] = useState(new Date())
   const [isActive, setIsActive] = useState(false);
   const [select, setSelect] = useState('help');
@@ -152,7 +154,7 @@ const Form2 = () => {
   // 만남일정
   const [calendar, setCalendar] = useState({
     calendartitle: '',
-    calendarDate: "",
+    calendarDate: '',
     calendartime: '',
     calendarlocation: '',
     calendarcontent: '',
@@ -274,9 +276,15 @@ const Form2 = () => {
         calendarTime: selectedTime,
         calendarLocation: calendarlocation,
         content: calendarcontent,
-        calendarDate: realCalendar,
+        calnedarDate: realCalendar,
       }
-      dispatch(__postCalendar(newcalendar));
+
+      formdata.append(
+        "articleRequestDto",
+        new Blob([JSON.stringify(newcalendar)], { type: "application/json" })
+      );
+
+      dispatch(__postCalendar(formdata));
       navigate('/calendar');
     }
   };
@@ -339,7 +347,8 @@ const Form2 = () => {
                 name='title'
                 value={title}
                 onChange={onChangeHandler}
-                placeholder='제목을 입력해주세요'
+                placeholder='제목을 입력해주세요(25자이내)'
+                maxLength="25"
               ></FormInput>
               <Textarea
                 name='content'
@@ -354,7 +363,8 @@ const Form2 = () => {
                 name='infotitle'
                 value={infotitle}
                 onChange={infoonChangeHandler}
-                placeholder='제목을 입력해주세요'
+                placeholder='제목을 입력해주세요(25자이내)'
+                maxLength="25"
               ></FormInput>
               <Textarea
                 name='infocontent'
@@ -369,7 +379,8 @@ const Form2 = () => {
                 name='calendartitle'
                 value={calendartitle}
                 onChange={calendaronChangeHandler}
-                placeholder='제목을 입력해주세요'
+                placeholder='제목을 입력해주세요(25자이내)'
+                maxLength="25"
               ></FormInput>
               <CalendarButton
               // onClick={showModal}
@@ -423,7 +434,8 @@ const Form2 = () => {
                 name='freetitle'
                 value={freetitle}
                 onChange={freeonChangeHandler}
-                placeholder='제목을 입력해주세요'
+                placeholder='제목을 입력해주세요(25자이내)'
+                maxLength="25"
               ></FormInput>
               <Textarea
                 name='freecontent'

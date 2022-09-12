@@ -2,9 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Img from "../../assets/naverIcon.png"
-import { BsCalendarCheck } from "react-icons/bs";
+import { BsQuestionSquare } from "react-icons/bs";
 import { __getCalendar } from '../../redux/modules/CalendarSlice';
-import { __getDate } from '../../redux/modules/DateSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 
@@ -12,34 +11,40 @@ const CalendarCard = ({ calendar, id }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        dispatch(__getCalendar());
-        dispatch(__getDate());
-    }, [dispatch])
+    // useEffect(() => {
+    //     dispatch(__getCalendar());
+    // }, [dispatch])
 
-    const onClickHandler = () => {
+    const onClickNavi = () => {
         navigate(`/calendardetail/${id}`)
     }
 
     return (
-        <StCalendarCard onClick={onClickHandler} >
+        <StCalendarCard onClick={onClickNavi}>
             <CardHead>
                 <HeadImg>
-                    <BsCalendarCheck/>
+                    <BsQuestionSquare />
                 </HeadImg>
-                <HeadName>이름</HeadName>
-                <HeadStudent>14학번</HeadStudent>
-                <HeadTime>15분전</HeadTime>
+                <HeadUser>
+                    <HeadTop>
+                        <HeadName>{calendar.username}</HeadName>
+                        <HeadTime>{calendar.createdAt}</HeadTime>
+                    </HeadTop>
+                    <HeadBottom>
+                        <HeadDepartment>{calendar.departmentName}</HeadDepartment>
+                        <HeadStudent>· {calendar.admission}</HeadStudent>
+                    </HeadBottom>
+                </HeadUser>
             </CardHead>
             <CardBody>
                 <BodyTitle>{calendar.title}</BodyTitle>
-                <BodyContent>
-                    {calendar.content}
-                </BodyContent>
+                {/* <BodyContent>
+                    {help.content}
+                </BodyContent> */}
             </CardBody>
             <CardFooter>
-                <Views>조회수 1500</Views>
-                <CommentCount>댓글 2700</CommentCount>
+                <Views>조회수 {calendar.views}</Views>
+                <CommentCount>댓글 {calendar.commentCnt}</CommentCount>
             </CardFooter>
         </StCalendarCard>
     );
@@ -68,13 +73,33 @@ const HeadImg = styled.div`
     background-color: #f6bd60;
     border-radius: 50%;
 `
-const HeadName = styled.h2`
-    font-size: 18px;
+
+const HeadUser = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
     margin: 0px 5px;
 `
-const HeadStudent = styled.p`
+const HeadTop = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    /* border: 1px solid red; */
+`
+const HeadBottom = styled.div`
+    display: flex;
     font-size: 12px;
     color:gray;
+    gap: 5px;
+`
+const HeadDepartment = styled.div``
+const HeadName = styled.h2`
+    font-size: 18px;
+    /* margin: 0px 5px; */
+`
+const HeadStudent = styled.p`
+
 `
 const HeadTime = styled.p`
     font-size: 12px;

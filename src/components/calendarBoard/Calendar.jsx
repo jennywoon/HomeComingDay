@@ -6,6 +6,7 @@ import { __getCalendar } from "../../redux/modules/CalendarSlice";
 import CalendarCard from "./CalendarCard";
 import calendarorange from "../../assets/calendarorange.png"
 import "./CalendarModal.css"
+import nonedatasquare from "../../assets/nonedatasquare.png"
 
 const Calendar = () => {
   const dispatch = useDispatch();
@@ -28,9 +29,18 @@ const Calendar = () => {
         </Select>
         <HelpList>
           <>
-            {calendars.slice(0).map((calendar) => (
-              <CalendarCard key={calendar.id} id={calendar.id} calendar={calendar} />
+          {calendars && calendars.length > 0 ? (
+            <div>
+            {calendars && calendars.slice(0).map((calendar) => (
+              <CalendarCard key={calendar.articleId} id={calendar.articleId} calendar={calendar} />
             ))}
+            </div>
+          ) : (
+            <NoneData>
+                <NoneDataImg></NoneDataImg>
+                <p>내가 쓴 게시글이 없습니다</p>
+              </NoneData>
+          )}
           </>
         </HelpList>
       </HelpWrap>
@@ -93,3 +103,21 @@ const Select = styled.select`
 const HelpList = styled.div`
   /* border: 1px solid red; */
 `;
+const NoneData = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #b3b3b3;
+    font-weight: 500;
+    font-size: 16px;
+`
+const NoneDataImg = styled.div`
+    width: 50px;
+    height: 50px;
+    background-image: url(${nonedatasquare});
+    background-position: center;
+    background-size: 100% 100%;
+`
