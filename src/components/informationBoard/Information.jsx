@@ -97,6 +97,7 @@ const InformationWrap = styled.div`
 const Select = styled.select`
   display: flex;
   margin-left: auto;
+  margin-right: 10px;
   margin-bottom: 10px;
   padding: 2px 4px;
   border-radius: 10px;
@@ -110,8 +111,9 @@ const Select = styled.select`
 
 const InformationList = styled.div`
   /* height: 100%; */
-  width: 100%;
+  width: 95%;
   height: 97%;
+  margin: 0 auto;
   /* border: 1px solid green; */
   overflow-y: scroll;
   /* overflow-y: auto; */

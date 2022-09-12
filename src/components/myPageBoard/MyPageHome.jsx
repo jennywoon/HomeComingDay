@@ -10,6 +10,7 @@ import Homeimg from '../../assets/Home.png';
 import Searchimg from '../../assets/Search.png';
 import Chatimg from '../../assets/Chat.png';
 import MyColorimg from '../../assets/MyColor.png';
+import MyPageUserTest from './MyPageUserTest';
 
 const MyPageHome = () => {
   const navigate = useNavigate();
@@ -27,7 +28,8 @@ const MyPageHome = () => {
   return (
     <HomeContainer>
       <MyPageTop>
-        <MyPageUser />
+        {/* <MyPageUser /> */}
+        <MyPageUserTest/>
       </MyPageTop>
       <MyPageBottom>
         <BottomWrap>
