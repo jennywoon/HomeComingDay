@@ -13,6 +13,7 @@ import {
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import { IoIosArrowBack } from 'react-icons/io';
 import axios from 'axios';
+import SignupModal from './SignupModal';
 
 const SignUp = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -104,6 +105,7 @@ const SignUp = () => {
 
   // 이메일 보내기
   const [isSend, setIsSend] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const handleSendEmail = async () => {
     const sendEmail = {
@@ -112,6 +114,7 @@ const SignUp = () => {
     try {
       const data = await axios.post(`${BASE_URL}/signup/sendEmail`, sendEmail);
       setIsSend(true);
+      setModalOpen(true);
       console.log(data.data);
     } catch (error) {
       console.log('error ', error);
@@ -264,6 +267,7 @@ const SignUp = () => {
 
   return (
     <FormContainer>
+      {isSend ? modalOpen && <SignupModal setModalOpen={setModalOpen} /> : null}
       <StSignupContainer onSubmit={handleSubmit}>
         <StSignupWraps>
           <FisrtWrap>
@@ -317,6 +321,7 @@ const SignUp = () => {
                       ? '해당 이메일로 인증번호 발송 완료'
                       : '해당 이메일로 인증번호 발송'}
                   </StSendEmailButton>
+
                   <Stlabel>인증번호</Stlabel>
                   <StFlexbox>
                     <Input
