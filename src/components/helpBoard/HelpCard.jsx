@@ -9,44 +9,45 @@ const HelpCard = ({ help, id }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-
-    // useEffect(() => {
-    //     dispatch(__postHelp());
-    //     dispatch(__getHelp());
-    // }, [dispatch])
+    useEffect(() => {
+        dispatch(__postHelp());
+        dispatch(__getHelp());
+    }, [dispatch])
 
     const onClickNavi = () => {
         navigate(`/helpdetail/${id}`)
     }
 
     return (
-        <HelpContainer onClick={onClickNavi}>
-            <CardHead>
-                <HeadImg>
-                    <BsQuestionSquare />
-                </HeadImg>
-                <HeadUser>
-                    <HeadTop>
-                        <HeadName>{help.username}</HeadName>
-                        <HeadTime>{help.createdAt}</HeadTime>
-                    </HeadTop>
-                    <HeadBottom>
-                        <HeadDepartment>{help.departmentName}</HeadDepartment>
-                        <HeadStudent>· {help.admission}</HeadStudent>
-                    </HeadBottom>
-                </HeadUser>
-            </CardHead>
-            <CardBody>
-                <BodyTitle>{help.title}</BodyTitle>
-                {/* <BodyContent>
-                    {help.content}
-                </BodyContent> */}
-            </CardBody>
-            <CardFooter>
-                <Views>조회수 {help.views}</Views>
-                <CommentCount>댓글 {help.commentCnt}</CommentCount>
-            </CardFooter>
-        </HelpContainer>
+      <HelpContainer onClick={onClickNavi}>
+        <Card>
+          <CardHead>
+            <StImg>
+              <HeadImg>
+                <BsQuestionSquare />
+              </HeadImg>
+            </StImg>
+            <HeadUser>
+              <HeadTop>
+                <HeadName>{help.username}</HeadName>
+                <HeadTime>{help.createdAt}</HeadTime>
+              </HeadTop>
+              <HeadBottom>
+                <HeadDepartment>{help.departmentName}</HeadDepartment>
+                <HeadStudent>· {help.admission}</HeadStudent>
+              </HeadBottom>
+            </HeadUser>
+          </CardHead>
+          <CardBody>
+            <BodyTitle>{help.title}</BodyTitle>
+          </CardBody>
+          <CardFooter>
+            <Views>조회수 {help.views}</Views>
+            <Division>|</Division>
+            <CommentCount>댓글 {help.commentCnt}</CommentCount>
+          </CardFooter>
+        </Card>
+      </HelpContainer>
     );
 };
 

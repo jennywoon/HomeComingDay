@@ -111,7 +111,7 @@ const CalendarDetail = () => {
           <DetailWrap>
             <FirstWrap>
               <DetailHeader>
-                <IoIosArrowBack size="25px" cursor="pointer" onClick={() => { navigate("/") }} />
+                <IoIosArrowBack size="25px" cursor="pointer" onClick={() => { navigate("/calendar") }} />
                 <HeaderTitle>만남일정</HeaderTitle>
                 <div style={{ width: "25px", height: "25px" }}></div>
               </DetailHeader>

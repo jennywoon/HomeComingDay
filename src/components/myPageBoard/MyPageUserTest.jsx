@@ -83,8 +83,8 @@ const MyPageUserTest = () => {
                         <AiOutlineCamera size="18" style={{ color: "white" }} />
                     </UserImgUpload>
                 </UserImg> */}
-                    {/* <img src={imageUrl} style={{ width: "80px", height: "80px", borderRadius: "50%" }}></img> */}
-                        <UserImg src={imageUrl} onClick={() => { onClickFileBtn() }}></UserImg>
+                    <img src={imageUrl} style={{ width: "80px", height: "80px", borderRadius: "50%" }}></img>
+                        {/* <UserImg src={imageUrl} onClick={() => { onClickFileBtn() }}></UserImg> */}
                         <input type="file" ref={imgRef} onChange={onChangeImage} style={{ display: "none" }}></input>
                         <UserImgUpload onClick={() => { onClickFileBtn() }}>
                             <AiOutlineCamera size="18" style={{ color: "white" }} />

@@ -4,50 +4,57 @@ import styled from 'styled-components';
 import Img from '../../assets/naverIcon.png';
 import { BsCalendarCheck } from 'react-icons/bs';
 import { __getCalendar } from '../../redux/modules/CalendarSlice';
+import { __getDate } from '../../redux/modules/DateSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 
 const CalendarCard = ({ calendar, id }) => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     dispatch(__getCalendar());
-    // }, [dispatch])
+  useEffect(() => {
+    dispatch(__getCalendar());
+    dispatch(__getDate());
+  }, [dispatch]);
 
-    const onClickNavi = () => {
-        navigate(`/calendardetail/${id}`)
-    }
+  const onClickNavi = () => {
+    navigate(`/calendardetail/${id}`)
+}
 
-    return (
-        <StCalendarCard onClick={onClickNavi}>
-            <CardHead>
-                <HeadImg>
-                    <BsQuestionSquare />
-                </HeadImg>
-                <HeadUser>
-                    <HeadTop>
-                        <HeadName>{calendar.username}</HeadName>
-                        <HeadTime>{calendar.createdAt}</HeadTime>
-                    </HeadTop>
-                    <HeadBottom>
-                        <HeadDepartment>{calendar.departmentName}</HeadDepartment>
-                        <HeadStudent>· {calendar.admission}</HeadStudent>
-                    </HeadBottom>
-                </HeadUser>
-            </CardHead>
-            <CardBody>
-                <BodyTitle>{calendar.title}</BodyTitle>
-                {/* <BodyContent>
-                    {help.content}
+  return (
+    <StCalendarCard onClick={onClickNavi}>
+      <Card>
+        <CardHead>
+          <StImg>
+            <HeadImg>
+              <BsCalendarCheck />
+            </HeadImg>
+          </StImg>
+          <HeadUser>
+            <HeadTop>
+              <HeadName>{calendar.username}</HeadName>
+              <HeadTime>{calendar.createdAt}</HeadTime>
+            </HeadTop>
+            <HeadBottom>
+              <HeadDepartment>{calendar.departmentName}</HeadDepartment>
+              <HeadStudent>· {calendar.admission}</HeadStudent>
+            </HeadBottom>
+          </HeadUser>
+        </CardHead>
+        <CardBody>
+          <BodyTitle>{calendar.title}</BodyTitle>
+          {/* <BodyContent>
+                    {calendar.content}
                 </BodyContent> */}
-            </CardBody>
-            <CardFooter>
-                <Views>조회수 {calendar.views}</Views>
-                <CommentCount>댓글 {calendar.commentCnt}</CommentCount>
-            </CardFooter>
-        </StCalendarCard>
-    );
+        </CardBody>
+        <CardFooter>
+          <Views>조회수 {calendar.views}</Views>
+          <Division>|</Division>
+          <CommentCount>댓글 {calendar.commentCnt}</CommentCount>
+        </CardFooter>
+      </Card>
+    </StCalendarCard>
+  );
 };
 
 export default CalendarCard;
