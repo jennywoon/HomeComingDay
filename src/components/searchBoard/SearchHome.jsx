@@ -13,7 +13,7 @@ const SearchHome = () => {
 
     return (
         <HomeContainer>
-            {/* <Search/> */}
+            <Search/>
             <SearchTest/>
             <SecondWrap>
                 <Bottom>

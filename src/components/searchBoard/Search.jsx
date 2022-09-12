@@ -7,35 +7,55 @@ import { IoCloseCircle } from "react-icons/io5";
 import SearchCard from "./SearchCard";
 import { __getSearch, __postSearch } from "../../redux/modules/SearchSlice";
 import { __getHelp } from "../../redux/modules/HelpSlice";
+import { __getInformation } from "../../redux/modules/InformationSlice";
+import { __getCalendar } from "../../redux/modules/CalendarSlice";
+import { __getFreeTalk } from "../../redux/modules/FreeTalkSlice";
 
 
 const Search = () => {
     const dispatch = useDispatch();
 
     // search post 연습
-
     
     const [search, setSearch] = useState()
+    const [filterBtn , setFilterBtn] = useState({
+        helpBtn : false ,
+        informationBtn : false,
+        freeTalkBtn : false,
+        calendarBtn : false
+    })
     const searchs = useSelector((state)=>state.helps.helps)
-    
+    const helpSearchs = useSelector((state)=>state.helps.helps)
+    const informationSearchs = useSelector((state)=>state.informations.informations)
+    const freeTalkSearchs = useSelector((state)=>state.freetalks.freetalks)
+    const calendarSearchs = useSelector((state)=>state.calendars.calendars)
+
     console.log(searchs)
 
     useEffect(() => {
-        // dispatch(__getSearch());
         dispatch(__getHelp())
+        dispatch(__getInformation())
+        dispatch(__getCalendar())
+        dispatch(__getFreeTalk())
     }, [dispatch])
 
+    const helpSearchFilter = () =>{
+        setFilterBtn(!filterBtn)
+    }
+  
+ 
     //filter
     const [filteredList, setFilteredList] = new useState(searchs);
     const filterBySearch = (e) => {
         // Access input value
 
-        const query = setInputText(e.target.value);
+        const query =e.target.value;
+        console.log(query)
         // Create copy of item list
-        var updatedList = [...searchs];
+        let updatedList = [...searchs];
         // Include all elements which includes the search query
         updatedList = updatedList.filter((item) => {
-          return item.title.toLowerCase().indexOf(query.toString().toLowerCase()) !== -1;
+          return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
         });
         // Trigger render with updated values
         setFilteredList(updatedList);
@@ -67,10 +87,10 @@ const Search = () => {
             {/* <Banner /> */}
             <HelpWrap>
                 <SearchWrap>
-                    <SearchDiv>
+                    <SearchDiv >
                         <BiSearch size="37" style={{ paddingLeft: "20px" }} />
                         <SearchInput
-                             id="search-box" onChange={filterBySearch} value={inputText}
+                             id="search-box" onChange={filterBySearch}
                             placeholder="검색어를 입력해주세요" 
                             // onKeyPress={(e) => {
                             //     if (e.key === 'Enter') {
@@ -85,16 +105,18 @@ const Search = () => {
                             size="37" style={{ paddingRight: "20px", cursor: "pointer" }} />
                     </SearchDiv>
                 </SearchWrap>
+                <SearchFilterBox>
                 <SearchFilter>
                     <FilterMenu>
-                        <FilterList>도움요청</FilterList>
-                        <FilterList>정보공유</FilterList>
+                        <FilterList show={filterBtn} onClick={helpSearchFilter}>도움요청</FilterList>
+                        <FilterList >정보공유</FilterList>
                         <FilterList>만남공유</FilterList>
                         <FilterList>자유토크</FilterList>
                     </FilterMenu>
                 </SearchFilter>
+                </SearchFilterBox>
                 <RecentSearch>
-                    <RecentWrap>
+                    <RecentWrap id="item-list">
                         {/* <RecentTitle>최근 검색어</RecentTitle> */}
                         {/* search card 맵 돌릴 예정 */}
                         <>
@@ -173,19 +195,33 @@ const RecentTitle = styled.div`
 const SearchFilter = styled.div`
 
 `
-const FilterMenu =styled.ol`
+const SearchFilterBox = styled.div`
     display: flex;
-    width: 80%;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    
+`
+
+const FilterMenu =styled.ul`
+    display: flex;
+    width: 90%;
+    text-align: center;
     justify-content: space-between;
-    margin:10px 0;
+    
+    height:25px;
+    margin:10px 0px;
+    
 `
 const FilterList = styled.li`
     width:70px;
     text-align: center;
     border-radius: 20px;
+    display: inline-block;
     /* border:1px solid red; */
-    background-color: #F7931E;;
-    color:white;
+    background-color: ${props => props.show ? "#F7931E" : "white" };
+    color:${props => props.show ? "white" : "black" };
     list-style:none;
+    cursor:pointer;
 
 `

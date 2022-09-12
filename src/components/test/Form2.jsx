@@ -20,11 +20,10 @@ import { TimePicker } from 'antd';
 import '../calendarBoard/Time.css';
 // import '../calendarBoard/TimePicker.css';
 import Calendar from 'react-calendar';
-import "../calendarBoard/CalendarModal.css"
-// import '../calendarBoard/Calendar.css'; 
-import { useDropzone } from "react-dropzone";
+import '../calendarBoard/CalendarModal.css';
+// import '../calendarBoard/Calendar.css';
+import { useDropzone } from 'react-dropzone';
 import dayjs from 'dayjs';
-
 
 const Form2 = () => {
   const dispatch = useDispatch();
@@ -47,9 +46,7 @@ const Form2 = () => {
     freeimageUrl: '',
   });
 
-  
-
-  const [valueDate, onChageDate] = useState(new Date())
+  const [valueDate, onChageDate] = useState(new Date());
   const [isActive, setIsActive] = useState(false);
   const [select, setSelect] = useState('help');
 
@@ -64,18 +61,18 @@ const Form2 = () => {
   //   setShowCalendar(false);
   // };
 
-  const [reactCalendar, setReactCalendar] = useState("")
+  const [reactCalendar, setReactCalendar] = useState('');
   const onChangeCalendar = (e) => {
-    setReactCalendar(e.target.value)
-  }
+    setReactCalendar(e.target.value);
+  };
 
   //이미지 Dropzone -추가
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
-      "image/png": [".png"],
-      "image/jpg": [".jpg"],
-      "image/jpeg": [".jpeg"],
+      'image/png': ['.png'],
+      'image/jpg': ['.jpg'],
+      'image/jpeg': ['.jpeg'],
     },
     maxFiles: 3,
     onDrop: (acceptedFiles) => {
@@ -93,10 +90,9 @@ const Form2 = () => {
   //이미지프리뷰삭제
   const deleteImage = (i) => {
     let deleteList = files.filter((_, id) => id !== i);
-    setFiles(deleteList)
+    setFiles(deleteList);
     return;
   };
-
 
   // selectedImage.filter((img,id)=>{
   //     URL.revokeObjectURL(img);
@@ -120,7 +116,6 @@ const Form2 = () => {
   const { title, content, imgUrl } = help;
   const { infotitle, infocontent, infoimageUrl } = info;
   const { freetitle, freecontent, freeimageUrl } = freetalk;
-
 
   // console.log("help", title.length , "info" , info.length , "free" , freetalk.length)
 
@@ -157,14 +152,19 @@ const Form2 = () => {
     calendarcontent: '',
   });
   const [date, setDate] = useState({
-    calendarDate: "",
+    calendarDate: '',
   });
-  const onChange = value => setDate(value);
-  const realCalendar = moment(date.toString()).format("YYYY년 MM월 DD일")
-  const dates = { calendarDate: realCalendar }
+  const onChange = (value) => setDate(value);
+  const realCalendar = moment(date.toString()).format('YYYY년 MM월 DD일');
+  const dates = { calendarDate: realCalendar };
 
-  const { calendartitle, calendarDate, calendartime, calendarlocation, calendarcontent } =
-    calendar;
+  const {
+    calendartitle,
+    calendarDate,
+    calendartime,
+    calendarlocation,
+    calendarcontent,
+  } = calendar;
 
   const [selectedTime, setSelectedTime] = useState('00:00');
   const calendaronChangeHandler = (e) => {
@@ -175,13 +175,11 @@ const Form2 = () => {
     });
   };
 
-
   const onSelectTimeHandler = (value) => {
     const timeString = moment(value).format('hh:mm a');
     setSelectedTime(timeString);
     console.log(selectedTime);
   };
-
 
   const handleSelect = (e) => {
     setSelect(e.target.value);
@@ -189,9 +187,10 @@ const Form2 = () => {
 
   const formdata = new FormData();
   //등록하기
+  // const [isActive, setIsActive] = useState(false);
   const onSubmitHandler = (e) => {
-
     e.preventDefault();
+    setIsActive(e);
     if (
       title.length &&
       infotitle.length &&
@@ -221,64 +220,59 @@ const Form2 = () => {
         content: content,
       };
       files.map((image) => {
-        formdata.append("files", image);
+        formdata.append('files', image);
       });
       formdata.append(
-        "articleRequestDto",
-        new Blob([JSON.stringify(newhelp)], { type: "application/json" })
+        'articleRequestDto',
+        new Blob([JSON.stringify(newhelp)], { type: 'application/json' })
       );
       for (var value of formdata.values()) {
-        console.log("formdata value", value);
+        console.log('formdata value', value);
       }
-      console.log(value)
+      console.log(value);
       dispatch(__postHelp(formdata));
-      navigate('/')
-
+      navigate('/');
     } else if (select === 'info') {
       const newinfo = {
         title: infotitle,
         content: infocontent,
-
       };
       files.map((image) => {
-        formdata.append("files", image)
+        formdata.append('files', image);
       });
       formdata.append(
-        "articleRequestDto",
-        new Blob([JSON.stringify(newinfo)], { type: "application/json" })
+        'articleRequestDto',
+        new Blob([JSON.stringify(newinfo)], { type: 'application/json' })
       );
       dispatch(__postInformation(formdata));
       navigate('/information');
-
     } else if (select === 'freetalk') {
       const newfreetalk = {
         title: freetitle,
         content: freecontent,
-
       };
       files.map((image) => {
-        formdata.append("files", image)
+        formdata.append('files', image);
       });
       formdata.append(
-        "articleRequestDto",
-        new Blob([JSON.stringify(newfreetalk)], { type: "application/json" })
+        'articleRequestDto',
+        new Blob([JSON.stringify(newfreetalk)], { type: 'application/json' })
       );
 
       dispatch(__postFreeTalk(formdata));
       navigate('/freetalk');
-
     } else if (select === 'meet') {
       const newcalendar = {
         title: calendartitle,
         calendarTime: selectedTime,
         calendarLocation: calendarlocation,
         content: calendarcontent,
-        calnedarDate: realCalendar,
-      }
+        calendarDate: realCalendar,
+      };
 
       formdata.append(
-        "articleRequestDto",
-        new Blob([JSON.stringify(newcalendar)], { type: "application/json" })
+        'articleRequestDto',
+        new Blob([JSON.stringify(newcalendar)], { type: 'application/json' })
       );
 
       dispatch(__postCalendar(formdata));
@@ -337,7 +331,6 @@ const Form2 = () => {
             <option value='meet'>만남일정</option>
             <option value='freetalk'>자유토크</option>
           </FormSelection>
-
           {select === 'help' ? (
             <>
               <FormInput
@@ -345,14 +338,83 @@ const Form2 = () => {
                 value={title}
                 onChange={onChangeHandler}
                 placeholder='제목을 입력해주세요(25자이내)'
-                maxLength="25"
+                maxLength='25'
               ></FormInput>
-              <Textarea
-                name='content'
-                value={content}
-                onChange={onChangeHandler}
-                placeholder='내용을 입력해주세요'
-              ></Textarea>
+              <StCard>
+                <Textarea
+                  name='content'
+                  value={content}
+                  onChange={onChangeHandler}
+                  placeholder='내용을 입력해주세요'
+                ></Textarea>
+                <FormFooter>
+                  <FooterContain>
+                    {select === 'help' ||
+                    select === 'info' ||
+                    select === 'freetalk' ? (
+                      <>
+                        <GetRootProps>
+                          <StImaBox>
+                            <StImgUpload
+                              {...getRootProps({ className: 'dropzone' })}
+                            >
+                              <Imgadd size='24px' />
+                              <Imgtxt>이미지 첨부</Imgtxt>
+                              {/* <button width="300px" text="컴퓨터에서 선택" /> */}
+                              <input {...getInputProps()} />
+                            </StImgUpload>
+                          </StImaBox>
+                        </GetRootProps>
+                        <StImgContainer>
+                          {files.length !== 0 &&
+                            files.map((file, i) => (
+                              // console.log("file!!!!!!!", file)
+                              <div key={i} style={{ display: 'flex' }}>
+                                <div
+                                  style={{
+                                    width: '120px',
+                                    height: '110px',
+                                    overflow: 'hidden',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    position: 'relative',
+                                  }}
+                                >
+                                  <img
+                                    src={file.preview}
+                                    style={{
+                                      width: '100px',
+                                      height: '100px',
+                                      backgroundSize: 'cover',
+                                      justifyContent: 'center',
+                                      objectFit: 'cover',
+                                      borderRadius: '16px',
+                                    }}
+                                    // onLoad={() => {
+                                    //   URL.revokeObjectURL(file.preview);
+                                    // }}
+                                  />
+                                  <CancelBtn
+                                    onClick={() => deleteImage(i)}
+                                    size='20px'
+                                    style={{
+                                      color: '#F7931E',
+                                      position: 'absolute',
+                                      right: '5px',
+                                      top: '0px',
+                                      cursor: 'pointer',
+                                    }}
+                                  />
+                                </div>
+                              </div>
+                            ))}
+                        </StImgContainer>
+                      </>
+                    ) : null}
+                  </FooterContain>
+                </FormFooter>
+              </StCard>
             </>
           ) : select === 'info' ? (
             <>
@@ -361,14 +423,83 @@ const Form2 = () => {
                 value={infotitle}
                 onChange={infoonChangeHandler}
                 placeholder='제목을 입력해주세요(25자이내)'
-                maxLength="25"
+                maxLength='25'
               ></FormInput>
-              <Textarea
-                name='infocontent'
-                value={infocontent}
-                onChange={infoonChangeHandler}
-                placeholder='내용을 입력해주세요'
-              ></Textarea>
+              <StCard>
+                <Textarea
+                  name='infocontent'
+                  value={infocontent}
+                  onChange={infoonChangeHandler}
+                  placeholder='내용을 입력해주세요'
+                ></Textarea>
+                <FormFooter>
+                  <FooterContain>
+                    {select === 'help' ||
+                    select === 'info' ||
+                    select === 'freetalk' ? (
+                      <>
+                        <GetRootProps>
+                          <StImaBox>
+                            <StImgUpload
+                              {...getRootProps({ className: 'dropzone' })}
+                            >
+                              <Imgadd size='24px' />
+                              <Imgtxt>이미지 첨부</Imgtxt>
+                              {/* <button width="300px" text="컴퓨터에서 선택" /> */}
+                              <input {...getInputProps()} />
+                            </StImgUpload>
+                          </StImaBox>
+                        </GetRootProps>
+                        <StImgContainer>
+                          {files.length !== 0 &&
+                            files.map((file, i) => (
+                              // console.log("file!!!!!!!", file)
+                              <div key={i} style={{ display: 'flex' }}>
+                                <div
+                                  style={{
+                                    width: '120px',
+                                    height: '110px',
+                                    overflow: 'hidden',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    position: 'relative',
+                                  }}
+                                >
+                                  <img
+                                    src={file.preview}
+                                    style={{
+                                      width: '100px',
+                                      height: '100px',
+                                      backgroundSize: 'cover',
+                                      justifyContent: 'center',
+                                      objectFit: 'cover',
+                                      borderRadius: '16px',
+                                    }}
+                                    // onLoad={() => {
+                                    //   URL.revokeObjectURL(file.preview);
+                                    // }}
+                                  />
+                                  <CancelBtn
+                                    onClick={() => deleteImage(i)}
+                                    size='20px'
+                                    style={{
+                                      color: '#F7931E',
+                                      position: 'absolute',
+                                      right: '5px',
+                                      top: '0px',
+                                      cursor: 'pointer',
+                                    }}
+                                  />
+                                </div>
+                              </div>
+                            ))}
+                        </StImgContainer>
+                      </>
+                    ) : null}
+                  </FooterContain>
+                </FormFooter>
+              </StCard>
             </>
           ) : select === 'meet' ? (
             <>
@@ -377,19 +508,25 @@ const Form2 = () => {
                 value={calendartitle}
                 onChange={calendaronChangeHandler}
                 placeholder='제목을 입력해주세요(25자이내)'
-                maxLength="25"
+                maxLength='25'
               ></FormInput>
               <CalendarButton
               // onClick={showModal}
               >
                 <CalendarTitle>날짜</CalendarTitle>
                 <DateDiv onClick={() => setIsActive(!isActive)}>
-                  {moment(date).format("YYYY년 MM월 DD일")}
+                  {moment(date).format('YYYY년 MM월 DD일')}
                   <IoIosArrowForward />
                 </DateDiv>
               </CalendarButton>
               <CalendarWrap value={reactCalendar} onClick={onChangeCalendar}>
-                {isActive && <Calendar name="calendarDate" value={calendarDate} onChange={onChange} />}
+                {isActive && (
+                  <Calendar
+                    name='calendarDate'
+                    value={calendarDate}
+                    onChange={onChange}
+                  />
+                )}
               </CalendarWrap>
               <TimeDiv>
                 <CalendarTitle>시간</CalendarTitle>
@@ -432,78 +569,100 @@ const Form2 = () => {
                 value={freetitle}
                 onChange={freeonChangeHandler}
                 placeholder='제목을 입력해주세요(25자이내)'
-                maxLength="25"
+                maxLength='25'
               ></FormInput>
-              <Textarea
-                name='freecontent'
-                value={freecontent}
-                onChange={freeonChangeHandler}
-                placeholder='내용을 입력해주세요'
-              ></Textarea>
+              <StCard>
+                <Textarea
+                  name='freecontent'
+                  value={freecontent}
+                  onChange={freeonChangeHandler}
+                  placeholder='내용을 입력해주세요'
+                ></Textarea>
+                <FormFooter>
+                  <FooterContain>
+                    {select === 'help' ||
+                    select === 'info' ||
+                    select === 'freetalk' ? (
+                      <>
+                        <GetRootProps>
+                          <StImaBox>
+                            <StImgUpload
+                              {...getRootProps({ className: 'dropzone' })}
+                            >
+                              <Imgadd size='24px' />
+                              <Imgtxt>이미지 첨부</Imgtxt>
+                              {/* <button width="300px" text="컴퓨터에서 선택" /> */}
+                              <input {...getInputProps()} />
+                            </StImgUpload>
+                          </StImaBox>
+                        </GetRootProps>
+                        <StImgContainer>
+                          {files.length !== 0 &&
+                            files.map((file, i) => (
+                              // console.log("file!!!!!!!", file)
+                              <div key={i} style={{ display: 'flex' }}>
+                                <div
+                                  style={{
+                                    width: '120px',
+                                    height: '110px',
+                                    overflow: 'hidden',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    position: 'relative',
+                                  }}
+                                >
+                                  <img
+                                    src={file.preview}
+                                    style={{
+                                      width: '100px',
+                                      height: '100px',
+                                      backgroundSize: 'cover',
+                                      justifyContent: 'center',
+                                      objectFit: 'cover',
+                                      borderRadius: '16px',
+                                    }}
+                                    // onLoad={() => {
+                                    //   URL.revokeObjectURL(file.preview);
+                                    // }}
+                                  />
+                                  <CancelBtn
+                                    onClick={() => deleteImage(i)}
+                                    size='20px'
+                                    style={{
+                                      color: '#F7931E',
+                                      position: 'absolute',
+                                      right: '5px',
+                                      top: '0px',
+                                      cursor: 'pointer',
+                                    }}
+                                  />
+                                </div>
+                              </div>
+                            ))}
+                        </StImgContainer>
+                      </>
+                    ) : null}
+                  </FooterContain>
+                </FormFooter>
+              </StCard>
             </>
           ) : null}
         </FormBody>
-        <FormFooter>
-          <FooterContain>
-            {select === 'help' || select === 'info' || select === 'freetalk' ? (
-              <>
-                <GetRootProps {...getRootProps({ className: "dropzone" })}>
-                  <input
-                    {...getInputProps()}
-                  />
-                  <StImaBox>
-                    <StImgUpload>
-                      <Imgadd size='24px' />
-                      <Imgtxt>이미지 첨부</Imgtxt>
-                      {/* <button width="300px" text="컴퓨터에서 선택" /> */}
-                    </StImgUpload>
-                  </StImaBox>
-                </GetRootProps>
-                <StImgContainer>
-                  {files.length !== 0 &&
-                    files.map((file, i) => (
-                      // console.log("file!!!!!!!", file)
-                      <div key={i} style={{ display: "flex" }}>
-                        <div
-                          style={{
-                            width: "120px",
-                            height: "110px",
-                            overflow: "hidden",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            position: "relative"
-                          }}
-                        >
-                          <img
-                            src={file.preview}
-                            style={{
-                              width: "100px",
-                              height: "100px",
-                              backgroundSize: "cover",
-                              justifyContent: "center",
-                              objectFit: "cover",
-                              borderRadius: "16px",
 
-                            }}
-                          // onLoad={() => {
-                          //   URL.revokeObjectURL(file.preview);
-                          // }}
-                          />
-                          <CancelBtn onClick={() => deleteImage(i)} size="20px" style={{ color: "#F7931E", position: "absolute", right: "5px", top: "0px", cursor: "pointer" }} />
-                        </div>
-                      </div>
-                    ))}
-                </StImgContainer>
-              </>)
-              : null}
-          </FooterContain>
-          <FooterBtn>
-            <Button type='submit' backgroundColor='#F7931E' width="90%" height="40px" color="white" style={{display:"block", margin:"15px auto"}}>
-              <div style={{fontWeight: "500", fontSize: "16px"}}>올리기</div>
-            </Button>
-          </FooterBtn>
-        </FormFooter>
+        <FooterBtn>
+          <Button
+            type='submit'
+            backgroundColor='#F7931E'
+            width='100%'
+            height='40px'
+            color='white'
+            style={{ display: 'block', margin: '15px auto' }}
+            // isDisabled={isActive ? false : true}
+          >
+            <div style={{ fontWeight: '500', fontSize: '16px' }}>올리기</div>
+          </Button>
+        </FooterBtn>
       </FormWrap>
     </FormContainer>
   );
@@ -512,265 +671,289 @@ const Form2 = () => {
 export default Form2;
 
 const FormContainer = styled.div`
-        position: relative;
-        width: 100%;
-        height: 100vh;
-        overflow-y: hidden;
-        `;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow-y: hidden;
+  display: flex;
+  align-items: center;
+`;
 
 const FormWrap = styled.form`
-        width: 100%;
-        background-color: white;
-        display: flex;
-        flex-direction: column;
-        `;
+  width: 90%;
+  height: 90%;
+  /* border: 1px solid red; */
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+`;
 const FormHeader = styled.div`
-        width: 100%;
-        height: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 80px;
-        `;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+`;
 const FormBody = styled.div`
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        `;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
 const FormSelection = styled.select`
-        border: none;
-        margin-bottom: 25px;
-        width: 75px;
-        color: #f7931e;
-        font-size: 14px;
-        font-weight: 600;
-        `;
+  border: none;
+  margin-bottom: 25px;
+  width: 75px;
+  color: #f7931e;
+  font-size: 14px;
+  font-weight: 600;
+  outline: none;
+`;
 const FormInput = styled.input`
-        font-size: 20px;
-        border: none;
-        border-bottom: 1px solid gray;
-        padding: 10px 10px 10px 5px;
-        font-weight: bold;
-        color: black;
-        `;
+  font-size: 20px;
+  border: none;
+  border-bottom: 1px solid #d9d9d9;
+  padding: 10px 10px 10px 5px;
+  font-weight: bold;
+  color: black;
+  margin-bottom: 10px;
+  outline: none;
+  ::placeholder {
+    font-size: 20px;
+    color: black;
+    font-weight: 600;
+  }
+`;
+
+const StCard = styled.div`
+  border: 1px solid #eee;
+  border-radius: 16px;
+  box-shadow: 0px 2px 14px rgba(0, 0, 0, 0.05);
+  padding: 5px;
+`;
+
 const Textarea = styled.textarea`
-        width: 100%;
-        height: 400px;
-        border: none;
-        padding: 10px 5px;
-        `;
+  width: 100%;
+  height: 400px;
+  border: none;
+  padding: 10px 5px;
+  outline: none;
+  ::placeholder {
+    font-size: 16px;
+    color: #aaa;
+    font-weight: 400;
+  }
+`;
 
 const FormFooter = styled.div`
-        width: 100%;
-        height: 100%;
-        border-top: 1px solid gray;
-        align-items: center;
-        `;
+  width: 100%;
+  height: 100%;
+  border-top: 1px solid #d9d9d9;
+  align-items: center;
+`;
 
 const FooterContain = styled.div`
-        width: 100%;
-        `;
+  width: 100%;
+`;
 
 const Imgadd = styled(GrImage)`
-        opacity: 0.3;
-        `;
+  opacity: 0.3;
+`;
 
 const FooterBtn = styled.div`
-        margin:0 auto;
-        width:100%;
-        
-`
-
+  margin: 0 auto;
+  width: 100%;
+`;
 
 const Filelabel = styled.label`
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 120px;
-        height: 50px;
-        border: 1px solid #eee;
-        border-radius: 20px;
-        margin: 15px;
-        `;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 50px;
+  border: 1px solid #eee;
+  border-radius: 20px;
+  margin: 15px;
+`;
 
 const Addfile = styled.input`
-        display: none;
-        `;
+  display: none;
+`;
 const ImgContainer = styled.label`
-        display: 'flex';
-        align-items: center;
-        margin: 20px 10px;
-        position: relative;
-        `;
+  display: 'flex';
+  align-items: center;
+  margin: 20px 10px;
+  position: relative;
+`;
 
 const ImgContent = styled.img`
-        width: 100px;
-        height: 100px;
-        position: relative;
-        `;
+  width: 100px;
+  height: 100px;
+  position: relative;
+`;
 const DeleteButton = styled(TiDelete)`
-        position: absolute;
-        /* size:50px; */
-        right: 1px;
-        color: white;
-        cursor: pointer;
-        `;
+  position: absolute;
+  /* size:50px; */
+  right: 1px;
+  color: white;
+  cursor: pointer;
+`;
 
 const CalendarButton = styled.div`
-        height: 40px;
-        margin-top: 10px;
-        border-radius: 10px;
-        border: 1px solid #9b9999;
-        background-color: transparent;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 20px;
-        `;
+  height: 40px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 1px solid #d9d9d9;
+  background-color: transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+`;
 
 const TimeDiv = styled.div`
-        height: 40px;
-        margin-top: 10px;
-        border-radius: 10px;
-        border: 1px solid #9b9999;
-        background-color: transparent;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 20px;
-        `;
+  height: 40px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 1px solid #d9d9d9;
+  background-color: transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+`;
 const CalendarTitle = styled.div`
-        font-size: 14px;
-        color: #f7931e;
-        font-weight: 600;
-        `;
+  font-size: 14px;
+  color: #f7931e;
+  font-weight: 600;
+`;
 
 const DateDiv = styled.div`
-        width: 90%;
-        height: 30px;
-        display: flex;
-        justify-content: right;
-        align-items: center;
-        font-size: 14px;
-        cursor: pointer;
-        gap: 10px;
-        `;
+  width: 90%;
+  height: 30px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  font-size: 14px;
+  cursor: pointer;
+  gap: 10px;
+`;
 const CalendarDiv = styled.div`
-        height: 40px;
-        margin-top: 10px;
-        border-radius: 10px;
-        border: 1px solid #9b9999;
-        background-color: transparent;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 20px;
-        `;
+  height: 40px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 1px solid #d9d9d9;
+  background-color: transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+`;
 const CalendarInput = styled.input`
-        width: 65%;
-        height: 30px;
-        border-radius: 10px;
-        border: none;
-        background-color: transparent;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: right;
-        ::-webkit-input-placeholder {
-          text-align: right;
+  width: 65%;
+  height: 30px;
+  border-radius: 10px;
+  border: none;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: right;
+  ::-webkit-input-placeholder {
+    text-align: right;
   }
-        padding: 0 10px;
-        outline: none;
-        `;
+  padding: 0 10px;
+  outline: none;
+`;
 
 const TextDiv = styled.div`
-height: 210px;
-margin-top: 10px;
-border-radius: 10px;
-border: 1px solid #9b9999;
-background-color: transparent;
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 0 20px;
+  height: 210px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 1px solid #d9d9d9;
+  background-color: transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
 `;
 
 const CalendarTextarea = styled.textarea`
-        width: 65%;
-        height: 200px;
-        resize: none;
-        border-radius: 10px;
-        border: none;
-        background-color: transparent;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        textarea::placeholder {
-          text-align: right;
+  width: 65%;
+  height: 200px;
+  resize: none;
+  border-radius: 10px;
+  border: none;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  textarea::placeholder {
+    text-align: right;
   }
-        padding: 0 10px;
-        text-align: right;
-        `
+  padding: 0 10px;
+  text-align: right;
+`;
 
 const StTimePicker = styled(TimePicker)`
-        width: 160px;
-        justify-content: space-between;
-        border: none;
-        color: orange;
-        input::placeholder {
-          color: gray;
+  width: 160px;
+  justify-content: space-between;
+  border: none;
+  color: orange;
+  input::placeholder {
+    color: gray;
   }
-        `;
-
+`;
 
 //Dropzone추가
 const GetRootProps = styled.div`
-        width: 100%;
-        /* height: 300px; */
-        display: flex;
-        justify-content: center;
-        `;
+  /* width: 100%; */
+  /* height: 300px; */
+  display: flex;
+  justify-content: center;
+`;
 
 const StImaBox = styled.div`
-        display: flex;
-        width:100%;
-        height: 36px;
-        margin:10px;
-        cursor: pointer;
-        `
+  display: flex;
+  width: 100%;
+  height: 36px;
+  margin: 10px;
+  /* cursor: pointer; */
+`;
 
 const StImgUpload = styled.div`
-        display: flex;
-        width:111px;
-        height: 100%;
-        justify-content: center;
-        flex-direction: row;
-        align-items: center;
-        position: relative;
-        padding: 0.5rem;
-        border:1px solid #e3e3e3;
-        border-radius: 20px;
-        `;
+  display: flex;
+  width: 111px;
+  height: 100%;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  padding: 0.5rem;
+  border: 1px solid #e3e3e3;
+  border-radius: 20px;
+  cursor: pointer;
+`;
 
 const StImgContainer = styled.div`
-        display: flex;
-        width: 100%;
-        height: 100px;
-        box-sizing: border-box;
-        background: #fff;
-        scrollbar-width: none;
-        `;
+  display: flex;
+  width: 100%;
+  height: 100px;
+  box-sizing: border-box;
+  background: #fff;
+  scrollbar-width: none;
+`;
 const Imgtxt = styled.div`
-        width:80px;
-        text-align: center;
-        `
+  width: 80px;
+  text-align: center;
+`;
 const CancelBtn = styled(MdCancel)`
-        position:absolute;
-        right:0;
-
-        `
+  position: absolute;
+  right: 0;
+`;
 const CalendarWrap = styled.div`
   display: flex;
   justify-content: right;
   /* padding-right: 10px; */
-`
+`;
