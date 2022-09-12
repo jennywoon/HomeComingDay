@@ -1,34 +1,45 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Complete from "../../assets/Complete.png"
 import Button from "../../components/elements/Button"
+import { __getMyPage } from '../../redux/modules/MyPageSlice';
 
 const SignupComplete = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onClickHandler = () => {
-    navigate('/login')
+    navigate('/')
   }
+
+  useEffect(() => {
+    dispatch(__getMyPage())
+  }, [dispatch])
+
+  const data = useSelector((state) => state.mypages.mypages)
 
   return (
     <StSignupComplete>
       <StCompleteWrap>
+        <div></div>
         <FisrtWrap>
           <StImg>
             <CompleteImg src={Complete} alt='Complete' />
           </StImg>
           <StText>
             <p style={{ fontSize: '24px' }}>
-              <strong>조수정</strong>님,
+              <strong>{data.username}</strong>님,
             </p>
             <p style={{ fontSize: '24px', marginBottom: '25px' }}>
               홈커밍데이 가입을 환영합니다!
             </p>
             <p>모교 선후배들과 소통을 이어가보세요</p>
           </StText>
+                  </FisrtWrap>
           <Button
-          type='submit'
+            type='submit'
             width='100%'
             // padding='10px 0'
             style={{ marginTop: '100px' }}
@@ -37,10 +48,9 @@ const SignupComplete = () => {
             onClickHandler={onClickHandler}
           >
             <ButtonTitle>
-            시작하기
+              시작하기
             </ButtonTitle>
           </Button>
-        </FisrtWrap>
       </StCompleteWrap>
     </StSignupComplete>
   );
@@ -58,12 +68,16 @@ const StSignupComplete = styled.div`
 
 const StCompleteWrap = styled.div`
   width: 85%;
-  height: 100%;
+  height: 90%;
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const FisrtWrap = styled.div`
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   display: flex;
   flex-direction: column;
   justify-content: center;

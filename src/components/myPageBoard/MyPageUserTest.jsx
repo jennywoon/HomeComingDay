@@ -4,7 +4,7 @@ import { AiOutlineCamera } from "react-icons/ai";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { __getMyPage } from '../../redux/modules/MyPageSlice';
+import { __getMyPage, __patchProfileImage } from '../../redux/modules/MyPageSlice';
 import MyPageLogoutModal from "./MyPageLogoutModal"
 import profiletest from "../../assets/profiletest.jpg"
 import axios from 'axios';
@@ -55,17 +55,18 @@ const MyPageUserTest = () => {
             console.log("이미지주소", reader.result);
         };
         if (e.target.files[0]) {
-            const img = new FormData();
-            img.append("imgFile", e.target.files[0]);
-            axios
-                .post("http://localhost:3001/helps", img)
-                .then((res) => {
-                    setImageUrl(res.data);
-                })
+            const userImage = new FormData();
+            userImage.append("imgFile", e.target.files[0]);
+            // axios
+            //     .post("http://localhost:3001/helps", img)
+            //     .then((res) => {
+            //         setImageUrl(res.data);
+            //     })
 
-                .catch((err) => {
-                    console.error(err);
-                })
+            //     .catch((err) => {
+            //         console.error(err);
+            //     })
+            dispatch(__patchProfileImage(userImage))
         }
     }
 
