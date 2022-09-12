@@ -7,7 +7,7 @@ import Img from "../../assets/naverIcon.png"
 import FreeTalkDetailComment from './FreeTalkDetailComment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteFreeTalk, __getFreeTalk, __getFreeTalkComment, __postFreeTalkComment } from '../../redux/modules/FreeTalkSlice';
+import { __deleteFreeTalk, __getDetailFreeTalk, __getFreeTalk, __getFreeTalkComment, __postFreeTalkComment } from '../../redux/modules/FreeTalkSlice';
 import { useRef } from 'react';
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation } from "swiper";
@@ -33,10 +33,10 @@ const FreeTalkDetail = () => {
         setComment(e.target.value)
     }
 
- // useEffect(() => {
-    //     dispatch(__getFreeTalk());
-    //     dispatch(__getFreeComment());
-    // }, [dispatch])
+    //조회수반영
+    useEffect(() => {
+        dispatch(__getDetailFreeTalk(id));
+    }, [dispatch])
 
     const freetalksfind = freetalks.find((freetalk) => freetalk.articleId === Number(id))
    

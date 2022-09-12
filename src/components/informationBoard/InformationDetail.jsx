@@ -7,7 +7,7 @@ import Img from "../../assets/naverIcon.png"
 import InformationDetailComment from './InformationDetailComment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteInformation, __getInfoComment, __getInformation, __postInfoComment, __postInformation, __updateInformation } from '../../redux/modules/InformationSlice';
+import { __deleteInformation, __getDetailInformation, __getInfoComment, __getInformation, __postInfoComment, __postInformation, __updateInformation } from '../../redux/modules/InformationSlice';
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { useRef } from 'react';
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -35,10 +35,10 @@ const InformationDetail = () => {
 
     const informationsfind = informations.find((info) => info.articleId === Number(id))
 
-    // useEffect(() => {
-    //     dispatch(__getInformation());
-    //     dispatch(__getInfoComment());
-    // }, [dispatch])
+    //조회수반영
+    useEffect(() => {
+        dispatch(__getDetailInformation(id));
+    }, [dispatch])
 
     console.log("information", informations, "informationsfind", informationsfind)
 

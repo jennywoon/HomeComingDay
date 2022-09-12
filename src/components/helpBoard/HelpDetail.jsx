@@ -38,11 +38,10 @@ const HelpDetail = () => {
         setComment(e.target.value)
     }
 
-    // useEffect(() => {
-    //     dispatch(__getHelp());
-    //     dispatch(__postHelpComment());
-    //     dispatch(__getDetailHelp(id))
-    // }, [dispatch])
+    //조회수반영
+    useEffect(() => {
+        dispatch(__getDetailHelp(id))
+    }, [dispatch])
 
 
     const helpsfind = helps.find((help) => help.articleId === Number(id))
