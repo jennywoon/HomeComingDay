@@ -7,7 +7,6 @@ import CalendarSlice from "../modules/CalendarSlice";
 
 import SearchSlice from "../modules/SearchSlice";
 import SchoolInfoSlice from "../modules/SchoolInfoSlice";
-import DateSlice from "../modules/DateSlice";
 import MyPageSlice from "../modules/MyPageSlice";
 import { getDefaultMiddleware } from "@reduxjs/toolkit";
 
@@ -21,7 +20,6 @@ export const store = configureStore({
     mypages: MyPageSlice,
     freetalks : FreeTalkSlice,
     calendars : CalendarSlice,
-    dates: DateSlice,
     searchs: SearchSlice,
     schoolInfo: SchoolInfoSlice,
   },

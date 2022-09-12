@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import Img from '../../assets/naverIcon.png';
 import { BsCalendarCheck } from 'react-icons/bs';
 import { __getCalendar } from '../../redux/modules/CalendarSlice';
-import { __getDate } from '../../redux/modules/DateSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 
@@ -14,7 +13,6 @@ const CalendarCard = ({ calendar, id }) => {
 
   useEffect(() => {
     dispatch(__getCalendar());
-    dispatch(__getDate());
   }, [dispatch]);
 
   const onClickNavi = () => {

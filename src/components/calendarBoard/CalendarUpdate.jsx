@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { __getHelp, __postHelp } from '../../redux/modules/HelpSlice';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
-import CalendarModal from './CalendarModal';
 import TimeRangePicker from '@wojtekmaj/react-timerange-picker';
 import Button from '../elements/Button';
 import {
@@ -69,7 +68,6 @@ const CalendarUpdate = () => {
 
   return (
     <>
-    {modalOpen && <CalendarModal setModalOpen={setModalOpen} />}
     <FormContainer>
       <FormWrap onSubmit={onUpdateHandler}>
         <FormHeader>

@@ -73,6 +73,10 @@ const MyPageUserTest = () => {
         imgRef.current.click();
     }
 
+    const onErrorImg = (e) => {
+        e.target.src = profiletest
+    }
+
     return (
         <StLoginContainer>
             {modalOpen && <MyPageLogoutModal setModalOpen={setModalOpen} />}
@@ -83,8 +87,8 @@ const MyPageUserTest = () => {
                         <AiOutlineCamera size="18" style={{ color: "white" }} />
                     </UserImgUpload>
                 </UserImg> */}
-                    <img src={imageUrl} style={{ width: "80px", height: "80px", borderRadius: "50%" }}></img>
-                        {/* <UserImg src={imageUrl} onClick={() => { onClickFileBtn() }}></UserImg> */}
+                    {/* <img src={imageUrl} style={{ width: "80px", height: "80px", borderRadius: "50%" }} ></img> */}
+                        <UserImg src={imageUrl} onClick={() => { onClickFileBtn() }} onError={onErrorImg}></UserImg>
                         <input type="file" ref={imgRef} onChange={onChangeImage} style={{ display: "none" }}></input>
                         <UserImgUpload onClick={() => { onClickFileBtn() }}>
                             <AiOutlineCamera size="18" style={{ color: "white" }} />
@@ -141,7 +145,7 @@ const UserImgWrap = styled.div`
     justify-content: center;
 `
 
-const UserImg = styled.div`
+const UserImg = styled.img`
     background-image: url(${profiletest});
     background-position: center;
     background-size: 100% 100%;
