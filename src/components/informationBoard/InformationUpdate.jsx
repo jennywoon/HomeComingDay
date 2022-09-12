@@ -33,8 +33,6 @@ const InformationUpdate = () => {
         setEditTitle(e.target.value)
     }
 
-
-    
     const onChangeContent = (e) =>{
         setEditContent(e.target.value)
     }
@@ -66,8 +64,7 @@ const InformationUpdate = () => {
         <FormContainer>
             <FormWrap onSubmit={onUpdateHandler}>
                 <FormHeader>
-                    <IoIosArrowBack size="25px" cursor="pointer" onClick={() => {navigate(-1)}}/>
-                    <Button type="submit" backgroundColor="white">수정하기</Button>
+                    <IoIosArrowBack size="25px" cursor="pointer" onClick={() => {navigate(`/informationdetail/${id}`)}}/>
                 </FormHeader>
                 <FormBody>
                     <FormSelection name="category">
@@ -80,11 +77,17 @@ const InformationUpdate = () => {
                 <Textarea name="content" value={EditContent} onChange={onChangeContent} placeholder="내용을 입력해주세요"></Textarea>
                 </FormBody>
                 <FormFooter>
-                    <Filelabel className="fileUpload-button" htmlFor="fileUpload">
+                    {/* <Filelabel className="fileUpload-button" htmlFor="fileUpload">
                     <GrImage size="24px" />
                     </Filelabel>
                     <Addfile type="file" multiple={true} id="fileUpload" name="imgUrl" value={EditImg || ""} onChange={onChangeImg}>
-                    </Addfile>
+                    </Addfile> */}
+                    <FooterBtn>
+                        <Button type='submit' backgroundColor='#F7931E' width="90%" height="40px" color="white" style={{ display: "block", margin: "15px auto" }}>
+                            <div style={{ fontWeight: "500", fontSize: "16px" }}>수정하기</div>
+                        </Button>
+                    </FooterBtn>
+
                     
                 </FormFooter>
             </FormWrap>
@@ -132,9 +135,12 @@ const FormBody = styled.div`
     padding : 10px 20px;
 `
 const FormSelection = styled.select`
-    border:none;
+    border: none;
     margin-bottom: 25px;
-    width:75px;
+    width: 75px;
+    color: #f7931e;
+    font-size: 14px;
+    font-weight: 600;
 `
 const FormInput =styled.input`
     font-size: 20px;
@@ -146,7 +152,7 @@ const FormInput =styled.input`
 `
 const Textarea = styled.textarea`
     width: 100%;
-    height:63vh;
+    height:400px;
     border:none;
     padding: 10px 5px;
 `
@@ -165,4 +171,10 @@ const Filelabel = styled.label`
 
 const Addfile = styled.input`
     display: none;
+`
+
+const FooterBtn = styled.div`
+        margin:0 auto;
+        width:100%;
+        
 `

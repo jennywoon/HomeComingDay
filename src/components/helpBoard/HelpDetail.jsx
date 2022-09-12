@@ -179,8 +179,8 @@ const HelpDetail = () => {
                                     </ContentImgBox>
                                     : null}
                                 <BodyTxtBox>
-                                    <ContentView>조회수 1000회 | 댓글 100개</ContentView>
-                                    <ContentTime>15분전</ContentTime>
+                                    <ContentView>조회수 {helpsfind && helpsfind.views} | 댓글수 {helpsfind && helpsfind.commentCnt}</ContentView>
+                                    <ContentTime>{helpsfind && helpsfind.createdAt}</ContentTime>
                                 </BodyTxtBox>
                             </BodyContent>
 
@@ -371,7 +371,7 @@ const BodyContent = styled.div`
     padding: 0px 20px;
     /* border: 1px solid red; */
     width: 100%;
-    height: 350px;
+    /* height: 350px; */
     display: flex;
      flex-direction: column;
     justify-content: space-between;
