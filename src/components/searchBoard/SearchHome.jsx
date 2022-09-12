@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import Search from './Search';
 import { useNavigate } from "react-router-dom"
-import { AiOutlineHome } from "react-icons/ai";
-import { BiSearch } from "react-icons/bi";
-import { FiUser } from "react-icons/fi";
-import { HiOutlineChatAlt2 } from "react-icons/hi";
 import SearchTest from './SearchTest';
+import Homeimg from "../../assets/Home.png"
+import SearchColorimg from "../../assets/SearchColor.png"
+import Chatimg from "../../assets/Chat.png"
+import Myimg from "../../assets/My.png"
 
 const SearchHome = () => {
     const navigate = useNavigate();
@@ -20,25 +20,25 @@ const SearchHome = () => {
                     <Tap onClick={() => { navigate("/") }}
                         style={{ paddingLeft: "20px" }}
                     >
-                        <AiOutlineHome size="23" color="#696969"/>
-                        <TapTitle style={{ color: "#696969" }}>HOME</TapTitle>
+                        <img src={Homeimg} alt='홈' style={{ width: '45%', margin:'2px' }} />
+                        <TapTitle style={{ color: "#8E8E8E" }}>홈</TapTitle>
                     </Tap>
                     <Tap onClick={() => { navigate("/search") }}
                         style={{ color:"#f7931e" }}
                     >
-                        <BiSearch size="23"/>
-                        <TapTitle style={{ fontWeight: "bold" }}>SEARCH</TapTitle>
+                        <img src={SearchColorimg} alt='검색' style={{ width: '45%', margin:'2px' }} />
+                        <TapTitle style={{ fontWeight: "bold" }}>검색</TapTitle>
                     </Tap>
                     <Tap onClick={() => { navigate("/chat") }}>
-                        <HiOutlineChatAlt2 size="23" color="#696969" />
-                        <TapTitle style={{ color: "#696969" }}>CHAT</TapTitle>
+                    <img src={Chatimg} alt='채팅' style={{ width: '45%', margin:'2px' }} />
+                        <TapTitle style={{ color: "#8E8E8E" }}>채팅</TapTitle>
                     </Tap>
                     <Tap
                         style={{ paddingRight: "20px" }}
                         onClick={() => { navigate("/mypage") }}
                     >
-                        <FiUser size="23" color="#696969" />
-                        <TapTitle style={{ color: "#696969" }}>MY</TapTitle>
+                        <img src={Myimg} alt='마이페이지' style={{ width: '45%', margin:'2px' }} />
+                        <TapTitle style={{ color: "#8E8E8E" }}>MY</TapTitle>
                     </Tap>
                 </Bottom>
             </SecondWrap>
@@ -59,6 +59,7 @@ const SecondWrap = styled.div`
     position: sticky;
     background-color: #ffffff;
     bottom: 0;
+    box-shadow: 0px 2px 13px rgba(0, 0, 0, 0.2);
 `
 const Bottom = styled.div`
     height: 60px;
@@ -75,5 +76,6 @@ const Tap = styled.div`
     cursor: pointer;
 `
 const TapTitle = styled.div`
-    font-size: 12px;
+    font-size: 11px;
+    font-weight: 400;
 `

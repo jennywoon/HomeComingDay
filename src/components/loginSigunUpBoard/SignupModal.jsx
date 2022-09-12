@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 
@@ -14,8 +14,7 @@ const SignupModal = ({ setModalOpen }) => {
           <FirstWrap>
             <ModalTop>
               <AiOutlineCheckCircle style={{ color: '#f7931e' }} size='28' />
-              <TopTitle>인증번호가 발송되었습니다</TopTitle>
-              <TopTitle>이메일을 확인하세요</TopTitle>
+              <TopTitle>인증번호가 발송되었습니다<br/>이메일을 확인하세요</TopTitle>
             </ModalTop>
             <ModalBottom onClick={closeModal}>
               <BottomTitle>확인</BottomTitle>
@@ -34,7 +33,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   width: 100%;
   z-index: 10;
   overflow: hidden;
