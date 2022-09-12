@@ -400,7 +400,7 @@ const SignUp = () => {
               style={{ marginTop: '50px', backgroundColor: '#f7931e' }}
               color='white'
             >
-              <ButtonTitle>회원가입</ButtonTitle>
+              <ButtonTitle>가입하기</ButtonTitle>
             </Button>
           </FisrtWrap>
         </StSignupWraps>
@@ -474,13 +474,12 @@ const StEmailButton = styled.button`
   transform: translatey(-50%);
   background-color: transparent;
   border: none;
-  /* border: 0.5px solid #eee; */
   color: ${({ isOnCheck }) => (isOnCheck ? '#03C75A' : '#b3b3b3')};
   border-radius: 50px;
   padding: 5px 10px;
   font-size: 14px;
   font-weight: 600;
-  /* cursor: ${({ emailError }) => (emailError ? 'none' : 'pointer')} */
+  text-decoration: underline;
   cursor: pointer;
 `;
 
@@ -491,20 +490,20 @@ const StEmailCheckButton = styled.button`
   transform: translatey(-50%);
   background-color: transparent;
   border: none;
-  /* border: 0.5px solid #eee; */
   color: ${({ isCheck }) => (isCheck ? '#03C75A' : '#b3b3b3')};
   border-radius: 50px;
   padding: 5px 10px;
   font-size: 14px;
   font-weight: 600;
+  text-decoration: underline;
   cursor: pointer;
 `;
 
 const StSendEmailButton = styled.button`
   width: 100%;
-  color: ${({ isSend }) => (isSend ? '#f7931e' : '#b3b3b3')};
+  color: ${({ isSend }) => (isSend ? '#b3b3b3' : '#f7931e')};
   background-color: #fff;
-  border: 1px solid #b3b3b3;
+  border: ${({ isSend }) => (isSend ? '1px solid #b3b3b3' : '1px solid #f7931e')};
   border-radius: 16px;
   padding: 5px 10px;
   font-size: 12px;
