@@ -6,13 +6,15 @@ import { AiOutlineHome } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
 import { FiUser } from "react-icons/fi";
 import { HiOutlineChatAlt2 } from "react-icons/hi";
+import SearchTest from './SearchTest';
 
 const SearchHome = () => {
     const navigate = useNavigate();
 
     return (
         <HomeContainer>
-            <Search/>
+            {/* <Search/> */}
+            <SearchTest/>
             <SecondWrap>
                 <Bottom>
                     <Tap onClick={() => { navigate("/") }}
