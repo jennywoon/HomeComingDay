@@ -137,3 +137,21 @@ const NoneDataImg = styled.div`
   background-position: center;
   background-size: 100% 100%;
 `;
+const NoneData = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #b3b3b3;
+    font-weight: 500;
+    font-size: 16px;
+`
+const NoneDataImg = styled.div`
+    width: 50px;
+    height: 50px;
+    background-image: url(${nonedatasquare});
+    background-position: center;
+    background-size: 100% 100%;
+`
