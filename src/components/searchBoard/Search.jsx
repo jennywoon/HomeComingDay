@@ -8,22 +8,38 @@ import SearchCard from "./SearchCard";
 import { __getSearch, __postSearch } from "../../redux/modules/SearchSlice";
 import { __getHelp } from "../../redux/modules/HelpSlice";
 
+
 const Search = () => {
     const dispatch = useDispatch();
 
     // search post 연습
 
+    
     const [search, setSearch] = useState()
-    const searchs = useSelector((state)=>state)
+    const searchs = useSelector((state)=>state.helps.helps)
     
     console.log(searchs)
 
     useEffect(() => {
-        dispatch(__getSearch());
+        // dispatch(__getSearch());
         dispatch(__getHelp())
     }, [dispatch])
 
-    
+    //filter
+    const [filteredList, setFilteredList] = new useState(searchs);
+    const filterBySearch = (e) => {
+        // Access input value
+
+        const query = setInputText(e.target.value);
+        // Create copy of item list
+        var updatedList = [...searchs];
+        // Include all elements which includes the search query
+        updatedList = updatedList.filter((item) => {
+          return item.title.toLowerCase().indexOf(query.toString().toLowerCase()) !== -1;
+        });
+        // Trigger render with updated values
+        setFilteredList(updatedList);
+      };
 
     // input 안 x버튼 클릭할 때, input 내용 없어지도록 구현 + post 기능 추가
 
@@ -54,29 +70,38 @@ const Search = () => {
                     <SearchDiv>
                         <BiSearch size="37" style={{ paddingLeft: "20px" }} />
                         <SearchInput
-                            type="text" name="inputText" value={inputText} onChange={onChangeInput}
+                             id="search-box" onChange={filterBySearch} value={inputText}
                             placeholder="검색어를 입력해주세요" 
-                            onKeyPress={(e) => {
-                                if (e.key === 'Enter') {
-                                  dispatch(__getSearch(inputText))
+                            // onKeyPress={(e) => {
+                            //     if (e.key === 'Enter') {
+                            //       dispatch(__getSearch(inputText))
                                   
-                                }
-                              }}
+                            //     }
+                            //   }
+                            // }
                             />
                         <IoCloseCircle
                             onClick={onReset}
                             size="37" style={{ paddingRight: "20px", cursor: "pointer" }} />
                     </SearchDiv>
                 </SearchWrap>
+                <SearchFilter>
+                    <FilterMenu>
+                        <FilterList>도움요청</FilterList>
+                        <FilterList>정보공유</FilterList>
+                        <FilterList>만남공유</FilterList>
+                        <FilterList>자유토크</FilterList>
+                    </FilterMenu>
+                </SearchFilter>
                 <RecentSearch>
                     <RecentWrap>
                         {/* <RecentTitle>최근 검색어</RecentTitle> */}
                         {/* search card 맵 돌릴 예정 */}
-                        {/* <>
-                            {searchs?.map((search) => (
-                                <SearchCard key={search.id} id={search.id} search={search} />
+                        <>
+                            {filteredList?.map((search) => (
+                                <SearchCard key={search.articleId} id={search.articleId} search={search} />
                             ))}
-                        </> */}
+                        </>
                         {/* <SearchCard/> */}
                     </RecentWrap>
                     
@@ -138,9 +163,29 @@ const RecentSearch = styled.div`
 const RecentWrap = styled.div`
     width: 75%;
     height: 100vh;
+    overflow: scroll;
 `
 const RecentTitle = styled.div`
     margin: 50px 0 20px 0;
     font-size: 20px;
     font-weight: 700;
+`
+const SearchFilter = styled.div`
+
+`
+const FilterMenu =styled.ol`
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+    margin:10px 0;
+`
+const FilterList = styled.li`
+    width:70px;
+    text-align: center;
+    border-radius: 20px;
+    /* border:1px solid red; */
+    background-color: #F7931E;;
+    color:white;
+    list-style:none;
+
 `
