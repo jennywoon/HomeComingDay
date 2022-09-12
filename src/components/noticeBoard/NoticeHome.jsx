@@ -2,12 +2,12 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { IoIosArrowBack } from 'react-icons/io'
-import { AiOutlineHome } from "react-icons/ai";
-import { BiSearch } from "react-icons/bi";
-import { FiUser } from "react-icons/fi";
-import { HiOutlineChatAlt2 } from "react-icons/hi";
 import { TbBellRinging } from "react-icons/tb";
 import { IoMdClose } from "react-icons/io";
+import Homeimg from '../../assets/Home.png';
+import Searchimg from '../../assets/Search.png';
+import Chatimg from '../../assets/Chat.png';
+import Myimg from '../../assets/My.png';
 
 const ChatHome = () => {
     const navigate = useNavigate();
@@ -33,7 +33,7 @@ const ChatHome = () => {
                             <ChatContent>15분 전</ChatContent>
                         </FirstContainer>
                         <SecondContainer>
-                            <IoMdClose size="22" color="#696969" />
+                            <IoMdClose size="22" color="#8E8E8E" />
                         </SecondContainer>
                     </ChatContainer>
                 </ChatCardContainer>
@@ -44,23 +44,39 @@ const ChatHome = () => {
                     <Tap onClick={() => { navigate("/") }}
                         style={{ paddingLeft: "20px" }}
                     >
-                        <AiOutlineHome size="23" color="#696969" />
-                        <TapTitle style={{ color: "#696969" }}>HOME</TapTitle>
+                        <img
+              src={Homeimg}
+              alt='홈'
+              style={{ width: '45%', margin: '2px' }}
+            />
+                        <TapTitle style={{ color: "#8E8E8E" }}>홈</TapTitle>
                     </Tap>
                     <Tap onClick={() => { navigate("/search") }}>
-                        <BiSearch size="23" color="#696969" />
-                        <TapTitle style={{ color: "#696969" }}>SEARCH</TapTitle>
+                    <img
+              src={Searchimg}
+              alt='검색'
+              style={{ width: '45%', margin: '2px' }}
+            />
+                        <TapTitle style={{ color: "#8E8E8E" }}>검색</TapTitle>
                     </Tap>
                     <Tap onClick={() => { navigate("/chat") }}>
-                        <HiOutlineChatAlt2 size="23" color="#696969"/>
-                        <TapTitle style={{ color: "#696969" }}>CHAT</TapTitle>
+                    <img
+              src={Chatimg}
+              alt='채팅'
+              style={{ width: '45%', margin: '2px' }}
+            />
+                        <TapTitle style={{ color: "#8E8E8E" }}>채팅</TapTitle>
                     </Tap>
                     <Tap
                         style={{ paddingRight: "20px" }}
                         onClick={() => { navigate("/mypage") }}
                     >
-                        <FiUser size="23" color="#696969" />
-                        <TapTitle style={{ color: "#696969" }}>MY</TapTitle>
+                        <img
+              src={Myimg}
+              alt='마이페이지'
+              style={{ width: '45%', margin: '2px' }}
+            />
+                        <TapTitle style={{ color: "#8E8E8E" }}>MY</TapTitle>
                     </Tap>
                 </Bottom>
             </BottomTapWrap>
@@ -157,6 +173,7 @@ const BottomTapWrap = styled.div`
     position: sticky;
     background-color: #ffffff;
     bottom: 0;
+    box-shadow: 0px 2px 13px rgba(0, 0, 0, 0.2);
 `
 const Bottom = styled.div`
     height: 60px;
@@ -172,5 +189,6 @@ const Tap = styled.div`
     cursor: pointer;
 `
 const TapTitle = styled.div`
-    font-size: 12px;
+  font-size: 11px;
+  font-weight: 400;
 `
