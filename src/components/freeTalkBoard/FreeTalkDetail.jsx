@@ -175,8 +175,8 @@ const FreeTalkDetail = () => {
                                     </ContentImgBox>
                                     : null}
                                 <BodyTxtBox>
-                                    <ContentView>조회수 1000회 | 댓글 100개</ContentView>
-                                    <ContentTime>15분전</ContentTime>
+                                <ContentView>조회수 {freetalksfind && freetalksfind.views} | 댓글수 {freetalksfind && freetalksfind.commentCnt}</ContentView>
+                                    <ContentTime>{freetalksfind && freetalksfind.createdAt}</ContentTime>
                                 </BodyTxtBox>
                             </BodyContent>
                             

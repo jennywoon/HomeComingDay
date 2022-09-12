@@ -174,8 +174,8 @@ const InformationDetail = () => {
                                     </ContentImgBox>
                                     : null}
                                 <BodyTxtBox>
-                                    <ContentView>조회수 1000회 | 댓글 100개</ContentView>
-                                    <ContentTime>15분전</ContentTime>
+                                    <ContentView>조회수 {informationsfind && informationsfind.views} | 댓글수 {informationsfind && informationsfind.commentCnt}</ContentView>
+                                    <ContentTime>{informationsfind && informationsfind.createdAt}</ContentTime>
                                 </BodyTxtBox>
                             </BodyContent>
 
