@@ -37,7 +37,7 @@ export const __patchProfileImage = createAsyncThunk("mypages/patchProfileImage",
       method: 'patch',
       url: `${BASE_URL}/myPage`,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${getCookie("accessToken")}`,
         // RefreshToken : getCookie('refreshToken')
       },

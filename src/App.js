@@ -2,7 +2,8 @@ import React, { Fragment, useEffect } from "react";
 import Router from "./shared/Router";
 import './App.css'
 import styled from "styled-components";
-import background from "./assets/background.png"
+// import background from "./assets/background.png"
+import background2 from "./assets/background2.png"
 
 function App() {
 
@@ -18,10 +19,10 @@ function App() {
 
   return (
     <Container>
-      <TitleWrap>
+      {/* <TitleWrap>
         <SiteContent>대학교 졸업생 동문 사이트</SiteContent>
         <SiteTitle>Homecoming Day</SiteTitle>
-      </TitleWrap>
+      </TitleWrap> */}
       <div className='wrap' >
         <Router />
       </div>
@@ -41,7 +42,7 @@ const Container = styled.div`
   align-items: center;
   height: 100vh;
   /* background: linear-gradient(0deg, #FFF4CC 2.36%, #FFFFFF 55.35%); */
-  background-image: url(${background});
+  background-image: url(${background2});
   background-size: 100% 100%;
   background-position: center;
   overflow: hidden;
