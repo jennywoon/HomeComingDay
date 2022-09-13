@@ -10,6 +10,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 const initialState = {
     commentList : [],
     helps : [],
+    heart: [],
     isLoading: false,
     error: null,
 };
@@ -194,6 +195,28 @@ export const __updateHelpComment = createAsyncThunk("comment/updateHelpComment",
 }
 );
 
+export const __postHelpHeart = createAsyncThunk(
+  "postHelpHeart",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios({
+        method: "post",
+        url: `${BASE_URL}/article/help/${payload.articleId}/heart`,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getCookie("token")}`,
+        },
+        data: payload,
+      });
+      console.log(data)
+      console.log("payload",payload)
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (error) {
+      console.log(error)
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 export const HelpSlice = createSlice({
     name: "comments", 
@@ -212,15 +235,15 @@ export const HelpSlice = createSlice({
         state.error = action.payload;
       },
       [__postHelp.pending]: (state) => {
-        state.isLoading = true; // 네트워크 요청이 시작되면 로딩상태를 true로 변경합니다.
+        state.isLoading = true; 
       },
       [__postHelp.fulfilled]: (state, action) => {
-        state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
-        state.helps.push(action.payload); // Store에 있는 todos에 서버에서 가져온 todos를 넣습니다.
+        state.isLoading = false;
+        state.helps.push(action.payload);
       },
       [__postHelp.rejected]: (state, action) => {
-        state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.
-        state.error = action.payload; // catch 된 error 객체를 state.error에 넣습니다.
+        state.isLoading = false;
+        state.error = action.payload;
       },
 
       [__deleteHelp.pending]: (state) => {
@@ -228,7 +251,6 @@ export const HelpSlice = createSlice({
       },
       [__deleteHelp.fulfilled]: (state, action) => {
         state.isLoading = false;
-        // console.log(state.camps)
         // console.log(action)
         state.helps = state.helps.filter(helps => helps.id !== action.payload)
       },
@@ -316,6 +338,19 @@ export const HelpSlice = createSlice({
         state.error = action.payload;
       },
 
+      // 좋아요
+      [__postHelpHeart.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__postHelpHeart.fulfilled]: (state, action) => {
+        console.log("__postHeart.fulfilled", action);
+        state.isLoading = false;
+        state.heart.unshift(action);
+      },
+      [__postHelpHeart.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
     },
 });
 

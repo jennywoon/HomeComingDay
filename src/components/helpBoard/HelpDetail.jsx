@@ -1,246 +1,306 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../Header';
 import styled from 'styled-components';
-import { IoIosArrowBack } from 'react-icons/io'
-import { AiOutlineMenu } from 'react-icons/ai'
-import Img from "../../assets/naverIcon.png"
+import { IoIosArrowBack } from 'react-icons/io';
+import { AiOutlineMenu } from 'react-icons/ai';
+import Img from '../../assets/naverIcon.png';
 import HelpDetailComment from './HelpDetailComment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteHelp, __updateHelp, __getHelp, __getComments, __getHelpComment, __postHelpComment, __getDetailHelp } from '../../redux/modules/HelpSlice';
+import {
+  __deleteHelp,
+  __updateHelp,
+  __getHelp,
+  __getComments,
+  __getHelpComment,
+  __postHelpComment,
+  __getDetailHelp,
+  __postHelpHeart,
+} from '../../redux/modules/HelpSlice';
 import { useRef } from 'react';
-import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Navigation } from "swiper";
-import "swiper/css";
-import "swiper/css/navigation";
-import { BiDotsVerticalRounded } from "react-icons/bi";
-import { GrFormPrevious, GrFormNext } from "react-icons/gr";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Navigation } from 'swiper';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import { BiDotsVerticalRounded } from 'react-icons/bi';
+import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
 import HelpDeleteModal from './HelpDeleteModal';
-
+import commentImg from '../../assets/commentImg.png';
+import heartImg from '../../assets/heartImg.png';
+import heartColorImg from '../../assets/heartColor.png';
+import { convertLegacyProps } from 'antd/lib/button/button';
 
 const HelpDetail = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const { helps } = useSelector((state) => state.helps)
-    // const commentList = useSelector((state) => state.helps)
-    // console.log(commentList)
-    // const commentList = useSelector((state) => state.helps.helps)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { helps } = useSelector((state) => state.helps);
+  // const commentList = useSelector((state) => state.helps)
+  // console.log(commentList)
+  // const commentList = useSelector((state) => state.helps.helps)
 
-    const { id } = useParams();
-    const [show, setShow] = useState(false)
-    const [showChaet, setShowChaet] = useState(false)
-    const [comment, setComment] = useState("")
-    const modalRef = useRef(null);
+  const { id } = useParams();
+  const [show, setShow] = useState(false);
+  const [showChaet, setShowChaet] = useState(false);
+  const [comment, setComment] = useState('');
+  const modalRef = useRef(null);
 
+  const onChangePostHandler = (e) => {
+    setComment(e.target.value);
+  };
 
+  //조회수반영
+  useEffect(() => {
+    dispatch(__getDetailHelp(id));
+  }, [dispatch]);
 
-    const onChangePostHandler = (e) => {
-        setComment(e.target.value)
-    }
+  const helpsfind = helps.find((help) => help.articleId === Number(id));
+  // const helpscomment = helpsfind.commentList
+  // console.log(commentList)
+  console.log('helpsfind', helpsfind);
+  // console.log("helpscomment",helpscomment)
+  // useEffect(() => {
+  //     dispatch(__getDetailHelp(helpsfind.articleId));
+  // }, [dispatch])
 
-    //조회수반영
-    useEffect(() => {
-        dispatch(__getDetailHelp(id))
-    }, [dispatch])
+  // console.log("helps", helps , "helpsfind" , helpsfind)
 
+  const onCilckShow = () => {
+    setShow(!show);
+  };
+  const onCilckChaetShow = () => {
+    setShowChaet(!showChaet);
+  };
 
-    const helpsfind = helps.find((help) => help.articleId === Number(id))
-    // const helpscomment = helpsfind.commentList
-    // console.log(commentList)
-    console.log("helpsfind", helpsfind)
-    // console.log("helpscomment",helpscomment)
-    // useEffect(() => {
-    //     dispatch(__getDetailHelp(helpsfind.articleId));
-    // }, [dispatch])
+  const onClickRevice = () => {
+    navigate(`/helpupdate/${id}`);
+  };
 
-    // console.log("helps", helps , "helpsfind" , helpsfind)
+  const onClickPostComment = async (e) => {
+    e.preventDefault();
+    const newcomment = {
+      content: comment,
+      articleId: id,
+    };
+    await dispatch(__postHelpComment(newcomment));
+    await dispatch(__getHelp());
+    setComment('');
+  };
 
-    const onCilckShow = () => {
-        setShow(!show)
-    }
-    const onCilckChaetShow = () => {
-        setShowChaet(!showChaet)
-    }
+  // const closeModal = (e) => {
+  //     if (!modalRef.current.contains(e.target)) {
+  //         setShow(false);
+  //     }
+  // };
 
-    const onClickRevice = () => {
-        navigate(`/helpupdate/${id}`)
-    }
+  // useEffect(() => {
+  //     dispatch(__postHelpComment());
+  //     dispatch(__getDetailHelp(id))
+  // }, [dispatch])
 
-    const onClickPostComment = async (e) => {
-        e.preventDefault();
-        const newcomment = {
-            content: comment,
-            articleId: id
-        }
-        await dispatch(__postHelpComment(newcomment));
-        await dispatch(__getHelp());
-        setComment("");
-    }
+  //swiper 옵션
+  SwiperCore.use(Navigation);
+  const [swiper, setSwiper] = useState(null);
+  const [mainImageIndex, setMainImageIndex] = useState(0);
+  const navigationPrevRef = useRef(null);
+  const navigationNextRef = useRef(null);
 
-    // const closeModal = (e) => {
-    //     if (!modalRef.current.contains(e.target)) {
-    //         setShow(false);
-    //     }
-    // };
+  const swiperParams = {
+    navigation: {
+      prevEl: navigationPrevRef.current,
+      nextEl: navigationNextRef.current,
+    },
+    onBeforeInit: (swiper) => {
+      swiper.params.navigation.prevEl = navigationPrevRef.current;
+      swiper.params.navigation.nextEl = navigationNextRef.current;
+      // swiper.activeIndex = setMainImageIndex;
+      swiper.navigation.update();
+    },
+    onSwiper: setSwiper,
+    onSlideChange: (e) => setMainImageIndex(e.activeIndex),
+  };
 
-    // useEffect(() => {
-    //     dispatch(__postHelpComment());
-    //     dispatch(__getDetailHelp(id))
-    // }, [dispatch])
+  //모달
+  const [modalOpen, setModalOpen] = useState(false);
+  const showModal = (e) => {
+    e.preventDefault();
+    setModalOpen(true);
+  };
 
-    //swiper 옵션
-    SwiperCore.use(Navigation);
-    const [swiper, setSwiper] = useState(null)
-    const [mainImageIndex, setMainImageIndex] = useState(0);
-    const navigationPrevRef = useRef(null)
-    const navigationNextRef = useRef(null)
+  // 좋아요
+  const [isClickHeart, setIsClickHeart] = useState(false)
+  const heartClick = () => {
+    const newHeart = {
+        articleId: id,
+      };
+    dispatch(__postHelpHeart(newHeart));
+    dispatch(__getDetailHelp(id));
+  };
 
-    const swiperParams = {
-        navigation: { prevEl: navigationPrevRef.current, nextEl: navigationNextRef.current },
-        onBeforeInit: (swiper) => {
-            swiper.params.navigation.prevEl = navigationPrevRef.current;
-            swiper.params.navigation.nextEl = navigationNextRef.current;
-            // swiper.activeIndex = setMainImageIndex;
-            swiper.navigation.update();
-        },
-        onSwiper: setSwiper,
-        onSlideChange: (e) => setMainImageIndex(e.activeIndex)
-    }
+  return (
+    <Container>
+      {modalOpen && <HelpDeleteModal setModalOpen={setModalOpen} />}
+      <Header />
+      <HelpContainer>
+        <HelpWrap>
+          <DetailWrap>
+            <FirstWrap>
+              <DetailHeader>
+                <IoIosArrowBack
+                  size='25px'
+                  cursor='pointer'
+                  onClick={() => {
+                    navigate('/');
+                  }}
+                />
+                <HeaderTitle>도움요청</HeaderTitle>
+                <div style={{ width: '25px', height: '25px' }}></div>
+              </DetailHeader>
+            </FirstWrap>
+            <DetailBody>
+              <Bodytop>
+                <Bodyimg src={Img} alt='' />
+                <Bodytxt>
+                  <Txtname onClick={onCilckChaetShow}>
+                    {helpsfind && helpsfind.username}
+                  </Txtname>
+                  <Txtstudent>
+                    {helpsfind && helpsfind.departmentName}{' '}
+                    <span> {helpsfind && helpsfind.admission} </span>
+                  </Txtstudent>
+                  {showChaet ? <ChaetingBox>1:1채팅</ChaetingBox> : null}
+                </Bodytxt>
+                <BiDotsVerticalRounded
+                  size='20px'
+                  style={{ marginLeft: 'auto', cursor: 'pointer' }}
+                  onClick={onCilckShow}
+                />
+                {show ? (
+                  <Revisebox ref={modalRef}>
+                    <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
+                    <DeleteButton onClick={showModal}>삭제</DeleteButton>
+                  </Revisebox>
+                ) : null}
+              </Bodytop>
+              <BodyContent>
+                <ContentTitle>{helpsfind && helpsfind.title}</ContentTitle>
+                <ContentBody>{helpsfind && helpsfind.content}</ContentBody>
+                {helpsfind && helpsfind.imageList.length > 0 ? (
+                  <ContentImgBox>
+                    <Swiper
+                      {...swiperParams}
+                      ref={setSwiper}
+                      spaceBetween={50}
+                      slidesPerView={1}
+                    >
+                      {helpsfind &&
+                        helpsfind.imageList.map((image) => {
+                          return (
+                            <SwiperSlide key={image.imageId}>
+                              <ContentImg src={image.imgUrl}></ContentImg>
+                            </SwiperSlide>
+                          );
+                        })}
+                      <PrevButton ref={navigationPrevRef}>
+                        <PreviousBtn />
+                      </PrevButton>
+                      <NextButton ref={navigationNextRef}>
+                        <NextBtn />
+                      </NextButton>
+                    </Swiper>
+                  </ContentImgBox>
+                ) : null}
+                <BodyTxtBox>
+                  <ContentView>
+                    {helpsfind && helpsfind.createdAt} | 조회수{' '}
+                    {helpsfind && helpsfind.views}
+                  </ContentView>
+                  <Count>
+                    <CommentCount>
+                      <CommentImg>
+                        <img src={commentImg} alt='댓글이미지' />
+                      </CommentImg>
+                      댓글 {helpsfind && helpsfind.commentCnt}
+                    </CommentCount>
+                    <HeartCount onClick={heartClick}>
+                        {
+                            isClickHeart ? 
+                      <HeartImg>
+                        <img src={heartColorImg} alt='좋아요이미지' />
+                      </HeartImg>
+                      :
+                      <HeartImg>
+                        <img src={heartImg} alt='좋아요이미지' />
+                      </HeartImg>
+                        }
+                      좋아요 {helpsfind && helpsfind.heartCnt}
+                    </HeartCount>
+                  </Count>
+                </BodyTxtBox>
+              </BodyContent>
 
-    //모달
-    const [modalOpen, setModalOpen] = useState(false);
-    const showModal = (e) => {
-        e.preventDefault();
-        setModalOpen(true);
-    }
-
-    return (
-
-        <Container>
-            {modalOpen && <HelpDeleteModal setModalOpen={setModalOpen} />}
-            <Header />
-            <HelpContainer >
-                <HelpWrap>
-                    <DetailWrap>
-                        <FirstWrap>
-                            <DetailHeader>
-                                <IoIosArrowBack size="25px" cursor="pointer" onClick={() => { navigate("/") }} />
-                                <HeaderTitle>도움요청</HeaderTitle>
-                                <div style={{ width: "25px", height: "25px" }}></div>
-                            </DetailHeader>
-                        </FirstWrap>
-                        <DetailBody>
-                            <Bodytop>
-                                <Bodyimg src={Img} alt="" />
-                                <Bodytxt>
-                                    <Txtname onClick={onCilckChaetShow}>{helpsfind && helpsfind.username}</Txtname>
-                                    <Txtstudent>{helpsfind && helpsfind.departmentName} <span> {helpsfind && helpsfind.admission} </span></Txtstudent>
-                                    {showChaet ?
-                                        <ChaetingBox>1:1채팅</ChaetingBox>
-                                        : null
-                                    }
-                                </Bodytxt>
-                                <BiDotsVerticalRounded
-                                    size="20px" style={{ marginLeft: "auto", cursor: "pointer" }}
-                                    onClick={onCilckShow} />
-                                {show ?
-                                    <Revisebox ref={modalRef}>
-                                        <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
-                                        <DeleteButton onClick={showModal}>삭제</DeleteButton>
-                                    </Revisebox>
-                                    : null
-                                }
-                            </Bodytop>
-                            <BodyContent>
-                                <ContentTitle>{helpsfind && helpsfind.title}</ContentTitle>
-                                <ContentBody>{helpsfind && helpsfind.content}</ContentBody>
-                                {helpsfind && helpsfind.imageList.length > 0 ?
-                                    <ContentImgBox>
-                                        <Swiper
-                                            {...swiperParams}
-                                            ref={setSwiper}
-                                            spaceBetween={50}
-                                            slidesPerView={1}
-                                        >
-                                            {helpsfind && helpsfind.imageList.map((image) => {
-                                                return (
-                                                    <SwiperSlide key={image.imageId}>
-                                                        <ContentImg src={image.imgUrl}></ContentImg>
-                                                    </SwiperSlide>
-                                                )
-                                            })}
-                                            <PrevButton ref={navigationPrevRef}>
-                                                <PreviousBtn />
-                                            </PrevButton>
-                                            <NextButton ref={navigationNextRef}>
-                                                <NextBtn />
-                                            </NextButton>
-                                        </Swiper>
-                                    </ContentImgBox>
-                                    : null}
-                                <BodyTxtBox>
-                                    <ContentView>조회수 {helpsfind && helpsfind.views} | 댓글수 {helpsfind && helpsfind.commentCnt}</ContentView>
-                                    <ContentTime>{helpsfind && helpsfind.createdAt}</ContentTime>
-                                </BodyTxtBox>
-                            </BodyContent>
-
-
-
-                            <BodyContainer>
-
-                                <BodyCommentBox>
-                                    {helpsfind && helpsfind.commentList.length === 0 ?
-                                        <BodyComment>작성한 댓글이 없습니다 <br></br> 첫번째 댓글을 남겨보세요 </BodyComment>
-                                        :
-                                        <>
-                                            {helpsfind && helpsfind.commentList.map((comment) => (
-                                                <HelpDetailComment key={comment.commentId} comment={comment} helpsfind={helpsfind} modalRef={modalRef} />
-                                            ))}
-                                        </>
-                                    }
-                                </BodyCommentBox>
-                            </BodyContainer>
-                        </DetailBody>
-                    </DetailWrap>
-                </HelpWrap>
-                <CommentContainer onSubmit={onClickPostComment}>
-                    <CommentBox>
-                        <CommentDiv>
-                            <CommentPost placeholder='댓글을 입력해주세요' value={comment} onChange={onChangePostHandler} ></CommentPost>
-                            <CommentButton type="submit" >올리기</CommentButton>
-                        </CommentDiv>
-                    </CommentBox>
-                </CommentContainer>
-            </HelpContainer>
-        </Container>
-    );
+              <BodyContainer>
+                <BodyCommentBox>
+                  {helpsfind && helpsfind.commentList.length === 0 ? (
+                    <BodyComment>
+                      작성한 댓글이 없습니다 <br></br> 첫번째 댓글을 남겨보세요{' '}
+                    </BodyComment>
+                  ) : (
+                    <>
+                      {helpsfind &&
+                        helpsfind.commentList.map((comment) => (
+                          <HelpDetailComment
+                            key={comment.commentId}
+                            comment={comment}
+                            helpsfind={helpsfind}
+                            modalRef={modalRef}
+                          />
+                        ))}
+                    </>
+                  )}
+                </BodyCommentBox>
+              </BodyContainer>
+            </DetailBody>
+          </DetailWrap>
+        </HelpWrap>
+        <CommentContainer onSubmit={onClickPostComment}>
+          <CommentBox>
+            <CommentDiv>
+              <CommentPost
+                placeholder='댓글을 입력해주세요'
+                value={comment}
+                onChange={onChangePostHandler}
+              ></CommentPost>
+              <CommentButton type='submit'>올리기</CommentButton>
+            </CommentDiv>
+          </CommentBox>
+        </CommentContainer>
+      </HelpContainer>
+    </Container>
+  );
 };
-
-
-
 
 export default HelpDetail;
 
 const Container = styled.div`
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow-y: hidden;
-`
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow-y: hidden;
+`;
 const HelpContainer = styled.div`
-    width: 100%;
-    height: 100%;
-    /* border: 1px solid green; */
-    display: flex;
-    flex-direction: column;
-`
+  width: 100%;
+  height: 100%;
+  /* border: 1px solid green; */
+  display: flex;
+  flex-direction: column;
+`;
 
 const HelpWrap = styled.div`
-    width: 100%;
-    height: 100%;
-    /* border: 1px solid blue; */
-    overflow-y: scroll;
-`
+  width: 100%;
+  height: 100%;
+  /* border: 1px solid blue; */
+  overflow-y: scroll;
+`;
 const DetailWrap = styled.form`
   width: 100%;
   /* height:100%; */
@@ -250,290 +310,309 @@ const DetailWrap = styled.form`
 `;
 
 const FirstWrap = styled.div`
-    display: flex;
-    flex-direction: column;
-    /* border:1px solid blue; */
-    width: 100%;
-    height: 100%;
-`
+  display: flex;
+  flex-direction: column;
+  /* border:1px solid blue; */
+  width: 100%;
+  height: 100%;
+`;
 const DetailHeader = styled.div`
-    width: 100%;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-`
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+`;
 const HeaderTitle = styled.div`
   font-weight: 800;
   /* margin:10px auto; */
 `;
 const Revisebox = styled.div`
-    border: 1px solid #f1f0f0;
-    z-index: 5;
-    border-radius: 10px;
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    right: 0;
-    top:55px;
-    background-color: #fff;
-    box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
-    border-radius: 16px;
-    /* box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.05); */
-`
+  border: 1px solid #f1f0f0;
+  z-index: 5;
+  border-radius: 10px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  right: 0;
+  top: 55px;
+  background-color: #fff;
+  box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+  /* box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.05); */
+`;
 const ReviseButton = styled.button`
-    border:none;
-    border-bottom: 1px solid #f1f0f0;
-    padding:10px 15px;
-    border-radius: 10px 10px 0 0;
-    background-color: #fff;
-    color:gray;
-    cursor:pointer;
-    :hover {
-        color: #000;
-    }
-`
+  border: none;
+  border-bottom: 1px solid #f1f0f0;
+  padding: 10px 15px;
+  border-radius: 10px 10px 0 0;
+  background-color: #fff;
+  color: gray;
+  cursor: pointer;
+  :hover {
+    color: #000;
+  }
+`;
 
 const DeleteButton = styled.button`
-    border:none;
-    background-color: #eee;
-    padding:10px 15px;
-    border-radius: 0 0 10px 10px;
-    background-color: #fff;
-    color:gray;
-    cursor:pointer;
-    :hover {
-        color: #000;
-    }
-`
+  border: none;
+  background-color: #eee;
+  padding: 10px 15px;
+  border-radius: 0 0 10px 10px;
+  background-color: #fff;
+  color: gray;
+  cursor: pointer;
+  :hover {
+    color: #000;
+  }
+`;
 
 const DetailBody = styled.div`
-    /* border: 1px solid #f1f0f0; */
-    /* border: 1px solid red; */
-    /* margin: 10px 20px; */
-    border-radius: 20px;
-    width: 100%;
-    height:100%;
-    /* box-sizing: border-box; */
-    /* box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.05); */
-    /* overflow-y: scroll; */
-`
+  /* border: 1px solid #f1f0f0; */
+  /* border: 1px solid red; */
+  /* margin: 10px 20px; */
+  border-radius: 20px;
+  width: 100%;
+  height: 100%;
+  /* box-sizing: border-box; */
+  /* box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.05); */
+  /* overflow-y: scroll; */
+`;
 
 const Bodytop = styled.div`
-    display:flex;
-    align-items: center;
-    padding:20px 20px 10px 20px;
-    position: relative;
-`
+  display: flex;
+  align-items: center;
+  padding: 20px 20px 10px 20px;
+  position: relative;
+`;
 
 const Bodyimg = styled.img`
-    width:40px;
-`
+  width: 40px;
+`;
 
 const Bodytxt = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin-left: 10px;
-    position:relative;
-`
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  position: relative;
+`;
 
 const Txtname = styled.h3`
-    cursor:pointer;
-    /* margin: 0px; */
-`
+  cursor: pointer;
+  /* margin: 0px; */
+`;
 const Txtstudent = styled.p`
-    /* margin: 0px; */
-    font-size: 12px;
-    color: gray;
-`
+  /* margin: 0px; */
+  font-size: 12px;
+  color: gray;
+`;
 const ChaetingBox = styled.div`
-    border: 1px solid #f1f0f0;
-    border-radius: 16px;
-    position: absolute;
-    text-align: center;
-    line-height: 30px;
-    top:25px;
-    z-index: 1;
-    width:60px;
-    height:30px;
-    background-color: #fff;
-    cursor:pointer;
-    box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
-    color:gray;
-    cursor:pointer;
-    :hover {
-        color: #000;
-    }
-`
+  border: 1px solid #f1f0f0;
+  border-radius: 16px;
+  position: absolute;
+  text-align: center;
+  line-height: 30px;
+  top: 25px;
+  z-index: 1;
+  width: 60px;
+  height: 30px;
+  background-color: #fff;
+  cursor: pointer;
+  box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
+  color: gray;
+  cursor: pointer;
+  :hover {
+    color: #000;
+  }
+`;
 
 const BodyContent = styled.div`
-    padding: 0px 20px;
-    /* border: 1px solid red; */
-    width: 100%;
-    /* height: 350px; */
-    display: flex;
-     flex-direction: column;
-    justify-content: space-between;
-`
+  padding: 0px 20px;
+  /* border: 1px solid red; */
+  width: 100%;
+  /* height: 350px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
 const ContentTitle = styled.h3`
-    /* margin:10px 0px; */
-    font-weight: 600;
-    font-size: 18px;
-    width:100%;
-`
+  /* margin:10px 0px; */
+  font-weight: 600;
+  font-size: 18px;
+  width: 100%;
+`;
 const ContentBody = styled.p`
-/* border: 1px solid blue; */
-    color:gray;
-    font-size: 16px;
-    font-weight: 400;
-    width:100%;
-    margin-bottom: 10px;
-`
+  /* border: 1px solid blue; */
+  color: gray;
+  font-size: 16px;
+  font-weight: 400;
+  width: 100%;
+  margin-bottom: 10px;
+`;
 
 const ContentImgBox = styled.div`
-    width:100%;
-    height:250px;
-    border-radius: 20px;
-    position:relative;
-`
+  width: 100%;
+  height: 250px;
+  border-radius: 20px;
+  position: relative;
+`;
 const ContentImg = styled.img`
-    /* border:1px solid gray; */
-    width: 100%;
-    height:250px;
-    display:flex;
-    border-radius: 20px;
-    /* margin : 20px 0px; */
-    /* background-repeat: no-repeat;
+  /* border:1px solid gray; */
+  width: 100%;
+  height: 250px;
+  display: flex;
+  border-radius: 20px;
+  /* margin : 20px 0px; */
+  /* background-repeat: no-repeat;
     background-size: cover; */
-`
+`;
 const PrevButton = styled.button`
-    font-size: 20px;
-    display: flex;
-    position:absolute;
-    border:none;
-    border-radius: 20px;
-    top:50%;
-    left:0;
-    z-index: 2;
-    transform: translatey(-50%);
-    
-`
+  font-size: 20px;
+  display: flex;
+  position: absolute;
+  border: none;
+  border-radius: 20px;
+  top: 50%;
+  left: 0;
+  z-index: 2;
+  transform: translatey(-50%);
+`;
 const NextButton = styled.button`
-    font-size: 20px;
-    display: flex;
-    position:absolute;
-    border:none;
-    border-radius: 20px;
-    top:50%;
-    right:0;
-    z-index: 2;
-    transform: translatey(-50%);
-`
+  font-size: 20px;
+  display: flex;
+  position: absolute;
+  border: none;
+  border-radius: 20px;
+  top: 50%;
+  right: 0;
+  z-index: 2;
+  transform: translatey(-50%);
+`;
 
-const PreviousBtn = styled(GrFormPrevious)`
-    
-`
-const NextBtn = styled(GrFormNext)`
-   
-`
-
+const PreviousBtn = styled(GrFormPrevious)``;
+const NextBtn = styled(GrFormNext)``;
 
 const ContentView = styled.p`
-    
-    font-size: 14px;
-    line-height: 40px;
-    height:40px;
-    /* margin:30px 0px 10px; */
-    color: gray;
-    /* border: 1px solid blue; */
-    
-`
+  font-size: 14px;
+  line-height: 40px;
+  height: 40px;
+  /* margin:30px 0px 10px; */
+  color: gray;
+  /* border: 1px solid blue; */
+`;
 const BodyTxtBox = styled.div`
-    display: flex;
-    width:100%;
-    align-items: center;
-`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+`;
 const ContentTime = styled.div`
-      color: gray;
-      font-size: 14px;
-      margin-left: auto;
-      
-`
+  color: gray;
+  font-size: 14px;
+  margin-left: auto;
+`;
 
 const BodyContainer = styled.div`
-    width: 100%;
-    height: 100%;
-    /* border: 1px solid green; */
-    /* overflow-y: scroll; */
-`
+  width: 100%;
+  height: 100%;
+  /* border: 1px solid green; */
+  /* overflow-y: scroll; */
+`;
 const BodyCommentBox = styled.div`
-    border-top : 1px solid rgba(0,0,0,0.1);
-    /* margin:20px; */
-    /* overflow-y: scroll; */
-    height: 100%;
-    width: 100%;
-    /* position:relative; */
-    /* height: 70%; */
-    /* border: 1px solid orangered; */
-`
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  /* margin:20px; */
+  /* overflow-y: scroll; */
+  height: 100%;
+  width: 100%;
+  /* position:relative; */
+  /* height: 70%; */
+  /* border: 1px solid orangered; */
+`;
 
 const CommentContainer = styled.form`
-    position: sticky;
-    bottom: 0;
-    bottom: 10px;
-    width: 100%;
-    /* height: 100%; */
-    /* border: 1px solid blue; */
-    /* max-width:500px; */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-`
+  position: sticky;
+  bottom: 0;
+  bottom: 10px;
+  width: 100%;
+  /* height: 100%; */
+  /* border: 1px solid blue; */
+  /* max-width:500px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 const CommentBox = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* height: 60px; */
-    width: 95%;
-    /* border: 1px solid red; */
-`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 60px; */
+  width: 95%;
+  /* border: 1px solid red; */
+`;
 
 const CommentDiv = styled.div`
-    /* width : 370px; */
-    width: 100%;
-    /* height: 50px; */
-    padding: 10px;
-    background-color: #eeeeee;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    /* margin-bottom: 20px; */
-    justify-content: space-between;
-`
+  /* width : 370px; */
+  width: 100%;
+  /* height: 50px; */
+  padding: 10px;
+  background-color: #eeeeee;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  /* margin-bottom: 20px; */
+  justify-content: space-between;
+`;
 
 const CommentPost = styled.input`
-    width:80%;
-    /* width: 100%; */
-    /* bottom : 0; */
-    background-color: #eeeeee;
-    height: 30px;
-    border-radius: 10px;
-    border: none;
-`
+  width: 80%;
+  /* width: 100%; */
+  /* bottom : 0; */
+  background-color: #eeeeee;
+  height: 30px;
+  border-radius: 10px;
+  border: none;
+`;
 const CommentButton = styled.button`
-    border: none;
-    cursor: pointer;
-`
+  border: none;
+  cursor: pointer;
+`;
 const BodyComment = styled.div`
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 500;
-    color:#B3B3B3;
-    height:100px;
-    width:100%;
-    text-align: center;
-`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  color: #b3b3b3;
+  height: 100px;
+  width: 100%;
+  text-align: center;
+`;
+const Count = styled.div`
+  display: flex;
+`;
+
+const CommentCount = styled.div`
+  font-size: 12px;
+  font-weight: 500;
+  color: black;
+  display: flex;
+  margin-right: 15px;
+`;
+
+const CommentImg = styled.div`
+  margin-right: 5px;
+`;
+
+const HeartCount = styled.div`
+  font-size: 12px;
+  font-weight: 500;
+  color: black; 
+  display: flex;
+  cursor: pointer;      
+`;
+
+const HeartImg = styled.div`
+  margin-right: 5px;
+`;
