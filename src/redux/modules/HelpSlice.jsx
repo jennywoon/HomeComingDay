@@ -56,7 +56,7 @@ export const __getDetailHelp = createAsyncThunk("helps/getDetailHelp", async (pa
         // RefreshToken : getCookie('refreshToken')
       },
     });
-    console.log(data)
+    console.log(data.data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
       console.log('error', error);
@@ -204,13 +204,14 @@ export const __postHelpHeart = createAsyncThunk(
         url: `${BASE_URL}/article/help/${payload.articleId}/heart`,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${getCookie("token")}`,
+          Authorization: `Bearer ${getCookie("accessToken")}`,
         },
         data: payload,
       });
       console.log(data)
-      console.log("payload",payload)
-      return thunkAPI.fulfillWithValue(payload);
+      console.log("data",data.data)
+      console.log(payload)
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log(error)
       return thunkAPI.rejectWithValue(error);
