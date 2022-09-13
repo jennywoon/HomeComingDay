@@ -41,7 +41,9 @@ export const __patchProfileImage = createAsyncThunk("mypages/patchProfileImage",
         Authorization: `Bearer ${getCookie("accessToken")}`,
         // RefreshToken : getCookie('refreshToken')
       },
+      data: payload
     });
+    console.log(payload)
     console.log(data.data)
     return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {

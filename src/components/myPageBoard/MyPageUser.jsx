@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { AiOutlineCamera } from "react-icons/ai";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { __getMyPage } from '../../redux/modules/MyPageSlice';
+import { __getMyPage, __patchProfileImage } from '../../redux/modules/MyPageSlice';
 import MyPageLogoutModal from "./MyPageLogoutModal"
+import profiletest from "../../assets/profiletest.jpg"
 
 const MyPageUser = () => {
 
@@ -18,43 +19,80 @@ const MyPageUser = () => {
         dispatch(__getMyPage())
     }, [dispatch])
 
+    //이미지 업로드
+
+    const [imageUrl, setImageUrl] = useState("");
+    const imgRef = useRef();
+
+    const onChangeImage = async (e) => {
+        const reader = new FileReader();
+        const file = imgRef.current.files[0];
+        console.log(file);
+
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setImageUrl(reader.result);
+            console.log("이미지주소", reader.result);
+        };
+        if (e.target.files[0]) {
+            const userImage = new FormData();
+            userImage.append("userImage", e.target.files[0]);
+            await dispatch(__patchProfileImage(userImage));
+            await dispatch(__getMyPage());
+            console.log(userImage);
+        }
+    }
+
+    const onClickFileBtn = (e) => {
+        imgRef.current.click();
+    }
+
+    const onErrorImg = (e) => {
+        e.target.src = profiletest
+    }
+
     const [modalOpen, setModalOpen] = useState(false);
     const showModal = (e) => {
         e.preventDefault();
         setModalOpen(true);
     }
+
     return (
         <StLoginContainer>
-        {modalOpen && <MyPageLogoutModal setModalOpen={setModalOpen}/>}
-        <UserContainer>
-            <UserImgWrap>
-                <UserImg>
-                    <UserImgUpload>
-                        <AiOutlineCamera size="18" style={{ color: "white" }} />
-                    </UserImgUpload>
-                </UserImg>
-            </UserImgWrap>
-            <UserInfo>
-                <FirstWrap>
-                    <UserWrap>
-                        <UserName>{mypages.username}</UserName>
-                        <UserAdmission>| {mypages.admission}</UserAdmission>
-                    </UserWrap>
-                    <UserWrap>
-                        <UserUniversity>{mypages.schoolName}</UserUniversity>
-                        <UserDepartment>{mypages.departmentName}</UserDepartment>
-                    </UserWrap>
-                    <UserEmail>{mypages.email}</UserEmail>
-                </FirstWrap>
-                <SecondWrap>
-                    <LogoutButton
-                        onClick={showModal}
-                    >
-                        <LogoutTitle>로그아웃</LogoutTitle>
-                    </LogoutButton>
-                </SecondWrap>
-            </UserInfo>
-        </UserContainer>
+            {modalOpen && <MyPageLogoutModal setModalOpen={setModalOpen} />}
+            <UserContainer>
+                <UserImgWrap>
+                        <UserImg 
+                        src={mypages.userImage} onClick={() => { onClickFileBtn() }} 
+                        onError={onErrorImg}
+                        >
+                        </UserImg>
+                        <input type="file" ref={imgRef} onChange={onChangeImage} style={{ display: "none" }}></input>
+                        <UserImgUpload onClick={() => { onClickFileBtn() }}>
+                            <AiOutlineCamera size="18" style={{ color: "white" }} />
+                        </UserImgUpload>
+                </UserImgWrap>
+                <UserInfo>
+                    <FirstWrap>
+                        <UserWrap>
+                            <UserName>{mypages.username}</UserName>
+                            <UserAdmission>| {mypages.admission}</UserAdmission>
+                        </UserWrap>
+                        <UserWrap>
+                            <UserUniversity>{mypages.schoolName}</UserUniversity>
+                            <UserDepartment>{mypages.departmentName}</UserDepartment>
+                        </UserWrap>
+                        <UserEmail>{mypages.email}</UserEmail>
+                    </FirstWrap>
+                    <SecondWrap>
+                        <LogoutButton
+                            onClick={showModal}
+                        >
+                            <LogoutTitle>로그아웃</LogoutTitle>
+                        </LogoutButton>
+                    </SecondWrap>
+                </UserInfo>
+            </UserContainer>
         </StLoginContainer>
     );
 };
@@ -85,7 +123,10 @@ const UserImgWrap = styled.div`
     justify-content: center;
 `
 
-const UserImg = styled.div`
+const UserImg = styled.img`
+    /* background-image: url(${profiletest});
+    background-position: center;
+    background-size: 100% 100%; */
     width: 80px;
     height: 80px;
     border-radius: 50%;
@@ -93,6 +134,8 @@ const UserImg = styled.div`
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
+    display: block;
+    cursor: pointer;
 `
 
 const UserImgUpload = styled.div`
@@ -103,6 +146,10 @@ const UserImgUpload = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    position: absolute;
+    bottom: 82%;
+    right: 75%;
+    cursor: pointer;
 `
 const UserInfo = styled.div`
     width: 75%;

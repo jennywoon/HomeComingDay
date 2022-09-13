@@ -13,9 +13,6 @@ const MyPageCard = ({ myarticle }) => {
 
     return (
         <>
-            <BoardName>
-                <div>{myarticle.articleFlag}</div>
-            </BoardName>
             <Container>
                 <TotalWrap>
                     <PostTitle>{myarticle.title}</PostTitle>
@@ -24,11 +21,12 @@ const MyPageCard = ({ myarticle }) => {
                             <PostView>조회수 {myarticle.views}</PostView>
                             <div>|</div>
                             <CommentCount>댓글 {myarticle.commentCnt}</CommentCount>
+                            <div>|</div>
+                            <PostTime>{myarticle.createdAt}</PostTime>
                         </FirstWrap>
-                        {/* <BoardName>
-                        <div>{myarticle.articleFlag}</div>
-                    </BoardName> */}
-                        <PostTime>{myarticle.createdAt}</PostTime>
+                        <BoardName>
+                            <div>{myarticle.articleFlag}</div>
+                        </BoardName>
                     </BottomWrap>
                 </TotalWrap>
             </Container>
@@ -40,26 +38,31 @@ export default MyPageCard;
 
 const Container = styled.div`
     width: 100%;
-    /* height: 120px; */
-    padding: 10px;
+    height: 100%;
+    height: 100px;
     border: 1px solid #ddd;
-    border-radius: 10px;
+    border-radius: 16px;
     cursor: pointer;
     margin-bottom: 20px;
     background-color: white;
     display: flex;
     justify-content: center;
+    /* border: 1px solid red; */
 `;
 
 const TotalWrap = styled.div`
-    /* border: 1px solid red; */
-    width: 95%;
+    /* border: 1px solid blue; */
+    width: 90%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 `
 
 const BottomWrap = styled.div`
     display: flex;
     justify-content: space-between;
+    margin-top: 20px;
 `
 const FirstWrap = styled.div`
     display: flex;
@@ -71,7 +74,7 @@ const FirstWrap = styled.div`
 const PostTitle = styled.div`
     font-size: 16px;
     font-weight: 600;
-    margin-bottom: 10px;
+    /* margin-bottom: 40px; */
 `
 const PostView = styled.div`
 `
