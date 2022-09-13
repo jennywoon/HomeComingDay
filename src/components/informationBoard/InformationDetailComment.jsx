@@ -17,6 +17,7 @@ const InformationComment = ({ comment, informationsfind, modalRef }) => {
     const { commentId } = informationsfind.commentList.find((commentmap) => commentmap.commentId === comment.commentId)
 
     const [showComment, setShowComment] = useState(false)
+    const [showReplyComment, setReplyComment] = useState(false)
     const [isEdit, setIsEdit] = useState(false)
     const [editComment, setEditComment] = useState("")
 
@@ -26,6 +27,9 @@ const InformationComment = ({ comment, informationsfind, modalRef }) => {
 
     const onCilckShow = () => {
         setShowComment(!showComment)
+    }
+    const onCilckReplyShow = () => {
+        setReplyComment(!showReplyComment)
     }
 
     const onClickRevice = () => {
@@ -52,16 +56,36 @@ const InformationComment = ({ comment, informationsfind, modalRef }) => {
 
     return (
         <CommentContain>
-            {modalOpen && <InfoCommentDeleteModal setModalOpen={setModalOpen} comment={comment}/>}
+            {modalOpen && <InfoCommentDeleteModal setModalOpen={setModalOpen} comment={comment} />}
             <CommentBox>
                 <CommentImg src={Img} alt="" />
                 <CommentTxt>
                     <TxtName>{comment.username}</TxtName>
-                    <TxtStudent>{comment.admission} <span> {comment.createdAt}</span></TxtStudent>
+                    <TxtStudent>{comment.admission} · {comment.departmentName}</TxtStudent>
+                    {isEdit ?
+                        <EditBox>
+                            <Input onChange={onChangeEdit} value={editComment} />
+                            <ReviseButtonChange type="button" onClick={onClickReviceChange} >수정완료</ReviseButtonChange>
+                        </EditBox>
+                        :
+                        <Comment>{comment.content}</Comment>
+                    }
+                    <TxtWrap>
+                        <TxtFirstWrap>
+                        <TxtCreateAt> {comment.createdAt}</TxtCreateAt>
+                        <TxtCreateAt>|</TxtCreateAt>
+                        <TxtCreateAt onClick={onCilckReplyShow}>답글쓰기</TxtCreateAt>
+                        </TxtFirstWrap>
+                        <ReplyInput>
+                        {showReplyComment ?
+                            <input></input> : null
+                        }
+                        </ReplyInput>
+                    </TxtWrap>
                 </CommentTxt>
-                {/* <AiOutlineMenu size="18px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }} onClick={onCilckShow} /> */}
+
                 <BiDotsVerticalRounded
-                    size="20px" style={{ marginLeft: "auto", cursor: "pointer" }}
+                    size="20px" style={{ marginLeft: "auto", marginTop: "2px", cursor: "pointer" }}
                     onClick={onCilckShow} />
                 {showComment ?
                     <Revisebox ref={modalRef}>
@@ -69,18 +93,7 @@ const InformationComment = ({ comment, informationsfind, modalRef }) => {
                         <DeleteButton onClick={showModal} type="button">삭제</DeleteButton>
                     </Revisebox>
                     : null}
-
             </CommentBox>
-
-            {isEdit ?
-                <EditBox>
-                    <Input onChange={onChangeEdit} value={editComment} />
-                    <ReviseButtonChange type="button" onClick={onClickReviceChange} >수정완료</ReviseButtonChange>
-                </EditBox>
-                :
-                <Comment>{comment.content}</Comment>
-
-            }
         </CommentContain>
     );
 };
@@ -89,19 +102,28 @@ export default InformationComment;
 
 
 const CommentContain = styled.div`
-    margin: 5px 0px;
+    margin: 10px 0px;
+    /* border: 1px solid blue; */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
 `
 
 const CommentBox = styled.div`
     display:flex;
-    align-items: center;
-    padding:20px 20px 0px 20px;
-    margin-bottom: 10px;
+    /* align-items: center; */
+    /* padding:20px 20px 0px 20px; */
+    /* margin-bottom: 10px; */
     position: relative;
+    /* border: 1px solid red; */
+    width: 90%;
 `
 
 const CommentImg = styled.img`
     width:30px;
+    height: 30px;
+    margin-top: 2px;
 `
 
 const CommentTxt = styled.div`
@@ -159,21 +181,43 @@ const ReviseButtonChange = styled.button`
 const EditBox = styled.div`
     display: flex;
     align-items: center;
-    padding: 0px 20px;
+    /* padding: 0px 20px; */
 `
 
 
 const TxtName = styled.h3`
     margin: 0px;
     font-size:14px;
+    font-weight: 700;
 `
 const TxtStudent = styled.p`
     margin: 0px;
-    font-size: 10px;
-    color: gray;
+    font-size: 12px;
+    font-weight: 500;
+    color: #bebebe;
 `
 
+const TxtWrap = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+`
+
+const TxtFirstWrap = styled.div`
+    display: flex;
+    gap: 5px;
+`
+const TxtCreateAt = styled.div`
+    font-size: 12px;
+    font-weight: 500;
+    color: #bebebe;
+    cursor: pointer;
+`
+
+const ReplyInput = styled.div``
 const Comment = styled.p`
-    padding: 0px 20px;
+    /* padding: 0px 20px; */
+    margin: 5px 0;
     font-size:14px;
+    font-weight: 500;
 `
