@@ -2,53 +2,69 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { BsQuestionSquare } from 'react-icons/bs';
-import { __getHelp, __postHelp } from '../../redux/modules/HelpSlice';
+import { __getHelp, __postHeart, __postHelp } from '../../redux/modules/HelpSlice';
 import { useNavigate } from 'react-router-dom';
+import commentImg from '../../assets/commentImg.png';
+import heartImg from '../../assets/heartImg.png';
 
 const HelpCard = ({ help, id }) => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        dispatch(__postHelp());
-        dispatch(__getHelp());
-    }, [dispatch])
+  useEffect(() => {
+    dispatch(__postHelp());
+    dispatch(__getHelp());
+  }, [dispatch]);
 
-    const onClickNavi = () => {
-        navigate(`/helpdetail/${id}`)
-    }
+  const onClickNavi = () => {
+    navigate(`/helpdetail/${id}`);
+  };
 
-    return (
-      <HelpContainer onClick={onClickNavi}>
-        <Card>
-          <CardHead>
-            <StImg>
-              <HeadImg>
-                <BsQuestionSquare />
-              </HeadImg>
-            </StImg>
-            <HeadUser>
-              <HeadTop>
-                <HeadName>{help.username}</HeadName>
-                <HeadTime>{help.createdAt}</HeadTime>
-              </HeadTop>
-              <HeadBottom>
-                <HeadDepartment>{help.departmentName}</HeadDepartment>
-                <HeadStudent>· {help.admission}</HeadStudent>
-              </HeadBottom>
-            </HeadUser>
-          </CardHead>
-          <CardBody>
-            <BodyTitle>{help.title}</BodyTitle>
-          </CardBody>
-          <CardFooter>
-            <Views>조회수 {help.views}</Views>
-            <Division>|</Division>
-            <CommentCount>댓글 {help.commentCnt}</CommentCount>
-          </CardFooter>
-        </Card>
-      </HelpContainer>
-    );
+  return (
+    <HelpContainer onClick={onClickNavi}>
+      <Card>
+        <CardHead>
+          <StImg>
+            <HeadImg>
+              <BsQuestionSquare />
+            </HeadImg>
+          </StImg>
+          <HeadUser>
+            <HeadTop>
+              <HeadName>{help.username}</HeadName>
+              <HeadTime>{help.createdAt}</HeadTime>
+            </HeadTop>
+            <HeadBottom>
+              <HeadDepartment>{help.departmentName}</HeadDepartment>
+              <HeadStudent>· {help.admission}</HeadStudent>
+            </HeadBottom>
+          </HeadUser>
+        </CardHead>
+        <CardBody>
+          <BodyTitle>{help.title}</BodyTitle>
+        </CardBody>
+        <CardFooter>
+          <Views>조회수 {help.views}</Views>
+          <Count>
+            <CommentCount>
+              <CommentImg>
+              <img src={commentImg} alt='댓글이미지' />
+              </CommentImg>
+              {help.commentCnt}
+            </CommentCount>
+            <HeartCount>
+              <HeartImg>
+              <img src={heartImg} alt='댓글이미지' />
+              </HeartImg>
+              {help.heartCnt}
+            </HeartCount>
+          </Count>
+          {/* <Division>|</Division> */}
+          {/* <CommentCount>댓글 {help.commentCnt}</CommentCount> */}
+        </CardFooter>
+      </Card>
+    </HelpContainer>
+  );
 };
 
 export default HelpCard;
@@ -151,7 +167,8 @@ const BodyContent = styled.div`
 `;
 const CardFooter = styled.div`
   display: flex;
-  justify-content: start;
+  /* justify-content: start; */
+  justify-content: space-between;
 `;
 
 const Views = styled.div`
@@ -166,7 +183,27 @@ const Division = styled.div`
   color: gray;
 `;
 
+const Count = styled.div`
+  display: flex;
+`;
+
 const CommentCount = styled.div`
   font-size: 12px;
   color: gray;
+  display: flex;
+  margin-right: 10px;
 `;
+
+const CommentImg = styled.div`
+  margin-right: 3px;
+`
+
+const HeartCount = styled.div`
+  font-size: 12px;
+  color: gray;
+  display: flex;
+`;
+
+const HeartImg = styled.div`
+  margin-right: 3px;
+`
