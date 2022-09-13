@@ -25,9 +25,7 @@ const HelpCard = ({ help, id }) => {
       <Card>
         <CardHead>
           <StImg>
-            <HeadImg>
-              <BsQuestionSquare />
-            </HeadImg>
+            <HeadImg src={help.userImage}/>
           </StImg>
           <HeadUser>
             <HeadTop>
@@ -98,13 +96,12 @@ const StImg = styled.div`
   /* border: 1px solid red; */
 `;
 
-const HeadImg = styled.div`
+const HeadImg = styled.img`
   width: 30px;
   height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f6bd60;
   /* background-size: 100% 100%; */
   border-radius: 50%;
   margin-right: 7px;

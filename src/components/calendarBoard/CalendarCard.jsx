@@ -24,9 +24,7 @@ const CalendarCard = ({ calendar, id }) => {
       <Card>
         <CardHead>
           <StImg>
-            <HeadImg>
-              <BsCalendarCheck />
-            </HeadImg>
+            <HeadImg src={calendar.userImage}/>
           </StImg>
           <HeadUser>
             <HeadTop>
@@ -84,13 +82,12 @@ const CardHead = styled.div`
 
 const StImg = styled.div``;
 
-const HeadImg = styled.div`
+const HeadImg = styled.img`
   width: 30px;
   height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f6bd60;
   border-radius: 50%;
 `;
 
