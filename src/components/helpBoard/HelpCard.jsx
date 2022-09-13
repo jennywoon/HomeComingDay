@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { BsQuestionSquare } from 'react-icons/bs';
 import { __getHelp, __postHeart, __postHelp } from '../../redux/modules/HelpSlice';
 import { useNavigate } from 'react-router-dom';
 import commentImg from '../../assets/commentImg.png';
@@ -192,7 +191,7 @@ const CommentCount = styled.div`
 `;
 
 const CommentImg = styled.div`
-  margin-right: 3px;
+  margin-right: 5px;
 `
 
 const HeartCount = styled.div`
@@ -202,5 +201,5 @@ const HeartCount = styled.div`
 `;
 
 const HeartImg = styled.div`
-  margin-right: 3px;
+  margin-right: 5px;
 `

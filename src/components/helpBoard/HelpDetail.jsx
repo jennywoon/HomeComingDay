@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Header from '../Header';
 import styled from 'styled-components';
 import { IoIosArrowBack } from 'react-icons/io';
-import { AiOutlineMenu } from 'react-icons/ai';
 import Img from '../../assets/naverIcon.png';
 import HelpDetailComment from './HelpDetailComment';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -28,51 +27,44 @@ import HelpDeleteModal from './HelpDeleteModal';
 import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
 import heartColorImg from '../../assets/heartColor.png';
-import { convertLegacyProps } from 'antd/lib/button/button';
 
 const HelpDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { helps } = useSelector((state) => state.helps);
-  // const commentList = useSelector((state) => state.helps)
-  // console.log(commentList)
-  // const commentList = useSelector((state) => state.helps.helps)
-
   const { id } = useParams();
   const [show, setShow] = useState(false);
   const [showChaet, setShowChaet] = useState(false);
   const [comment, setComment] = useState('');
   const modalRef = useRef(null);
 
-  const onChangePostHandler = (e) => {
-    setComment(e.target.value);
-  };
+  const helpsfind = helps.find((help) => help.articleId === Number(id));
+  console.log('helpsfind', helpsfind);
 
-  //조회수반영
+  
+  // 조회수 반영
   useEffect(() => {
-    dispatch(__getDetailHelp(id));
+      dispatch(__getDetailHelp(id));
   }, [dispatch]);
 
-  const helpsfind = helps.find((help) => help.articleId === Number(id));
-  // const helpscomment = helpsfind.commentList
-  // console.log(commentList)
-  console.log('helpsfind', helpsfind);
-  // console.log("helpscomment",helpscomment)
-  // useEffect(() => {
-  //     dispatch(__getDetailHelp(helpsfind.articleId));
-  // }, [dispatch])
-
-  // console.log("helps", helps , "helpsfind" , helpsfind)
-
+  // 프로필 사진 클릭
   const onCilckShow = () => {
     setShow(!show);
   };
-  const onCilckChaetShow = () => {
-    setShowChaet(!showChaet);
-  };
 
+  // 1:1 채팅버튼
+  const onCilckChaetShow = () => {
+      setShowChaet(!showChaet);
+    };
+    
+    // 수정버튼
   const onClickRevice = () => {
     navigate(`/helpupdate/${id}`);
+  };
+
+  // 댓글
+  const onChangePostHandler = (e) => {
+    setComment(e.target.value);
   };
 
   const onClickPostComment = async (e) => {
@@ -119,7 +111,7 @@ const HelpDetail = () => {
     onSlideChange: (e) => setMainImageIndex(e.activeIndex),
   };
 
-  //모달
+  // delete, update 모달
   const [modalOpen, setModalOpen] = useState(false);
   const showModal = (e) => {
     e.preventDefault();
@@ -127,32 +119,40 @@ const HelpDetail = () => {
   };
 
   // 좋아요
-  //   const heartCount = useSelector((state) => state.helps.helps)
-  console.log(helpsfind.heartCnt);
   const [isClickHeart, setIsClickHeart] = useState(false);
   const heartClick = async () => {
     if (isClickHeart) {
-        setIsClickHeart(true);
-      } else {
         setIsClickHeart(false);
+      } else {
+        setIsClickHeart(true);
       }
     const newHeart = {
       articleId: id,
     };
     const response = await dispatch(__postHelpHeart(newHeart));
     console.log(response.payload)
-    // const data = dispatch(__getDetailHelp(id));
-    // console.log(data)
+    await dispatch(__getHelp());
 };
 
-// useEffect(() => {
-//     dispatch(__getDetailHelp(id))
-//     if (isClickHeart) {
-//       setIsClickHeart(true);
-//     } else {
-//       setIsClickHeart(false);
-//     }
-//   }, [isClickHeart]);
+const user_id = useSelector((state) => state.user);
+console.log(user_id)
+// const post = useSelector((state) => state.post.list);
+//  React.useEffect(()=>{
+    // console.log(post)
+    // const _post = post.filter((p) => {
+    //   return p.id === props.id;
+    // })[0].like_list;
+  
+    // if (_post) {
+    //   _post.forEach((p) => {
+    //     if (p === user_id) {
+    //       setLike(true);
+    //       setColor('like');
+    //     }
+    //   });
+    // }
+//   })
+
 
   return (
     <Container>
