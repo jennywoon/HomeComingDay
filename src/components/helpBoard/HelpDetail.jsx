@@ -176,7 +176,7 @@ console.log(user_id)
             </FirstWrap>
             <DetailBody>
               <Bodytop>
-                <Bodyimg src={Img} alt='' />
+                <Bodyimg src={helpsfind && helpsfind.userImage} alt='' />
                 <Bodytxt>
                   <Txtname onClick={onCilckChaetShow}>
                     {helpsfind && helpsfind.username}

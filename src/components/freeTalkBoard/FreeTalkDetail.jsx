@@ -123,7 +123,7 @@ const FreeTalkDetail = () => {
                         </FirstWrap>
                         <DetailBody>
                             <Bodytop>
-                                <Bodyimg src={Img} alt="" />
+                                <Bodyimg src={freetalksfind && freetalksfind.userImage} alt="" />
                                 <Bodytxt>
                                     <Txtname onClick={onCilckChaetShow}>{freetalksfind && freetalksfind.username}</Txtname>
                                     <Txtstudent>{freetalksfind && freetalksfind.departmentName} <span> {freetalksfind && freetalksfind.admission} </span></Txtstudent>

@@ -78,7 +78,7 @@ const CalendarDetailComment = ({ comment, modalRef, calendarfind }) => {
         <CommentContain >
             {modalOpen && <CalendarCommentDeleteModal setModalOpen={setModalOpen} comment={comment} />}
             <CommentBox >
-                <CommentImg src={Img} alt="" />
+                <CommentImg src={comment.userImage} alt="" />
                 <CommentTxt>
                     <TxtName>{comment.username}</TxtName>
                     <TxtStudent>{comment.admission} <span> {comment.createdAt}</span></TxtStudent>

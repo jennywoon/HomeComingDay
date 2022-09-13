@@ -79,7 +79,7 @@ const DetailComment = ({ comment, modalRef, helpsfind }) => {
         <CommentContain >
             {modalOpen && <HelpCommentDeleteModal setModalOpen={setModalOpen} comment={comment}/>}
             <CommentBox >
-                <CommentImg src={Img} alt="" />
+                <CommentImg src={comment.userImage} alt="" />
                 <CommentTxt>
                     <TxtName>{comment.username}</TxtName>
                     <TxtStudent>{comment.admission} <span> {comment.createdAt}</span></TxtStudent>

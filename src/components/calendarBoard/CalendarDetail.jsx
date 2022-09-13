@@ -118,7 +118,7 @@ const CalendarDetail = () => {
             </FirstWrap>
             <DetailBody>
               <Bodytop>
-                <Bodyimg src={Img} alt="" />
+                <Bodyimg src={calendarfind && calendarfind.userImage} alt="" />
                 <Bodytxt>
                   <Txtname onClick={onCilckChaetShow}>{calendarfind && calendarfind.username}</Txtname>
                   <Txtstudent>{calendarfind && calendarfind.departmentName} <span> {calendarfind && calendarfind.admission} </span></Txtstudent>
