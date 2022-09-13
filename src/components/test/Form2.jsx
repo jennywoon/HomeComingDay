@@ -187,10 +187,10 @@ const Form2 = () => {
 
   const formdata = new FormData();
   //등록하기
-  // const [isActive, setIsActive] = useState(false);
+  const [isOnActive, setIsOnActive] = useState(false);
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    setIsActive(e);
+    setIsOnActive(e);
     if (
       title.length &&
       infotitle.length &&
@@ -310,6 +310,42 @@ const Form2 = () => {
   //         freeimageUrl : ""
   //     })
   // },[handleSelect])
+  
+  const handleCheck = (e) => {
+    setIsOnActive(e);
+  };
+
+  useEffect(() => {
+    if (title !== '' && content !== '') {
+      handleCheck(true);
+    } else {
+      handleCheck(false);
+    }
+  },[title, content])
+  
+  useEffect(() => {
+    if (infotitle !== '' && infocontent !== '') {
+      handleCheck(true);
+    } else {
+      handleCheck(false);
+    }
+  },[infotitle, infocontent])
+  
+  useEffect(() => {
+    if (freetitle !== '' && freecontent !== '') {
+      handleCheck(true);
+    } else {
+      handleCheck(false);
+    }
+  },[freetitle, freecontent])
+
+  useEffect(() => {
+    if (calendartitle !== '' && selectedTime !== '' && calendarlocation !== '' && calendarcontent !== '') {
+      handleCheck(true);
+    } else {
+      handleCheck(false);
+    }
+  },[calendartitle, selectedTime, calendarlocation, calendarcontent])
 
   return (
     <FormContainer>
@@ -657,8 +693,8 @@ const Form2 = () => {
             width='100%'
             height='40px'
             color='white'
-            style={{ display: 'block', margin: '15px auto' }}
-            // isDisabled={isActive ? false : true}
+            style={{ display: 'block', margin: '15px auto', backgroundColor:"#f7931e" }}
+            isDisabled={isOnActive ? false : true}
           >
             <div style={{ fontWeight: '500', fontSize: '16px' }}>올리기</div>
           </Button>
