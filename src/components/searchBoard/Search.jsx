@@ -190,7 +190,7 @@ const Search = () => {
             <HelpWrap>
                 <SearchWrap>
                     <SearchDiv >
-                        <BiSearch size="37" style={{ paddingLeft: "20px" }} />
+                        <BiSearch size="37" style={{ paddingLeft: "20px" , color:"#F7931E"}} />
                         {/* <SearchInput
                         id="search-box" onChange={filterBySearch} 
                         placeholder="검색어를 입력해주세요" 
@@ -201,7 +201,9 @@ const Search = () => {
                             //   }
                             // }
                             /> */}
-                        {helpBtn ?
+
+                        {/* 필터검색용 */}
+                        {/* {helpBtn ?
                         <SearchInput id="search-box" onChange={filterByHelpSearch} placeholder="검색어를 입력해주세요" />
                         :
                         informationBtn?
@@ -214,24 +216,34 @@ const Search = () => {
                         <SearchInput id="search-box" onChange={filterByCalendarSearch} placeholder="검색어를 입력해주세요" />
                         :
                         <SearchInput id="search-box" onChange={filterBySearch} placeholder="검색어를 입력해주세요" />
-                        }
-                        
+                        } */}
+                        <SearchInput id="search-box" onChange={filterBySearch} placeholder="검색어를 입력해주세요" />
                         <IoCloseCircle
                             onClick={onReset}
-                            size="37" style={{ paddingRight: "20px", cursor: "pointer" }} />
+                            size="37" style={{ paddingRight: "20px", cursor: "pointer" , color:"#F7931E"}} />
                     </SearchDiv>
+                    
                 </SearchWrap>
+               
                 <SearchFilterBox>
-                <SearchFilter>
+                 {/* 필터검색용 */}
+                {/* <SearchFilter>
                     <FilterMenu>
                         <FilterList show={helpBtn} onClick={helpSearchFilter}>도움요청</FilterList>
                         <FilterList show={informationBtn} onClick={informationSearchFilter}>정보공유</FilterList>
                         <FilterList show={freeTalkBtn} onClick={freeTalkSearchFilter}>만남공유</FilterList>
                         <FilterList show={calendarBtn} onClick={calendarSearchFilter}>자유토크</FilterList>
                     </FilterMenu>
-                </SearchFilter>
+                </SearchFilter> */}
                 </SearchFilterBox>
+                <SelectBox>
+                    <Select name='state'>
+                            <option>최신순</option>
+                            <option>인기순</option>
+                    </Select>
+                </SelectBox>
                 <RecentSearch>
+                    
                     <RecentWrap id="item-list">
                         {/* <RecentTitle>최근 검색어</RecentTitle> */}
                         {/* search card 맵 돌릴 예정 */}
@@ -301,11 +313,11 @@ const SearchWrap = styled.div`
 `
 
 const SearchDiv = styled.div`
-    width: 80%;
+    width: 90%;
     height: 48px;
     /* top: 129px; */
     margin-top: 30px;
-    border: 1px solid #000000;
+    border: 1px solid #F7931E;
     border-radius: 24px;
     display: flex;
     justify-content: space-between;
@@ -319,6 +331,26 @@ const SearchInput = styled.input`
     outline: none;
     font-size: 16px;
 `
+const SelectBox = styled.div`
+    display: flex;
+  width:90%;
+  margin-top: 10px ;
+  margin-bottom: 10px ;
+`
+
+const Select = styled.select`
+  display: flex;
+  margin-left: auto;
+  text-align: center;
+  border-radius: 10px;
+  border: 1px solid #f7931e;
+  color: #f7931e;
+  width: 70px;
+  font-weight: 500;
+  font-size: 12px;
+  outline: none;
+`;
+
 
 const RecentSearch = styled.div`
     width: 100%;
@@ -329,7 +361,7 @@ const RecentSearch = styled.div`
 `
 
 const RecentWrap = styled.div`
-    width: 75%;
+    width: 90%;
     height: 100vh;
     
 `

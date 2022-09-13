@@ -19,9 +19,7 @@ const SearchCard = ({search,id}) => {
 
     return (
         <HelpContainer onClick={onClickNavi}>
-            <BoardName>
-                <div>{search.articleFlag}</div>
-            </BoardName>
+            
             <CardHead>
                 <HeadImg>
                     <BsQuestionSquare />
@@ -43,9 +41,15 @@ const SearchCard = ({search,id}) => {
                     {help.content}
                 </BodyContent> */}
             </CardBody>
+            
             <CardFooter>
-                <Views>조회수 {search.views}</Views>
-                <CommentCount>댓글 {search.commentCnt}</CommentCount>
+                <FooterTxt>
+                    <Views>조회수 {search.views}</Views>
+                    <CommentCount>댓글 {search.commentCnt}</CommentCount>
+                </FooterTxt>
+                <BoardName>
+                    <div>{search.articleFlag}</div>
+                </BoardName>
             </CardFooter>
         </HelpContainer>
     );
@@ -55,10 +59,12 @@ export default SearchCard;
 
 const HelpContainer = styled.div`
   padding: 10px;
-  border: 1px solid #ddd;
+  height:152px;
+  border: 1px solid #fff;
   border-radius: 10px;
   cursor: pointer;
   margin-bottom: 20px;
+  box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
 `;
 
 const CardHead = styled.div`
@@ -110,7 +116,10 @@ const HeadTime = styled.p`
 const CardBody = styled.div`
 `
 const BodyTitle = styled.div`
-    margin: 5px 0px;
+    width:300px;
+    height:60px;
+    line-height: 50px;
+    font-weight: 600;
     font-size: 16px;
 `
 const BodyContent = styled.div`
@@ -119,8 +128,13 @@ const BodyContent = styled.div`
 `
 const CardFooter = styled.div`
     display: flex;
-    justify-content: end;
+    height: 20px;
+    
 `
+const FooterTxt =styled.div`
+    display: flex;
+`
+
 const Views = styled.div`
     font-size: 12px;
     color:gray;
@@ -131,7 +145,7 @@ const CommentCount = styled.div`
     color:gray;
 `
 const BoardName = styled.div`
-    width: 80px;
+    width: 60px;
     background-color: #f7931e;
     color: white;
     font-size: 12px;
@@ -140,4 +154,5 @@ const BoardName = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: auto;
 `
