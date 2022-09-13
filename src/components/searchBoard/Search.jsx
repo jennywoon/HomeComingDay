@@ -5,7 +5,7 @@ import styled from "styled-components"
 import { BiSearch } from "react-icons/bi";
 import { IoCloseCircle } from "react-icons/io5";
 import SearchCard from "./SearchCard";
-import { __getSearch, __postSearch } from "../../redux/modules/SearchSlice";
+import { __getSearch, __getSearchArticle, __postSearch } from "../../redux/modules/SearchSlice";
 import { __getHelp } from "../../redux/modules/HelpSlice";
 import { __getInformation } from "../../redux/modules/InformationSlice";
 import { __getCalendar } from "../../redux/modules/CalendarSlice";
@@ -23,20 +23,18 @@ const Search = () => {
     const [freeTalkBtn , setFreeTalkBtn] = useState(false)
     const [calendarBtn , setCalendarBtn] = useState(false)
 
-    const searchs = useSelector((state)=>state.helps.helps)
+    const searchArticle = useSelector((state)=>state.searchs.searchs)
     const helpSearchs = useSelector((state)=>state.helps.helps)
     const informationSearchs = useSelector((state)=>state.informations.informations)
     const freeTalkSearchs = useSelector((state)=>state.freetalks.freetalks)
     const calendarSearchs = useSelector((state)=>state.calendars.calendars)
 
+    // const searchs = [...helpSearchs,...informationSearchs,...freeTalkSearchs,...calendarSearchs]
 
-    console.log(helpBtn)
+    console.log(searchArticle)
 
     useEffect(() => {
-        dispatch(__getHelp())
-        dispatch(__getInformation())
-        dispatch(__getCalendar())
-        dispatch(__getFreeTalk())
+        dispatch(__getSearchArticle())
     }, [dispatch])
 
     const helpSearchFilter = () =>{
@@ -56,15 +54,13 @@ const Search = () => {
     }
 
     //filter
-
-    
-    const [filteredList, setFilteredList] = new useState(helpSearchs);
+    const [filteredList, setFilteredList] = new useState(searchArticle);
     const filterBySearch = (e) => {
         // Access input value
         const query =e.target.value;
-        console.log(query)
+        // console.log(query)
         // Create copy of item list
-        let updatedList = [...helpSearchs];
+        let updatedList = [...searchArticle];
         // Include all elements which includes the search query
         updatedList = updatedList.filter((item) => {
           return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
@@ -194,12 +190,13 @@ const RecentSearch = styled.div`
     height: 100vh;
     display: flex;
     justify-content: center;
+    overflow: scroll;
 `
 
 const RecentWrap = styled.div`
     width: 75%;
     height: 100vh;
-    overflow: scroll;
+    
 `
 const RecentTitle = styled.div`
     margin: 50px 0 20px 0;

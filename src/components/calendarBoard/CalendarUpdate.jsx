@@ -27,7 +27,7 @@ const CalendarUpdate = () => {
   }
 
   const [value, onChange] = useState(['10:00', '11:00']);
-
+  const [isOnActive, setIsOnActive] = useState(false);
   const [EditTitle, setEditTitle] = useState(
     calendarfind && calendarfind.calendartitle
   );
@@ -71,10 +71,7 @@ const CalendarUpdate = () => {
     <FormContainer>
       <FormWrap onSubmit={onUpdateHandler}>
         <FormHeader>
-          <IoIosArrowBack size='25px' cursor='pointer' onClick={() => {navigate(-1)}} />
-          <Button type='submit' backgroundColor='white'>
-            수정하기
-          </Button>
+          <IoIosArrowBack size='25px' cursor='pointer' onClick={() => {navigate('/calendardetail')}} />
         </FormHeader>
         <FormBody>
           <FormSelection name='category'>
@@ -120,6 +117,11 @@ const CalendarUpdate = () => {
           </CalendarDiv>
           {/* <CalendarTest/> */}
         </FormBody>
+        <FooterBtn>
+          <Button type='submit' backgroundColor='#F7931E' width="90%" height="40px" color="white" style={{ display: "block", margin: "15px auto" ,backgroundColor:'#F7931E'}} isDisabled={isOnActive ? false : true}>
+            <div style={{ fontWeight: "500", fontSize: "16px" }}>수정하기</div>
+          </Button>
+        </FooterBtn>
       </FormWrap>
     </FormContainer>
     </>
@@ -152,11 +154,12 @@ const FormWrap = styled.form`
   
 `;
 const FormHeader = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 80px;
-    padding : 10px 20px;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 40px 0px;
 `
 
 const CalendarButton = styled.button`
@@ -218,9 +221,12 @@ const FormBody = styled.div`
     padding : 10px 20px;
 `
 const FormSelection = styled.select`
-    border:none;
+     border: none;
     margin-bottom: 25px;
-    width:75px;
+    width: 75px;
+    color: #f7931e;
+    font-size: 14px;
+    font-weight: 600;
 `
 const FormInput = styled.input`
     font-size: 20px;
@@ -229,4 +235,15 @@ const FormInput = styled.input`
     padding: 10px 10px 10px 5px;
     font-weight: bold;
     color: black;
+    margin-bottom: 10px;
+    outline: none;
+    ::placeholder {
+    font-size: 20px;
+    color: black;
+    font-weight: 600;
+  }
+`
+const FooterBtn = styled.div`
+        margin:0 auto;
+        width:100%;       
 `

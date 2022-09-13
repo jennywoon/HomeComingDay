@@ -1,8 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 // import Cookies from "universal-cookie"
+import { getCookie, setCookie } from '../../shared/cookies';
 
 // const cookies = new Cookies();
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const initialState = {
     searchs: [  
@@ -31,7 +34,24 @@ export const __getSearch = createAsyncThunk("searchs/getsearchs", async (props)=
   .then((response) => response.data)
 })
 
-
+export const __getSearchArticle = createAsyncThunk("searchs/getSearchArticle", async (payload, thunkAPI) => {
+  try {
+    const data = await axios({
+      method: 'get',
+      url: `${BASE_URL}/searchArticle`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+        // RefreshToken : getCookie('refreshToken')
+      },
+    });
+      console.log(data)
+      return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+      console.log('error', error);
+      return thunkAPI.rejectWithValue(error);
+  }
+});
 
 export const __postSearch = createAsyncThunk("searchs/postSearch", async (payload, thunkAPI) => {
     console.log('payload', payload)
@@ -60,7 +80,7 @@ export const SearchSlice = createSlice({
       //   state.isLoading = false;
       //   state.error = action.payload;
       // },
-
+      
       [__getSearch.fulfilled]: (state, action) => {
         console.log(state.helps)
         console.log(action.payload)
@@ -72,6 +92,18 @@ export const SearchSlice = createSlice({
   
       },
       [__getSearch.rejected]: (state, action) => {
+      },
+
+      [__getSearchArticle.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__getSearchArticle.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        state.searchs = action.payload;
+      },
+      [__getSearchArticle.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       },
 
       [__postSearch.pending]: (state) => {
