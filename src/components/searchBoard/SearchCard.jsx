@@ -19,6 +19,9 @@ const SearchCard = ({search,id}) => {
 
     return (
         <HelpContainer onClick={onClickNavi}>
+            <BoardName>
+                <div>{search.articleFlag}</div>
+            </BoardName>
             <CardHead>
                 <HeadImg>
                     <BsQuestionSquare />
@@ -126,4 +129,15 @@ const Views = styled.div`
 const CommentCount = styled.div`
     font-size: 12px;
     color:gray;
+`
+const BoardName = styled.div`
+    width: 80px;
+    background-color: #f7931e;
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
