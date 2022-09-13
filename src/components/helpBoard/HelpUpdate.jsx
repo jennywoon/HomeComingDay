@@ -31,13 +31,12 @@ const HelpUpdate = () => {
     const [EditTitle, setEditTitle] = useState(helpsfind && helpsfind.title)
     const [EditContent, setEditContent] = useState(helpsfind && helpsfind.content)
     const [EditImg, setEditImg] = useState("")
-
+    const [isOnActive, setIsOnActive] = useState(false);
 
 
     const onChangeTitle = (e) => {
         setEditTitle(e.target.value)
     }
-
 
 
     const onChangeContent = (e) => {
@@ -48,6 +47,17 @@ const HelpUpdate = () => {
         setEditImg(e.target.value)
     }
 
+    const handleCheck = (e) => {
+      setIsOnActive(e);
+    };
+  
+    useEffect(() => {
+      if (EditTitle !== '' && EditContent !== '') {
+        handleCheck(true);
+      } else {
+        handleCheck(false);
+      }
+    },[EditTitle, EditContent])
 
     const onUpdateHandler = async (e) => {
         e.preventDefault();
@@ -79,71 +89,14 @@ const HelpUpdate = () => {
                         <option value="">자유토크</option> */}
                     </FormSelection>
                     <FormInput name="title" value={EditTitle} onChange={onChangeTitle} placeholder="제목을 입력해주세요"></FormInput>
+                    <StCard>
                     <Textarea name="content" value={EditContent} onChange={onChangeContent} placeholder="내용을 입력해주세요"></Textarea>
+                    </StCard>
                 </FormBody>
                 <FormFooter>
-                    {/* <Filelabel className="fileUpload-button" htmlFor="fileUpload">
-                        <GrImage size="24px" />
-                    </Filelabel>
-                    <Addfile type="file" multiple={true} id="fileUpload" name="imgUrl" value={EditImg || ""} onChange={onChangeImg}>
-                    </Addfile> */}
                     
-
-
-            {/* <FooterContain>
-              <>
-                <GetRootProps {...getRootProps({ className: "dropzone" })}>
-                  <input
-                    {...getInputProps()}
-                  />
-                  <StImaBox>
-                    <StImgUpload>
-                      <Imgadd size='24px' />
-                      <Imgtxt>이미지 첨부</Imgtxt>
-                      
-                    </StImgUpload>
-                  </StImaBox>
-                </GetRootProps>
-                <StImgContainer>
-                  {files.length !== 0 &&
-                    files.map((file, i) => (
-                      // console.log("file!!!!!!!", file)
-                      <div key={i} style={{ display: "flex" }}>
-                        <div
-                          style={{
-                            width: "120px",
-                            height: "110px",
-                            overflow: "hidden",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            position: "relative"
-                          }}
-                        >
-                          <img
-                            src={file.preview}
-                            style={{
-                              width: "100px",
-                              height: "100px",
-                              backgroundSize: "cover",
-                              justifyContent: "center",
-                              objectFit: "cover",
-                              borderRadius: "16px",
-
-                            }}
-                        
-                          />
-                          <CancelBtn onClick={() => deleteImage(i)} size="20px" style={{ color: "#F7931E", position: "absolute", right: "5px", top: "0px", cursor: "pointer" }} />
-                        </div>
-                      </div>
-                    ))}
-                </StImgContainer>
-              </>
-            
-          </FooterContain> */}
-
                     <FooterBtn>
-                        <Button type='submit' backgroundColor='#F7931E' width="90%" height="40px" color="white" style={{ display: "block", margin: "15px auto" }}>
+                        <Button type='submit' backgroundColor='#F7931E' width="90%" height="40px" color="white" style={{ display: "block", margin: "15px auto" ,backgroundColor:'#F7931E'}} isDisabled={isOnActive ? false : true}>
                             <div style={{ fontWeight: "500", fontSize: "16px" }}>수정하기</div>
                         </Button>
                     </FooterBtn>
@@ -182,11 +135,12 @@ const FormWrap = styled.form`
   
 `;
 const FormHeader = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 80px;
-    padding : 10px 20px;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 40px 0px;
 `
 const FormBody = styled.div`
     display: flex;
@@ -208,6 +162,13 @@ const FormInput = styled.input`
     padding: 10px 10px 10px 5px;
     font-weight: bold;
     color: black;
+    margin-bottom: 10px;
+    outline: none;
+    ::placeholder {
+    font-size: 20px;
+    color: black;
+    font-weight: 600;
+  }
 `
 const Textarea = styled.textarea`
     width: 100%;
@@ -217,11 +178,15 @@ const Textarea = styled.textarea`
 `
 
 const FormFooter = styled.div`
-     width: 100%;
-        height: 100%;
-        border-top: 1px solid gray;
-        align-items: center;
+    display: flex;
+    width:100%;
 `
+const StCard = styled.div`
+  border: 1px solid #eee;
+  border-radius: 16px;
+  box-shadow: 0px 2px 14px rgba(0, 0, 0, 0.05);
+  padding: 5px;
+`;
 
 const FooterContain = styled.div`
         width: 100%;
@@ -245,48 +210,6 @@ const FooterBtn = styled.div`
         width:100%;
         
 `
-
-//Dropzone추가
-const GetRootProps = styled.div`
-        /* width: 100%;
-        height: 300px;
-        display: flex;
-        justify-content: center; */
-        `;
-
-const StImaBox = styled.div`
-        display: flex;
-        width:100%;
-        height: 36px;
-        margin:10px;
-        cursor: pointer;
-        `
-
-const StImgUpload = styled.div`
-        display: flex;
-        width:111px;
-        height: 100%;
-        justify-content: center;
-        flex-direction: row;
-        align-items: center;
-        position: relative;
-        padding: 0.5rem;
-        border:1px solid #e3e3e3;
-        border-radius: 20px;
-        `;
-
-const StImgContainer = styled.div`
-        display: flex;
-        width: 100%;
-        height: 100px;
-        box-sizing: border-box;
-        background: #fff;
-        scrollbar-width: none;
-        `;
-const Imgtxt = styled.div`
-        width:80px;
-        text-align: center;
-        `
 const CancelBtn = styled(MdCancel)`
         position:absolute;
         right:0;

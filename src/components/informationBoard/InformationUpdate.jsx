@@ -14,7 +14,7 @@ const InformationUpdate = () => {
     const navigate = useNavigate();
     const {id} = useParams();
     const {informations} = useSelector((state) => state.informations)
-    const informationsfind = informations.find((info)=> info.id === Number(id))
+    const informationsfind = informations.find((info)=> info.articleId === Number(id))
 
     // const [updateHelp, setUpdateHelp] = useState({
     //     title: "",
@@ -27,7 +27,8 @@ const InformationUpdate = () => {
     // console.log("helps", helps , "helpsfind" , helpsfind)
     const [EditTitle, setEditTitle] = useState(informationsfind&&informationsfind.title)
     const [EditContent, setEditContent] = useState(informationsfind&&informationsfind.content)
-    const [EditImg, setEditImg] = useState('')
+    const [EditImg, setEditImg] = useState('');
+    const [isOnActive, setIsOnActive] = useState(false);
 
     const onChangeTitle = (e) =>{
         setEditTitle(e.target.value)
@@ -45,8 +46,21 @@ const InformationUpdate = () => {
         dispatch(__getInformation());
     }, [dispatch])
 
+    const handleCheck = (e) => {
+        setIsOnActive(e);
+      };
+    
+      useEffect(() => {
+        if (EditTitle !== '' && EditContent !== '') {
+          handleCheck(true);
+        } else {
+          handleCheck(false);
+        }
+      },[EditTitle, EditContent])
+
     const onUpdateHandler = (e) => {
         e.preventDefault();
+        setIsOnActive(false);
          const editinformationsfind = {
             ...informationsfind ,
             id: id,
@@ -74,7 +88,9 @@ const InformationUpdate = () => {
                         <option value="">자유토크</option> */}
                     </FormSelection>
                 <FormInput name="title" value={EditTitle} onChange={onChangeTitle} placeholder="제목을 입력해주세요"></FormInput>
+                <StCard>
                 <Textarea name="content" value={EditContent} onChange={onChangeContent} placeholder="내용을 입력해주세요"></Textarea>
+                </StCard>
                 </FormBody>
                 <FormFooter>
                     {/* <Filelabel className="fileUpload-button" htmlFor="fileUpload">
@@ -83,7 +99,7 @@ const InformationUpdate = () => {
                     <Addfile type="file" multiple={true} id="fileUpload" name="imgUrl" value={EditImg || ""} onChange={onChangeImg}>
                     </Addfile> */}
                     <FooterBtn>
-                        <Button type='submit' backgroundColor='#F7931E' width="90%" height="40px" color="white" style={{ display: "block", margin: "15px auto" }}>
+                        <Button type='submit' backgroundColor='#F7931E' width="90%" height="40px" color="white" style={{ display: "block", margin: "15px auto", backgroundColor:'#F7931E'}} isDisabled={isOnActive ? false : true}>
                             <div style={{ fontWeight: "500", fontSize: "16px" }}>수정하기</div>
                         </Button>
                     </FooterBtn>
@@ -123,11 +139,12 @@ const FormWrap = styled.form`
   
 `;
 const FormHeader = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 80px;
-    padding : 10px 20px;
+    width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 40px 0px;
 `
 const FormBody = styled.div`
     display: flex;
@@ -149,6 +166,13 @@ const FormInput =styled.input`
     padding: 10px 10px 10px 5px;
     font-weight: bold;
     color: black;
+    margin-bottom: 10px;
+    outline: none;
+    ::placeholder {
+    font-size: 20px;
+    color: black;
+    font-weight: 600;
+    }
 `
 const Textarea = styled.textarea`
     width: 100%;
@@ -161,7 +185,7 @@ const FormFooter = styled.div`
     display: flex;
     width:100%;
     /* background-color: yellow; */
-    border-top: 1px solid gray;
+    /* border-top: 1px solid gray; */
 
 `
 const Filelabel = styled.label`
@@ -175,6 +199,11 @@ const Addfile = styled.input`
 
 const FooterBtn = styled.div`
         margin:0 auto;
-        width:100%;
-        
+        width:100%;       
 `
+const StCard = styled.div`
+  border: 1px solid #eee;
+  border-radius: 16px;
+  box-shadow: 0px 2px 14px rgba(0, 0, 0, 0.05);
+  padding: 5px;
+`;
