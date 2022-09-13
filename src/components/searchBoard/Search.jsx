@@ -33,43 +33,135 @@ const Search = () => {
 
     console.log(searchArticle)
 
+    
     useEffect(() => {
         dispatch(__getSearchArticle())
     }, [dispatch])
 
+    
     const helpSearchFilter = () =>{
         setHelpBtn(!helpBtn)
+        setInformationBtn(false)
+        setFreeTalkBtn(false)
+        setCalendarBtn(false)
     }
   
     const informationSearchFilter = () =>{
         setInformationBtn(!informationBtn)
+        setHelpBtn(false)
+        setFreeTalkBtn(false)
+        setCalendarBtn(false)
     }
 
     const freeTalkSearchFilter = () =>{
         setFreeTalkBtn(!freeTalkBtn)
+        setInformationBtn(false)
+        setHelpBtn(false)
+        setCalendarBtn(false)
     }
 
     const calendarSearchFilter = () =>{
         setCalendarBtn(!calendarBtn)
+        setFreeTalkBtn(false)
+        setInformationBtn(false)
+        setHelpBtn(false)
     }
 
-    //filter
-    const [filteredList, setFilteredList] = new useState(searchArticle);
-    const filterBySearch = (e) => {
+    // //filter
+    // const [filteredList, setFilteredList] = new useState(searchArticle);
+    // const filterBySearch = (e) => {
+    //     // Access input value
+    //     const query =e.target.value;
+    //     // console.log(query)
+    //     // Create copy of item list
+    //     let updatedList = [...searchArticle];
+    //     // Include all elements which includes the search query
+    //     updatedList = updatedList.filter((item) => {
+    //       return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+    //     });
+    //     // Trigger render with updated values
+    //     setFilteredList(updatedList);
+    //   };
+    
+      //Articles
+      const [filteredList, setFilteredList] = new useState(searchArticle);
+      const filterBySearch = (e) => {
+          // Access input value
+          const query = e.target.value
+          // console.log(query)
+          // Create copy of item list
+          let updatedList = [...searchArticle];
+          // Include all elements which includes the search query
+          updatedList = updatedList.filter((item) => {
+            return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+          });
+          // Trigger render with updated values
+          setFilteredList(updatedList);
+        };
+      
+    //Help
+    const [filteredHelpList, setFilteredHelpList] = new useState(helpSearchs);
+    const filterByHelpSearch = (e) => {
         // Access input value
-        const query =e.target.value;
+        const query = e.target.value
         // console.log(query)
         // Create copy of item list
-        let updatedList = [...searchArticle];
+        let updatedList = [...helpSearchs];
         // Include all elements which includes the search query
         updatedList = updatedList.filter((item) => {
           return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
         });
         // Trigger render with updated values
-        setFilteredList(updatedList);
+        setFilteredHelpList(updatedList);
       };
 
+     //informationfilter
+      const [filteredInformationList, setFilteredInformationList] = new useState(informationSearchs);
+      const filterByInformationSearch = (e) => {
+          // Access input value
+          const query = e.target.value
+          // console.log(query)
+          // Create copy of item list
+          let updatedList = [...informationSearchs];
+          // Include all elements which includes the search query
+          updatedList = updatedList.filter((item) => {
+            return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+          });
+          // Trigger render with updated values
+          setFilteredInformationList(updatedList);
+        };
 
+      //Freetalkfilter
+      const [filteredFreetalkList, setFilteredFreetalkList] = new useState(freeTalkSearchs);
+      const filterByFreetalkSearch = (e) => {
+          // Access input value
+          const query = e.target.value
+          // console.log(query)
+          // Create copy of item list
+          let updatedList = [...freeTalkSearchs];
+          // Include all elements which includes the search query
+          updatedList = updatedList.filter((item) => {
+            return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+          });
+          // Trigger render with updated values
+          setFilteredFreetalkList(updatedList);
+        };
+
+    //Calendarfilter
+    const [filteredCalendarList, setFilteredCalendarList] = new useState(calendarSearchs);
+    const filterByCalendarSearch = (e) => {
+        // Access input value
+        const query = e.target.value
+        // console.log(query)
+        // Create copy of item list
+        let updatedList = [...calendarSearchs];
+        // Include all elements which includes the search query
+        updatedList = updatedList.filter((item) => {
+          return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+        });
+        // Trigger render with updated values
+        setFilteredCalendarList(updatedList);
+      };
 
 
     // input 안 x버튼 클릭할 때, input 내용 없어지도록 구현 + post 기능 추가
@@ -99,17 +191,31 @@ const Search = () => {
                 <SearchWrap>
                     <SearchDiv >
                         <BiSearch size="37" style={{ paddingLeft: "20px" }} />
-                        <SearchInput
-                             id="search-box" onChange={filterBySearch}
-                            placeholder="검색어를 입력해주세요" 
+                        {/* <SearchInput
+                        id="search-box" onChange={filterBySearch} 
+                        placeholder="검색어를 입력해주세요" 
                             // onKeyPress={(e) => {
                             //     if (e.key === 'Enter') {
                             //       dispatch(__getSearch(inputText))
-                                  
                             //     }
                             //   }
                             // }
-                            />
+                            /> */}
+                        {helpBtn ?
+                        <SearchInput id="search-box" onChange={filterByHelpSearch} placeholder="검색어를 입력해주세요" />
+                        :
+                        informationBtn?
+                        <SearchInput id="search-box" onChange={filterByInformationSearch} placeholder="검색어를 입력해주세요" />
+                        :
+                        freeTalkBtn?
+                        <SearchInput id="search-box" onChange={filterByFreetalkSearch} placeholder="검색어를 입력해주세요" />
+                        :
+                        calendarBtn?
+                        <SearchInput id="search-box" onChange={filterByCalendarSearch} placeholder="검색어를 입력해주세요" />
+                        :
+                        <SearchInput id="search-box" onChange={filterBySearch} placeholder="검색어를 입력해주세요" />
+                        }
+                        
                         <IoCloseCircle
                             onClick={onReset}
                             size="37" style={{ paddingRight: "20px", cursor: "pointer" }} />
@@ -129,11 +235,40 @@ const Search = () => {
                     <RecentWrap id="item-list">
                         {/* <RecentTitle>최근 검색어</RecentTitle> */}
                         {/* search card 맵 돌릴 예정 */}
-                        <>
+
+                        {/* <>
                             {filteredList?.map((search) => (
                                 <SearchCard key={search.articleId} id={search.articleId} search={search} />
                             ))}
-                        </>
+                        </> */}
+                        {helpBtn ? 
+                            (filteredHelpList?.map((search) => (
+                                <SearchCard key={search.articleId} id={search.articleId} search={search} />
+                            )))
+                            :  
+                        informationBtn? 
+                            (filteredInformationList?.map((search) => (
+                                <SearchCard key={search.articleId} id={search.articleId} search={search} />
+                            )))
+                            :
+                        freeTalkBtn?
+                            (filteredFreetalkList?.map((search) => (
+                                <SearchCard key={search.articleId} id={search.articleId} search={search} />
+                            ))) 
+                            :
+                        calendarBtn?
+                            (filteredCalendarList?.map((search) => (
+                                <SearchCard key={search.articleId} id={search.articleId} search={search} />
+                            ))) 
+                            :
+                            (filteredList?.map((search) => (
+                                <SearchCard key={search.articleId} id={search.articleId} search={search} />
+                            )))
+                            
+                        }
+                        
+                        
+                        
                         {/* <SearchCard/> */}
                     </RecentWrap>
                     

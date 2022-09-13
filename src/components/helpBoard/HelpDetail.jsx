@@ -127,14 +127,32 @@ const HelpDetail = () => {
   };
 
   // 좋아요
-  const [isClickHeart, setIsClickHeart] = useState(false)
-  const heartClick = () => {
+  //   const heartCount = useSelector((state) => state.helps.helps)
+  console.log(helpsfind.heartCnt);
+  const [isClickHeart, setIsClickHeart] = useState(false);
+  const heartClick = async () => {
+    if (isClickHeart) {
+        setIsClickHeart(true);
+      } else {
+        setIsClickHeart(false);
+      }
     const newHeart = {
-        articleId: id,
-      };
-    dispatch(__postHelpHeart(newHeart));
-    dispatch(__getDetailHelp(id));
-  };
+      articleId: id,
+    };
+    const response = await dispatch(__postHelpHeart(newHeart));
+    console.log(response.payload)
+    // const data = dispatch(__getDetailHelp(id));
+    // console.log(data)
+};
+
+// useEffect(() => {
+//     dispatch(__getDetailHelp(id))
+//     if (isClickHeart) {
+//       setIsClickHeart(true);
+//     } else {
+//       setIsClickHeart(false);
+//     }
+//   }, [isClickHeart]);
 
   return (
     <Container>
@@ -221,19 +239,21 @@ const HelpDetail = () => {
                       </CommentImg>
                       댓글 {helpsfind && helpsfind.commentCnt}
                     </CommentCount>
-                    <HeartCount onClick={heartClick}>
-                        {
-                            isClickHeart ? 
-                      <HeartImg>
-                        <img src={heartColorImg} alt='좋아요이미지' />
-                      </HeartImg>
-                      :
-                      <HeartImg>
-                        <img src={heartImg} alt='좋아요이미지' />
-                      </HeartImg>
-                        }
-                      좋아요 {helpsfind && helpsfind.heartCnt}
+                    <HeartCount
+                      onClick={heartClick}
+                      isClickHeart={isClickHeart ? true : false}
+                    >
+                      {isClickHeart ? (
+                        <HeartImg>
+                          <img src={heartColorImg} alt='좋아요이미지' />
+                        </HeartImg>
+                      ) : (
+                        <HeartImg>
+                          <img src={heartImg} alt='좋아요이미지' />
+                        </HeartImg>
+                      )}
                     </HeartCount>
+                    좋아요 {helpsfind && helpsfind.heartCnt}
                   </Count>
                 </BodyTxtBox>
               </BodyContent>
@@ -608,9 +628,9 @@ const CommentImg = styled.div`
 const HeartCount = styled.div`
   font-size: 12px;
   font-weight: 500;
-  color: black; 
+  color: black;
   display: flex;
-  cursor: pointer;      
+  cursor: pointer;
 `;
 
 const HeartImg = styled.div`
