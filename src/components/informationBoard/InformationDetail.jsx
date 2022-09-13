@@ -123,7 +123,7 @@ const InformationDetail = () => {
                         </FirstWrap>
                         <DetailBody>
                             <Bodytop>
-                                <Bodyimg src={Img} alt="" />
+                                <Bodyimg src={informationsfind.userImage} alt="" />
                                 <Bodytxt>
                                     <Txtname onClick={onCilckChaetShow}>{informationsfind && informationsfind.username}</Txtname>
                                     <Txtstudent>{informationsfind && informationsfind.departmentName} <span> {informationsfind && informationsfind.admission} </span></Txtstudent>

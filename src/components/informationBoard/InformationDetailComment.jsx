@@ -5,7 +5,7 @@ import Img from "../../assets/naverIcon.png"
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Input from "../elements/Input";
-import { __deleteInfoComment, __updateInfoComment, __getInformation, __getDetailInformation, __postInformation } from '../../redux/modules/InformationSlice';
+import { __deleteInfoComment, __updateInfoComment, __getInformation, __getDetailInformation, __postInformation, __postInfoReplyComment } from '../../redux/modules/InformationSlice';
 import { useParams } from 'react-router-dom';
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import InfoCommentDeleteModal from './InfoCommentDeleteModal';
@@ -17,7 +17,7 @@ const InformationComment = ({ comment, informationsfind, modalRef }) => {
     const { commentId } = informationsfind.commentList.find((commentmap) => commentmap.commentId === comment.commentId)
 
     const [showComment, setShowComment] = useState(false)
-    const [showReplyComment, setReplyComment] = useState(false)
+    const [showReplyComment, setShowReplyComment] = useState(false)
     const [isEdit, setIsEdit] = useState(false)
     const [editComment, setEditComment] = useState("")
 
@@ -29,7 +29,7 @@ const InformationComment = ({ comment, informationsfind, modalRef }) => {
         setShowComment(!showComment)
     }
     const onCilckReplyShow = () => {
-        setReplyComment(!showReplyComment)
+        setShowReplyComment(!showReplyComment)
     }
 
     const onClickRevice = () => {
@@ -54,11 +54,29 @@ const InformationComment = ({ comment, informationsfind, modalRef }) => {
         setModalOpen(true);
     }
 
+    // 대댓글 구현중
+    const [replyComment, setReplyComment] = useState("");
+    const onChangeReplyHandler = (e) => {
+        setReplyComment(e.target.value);
+    }
+
+    const onClickPostReplyComment = async (e) => {
+        e.preventDefault();
+        const newReplyComment = {
+            content: replyComment,
+            articleId: Number(id),
+            commentId: commentId
+        }
+        await dispatch(__postInfoReplyComment(newReplyComment));
+        await dispatch(__getInformation());
+        setReplyComment("");
+    }
+
     return (
         <CommentContain>
             {modalOpen && <InfoCommentDeleteModal setModalOpen={setModalOpen} comment={comment} />}
             <CommentBox>
-                <CommentImg src={Img} alt="" />
+                <CommentImg src={comment.userImage} alt="" />
                 <CommentTxt>
                     <TxtName>{comment.username}</TxtName>
                     <TxtStudent>{comment.admission} · {comment.departmentName}</TxtStudent>
@@ -72,15 +90,19 @@ const InformationComment = ({ comment, informationsfind, modalRef }) => {
                     }
                     <TxtWrap>
                         <TxtFirstWrap>
-                        <TxtCreateAt> {comment.createdAt}</TxtCreateAt>
-                        <TxtCreateAt>|</TxtCreateAt>
-                        <TxtCreateAt onClick={onCilckReplyShow}>답글쓰기</TxtCreateAt>
+                            <TxtCreateAt> {comment.createdAt}</TxtCreateAt>
+                            <TxtCreateAt>|</TxtCreateAt>
+                            <TxtCreateAt onClick={onCilckReplyShow}>답글쓰기</TxtCreateAt>
                         </TxtFirstWrap>
-                        <ReplyInput>
-                        {showReplyComment ?
-                            <input></input> : null
-                        }
-                        </ReplyInput>
+                        <ReplyInputContainer onSubmit={onClickPostReplyComment}>
+                            {/* {showReplyComment ? */}
+                                <div>
+                                    <input value={replyComment} onChange={onChangeReplyHandler}/>
+                                    <button>올리기</button>
+                                </div>
+                                {/* : null */}
+                            {/* } */}
+                        </ReplyInputContainer>
                     </TxtWrap>
                 </CommentTxt>
 
@@ -214,7 +236,7 @@ const TxtCreateAt = styled.div`
     cursor: pointer;
 `
 
-const ReplyInput = styled.div``
+const ReplyInputContainer = styled.form``
 const Comment = styled.p`
     /* padding: 0px 20px; */
     margin: 5px 0;

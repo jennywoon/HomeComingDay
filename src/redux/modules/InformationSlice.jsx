@@ -6,8 +6,8 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const initialState = {
     infoComments:[],
+    infoReplyComments:[],
     information : [],
-    // insta: null,
     isLoading: false,
     error: null,
 };
@@ -186,7 +186,24 @@ export const __updateInfoComment = createAsyncThunk("comment/updateInfoComment",
 }
 );
 
-
+export const __postInfoReplyComment = createAsyncThunk("replycomennts/postInfoReplyComment", async (payload, thunkAPI) => {
+  try {
+    const data = await axios({
+      method: 'post',
+      url: `${BASE_URL}/article/information/${payload.articleId}/comment/${payload.commentId}`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+      },
+      data: payload
+    });
+    console.log("payload" , payload)
+    console.log(data)
+    return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
 
 export const InformationSlice = createSlice({
     name: "informations",
@@ -306,6 +323,18 @@ export const InformationSlice = createSlice({
       },
       [__updateInfoComment.rejected]: (state, action) => {
         state.isLoading = false;
+        state.error = action.payload;
+      },
+      [__postInfoReplyComment.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__postInfoReplyComment.fulfilled]: (state, action) => {
+        state.isLoading = false; 
+        console.log(action.payload)
+        state.infoReplyComments.push(action.payload);
+      },
+      [__postInfoReplyComment.rejected]: (state, action) => {
+        state.isLoading = false; 
         state.error = action.payload;
       },
 
