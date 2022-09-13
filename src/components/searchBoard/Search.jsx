@@ -18,19 +18,19 @@ const Search = () => {
     // search post 연습
     
     const [search, setSearch] = useState()
-    const [filterBtn , setFilterBtn] = useState({
-        helpBtn : false ,
-        informationBtn : false,
-        freeTalkBtn : false,
-        calendarBtn : false
-    })
+    const [helpBtn , setHelpBtn] = useState(false)
+    const [informationBtn , setInformationBtn] = useState(false)
+    const [freeTalkBtn , setFreeTalkBtn] = useState(false)
+    const [calendarBtn , setCalendarBtn] = useState(false)
+
     const searchs = useSelector((state)=>state.helps.helps)
     const helpSearchs = useSelector((state)=>state.helps.helps)
     const informationSearchs = useSelector((state)=>state.informations.informations)
     const freeTalkSearchs = useSelector((state)=>state.freetalks.freetalks)
     const calendarSearchs = useSelector((state)=>state.calendars.calendars)
 
-    console.log(searchs)
+
+    console.log(helpBtn)
 
     useEffect(() => {
         dispatch(__getHelp())
@@ -40,19 +40,31 @@ const Search = () => {
     }, [dispatch])
 
     const helpSearchFilter = () =>{
-        setFilterBtn(!filterBtn)
+        setHelpBtn(!helpBtn)
     }
   
- 
+    const informationSearchFilter = () =>{
+        setInformationBtn(!informationBtn)
+    }
+
+    const freeTalkSearchFilter = () =>{
+        setFreeTalkBtn(!freeTalkBtn)
+    }
+
+    const calendarSearchFilter = () =>{
+        setCalendarBtn(!calendarBtn)
+    }
+
     //filter
-    const [filteredList, setFilteredList] = new useState(searchs);
+
+    
+    const [filteredList, setFilteredList] = new useState(helpSearchs);
     const filterBySearch = (e) => {
         // Access input value
-
         const query =e.target.value;
         console.log(query)
         // Create copy of item list
-        let updatedList = [...searchs];
+        let updatedList = [...helpSearchs];
         // Include all elements which includes the search query
         updatedList = updatedList.filter((item) => {
           return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
@@ -61,8 +73,10 @@ const Search = () => {
         setFilteredList(updatedList);
       };
 
-    // input 안 x버튼 클릭할 때, input 내용 없어지도록 구현 + post 기능 추가
 
+
+
+    // input 안 x버튼 클릭할 때, input 내용 없어지도록 구현 + post 기능 추가
     const [inputText, setInputText] = useState("");
 
     const onChangeInput = (e) => {
@@ -108,10 +122,10 @@ const Search = () => {
                 <SearchFilterBox>
                 <SearchFilter>
                     <FilterMenu>
-                        <FilterList show={filterBtn} onClick={helpSearchFilter}>도움요청</FilterList>
-                        <FilterList >정보공유</FilterList>
-                        <FilterList>만남공유</FilterList>
-                        <FilterList>자유토크</FilterList>
+                        <FilterList show={helpBtn} onClick={helpSearchFilter}>도움요청</FilterList>
+                        <FilterList show={informationBtn} onClick={informationSearchFilter}>정보공유</FilterList>
+                        <FilterList show={freeTalkBtn} onClick={freeTalkSearchFilter}>만남공유</FilterList>
+                        <FilterList show={calendarBtn} onClick={calendarSearchFilter}>자유토크</FilterList>
                     </FilterMenu>
                 </SearchFilter>
                 </SearchFilterBox>
