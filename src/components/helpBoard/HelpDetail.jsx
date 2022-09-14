@@ -88,6 +88,8 @@ const HelpDetail = (props) => {
   //     dispatch(__getDetailHelp(id))
   // }, [dispatch])
 
+
+
   //swiper 옵션
   SwiperCore.use(Navigation);
   const [swiper, setSwiper] = useState(null);
@@ -143,14 +145,14 @@ const HelpDetail = (props) => {
     //   setIsClickHeart(true);
     // }
   };
+  //좋아요추가
+  const {heart} = useSelector((state)=>state.helps)
+  const heartmap = heart&&heart.map((heart)=> heart.payload)
+  console.log("heart",heart ,"heartmap",heartmap )
 
-  // useEffect(() => {
-  // const data = dispatch(__getHelp());
-  // console.log(data)
-  // if(helpsfind.filter(item => item.articleId === articleId)[0]) {
-  //   setIsClickHeart(true);
-  // }
-  // }, [dispatch])
+  const heartLike = heartmap[0]
+  console.log(heartLike)
+
 
   return (
     <Container>
@@ -244,7 +246,7 @@ const HelpDetail = (props) => {
                       <HeartCount
                         onClick={heartClick}
                       >
-                        {isClickHeart ? (
+                        {heartLike ? (
                           <HeartImg>
                             <img src={heartColorImg} alt='좋아요이미지' />
                           </HeartImg>
