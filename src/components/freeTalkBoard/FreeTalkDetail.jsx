@@ -110,21 +110,22 @@ const FreeTalkDetail = () => {
         setModalOpen(true);
     }
 
-    // 좋아요
-    const [isClickHeart, setIsClickHeart] = useState(false);
-    const heartClick = async () => {
-        if (isClickHeart) {
-            setIsClickHeart(false);
-        } else {
-            setIsClickHeart(true);
-        }
-        const newHeart = {
-            articleId: id,
-        };
-        const response = await dispatch(__postFreeTalkHeart(newHeart));
-        console.log(response.payload)
-        await dispatch(__getFreeTalk());
+  // 좋아요
+  const {heart} = useSelector((state)=>state.freetalks)
+  const heartmap = heart&&heart.map((heart)=> heart.payload)
+  console.log("heart",heart ,"heartmap",heartmap )
+
+  const heartLike = heartmap[0]
+  console.log(heartLike)
+
+  const heartClick = async () => {
+    const newHeart = {
+      articleId: id,
     };
+    const response = await dispatch(__postFreeTalkHeart(newHeart));
+    console.log(response.payload);
+    dispatch(__getFreeTalk());
+  };
 
     return (
         <Container>
@@ -207,9 +208,8 @@ const FreeTalkDetail = () => {
                                         </CommentCount>
                                         <HeartCount
                                             onClick={heartClick}
-                                            isClickHeart={isClickHeart ? true : false}
                                         >
-                                            {isClickHeart ? (
+                                            {heartLike ? (
                                                 <HeartImg>
                                                     <img src={heartColorImg} alt='좋아요이미지' />
                                                 </HeartImg>

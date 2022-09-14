@@ -240,6 +240,25 @@ export const __postHelpHeart = createAsyncThunk(
   }
 );
 
+export const __getHelpHeart = createAsyncThunk("helps/getHelpHeart", async (payload, thunkAPI) => {
+  try {
+    const data = await axios({
+      method: 'get',
+      url: `${BASE_URL}/article/help/${payload.articleId}/heart`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+        // RefreshToken : getCookie('refreshToken')
+      },
+    });
+    console.log(data.data)
+      return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+      console.log('error', error);
+      return thunkAPI.rejectWithValue(error);
+  }
+});
+
 export const HelpSlice = createSlice({
     name: "comments", 
     initialState,
@@ -381,6 +400,17 @@ export const HelpSlice = createSlice({
         state.heart.unshift(action);
       },
       [__postHelpHeart.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+      [__getHelpHeart.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__getHelpHeart.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        state.heart = action.payload;
+      },
+      [__getHelpHeart.rejected]: (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       },

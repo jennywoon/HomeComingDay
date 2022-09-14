@@ -11,6 +11,7 @@ const initialState = {
     searchs: [  
     ],
     helps: [],
+    popular:[],
     // insta: null,
     isLoading: false,
     error: null,
@@ -52,6 +53,26 @@ export const __getSearchArticle = createAsyncThunk("searchs/getSearchArticle", a
       return thunkAPI.rejectWithValue(error);
   }
 });
+
+export const __getSearchArticlePopular = createAsyncThunk("searchs/getSearchArticlePopular", async (payload, thunkAPI) => {
+  try {
+    const data = await axios({
+      method: 'get',
+      url: `${BASE_URL}/searchArticle/popular`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+        // RefreshToken : getCookie('refreshToken')
+      },
+    });
+      console.log(data)
+      return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+      console.log('error', error);
+      return thunkAPI.rejectWithValue(error);
+  }
+});
+
 
 export const __postSearch = createAsyncThunk("searchs/postSearch", async (payload, thunkAPI) => {
     console.log('payload', payload)
@@ -102,6 +123,18 @@ export const SearchSlice = createSlice({
         state.searchs = action.payload;
       },
       [__getSearchArticle.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+
+      [__getSearchArticlePopular.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__getSearchArticlePopular.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        state.popular = action.payload;
+      },
+      [__getSearchArticlePopular.rejected]: (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       },

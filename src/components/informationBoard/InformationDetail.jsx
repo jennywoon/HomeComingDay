@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Header from '../Header';
 import styled from 'styled-components';
 import { IoIosArrowBack } from 'react-icons/io'
-import { AiOutlineMenu } from 'react-icons/ai'
-import Img from "../../assets/naverIcon.png"
 import InformationDetailComment from './InformationDetailComment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -110,20 +108,21 @@ const InformationDetail = () => {
         setModalOpen(true);
     }
 
-     // 좋아요
-    const [isClickHeart, setIsClickHeart] = useState(false);
-    const heartClick = async () => {
-    if (isClickHeart) {
-      setIsClickHeart(false);
-    } else {
-      setIsClickHeart(true);
-    }
+  // 좋아요
+  const {heart} = useSelector((state)=>state.informations)
+  const heartmap = heart&&heart.map((heart)=> heart.payload)
+  console.log("heart",heart ,"heartmap",heartmap )
+
+  const heartLike = heartmap[0]
+  console.log(heartLike)
+
+  const heartClick = async () => {
     const newHeart = {
       articleId: id,
     };
     const response = await dispatch(__postInformationHeart(newHeart));
-    console.log(response.payload)
-    await dispatch(__getInformation());
+    console.log(response.payload);
+    dispatch(__getInformation());
   };
 
     return (
@@ -204,9 +203,8 @@ const InformationDetail = () => {
                                         </CommentCount>
                                         <HeartCount
                                             onClick={heartClick}
-                                            isClickHeart={isClickHeart ? true : false}
                                         >
-                                            {isClickHeart ? (
+                                            {heartLike ? (
                                                 <HeartImg>
                                                     <img src={heartColorImg} alt='좋아요이미지' />
                                                 </HeartImg>

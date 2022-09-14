@@ -5,7 +5,7 @@ import styled from "styled-components"
 import { BiSearch } from "react-icons/bi";
 import { IoCloseCircle } from "react-icons/io5";
 import SearchCard from "./SearchCard";
-import { __getSearch, __getSearchArticle, __postSearch } from "../../redux/modules/SearchSlice";
+import { __getSearch, __getSearchArticle, __getSearchArticlePopular, __postSearch } from "../../redux/modules/SearchSlice";
 import { __getHelp } from "../../redux/modules/HelpSlice";
 import { __getInformation } from "../../redux/modules/InformationSlice";
 import { __getCalendar } from "../../redux/modules/CalendarSlice";
@@ -22,8 +22,10 @@ const Search = () => {
     const [informationBtn , setInformationBtn] = useState(false)
     const [freeTalkBtn , setFreeTalkBtn] = useState(false)
     const [calendarBtn , setCalendarBtn] = useState(false)
+    const [select, setSelect] = useState('new');
 
     const searchArticle = useSelector((state)=>state.searchs.searchs)
+    // const searchArticlePopular = useSelector((state)=>state.searchs.popular)
     const helpSearchs = useSelector((state)=>state.helps.helps)
     const informationSearchs = useSelector((state)=>state.informations.informations)
     const freeTalkSearchs = useSelector((state)=>state.freetalks.freetalks)
@@ -33,11 +35,18 @@ const Search = () => {
 
     console.log(searchArticle)
 
+    const searchArticlePopular = searchArticle.filter((article)=>article.view)
+    console.log("searchArticlePopular",searchArticlePopular)
+
     
     useEffect(() => {
         dispatch(__getSearchArticle())
+        // dispatch(__getSearchArticlePopular())
     }, [dispatch])
 
+    const handleSelect = (e) => {
+        setSelect(e.target.value);
+      };
     
     const helpSearchFilter = () =>{
         setHelpBtn(!helpBtn)
@@ -67,6 +76,7 @@ const Search = () => {
         setHelpBtn(false)
     }
 
+    
     // //filter
     // const [filteredList, setFilteredList] = new useState(searchArticle);
     // const filterBySearch = (e) => {
@@ -237,10 +247,10 @@ const Search = () => {
                 </SearchFilter> */}
                 </SearchFilterBox>
                 <SelectBox>
-                    <Select name='state'>
-                            <option>최신순</option>
-                            <option>인기순</option>
-                    </Select>
+                <Select name='state' onChange={handleSelect}>
+                    <option value='new'>최신순</option>
+                    <option value='popular'>인기순</option>
+                </Select>
                 </SelectBox>
                 <RecentSearch>
                     
