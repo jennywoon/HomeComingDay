@@ -82,7 +82,7 @@ const HelpWrap = styled.div`
   position: relative;
   top: 170px;
   width: 100%;
-  height: 64%;
+  height: 62%;
   border-radius: 20px;
   background-color: white;
   padding: 10px 5px 10px 5px;
@@ -106,7 +106,7 @@ const Select = styled.select`
 const HelpList = styled.div`
   /* border: 1px solid red; */
   width: 95%;
-  height: 98%;
+  height: 95%;
   margin: 0 auto;
   overflow-y: scroll;
   ::-webkit-scrollbar {

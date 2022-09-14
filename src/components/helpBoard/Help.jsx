@@ -92,7 +92,7 @@ const HelpWrap = styled.div`
   top: 170px;
   width: 100%;
   /* height: 100vh; */
-  height: 64%;
+  height: 62%;
   border-radius: 20px;
   background-color: white;
   padding: 10px 5px 10px 5px;
@@ -118,7 +118,7 @@ const Select = styled.select`
 const HelpList = styled.div`
   /* height: 100%; */
   width: 95%;
-  height: 98%;
+  height: 95%;
   margin: 0 auto;
   /* border: 1px solid green; */
   overflow-y: scroll;
