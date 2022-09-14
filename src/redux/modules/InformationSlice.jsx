@@ -8,6 +8,7 @@ const initialState = {
   infoComments: [],
   infoReplyComments: [],
   information: [],
+  informationPopular:[],
   heart: [],
   isLoading: false,
   error: null,
@@ -64,6 +65,25 @@ export const __getDetailInformation = createAsyncThunk(
     }
   }
 );
+
+export const __getPopularInformation = createAsyncThunk("information/getPopularInformation", async (payload, thunkAPI) => {
+  try {
+    const data = await axios({
+      method: 'get',
+      url: `${BASE_URL}/article/information/popular`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+        // RefreshToken : getCookie('refreshToken')
+      },
+    });
+    console.log(data.data)
+      return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+      console.log('error', error);
+      return thunkAPI.rejectWithValue(error);
+  }
+});
 
 export const __postInformation = createAsyncThunk(
   'informations/postInformation',
@@ -274,6 +294,18 @@ export const InformationSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    [__getPopularInformation.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getPopularInformation.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.informationPopular = action.payload;
+    },
+    [__getPopularInformation.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
     [__postInformation.pending]: (state) => {
       state.isLoading = true;
     },

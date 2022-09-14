@@ -10,6 +10,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 const initialState = {
     freetalks: [],
     freeComments:[],
+    freePopular:[],
     heart: [],
     isLoading: false,
     error: null,
@@ -54,6 +55,25 @@ export const __getDetailFreeTalk = createAsyncThunk("freetalks/getDetailFreeTalk
       },
     });
     console.log(data)
+      return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+      console.log('error', error);
+      return thunkAPI.rejectWithValue(error);
+  }
+});
+
+export const __getPopularFreeTalk = createAsyncThunk("freetalk/getPopularfreetalk", async (payload, thunkAPI) => {
+  try {
+    const data = await axios({
+      method: 'get',
+      url: `${BASE_URL}/article/freetalk/popular`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+        // RefreshToken : getCookie('refreshToken')
+      },
+    });
+    console.log(data.data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
       console.log('error', error);
@@ -229,6 +249,18 @@ export const FreeTalkSlice = createSlice({
         state.freetalks = action.payload;
       },
       [__getFreeTalk.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+
+      [__getPopularFreeTalk.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__getPopularFreeTalk.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        state.freePopular = action.payload;
+      },
+      [__getPopularFreeTalk.rejected]: (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       },

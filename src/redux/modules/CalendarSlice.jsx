@@ -8,6 +8,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 const initialState = {
     calendarsComments:[],
     calendars: [],
+    calendarPopular:[],
     heart:[],
     isLoading: false,
     error: null,
@@ -50,6 +51,24 @@ export const __getDetailCalendar = createAsyncThunk("calendars/getDetailcalendar
   }
 });
 
+export const __getPopularCalendar = createAsyncThunk("calendar/getPopularcalendar", async (payload, thunkAPI) => {
+  try {
+    const data = await axios({
+      method: 'get',
+      url: `${BASE_URL}/article/calendar/popular`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+        // RefreshToken : getCookie('refreshToken')
+      },
+    });
+    console.log(data.data)
+      return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+      console.log('error', error);
+      return thunkAPI.rejectWithValue(error);
+  }
+});
 
 export const __postCalendar = createAsyncThunk("calendars/postcalendars", async (payload, thunkAPI) => {
   try {
@@ -257,6 +276,18 @@ export const CalendarSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       },
+      [__getPopularCalendar.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__getPopularCalendar.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        state.calendarPopular = action.payload;
+      },
+      [__getPopularCalendar.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+
       [__postCalendar.pending]: (state) => {
         state.isLoading = true;
       },

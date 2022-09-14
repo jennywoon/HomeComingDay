@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+import { useEffect ,useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components"
 import Img from "../../assets/naverIcon.png"
-import { __getInformation } from "../../redux/modules/InformationSlice";
+import { __getInformation, __getPopularInformation } from "../../redux/modules/InformationSlice";
 import InformationCard from "./InformationCard";
 import { TiPencil } from "react-icons/ti";
 import { useNavigate } from "react-router-dom";
@@ -14,10 +14,17 @@ const Information = () => {
   const navigate = useNavigate();
 
   const { informations } = useSelector((state) => state.informations);
-  console.log(informations)
+  const {informationPopular} = useSelector((state)=>state.informations)
+  const [select, setSelect] = useState('new');
+  console.log(informationPopular)
+
+  const handleSelect = (e) => {
+    setSelect(e.target.value);
+  };
 
   useEffect(() => {
     dispatch(__getInformation());
+    dispatch(__getPopularInformation());
   }, [dispatch])
 
   return (
@@ -26,24 +33,31 @@ const Information = () => {
         <Banner />
       </BannerWrap>
       <InformationWrap>
-        <Select name='state'>
-          <option>최신순</option>
-          <option>인기순</option>
+      <Select name='state' onChange={handleSelect}>
+          <option value='new'>최신순</option>
+          <option value='popular'>인기순</option>
         </Select>
          <InformationList>
           <>
-            {informations && informations.length > 0 ? (
+            {select === "new"&&informations && informations.length > 0 ? (
               <div>
                 {informations && informations.slice(0).map((information) => (
                   <InformationCard key={information.articleId} id={information.articleId} information={information} />
                 ))}
               </div>
-            ) : (
-              <NoneData>
-                <NoneDataImg></NoneDataImg>
-                <p>내가 쓴 게시글이 없습니다</p>
-              </NoneData>
-            )}
+            ) :
+              select === "popular"&& informationPopular && informationPopular.length > 0 ?
+            (<div>
+             {informationPopular && informationPopular.slice(0).map((information) => (
+               <InformationCard key={information.articleId} id={information.articleId} information={information} />
+             ))}
+           </div>) :
+             (
+               <NoneData>
+                 <NoneDataImg></NoneDataImg>
+                 <p>내가 쓴 게시글이 없습니다</p>
+               </NoneData>
+             )}
           </>
         </InformationList>
 
