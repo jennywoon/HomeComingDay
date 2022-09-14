@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect ,useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { __getCalendar } from '../../redux/modules/CalendarSlice';
+import { __getCalendar, __getPopularCalendar } from '../../redux/modules/CalendarSlice';
 import CalendarCard from './CalendarCard';
 import calendarorange from '../../assets/calendarorange.png';
 import './CalendarModal.css';
@@ -12,10 +12,17 @@ const Calendar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { calendars } = useSelector((state) => state.calendars);
+  const { calendarPopular } = useSelector((state) => state.calendars);
+  const [select, setSelect] = useState('new');
 
   useEffect(() => {
     dispatch(__getCalendar());
+    dispatch(__getPopularCalendar());
   }, [dispatch]);
+
+  const handleSelect = (e) => {
+    setSelect(e.target.value);
+  };
 
   return (
     <HelpContainer>
@@ -23,19 +30,27 @@ const Calendar = () => {
         <Banner />
       </BannerWrap>
       <HelpWrap>
-        <Select name='state'>
-          <option>최신순</option>
-          <option>인기순</option>
+      <Select name='state' onChange={handleSelect}>
+          <option value='new'>최신순</option>
+          <option value='popular'>인기순</option>
         </Select>
         <HelpList>
           <>
-          {calendars && calendars.length > 0 ? (
+          {select === "new"&&calendars && calendars.length > 0 ? (
             <div>
             {calendars && calendars.slice(0).map((calendar) => (
               <CalendarCard key={calendar.articleId} id={calendar.articleId} calendar={calendar} />
             ))}
             </div>
-          ) : (
+          ) : 
+          
+          select === "popular"&& calendarPopular && calendarPopular.length > 0 ?
+          (<div>
+           {calendarPopular && calendarPopular.slice(0).map((calendar) => (
+             <CalendarCard key={calendar.articleId} id={calendar.articleId} calendar={calendar} />
+           ))}
+         </div>) :
+          (
             <NoneData>
                 <NoneDataImg></NoneDataImg>
                 <p>내가 쓴 게시글이 없습니다</p>

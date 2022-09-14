@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useEffect ,useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components"
-import { __getFreeTalk } from "../../redux/modules/FreeTalkSlice";
+import { __getFreeTalk, __getPopularFreeTalk } from "../../redux/modules/FreeTalkSlice";
 import FreeTalkCard from "./FreeTalkCard"
 import freetalkorange from "../../assets/freetalkorange.png"
 import nonedatasquare from "../../assets/nonedatasquare.png"
@@ -9,34 +9,48 @@ import nonedatasquare from "../../assets/nonedatasquare.png"
 const FreeTalk = () => {
   const dispatch = useDispatch();
   const { freetalks } = useSelector((state) => state.freetalks);
+  const { freePopular } = useSelector((state) => state.freetalks);
+  const [select, setSelect] = useState('new');
   console.log(freetalks)
 
   useEffect(() => {
     dispatch(__getFreeTalk());
+    dispatch(__getPopularFreeTalk());
   }, [dispatch])
 
+  const handleSelect = (e) => {
+    setSelect(e.target.value);
+  };
+  
   return (
     <FreeTalkContainer>
       <BannerWrap>
         <Banner />
       </BannerWrap>
       <FreeTalkWrap>
-        <Select name='state'>
-          <option>최신순</option>
-          <option>인기순</option>
+      <Select name='state' onChange={handleSelect}>
+          <option value='new'>최신순</option>
+          <option value='popular'>인기순</option>
         </Select>
         {/* <Iconbox onClick={()=>navigate('/informationform')}>
           <TiPencil color="white" size="40px"/>
         </Iconbox> */}
         <FreeTalkList>
           <>
-            {freetalks && freetalks.length > 0 ? (
+            {select === "new"&& freetalks && freetalks.length > 0 ? (
               <div>
                 {freetalks && freetalks.slice(0).map((freetalk) => (
                   <FreeTalkCard key={freetalk.articleId} id={freetalk.articleId} freetalk={freetalk} />
                 ))}
               </div>
-            ) : (
+            ) : 
+            select === "popular"&& freePopular && freePopular.length > 0 ?
+            (<div>
+             {freePopular && freePopular.slice(0).map((freetalk) => (
+               <FreeTalkCard key={freetalk.articleId} id={freetalk.articleId} freetalk={freetalk} />
+             ))}
+           </div>) :
+            (
               <NoneData>
                 <NoneDataImg></NoneDataImg>
                 <p>내가 쓴 게시글이 없습니다</p>
