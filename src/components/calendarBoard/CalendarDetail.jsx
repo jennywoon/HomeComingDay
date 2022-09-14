@@ -9,7 +9,7 @@ import Img from '../../assets/naverIcon.png';
 import CalendarDetailComment from './CalendarDetailComment'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { __getCalendar, __deleteCalendar, __getDetailCalendar, __postCalendarComment } from '../../redux/modules/CalendarSlice';
+import { __getCalendar, __deleteCalendar, __getDetailCalendar, __postCalendarComment, __postCalendarHeart } from '../../redux/modules/CalendarSlice';
 import { useRef } from 'react';
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation } from "swiper";
@@ -116,9 +116,9 @@ const CalendarDetail = () => {
     const newHeart = {
       articleId: id,
     };
-    // const response = await dispatch(__postHelpHeart(newHeart));
-    // console.log(response.payload)
-    // await dispatch(__getHelp());
+    const response = await dispatch(__postCalendarHeart(newHeart));
+    console.log(response.payload)
+    await dispatch(__getCalendar());
   };
 
   return (
@@ -200,8 +200,8 @@ const CalendarDetail = () => {
                           <img src={heartImg} alt='좋아요이미지' />
                         </HeartImg>
                       )}
-                    </HeartCount>
                     좋아요 {calendarfind && calendarfind.heartCnt}
+                    </HeartCount>
                   </Count>
                 </BodyTxtBox>
               </BodyContent>
@@ -562,10 +562,13 @@ const CommentPost = styled.input`
     height: 30px;
     border-radius: 10px;
     border: none;
+    outline: none;
 `
 const CommentButton = styled.button`
     border: none;
     cursor: pointer;
+    color: black;
+    font-weight: 600;
 `
 const BodyComment = styled.div`
     display:flex;

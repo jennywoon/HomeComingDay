@@ -253,8 +253,8 @@ const HelpDetail = (props) => {
                           <img src={heartImg} alt='좋아요이미지' />
                         </HeartImg>
                       )}
-                    </HeartCount>
                     좋아요 {helpsfind && helpsfind.heartCnt}
+                    </HeartCount>
                   </Count>
                 </BodyTxtBox>
               </BodyContent>
@@ -598,10 +598,13 @@ const CommentPost = styled.input`
   height: 30px;
   border-radius: 10px;
   border: none;
+  outline: none;
 `;
 const CommentButton = styled.button`
   border: none;
   cursor: pointer;
+  color: black;
+  font-weight: 600;
 `;
 const BodyComment = styled.div`
   display: flex;
@@ -617,6 +620,7 @@ const Count = styled.div`
   display: flex;
   /* border: 1px solid blue; */
   align-items: center;
+  color: black;
 `;
 
 const CommentCount = styled.div`
