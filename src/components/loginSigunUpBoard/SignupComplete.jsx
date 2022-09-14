@@ -17,7 +17,7 @@ const SignupComplete = () => {
   useEffect(() => {
     dispatch(__getMyPage())
   }, [dispatch])
-
+  
   const data = useSelector((state) => state.mypages.mypages)
 
   return (
@@ -30,7 +30,7 @@ const SignupComplete = () => {
           </StImg>
           <StText>
             <p style={{ fontSize: '24px' }}>
-              <strong>{data.username}</strong>님,
+              <strong>{data && data.username}</strong>님,
             </p>
             <p style={{ fontSize: '24px', marginBottom: '25px' }}>
               홈커밍데이 가입을 환영합니다!

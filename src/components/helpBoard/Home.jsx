@@ -98,7 +98,7 @@ const NavbarTitle = styled.div`
 `;
 const SecondWrap = styled.div`
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   position: sticky;
   background-color: #ffffff;
   bottom: 0;
