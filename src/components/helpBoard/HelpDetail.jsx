@@ -41,7 +41,6 @@ const HelpDetail = (props) => {
   const helpsfind = helps.find((help) => help.articleId === Number(id));
   console.log('helpsfind', helpsfind);
 
-
   // 조회수 반영
   useEffect(() => {
     dispatch(__getDetailHelp(id));
@@ -124,33 +123,34 @@ const HelpDetail = (props) => {
 
   const [isClickHeart, setIsClickHeart] = useState(false);
   const heartClick = async () => {
-    if (isClickHeart) {
-      setIsClickHeart(false);
-    } else {
-      setIsClickHeart(true);
-    }
     const newHeart = {
       articleId: id,
     };
     const response = await dispatch(__postHelpHeart(newHeart));
-    console.log(response.payload)
-    console.log(mypageEmail.email);
-    // const heartdetail = mypageEmail.find((p) => {
-      //   return (p.email === response.payload)
-      // })
-      // console.log(heartdetail)
-      if (mypageEmail.email === response.payload) {
-        setIsClickHeart(true);
-      }
-    };
-    
-    useEffect(() => {
-    const data = dispatch(__getHelp());
-    console.log(data)
-    // if(helpsfind.filter(item => item.articleId === articleId)[0]) {
+    console.log(response.payload);
+
+    if (response.payload === false) {
+      // isClickHeart(true)
+      setIsClickHeart(false);
+    } else {
+      // isClickHeart(false)
+      setIsClickHeart(true);
+    }
+    dispatch(__getHelp());
+    // if (isClickHeart) {
+    //   setIsClickHeart(false);
+    // } else {
     //   setIsClickHeart(true);
     // }
-  }, [])
+  };
+
+  // useEffect(() => {
+  // const data = dispatch(__getHelp());
+  // console.log(data)
+  // if(helpsfind.filter(item => item.articleId === articleId)[0]) {
+  //   setIsClickHeart(true);
+  // }
+  // }, [dispatch])
 
   return (
     <Container>
@@ -158,7 +158,13 @@ const HelpDetail = (props) => {
       <Header />
       <FirstWrap>
         <DetailHeader>
-          <IoIosArrowBack size='25px' cursor='pointer' onClick={() => { navigate('/') }} />
+          <IoIosArrowBack
+            size='25px'
+            cursor='pointer'
+            onClick={() => {
+              navigate('/');
+            }}
+          />
           <HeaderTitle>도움요청</HeaderTitle>
           <div style={{ width: '25px', height: '25px' }}></div>
         </DetailHeader>
@@ -181,7 +187,11 @@ const HelpDetail = (props) => {
                 </Bodytxt>
                 <BiDotsVerticalRounded
                   size='20px'
-                  style={{ marginLeft: 'auto', cursor: 'pointer', color: "#bebebe" }}
+                  style={{
+                    marginLeft: 'auto',
+                    cursor: 'pointer',
+                    color: '#bebebe',
+                  }}
                   onClick={onCilckShow}
                 />
                 {show ? (
@@ -233,7 +243,6 @@ const HelpDetail = (props) => {
                     </CommentCount>
                     <HeartCount
                       onClick={heartClick}
-                      isClickHeart={isClickHeart ? true : false}
                     >
                       {isClickHeart ? (
                         <HeartImg>
@@ -244,7 +253,7 @@ const HelpDetail = (props) => {
                           <img src={heartImg} alt='좋아요이미지' />
                         </HeartImg>
                       )}
-                    좋아요 {helpsfind && helpsfind.heartCnt}
+                      좋아요 {helpsfind && helpsfind.heartCnt}
                     </HeartCount>
                   </Count>
                 </BodyTxtBox>
@@ -403,11 +412,11 @@ const Bodytop = styled.div`
   display: flex;
   align-items: center;
   position: relative;
-  margin: 10px 0; 
+  margin: 10px 0;
 `;
 
 const Bodyimg = styled.img`
-  width:40px;
+  width: 40px;
   height: 40px;
   border-radius: 50%;
 `;
@@ -454,7 +463,7 @@ const BodyContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 `;
 const ContentTitle = styled.h3`
   font-weight: 600;
