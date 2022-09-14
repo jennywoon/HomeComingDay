@@ -8,6 +8,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 const initialState = {
     calendarsComments:[],
     calendars: [],
+    heart:[],
     isLoading: false,
     error: null,
 };
@@ -215,6 +216,31 @@ export const __updateCalendarComment = createAsyncThunk("comment/updateHelpComme
 // }
 // });
 
+// 좋아요
+export const __postCalendarHeart = createAsyncThunk(
+  'postCalendarHeart',
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios({
+        method: 'post',
+        url: `${BASE_URL}/article/calendar/${payload.articleId}/heart`,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getCookie('accessToken')}`,
+        },
+        data: payload,
+      });
+      console.log(data);
+      console.log('data', data.data);
+      console.log(payload);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const CalendarSlice = createSlice({
     name: "calendars",
     initialState,
@@ -370,6 +396,20 @@ export const CalendarSlice = createSlice({
       //   state.isLoading = false;
       //   state.error = action.payload;
       // },
+
+          // 좋아요
+    [__postCalendarHeart.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__postCalendarHeart.fulfilled]: (state, action) => {
+      console.log('__postHeart.fulfilled', action);
+      state.isLoading = false;
+      state.heart.unshift(action);
+    },
+    [__postCalendarHeart.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
     },
 });
 

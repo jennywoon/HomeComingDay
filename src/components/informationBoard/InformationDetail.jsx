@@ -7,7 +7,7 @@ import Img from "../../assets/naverIcon.png"
 import InformationDetailComment from './InformationDetailComment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteInformation, __getDetailInformation, __getInfoComment, __getInformation, __postInfoComment, __postInformation, __updateInformation } from '../../redux/modules/InformationSlice';
+import { __deleteInformation, __getDetailInformation, __getInfoComment, __getInformation, __postInfoComment, __postInformation, __postInformationHeart, __updateInformation } from '../../redux/modules/InformationSlice';
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { useRef } from 'react';
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -121,9 +121,9 @@ const InformationDetail = () => {
     const newHeart = {
       articleId: id,
     };
-    // const response = await dispatch(__postHelpHeart(newHeart));
-    // console.log(response.payload)
-    // await dispatch(__getHelp());
+    const response = await dispatch(__postInformationHeart(newHeart));
+    console.log(response.payload)
+    await dispatch(__getInformation());
   };
 
     return (
@@ -215,8 +215,8 @@ const InformationDetail = () => {
                                                     <img src={heartImg} alt='좋아요이미지' />
                                                 </HeartImg>
                                             )}
-                                        </HeartCount>
                                         좋아요 {informationsfind && informationsfind.heartCnt}
+                                        </HeartCount>
                                     </Count>
                                 </BodyTxtBox>
                             </BodyContent>
@@ -571,10 +571,13 @@ const CommentPost = styled.input`
     height: 30px;
     border-radius: 10px;
     border: none;
+    outline: none;
 `
 const CommentButton = styled.button`
     border: none;
     cursor: pointer;
+    color: black;
+    font-weight: 600;
 `
 const BodyComment = styled.div`
     display:flex;

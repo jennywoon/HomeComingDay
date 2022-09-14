@@ -195,6 +195,7 @@ export const __updateHelpComment = createAsyncThunk("comment/updateHelpComment",
 }
 );
 
+// 좋아요
 export const __postHelpHeart = createAsyncThunk(
   "postHelpHeart",
   async (payload, thunkAPI) => {

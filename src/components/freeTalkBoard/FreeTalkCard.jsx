@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { BsQuestionSquare } from 'react-icons/bs';
 import {
   __getFreeTalk,
   __postFreeTalk,
 } from '../../redux/modules/FreeTalkSlice';
 import { useNavigate } from 'react-router-dom';
+import commentgray from '../../assets/commentgray.png';
+import heartgray from '../../assets/heartgray.png';
 
 const FreeTalkCard = ({ freetalk, id }) => {
   const dispatch = useDispatch();
@@ -41,14 +42,23 @@ const FreeTalkCard = ({ freetalk, id }) => {
         </CardHead>
         <CardBody>
           <BodyTitle>{freetalk.title}</BodyTitle>
-          {/* <BodyContent>
-                    {help.content}
-                </BodyContent> */}
         </CardBody>
         <CardFooter>
           <Views>조회수 {freetalk.views}</Views>
-          <Division>|</Division>
-          <CommentCount>댓글 {freetalk.commentCnt}</CommentCount>
+          <Count>
+            <CommentCount>
+              <CommentImg>
+              <img src={commentgray} alt='댓글이미지' />
+              </CommentImg>
+              {freetalk.commentCnt}
+            </CommentCount>
+            <HeartCount>
+              <HeartImg>
+              <img src={heartgray} alt='댓글이미지' />
+              </HeartImg>
+              {freetalk.heartCnt}
+            </HeartCount>
+          </Count>
         </CardFooter>
       </Card>
     </FreeTalkContainer>
@@ -151,7 +161,7 @@ const BodyContent = styled.div`
 
 const CardFooter = styled.div`
   display: flex;
-  justify-content: start;
+  justify-content: space-between;
 `;
 
 const Views = styled.div`
@@ -167,7 +177,27 @@ const Division = styled.div`
   color: gray;
 `;
 
+const Count = styled.div`
+  display: flex;
+`;
+
 const CommentCount = styled.div`
   font-size: 12px;
   color: gray;
+  display: flex;
+  margin-right: 10px;
 `;
+
+const CommentImg = styled.div`
+  margin-right: 5px;
+`
+
+const HeartCount = styled.div`
+  font-size: 12px;
+  color: gray;
+  display: flex;
+`;
+
+const HeartImg = styled.div`
+  margin-right: 5px;
+`
