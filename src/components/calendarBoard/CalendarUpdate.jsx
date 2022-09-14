@@ -71,7 +71,7 @@ const CalendarUpdate = () => {
     <FormContainer>
       <FormWrap onSubmit={onUpdateHandler}>
         <FormHeader>
-          <IoIosArrowBack size='25px' cursor='pointer' onClick={() => {navigate('/calendardetail')}} />
+          <IoIosArrowBack size='25px' cursor='pointer' onClick={() => {navigate(`/calendardetail/${id}`)}} />
         </FormHeader>
         <FormBody>
           <FormSelection name='category'>
@@ -155,6 +155,7 @@ const FormWrap = styled.form`
 `;
 const FormHeader = styled.div`
   width: 100%;
+  padding-left:15px;
   height: 50px;
   display: flex;
   align-items: center;
@@ -213,7 +214,7 @@ const CalendarInput = styled.input`
     align-items: center;
     ::-webkit-input-placeholder{text-align:right}
     padding: 0 10px;
-    /* outline: none; */
+    outline: none;
 `
 const FormBody = styled.div`
     display: flex;

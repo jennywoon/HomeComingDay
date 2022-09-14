@@ -14,12 +14,19 @@ const SearchCard = ({search,id}) => {
     // },[dispatch])
 
     const onClickNavi = () => {
+    if(search.articleFlag === "도움요청"){
         navigate(`/helpdetail/${id}`)
-    }
+    }else if(search.articleFlag === "정보공유"){
+        navigate(`/informationdetail/${id}`)
+    }else if(search.articleFlag === "만남일정"){
+        navigate(`/calendardetail/${id}`)
+    }else if(search.articleFlag === "자유토크"){
+        navigate(`/freetalkdetail/${id}`)
+    }};
+
 
     return (
         <HelpContainer onClick={onClickNavi}>
-            
             <CardHead>
                 <HeadImg>
                     <BsQuestionSquare />

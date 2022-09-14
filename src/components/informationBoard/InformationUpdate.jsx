@@ -140,6 +140,7 @@ const FormWrap = styled.form`
 `;
 const FormHeader = styled.div`
     width: 100%;
+    padding-left:15px;
   height: 50px;
   display: flex;
   align-items: center;
@@ -177,6 +178,7 @@ const FormInput =styled.input`
 const Textarea = styled.textarea`
     width: 100%;
     height:400px;
+    outline: none;
     border:none;
     padding: 10px 5px;
 `

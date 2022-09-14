@@ -134,7 +134,7 @@ const FormContainer = styled.div`
 `;
 
 const FormWrap = styled.form`
-  width: 500px;
+  width: 100%;
   height:100vh;
   background-color: white;
   display: flex;
@@ -143,6 +143,7 @@ const FormWrap = styled.form`
 `;
 const FormHeader = styled.div`
   width: 100%;
+  padding-left:15px;
   height: 50px;
   display: flex;
   align-items: center;
@@ -182,6 +183,7 @@ const Textarea = styled.textarea`
     height:400px;
     border:none;
     padding: 10px 5px;
+    outline: none;
 `
 
 const FormFooter = styled.div`
