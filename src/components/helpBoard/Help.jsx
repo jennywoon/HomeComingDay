@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components"
 import { useSelector, useDispatch } from "react-redux";
-import { __getHelp } from "../../redux/modules/HelpSlice";
+import { __getHelp, __getPopularHelp } from "../../redux/modules/HelpSlice";
 import HelpCard from "./HelpCard";
 import Loading from "../test/Loading";
 import helporange from "../../assets/helporange.png"
@@ -12,13 +12,22 @@ const Help = () => {
 
   const dispatch = useDispatch();
   const { helps } = useSelector((state) => state.helps);
+  const {helpPopular} = useSelector((state)=>state.helps)
   const { isLoading } = useSelector((state) => state.helps);
+  const [select, setSelect] = useState('new');
   // console.log(isLoading)
   // console.log(helps)
+  console.log(helpPopular)
 
   useEffect(() => {
     dispatch(__getHelp());
+    dispatch(__getPopularHelp());
   }, [dispatch])
+
+
+  const handleSelect = (e) => {
+    setSelect(e.target.value);
+  };
 
   // if (isLoading) {
   //   return <Loading />;
@@ -30,20 +39,27 @@ const Help = () => {
         <Banner />
       </BannerWrap>
       <HelpWrap>
-        <Select name='state'>
-          <option>최신순</option>
-          <option>인기순</option>
+        <Select name='state' onChange={handleSelect}>
+          <option value='new'>최신순</option>
+          <option value='popular'>인기순</option>
         </Select>
         {/* <Loading /> */}
         <HelpList>
           <>
-            {helps && helps.length > 0 ? (
+            {select === "new"&& helps && helps.length > 0 ? (
               <div>
                 {helps && helps.slice(0).map((help) => (
                   <HelpCard key={help.articleId} id={help.articleId} help={help} />
                 ))}
               </div>
-            ) : (
+            ) : 
+            select === "popular"&& helpPopular && helpPopular.length > 0 ?
+           (<div>
+            {helpPopular && helpPopular.slice(0).map((help) => (
+              <HelpCard key={help.articleId} id={help.articleId} help={help} />
+            ))}
+          </div>) :
+            (
               <NoneData>
                 <NoneDataImg></NoneDataImg>
                 <p>내가 쓴 게시글이 없습니다</p>
