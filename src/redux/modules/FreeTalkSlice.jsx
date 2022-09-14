@@ -10,7 +10,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 const initialState = {
     freetalks: [],
     freeComments:[],
-    // insta: null,
+    heart: [],
     isLoading: false,
     error: null,
 };
@@ -162,7 +162,6 @@ export const __deleteFreeTalkComment = createAsyncThunk("comments/deleteInfoComm
       },
       data: payload
     });
-    // console.log(payload)
   //   console.log(payload)
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
@@ -191,6 +190,31 @@ export const __updateFreeTalkComment = createAsyncThunk("comment/updateInfoComme
 }
 );
 
+// 좋아요
+export const __postFreeTalkHeart = createAsyncThunk(
+  "postFreeTalkHeart",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios({
+        method: "post",
+        url: `${BASE_URL}/article/help/${payload.articleId}/heart`,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getCookie("accessToken")}`,
+        },
+        data: payload,
+      });
+      console.log(data)
+      console.log("data",data.data)
+      console.log(payload)
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      console.log(error)
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 
 export const FreeTalkSlice = createSlice({
     name: "freetalks",
@@ -209,15 +233,15 @@ export const FreeTalkSlice = createSlice({
         state.error = action.payload;
       },
       [__postFreeTalk.pending]: (state) => {
-        state.isLoading = true; // 네트워크 요청이 시작되면 로딩상태를 true로 변경합니다.
+        state.isLoading = true;
       },
       [__postFreeTalk.fulfilled]: (state, action) => {
-        state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
-        state.freetalks.push(action.payload); // Store에 있는 todos에 서버에서 가져온 todos를 넣습니다.
+        state.isLoading = false;
+        state.freetalks.push(action.payload);
       },
       [__postFreeTalk.rejected]: (state, action) => {
-        state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.
-        state.error = action.payload; // catch 된 error 객체를 state.error에 넣습니다.
+        state.isLoading = false;
+        state.error = action.payload;
       },
 
       [__deleteFreeTalk.pending]: (state) => {
@@ -225,7 +249,6 @@ export const FreeTalkSlice = createSlice({
       },
       [__deleteFreeTalk.fulfilled]: (state, action) => {
         state.isLoading = false;
-        // console.log(state.camps)
         // console.log(action)
         state.freetalks = state.freetalks.filter(freetalk => freetalk.id !== action.payload)
       },
@@ -314,7 +337,19 @@ export const FreeTalkSlice = createSlice({
         state.error = action.payload;
       },
 
-
+      // 좋아요
+      [__postFreeTalkHeart.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__postFreeTalkHeart.fulfilled]: (state, action) => {
+        console.log("__postHeart.fulfilled", action);
+        state.isLoading = false;
+        state.heart.unshift(action);
+      },
+      [__postFreeTalkHeart.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
     },
 });
 

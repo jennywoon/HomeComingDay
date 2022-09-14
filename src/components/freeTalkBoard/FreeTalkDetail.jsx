@@ -7,7 +7,7 @@ import Img from "../../assets/naverIcon.png"
 import FreeTalkDetailComment from './FreeTalkDetailComment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteFreeTalk, __getDetailFreeTalk, __getFreeTalk, __getFreeTalkComment, __postFreeTalkComment } from '../../redux/modules/FreeTalkSlice';
+import { __deleteFreeTalk, __getDetailFreeTalk, __getFreeTalk, __getFreeTalkComment, __postFreeTalkComment, __postFreeTalkHeart } from '../../redux/modules/FreeTalkSlice';
 import { useRef } from 'react';
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation } from "swiper";
@@ -121,9 +121,9 @@ const FreeTalkDetail = () => {
         const newHeart = {
             articleId: id,
         };
-        // const response = await dispatch(__postHelpHeart(newHeart));
-        // console.log(response.payload)
-        // await dispatch(__getHelp());
+        const response = await dispatch(__postFreeTalkHeart(newHeart));
+        console.log(response.payload)
+        await dispatch(__getFreeTalk());
     };
 
     return (
@@ -218,8 +218,8 @@ const FreeTalkDetail = () => {
                                                     <img src={heartImg} alt='좋아요이미지' />
                                                 </HeartImg>
                                             )}
-                                        </HeartCount>
                                         좋아요 {freetalksfind && freetalksfind.heartCnt}
+                                        </HeartCount>
                                     </Count>
                                 </BodyTxtBox>
                             </BodyContent>
@@ -569,10 +569,13 @@ const CommentPost = styled.input`
     height: 30px;
     border-radius: 10px;
     border: none;
+    outline: none;
 `
 const CommentButton = styled.button`
     border: none;
     cursor: pointer;
+    color: black;
+    font-weight: 600;
 `
 const BodyComment = styled.div`
     display:flex;

@@ -6,6 +6,8 @@ import { BsCalendarCheck } from 'react-icons/bs';
 import { __getCalendar } from '../../redux/modules/CalendarSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
+import commentgray from '../../assets/commentgray.png';
+import heartgray from '../../assets/heartgray.png';
 
 const CalendarCard = ({ calendar, id }) => {
   const dispatch = useDispatch();
@@ -45,8 +47,20 @@ const CalendarCard = ({ calendar, id }) => {
         </CardBody>
         <CardFooter>
           <Views>조회수 {calendar.views}</Views>
-          <Division>|</Division>
-          <CommentCount>댓글 {calendar.commentCnt}</CommentCount>
+          <Count>
+            <CommentCount>
+              <CommentImg>
+              <img src={commentgray} alt='댓글이미지' />
+              </CommentImg>
+              {calendar.commentCnt}
+            </CommentCount>
+            <HeartCount>
+              <HeartImg>
+              <img src={heartgray} alt='댓글이미지' />
+              </HeartImg>
+              {calendar.heartCnt}
+            </HeartCount>
+          </Count>
         </CardFooter>
       </Card>
     </StCalendarCard>
@@ -89,6 +103,7 @@ const HeadImg = styled.img`
   justify-content: center;
   align-items: center;
   border-radius: 50%;
+  margin-right: 7px;
 `;
 
 const HeadUser = styled.div`
@@ -150,7 +165,7 @@ const BodyContent = styled.div`
 
 const CardFooter = styled.div`
   display: flex;
-  justify-content: start;
+  justify-content: space-between;
 `;
 
 const Views = styled.div`
@@ -166,7 +181,27 @@ const Division = styled.div`
   color: gray;
 `;
 
+const Count = styled.div`
+  display: flex;
+`;
+
 const CommentCount = styled.div`
   font-size: 12px;
   color: gray;
+  display: flex;
+  margin-right: 10px;
 `;
+
+const CommentImg = styled.div`
+  margin-right: 5px;
+`
+
+const HeartCount = styled.div`
+  font-size: 12px;
+  color: gray;
+  display: flex;
+`;
+
+const HeartImg = styled.div`
+  margin-right: 5px;
+`
