@@ -54,14 +54,14 @@ export default FreeTalk;
 
 const FreeTalkContainer = styled.div`
   width: 100%;
-  /* height: 100%; */
-  height: 100vh;
+  height: 100%;
+  /* height: 100vh; */
   gap: 12px;
 `;
 
 const BannerWrap = styled.div`
   width: 100%;
-  height: 180px;
+  height: 190px;
   /* height: 20% */
   display: flex;
   justify-content: center;
@@ -71,7 +71,7 @@ const BannerWrap = styled.div`
   position: absolute;
 `
 const Banner = styled.div`
-  height: 180px;
+  height: 190px;
   /* height: 20% */
   width: 95%;
   /* border: 1px solid red; */
@@ -84,8 +84,8 @@ const FreeTalkWrap = styled.div`
   position: relative;
   top: 170px;
   width: 100%;
-  height: 100vh;
-  /* height: 63%; */
+  /* height: 100vh; */
+  height: 64%;
   border-radius: 20px;
   background-color: white;
   padding: 10px 5px 10px 5px;
@@ -110,7 +110,7 @@ const Select = styled.select`
 const FreeTalkList = styled.div`
   /* height: 100%; */
   width: 95%;
-  height: 97%;
+  height: 98%;
   margin: 0 auto;
   /* border: 1px solid green; */
   overflow-y: scroll;

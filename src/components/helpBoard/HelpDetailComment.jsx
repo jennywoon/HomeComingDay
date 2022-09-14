@@ -77,16 +77,48 @@ const DetailComment = ({ comment, modalRef, helpsfind }) => {
     return (
 
         <CommentContain >
-            {modalOpen && <HelpCommentDeleteModal setModalOpen={setModalOpen} comment={comment}/>}
+            {modalOpen && <HelpCommentDeleteModal setModalOpen={setModalOpen} comment={comment} />}
             <CommentBox >
                 <CommentImg src={comment.userImage} alt="" />
                 <CommentTxt>
                     <TxtName>{comment.username}</TxtName>
-                    <TxtStudent>{comment.admission} <span> {comment.createdAt}</span></TxtStudent>
+                    <TxtStudent>{comment.admission} · {comment.departmentName}</TxtStudent>
+                    {isEdit ?
+                        <EditBox>
+                            <Input onChange={onChangeEdit} value={editComment} />
+                            <ReviseButtonChange type="button" onClick={onClickReviceChange} >수정완료</ReviseButtonChange>
+                        </EditBox>
+                        :
+                        <Comment>{comment.content}</Comment>
+
+                    }
+                    <TxtWrap>
+                        <TxtFirstWrap>
+                            <TxtCreateAt> {comment.createdAt}</TxtCreateAt>
+                            <TxtCreateAt>|</TxtCreateAt>
+                            <TxtCreateAt 
+                            // onClick={onCilckReplyShow}
+                            >답글쓰기</TxtCreateAt>
+                        </TxtFirstWrap>
+                        {/* 대댓글 해보는 중 */}
+                        {/* <ReplyInputContainer 
+                        onSubmit={onClickPostReplyComment}
+                        >
+                            {showReplyComment ?
+                            <div>
+                                <input 
+                                value={replyComment} onChange={onChangeReplyHandler}
+                                 />
+                                <button>올리기</button>
+                            </div>
+                            : null 
+                            }
+                        </ReplyInputContainer> */}
+                    </TxtWrap>
                 </CommentTxt>
                 {/* <AiOutlineMenu size="18px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }} onClick={onCilckShow}/> */}
                 <BiDotsVerticalRounded
-                    size="20px" style={{ marginLeft: "auto", cursor: "pointer" }}
+                    size="20px" style={{ marginLeft: "auto", marginTop: "2px", cursor: "pointer", color: "#bebebe" }}
                     onClick={onCilckShow} />
                 {showComment ?
                     <Revisebox ref={modalRef}>
@@ -96,16 +128,6 @@ const DetailComment = ({ comment, modalRef, helpsfind }) => {
                     : null}
 
             </CommentBox>
-
-            {isEdit ?
-                <EditBox>
-                    <Input onChange={onChangeEdit} value={editComment} />
-                    <ReviseButtonChange type="button" onClick={onClickReviceChange} >수정완료</ReviseButtonChange>
-                </EditBox>
-                :
-                <Comment>{comment.content}</Comment>
-
-            }
         </CommentContain>
     );
 };
@@ -114,20 +136,25 @@ export default DetailComment;
 
 
 const CommentContain = styled.div`
-    margin: 5px 0px;
-
+    margin: 10px 0px;
+    /* border: 1px solid blue; */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
 `
 
 const CommentBox = styled.div`
     display:flex;
-    align-items: center;
-    padding:20px 20px 0px 20px;
-    margin-bottom: 10px;
     position: relative;
+    width: 100%;
 `
 
 const CommentImg = styled.img`
     width:30px;
+    height: 30px;
+    margin-top: 2px;
+    border-radius: 50%;
 `
 
 const CommentTxt = styled.div`
@@ -185,20 +212,40 @@ const ReviseButtonChange = styled.button`
 const EditBox = styled.div`
     display: flex;
     align-items: center;
-    padding: 0px 20px;
+    /* padding: 0px 20px; */
 `
 
 const TxtName = styled.h3`
     margin: 0px;
     font-size:14px;
+    font-weight: 700;
 `
 const TxtStudent = styled.p`
     margin: 0px;
-    font-size: 10px;
-    color: gray;
+    font-size: 12px;
+    font-weight: 500;
+    color: #bebebe;
+`
+const TxtWrap = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 `
 
+const TxtFirstWrap = styled.div`
+    display: flex;
+    gap: 5px;
+`
+const TxtCreateAt = styled.div`
+    font-size: 12px;
+    font-weight: 500;
+    color: #bebebe;
+    cursor: pointer;
+`
+
+const ReplyInputContainer = styled.form``
 const Comment = styled.p`
-    padding: 0px 20px;
+    margin: 5px 0;
     font-size:14px;
+    font-weight: 500;
 `

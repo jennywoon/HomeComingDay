@@ -41,10 +41,10 @@ const HelpDetail = (props) => {
   const helpsfind = helps.find((help) => help.articleId === Number(id));
   console.log('helpsfind', helpsfind);
 
-  
+
   // 조회수 반영
   useEffect(() => {
-      dispatch(__getDetailHelp(id));
+    dispatch(__getDetailHelp(id));
   }, [dispatch]);
 
   // 프로필 사진 클릭
@@ -54,10 +54,10 @@ const HelpDetail = (props) => {
 
   // 1:1 채팅버튼
   const onCilckChaetShow = () => {
-      setShowChaet(!showChaet);
-    };
-    
-    // 수정버튼
+    setShowChaet(!showChaet);
+  };
+
+  // 수정버튼
   const onClickRevice = () => {
     navigate(`/helpupdate/${id}`);
   };
@@ -122,65 +122,59 @@ const HelpDetail = (props) => {
   const [isClickHeart, setIsClickHeart] = useState(false);
   const heartClick = async () => {
     if (isClickHeart) {
-        setIsClickHeart(false);
-      } else {
-        setIsClickHeart(true);
-      }
+      setIsClickHeart(false);
+    } else {
+      setIsClickHeart(true);
+    }
     const newHeart = {
       articleId: id,
     };
     const response = await dispatch(__postHelpHeart(newHeart));
     console.log(response.payload)
     await dispatch(__getHelp());
-};
+  };
 
-const mypageEmail = useSelector((state) => state.mypages.mypages.email);
-console.log(mypageEmail);
+  const mypageEmail = useSelector((state) => state.mypages.mypages.email);
+  console.log(mypageEmail);
 
-// useEffect(()=>{
-//   const heartdetail = helps.filter((p)=>{
-//     return p.username === props.username
-//   })
-// })
+  // useEffect(()=>{
+  //   const heartdetail = helps.filter((p)=>{
+  //     return p.username === props.username
+  //   })
+  // })
 
-// const post = useSelector((state) => state.post.list);
-//  React.useEffect(()=>{
-    // console.log(post)
-    // const _post = post.filter((p) => {
-    //   return p.id === props.id;
-    // })[0].like_list;
-  
-    // if (_post) {
-    //   _post.forEach((p) => {
-    //     if (p === user_id) {
-    //       setLike(true);
-    //       setColor('like');
-    //     }
-    //   });
-    // }
-//   })
+  // const post = useSelector((state) => state.post.list);
+  //  React.useEffect(()=>{
+  // console.log(post)
+  // const _post = post.filter((p) => {
+  //   return p.id === props.id;
+  // })[0].like_list;
+
+  // if (_post) {
+  //   _post.forEach((p) => {
+  //     if (p === user_id) {
+  //       setLike(true);
+  //       setColor('like');
+  //     }
+  //   });
+  // }
+  //   })
 
 
   return (
     <Container>
       {modalOpen && <HelpDeleteModal setModalOpen={setModalOpen} />}
       <Header />
+      <FirstWrap>
+        <DetailHeader>
+          <IoIosArrowBack size='25px' cursor='pointer' onClick={() => { navigate('/') }} />
+          <HeaderTitle>도움요청</HeaderTitle>
+          <div style={{ width: '25px', height: '25px' }}></div>
+        </DetailHeader>
+      </FirstWrap>
       <HelpContainer>
         <HelpWrap>
           <DetailWrap>
-            <FirstWrap>
-              <DetailHeader>
-                <IoIosArrowBack
-                  size='25px'
-                  cursor='pointer'
-                  onClick={() => {
-                    navigate('/');
-                  }}
-                />
-                <HeaderTitle>도움요청</HeaderTitle>
-                <div style={{ width: '25px', height: '25px' }}></div>
-              </DetailHeader>
-            </FirstWrap>
             <DetailBody>
               <Bodytop>
                 <Bodyimg src={helpsfind && helpsfind.userImage} alt='' />
@@ -196,7 +190,7 @@ console.log(mypageEmail);
                 </Bodytxt>
                 <BiDotsVerticalRounded
                   size='20px'
-                  style={{ marginLeft: 'auto', cursor: 'pointer' }}
+                  style={{ marginLeft: 'auto', cursor: 'pointer', color: "#bebebe" }}
                   onClick={onCilckShow}
                 />
                 {show ? (
@@ -313,35 +307,18 @@ const Container = styled.div`
   width: 100%;
   height: 100vh;
   overflow-y: hidden;
-`;
-const HelpContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  /* border: 1px solid green; */
   display: flex;
   flex-direction: column;
-`;
-
-const HelpWrap = styled.div`
-  width: 100%;
-  height: 100%;
-  /* border: 1px solid blue; */
-  overflow-y: scroll;
-`;
-const DetailWrap = styled.form`
-  width: 100%;
-  /* height:100%; */
-  background-color: white;
-  display: flex;
-  flex-direction: column;
+  align-items: center;
 `;
 
 const FirstWrap = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   /* border:1px solid blue; */
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 60px;
 `;
 const DetailHeader = styled.div`
   width: 100%;
@@ -351,6 +328,36 @@ const DetailHeader = styled.div`
   justify-content: space-between;
   position: sticky;
 `;
+
+const HelpContainer = styled.div`
+  width: 90%;
+  height: 86%;
+  border: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  box-shadow: 0px 2px 14px rgba(0, 0, 0, 0.05);
+  padding: 5px;
+  align-items: center;
+`;
+
+const HelpWrap = styled.div`
+  width: 90%;
+  height: 100%;
+  /* border: 1px solid blue; */
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
+`;
+const DetailWrap = styled.form`
+  width: 100%;
+  /* height:100%; */
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+`;
+
 const HeaderTitle = styled.div`
   font-weight: 800;
   /* margin:10px auto; */
@@ -396,26 +403,22 @@ const DeleteButton = styled.button`
 `;
 
 const DetailBody = styled.div`
-  /* border: 1px solid #f1f0f0; */
-  /* border: 1px solid red; */
-  /* margin: 10px 20px; */
   border-radius: 20px;
   width: 100%;
   height: 100%;
-  /* box-sizing: border-box; */
-  /* box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.05); */
-  /* overflow-y: scroll; */
 `;
 
 const Bodytop = styled.div`
   display: flex;
   align-items: center;
-  padding: 20px 20px 10px 20px;
   position: relative;
+  margin: 10px 0; 
 `;
 
 const Bodyimg = styled.img`
-  width: 40px;
+  width:40px;
+  height: 40px;
+  border-radius: 50%;
 `;
 
 const Bodytxt = styled.div`
@@ -432,7 +435,7 @@ const Txtname = styled.h3`
 const Txtstudent = styled.p`
   /* margin: 0px; */
   font-size: 12px;
-  color: gray;
+  color: #bebebe;
 `;
 const ChaetingBox = styled.div`
   border: 1px solid #f1f0f0;
@@ -455,27 +458,26 @@ const ChaetingBox = styled.div`
 `;
 
 const BodyContent = styled.div`
-  padding: 0px 20px;
-  /* border: 1px solid red; */
   width: 100%;
-  /* height: 350px; */
+  /* height: 370px; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
 `;
 const ContentTitle = styled.h3`
-  /* margin:10px 0px; */
   font-weight: 600;
   font-size: 18px;
   width: 100%;
 `;
 const ContentBody = styled.p`
   /* border: 1px solid blue; */
-  color: gray;
-  font-size: 16px;
+  color: #b3b3b3;
+  font-size: 14px;
   font-weight: 400;
   width: 100%;
-  margin-bottom: 10px;
+  margin: 10px 0;
+  height: 100%;
 `;
 
 const ContentImgBox = styled.div`
@@ -525,7 +527,7 @@ const ContentView = styled.p`
   line-height: 40px;
   height: 40px;
   /* margin:30px 0px 10px; */
-  color: gray;
+  color: #bebebe;
   /* border: 1px solid blue; */
 `;
 const BodyTxtBox = styled.div`
@@ -547,20 +549,14 @@ const BodyContainer = styled.div`
   /* overflow-y: scroll; */
 `;
 const BodyCommentBox = styled.div`
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  /* margin:20px; */
-  /* overflow-y: scroll; */
   height: 100%;
   width: 100%;
-  /* position:relative; */
-  /* height: 70%; */
-  /* border: 1px solid orangered; */
 `;
 
 const CommentContainer = styled.form`
   position: sticky;
-  bottom: 0;
-  bottom: 10px;
+  /* bottom: 0;
+  bottom: 10px; */
   width: 100%;
   /* height: 100%; */
   /* border: 1px solid blue; */
@@ -569,6 +565,7 @@ const CommentContainer = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 10px;
 `;
 
 const CommentBox = styled.div`
@@ -618,6 +615,8 @@ const BodyComment = styled.div`
 `;
 const Count = styled.div`
   display: flex;
+  /* border: 1px solid blue; */
+  align-items: center;
 `;
 
 const CommentCount = styled.div`

@@ -16,6 +16,9 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 import InformationDetailModal from './InformationDetailModal';
+import commentImg from '../../assets/commentImg.png';
+import heartImg from '../../assets/heartImg.png';
+import heartColorImg from '../../assets/heartColor.png';
 
 const InformationDetail = () => {
     const dispatch = useDispatch();
@@ -107,6 +110,22 @@ const InformationDetail = () => {
         setModalOpen(true);
     }
 
+     // 좋아요
+    const [isClickHeart, setIsClickHeart] = useState(false);
+    const heartClick = async () => {
+    if (isClickHeart) {
+      setIsClickHeart(false);
+    } else {
+      setIsClickHeart(true);
+    }
+    const newHeart = {
+      articleId: id,
+    };
+    // const response = await dispatch(__postHelpHeart(newHeart));
+    // console.log(response.payload)
+    // await dispatch(__getHelp());
+  };
+
     return (
         <Container>
             {modalOpen && <InformationDetailModal setModalOpen={setModalOpen} />}
@@ -133,7 +152,7 @@ const InformationDetail = () => {
                                     }
                                 </Bodytxt>
                                 <BiDotsVerticalRounded
-                                    size="20px" style={{ marginLeft: "auto", cursor: "pointer", color:"#bebebe" }}
+                                    size="20px" style={{ marginLeft: "auto", cursor: "pointer", color: "#bebebe" }}
                                     onClick={onCilckShow} />
                                 {show ?
                                     <Revisebox ref={modalRef}>
@@ -171,8 +190,34 @@ const InformationDetail = () => {
                                     </ContentImgBox>
                                     : null}
                                 <BodyTxtBox>
-                                    <ContentView>조회수 {informationsfind && informationsfind.views} | 댓글수 {informationsfind && informationsfind.commentCnt}</ContentView>
-                                    <ContentTime>{informationsfind && informationsfind.createdAt}</ContentTime>
+                                    <ContentView>
+                                        {informationsfind && informationsfind.createdAt} | 조회수{' '}
+                                        {informationsfind && informationsfind.views}
+
+                                    </ContentView>
+                                    <Count>
+                                        <CommentCount>
+                                            <CommentImg>
+                                                <img src={commentImg} alt='댓글이미지' />
+                                            </CommentImg>
+                                            댓글 {informationsfind && informationsfind.commentCnt}
+                                        </CommentCount>
+                                        <HeartCount
+                                            onClick={heartClick}
+                                            isClickHeart={isClickHeart ? true : false}
+                                        >
+                                            {isClickHeart ? (
+                                                <HeartImg>
+                                                    <img src={heartColorImg} alt='좋아요이미지' />
+                                                </HeartImg>
+                                            ) : (
+                                                <HeartImg>
+                                                    <img src={heartImg} alt='좋아요이미지' />
+                                                </HeartImg>
+                                            )}
+                                        </HeartCount>
+                                        좋아요 {informationsfind && informationsfind.heartCnt}
+                                    </Count>
                                 </BodyTxtBox>
                             </BodyContent>
 
@@ -256,7 +301,6 @@ const InformationWrap = styled.div`
     overflow-y: scroll;
     ::-webkit-scrollbar {
     width: 0px;
-    /* background-color: red; */
   }
 `
 const DetailWrap = styled.form`
@@ -345,7 +389,7 @@ const Txtname = styled.h3`
 const Txtstudent = styled.p`
     /* margin: 0px; */
     font-size: 12px;
-    color: gray;
+    color: #bebebe;
 `
 const ChaetingBox = styled.div`
     border: 1px solid #f1f0f0;
@@ -370,7 +414,7 @@ const ChaetingBox = styled.div`
 const BodyContent = styled.div`
   /* padding: 0px 20px; */
   width: 100%;
-  height: 350px;
+  /* height: 370px; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -387,7 +431,7 @@ const ContentTitle = styled.h3`
 `
 const ContentBody = styled.div`
 /* border: 1px solid blue; */
-    color:gray;
+    color: #b3b3b3;
     font-size: 14px;
     font-weight: 400;
     width:100%;
@@ -449,7 +493,7 @@ const ContentView = styled.p`
     line-height: 40px;
     height:40px;
     /* margin:30px 0px 10px; */
-    color: gray;
+    color: #bebebe;
     /* border: 1px solid blue; */
     
 `
@@ -457,6 +501,7 @@ const BodyTxtBox = styled.div`
     display: flex;
     width:100%;
     align-items: center;
+    justify-content: space-between;
 `
 const ContentTime = styled.div`
       color: gray;
@@ -541,3 +586,32 @@ const BodyComment = styled.div`
     width:100%;
     text-align: center;
 `
+const Count = styled.div`
+  display: flex;
+  /* border: 1px solid blue; */
+  align-items: center;
+`;
+
+const CommentCount = styled.div`
+  font-size: 12px;
+  font-weight: 500;
+  color: black;
+  display: flex;
+  margin-right: 15px;
+`;
+
+const CommentImg = styled.div`
+  margin-right: 5px;
+`;
+
+const HeartCount = styled.div`
+  font-size: 12px;
+  font-weight: 500;
+  color: black;
+  display: flex;
+  cursor: pointer;
+`;
+
+const HeartImg = styled.div`
+  margin-right: 5px;
+`;

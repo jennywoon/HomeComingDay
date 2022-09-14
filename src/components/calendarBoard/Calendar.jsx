@@ -60,7 +60,7 @@ const HelpContainer = styled.div`
 
 const BannerWrap = styled.div`
   width: 100%;
-  height: 180px;
+  height: 190px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,7 +70,7 @@ const BannerWrap = styled.div`
 `;
 
 const Banner = styled.div`
-  height: 180px;
+  height: 190px;
   width: 95%;
   /* border: 1px solid red; */
   background-image: url(${calendarorange});
@@ -82,6 +82,7 @@ const HelpWrap = styled.div`
   position: relative;
   top: 170px;
   width: 100%;
+  height: 64%;
   border-radius: 20px;
   background-color: white;
   padding: 10px 5px 10px 5px;
@@ -105,7 +106,7 @@ const Select = styled.select`
 const HelpList = styled.div`
   /* border: 1px solid red; */
   width: 95%;
-  height: 97%;
+  height: 98%;
   margin: 0 auto;
   overflow-y: scroll;
   ::-webkit-scrollbar {

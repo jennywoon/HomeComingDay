@@ -94,20 +94,20 @@ const InformationComment = ({ comment, informationsfind, modalRef }) => {
                             <TxtCreateAt>|</TxtCreateAt>
                             <TxtCreateAt onClick={onCilckReplyShow}>답글쓰기</TxtCreateAt>
                         </TxtFirstWrap>
-                        <ReplyInputContainer onSubmit={onClickPostReplyComment}>
-                            {/* {showReplyComment ? */}
+                        {/* <ReplyInputContainer onSubmit={onClickPostReplyComment}>
+                            {showReplyComment ?
                                 <div>
                                     <input value={replyComment} onChange={onChangeReplyHandler}/>
                                     <button>올리기</button>
                                 </div>
-                                {/* : null */}
-                            {/* } */}
-                        </ReplyInputContainer>
+                                : null
+                            }
+                        </ReplyInputContainer> */}
                     </TxtWrap>
                 </CommentTxt>
 
                 <BiDotsVerticalRounded
-                    size="20px" style={{ marginLeft: "auto", marginTop: "2px", cursor: "pointer", color:"#bebebe" }}
+                    size="20px" style={{ marginLeft: "auto", marginTop: "2px", cursor: "pointer", color: "#bebebe" }}
                     onClick={onCilckShow} />
                 {showComment ?
                     <Revisebox ref={modalRef}>
@@ -134,11 +134,7 @@ const CommentContain = styled.div`
 
 const CommentBox = styled.div`
     display:flex;
-    /* align-items: center; */
-    /* padding:20px 20px 0px 20px; */
-    /* margin-bottom: 10px; */
     position: relative;
-    /* border: 1px solid red; */
     width: 100%;
 `
 

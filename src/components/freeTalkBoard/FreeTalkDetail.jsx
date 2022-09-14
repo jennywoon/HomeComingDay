@@ -16,6 +16,9 @@ import "swiper/css/navigation";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 import FreeTalkDeleteModal from './FreeTalkDeleteModal';
+import commentImg from '../../assets/commentImg.png';
+import heartImg from '../../assets/heartImg.png';
+import heartColorImg from '../../assets/heartColor.png';
 
 const FreeTalkDetail = () => {
     const dispatch = useDispatch();
@@ -39,7 +42,7 @@ const FreeTalkDetail = () => {
     }, [dispatch])
 
     const freetalksfind = freetalks.find((freetalk) => freetalk.articleId === Number(id))
-   
+
     console.log("freetalks", freetalks, "freetalksfind", freetalksfind)
 
     const onCilckShow = () => {
@@ -65,7 +68,7 @@ const FreeTalkDetail = () => {
     //     }
     // }
 
-    const onClickPostComment = async(e) => {
+    const onClickPostComment = async (e) => {
         e.preventDefault();
         const newcomment = {
             content: comment,
@@ -100,27 +103,43 @@ const FreeTalkDetail = () => {
         onSlideChange: (e) => setMainImageIndex(e.activeIndex)
     }
 
-        //모달
-        const [modalOpen, setModalOpen] = useState(false);
-        const showModal = (e) => {
-            e.preventDefault();
-            setModalOpen(true);
+    //모달
+    const [modalOpen, setModalOpen] = useState(false);
+    const showModal = (e) => {
+        e.preventDefault();
+        setModalOpen(true);
+    }
+
+    // 좋아요
+    const [isClickHeart, setIsClickHeart] = useState(false);
+    const heartClick = async () => {
+        if (isClickHeart) {
+            setIsClickHeart(false);
+        } else {
+            setIsClickHeart(true);
         }
+        const newHeart = {
+            articleId: id,
+        };
+        // const response = await dispatch(__postHelpHeart(newHeart));
+        // console.log(response.payload)
+        // await dispatch(__getHelp());
+    };
 
     return (
         <Container>
-            {modalOpen && <FreeTalkDeleteModal setModalOpen={setModalOpen}/>}
+            {modalOpen && <FreeTalkDeleteModal setModalOpen={setModalOpen} />}
             <Header />
+            <FirstWrap>
+                <DetailHeader>
+                    <IoIosArrowBack size="25px" cursor="pointer" onClick={() => { navigate("/freetalk") }} />
+                    <HeaderTitle>자유토크</HeaderTitle>
+                    <div style={{ width: "25px", height: "25px" }}></div>
+                </DetailHeader>
+            </FirstWrap>
             <FreeTalkContainer>
                 <HelpWrap>
                     <DetailWrap>
-                        <FirstWrap>
-                            <DetailHeader>
-                                <IoIosArrowBack size="25px" cursor="pointer" onClick={() => { navigate("/freetalk") }} />
-                                <HeaderTitle>자유토크</HeaderTitle>
-                                <div style={{ width: "25px", height: "25px" }}></div>
-                            </DetailHeader>
-                        </FirstWrap>
                         <DetailBody>
                             <Bodytop>
                                 <Bodyimg src={freetalksfind && freetalksfind.userImage} alt="" />
@@ -135,7 +154,7 @@ const FreeTalkDetail = () => {
                                 {/* <AiOutlineMenu size="20px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }}
                                     onClick={onCilckShow} /> */}
                                 <BiDotsVerticalRounded
-                                    size="20px" style={{ marginLeft: "auto", cursor: "pointer" }}
+                                    size="20px" style={{ marginLeft: "auto", cursor: "pointer", color: "#bebebe" }}
                                     onClick={onCilckShow} />
 
                                 {show ?
@@ -175,15 +194,40 @@ const FreeTalkDetail = () => {
                                     </ContentImgBox>
                                     : null}
                                 <BodyTxtBox>
-                                <ContentView>조회수 {freetalksfind && freetalksfind.views} | 댓글수 {freetalksfind && freetalksfind.commentCnt}</ContentView>
-                                    <ContentTime>{freetalksfind && freetalksfind.createdAt}</ContentTime>
+                                    <ContentView>
+                                        {freetalksfind && freetalksfind.createdAt} | 조회수{' '}
+                                        {freetalksfind && freetalksfind.views}
+                                    </ContentView>
+                                    <Count>
+                                        <CommentCount>
+                                            <CommentImg>
+                                                <img src={commentImg} alt='댓글이미지' />
+                                            </CommentImg>
+                                            댓글 {freetalksfind && freetalksfind.commentCnt}
+                                        </CommentCount>
+                                        <HeartCount
+                                            onClick={heartClick}
+                                            isClickHeart={isClickHeart ? true : false}
+                                        >
+                                            {isClickHeart ? (
+                                                <HeartImg>
+                                                    <img src={heartColorImg} alt='좋아요이미지' />
+                                                </HeartImg>
+                                            ) : (
+                                                <HeartImg>
+                                                    <img src={heartImg} alt='좋아요이미지' />
+                                                </HeartImg>
+                                            )}
+                                        </HeartCount>
+                                        좋아요 {freetalksfind && freetalksfind.heartCnt}
+                                    </Count>
                                 </BodyTxtBox>
                             </BodyContent>
-                            
+
                             <BodyContainer>
 
-                            <BodyCommentBox>
-                            {freetalksfind && freetalksfind.commentList.length === 0 ?
+                                <BodyCommentBox>
+                                    {freetalksfind && freetalksfind.commentList.length === 0 ?
                                         <BodyComment>작성한 댓글이 없습니다 <br></br> 첫번째 댓글을 남겨보세요 </BodyComment>
                                         :
                                         <>
@@ -192,7 +236,7 @@ const FreeTalkDetail = () => {
                                             ))}
                                         </>
                                     }
-                            </BodyCommentBox>
+                                </BodyCommentBox>
                             </BodyContainer>
                         </DetailBody>
                     </DetailWrap>
@@ -217,35 +261,18 @@ const Container = styled.div`
     width: 100%;
     height: 100vh;
     overflow-y: hidden;
-`
-const FreeTalkContainer = styled.div`
-    width: 100%;
-    height: 100%;
-    /* border: 1px solid green; */
     display: flex;
     flex-direction: column;
+    align-items: center;
 `
-
-const HelpWrap = styled.div`
-    width: 100%;
-    height: 100%;
-    /* border: 1px solid blue; */
-    overflow-y: scroll;
-`
-const DetailWrap = styled.form`
-  width: 100%;
-  /* height:100%; */
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-`;
-
 const FirstWrap = styled.div`
     display: flex;
+    /* align-items: center; */
+    justify-content: center;
     flex-direction: column;
     /* border:1px solid blue; */
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 60px;
 `
 const DetailHeader = styled.div`
     width: 100%;
@@ -255,6 +282,35 @@ const DetailHeader = styled.div`
     justify-content: space-between;
     position: sticky;
 `
+const FreeTalkContainer = styled.div`
+    width: 90%;
+    height: 86%;
+    border: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    box-shadow: 0px 2px 14px rgba(0, 0, 0, 0.05);
+    padding: 5px;
+    align-items: center;
+`
+
+const HelpWrap = styled.div`
+    width: 90%;
+    height: 100%;
+    /* border: 1px solid blue; */
+    overflow-y: scroll;
+    ::-webkit-scrollbar {
+    width: 0px;
+  }
+`
+const DetailWrap = styled.form`
+  width: 100%;
+  /* height:100%; */
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+`;
+
 const HeaderTitle = styled.div`
   font-weight: 800;
   /* margin:10px auto; */
@@ -300,26 +356,23 @@ const DeleteButton = styled.button`
 `
 
 const DetailBody = styled.div`
-    /* border: 1px solid #f1f0f0; */
-    /* border: 1px solid red; */
-    /* margin: 10px 20px; */
     border-radius: 20px;
     width: 100%;
-    height:100%;
-    /* box-sizing: border-box; */
-    /* box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.05); */
-    /* overflow-y: scroll; */
+    height: 100%;
 `
 
 const Bodytop = styled.div`
     display:flex;
     align-items: center;
-    padding:20px 20px 10px 20px;
+    /* padding:20px 20px 10px 20px; */
     position: relative;
+    margin: 10px 0; 
 `
 
 const Bodyimg = styled.img`
     width:40px;
+    height: 40px;
+    border-radius: 50%;
 `
 
 const Bodytxt = styled.div`
@@ -336,7 +389,7 @@ const Txtname = styled.h3`
 const Txtstudent = styled.p`
     /* margin: 0px; */
     font-size: 12px;
-    color: gray;
+    color: #bebebe;
 `
 const ChaetingBox = styled.div`
     border: 1px solid #f1f0f0;
@@ -359,27 +412,30 @@ const ChaetingBox = styled.div`
 `
 
 const BodyContent = styled.div`
-    padding: 0px 20px;
-    /* border: 1px solid red; */
-    width: 100%;
-    height: 350px;
-    display: flex;
-     flex-direction: column;
-    justify-content: space-between;
+  /* padding: 0px 20px; */
+  width: 100%;
+  /* height: 370px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
 `
 const ContentTitle = styled.h3`
     /* margin:10px 0px; */
     font-weight: 600;
     font-size: 18px;
     width:100%;
+    /* height: 100%; */
+    /* border: 1px solid green; */
 `
 const ContentBody = styled.p`
 /* border: 1px solid blue; */
-    color:gray;
-    font-size: 16px;
+color: #b3b3b3;
+    font-size: 14px;
     font-weight: 400;
     width:100%;
-    margin-bottom: 10px;
+    margin: 10px 0;
+    height: 100%;
 `
 
 const ContentImgBox = styled.div`
@@ -436,7 +492,7 @@ const ContentView = styled.p`
     line-height: 40px;
     height:40px;
     /* margin:30px 0px 10px; */
-    color: gray;
+    color: #bebebe;
     /* border: 1px solid blue; */
     
 `
@@ -444,6 +500,7 @@ const BodyTxtBox = styled.div`
     display: flex;
     width:100%;
     align-items: center;
+    justify-content: space-between;
 `
 const ContentTime = styled.div`
       color: gray;
@@ -459,7 +516,7 @@ const BodyContainer = styled.div`
     /* overflow-y: scroll; */
 `
 const BodyCommentBox = styled.div`
-    border-top : 1px solid rgba(0,0,0,0.1);
+    /* border-top : 1px solid rgba(0,0,0,0.1); */
     /* margin:20px; */
     /* overflow-y: scroll; */
     height: 100%;
@@ -471,8 +528,6 @@ const BodyCommentBox = styled.div`
 
 const CommentContainer = styled.form`
     position: sticky;
-    bottom: 0;
-    bottom: 10px;
     width: 100%;
     /* height: 100%; */
     /* border: 1px solid blue; */
@@ -481,6 +536,7 @@ const CommentContainer = styled.form`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 10px;
 `
 
 const CommentBox = styled.div`
@@ -528,3 +584,32 @@ const BodyComment = styled.div`
     width:100%;
     text-align: center;
 `
+const Count = styled.div`
+  display: flex;
+  /* border: 1px solid blue; */
+  align-items: center;
+`;
+
+const CommentCount = styled.div`
+  font-size: 12px;
+  font-weight: 500;
+  color: black;
+  display: flex;
+  margin-right: 15px;
+`;
+
+const CommentImg = styled.div`
+  margin-right: 5px;
+`;
+
+const HeartCount = styled.div`
+  font-size: 12px;
+  font-weight: 500;
+  color: black;
+  display: flex;
+  cursor: pointer;
+`;
+
+const HeartImg = styled.div`
+  margin-right: 5px;
+`;
