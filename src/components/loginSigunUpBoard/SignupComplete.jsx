@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -17,8 +17,9 @@ const SignupComplete = () => {
   useEffect(() => {
     dispatch(__getMyPage())
   }, [dispatch])
-  
+
   const data = useSelector((state) => state.mypages.mypages)
+  console.log(data);
 
   return (
     <StSignupComplete>
@@ -35,22 +36,25 @@ const SignupComplete = () => {
             <p style={{ fontSize: '24px', marginBottom: '25px' }}>
               홈커밍데이 가입을 환영합니다!
             </p>
-            <p>모교 선후배들과 소통을 이어가보세요</p>
+            <SchoolDiv>
+              <p style={{color: "#f7931e"}}>{data && data.schoolName}</p>
+              <p>선후배들과 소통을 이어가보세요</p>
+            </SchoolDiv>
           </StText>
-                  </FisrtWrap>
-          <Button
-            type='submit'
-            width='100%'
-            // padding='10px 0'
-            style={{ marginTop: '100px' }}
-            backgroundColor='#f7931e'
-            color='white'
-            onClickHandler={onClickHandler}
-          >
-            <ButtonTitle>
-              시작하기
-            </ButtonTitle>
-          </Button>
+        </FisrtWrap>
+        <Button
+          type='submit'
+          width='100%'
+          // padding='10px 0'
+          style={{ marginTop: '100px' }}
+          backgroundColor='#f7931e'
+          color='white'
+          onClickHandler={onClickHandler}
+        >
+          <ButtonTitle>
+            시작하기
+          </ButtonTitle>
+        </Button>
       </StCompleteWrap>
     </StSignupComplete>
   );
@@ -96,6 +100,15 @@ const CompleteImg = styled.img`
 
 const StText = styled.div`
   text-align: center;
+`
+
+const SchoolDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: #bebebe;
+  gap: 5px;
 `
 
 const ButtonTitle = styled.div`

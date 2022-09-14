@@ -248,12 +248,12 @@ const Search = () => {
                         {/* <RecentTitle>최근 검색어</RecentTitle> */}
                         {/* search card 맵 돌릴 예정 */}
 
-                        {/* <>
+                        <>
                             {filteredList?.map((search) => (
                                 <SearchCard key={search.articleId} id={search.articleId} search={search} />
                             ))}
-                        </> */}
-                        {helpBtn ? 
+                        </>
+                        {/* {helpBtn ? 
                             (filteredHelpList?.map((search) => (
                                 <SearchCard key={search.articleId} id={search.articleId} search={search} />
                             )))
@@ -277,7 +277,7 @@ const Search = () => {
                                 <SearchCard key={search.articleId} id={search.articleId} search={search} />
                             )))
                             
-                        }
+                        } */}
                         
                         
                         
@@ -302,6 +302,8 @@ const HelpContainer = styled.form`
 const HelpWrap = styled.div`
   /* padding: 0 10px; */
   width: 100%;
+  height: 87%;;
+  /* border: 1px solid red; */
 `;
 
 const SearchWrap = styled.div`
@@ -354,10 +356,14 @@ const Select = styled.select`
 
 const RecentSearch = styled.div`
     width: 100%;
-    height: 100vh;
+    height: 85%;
     display: flex;
     justify-content: center;
     overflow: scroll;
+    ::-webkit-scrollbar{
+    width: 0px;
+  }
+    /* border: 1px solid blue; */
 `
 
 const RecentWrap = styled.div`
