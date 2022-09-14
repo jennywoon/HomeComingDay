@@ -47,6 +47,10 @@ const CalendarUpdate = () => {
     calendarcontent: '',
   });
 
+  const handleCheck = (e) => {
+    setIsOnActive(e);
+  };
+
   const [EditTitle, setEditTitle] = useState(
     calendarfind && calendarfind.calendartitle
   );
@@ -57,6 +61,8 @@ const CalendarUpdate = () => {
     calendarfind && calendarfind.calendarcontent
   );
   const [reactCalendar, setReactCalendar] = useState('');
+  const [selectedTime, setSelectedTime] = useState('00:00');
+
   const onChangeCalendar = (e) => {
     setReactCalendar(e.target.value);
   };
@@ -67,7 +73,7 @@ const CalendarUpdate = () => {
     console.log(selectedTime);
   };
 
-  const [selectedTime, setSelectedTime] = useState('00:00');
+  
 
   const onChangeTitle = (e) => {
     setEditTitle(e.target.value);
@@ -88,22 +94,33 @@ const CalendarUpdate = () => {
   } = calendar;
 
   useEffect(() => {
+    if (EditTitle !== '' && selectedTime !== '' && calendarlocation !== '' && EditContent !== '') {
+      handleCheck(true);
+    } else {
+      handleCheck(false);
+    }
+  },[EditTitle, EditContent,selectedTime, calendarlocation])
+
+  useEffect(() => {
     dispatch(__getCalendar());
   }, [dispatch]);
 
   
 
-  const onUpdateHandler = (e) => {
+  const onUpdateHandler = async(e) => {
     e.preventDefault();
     setIsOnActive(e);
     const editcalendarfind = {
       ...calendarfind,
       id: id,
-      calendartitle: EditTitle,
-      calendarlocation: EditLocation,
-      calendarcontent: EditContent,
+      title: EditTitle,
+      content: EditContent,
+      calendarLocation: EditLocation,
+      calendarDate:realCalendar,
+      calendarTime:selectedTime
     };
-    dispatch(__updateCalendar(editcalendarfind));
+    await dispatch(__updateCalendar(editcalendarfind));
+    await dispatch(__getCalendar())
     navigate(`/calendardetail/${id}`)
     // window.location.reload();
   };
@@ -128,8 +145,8 @@ const CalendarUpdate = () => {
                 name='calendartitle'
                 value={EditTitle}
                 onChange={onChangeTitle}
-                placeholder='제목을 입력해주세요(25자이내)'
-                maxLength='25'
+                placeholder='제목을 입력해주세요'
+                maxLength='40'
               ></FormInput>
               <CalendarButton type="button"
               // onClick={showModal}
@@ -179,15 +196,16 @@ const CalendarUpdate = () => {
               placeholder='장소를 입력해주세요'
             ></CalendarInput>
           </CalendarDiv>
-          <CalendarDiv>
+          <TextDiv>
             <CalendarTitle>내용</CalendarTitle>
-            <CalendarInput
+            <CalendarTextarea
               name='calendarcontent'
               value={EditContent}
               onChange={onChangeContent}
               placeholder='내용을 입력해주세요'
-            ></CalendarInput>
-          </CalendarDiv>
+              maxLength='400'
+            ></CalendarTextarea>
+          </TextDiv>
           {/* <CalendarTest/> */}
         </FormBody>
         <FooterBtn>
@@ -263,6 +281,8 @@ const TimeDiv = styled.div`
 `
 const CalendarTitle = styled.div`
     font-size: 14px;
+  color: #f7931e;
+  font-weight: 600;
 `
 const CalendarDiv = styled.div`
     height: 40px;
@@ -287,9 +307,37 @@ const CalendarInput = styled.input`
     align-items: center;
     text-align: right;
     ::-webkit-input-placeholder{text-align:right}
-    
     outline: none;
 `
+const CalendarTextarea = styled.textarea`
+  width: 65%;
+  height: 200px;
+  resize: none;
+  border-radius: 10px;
+  border: none;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  textarea::placeholder {
+    text-align: right;
+  }
+  padding: 0 10px;
+  text-align: right;
+`;
+
+const TextDiv = styled.div`
+  height: 210px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 1px solid #9b9999;
+  background-color: transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  
+`;
 const FormBody = styled.div`
     display: flex;
     flex-direction: column;
