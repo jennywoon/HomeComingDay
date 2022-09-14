@@ -11,6 +11,11 @@ import {
   __updateCalendar,
 } from '../../redux/modules/CalendarSlice';
 import { useSelector } from 'react-redux';
+import '../calendarBoard/CalendarModal.css';
+import { TimePicker } from 'antd';
+import Calendar from 'react-calendar';
+import moment from 'moment';
+
 
 const CalendarUpdate = () => {
   const dispatch = useDispatch();
@@ -26,8 +31,22 @@ const CalendarUpdate = () => {
       setModalOpen(true);
   }
 
-  const [value, onChange] = useState(['10:00', '11:00']);
+  const onChange = (value) => setDate(value);
+  const [date, setDate] = useState({
+    calendarDate: '',
+  });
+  const realCalendar = moment(date.toString()).format('YYYY년 MM월 DD일');
+  const dates = { calendarDate: realCalendar };
   const [isOnActive, setIsOnActive] = useState(false);
+  const [isActive, setIsActive] = useState(false);
+  const [calendar, setCalendar] = useState({
+    calendartitle: '',
+    calendarDate: '',
+    calendartime: '',
+    calendarlocation: '',
+    calendarcontent: '',
+  });
+
   const [EditTitle, setEditTitle] = useState(
     calendarfind && calendarfind.calendartitle
   );
@@ -37,6 +56,18 @@ const CalendarUpdate = () => {
   const [EditContent, setEditContent] = useState(
     calendarfind && calendarfind.calendarcontent
   );
+  const [reactCalendar, setReactCalendar] = useState('');
+  const onChangeCalendar = (e) => {
+    setReactCalendar(e.target.value);
+  };
+
+  const onSelectTimeHandler = (value) => {
+    const timeString = moment(value).format('hh:mm a');
+    setSelectedTime(timeString);
+    console.log(selectedTime);
+  };
+
+  const [selectedTime, setSelectedTime] = useState('00:00');
 
   const onChangeTitle = (e) => {
     setEditTitle(e.target.value);
@@ -48,12 +79,23 @@ const CalendarUpdate = () => {
     setEditContent(e.target.value);
   };
 
+  const {
+    calendartitle,
+    calendarDate,
+    calendartime,
+    calendarlocation,
+    calendarcontent,
+  } = calendar;
+
   useEffect(() => {
     dispatch(__getCalendar());
   }, [dispatch]);
 
+  
+
   const onUpdateHandler = (e) => {
     e.preventDefault();
+    setIsOnActive(e);
     const editcalendarfind = {
       ...calendarfind,
       id: id,
@@ -69,34 +111,65 @@ const CalendarUpdate = () => {
   return (
     <>
     <FormContainer>
-      <FormWrap onSubmit={onUpdateHandler}>
+      <FormWrap 
+      onSubmit={onUpdateHandler}
+      >
         <FormHeader>
           <IoIosArrowBack size='25px' cursor='pointer' onClick={() => {navigate(`/calendardetail/${id}`)}} />
         </FormHeader>
         <FormBody>
           <FormSelection name='category'>
             <option value=''>만남일정</option>
-            <option value='help'>도움요청</option>
+            {/* <option value='help'>도움요청</option>
             <option value='information'>정보공유</option>
-            <option value='freetalk'>자유토크</option>
+            <option value='freetalk'>자유토크</option> */}
           </FormSelection>
           <FormInput
-            name='calendartitle'
-            value={EditTitle}
-            onChange={onChangeTitle}
-            placeholder='제목을 입력해주세요'
-          ></FormInput>
+                name='calendartitle'
+                value={EditTitle}
+                onChange={onChangeTitle}
+                placeholder='제목을 입력해주세요(25자이내)'
+                maxLength='25'
+              ></FormInput>
+              <CalendarButton type="button"
+              // onClick={showModal}
+              >
+                <CalendarTitle>날짜</CalendarTitle>
+                <DateDiv onClick={() => setIsActive(!isActive)}>
+                  {moment(date).format('YYYY년 MM월 DD일')}
+                  <IoIosArrowForward />
+                </DateDiv>
+              </CalendarButton>
+              <CalendarWrap value={reactCalendar} onClick={onChangeCalendar}>
+                {isActive && (
+                  <Calendar
+                    name='calendarDate'
+                    value={calendarDate}
+                    onChange={onChange}
+                  />
+                )}
+                </CalendarWrap>
           {/* <Textarea></Textarea> */}
-          <CalendarButton onClick={showModal}>
+          {/* <CalendarButton onClick={showModal}>
             <CalendarTitle>날짜</CalendarTitle>
             <IoIosArrowForward />
-            {/* <DateDiv></DateDiv> */}
-          </CalendarButton>
+            <DateDiv></DateDiv>
+          </CalendarButton> */}
           <TimeDiv>
-            <CalendarTitle>시간</CalendarTitle>
-            {/* <IoIosArrowForward /> */}
-            <TimeRangePicker onChange={onChange} value={value} />
-          </TimeDiv>
+                <CalendarTitle>시간</CalendarTitle>
+                <StTimePicker
+                  use12Hours
+                  format='hh:mm a'
+                  name='calendartime'
+                  // value={calendartime}
+                  // onChange={calendarTimeChangeHandler}
+                  placeholder='시간을 선택해주세요'
+                  showNow={false}
+                  value={moment(selectedTime, 'hh:mm a')}
+                  onSelect={onSelectTimeHandler}
+                />
+                {/* <IoIosArrowForward /> */}
+              </TimeDiv>
           <CalendarDiv>
             <CalendarTitle>장소</CalendarTitle>
             <CalendarInput
@@ -212,8 +285,9 @@ const CalendarInput = styled.input`
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: right;
     ::-webkit-input-placeholder{text-align:right}
-    padding: 0 10px;
+    
     outline: none;
 `
 const FormBody = styled.div`
@@ -248,3 +322,28 @@ const FooterBtn = styled.div`
         margin:0 auto;
         width:100%;       
 `
+
+const DateDiv = styled.div`
+  width: 90%;
+  height: 30px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  font-size: 14px;
+  cursor: pointer;
+  gap: 10px;
+`
+const CalendarWrap = styled.div`
+  display: flex;
+  justify-content: right;
+  /* padding-right: 10px; */
+`;
+const StTimePicker = styled(TimePicker)`
+  width: 160px;
+  justify-content: space-between;
+  border: none;
+  color: orange;
+  input::placeholder {
+    color: gray;
+  }
+`;

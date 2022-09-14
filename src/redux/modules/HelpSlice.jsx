@@ -11,6 +11,7 @@ const initialState = {
     commentList : [],
     helps : [],
     heart: [],
+    helpPopular:[],
     isLoading: false,
     error: null,
 };
@@ -50,6 +51,25 @@ export const __getDetailHelp = createAsyncThunk("helps/getDetailHelp", async (pa
     const data = await axios({
       method: 'get',
       url: `${BASE_URL}/article/help/${payload}`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+        // RefreshToken : getCookie('refreshToken')
+      },
+    });
+    console.log(data.data)
+      return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+      console.log('error', error);
+      return thunkAPI.rejectWithValue(error);
+  }
+});
+
+export const __getPopularHelp = createAsyncThunk("helps/getPopularHelp", async (payload, thunkAPI) => {
+  try {
+    const data = await axios({
+      method: 'get',
+      url: `${BASE_URL}/article/help/popular`,
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${getCookie("accessToken")}`,
@@ -233,6 +253,17 @@ export const HelpSlice = createSlice({
         state.helps = action.payload;
       },
       [__getHelp.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+      [__getPopularHelp.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__getPopularHelp.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        state.helpPopular = action.payload;
+      },
+      [__getPopularHelp.rejected]: (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       },
