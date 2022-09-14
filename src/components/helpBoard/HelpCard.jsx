@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { __getHelp, __postHeart, __postHelp } from '../../redux/modules/HelpSlice';
 import { useNavigate } from 'react-router-dom';
-import commentImg from '../../assets/commentImg.png';
-import heartImg from '../../assets/heartImg.png';
+import commentgray from '../../assets/commentgray.png';
+import heartgray from '../../assets/heartgray.png';
 
 const HelpCard = ({ help, id }) => {
   const dispatch = useDispatch();
@@ -45,13 +45,13 @@ const HelpCard = ({ help, id }) => {
           <Count>
             <CommentCount>
               <CommentImg>
-              <img src={commentImg} alt='댓글이미지' />
+              <img src={commentgray} alt='댓글이미지' />
               </CommentImg>
               {help.commentCnt}
             </CommentCount>
             <HeartCount>
               <HeartImg>
-              <img src={heartImg} alt='댓글이미지' />
+              <img src={heartgray} alt='댓글이미지' />
               </HeartImg>
               {help.heartCnt}
             </HeartCount>

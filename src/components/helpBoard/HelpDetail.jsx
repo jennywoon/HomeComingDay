@@ -28,7 +28,7 @@ import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
 import heartColorImg from '../../assets/heartColor.png';
 
-const HelpDetail = () => {
+const HelpDetail = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { helps } = useSelector((state) => state.helps);
@@ -134,8 +134,15 @@ const HelpDetail = () => {
     await dispatch(__getHelp());
 };
 
-const user_id = useSelector((state) => state.user);
-console.log(user_id)
+const mypageEmail = useSelector((state) => state.mypages.mypages.email);
+console.log(mypageEmail);
+
+// useEffect(()=>{
+//   const heartdetail = helps.filter((p)=>{
+//     return p.username === props.username
+//   })
+// })
+
 // const post = useSelector((state) => state.post.list);
 //  React.useEffect(()=>{
     // console.log(post)
