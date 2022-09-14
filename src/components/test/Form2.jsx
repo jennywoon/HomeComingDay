@@ -373,8 +373,8 @@ const Form2 = () => {
                 name='title'
                 value={title}
                 onChange={onChangeHandler}
-                placeholder='제목을 입력해주세요(25자이내)'
-                maxLength='25'
+                placeholder='제목을 입력해주세요'
+                maxLength='40'
               ></FormInput>
               <StCard>
                 <Textarea
@@ -382,6 +382,7 @@ const Form2 = () => {
                   value={content}
                   onChange={onChangeHandler}
                   placeholder='내용을 입력해주세요'
+                  maxLength='400'
                 ></Textarea>
                 <FormFooter>
                   <FooterContain>
@@ -458,8 +459,8 @@ const Form2 = () => {
                 name='infotitle'
                 value={infotitle}
                 onChange={infoonChangeHandler}
-                placeholder='제목을 입력해주세요(25자이내)'
-                maxLength='25'
+                placeholder='제목을 입력해주세요'
+                maxLength='40'
               ></FormInput>
               <StCard>
                 <Textarea
@@ -467,6 +468,7 @@ const Form2 = () => {
                   value={infocontent}
                   onChange={infoonChangeHandler}
                   placeholder='내용을 입력해주세요'
+                  maxLength='400'
                 ></Textarea>
                 <FormFooter>
                   <FooterContain>
@@ -543,8 +545,8 @@ const Form2 = () => {
                 name='calendartitle'
                 value={calendartitle}
                 onChange={calendaronChangeHandler}
-                placeholder='제목을 입력해주세요(25자이내)'
-                maxLength='25'
+                placeholder='제목을 입력해주세요'
+                maxLength='40'
               ></FormInput>
               <CalendarButton
               // onClick={showModal}
@@ -595,6 +597,7 @@ const Form2 = () => {
                   value={calendarcontent}
                   onChange={calendaronChangeHandler}
                   placeholder='내용을 입력해주세요'
+                  maxLength='400'
                 ></CalendarTextarea>
               </TextDiv>
             </>
@@ -604,8 +607,8 @@ const Form2 = () => {
                 name='freetitle'
                 value={freetitle}
                 onChange={freeonChangeHandler}
-                placeholder='제목을 입력해주세요(25자이내)'
-                maxLength='25'
+                placeholder='제목을 입력해주세요'
+                maxLength='40'
               ></FormInput>
               <StCard>
                 <Textarea
@@ -613,6 +616,7 @@ const Form2 = () => {
                   value={freecontent}
                   onChange={freeonChangeHandler}
                   placeholder='내용을 입력해주세요'
+                  maxLength='400'
                 ></Textarea>
                 <FormFooter>
                   <FooterContain>
