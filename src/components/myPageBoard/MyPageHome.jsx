@@ -28,19 +28,16 @@ const MyPageHome = () => {
 
   const targetRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [page, setPage] = useState(1)
-  let options = {
-    root: null,
-    threshold: 0.3,
-  }
-
+  const [page, setPage] = useState(1);
+  
   const checkIntersect = useCallback(([entry], observer) => {
     if(entry.isIntersecting && !isLoaded){
       dispatch(__getMyArticle(page));
+
       observer.unobserve(entry.target);
-      setPage((prev) => prev + 1)
+      setPage((prev) => prev + 1);
     }
-  }, [myarticles])
+  }, [dispatch, isLoaded, page])
 
   useEffect(() => {
     let observer;
@@ -48,9 +45,10 @@ const MyPageHome = () => {
       observer = new IntersectionObserver(checkIntersect, {
         threshold: 0.5,
       })
-      observer.observe(targetRef.current)
+      observer.observe(targetRef.current);
     }
   }, [myarticles]);
+
   console.log(myarticles);
 
 
@@ -68,7 +66,7 @@ const MyPageHome = () => {
           <ArticleWrap>
             {myarticles && myarticles.length > 0 ? (
               <div>
-                {myarticles && myarticles.slice(0).reverse().map((myarticle) => (
+                {myarticles && myarticles.slice(0).map((myarticle) => (
                       <MyPageCard key={myarticle.articleId} id={myarticle.articleId} myarticle={myarticle}
                       />
                     ))}

@@ -21,7 +21,7 @@ const Header = () => {
         <HeaderContainer>
             <HeaderWrap>
                 <Logo onClick={() => { navigate("/") }} style={{ cursor: "pointer" }} />
-                <div>{data && data.schoolName}</div>
+                <div style={{fontSize:"20px"}}>{data && data.schoolName}</div>
                 <IconWrap>
                     <VscBell size="27"
                         onClick={() => { navigate("/notice") }} style={{ cursor: "pointer" }}

@@ -53,25 +53,28 @@ export const __patchProfileImage = createAsyncThunk("mypages/patchProfileImage",
 });
 
 export const __getMyArticle = createAsyncThunk("myarticles/getMyArticles", async (payload, thunkAPI) => {
+  console.log("payload", payload)
   try {
     const data = await axios({
       method: 'get',
       // url: `${BASE_URL}/myPage/myArticle`,
       // 아래 무한스크롤 url
       url: `${BASE_URL}/myPage/myArticle?page=${payload}&size=${7}`,
+      payload, 
       headers: {
-        'Content-Type': 'application/json',
+        // 'Content-Type': 'application/json',
         Authorization: `Bearer ${getCookie("accessToken")}`,
         // RefreshToken : getCookie('refreshToken')
       },
     });
     console.log(data.data.content)
-    return thunkAPI.fulfillWithValue(data.data);
+    return thunkAPI.fulfillWithValue(data.data.content);
   } catch (error) {
     console.log('error', error);
     return thunkAPI.rejectWithValue(error);
   }
 });
+
 
 export const MyPageSlice = createSlice({
   name: "mypages",
@@ -106,7 +109,8 @@ export const MyPageSlice = createSlice({
     },
     [__getMyArticle.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.myarticles = action.payload;
+      // state.myarticles = action.payload;
+      state.myarticles.push(...action.payload);
     },
     [__getMyArticle.rejected]: (state, action) => {
       state.isLoading = false;
