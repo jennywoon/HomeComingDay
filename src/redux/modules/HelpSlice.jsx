@@ -211,7 +211,7 @@ export const __postHelpHeart = createAsyncThunk(
       });
       console.log(data)
       console.log("data",data.data)
-      console.log(payload)
+      // console.log(payload)
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log(error)

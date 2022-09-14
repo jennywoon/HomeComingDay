@@ -119,6 +119,9 @@ const HelpDetail = (props) => {
   };
 
   // 좋아요
+  const mypageEmail = useSelector((state) => state.mypages.mypages);
+  // console.log(mypageEmail);
+
   const [isClickHeart, setIsClickHeart] = useState(false);
   const heartClick = async () => {
     if (isClickHeart) {
@@ -131,35 +134,23 @@ const HelpDetail = (props) => {
     };
     const response = await dispatch(__postHelpHeart(newHeart));
     console.log(response.payload)
-    await dispatch(__getHelp());
-  };
-
-  const mypageEmail = useSelector((state) => state.mypages.mypages.email);
-  console.log(mypageEmail);
-
-  // useEffect(()=>{
-  //   const heartdetail = helps.filter((p)=>{
-  //     return p.username === props.username
-  //   })
-  // })
-
-  // const post = useSelector((state) => state.post.list);
-  //  React.useEffect(()=>{
-  // console.log(post)
-  // const _post = post.filter((p) => {
-  //   return p.id === props.id;
-  // })[0].like_list;
-
-  // if (_post) {
-  //   _post.forEach((p) => {
-  //     if (p === user_id) {
-  //       setLike(true);
-  //       setColor('like');
-  //     }
-  //   });
-  // }
-  //   })
-
+    console.log(mypageEmail.email);
+    // const heartdetail = mypageEmail.find((p) => {
+      //   return (p.email === response.payload)
+      // })
+      // console.log(heartdetail)
+      if (mypageEmail.email === response.payload) {
+        setIsClickHeart(true);
+      }
+    };
+    
+    useEffect(() => {
+    const data = dispatch(__getHelp());
+    console.log(data)
+    // if(helpsfind.filter(item => item.articleId === articleId)[0]) {
+    //   setIsClickHeart(true);
+    // }
+  }, [])
 
   return (
     <Container>
