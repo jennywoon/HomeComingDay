@@ -3,17 +3,29 @@ import styled from 'styled-components';
 import { useEffect } from 'react';
 import { __getMyPage, __getMyArticle } from '../../redux/modules/MyPageSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-const MyPageCard = ({ myarticle }) => {
+const MyPageCard = ({ myarticle,id }) => {
     const dispatch = useDispatch();
-
+    const navigate = useNavigate();
     useEffect(() => {
         dispatch(__getMyArticle())
     }, [dispatch])
 
+    const onClickNavi = () => {
+        if(myarticle.articleFlag === "도움요청"){
+            navigate(`/helpdetail/${id}`)
+        }else if(myarticle.articleFlag === "정보공유"){
+            navigate(`/informationdetail/${id}`)
+        }else if(myarticle.articleFlag === "만남일정"){
+            navigate(`/calendardetail/${id}`)
+        }else if(myarticle.articleFlag === "자유토크"){
+            navigate(`/freetalkdetail/${id}`)
+        }};
+
     return (
         <>
-            <Container>
+            <Container onClick={onClickNavi}>
                 <TotalWrap>
                     <PostTitle>{myarticle.title}</PostTitle>
                     <BottomWrap>
@@ -38,8 +50,8 @@ export default MyPageCard;
 
 const Container = styled.div`
     width: 100%;
-    height: 100%;
-    height: 100px;
+    /* height: 100%; */
+    height: 120px;
     border: 1px solid #ddd;
     border-radius: 16px;
     cursor: pointer;
@@ -74,6 +86,7 @@ const FirstWrap = styled.div`
 const PostTitle = styled.div`
     font-size: 16px;
     font-weight: 600;
+    height:45px;
     /* margin-bottom: 40px; */
 `
 const PostView = styled.div`

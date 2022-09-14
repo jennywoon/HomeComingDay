@@ -123,11 +123,12 @@ const HeadTime = styled.p`
 const CardBody = styled.div`
 `
 const BodyTitle = styled.div`
-    width:300px;
+    display:flex;
+    width:350px;
     height:60px;
-    line-height: 50px;
     font-weight: 600;
     font-size: 16px;
+    align-items:center;
 `
 const BodyContent = styled.div`
     font-size: 12px;

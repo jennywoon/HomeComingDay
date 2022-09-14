@@ -66,7 +66,7 @@ export const __getPopularFreeTalk = createAsyncThunk("freetalk/getPopularfreetal
   try {
     const data = await axios({
       method: 'get',
-      url: `${BASE_URL}/article/freetalk/popular`,
+      url: `${BASE_URL}/article/freeTalk/popular`,
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${getCookie("accessToken")}`,
