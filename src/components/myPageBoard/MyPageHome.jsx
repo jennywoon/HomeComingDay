@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import MyPageUser from './MyPageUser';
@@ -10,19 +10,49 @@ import Homeimg from '../../assets/Home.png';
 import Searchimg from '../../assets/Search.png';
 import Chatimg from '../../assets/Chat.png';
 import MyColorimg from '../../assets/MyColor.png';
+import { useCallback } from 'react';
 
 const MyPageHome = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const myarticles = useSelector((state) => state.mypages.myarticles);
+  const {error} = useSelector((state) => state.mypages.myarticles)
   console.log(myarticles);
 
-  useEffect(() => {
-    dispatch(__getMyArticle());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(__getMyArticle());
+  // }, [dispatch]);
 
   // 무한 스크롤
+
+  const targetRef = useRef(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [page, setPage] = useState(1)
+  let options = {
+    root: null,
+    threshold: 0.3,
+  }
+
+  const checkIntersect = useCallback(([entry], observer) => {
+    if(entry.isIntersecting && !isLoaded){
+      dispatch(__getMyArticle(page));
+      observer.unobserve(entry.target);
+      setPage((prev) => prev + 1)
+    }
+  }, [myarticles])
+
+  useEffect(() => {
+    let observer;
+    if(targetRef){
+      observer = new IntersectionObserver(checkIntersect, {
+        threshold: 0.5,
+      })
+      observer.observe(targetRef.current)
+    }
+  }, [myarticles]);
+  console.log(myarticles);
+
 
   return (
     <HomeContainer>
@@ -38,15 +68,8 @@ const MyPageHome = () => {
           <ArticleWrap>
             {myarticles && myarticles.length > 0 ? (
               <div>
-                {myarticles &&
-                  myarticles
-                    .slice(0)
-                    .reverse()
-                    .map((myarticle) => (
-                      <MyPageCard
-                        key={myarticle.articleId}
-                        id={myarticle.articleId}
-                        myarticle={myarticle}
+                {myarticles && myarticles.slice(0).reverse().map((myarticle) => (
+                      <MyPageCard key={myarticle.articleId} id={myarticle.articleId} myarticle={myarticle}
                       />
                     ))}
               </div>
@@ -56,6 +79,7 @@ const MyPageHome = () => {
                 <p>내가 쓴 게시글이 없습니다</p>
               </NoneData>
             )}
+            <div ref={targetRef}>{error}</div>
           </ArticleWrap>
         </BottomWrap>
       </MyPageBottom>

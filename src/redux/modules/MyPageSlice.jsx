@@ -56,14 +56,16 @@ export const __getMyArticle = createAsyncThunk("myarticles/getMyArticles", async
   try {
     const data = await axios({
       method: 'get',
-      url: `${BASE_URL}/myPage/myArticle`,
+      // url: `${BASE_URL}/myPage/myArticle`,
+      // 아래 무한스크롤 url
+      url: `${BASE_URL}/myPage/myArticle?page=${payload}&size=${7}`,
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${getCookie("accessToken")}`,
         // RefreshToken : getCookie('refreshToken')
       },
     });
-    console.log(data.data)
+    console.log(data.data.content)
     return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
     console.log('error', error);
