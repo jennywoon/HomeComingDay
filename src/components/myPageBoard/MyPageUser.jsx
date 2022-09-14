@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { __getMyPage, __patchProfileImage } from '../../redux/modules/MyPageSlice';
 import MyPageLogoutModal from "./MyPageLogoutModal"
-import profiletest from "../../assets/profiletest.jpg"
+import profileorange from "../../assets/profileorange.png"
 
 const MyPageUser = () => {
 
@@ -48,7 +48,7 @@ const MyPageUser = () => {
     }
 
     const onErrorImg = (e) => {
-        e.target.src = profiletest
+        e.target.src = profileorange
     }
 
     const [modalOpen, setModalOpen] = useState(false);
@@ -124,9 +124,6 @@ const UserImgWrap = styled.div`
 `
 
 const UserImg = styled.img`
-    /* background-image: url(${profiletest});
-    background-position: center;
-    background-size: 100% 100%; */
     width: 80px;
     height: 80px;
     border-radius: 50%;

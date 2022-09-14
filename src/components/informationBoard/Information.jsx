@@ -56,15 +56,16 @@ export default Information;
 
 const InformationContainer = styled.div`
   width: 100%;
-  /* height: 100%; */
-  height: 100vh;
+  height: 100%;
+  /* height: 100vh; */
   gap: 12px;
+  /* border: 1px solid red; */
 `;
 
 const BannerWrap = styled.div`
   width: 100%;
-  height: 180px;
-  /* height: 20% */
+  height: 190px;
+  /* height: 22% */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -73,8 +74,8 @@ const BannerWrap = styled.div`
   position: absolute;
 `
 const Banner = styled.div`
-  height: 180px;
-  /* height: 20% */
+  height: 190px;
+  /* height: 22% */
   width: 95%;
   /* border: 1px solid red; */
   background-image: url(${informationorange});
@@ -86,12 +87,12 @@ const InformationWrap = styled.div`
   position: relative;
   top: 170px;
   width: 100%;
-  height: 100vh;
-  /* height: 63%; */
+  /* height: 100vh; */
+  height: 64%;
   border-radius: 20px;
   background-color: white;
   padding: 10px 5px 10px 5px;
-  /* border: 1px solid red; */
+  /* border: 1px solid blue; */
 `;
 
 const Select = styled.select`
@@ -112,7 +113,7 @@ const Select = styled.select`
 const InformationList = styled.div`
   /* height: 100%; */
   width: 95%;
-  height: 97%;
+  height: 98%;
   margin: 0 auto;
   /* border: 1px solid green; */
   overflow-y: scroll;

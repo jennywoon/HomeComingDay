@@ -111,16 +111,16 @@ const InformationDetail = () => {
         <Container>
             {modalOpen && <InformationDetailModal setModalOpen={setModalOpen} />}
             <Header />
+            <FirstWrap>
+                <DetailHeader>
+                    <IoIosArrowBack size="25px" cursor="pointer" onClick={() => { navigate("/information") }} />
+                    <HeaderTitle>정보공유</HeaderTitle>
+                    <div style={{ width: "25px", height: "25px" }}></div>
+                </DetailHeader>
+            </FirstWrap>
             <InformationContainer>
                 <InformationWrap>
                     <DetailWrap >
-                        <FirstWrap>
-                            <DetailHeader>
-                                <IoIosArrowBack size="25px" cursor="pointer" onClick={() => { navigate("/information") }} />
-                                <HeaderTitle>정보공유</HeaderTitle>
-                                <div style={{ width: "25px", height: "25px" }}></div>
-                            </DetailHeader>
-                        </FirstWrap>
                         <DetailBody>
                             <Bodytop>
                                 <Bodyimg src={informationsfind.userImage} alt="" />
@@ -132,12 +132,9 @@ const InformationDetail = () => {
                                         : null
                                     }
                                 </Bodytxt>
-                                {/* <AiOutlineMenu size="20px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }}
-                                onClick={onCilckShow} /> */}
                                 <BiDotsVerticalRounded
-                                    size="20px" style={{ marginLeft: "auto", cursor: "pointer" }}
+                                    size="20px" style={{ marginLeft: "auto", cursor: "pointer", color:"#bebebe" }}
                                     onClick={onCilckShow} />
-
                                 {show ?
                                     <Revisebox ref={modalRef}>
                                         <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
@@ -218,36 +215,19 @@ const Container = styled.div`
     width: 100%;
     height: 100vh;
     overflow-y: hidden;
-`
-
-const InformationContainer = styled.div`
-    width: 100%;
-    height: 100%;
-    /* border: 1px solid green; */
     display: flex;
     flex-direction: column;
+    align-items: center;
 `
-
-const InformationWrap = styled.div`
-    width: 100%;
-    height: 100%;
-    /* border: 1px solid blue; */
-    overflow-y: scroll;
-`
-const DetailWrap = styled.form`
-  width: 100%;
-  /* height:100%; */
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-`;
 
 const FirstWrap = styled.div`
     display: flex;
+    /* align-items: center; */
+    justify-content: center;
     flex-direction: column;
     /* border:1px solid blue; */
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 60px;
 `
 const DetailHeader = styled.div`
     width: 100%;
@@ -257,6 +237,36 @@ const DetailHeader = styled.div`
     justify-content: space-between;
     position: sticky;
 `
+const InformationContainer = styled.div`
+    width: 90%;
+    height: 86%;
+    border: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    box-shadow: 0px 2px 14px rgba(0, 0, 0, 0.05);
+    padding: 5px;
+    align-items: center;
+`
+
+const InformationWrap = styled.div`
+    width: 90%;
+    height: 100%;
+    /* border: 1px solid blue; */
+    overflow-y: scroll;
+    ::-webkit-scrollbar {
+    width: 0px;
+    /* background-color: red; */
+  }
+`
+const DetailWrap = styled.form`
+  width: 100%;
+  /* height:100%; */
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+`;
+
 const HeaderTitle = styled.div`
   font-weight: 800;
   /* margin:10px auto; */
@@ -302,26 +312,23 @@ const DeleteButton = styled.button`
 `
 
 const DetailBody = styled.div`
-    /* border: 1px solid #f1f0f0; */
-    /* border: 1px solid red; */
-    /* margin: 10px 20px; */
     border-radius: 20px;
     width: 100%;
-    height:100%;
-    /* box-sizing: border-box; */
-    /* box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.05); */
-    /* overflow-y: scroll; */
+    height: 100%;
 `
 
 const Bodytop = styled.div`
     display:flex;
     align-items: center;
-    padding:20px 20px 10px 20px;
+    /* padding:20px 20px 10px 20px; */
     position: relative;
+    margin: 10px 0; 
 `
 
 const Bodyimg = styled.img`
     width:40px;
+    height: 40px;
+    border-radius: 50%;
 `
 
 const Bodytxt = styled.div`
@@ -361,12 +368,13 @@ const ChaetingBox = styled.div`
 `
 
 const BodyContent = styled.div`
-  padding: 0px 20px;
+  /* padding: 0px 20px; */
   width: 100%;
   height: 350px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
     
 `
 const ContentTitle = styled.h3`
@@ -374,14 +382,17 @@ const ContentTitle = styled.h3`
     font-weight: 600;
     font-size: 18px;
     width:100%;
+    /* height: 100%; */
+    /* border: 1px solid green; */
 `
-const ContentBody = styled.p`
+const ContentBody = styled.div`
 /* border: 1px solid blue; */
     color:gray;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 400;
     width:100%;
-    margin-bottom: 10px;
+    margin: 10px 0;
+    height: 100%;
 `
 
 const ContentImgBox = styled.div`
@@ -461,7 +472,7 @@ const BodyContainer = styled.div`
     /* overflow-y: scroll; */
 `
 const BodyCommentBox = styled.div`
-    border-top : 1px solid rgba(0,0,0,0.1);
+    /* border-top : 1px solid rgba(0,0,0,0.1); */
     /* margin:20px; */
     /* overflow-y: scroll; */
     height: 100%;
@@ -473,8 +484,7 @@ const BodyCommentBox = styled.div`
 
 const CommentContainer = styled.form`
     position: sticky;
-    bottom: 0;
-    bottom: 10px;
+    /* bottom: 20px; */
     width: 100%;
     /* height: 100%; */
     /* border: 1px solid blue; */
@@ -483,6 +493,7 @@ const CommentContainer = styled.form`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 10px;
 `
 
 const CommentBox = styled.div`

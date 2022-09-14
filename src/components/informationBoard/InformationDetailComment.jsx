@@ -107,7 +107,7 @@ const InformationComment = ({ comment, informationsfind, modalRef }) => {
                 </CommentTxt>
 
                 <BiDotsVerticalRounded
-                    size="20px" style={{ marginLeft: "auto", marginTop: "2px", cursor: "pointer" }}
+                    size="20px" style={{ marginLeft: "auto", marginTop: "2px", cursor: "pointer", color:"#bebebe" }}
                     onClick={onCilckShow} />
                 {showComment ?
                     <Revisebox ref={modalRef}>
@@ -139,13 +139,14 @@ const CommentBox = styled.div`
     /* margin-bottom: 10px; */
     position: relative;
     /* border: 1px solid red; */
-    width: 90%;
+    width: 100%;
 `
 
 const CommentImg = styled.img`
     width:30px;
     height: 30px;
     margin-top: 2px;
+    border-radius: 50%;
 `
 
 const CommentTxt = styled.div`
