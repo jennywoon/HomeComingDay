@@ -56,6 +56,7 @@ const Container = styled.div`
   z-index: 10;
   overflow: hidden;
   /* bottom: 0; */
+  /* border: 1px solid red; */
   @media screen and (max-width: 1024px) {
     background-image: none;
   }

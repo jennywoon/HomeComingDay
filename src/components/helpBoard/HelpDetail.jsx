@@ -154,148 +154,148 @@ const HelpDetail = (props) => {
 
   return (
     <Container>
-      {modalOpen && <HelpDeleteModal setModalOpen={setModalOpen} />}
-      <Header />
-      <FirstWrap>
-        <DetailHeader>
-          <IoIosArrowBack
-            size='25px'
-            cursor='pointer'
-            onClick={() => {
-              navigate('/');
-            }}
-          />
-          <HeaderTitle>도움요청</HeaderTitle>
-          <div style={{ width: '25px', height: '25px' }}></div>
-        </DetailHeader>
-      </FirstWrap>
-      <HelpContainer>
-        <HelpWrap>
-          <DetailWrap>
-            <DetailBody>
-              <Bodytop>
-                <Bodyimg src={helpsfind && helpsfind.userImage} alt='' />
-                <Bodytxt>
-                  <Txtname onClick={onCilckChaetShow}>
-                    {helpsfind && helpsfind.username}
-                  </Txtname>
-                  <Txtstudent>
-                    {helpsfind && helpsfind.departmentName}{' '}
-                    <span> {helpsfind && helpsfind.admission} </span>
-                  </Txtstudent>
-                  {showChaet ? <ChaetingBox>1:1채팅</ChaetingBox> : null}
-                </Bodytxt>
-                <BiDotsVerticalRounded
-                  size='20px'
-                  style={{
-                    marginLeft: 'auto',
-                    cursor: 'pointer',
-                    color: '#bebebe',
-                  }}
-                  onClick={onCilckShow}
-                />
-                {show ? (
-                  <Revisebox ref={modalRef}>
-                    <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
-                    <DeleteButton onClick={showModal}>삭제</DeleteButton>
-                  </Revisebox>
-                ) : null}
-              </Bodytop>
-              <BodyContent>
-                <ContentTitle>{helpsfind && helpsfind.title}</ContentTitle>
-                <ContentBody>{helpsfind && helpsfind.content}</ContentBody>
-                {helpsfind && helpsfind.imageList.length > 0 ? (
-                  <ContentImgBox>
-                    <Swiper
-                      {...swiperParams}
-                      ref={setSwiper}
-                      spaceBetween={50}
-                      slidesPerView={1}
-                    >
-                      {helpsfind &&
-                        helpsfind.imageList.map((image) => {
-                          return (
-                            <SwiperSlide key={image.imageId}>
-                              <ContentImg src={image.imgUrl}></ContentImg>
-                            </SwiperSlide>
-                          );
-                        })}
-                      <PrevButton ref={navigationPrevRef}>
-                        <PreviousBtn />
-                      </PrevButton>
-                      <NextButton ref={navigationNextRef}>
-                        <NextBtn />
-                      </NextButton>
-                    </Swiper>
-                  </ContentImgBox>
-                ) : null}
-                <BodyTxtBox>
-                  <ContentView>
-                    {helpsfind && helpsfind.createdAt} | 조회수{' '}
-                    {helpsfind && helpsfind.views}
-                  </ContentView>
-                  <Count>
-                    <CommentCount>
-                      <CommentImg>
-                        <img src={commentImg} alt='댓글이미지' />
-                      </CommentImg>
-                      댓글 {helpsfind && helpsfind.commentCnt}
-                    </CommentCount>
-                    <HeartCount
-                      onClick={heartClick}
-                    >
-                      {isClickHeart ? (
-                        <HeartImg>
-                          <img src={heartColorImg} alt='좋아요이미지' />
-                        </HeartImg>
-                      ) : (
-                        <HeartImg>
-                          <img src={heartImg} alt='좋아요이미지' />
-                        </HeartImg>
-                      )}
-                      좋아요 {helpsfind && helpsfind.heartCnt}
-                    </HeartCount>
-                  </Count>
-                </BodyTxtBox>
-              </BodyContent>
+        {modalOpen && <HelpDeleteModal setModalOpen={setModalOpen} />}
+        <Header />
+        <FirstWrap>
+          <DetailHeader>
+            <IoIosArrowBack
+              size='25px'
+              cursor='pointer'
+              onClick={() => {
+                navigate('/');
+              }}
+            />
+            <HeaderTitle>도움요청</HeaderTitle>
+            <div style={{ width: '25px', height: '25px' }}></div>
+          </DetailHeader>
+        </FirstWrap>
+        <HelpContainer>
+          <HelpWrap>
+            <DetailWrap>
+              <DetailBody>
+                <Bodytop>
+                  <Bodyimg src={helpsfind && helpsfind.userImage} alt='' />
+                  <Bodytxt>
+                    <Txtname onClick={onCilckChaetShow}>
+                      {helpsfind && helpsfind.username}
+                    </Txtname>
+                    <Txtstudent>
+                      {helpsfind && helpsfind.departmentName}{' '}
+                      <span> {helpsfind && helpsfind.admission} </span>
+                    </Txtstudent>
+                    {showChaet ? <ChaetingBox>1:1채팅</ChaetingBox> : null}
+                  </Bodytxt>
+                  <BiDotsVerticalRounded
+                    size='20px'
+                    style={{
+                      marginLeft: 'auto',
+                      cursor: 'pointer',
+                      color: '#bebebe',
+                    }}
+                    onClick={onCilckShow}
+                  />
+                  {show ? (
+                    <Revisebox ref={modalRef}>
+                      <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
+                      <DeleteButton onClick={showModal}>삭제</DeleteButton>
+                    </Revisebox>
+                  ) : null}
+                </Bodytop>
+                <BodyContent>
+                  <ContentTitle>{helpsfind && helpsfind.title}</ContentTitle>
+                  <ContentBody>{helpsfind && helpsfind.content}</ContentBody>
+                  {helpsfind && helpsfind.imageList.length > 0 ? (
+                    <ContentImgBox>
+                      <Swiper
+                        {...swiperParams}
+                        ref={setSwiper}
+                        spaceBetween={50}
+                        slidesPerView={1}
+                      >
+                        {helpsfind &&
+                          helpsfind.imageList.map((image) => {
+                            return (
+                              <SwiperSlide key={image.imageId}>
+                                <ContentImg src={image.imgUrl}></ContentImg>
+                              </SwiperSlide>
+                            );
+                          })}
+                        <PrevButton ref={navigationPrevRef}>
+                          <PreviousBtn />
+                        </PrevButton>
+                        <NextButton ref={navigationNextRef}>
+                          <NextBtn />
+                        </NextButton>
+                      </Swiper>
+                    </ContentImgBox>
+                  ) : null}
+                  <BodyTxtBox>
+                    <ContentView>
+                      {helpsfind && helpsfind.createdAt} | 조회수{' '}
+                      {helpsfind && helpsfind.views}
+                    </ContentView>
+                    <Count>
+                      <CommentCount>
+                        <CommentImg>
+                          <img src={commentImg} alt='댓글이미지' />
+                        </CommentImg>
+                        댓글 {helpsfind && helpsfind.commentCnt}
+                      </CommentCount>
+                      <HeartCount
+                        onClick={heartClick}
+                      >
+                        {isClickHeart ? (
+                          <HeartImg>
+                            <img src={heartColorImg} alt='좋아요이미지' />
+                          </HeartImg>
+                        ) : (
+                          <HeartImg>
+                            <img src={heartImg} alt='좋아요이미지' />
+                          </HeartImg>
+                        )}
+                        좋아요 {helpsfind && helpsfind.heartCnt}
+                      </HeartCount>
+                    </Count>
+                  </BodyTxtBox>
+                </BodyContent>
 
-              <BodyContainer>
-                <BodyCommentBox>
-                  {helpsfind && helpsfind.commentList.length === 0 ? (
-                    <BodyComment>
-                      작성한 댓글이 없습니다 <br></br> 첫번째 댓글을 남겨보세요{' '}
-                    </BodyComment>
-                  ) : (
-                    <>
-                      {helpsfind &&
-                        helpsfind.commentList.map((comment) => (
-                          <HelpDetailComment
-                            key={comment.commentId}
-                            comment={comment}
-                            helpsfind={helpsfind}
-                            modalRef={modalRef}
-                          />
-                        ))}
-                    </>
-                  )}
-                </BodyCommentBox>
-              </BodyContainer>
-            </DetailBody>
-          </DetailWrap>
-        </HelpWrap>
-        <CommentContainer onSubmit={onClickPostComment}>
-          <CommentBox>
-            <CommentDiv>
-              <CommentPost
-                placeholder='댓글을 입력해주세요'
-                value={comment}
-                onChange={onChangePostHandler}
-              ></CommentPost>
-              <CommentButton type='submit'>올리기</CommentButton>
-            </CommentDiv>
-          </CommentBox>
-        </CommentContainer>
-      </HelpContainer>
+                <BodyContainer>
+                  <BodyCommentBox>
+                    {helpsfind && helpsfind.commentList.length === 0 ? (
+                      <BodyComment>
+                        작성한 댓글이 없습니다 <br></br> 첫번째 댓글을 남겨보세요{' '}
+                      </BodyComment>
+                    ) : (
+                      <>
+                        {helpsfind &&
+                          helpsfind.commentList.map((comment) => (
+                            <HelpDetailComment
+                              key={comment.commentId}
+                              comment={comment}
+                              helpsfind={helpsfind}
+                              modalRef={modalRef}
+                            />
+                          ))}
+                      </>
+                    )}
+                  </BodyCommentBox>
+                </BodyContainer>
+              </DetailBody>
+            </DetailWrap>
+          </HelpWrap>
+          <CommentContainer onSubmit={onClickPostComment}>
+            <CommentBox>
+              <CommentDiv>
+                <CommentPost
+                  placeholder='댓글을 입력해주세요'
+                  value={comment}
+                  onChange={onChangePostHandler}
+                ></CommentPost>
+                <CommentButton type='submit'>올리기</CommentButton>
+              </CommentDiv>
+            </CommentBox>
+          </CommentContainer>
+        </HelpContainer>
     </Container>
   );
 };
@@ -309,7 +309,9 @@ const Container = styled.div`
   overflow-y: hidden;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  margin: auto;
+  /* align-items: center; */
+  /* justify-content: center; */
 `;
 
 const FirstWrap = styled.div`
@@ -319,6 +321,7 @@ const FirstWrap = styled.div`
   /* border:1px solid blue; */
   width: 90%;
   height: 60px;
+  margin: auto;
 `;
 const DetailHeader = styled.div`
   width: 100%;
@@ -339,6 +342,7 @@ const HelpContainer = styled.div`
   box-shadow: 0px 2px 14px rgba(0, 0, 0, 0.05);
   padding: 5px;
   align-items: center;
+  margin: auto;
 `;
 
 const HelpWrap = styled.div`

@@ -1,21 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import { VscBell } from "react-icons/vsc";
 import BottomTap from './BottomTap';
 import logo from "../assets/logo.png"
+import { useDispatch, useSelector } from 'react-redux';
+import { __getMyPage } from '../redux/modules/MyPageSlice';
 
 const Header = () => {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    // useEffect(() => (
+    //     dispatch(__getMyPage())
+    // ), [dispatch])
+    const data = useSelector((state) => state.mypages.mypages)
+    console.log(data);
 
     return (
         <HeaderContainer>
             <HeaderWrap>
                 <Logo onClick={() => { navigate("/") }} style={{ cursor: "pointer" }} />
-                {/* <HeaderTitle
-                onClick={() => { navigate("/") }} style={{ cursor: "pointer" }}
-            >HomeComing Day</HeaderTitle> */}
+                <div>{data && data.schoolName}</div>
                 <IconWrap>
                     <VscBell size="27"
                         onClick={() => { navigate("/notice") }} style={{ cursor: "pointer" }}
@@ -41,6 +47,7 @@ const HeaderContainer = styled.div`
     height: 60px;
     display: flex;
     justify-content: center;
+    align-items: center;
     font-size: 20px;
     font-weight: bold;
     /* border: 1px solid green; */

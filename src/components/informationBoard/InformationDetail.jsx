@@ -262,7 +262,7 @@ const Container = styled.div`
     overflow-y: hidden;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
 `
 
 const FirstWrap = styled.div`
@@ -273,6 +273,7 @@ const FirstWrap = styled.div`
     /* border:1px solid blue; */
     width: 90%;
     height: 60px;
+    margin: auto;
 `
 const DetailHeader = styled.div`
     width: 100%;
@@ -292,6 +293,7 @@ const InformationContainer = styled.div`
     box-shadow: 0px 2px 14px rgba(0, 0, 0, 0.05);
     padding: 5px;
     align-items: center;
+    margin: auto;
 `
 
 const InformationWrap = styled.div`
