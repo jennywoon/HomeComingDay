@@ -188,19 +188,27 @@ const CalendarDetail = () => {
                   </ContentTitle>
                   <Contentget>
                     <ContentgetTitle>날짜 </ContentgetTitle>
+                    <ContentgetContent>
                     {calendarfind && calendarfind.calendarDate}
+                    </ContentgetContent>
                   </Contentget>
                   <Contentget>
                     <ContentgetTitle>시간 </ContentgetTitle>
+                    <ContentgetContent>
                     {calendarfind && calendarfind.calendarTime}
+                    </ContentgetContent>
                   </Contentget>
                   <Contentget>
                     <ContentgetTitle>장소 </ContentgetTitle>
+                    <ContentgetContent>
                     {calendarfind && calendarfind.calendarLocation}
+                    </ContentgetContent>
                   </Contentget>
                   <Contentget>
                     <ContentgetTitle>내용 </ContentgetTitle>
+                    <ContentgetContent>
                     {calendarfind && calendarfind.content}
+                    </ContentgetContent>
                   </Contentget>
                 </ContentBody>
                 {/* <ContentImg src=''></ContentImg> */}
@@ -462,7 +470,7 @@ const ContentBody = styled.div`
 `;
 const Contentget = styled.div`
   color: #000;
-  height: 30px;
+  /* height: 30px; */
   display: flex;
   align-items: center;
 `;
@@ -470,8 +478,12 @@ const Contentget = styled.div`
 const ContentgetTitle = styled.span`
   color: #f7931e;
   font-weight: 600;
-  margin-right: 10px;
+  width:10%;
 `;
+
+const ContentgetContent = styled.div`
+  width:80%;
+`
 
 const ContentImgBox = styled.div`
   width: 100%;

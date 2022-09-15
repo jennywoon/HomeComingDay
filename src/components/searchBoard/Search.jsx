@@ -11,7 +11,6 @@ import { __getInformation } from "../../redux/modules/InformationSlice";
 import { __getCalendar } from "../../redux/modules/CalendarSlice";
 import { __getFreeTalk } from "../../redux/modules/FreeTalkSlice";
 
-
 const Search = () => {
     const dispatch = useDispatch();
 
@@ -22,27 +21,28 @@ const Search = () => {
     const [informationBtn , setInformationBtn] = useState(false)
     const [freeTalkBtn , setFreeTalkBtn] = useState(false)
     const [calendarBtn , setCalendarBtn] = useState(false)
+    const [inputText, setInputText] = useState("");
     const [select, setSelect] = useState('new');
 
     const searchArticle = useSelector((state)=>state.searchs.searchs)
-    // const searchArticlePopular = useSelector((state)=>state.searchs.popular)
-    const helpSearchs = useSelector((state)=>state.helps.helps)
-    const informationSearchs = useSelector((state)=>state.informations.informations)
-    const freeTalkSearchs = useSelector((state)=>state.freetalks.freetalks)
-    const calendarSearchs = useSelector((state)=>state.calendars.calendars)
+    const searchArticlePopular = useSelector((state)=>state.searchs.popular)
+    const {isLoading,error} = useSelector((state) => state.searchs)
+    // const helpSearchs = useSelector((state)=>state.helps.helps)
+    // const informationSearchs = useSelector((state)=>state.informations.informations)
+    // const freeTalkSearchs = useSelector((state)=>state.freetalks.freetalks)
+    // const calendarSearchs = useSelector((state)=>state.calendars.calendars)
 
     // const searchs = [...helpSearchs,...informationSearchs,...freeTalkSearchs,...calendarSearchs]
 
     console.log(searchArticle)
+    console.log(searchArticlePopular)
 
-    const searchArticlePopular = searchArticle.filter((article)=>article.view)
-    console.log("searchArticlePopular",searchArticlePopular)
+    // const searchArticlePopulars = searchArticle.map((article)=>article.views )
+    // console.log("searchArticlePopulars",searchArticlePopulars)
 
     
-    useEffect(() => {
-        dispatch(__getSearchArticle())
-        // dispatch(__getSearchArticlePopular())
-    }, [dispatch])
+ 
+    
 
     const handleSelect = (e) => {
         setSelect(e.target.value);
@@ -110,72 +110,72 @@ const Search = () => {
         };
       
     //Help
-    const [filteredHelpList, setFilteredHelpList] = new useState(helpSearchs);
-    const filterByHelpSearch = (e) => {
-        // Access input value
-        const query = e.target.value
-        // console.log(query)
-        // Create copy of item list
-        let updatedList = [...helpSearchs];
-        // Include all elements which includes the search query
-        updatedList = updatedList.filter((item) => {
-          return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
-        });
-        // Trigger render with updated values
-        setFilteredHelpList(updatedList);
-      };
+    // const [filteredHelpList, setFilteredHelpList] = new useState(helpSearchs);
+    // const filterByHelpSearch = (e) => {
+    //     // Access input value
+    //     const query = e.target.value
+    //     // console.log(query)
+    //     // Create copy of item list
+    //     let updatedList = [...helpSearchs];
+    //     // Include all elements which includes the search query
+    //     updatedList = updatedList.filter((item) => {
+    //       return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+    //     });
+    //     // Trigger render with updated values
+    //     setFilteredHelpList(updatedList);
+    //   };
 
-     //informationfilter
-      const [filteredInformationList, setFilteredInformationList] = new useState(informationSearchs);
-      const filterByInformationSearch = (e) => {
-          // Access input value
-          const query = e.target.value
-          // console.log(query)
-          // Create copy of item list
-          let updatedList = [...informationSearchs];
-          // Include all elements which includes the search query
-          updatedList = updatedList.filter((item) => {
-            return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
-          });
-          // Trigger render with updated values
-          setFilteredInformationList(updatedList);
-        };
+    //  //informationfilter
+    //   const [filteredInformationList, setFilteredInformationList] = new useState(informationSearchs);
+    //   const filterByInformationSearch = (e) => {
+    //       // Access input value
+    //       const query = e.target.value
+    //       // console.log(query)
+    //       // Create copy of item list
+    //       let updatedList = [...informationSearchs];
+    //       // Include all elements which includes the search query
+    //       updatedList = updatedList.filter((item) => {
+    //         return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+    //       });
+    //       // Trigger render with updated values
+    //       setFilteredInformationList(updatedList);
+    //     };
 
-      //Freetalkfilter
-      const [filteredFreetalkList, setFilteredFreetalkList] = new useState(freeTalkSearchs);
-      const filterByFreetalkSearch = (e) => {
-          // Access input value
-          const query = e.target.value
-          // console.log(query)
-          // Create copy of item list
-          let updatedList = [...freeTalkSearchs];
-          // Include all elements which includes the search query
-          updatedList = updatedList.filter((item) => {
-            return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
-          });
-          // Trigger render with updated values
-          setFilteredFreetalkList(updatedList);
-        };
+    //   //Freetalkfilter
+    //   const [filteredFreetalkList, setFilteredFreetalkList] = new useState(freeTalkSearchs);
+    //   const filterByFreetalkSearch = (e) => {
+    //       // Access input value
+    //       const query = e.target.value
+    //       // console.log(query)
+    //       // Create copy of item list
+    //       let updatedList = [...freeTalkSearchs];
+    //       // Include all elements which includes the search query
+    //       updatedList = updatedList.filter((item) => {
+    //         return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+    //       });
+    //       // Trigger render with updated values
+    //       setFilteredFreetalkList(updatedList);
+    //     };
 
-    //Calendarfilter
-    const [filteredCalendarList, setFilteredCalendarList] = new useState(calendarSearchs);
-    const filterByCalendarSearch = (e) => {
-        // Access input value
-        const query = e.target.value
-        // console.log(query)
-        // Create copy of item list
-        let updatedList = [...calendarSearchs];
-        // Include all elements which includes the search query
-        updatedList = updatedList.filter((item) => {
-          return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
-        });
-        // Trigger render with updated values
-        setFilteredCalendarList(updatedList);
-      };
+    // //Calendarfilter
+    // const [filteredCalendarList, setFilteredCalendarList] = new useState(calendarSearchs);
+    // const filterByCalendarSearch = (e) => {
+    //     // Access input value
+    //     const query = e.target.value
+    //     // console.log(query)
+    //     // Create copy of item list
+    //     let updatedList = [...calendarSearchs];
+    //     // Include all elements which includes the search query
+    //     updatedList = updatedList.filter((item) => {
+    //       return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+    //     });
+    //     // Trigger render with updated values
+    //     setFilteredCalendarList(updatedList);
+    //   };
 
 
     // input 안 x버튼 클릭할 때, input 내용 없어지도록 구현 + post 기능 추가
-    const [inputText, setInputText] = useState("");
+    // const [inputText, setInputText] = useState("");
 
     const onChangeInput = (e) => {
         setInputText(e.target.value);
@@ -193,6 +193,12 @@ const Search = () => {
         e.preventDefault();
         dispatch(__postSearch(search))
     }
+
+    useEffect(() => {
+        dispatch(__getSearchArticle())
+        // dispatch(__getSearchArticlePopular())
+    }, [dispatch])
+
 
     return (
         <HelpContainer onSubmit={onSubmitHandler}>
@@ -259,7 +265,7 @@ const Search = () => {
                         {/* search card 맵 돌릴 예정 */}
 
                         <>
-                            {filteredList?.map((search) => (
+                            {filteredList && filteredList?.map((search) => (
                                 <SearchCard key={search.articleId} id={search.articleId} search={search} />
                             ))}
                         </>
