@@ -314,8 +314,8 @@ const DetailWrap = styled.form`
 `;
 
 const HeaderTitle = styled.div`
-  font-weight: 800;
-  /* margin:10px auto; */
+  font-weight: 700;
+  font-size: 16px;
 `;
 const Revisebox = styled.div`
     border: 1px solid #f1f0f0;

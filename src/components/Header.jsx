@@ -50,8 +50,8 @@ const HeaderContainer = styled.div`
     align-items: center;
     font-size: 20px;
     font-weight: bold;
-    /* border-bottom: 1px solid #e7e7e7; */
-    box-shadow: 0px 2px 4px rgba(65, 65, 65, 0.1);
+    border-bottom: 1px solid #eeeded;
+    /* box-shadow: 0px 2px 13px rgba(107, 107, 107, 0.1); */
     /* border: 1px solid green; */
 `
 

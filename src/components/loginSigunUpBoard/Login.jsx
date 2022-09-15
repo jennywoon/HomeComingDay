@@ -189,15 +189,15 @@ const StLoginTitle = styled.div`
   text-align: center;
   font-size: 30px;
   font-weight: bold;
-  margin-bottom: 50px;
+  margin-bottom: 70px;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
 const LogoImg = styled.div`
-  width: 220px;
-  height: 160px;
+  width: 180px;
+  height: 120px;
   background-image: url(${logoname});
   background-position: center;
   background-size: 100% 100%;

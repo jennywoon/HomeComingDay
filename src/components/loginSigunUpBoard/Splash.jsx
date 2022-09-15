@@ -56,8 +56,8 @@ const LogoWrap = styled.div`
 `
 
 const LogoNameImg = styled.div`
-    width: 250px;
-    height: 170px;
+    width: 240px;
+    height: 160px;
     background-image: url(${logo3});
     background-position: center;
     background-size: 100% 100%;
