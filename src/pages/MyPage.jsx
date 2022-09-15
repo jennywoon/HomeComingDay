@@ -16,7 +16,7 @@ const MyPage = () => {
         <Container>
             <HeaderContainer>
                 <HeaderWrap>
-                    <Logo onClick={() => { navigate("/") }} style={{ cursor: "pointer" }} />
+                    <Logo onClick={() => { navigate("/main") }} style={{ cursor: "pointer" }} />
                     {/* <HeaderTitle
                 onClick={() => { navigate("/") }} style={{ cursor: "pointer" }}
             >HomeComing Day</HeaderTitle> */}

@@ -22,7 +22,7 @@ const Header = () => {
     return (
         <HeaderContainer>
             <HeaderWrap>
-                <Logo onClick={() => { navigate("/") }} style={{ cursor: "pointer" }} />
+                <Logo onClick={() => { navigate("/main") }} style={{ cursor: "pointer" }} />
                 <div style={{fontSize:"20px"}}>
                     {data && data.schoolName}
                     {/* {cookies.get("schoolname")} */}

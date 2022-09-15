@@ -74,7 +74,7 @@ const Login = () => {
     // console.log(response)
     if (response.payload.success === true) {
       if (response.payload.data.schoolInfo === true) {
-        navigate('/');
+        navigate('/main');
       } else if (response.payload.data.schoolInfo === false) {
         navigate('/schoolinfo');
       }

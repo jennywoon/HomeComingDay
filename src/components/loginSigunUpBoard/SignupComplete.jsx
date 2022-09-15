@@ -12,7 +12,7 @@ const SignupComplete = () => {
   const dispatch = useDispatch();
 
   const onClickHandler = () => {
-    navigate('/')
+    navigate('/main')
   }
 
   useEffect(() => {

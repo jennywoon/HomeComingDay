@@ -12,7 +12,7 @@ const InformationPage = () => {
             <Header />
             <Navbar>
                 <NavbarTitle
-                    onClick={() => { navigate("/") }}
+                    onClick={() => { navigate("/main") }}
                     style={{ paddingLeft: "20px" }}
                 >도움요청</NavbarTitle>
                 <NavbarTitle

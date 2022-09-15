@@ -85,7 +85,7 @@ const MyPageHome = () => {
         <Bottom>
           <Tap
             onClick={() => {
-              navigate('/');
+              navigate('/main');
             }}
             style={{ paddingLeft: '20px' }}
           >

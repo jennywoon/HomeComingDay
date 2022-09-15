@@ -23,7 +23,7 @@ const Home = () => {
         <Bottom>
           <Tap
             onClick={() => {
-              navigate('/');
+              navigate('/main');
             }}
             style={{ paddingLeft: '20px', color: '#f7931e' }}
           >

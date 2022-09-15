@@ -17,7 +17,7 @@ const SearchHome = () => {
             <SearchTest/>
             <SecondWrap>
                 <Bottom>
-                    <Tap onClick={() => { navigate("/") }}
+                    <Tap onClick={() => { navigate("/main") }}
                         style={{ paddingLeft: "20px" }}
                     >
                         <img src={Homeimg} alt='홈' style={{ width: '45%', margin:'2px' }} />

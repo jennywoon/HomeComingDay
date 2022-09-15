@@ -19,7 +19,7 @@ const SearchLayout = ({ children }) => {
                 <HeaderContainer>
                     <div></div>
                     <HeaderTitle
-                        onClick={() => { navigate("/") }} style={{ cursor: "pointer" }}
+                        onClick={() => { navigate("/main") }} style={{ cursor: "pointer" }}
                     >HomeComing Day</HeaderTitle>
 
                     <VscBell size="27" color="#000000"

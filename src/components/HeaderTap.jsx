@@ -8,7 +8,7 @@ const HeaderTap = () => {
     return (
         <Navbar>
             <NavbarTitle
-                onClick={() => { navigate("/")}}
+                onClick={() => { navigate("/main")}}
                 style={{ cursor: "pointer", paddingLeft: "20px" }}
             >도움요청</NavbarTitle>
             <NavbarTitle

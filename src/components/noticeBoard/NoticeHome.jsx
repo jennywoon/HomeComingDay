@@ -18,7 +18,7 @@ const ChatHome = () => {
                 <Header>
                     <IoIosArrowBack 
                     size="25px" cursor="pointer" style={{paddingLeft:"10px"}}
-                    onClick={() => { navigate("/") }} />
+                    onClick={() => { navigate("/main") }} />
                     <HeaderTitel>알림</HeaderTitel>
                     <div></div>
                 </Header>
@@ -41,7 +41,7 @@ const ChatHome = () => {
             {/* <BottomTap /> */}
             <BottomTapWrap>
                 <Bottom>
-                    <Tap onClick={() => { navigate("/") }}
+                    <Tap onClick={() => { navigate("/main") }}
                         style={{ paddingLeft: "20px" }}
                     >
                         <img

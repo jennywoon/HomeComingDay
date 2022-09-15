@@ -55,7 +55,7 @@ const FreeTalkCommentDeleteModal = ({ setModalOpen, comment, setShowComment}) =>
               <BottomTitle
             //   onClick={() => {
             //     dispatch(__deleteHelp(helpsfind.articleId))
-            //     navigate("/")
+            //     navigate("/main")
             //   }}
             onClick={onClickDelete}
               >삭제하기</BottomTitle>

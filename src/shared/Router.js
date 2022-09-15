@@ -40,15 +40,17 @@ import { Navigate } from "react-router-dom";
 const Router = () => {
 
   const token = getCookie("accessToken")
+  console.log(token);
   
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<MainPage />} />
+        <Route path="/main" element={<MainPage />} />
         <Route path="/naverlogin" element={<NaverLogin />} />
         <Route path="/schoolinfo" element={<SchoolInfoPage />}></Route>
-        <Route path="/login" element={token ? <Navigate to="/" /> : <LoginPage />}/>
-        <Route path="/signup" element={token ? <Navigate to="/" /> :<SignUpPage />}/>
+        {/* <Route path="/login" element={token ? <Navigate to="/main" /> : <LoginPage />}/> */}
+        <Route path="/login" element={token ? <Navigate to="/main" /> : <Navigate to="/login" />}/>
+        <Route path="/signup" element={token ? <Navigate to="/main" /> :<SignUpPage />}/>
         <Route path="/helpform" element={<HelpForm />}/>
         <Route path="/informationform" element={<InformationForm />}/>
         <Route path="/information" element={<InformationPage />} />
@@ -60,7 +62,7 @@ const Router = () => {
         <Route path="/signupcomplete" element={<SignupCompletePage />} />
         <Route path="/notice" element={<NoticePage />} />
         <Route path="/mypage" element={<MyPage />} />
-        <Route path="/splash" element={<Splash />} />
+        <Route path="/" element={<Splash />} />
         {/* 하단 페이지 추후 정리 */}
         <Route path="/test" element={<ScrollTest />} />
         <Route path="/helpcard" element={<HelpCard />} />

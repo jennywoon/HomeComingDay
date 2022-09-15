@@ -20,7 +20,7 @@ const MainPage = () => {
             <Header />
             <Navbar>
                     <NavbarTitle
-                        onClick={() => { navigate("/") }}
+                        onClick={() => { navigate("/main") }}
                         style={{paddingLeft: "20px", fontWeight: "800", textDecoration: "underline", color: "#f7931e" }}
                     >도움요청</NavbarTitle>
                     <NavbarTitle

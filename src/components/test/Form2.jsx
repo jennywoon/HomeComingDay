@@ -231,7 +231,7 @@ const Form2 = () => {
       }
       console.log(value);
       dispatch(__postHelp(formdata));
-      navigate('/');
+      navigate('/main');
     } else if (select === 'info') {
       const newinfo = {
         title: infotitle,
@@ -354,7 +354,7 @@ const Form2 = () => {
           <IoIosArrowBack
             size='25px'
             cursor='pointer'
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/main')}
           />
           {/* <Button type='submit' backgroundColor='white'>
             올리기

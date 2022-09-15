@@ -24,7 +24,7 @@ const MyPageLogoutModal = ({ setModalOpen }) => {
               <BottomTitle
               onClick={() => {
                 logout();
-                navigate("/splash")
+                navigate("/")
               }}
               >로그아웃</BottomTitle>
               <BottomTitle>돌아가기</BottomTitle>
