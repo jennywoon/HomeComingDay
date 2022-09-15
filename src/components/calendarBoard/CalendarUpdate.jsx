@@ -22,7 +22,8 @@ const CalendarUpdate = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { calendars } = useSelector((state) => state.calendars);
-  const calendarfind = calendars.find((calendar) => calendar.id === Number(id));
+  const calendarfind = calendars.find((calendar) => calendar.articleId === Number(id));
+  console.log(calendarfind)
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -52,16 +53,20 @@ const CalendarUpdate = () => {
   };
 
   const [EditTitle, setEditTitle] = useState(
-    calendarfind && calendarfind.calendartitle
+    calendarfind && calendarfind.title
   );
   const [EditLocation, setEditLocation] = useState(
-    calendarfind && calendarfind.calendarlocation
+    calendarfind && calendarfind.calendarLocation
   );
   const [EditContent, setEditContent] = useState(
-    calendarfind && calendarfind.calendarcontent
+    calendarfind && calendarfind.content
   );
-  const [reactCalendar, setReactCalendar] = useState('');
-  const [selectedTime, setSelectedTime] = useState('00:00');
+  const [reactCalendar, setReactCalendar] = useState(
+    calendarfind && calendarfind.calendarDate
+    );
+  const [selectedTime, setSelectedTime] = useState(
+    calendarfind && calendarfind.calendarTime
+    );
 
   const onChangeCalendar = (e) => {
     setReactCalendar(e.target.value);
@@ -94,12 +99,12 @@ const CalendarUpdate = () => {
   } = calendar;
 
   useEffect(() => {
-    if (EditTitle !== '' && selectedTime !== '' && calendarlocation !== '' && EditContent !== '') {
+    if (EditTitle !== '' && EditLocation !== '' && EditContent !== '') {
       handleCheck(true);
     } else {
       handleCheck(false);
     }
-  },[EditTitle, EditContent,selectedTime, calendarlocation])
+  },[EditTitle, EditContent, EditLocation])
 
   useEffect(() => {
     dispatch(__getCalendar());
@@ -109,7 +114,6 @@ const CalendarUpdate = () => {
 
   const onUpdateHandler = async(e) => {
     e.preventDefault();
-    setIsOnActive(e);
     const editcalendarfind = {
       ...calendarfind,
       id: id,

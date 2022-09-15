@@ -12,7 +12,7 @@ const SearchCard = ({search,id}) => {
     // useEffect(() => {
     //     dispatch(__getSearch());
     // },[dispatch])
-
+    
     const onClickNavi = () => {
     if(search.articleFlag === "도움요청"){
         navigate(`/helpdetail/${id}`)
@@ -29,7 +29,7 @@ const SearchCard = ({search,id}) => {
         <HelpContainer onClick={onClickNavi}>
             <CardHead>
                 <HeadImg>
-                    <BsQuestionSquare />
+                    <UserImg src={search.userImage}></UserImg>
                 </HeadImg>
                 <HeadUser>
                     <HeadTop>
@@ -86,6 +86,10 @@ const HeadImg = styled.div`
     align-items: center;
     background-color: #f6bd60;
     border-radius: 50%;
+`
+const UserImg =styled.img`
+    width: 30px;
+    height: 30px;
 `
 
 const HeadUser = styled.div`

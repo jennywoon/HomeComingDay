@@ -9,20 +9,32 @@ import SearchSlice from "../modules/SearchSlice";
 import SchoolInfoSlice from "../modules/SchoolInfoSlice";
 import MyPageSlice from "../modules/MyPageSlice";
 import { getDefaultMiddleware } from "@reduxjs/toolkit";
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { combineReducers } from 'redux';
+
+const persistConfig = {
+  key: 'root',
+  storage,
+};
+
+const reducers = combineReducers({
+      // naver: NaverSlice.reducer,
+  user: UserSlice.reducer,
+  informations : InformationSlice,
+  helps : HelpSlice,
+  mypages: MyPageSlice,
+  freetalks : FreeTalkSlice,
+  calendars : CalendarSlice,
+  searchs: SearchSlice,
+  schoolInfo: SchoolInfoSlice,
+})
+
+const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
   // devTools: process.env.NODE_ENV !== "production",
-  reducer: {
-    // naver: NaverSlice.reducer,
-    user: UserSlice.reducer,
-    informations : InformationSlice,
-    helps : HelpSlice,
-    mypages: MyPageSlice,
-    freetalks : FreeTalkSlice,
-    calendars : CalendarSlice,
-    searchs: SearchSlice,
-    schoolInfo: SchoolInfoSlice,
-  },
+  reducer: persistedReducer,
   middleware: getDefaultMiddleware({
     serializableCheck: false,
 }),
