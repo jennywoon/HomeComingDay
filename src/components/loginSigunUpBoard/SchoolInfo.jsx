@@ -12,6 +12,7 @@ import {
   __getAdmissions,
   __postSchoolInfo,
 } from '../../redux/modules/SchoolInfoSlice';
+import { __getMyPage } from '../../redux/modules/MyPageSlice';
 
 const SchoolInfo = () => {
   const navigate = useNavigate();
@@ -69,9 +70,11 @@ const SchoolInfo = () => {
   };
 
   // 저장하기 버튼
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async(e) => {
     e.preventDefault();
-    dispatch(__postSchoolInfo(schoolInfos)).then(navigate('/signupcomplete'));
+    await dispatch(__postSchoolInfo(schoolInfos))
+    // await dispatch(__getMyPage())
+    .then(navigate('/signupcomplete'));
   };
 
   // 저장하기 버튼 활성화

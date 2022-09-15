@@ -13,10 +13,10 @@ const CalendarCommentDeleteModal = ({ setModalOpen, comment, setShowComment}) =>
     setModalOpen(false);
   };
 
-  const { Calendars } = useSelector((state) => state.helps)
+  const { calendars } = useSelector((state) => state.calendars)
   const { id } = useParams();
-  const Calendarsfind = Calendars.find((Calendar) => Calendar.articleId === Number(id))
-  const { commentId } = Calendarsfind.commentList.find((commentmap) => commentmap.commentId === comment.commentId)
+  const calendarsfind = calendars.find((Calendar) => Calendar.articleId === Number(id))
+  const { commentId } = calendarsfind.commentList.find((commentmap) => commentmap.commentId === comment.commentId)
 
     const onClickDelete = async () => {
         const commentDelete = {
@@ -51,7 +51,7 @@ const CalendarCommentDeleteModal = ({ setModalOpen, comment, setShowComment}) =>
 export default CalendarCommentDeleteModal;
 
 const Container = styled.div`
-  position: fixed;
+  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: center;

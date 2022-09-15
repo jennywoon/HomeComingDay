@@ -51,7 +51,7 @@ const HelpCommentDeleteModal = ({ setModalOpen, comment, setShowComment}) => {
 export default HelpCommentDeleteModal;
 
 const Container = styled.div`
-  position: fixed;
+  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -61,6 +61,7 @@ const Container = styled.div`
   overflow: hidden;
   /* bottom: 0; */
   top: 0;
+  
   @media screen and (max-width: 1024px) {
     background-image: none;
   }
@@ -97,6 +98,7 @@ position: relative;
 `;
 
 const ModalContainer = styled.div`
+
   width: 80%;
   height: 180px;
   background-color: white;
@@ -104,11 +106,13 @@ const ModalContainer = styled.div`
   flex-direction: column;
   align-items: center;
   border-radius: 16px;
+  
 `;
 
 const FirstWrap = styled.div`
   width: 100%;
   height: 100%;
+  
 `;
 const ModalTop = styled.div`
   width: 100%;
