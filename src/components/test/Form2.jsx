@@ -386,9 +386,6 @@ const Form2 = () => {
                 ></Textarea>
                 <FormFooter>
                   <FooterContain>
-                    {select === 'help' ||
-                    select === 'info' ||
-                    select === 'freetalk' ? (
                       <>
                         <GetRootProps>
                           <StImaBox>
@@ -397,19 +394,21 @@ const Form2 = () => {
                             >
                               <Imgadd size='24px' />
                               <Imgtxt>이미지 첨부</Imgtxt>
+                              
                               {/* <button width="300px" text="컴퓨터에서 선택" /> */}
                               <input {...getInputProps()} />
                             </StImgUpload>
+                            <TxtWarning>* 이미지 최대 3장</TxtWarning>
                           </StImaBox>
                         </GetRootProps>
                         <StImgContainer>
                           {files.length !== 0 &&
                             files.map((file, i) => (
                               // console.log("file!!!!!!!", file)
-                              <div key={i} style={{ display: 'flex' }}>
+                              <StImgList key={i} style={{ display: 'flex' }}>
                                 <div
                                   style={{
-                                    width: '120px',
+                                    width: '122px',
                                     height: '110px',
                                     overflow: 'hidden',
                                     display: 'flex',
@@ -444,11 +443,11 @@ const Form2 = () => {
                                     }}
                                   />
                                 </div>
-                              </div>
+                              </StImgList>
                             ))}
                         </StImgContainer>
                       </>
-                    ) : null}
+                  
                   </FooterContain>
                 </FormFooter>
               </StCard>
@@ -472,9 +471,7 @@ const Form2 = () => {
                 ></Textarea>
                 <FormFooter>
                   <FooterContain>
-                    {select === 'help' ||
-                    select === 'info' ||
-                    select === 'freetalk' ? (
+                   
                       <>
                         <GetRootProps>
                           <StImaBox>
@@ -486,16 +483,17 @@ const Form2 = () => {
                               {/* <button width="300px" text="컴퓨터에서 선택" /> */}
                               <input {...getInputProps()} />
                             </StImgUpload>
+                            <TxtWarning>* 이미지 최대 3장</TxtWarning>
                           </StImaBox>
                         </GetRootProps>
                         <StImgContainer>
                           {files.length !== 0 &&
                             files.map((file, i) => (
                               // console.log("file!!!!!!!", file)
-                              <div key={i} style={{ display: 'flex' }}>
+                              <StImgList key={i} style={{ display: 'flex' }}>
                                 <div
                                   style={{
-                                    width: '120px',
+                                    width: '122px',
                                     height: '110px',
                                     overflow: 'hidden',
                                     display: 'flex',
@@ -530,11 +528,11 @@ const Form2 = () => {
                                     }}
                                   />
                                 </div>
-                              </div>
+                              </StImgList>
                             ))}
                         </StImgContainer>
                       </>
-                    ) : null}
+                 
                   </FooterContain>
                 </FormFooter>
               </StCard>
@@ -620,9 +618,6 @@ const Form2 = () => {
                 ></Textarea>
                 <FormFooter>
                   <FooterContain>
-                    {select === 'help' ||
-                    select === 'info' ||
-                    select === 'freetalk' ? (
                       <>
                         <GetRootProps>
                           <StImaBox>
@@ -634,16 +629,17 @@ const Form2 = () => {
                               {/* <button width="300px" text="컴퓨터에서 선택" /> */}
                               <input {...getInputProps()} />
                             </StImgUpload>
+                            <TxtWarning>* 이미지 최대 3장</TxtWarning>
                           </StImaBox>
                         </GetRootProps>
                         <StImgContainer>
                           {files.length !== 0 &&
                             files.map((file, i) => (
                               // console.log("file!!!!!!!", file)
-                              <div key={i} style={{ display: 'flex' }}>
+                              <StImgList key={i} style={{ display: 'flex' }}>
                                 <div
                                   style={{
-                                    width: '120px',
+                                    width: '122px',
                                     height: '110px',
                                     overflow: 'hidden',
                                     display: 'flex',
@@ -678,11 +674,11 @@ const Form2 = () => {
                                     }}
                                   />
                                 </div>
-                              </div>
+                              </StImgList>
                             ))}
                         </StImgContainer>
                       </>
-                    ) : null}
+                 
                   </FooterContain>
                 </FormFooter>
               </StCard>
@@ -773,6 +769,8 @@ const StCard = styled.div`
   padding: 5px;
 `;
 
+
+
 const Textarea = styled.textarea`
   width: 100%;
   height: 400px;
@@ -795,6 +793,7 @@ const FormFooter = styled.div`
 
 const FooterContain = styled.div`
   width: 100%;
+  
 `;
 
 const Imgadd = styled(GrImage)`
@@ -929,6 +928,7 @@ const CalendarTextarea = styled.textarea`
   display: flex;
   justify-content: center;
   align-items: center;
+  outline:none;
   textarea::placeholder {
     text-align: right;
   }
@@ -961,6 +961,12 @@ const StImaBox = styled.div`
   margin: 10px;
   /* cursor: pointer; */
 `;
+const TxtWarning =styled.div`
+  font-size:12px;
+`
+const StImgList = styled.div`
+  justify-items: baseline;
+`
 
 const StImgUpload = styled.div`
   display: flex;
@@ -979,7 +985,7 @@ const StImgUpload = styled.div`
 const StImgContainer = styled.div`
   display: flex;
   width: 100%;
-  height: 100px;
+  height: 115px;
   box-sizing: border-box;
   background: #fff;
   scrollbar-width: none;
