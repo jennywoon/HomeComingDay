@@ -48,8 +48,8 @@ const Router = () => {
         <Route path="/main" element={<MainPage />} />
         <Route path="/naverlogin" element={<NaverLogin />} />
         <Route path="/schoolinfo" element={<SchoolInfoPage />}></Route>
-        {/* <Route path="/login" element={token ? <Navigate to="/main" /> : <LoginPage />}/> */}
-        <Route path="/login" element={token ? <Navigate to="/main" /> : <Navigate to="/login" />}/>
+        <Route path="/login" element={token ? <Navigate to="/main" /> : <LoginPage />}/>
+        {/* <Route path="/login" element={token ? <Navigate to="/main" /> : <Navigate to="/login" />}/> */}
         <Route path="/signup" element={token ? <Navigate to="/main" /> :<SignUpPage />}/>
         <Route path="/helpform" element={<HelpForm />}/>
         <Route path="/informationform" element={<InformationForm />}/>
