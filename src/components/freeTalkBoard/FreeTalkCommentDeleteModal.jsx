@@ -71,7 +71,7 @@ const FreeTalkCommentDeleteModal = ({ setModalOpen, comment, setShowComment}) =>
 export default FreeTalkCommentDeleteModal;
 
 const Container = styled.div`
-  position: fixed;
+  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: center;
