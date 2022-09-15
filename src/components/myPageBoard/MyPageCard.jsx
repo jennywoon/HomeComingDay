@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const MyPageCard = ({ myarticle,id }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     useEffect(() => {
         dispatch(__getMyArticle())
     }, [dispatch])

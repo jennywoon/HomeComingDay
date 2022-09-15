@@ -6,6 +6,7 @@ import BottomTap from './BottomTap';
 import logo from "../assets/logo.png"
 import { useDispatch, useSelector } from 'react-redux';
 import { __getMyPage } from '../redux/modules/MyPageSlice';
+import Cookies from 'universal-cookie';
 
 const Header = () => {
 
@@ -16,12 +17,16 @@ const Header = () => {
     // ), [dispatch])
     const data = useSelector((state) => state.mypages.mypages)
     console.log(data);
+    const cookies = new Cookies();
 
     return (
         <HeaderContainer>
             <HeaderWrap>
                 <Logo onClick={() => { navigate("/") }} style={{ cursor: "pointer" }} />
-                <div style={{fontSize:"20px"}}>{data && data.schoolName}</div>
+                <div style={{fontSize:"20px"}}>
+                    {data && data.schoolName}
+                    {/* {cookies.get("schoolname")} */}
+                    </div>
                 <IconWrap>
                     <VscBell size="27"
                         onClick={() => { navigate("/notice") }} style={{ cursor: "pointer" }}

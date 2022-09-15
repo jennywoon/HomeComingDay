@@ -17,39 +17,39 @@ const MyPageHome = () => {
   const dispatch = useDispatch();
 
   const myarticles = useSelector((state) => state.mypages.myarticles);
-  const {error} = useSelector((state) => state.mypages.myarticles)
+  // const {error} = useSelector((state) => state.mypages.myarticles)
   console.log(myarticles);
 
-  // useEffect(() => {
-  //   dispatch(__getMyArticle());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(__getMyArticle());
+  }, [dispatch]);
 
   // 무한 스크롤
 
-  const targetRef = useRef(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [page, setPage] = useState(1);
+  // const targetRef = useRef(null);
+  // const [isLoaded, setIsLoaded] = useState(false);
+  // const [page, setPage] = useState(1);
   
-  const checkIntersect = useCallback(([entry], observer) => {
-    if(entry.isIntersecting && !isLoaded){
-      dispatch(__getMyArticle(page));
+  // const checkIntersect = useCallback(([entry], observer) => {
+  //   if(entry.isIntersecting && !isLoaded){
+  //     dispatch(__getMyArticle(page));
 
-      observer.unobserve(entry.target);
-      setPage((prev) => prev + 1);
-    }
-  }, [dispatch, isLoaded, page])
+  //     observer.unobserve(entry.target);
+  //     setPage((prev) => prev + 1);
+  //   }
+  // }, [dispatch, isLoaded, page])
 
-  useEffect(() => {
-    let observer;
-    if(targetRef){
-      observer = new IntersectionObserver(checkIntersect, {
-        threshold: 0.5,
-      })
-      observer.observe(targetRef.current);
-    }
-  }, [myarticles]);
+  // useEffect(() => {
+  //   let observer;
+  //   if(targetRef){
+  //     observer = new IntersectionObserver(checkIntersect, {
+  //       threshold: 0.5,
+  //     })
+  //     observer.observe(targetRef.current);
+  //   }
+  // }, [myarticles]);
 
-  console.log(myarticles);
+  // console.log("myarticles", myarticles);
 
 
   return (
@@ -77,7 +77,7 @@ const MyPageHome = () => {
                 <p>내가 쓴 게시글이 없습니다</p>
               </NoneData>
             )}
-            <div ref={targetRef}>{error}</div>
+            {/* <div ref={targetRef}>{error}</div> */}
           </ArticleWrap>
         </BottomWrap>
       </MyPageBottom>

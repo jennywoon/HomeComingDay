@@ -57,9 +57,9 @@ export const __getMyArticle = createAsyncThunk("myarticles/getMyArticles", async
   try {
     const data = await axios({
       method: 'get',
-      // url: `${BASE_URL}/myPage/myArticle`,
+      url: `${BASE_URL}/myPage/myArticle`,
       // 아래 무한스크롤 url
-      url: `${BASE_URL}/myPage/myArticle?page=${payload}&size=${7}`,
+      // url: `${BASE_URL}/myPage/myArticle?page=${payload}&size=${7}`,
       payload, 
       headers: {
         // 'Content-Type': 'application/json',
@@ -68,7 +68,9 @@ export const __getMyArticle = createAsyncThunk("myarticles/getMyArticles", async
       },
     });
     console.log(data.data.content)
-    return thunkAPI.fulfillWithValue(data.data.content);
+    return thunkAPI.fulfillWithValue(data.data);
+    // 아래 무한 스크롤일때
+    // return thunkAPI.fulfillWithValue(data.data.content);
   } catch (error) {
     console.log('error', error);
     return thunkAPI.rejectWithValue(error);
@@ -109,8 +111,9 @@ export const MyPageSlice = createSlice({
     },
     [__getMyArticle.fulfilled]: (state, action) => {
       state.isLoading = false;
-      // state.myarticles = action.payload;
-      state.myarticles.push(...action.payload);
+      state.myarticles = action.payload;
+      // 아래 무한스크롤일때
+      // state.myarticles.push(...action.payload);
     },
     [__getMyArticle.rejected]: (state, action) => {
       state.isLoading = false;

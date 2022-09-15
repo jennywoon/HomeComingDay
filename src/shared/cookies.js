@@ -22,4 +22,6 @@ export const removeCookie = (name) => {
 export function logout(){
   cookies.remove("accessToken", {path: "/"})
   cookies.remove("refreshToken", {path: "/"})
+  cookies.remove("username", {path: "/"})
+  // cookies.remove("schoolname", {path: "/"})
 }

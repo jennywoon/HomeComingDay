@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Complete from "../../assets/Complete.png"
 import Button from "../../components/elements/Button"
 import { __getMyPage } from '../../redux/modules/MyPageSlice';
+import Cookies from 'universal-cookie';
 
 const SignupComplete = () => {
   const navigate = useNavigate();
@@ -21,6 +22,8 @@ const SignupComplete = () => {
   const data = useSelector((state) => state.mypages.mypages)
   console.log(data);
 
+  const cookies = new Cookies();
+
   return (
     <StSignupComplete>
       <StCompleteWrap>
@@ -31,13 +34,19 @@ const SignupComplete = () => {
           </StImg>
           <StText>
             <p style={{ fontSize: '24px' }}>
-              <strong>{data && data.username}</strong>님,
+              <strong>
+                {/* {data && data.username} */}
+                {cookies.get("username")}
+                </strong>님,
             </p>
             <p style={{ fontSize: '24px', marginBottom: '25px' }}>
               홈커밍데이 가입을 환영합니다!
             </p>
             <SchoolDiv>
-              <p style={{color: "#f7931e"}}>{data && data.schoolName}</p>
+              <p style={{color: "#f7931e"}}>
+                {data && data.schoolName}
+                {/* {cookies.get("schoolname")} */}
+                </p>
               <p>선후배들과 소통을 이어가보세요</p>
             </SchoolDiv>
           </StText>

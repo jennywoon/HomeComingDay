@@ -20,6 +20,8 @@ export const __loginUser = createAsyncThunk(
       const data = await axios.post(`${BASE_URL}/login`, payload, config);
       setCookie('accessToken', `${data.data.data.accessToken}`);
       setCookie('refreshToken', `${data.data.data.refreshToken}`);
+      setCookie('username', `${data.data.data.username}`);
+      // setCookie("schoolname", `${data.data.data.schoolName}`)
       console.log(data.data.success)
       console.log(data.data)
       return thunkAPI.fulfillWithValue(data.data);
