@@ -119,6 +119,7 @@ const HelpDetail = () => {
 
   // 좋아요
   const { heart } = useSelector((state) => state.helps);
+  console.log(heart)
   const heartmap = heart && heart.map((heart) => heart.payload);
   console.log('heart', heart, 'heartmap', heartmap);
 
@@ -134,9 +135,9 @@ const HelpDetail = () => {
     dispatch(__getHelp());
   };
 
-  useEffect(()=>{
-    dispatch(__getHelpHeart());
-  }, [dispatch])
+  // useEffect(()=>{
+  //   dispatch(__getHelpHeart());
+  // }, [dispatch])
 
   return (
     <Container>
