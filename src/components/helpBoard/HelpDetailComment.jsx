@@ -149,7 +149,7 @@ const CommentBox = styled.div`
     position: relative;
     width: 100%;
 `
-
+ 
 const CommentImg = styled.img`
     width:30px;
     height: 30px;
