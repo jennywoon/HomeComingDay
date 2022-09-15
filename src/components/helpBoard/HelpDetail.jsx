@@ -548,9 +548,6 @@ const CommentContainer = styled.form`
   /* bottom: 0;
   bottom: 10px; */
   width: 100%;
-  /* height: 100%; */
-  /* border: 1px solid blue; */
-  /* max-width:500px; */
   display: flex;
   flex-direction: column;
   justify-content: center;
