@@ -127,19 +127,12 @@ const InformationDetail = () => {
   };
 
   // 좋아요
-  const { heart } = useSelector((state) => state.informations);
-  const heartmap = heart && heart.map((heart) => heart.payload);
-  console.log('heart', heart, 'heartmap', heartmap);
-
-  const heartLike = heartmap[0];
-  console.log(heartLike);
-
   const heartClick = async () => {
     const newHeart = {
       articleId: id,
     };
     const response = await dispatch(__postInformationHeart(newHeart));
-    console.log(response.payload);
+    // console.log(response.payload);
     dispatch(__getInformation());
   };
 
@@ -240,7 +233,7 @@ const InformationDetail = () => {
                       댓글 {informationsfind && informationsfind.commentCnt}
                     </CommentCount>
                     <HeartCount onClick={heartClick}>
-                      {heartLike ? (
+                      {informationsfind &&informationsfind.heart === true ? (
                         <HeartImg>
                           <img src={heartColorImg} alt='좋아요이미지' />
                         </HeartImg>

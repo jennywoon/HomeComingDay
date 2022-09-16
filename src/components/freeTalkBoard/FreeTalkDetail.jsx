@@ -111,19 +111,12 @@ const FreeTalkDetail = () => {
     }
 
   // 좋아요
-  const {heart} = useSelector((state)=>state.freetalks)
-  const heartmap = heart&&heart.map((heart)=> heart.payload)
-  console.log("heart",heart ,"heartmap",heartmap )
-
-  const heartLike = heartmap[0]
-  console.log(heartLike)
-
   const heartClick = async () => {
     const newHeart = {
       articleId: id,
     };
     const response = await dispatch(__postFreeTalkHeart(newHeart));
-    console.log(response.payload);
+    // console.log(response.payload);
     dispatch(__getFreeTalk());
   };
 
@@ -209,7 +202,7 @@ const FreeTalkDetail = () => {
                                         <HeartCount
                                             onClick={heartClick}
                                         >
-                                            {heartLike ? (
+                                            {freetalksfind &&freetalksfind.heart === true ? (
                                                 <HeartImg>
                                                     <img src={heartColorImg} alt='좋아요이미지' />
                                                 </HeartImg>
