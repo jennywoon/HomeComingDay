@@ -11,12 +11,12 @@ import { BiDotsVerticalRounded } from "react-icons/bi";
 import CalendarCommentDeleteModal from './CalendarCommentDeleteModal';
 
 
-const CalendarDetailComment = ({ comment, modalRef, calendarfind }) => {
+const CalendarDetailComment = ({ comment, modalRef, calendarfind ,data}) => {
     const dispatch = useDispatch();
     const { id } = useParams();
 
     const { commentId } = calendarfind.commentList.find((commentmap) => commentmap.commentId === comment.commentId)
-
+    const {username} = calendarfind.commentList.find((commentmap)=>commentmap.username === comment.username)
     console.log("commentId", commentId)
 
 
@@ -111,9 +111,13 @@ const CalendarDetailComment = ({ comment, modalRef, calendarfind }) => {
                     </TxtWrap>
                 </CommentTxt>
                 {/* <AiOutlineMenu size="18px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }} onClick={onCilckShow}/> */}
+
+                {username === data.username ? (
                 <BiDotsVerticalRounded
                     size="20px" style={{ marginLeft: "auto", marginTop: "2px", cursor: "pointer", color: "#bebebe" }}
                     onClick={onCilckShow} />
+                ) : null}
+
                 {showComment ?
                     <Revisebox ref={modalRef}>
                         <ReviseButton onClick={onClickRevice} type="button">수정</ReviseButton>
@@ -175,20 +179,22 @@ const Comment = styled.p`
 `
 const Revisebox = styled.div`
     border: 1px solid #f1f0f0;
-    border-radius: 10px;
+    border-radius: 16px;
     position: absolute;
     z-index: 2;
     display: flex;
     flex-direction: column;
     right: 0;
-    top:55px;
+    top:30px;
     background-color: #fff;
-    /* box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.05); */
+    width:58px;
+    box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
 `
 const ReviseButton = styled.button`
     border:none;
     border-bottom: 1px solid #f1f0f0;
-    padding:10px 15px;
+    width:100%;
+    padding:10px;
     border-radius: 10px 10px 0 0;
     background-color: #fff;
     color:gray;
@@ -201,7 +207,8 @@ const ReviseButton = styled.button`
 const DeleteButton = styled.button`
     border:none;
     background-color: #eee;
-    padding:10px 15px;
+    width:100%;
+    padding:10px;
     border-radius: 0 0 10px 10px;
     background-color: #fff;
     color:gray;
@@ -212,8 +219,9 @@ const DeleteButton = styled.button`
 `
 const ReviseButtonChange = styled.button`
     margin-left : auto; 
+    width:70px;
     background-color:white;
-    font-size:13px;
+    font-size:12px;
     /* border:none; */
     border:1px solid gray;
     cursor:pointer;

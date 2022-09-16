@@ -41,7 +41,9 @@ const CalendarDetail = () => {
   const calendarfind = calendars.find(
     (calendar) => calendar.articleId === Number(id)
   );
+  const data = useSelector((state) => state.mypages.mypages)
 
+  // 조회수 반영
   useEffect(() => {
     dispatch(__getDetailCalendar(id));
   }, [dispatch]);
@@ -158,6 +160,7 @@ const heartClick = async () => {
                   </Txtstudent>
                   {showChaet ? <ChaetingBox>1:1채팅</ChaetingBox> : null}
                 </Bodytxt>
+                {calendarfind.username === data.username ? 
                 <BiDotsVerticalRounded
                   size='20px'
                   style={{
@@ -166,7 +169,8 @@ const heartClick = async () => {
                     color: '#bebebe',
                   }}
                   onClick={onCilckShow}
-                />
+                /> : null}
+
                 {show ? (
                   <Revisebox ref={modalRef}>
                     <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
@@ -248,6 +252,7 @@ const heartClick = async () => {
                             comment={comment}
                             calendarfind={calendarfind}
                             modalRef={modalRef}
+                            data={data}
                           />
                         ))}
                     </>
@@ -345,16 +350,16 @@ const Revisebox = styled.div`
   display: flex;
   flex-direction: column;
   right: 0;
-  top: 55px;
+  top: 40px;
   background-color: #fff;
   box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
   border-radius: 16px;
-  /* box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.05); */
+  width:58px;
 `;
 const ReviseButton = styled.button`
   border: none;
   border-bottom: 1px solid #f1f0f0;
-  padding: 10px 15px;
+  padding: 10px;
   border-radius: 10px 10px 0 0;
   background-color: #fff;
   color: gray;
@@ -368,7 +373,7 @@ const ReviseButton = styled.button`
 const DeleteButton = styled.button`
   border: none;
   background-color: #eee;
-  padding: 10px 15px;
+  padding: 10px;
   border-radius: 0 0 10px 10px;
   background-color: #fff;
   color: gray;
