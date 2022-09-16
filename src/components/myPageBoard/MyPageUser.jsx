@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { __getMyPage, __patchProfileImage } from '../../redux/modules/MyPageSlice';
 import MyPageLogoutModal from "./MyPageLogoutModal"
 import profileorange from "../../assets/profileorange.png"
+import camera from "../../assets/camera.png"
 
 const MyPageUser = () => {
 
@@ -69,7 +70,7 @@ const MyPageUser = () => {
                         </UserImg>
                         <input type="file" ref={imgRef} onChange={onChangeImage} style={{ display: "none" }}></input>
                         <UserImgUpload onClick={() => { onClickFileBtn() }}>
-                            <AiOutlineCamera size="18" style={{ color: "white" }} />
+                            {/* <AiOutlineCamera size="18" style={{ color: "white" }} /> */}
                         </UserImgUpload>
                 </UserImgWrap>
                 <UserInfo>
@@ -108,11 +109,12 @@ const StLoginContainer = styled.form`
 `;
 
 const UserContainer = styled.div`
-    width: 90%;
+    width: 85%;
     height: 78%;
     /* height: 200px; */
     display: flex;
     /* border: 1px solid green; */
+    gap: 10px;
 `
 
 const UserImgWrap = styled.div`
@@ -124,8 +126,8 @@ const UserImgWrap = styled.div`
 `
 
 const UserImg = styled.img`
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
     background-color: #f9f9f9;
     display: flex;
@@ -136,8 +138,8 @@ const UserImg = styled.img`
 `
 
 const UserImgUpload = styled.div`
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     background-color: black;
     display: flex;
@@ -145,8 +147,11 @@ const UserImgUpload = styled.div`
     align-items: center;
     position: absolute;
     bottom: 82%;
-    right: 75%;
+    right: 72%;
     cursor: pointer;
+    background-image: url(${camera});
+    background-position: center;
+    background-size: 80% 80%;
 `
 const UserInfo = styled.div`
     width: 75%;

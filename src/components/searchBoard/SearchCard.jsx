@@ -5,24 +5,27 @@ import { IoClose } from "react-icons/io5";
 import { __getSearch } from '../../redux/modules/SearchSlice';
 import { useNavigate } from 'react-router-dom';
 import { BsQuestionSquare } from "react-icons/bs";
+import commentgray from "../../assets/commentgray.png"
+import heartgray from '../../assets/heartgray.png';
 
-const SearchCard = ({search,id}) => {
+const SearchCard = ({ search, id }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     // useEffect(() => {
     //     dispatch(__getSearch());
     // },[dispatch])
-    
+
     const onClickNavi = () => {
-    if(search.articleFlag === "도움요청"){
-        navigate(`/helpdetail/${id}`)
-    }else if(search.articleFlag === "정보공유"){
-        navigate(`/informationdetail/${id}`)
-    }else if(search.articleFlag === "만남일정"){
-        navigate(`/calendardetail/${id}`)
-    }else if(search.articleFlag === "자유토크"){
-        navigate(`/freetalkdetail/${id}`)
-    }};
+        if (search.articleFlag === "도움요청") {
+            navigate(`/helpdetail/${id}`)
+        } else if (search.articleFlag === "정보공유") {
+            navigate(`/informationdetail/${id}`)
+        } else if (search.articleFlag === "만남일정") {
+            navigate(`/calendardetail/${id}`)
+        } else if (search.articleFlag === "자유토크") {
+            navigate(`/freetalkdetail/${id}`)
+        }
+    };
 
 
     return (
@@ -34,7 +37,7 @@ const SearchCard = ({search,id}) => {
                 <HeadUser>
                     <HeadTop>
                         <HeadName>{search.username}</HeadName>
-                        <HeadTime>{search.createdAt}</HeadTime>
+                        <BoardName>{search.articleFlag}</BoardName>
                     </HeadTop>
                     <HeadBottom>
                         <HeadDepartment>{search.departmentName}</HeadDepartment>
@@ -48,15 +51,31 @@ const SearchCard = ({search,id}) => {
                     {help.content}
                 </BodyContent> */}
             </CardBody>
-            
+
             <CardFooter>
                 <FooterTxt>
                     <Views>조회수 {search.views}</Views>
-                    <CommentCount>댓글 {search.commentCnt}</CommentCount>
+                    <div>|</div>
+                    <HeadTime>{search.createdAt}</HeadTime>
+                    {/* <CommentCount>댓글 {search.commentCnt}</CommentCount> */}
                 </FooterTxt>
-                <BoardName>
+                {/* <BoardName>
                     <div>{search.articleFlag}</div>
-                </BoardName>
+                </BoardName> */}
+                <Count>
+                    <CommentCount>
+                        <CommentImg>
+                            <img src={commentgray} alt='댓글이미지' />
+                        </CommentImg>
+                        {search.commentCnt}
+                    </CommentCount>
+                    <HeartCount>
+                        <HeartImg>
+                            <img src={heartgray} alt='댓글이미지' />
+                        </HeartImg>
+                        {search.heartCnt}
+                    </HeartCount>
+                </Count>
             </CardFooter>
         </HelpContainer>
     );
@@ -88,7 +107,7 @@ const HeadImg = styled.div`
     border-radius: 50%;
     margin-right: 7px;
 `
-const UserImg =styled.img`
+const UserImg = styled.img`
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -123,12 +142,6 @@ const HeadName = styled.h2`
 const HeadStudent = styled.p`
 
 `
-const HeadTime = styled.p`
-    font-size: 12px;
-    color:gray;
-    margin-left: auto;
-    font-weight: 500;
-`
 const CardBody = styled.div`
 `
 const BodyTitle = styled.div`
@@ -145,31 +158,57 @@ const BodyContent = styled.div`
 `
 const CardFooter = styled.div`
     display: flex;
-    height: 20px;
+    /* height: 20px; */
+    align-items: center;
+    justify-content: space-between;
     
 `
-const FooterTxt =styled.div`
+const FooterTxt = styled.div`
     display: flex;
+    color:gray;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
 `
 
 const Views = styled.div`
-    font-size: 12px;
-    color:gray;
-    margin-right:10px;
 `
-const CommentCount = styled.div`
-    font-size: 12px;
-    color:gray;
+
+const HeadTime = styled.p`
 `
+
 const BoardName = styled.div`
     width: 60px;
-    background-color: #f7931e;
-    color: white;
-    font-size: 12px;
-    font-weight: 500;
-    border-radius: 10px;
+    height: 20px;
+    background-color: #fff4cc;
+    border-radius: 20px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin-left: auto;
+    font-size: 12px;
+    font-weight: 700;
+    color: #f7931e
+`
+const Count = styled.div`
+  display: flex;
+`;
+
+const CommentCount = styled.div`
+  font-size: 12px;
+  color: gray;
+  display: flex;
+  margin-right: 10px;
+`;
+
+const CommentImg = styled.div`
+  margin-right: 5px;
+`
+
+const HeartCount = styled.div`
+  font-size: 12px;
+  color: gray;
+  display: flex;
+`;
+
+const HeartImg = styled.div`
+  margin-right: 5px;
 `

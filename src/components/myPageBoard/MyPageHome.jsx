@@ -151,7 +151,7 @@ const HomeContainer = styled.div`
 const MyPageTop = styled.div`
   width: 100%;
   /* height: 200px; */
-  height: 22%;
+  height: 20%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -162,7 +162,7 @@ const MyPageTop = styled.div`
 const MyPageBottom = styled.div`
   width: 100%;
   /* height: 100%; */
-  height: 78%;
+  height: 80%;
   display: flex;
   justify-content: center;
   /* border: 1px solid blue; */
