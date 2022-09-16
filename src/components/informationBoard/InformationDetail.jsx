@@ -46,6 +46,7 @@ const InformationDetail = () => {
   const informationsfind = informations.find(
     (info) => info.articleId === Number(id)
   );
+  const data = useSelector((state) => state.mypages.mypages)
 
   //조회수반영
   useEffect(() => {
@@ -172,6 +173,8 @@ const InformationDetail = () => {
                   </Txtstudent>
                   {showChaet ? <ChaetingBox>1:1채팅</ChaetingBox> : null}
                 </Bodytxt>
+
+                {informationsfind.username === data.username ? 
                 <BiDotsVerticalRounded
                   size='20px'
                   style={{
@@ -180,7 +183,8 @@ const InformationDetail = () => {
                     color: '#bebebe',
                   }}
                   onClick={onCilckShow}
-                />
+                  /> : null}
+
                 {show ? (
                   <Revisebox ref={modalRef}>
                     <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
@@ -264,6 +268,7 @@ const InformationDetail = () => {
                             comment={comment}
                             informationsfind={informationsfind}
                             modalRef={modalRef}
+                            data={data}
                           />
                         ))}
                     </>
@@ -358,21 +363,21 @@ const HeaderTitle = styled.div`
 const Revisebox = styled.div`
   border: 1px solid #f1f0f0;
   z-index: 5;
-  border-radius: 10px;
+  border-radius: 16px;
   position: absolute;
   display: flex;
   flex-direction: column;
   right: 0;
-  top: 55px;
+  top: 40px;
   background-color: #fff;
   box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
   border-radius: 16px;
-  /* box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.05); */
+  width:58px;
 `;
 const ReviseButton = styled.button`
   border: none;
   border-bottom: 1px solid #f1f0f0;
-  padding: 10px 15px;
+  padding: 10px;
   border-radius: 10px 10px 0 0;
   background-color: #fff;
   color: gray;
@@ -385,7 +390,7 @@ const ReviseButton = styled.button`
 const DeleteButton = styled.button`
   border: none;
   background-color: #eee;
-  padding: 10px 15px;
+  padding: 10px;
   border-radius: 0 0 10px 10px;
   background-color: #fff;
   color: gray;
