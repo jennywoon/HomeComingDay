@@ -72,7 +72,7 @@ export default BottomTap;
 const SecondWrap = styled.div`
   width: 100%;
   position: sticky;
-  background-color: #eee;
+  background-color: #ffffff;
   bottom: 0;
   box-shadow: 0px 2px 13px rgba(0, 0, 0, 0.2);
 `;
@@ -81,6 +81,7 @@ const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-weight: 600;
 `;
 
 const Tap = styled.div`

@@ -162,7 +162,7 @@ const MyPageTop = styled.div`
 const MyPageBottom = styled.div`
   width: 100%;
   /* height: 100%; */
-  height: 80%;
+  height: 70%;
   display: flex;
   justify-content: center;
   /* border: 1px solid blue; */
