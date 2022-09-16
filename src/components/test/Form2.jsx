@@ -50,6 +50,9 @@ const Form2 = () => {
   const [isActive, setIsActive] = useState(false);
   const [select, setSelect] = useState('help');
 
+  
+
+
   // const onClickDate = () => {
   //   setIsActive(current => !current)
   // }
@@ -155,7 +158,7 @@ const Form2 = () => {
     calendarDate: '',
   });
   const onChange = (value) => setDate(value);
-  const realCalendar = moment(date.toString()).format('YYYY년 MM월 DD일');
+  const realCalendar = moment(date.toString()).format('MM월 DD일 dddd');
   const dates = { calendarDate: realCalendar };
 
   const {
@@ -213,6 +216,11 @@ const Form2 = () => {
     //     return alert("내용을 입력해주세요");
     // }
 
+    const now = new Date()
+    const defaultValue = moment(now.toString()).format('MM월 DD일 dddd')
+    console.log(defaultValue)
+
+
     //-추가
     if (select === 'help') {
       const newhelp = {
@@ -269,6 +277,10 @@ const Form2 = () => {
         content: calendarcontent,
         calendarDate: realCalendar,
       };
+      
+      if(newcalendar.calendarDate === "Invalid date"){
+        newcalendar.calendarDate = defaultValue
+      }
 
       formdata.append(
         'articleRequestDto',
@@ -561,6 +573,7 @@ const Form2 = () => {
                     name='calendarDate'
                     value={calendarDate}
                     onChange={onChange}
+                    
                   />
                 )}
               </CalendarWrap>
