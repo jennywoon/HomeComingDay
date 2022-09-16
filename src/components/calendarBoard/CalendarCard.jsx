@@ -8,6 +8,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 import commentgray from '../../assets/commentgray.png';
 import heartgray from '../../assets/heartgray.png';
+import calendarCheck from "../../assets/calendarCheck.png"
+import clock from "../../assets/clock.png"
 
 const CalendarCard = ({ calendar, id }) => {
   const dispatch = useDispatch();
@@ -19,58 +21,65 @@ const CalendarCard = ({ calendar, id }) => {
 
   const onClickNavi = () => {
     navigate(`/calendardetail/${id}`)
-}
+  }
 
   return (
     <StCalendarCard onClick={onClickNavi}>
       <Card>
         <CardHead>
-          <StImg>
-            <HeadImg src={calendar.userImage}/>
-          </StImg>
-          <HeadUser>
-            <HeadTop>
-              <HeadName>{calendar.username}</HeadName>
-              <HeadTime>{calendar.createdAt}</HeadTime>
-            </HeadTop>
-            <HeadBottom>
-              <HeadDepartment>{calendar.departmentName}</HeadDepartment>
-              <HeadStudent>· {calendar.admission}</HeadStudent>
-            </HeadBottom>
-          </HeadUser>
-        </CardHead>
+              <StImg>
+                <HeadImg src={calendar.userImage} />
+              </StImg>
+              <HeadUser>
+              <HeadTop>
+                <HeadName>{calendar.username}</HeadName>
+                <HeadTime>{calendar.createdAt}</HeadTime>
+                </HeadTop>
+                <HeadBottom>
+                  <HeadDepartment>{calendar.departmentName}</HeadDepartment>
+                  <HeadStudent>· {calendar.admission}</HeadStudent>
+                </HeadBottom>
+              </HeadUser>
+              </CardHead>
         <CardBody>
           <BodyTitle>{calendar.title}</BodyTitle>
-          {/* <BodyContent>
-                    {calendar.content}
-                </BodyContent> */}
+          <BodyContent>
+            <CheckLeft>
+              <CalendarCheck />
+              {calendar.calendarDate}
+            </CheckLeft>
+            <CheckLeft>
+              <Clock/>
+              {calendar.calendarTime}
+            </CheckLeft>
+          </BodyContent>
         </CardBody>
         <CardFooter>
           <Views>조회수 {calendar.views}</Views>
           <Count>
             <CommentCount>
               <CommentImg>
-              <img src={commentgray} alt='댓글이미지' />
+                <img src={commentgray} alt='댓글이미지' />
               </CommentImg>
               {calendar.commentCnt}
             </CommentCount>
             <HeartCount>
               <HeartImg>
-              <img src={heartgray} alt='댓글이미지' />
+                <img src={heartgray} alt='댓글이미지' />
               </HeartImg>
               {calendar.heartCnt}
             </HeartCount>
           </Count>
         </CardFooter>
       </Card>
-    </StCalendarCard>
+    </StCalendarCard >
   );
 };
 
 export default CalendarCard;
 
 const StCalendarCard = styled.div`
-  height: 175px;
+  height: 195px;
   padding: 10px;
   border: 1px solid #eee;
   border-radius: 16px;
@@ -84,7 +93,6 @@ const StCalendarCard = styled.div`
 
 const Card = styled.div`
   width: 97%;
-  /* border: 1px solid red; */
   margin: 0 auto;
 `;
 
@@ -94,7 +102,9 @@ const CardHead = styled.div`
   margin-bottom: 20px;
 `;
 
-const StImg = styled.div``;
+const StImg = styled.div`
+  /* margin-top: 3px; */
+`;
 
 const HeadImg = styled.img`
   width: 30px;
@@ -108,6 +118,7 @@ const HeadImg = styled.img`
 
 const HeadUser = styled.div`
   width: 100%;
+  /* height: 100%; */
   display: flex;
   flex-direction: column;
   margin: 0px 5px;
@@ -120,24 +131,24 @@ const HeadTop = styled.div`
   justify-content: space-between;
   /* border: 1px solid red; */
 `;
+const HeadStudent = styled.p``;
+
+const HeadName = styled.div`
+  font-size: 14px;
+  font-weight: 600;
+  color: #000;
+  /* border: 1px solid red; */
+`;
 
 const HeadBottom = styled.div`
   display: flex;
   font-size: 12px;
   color: gray;
   gap: 5px;
+  /* border: 1px solid blue; */
 `;
 
 const HeadDepartment = styled.div``;
-
-const HeadName = styled.h2`
-  font-size: 14px;
-  font-weight: 600;
-  color: #000;
-  /* margin: 0px 5px; */
-`;
-
-const HeadStudent = styled.p``;
 
 const HeadTime = styled.p`
   font-size: 12px;
@@ -147,8 +158,15 @@ const HeadTime = styled.p`
 `;
 
 const CardBody = styled.div`
-  height: 50px;
-  margin-bottom: 20px;
+  height: 70px;
+  /* height: 100%; */
+  margin-bottom: 15px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* border: 1px solid red; */
 `;
 
 const BodyTitle = styled.div`
@@ -156,12 +174,47 @@ const BodyTitle = styled.div`
   font-size: 16px;
   font-weight: 600;
   color: #000;
+  /* border: 1px solid red; */
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 `;
 
 const BodyContent = styled.div`
+  width: 80%;
+  height: 100%;
   font-size: 12px;
   margin: 5px 0px;
+  padding: 5px 0;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
 `;
+
+const CheckLeft = styled.div`
+  display: flex;
+  gap: 5px;
+  align-items: center;
+`
+
+const CalendarCheck = styled.div`
+  width: 20px;
+  height: 20px;
+  background-image: url(${calendarCheck});
+  background-size: 100% 100%;
+  background-position: center;
+`
+
+const Clock = styled.div`
+  width: 20px;
+  height: 20px;
+  background-image: url(${clock});
+  background-size: 100% 100%;
+  background-position: center;
+`
 
 const CardFooter = styled.div`
   display: flex;
