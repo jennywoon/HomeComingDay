@@ -461,11 +461,12 @@ const ContentTitle = styled.h3`
 `;
 const ContentBody = styled.div`
   /* border: 1px solid blue; */
-  color: #b3b3b3;
+  color: #000;
   font-size: 14px;
   font-weight: 400;
   width: 100%;
-  margin: 10px 0;
+  margin-top: 10px;
+  margin-bottom: 20px;
   height: 100%;
 `;
 const Contentget = styled.div`
@@ -528,7 +529,7 @@ const PreviousBtn = styled(GrFormPrevious)``;
 const NextBtn = styled(GrFormNext)``;
 
 const ContentView = styled.p`
-  font-size: 14px;
+  font-size: 12px;
   line-height: 40px;
   height: 40px;
   /* margin:30px 0px 10px; */
