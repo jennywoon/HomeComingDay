@@ -40,6 +40,7 @@ const HelpDetail = () => {
 
   const helpsfind = helps.find((help) => help.articleId === Number(id));
   console.log('helpsfind', helpsfind);
+  console.log('heart', helpsfind.heart)
 
   // 조회수 반영
   useEffect(() => {
@@ -118,26 +119,14 @@ const HelpDetail = () => {
   };
 
   // 좋아요
-  const { heart } = useSelector((state) => state.helps);
-  console.log(heart)
-  const heartmap = heart && heart.map((heart) => heart.payload);
-  console.log('heart', heart, 'heartmap', heartmap);
-
-  const heartLike = heartmap[0];
-  console.log(heartLike);
-
   const heartClick = async () => {
     const newHeart = {
       articleId: id,
     };
     const response = await dispatch(__postHelpHeart(newHeart));
-    console.log(response.payload);
+    // console.log(response.payload);
     dispatch(__getHelp());
   };
-
-  // useEffect(()=>{
-  //   dispatch(__getHelpHeart());
-  // }, [dispatch])
 
   return (
     <Container>
@@ -229,7 +218,7 @@ const HelpDetail = () => {
                       댓글 {helpsfind && helpsfind.commentCnt}
                     </CommentCount>
                     <HeartCount onClick={heartClick}>
-                      {heartLike ? (
+                      {helpsfind &&helpsfind.heart === true ? (
                         <HeartImg>
                           <img src={heartColorImg} alt='좋아요이미지' />
                         </HeartImg>

@@ -116,19 +116,12 @@ const CalendarDetail = () => {
   };
 
   // 좋아요
-  const { heart } = useSelector((state) => state.calendars);
-  const heartmap = heart && heart.map((heart) => heart.payload);
-  console.log('heart', heart, 'heartmap', heartmap);
-
-  const heartLike = heartmap[0];
-  console.log(heartLike);
-
-  const heartClick = async () => {
+const heartClick = async () => {
     const newHeart = {
       articleId: id,
     };
     const response = await dispatch(__postCalendarHeart(newHeart));
-    console.log(response.payload);
+    // console.log(response.payload);
     dispatch(__getCalendar());
   };
 
@@ -225,7 +218,7 @@ const CalendarDetail = () => {
                       댓글 {calendarfind && calendarfind.commentCnt}
                     </CommentCount>
                     <HeartCount onClick={heartClick}>
-                      {heartLike ? (
+                      {calendarfind &&calendarfind.heart === true ? (
                         <HeartImg>
                           <img src={heartColorImg} alt='좋아요이미지' />
                         </HeartImg>
