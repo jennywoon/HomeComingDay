@@ -70,7 +70,7 @@ const MyPageUser = () => {
                         </UserImg>
                         <input type="file" ref={imgRef} onChange={onChangeImage} style={{ display: "none" }}></input>
                         <UserImgUpload onClick={() => { onClickFileBtn() }}>
-                            {/* <AiOutlineCamera size="18" style={{ color: "white" }} /> */}
+                            <CameraIcon/>
                         </UserImgUpload>
                 </UserImgWrap>
                 <UserInfo>
@@ -147,11 +147,16 @@ const UserImgUpload = styled.div`
     align-items: center;
     position: absolute;
     bottom: 82%;
-    right: 72%;
+    right: 70%;
     cursor: pointer;
+`
+
+const CameraIcon = styled.div`
+    width: 20px;
+    height: 20px;
     background-image: url(${camera});
     background-position: center;
-    background-size: 80% 80%;
+    background-size: 100% 100%;
 `
 const UserInfo = styled.div`
     width: 75%;
@@ -159,18 +164,19 @@ const UserInfo = styled.div`
     /* border: 1px solid purple; */
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
 `
 
 const FirstWrap = styled.div`
     /* border: 1px solid red; */
     width: 95%;
-    height: 100%;
-    margin-top: 5px;
+    /* height: 100%; */
+    margin: 5px 0 15px 0;
 `
 const SecondWrap = styled.div`
     width: 95%;
+    /* border: 1px solid red; */
 `
 
 const UserUniversity = styled.div`

@@ -36,6 +36,7 @@ import Splash from "../components/loginSigunUpBoard/Splash";
 import { useSelector } from "react-redux";
 import { getCookie } from "./cookies";
 import { Navigate } from "react-router-dom";
+import FormPage from "../pages/FormPage";
 
 const Router = () => {
 
@@ -68,7 +69,8 @@ const Router = () => {
         <Route path="/helpcard" element={<HelpCard />} />
         <Route path="/freetest" element={<FreeTalkForm />} />
         <Route path="/searchcard" element={<SearchCard />} />
-        <Route path="/form" element={<Form2 />} />
+        {/* <Route path="/form" element={<Form2 />} /> */}
+        <Route path="/form" element={<FormPage />} />
         <Route path="/helpdetail/:id" element={<HelpDetail />} />
         <Route path="/helpupdate/:id" element={<HelpUpdate />} />
         <Route path="/informationdetail/:id" element={<InformationDetail />} />

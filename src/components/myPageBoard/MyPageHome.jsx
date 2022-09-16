@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import MyPageUser from './MyPageUser';
@@ -10,7 +10,6 @@ import Homeimg from '../../assets/Home.png';
 import Searchimg from '../../assets/Search.png';
 import Chatimg from '../../assets/Chat.png';
 import MyColorimg from '../../assets/MyColor.png';
-import { useCallback } from 'react';
 
 const MyPageHome = () => {
   const navigate = useNavigate();
@@ -151,7 +150,7 @@ const HomeContainer = styled.div`
 const MyPageTop = styled.div`
   width: 100%;
   /* height: 200px; */
-  height: 20%;
+  height: 25%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -162,7 +161,7 @@ const MyPageTop = styled.div`
 const MyPageBottom = styled.div`
   width: 100%;
   /* height: 100%; */
-  height: 80%;
+  height: 75%;
   display: flex;
   justify-content: center;
   /* border: 1px solid blue; */
