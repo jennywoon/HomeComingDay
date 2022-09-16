@@ -69,7 +69,7 @@ const MyPageCard = ({ myarticle, id }) => {
 export default MyPageCard;
 
 const Container = styled.div`
-  height: 110px;
+  height: 120px;
   /* padding: 10px; */
   border: 1px solid #eee;
   border-radius: 16px;
@@ -110,6 +110,7 @@ const CardBody = styled.div`
 `;
 
 const BodyTitle = styled.div`
+  height: 45px;
   margin: 5px 0px;
   font-size: 16px;
   font-weight: 600;

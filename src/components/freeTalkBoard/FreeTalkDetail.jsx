@@ -24,6 +24,7 @@ const FreeTalkDetail = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { freetalks } = useSelector((state) => state.freetalks)
+    const data = useSelector((state) => state.mypages.mypages)
     // const { freeComments } = useSelector((state) => state.freetalks)
     const { id } = useParams();
     // console.log(id)
@@ -147,9 +148,11 @@ const FreeTalkDetail = () => {
                                 </Bodytxt>
                                 {/* <AiOutlineMenu size="20px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }}
                                     onClick={onCilckShow} /> */}
+                                {freetalksfind.username === data.username ?
                                 <BiDotsVerticalRounded
                                     size="20px" style={{ marginLeft: "auto", cursor: "pointer", color: "#bebebe" }}
-                                    onClick={onCilckShow} />
+                                    onClick={onCilckShow} /> 
+                                    : null}
 
                                 {show ?
                                     <Revisebox ref={modalRef}>
@@ -225,7 +228,7 @@ const FreeTalkDetail = () => {
                                         :
                                         <>
                                             {freetalksfind && freetalksfind.commentList.map((comment) => (
-                                                <FreeTalkDetailComment key={comment.commentId} comment={comment} freetalksfind={freetalksfind} modalRef={modalRef} />
+                                                <FreeTalkDetailComment key={comment.commentId} comment={comment} freetalksfind={freetalksfind} modalRef={modalRef} data={data}/>
                                             ))}
                                         </>
                                     }
@@ -318,16 +321,17 @@ const Revisebox = styled.div`
     display: flex;
     flex-direction: column;
     right: 0;
-    top:55px;
+    top:40px;
     background-color: #fff;
     box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
     border-radius: 16px;
+    width:58px;
     /* box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.05); */
 `
 const ReviseButton = styled.button`
     border:none;
     border-bottom: 1px solid #f1f0f0;
-    padding:10px 15px;
+    padding:10px;
     border-radius: 10px 10px 0 0;
     background-color: #fff;
     color:gray;
@@ -340,7 +344,7 @@ const ReviseButton = styled.button`
 const DeleteButton = styled.button`
     border:none;
     background-color: #eee;
-    padding:10px 15px;
+    padding:10px;
     border-radius: 0 0 10px 10px;
     background-color: #fff;
     color:gray;
