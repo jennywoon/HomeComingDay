@@ -432,11 +432,12 @@ const ContentTitle = styled.h3`
 `
 const ContentBody = styled.p`
 /* border: 1px solid blue; */
-color: #b3b3b3;
+    color: #000;
     font-size: 14px;
     font-weight: 400;
     width:100%;
-    margin: 10px 0;
+    margin-top: 10px;
+    margin-bottom: 20px;
     height: 100%;
 `
 
@@ -444,7 +445,8 @@ const ContentImgBox = styled.div`
     width:100%;
     height:250px;
     border-radius: 20px;
-    position:relative;
+    position: relative;
+    margin-bottom: 40px;
 `
 const ContentImg = styled.img`
     /* border:1px solid gray; */
@@ -489,8 +491,7 @@ const NextBtn = styled(GrFormNext)`
 
 
 const ContentView = styled.p`
-    
-    font-size: 14px;
+    font-size: 12px;
     line-height: 40px;
     height:40px;
     /* margin:30px 0px 10px; */
