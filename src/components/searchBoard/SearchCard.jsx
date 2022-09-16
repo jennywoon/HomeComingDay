@@ -86,10 +86,12 @@ const HeadImg = styled.div`
     align-items: center;
     background-color: #f6bd60;
     border-radius: 50%;
+    margin-right: 7px;
 `
 const UserImg =styled.img`
     width: 30px;
     height: 30px;
+    border-radius: 50%;
 `
 
 const HeadUser = styled.div`
@@ -113,7 +115,9 @@ const HeadBottom = styled.div`
 `
 const HeadDepartment = styled.div``
 const HeadName = styled.h2`
-    font-size: 18px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #000;
     /* margin: 0px 5px; */
 `
 const HeadStudent = styled.p`
@@ -123,6 +127,7 @@ const HeadTime = styled.p`
     font-size: 12px;
     color:gray;
     margin-left: auto;
+    font-weight: 500;
 `
 const CardBody = styled.div`
 `

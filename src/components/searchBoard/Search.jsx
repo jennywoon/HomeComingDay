@@ -6,10 +6,6 @@ import { BiSearch } from "react-icons/bi";
 import { IoCloseCircle } from "react-icons/io5";
 import SearchCard from "./SearchCard";
 import { __getSearch, __getSearchArticle, __getSearchArticlePopular, __postSearch } from "../../redux/modules/SearchSlice";
-import { __getHelp } from "../../redux/modules/HelpSlice";
-import { __getInformation } from "../../redux/modules/InformationSlice";
-import { __getCalendar } from "../../redux/modules/CalendarSlice";
-import { __getFreeTalk } from "../../redux/modules/FreeTalkSlice";
 
 const Search = () => {
     const dispatch = useDispatch();
@@ -17,22 +13,12 @@ const Search = () => {
     // search post 연습
     
     const [search, setSearch] = useState()
-    const [helpBtn , setHelpBtn] = useState(false)
-    const [informationBtn , setInformationBtn] = useState(false)
-    const [freeTalkBtn , setFreeTalkBtn] = useState(false)
-    const [calendarBtn , setCalendarBtn] = useState(false)
     const [inputText, setInputText] = useState("");
     const [select, setSelect] = useState('new');
 
     const searchArticle = useSelector((state)=>state.searchs.searchs)
     const searchArticlePopular = useSelector((state)=>state.searchs.popular)
-    const {isLoading,error} = useSelector((state) => state.searchs)
-    // const helpSearchs = useSelector((state)=>state.helps.helps)
-    // const informationSearchs = useSelector((state)=>state.informations.informations)
-    // const freeTalkSearchs = useSelector((state)=>state.freetalks.freetalks)
-    // const calendarSearchs = useSelector((state)=>state.calendars.calendars)
-
-    // const searchs = [...helpSearchs,...informationSearchs,...freeTalkSearchs,...calendarSearchs]
+    
 
     console.log(searchArticle)
     console.log(searchArticlePopular)
@@ -40,42 +26,11 @@ const Search = () => {
     // const searchArticlePopulars = searchArticle.map((article)=>article.views )
     // console.log("searchArticlePopulars",searchArticlePopulars)
 
-    
- 
-    
 
     const handleSelect = (e) => {
         setSelect(e.target.value);
       };
     
-    const helpSearchFilter = () =>{
-        setHelpBtn(!helpBtn)
-        setInformationBtn(false)
-        setFreeTalkBtn(false)
-        setCalendarBtn(false)
-    }
-  
-    const informationSearchFilter = () =>{
-        setInformationBtn(!informationBtn)
-        setHelpBtn(false)
-        setFreeTalkBtn(false)
-        setCalendarBtn(false)
-    }
-
-    const freeTalkSearchFilter = () =>{
-        setFreeTalkBtn(!freeTalkBtn)
-        setInformationBtn(false)
-        setHelpBtn(false)
-        setCalendarBtn(false)
-    }
-
-    const calendarSearchFilter = () =>{
-        setCalendarBtn(!calendarBtn)
-        setFreeTalkBtn(false)
-        setInformationBtn(false)
-        setHelpBtn(false)
-    }
-
     
     // //filter
     // const [filteredList, setFilteredList] = new useState(searchArticle);
@@ -92,7 +47,7 @@ const Search = () => {
     //     // Trigger render with updated values
     //     setFilteredList(updatedList);
     //   };
-    
+      
       //Articles
       const [filteredList, setFilteredList] = new useState(searchArticle);
       const filterBySearch = (e) => {
@@ -109,82 +64,36 @@ const Search = () => {
           setFilteredList(updatedList);
         };
       
-    //Help
-    // const [filteredHelpList, setFilteredHelpList] = new useState(helpSearchs);
-    // const filterByHelpSearch = (e) => {
-    //     // Access input value
-    //     const query = e.target.value
-    //     // console.log(query)
-    //     // Create copy of item list
-    //     let updatedList = [...helpSearchs];
-    //     // Include all elements which includes the search query
-    //     updatedList = updatedList.filter((item) => {
-    //       return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
-    //     });
-    //     // Trigger render with updated values
-    //     setFilteredHelpList(updatedList);
-    //   };
+    //ArticlesPopural
+      const [filteredPopularList, setFilteredPopularList] = new useState(searchArticlePopular);
+      const filterByPopularSearch = (e) => {
+          // Access input value
+          const query = e.target.value
+          // console.log(query)
+          // Create copy of item list
+          let updatedList = [...searchArticlePopular];
+          // Include all elements which includes the search query
+          updatedList = updatedList.filter((item) => {
+            return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+          });
+          // Trigger render with updated values
+          setFilteredPopularList(updatedList);
+        };
 
-    //  //informationfilter
-    //   const [filteredInformationList, setFilteredInformationList] = new useState(informationSearchs);
-    //   const filterByInformationSearch = (e) => {
-    //       // Access input value
-    //       const query = e.target.value
-    //       // console.log(query)
-    //       // Create copy of item list
-    //       let updatedList = [...informationSearchs];
-    //       // Include all elements which includes the search query
-    //       updatedList = updatedList.filter((item) => {
-    //         return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
-    //       });
-    //       // Trigger render with updated values
-    //       setFilteredInformationList(updatedList);
-    //     };
-
-    //   //Freetalkfilter
-    //   const [filteredFreetalkList, setFilteredFreetalkList] = new useState(freeTalkSearchs);
-    //   const filterByFreetalkSearch = (e) => {
-    //       // Access input value
-    //       const query = e.target.value
-    //       // console.log(query)
-    //       // Create copy of item list
-    //       let updatedList = [...freeTalkSearchs];
-    //       // Include all elements which includes the search query
-    //       updatedList = updatedList.filter((item) => {
-    //         return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
-    //       });
-    //       // Trigger render with updated values
-    //       setFilteredFreetalkList(updatedList);
-    //     };
-
-    // //Calendarfilter
-    // const [filteredCalendarList, setFilteredCalendarList] = new useState(calendarSearchs);
-    // const filterByCalendarSearch = (e) => {
-    //     // Access input value
-    //     const query = e.target.value
-    //     // console.log(query)
-    //     // Create copy of item list
-    //     let updatedList = [...calendarSearchs];
-    //     // Include all elements which includes the search query
-    //     updatedList = updatedList.filter((item) => {
-    //       return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
-    //     });
-    //     // Trigger render with updated values
-    //     setFilteredCalendarList(updatedList);
-    //   };
+    
 
 
     // input 안 x버튼 클릭할 때, input 내용 없어지도록 구현 + post 기능 추가
     // const [inputText, setInputText] = useState("");
 
-    const onChangeInput = (e) => {
-        setInputText(e.target.value);
-        const { value, name } = e.target;
-        setSearch({
-            ...search,
-            [name]: value,
-        })
-    }
+    // const onChangeInput = (e) => {
+    //     setInputText(e.target.value);
+    //     const { value, name } = e.target;
+    //     setSearch({
+    //         ...search,
+    //         [name]: value,
+    //     })
+    // }
     const onReset = () => {
         setInputText("");
     }
@@ -196,7 +105,7 @@ const Search = () => {
 
     useEffect(() => {
         dispatch(__getSearchArticle())
-        // dispatch(__getSearchArticlePopular())
+        dispatch(__getSearchArticlePopular())
     }, [dispatch])
 
 
@@ -207,33 +116,16 @@ const Search = () => {
                 <SearchWrap>
                     <SearchDiv >
                         <BiSearch size="37" style={{ paddingLeft: "20px" , color:"#F7931E"}} />
-                        {/* <SearchInput
-                        id="search-box" onChange={filterBySearch} 
-                        placeholder="검색어를 입력해주세요" 
-                            // onKeyPress={(e) => {
-                            //     if (e.key === 'Enter') {
-                            //       dispatch(__getSearch(inputText))
-                            //     }
-                            //   }
-                            // }
-                            /> */}
+                        
 
-                        {/* 필터검색용 */}
-                        {/* {helpBtn ?
-                        <SearchInput id="search-box" onChange={filterByHelpSearch} placeholder="검색어를 입력해주세요" />
-                        :
-                        informationBtn?
-                        <SearchInput id="search-box" onChange={filterByInformationSearch} placeholder="검색어를 입력해주세요" />
-                        :
-                        freeTalkBtn?
-                        <SearchInput id="search-box" onChange={filterByFreetalkSearch} placeholder="검색어를 입력해주세요" />
-                        :
-                        calendarBtn?
-                        <SearchInput id="search-box" onChange={filterByCalendarSearch} placeholder="검색어를 입력해주세요" />
-                        :
+                        {select === "new" ? (
                         <SearchInput id="search-box" onChange={filterBySearch} placeholder="검색어를 입력해주세요" />
-                        } */}
-                        <SearchInput id="search-box" onChange={filterBySearch} placeholder="검색어를 입력해주세요" />
+                        ) : 
+                        select === "popular" ?
+                        (
+                        <SearchInput id="search-box" onChange={filterByPopularSearch} placeholder="검색어를 입력해주세요" />   
+                        ) :
+                           null }
                         <IoCloseCircle
                             onClick={onReset}
                             size="37" style={{ paddingRight: "20px", cursor: "pointer" , color:"#F7931E"}} />
@@ -263,41 +155,21 @@ const Search = () => {
                     <RecentWrap id="item-list">
                         {/* <RecentTitle>최근 검색어</RecentTitle> */}
                         {/* search card 맵 돌릴 예정 */}
-
+                        {select === "new"&& filteredList && filteredList.length > 0 ? (
                         <>
                             {filteredList && filteredList?.map((search) => (
                                 <SearchCard key={search.articleId} id={search.articleId} search={search} />
                             ))}
                         </>
-                        {/* {helpBtn ? 
-                            (filteredHelpList?.map((search) => (
+                        ) : 
+                        select === "popular"&& filteredPopularList && filteredPopularList.length > 0 ? (
+                        <>
+                            {filteredPopularList && filteredPopularList?.map((search) => (
                                 <SearchCard key={search.articleId} id={search.articleId} search={search} />
-                            )))
-                            :  
-                        informationBtn? 
-                            (filteredInformationList?.map((search) => (
-                                <SearchCard key={search.articleId} id={search.articleId} search={search} />
-                            )))
-                            :
-                        freeTalkBtn?
-                            (filteredFreetalkList?.map((search) => (
-                                <SearchCard key={search.articleId} id={search.articleId} search={search} />
-                            ))) 
-                            :
-                        calendarBtn?
-                            (filteredCalendarList?.map((search) => (
-                                <SearchCard key={search.articleId} id={search.articleId} search={search} />
-                            ))) 
-                            :
-                            (filteredList?.map((search) => (
-                                <SearchCard key={search.articleId} id={search.articleId} search={search} />
-                            )))
-                            
-                        } */}
+                            ))}
+                        </>
+                        ) : null}
                         
-                        
-                        
-                        {/* <SearchCard/> */}
                     </RecentWrap>
                     
 
