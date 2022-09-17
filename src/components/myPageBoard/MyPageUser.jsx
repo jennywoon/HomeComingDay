@@ -147,7 +147,7 @@ const UserImgUpload = styled.div`
     justify-content: center;
     align-items: center;
     position: absolute;
-    bottom: 82%;
+    bottom: 81%;
     right: 70%;
     cursor: pointer;
 `
