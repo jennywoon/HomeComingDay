@@ -21,6 +21,7 @@ const DetailComment = ({ comment, modalRef, helpsfind ,data}) => {
     console.log("username", username)
 
     const [showComment, setShowComment] = useState(false)
+    const [showReplyComment,setShowReplyComment] = useState(false)
     const [isEdit, setIsEdit] = useState(false)
     const [editComment, setEditComment] = useState("")
 
@@ -56,6 +57,11 @@ const DetailComment = ({ comment, modalRef, helpsfind ,data}) => {
         setShowComment(!showComment)
         setIsEdit(!isEdit)
     }
+
+    const onCilckReplyShow = () => {
+        setShowReplyComment(!showReplyComment)
+    }
+
     const onClickReviceChange = async () => {
         const editcomment = {
             articleId: Number(id),
@@ -65,6 +71,10 @@ const DetailComment = ({ comment, modalRef, helpsfind ,data}) => {
         await dispatch(__updateHelpComment(editcomment))
         await dispatch(__getHelp());
         setIsEdit(!isEdit)
+    }
+
+    const onClickPostReplyComment = (e)=>{
+        e.preventDefault();
     }
 
     //모달
@@ -79,7 +89,9 @@ const DetailComment = ({ comment, modalRef, helpsfind ,data}) => {
         <CommentContain >
             {modalOpen && <HelpCommentDeleteModal setModalOpen={setModalOpen} comment={comment} />}
             <CommentBox >
-                <CommentImg src={comment.userImage} alt="" />
+                <CommentImgDiv>
+                    <CommentImg src={comment.userImage} alt="" />
+                </CommentImgDiv>
                 <CommentTxt>
                     <TxtName>{comment.username}</TxtName>
                     <TxtStudent>{comment.admission} · {comment.departmentName}</TxtStudent>
@@ -92,29 +104,41 @@ const DetailComment = ({ comment, modalRef, helpsfind ,data}) => {
                         <Comment>{comment.content}</Comment>
 
                     }
-                    <TxtWrap>
+                   
                         <TxtFirstWrap>
                             <TxtCreateAt> {comment.createdAt}</TxtCreateAt>
                             <TxtCreateAt>|</TxtCreateAt>
                             <TxtCreateAt 
-                            // onClick={onCilckReplyShow}
+                            onClick={onCilckReplyShow}
                             >답글쓰기</TxtCreateAt>
                         </TxtFirstWrap>
                         {/* 대댓글 해보는 중 */}
-                        {/* <ReplyInputContainer 
+                        <ReplyInputContainer 
                         onSubmit={onClickPostReplyComment}
                         >
                             {showReplyComment ?
-                            <div>
-                                <input 
-                                value={replyComment} onChange={onChangeReplyHandler}
+                            <ReplyCommentBox>
+                                <CommentImg src={comment.userImage}></CommentImg>
+                                <Input 
+                                // value={replyComment} onChange={onChangeReplyHandler}
                                  />
-                                <button>올리기</button>
-                            </div>
+                                <ReviseButtonChange type="submit">댓글달기</ReviseButtonChange>
+                            </ReplyCommentBox>
                             : null 
                             }
-                        </ReplyInputContainer> */}
-                    </TxtWrap>
+                            <ReplyCommentBox>
+                            <CommentImgDiv>
+                                <CommentImg src={comment.userImage}></CommentImg>
+                            </CommentImgDiv>
+                                <CommentReplytxt>
+                                    <div>{comment.username}</div>
+                                    <div>대댓글 대댓글 대댓글 대댓글 대댓글 대댓글 대댓글 대댓글</div>
+                                </CommentReplytxt>
+                                <BiDotsVerticalRounded size="20px" style={{  cursor: "pointer", color: "#bebebe" }}
+                                />
+                            </ReplyCommentBox>
+                        </ReplyInputContainer>
+                    
                 </CommentTxt>
                 {/* <AiOutlineMenu size="18px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }} onClick={onCilckShow}/> */}
 
@@ -154,7 +178,11 @@ const CommentBox = styled.div`
     position: relative;
     width: 100%;
 `
- 
+
+const CommentImgDiv = styled.div`
+    width:40px;
+`
+
 const CommentImg = styled.img`
     width:30px;
     height: 30px;
@@ -165,7 +193,9 @@ const CommentImg = styled.img`
 const CommentTxt = styled.div`
     display: flex;
     flex-direction: column;
-    margin-left: 10px; 
+    width:100%;
+    
+    /* margin-left: 10px;  */
 `
 const Revisebox = styled.div`
     border: 1px solid #f1f0f0;
@@ -216,6 +246,8 @@ const ReviseButtonChange = styled.button`
     border:1px solid gray;
     cursor:pointer;
     border-radius: 10px;
+    height:25px;
+    color:gray;
     
 `
 const EditBox = styled.div`
@@ -253,7 +285,24 @@ const TxtCreateAt = styled.div`
     cursor: pointer;
 `
 
-const ReplyInputContainer = styled.form``
+const ReplyInputContainer = styled.form`
+    /* margin-left:30px; */
+`
+const ReplyCommentBox = styled.div`
+    display: flex;
+    align-items: center;
+    margin-top:6px;
+`
+const CommentReplytxt = styled.div`
+    font-size:13px;
+    width:100%;
+`
+
+const ReplyCommentImg = styled.img`
+    width:30px;
+    border-radius: 30px;
+`
+
 const Comment = styled.p`
     margin: 5px 0;
     font-size:14px;
