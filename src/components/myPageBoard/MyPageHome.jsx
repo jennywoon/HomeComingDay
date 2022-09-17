@@ -23,7 +23,7 @@ const MyPageHome = () => {
     dispatch(__getMyArticle());
   }, [dispatch]);
 
-  ///무한 스크롤
+  //무한 스크롤
 
   // const targetRef = useRef(null);
   // const [isLoaded, setIsLoaded] = useState(false);
