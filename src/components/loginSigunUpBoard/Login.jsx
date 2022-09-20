@@ -117,6 +117,7 @@ const Login = () => {
               onChange={onChangeEmailHandler}
               value={formValue.email}
               width='100%'
+              style={{borderBottom:"1px solid #ccc"}}
             />
           </StEmail>
           <StPassword>
@@ -127,6 +128,7 @@ const Login = () => {
                 onChange={onChangePasswordHandler}
                 value={formValue.password}
                 width='100%'
+                style={{borderBottom:"1px solid #ccc"}}
               />
               <StVisible onClick={handlePasswordType}>
                 {passwordType.visible ? (

@@ -57,7 +57,7 @@ const StyledInput = styled.input`
   width: ${(props) => props.width};
   padding: ${(props) => props.padding};
   border: none;
-  border-bottom: 1px solid #ccc;
+  /* border-bottom: 1px solid #ccc; */
   /* border: 1px solid #ccc; */
   /* border-radius: 3px; */
 `;
