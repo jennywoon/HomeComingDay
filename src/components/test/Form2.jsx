@@ -739,6 +739,10 @@ const TotalCatiner = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
+  overflow-y: scroll;
+  ::-webkit-scrollbar{
+    width: 0px;
+  }
 `
 const FormContainer = styled.div`
   position: relative;
