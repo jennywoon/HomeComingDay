@@ -21,12 +21,9 @@ root.render(
   <Suspense fallback={<Loading />}>
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-     
-          <ReactQueryDevtools initialIsOpen={true} />
-          <App />
-     
+        <ReactQueryDevtools initialIsOpen={true} />
+        <App />
       </QueryClientProvider>
-      <App />
     </Provider>
   </Suspense>
 );
