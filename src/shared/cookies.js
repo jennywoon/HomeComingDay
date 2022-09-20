@@ -6,7 +6,7 @@ export const setCookie = (name, value, option) => {
 
   let now =new Date();
   let after1m = new Date();
-  after1m.setMinutes(now.getMinutes() + 60);
+  after1m.setMinutes(now.getMinutes() + 240);
 
   return cookies.set(name, value, { ...option, expires: after1m });
 };

@@ -15,41 +15,38 @@ const MyPageHome = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const myarticles = useSelector((state) => state.mypages.myarticles);
-  // const {error} = useSelector((state) => state.mypages.myarticles)
-  console.log(myarticles);
-
-  useEffect(() => {
-    dispatch(__getMyArticle());
-  }, [dispatch]);
+  const {myarticles, totalCount} = useSelector((state) => state.mypages);
+  const {error} = useSelector((state) => state.mypages.myarticles)
+  console.log("myarticles", myarticles, totalCount);
+  // console.log(error);
 
   //무한 스크롤
 
-  // const targetRef = useRef(null);
-  // const [isLoaded, setIsLoaded] = useState(false);
-  // const [page, setPage] = useState(1);
+  const targetRef = useRef(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [page, setPage] = useState(0);
   
-  // const checkIntersect = useCallback(([entry], observer) => {
-  //   if(entry.isIntersecting && !isLoaded){
-  //     dispatch(__getMyArticle(page));
+  const checkIntersect = useCallback(([entry], observer) => {
+    if(entry.isIntersecting && !isLoaded){
+      console.log("page", page);
+      dispatch(__getMyArticle(page));
+      observer.unobserve(entry.target);
+      setPage((prev) => prev + 1);
+    }
+  }, [dispatch, isLoaded, page])
 
-  //     observer.unobserve(entry.target);
-  //     setPage((prev) => prev + 1);
-  //   }
-  // }, [dispatch, isLoaded, page])
-
-  // useEffect(() => {
-  //   let observer;
-  //   if(targetRef){
-  //     observer = new IntersectionObserver(checkIntersect, {
-  //       threshold: 0.5,
-  //     })
-  //     observer.observe(targetRef.current);
-  //   }
-  // }, [myarticles]);
-
-  // console.log("myarticles", myarticles);
-
+  useEffect(() => {
+    let observer;
+    console.log("length", myarticles.length);
+    console.log("totalCount", totalCount);
+    console.log(myarticles.length !== totalCount)
+    if(targetRef && myarticles.length !== totalCount){
+      observer = new IntersectionObserver(checkIntersect, {
+        threshold: 0.5,
+      })
+      observer.observe(targetRef.current);
+    }
+  }, [myarticles]);
 
   return (
     <HomeContainer>
@@ -61,11 +58,12 @@ const MyPageHome = () => {
           <TitleWrap>
             <MyPostTitle>내가 쓴 게시글</MyPostTitle>
             <PostCount>{myarticles && myarticles.length}</PostCount>
+            {/* <PostCount>{totalCount}</PostCount> */}
           </TitleWrap>
           <ArticleWrap>
             {myarticles && myarticles.length > 0 ? (
               <div>
-                {myarticles && myarticles.slice(0).map((myarticle) => (
+                {myarticles && myarticles.map((myarticle) => (
                       <MyPageCard key={myarticle.articleId} id={myarticle.articleId} myarticle={myarticle}
                       />
                     ))}
@@ -76,7 +74,7 @@ const MyPageHome = () => {
                 <p>내가 쓴 게시글이 없습니다</p>
               </NoneData>
             )}
-            {/* <div ref={targetRef}>{error}</div> */}
+            <div ref={targetRef}>{error}</div>
           </ArticleWrap>
         </BottomWrap>
       </MyPageBottom>
@@ -160,7 +158,6 @@ const MyPageTop = styled.div`
 
 const MyPageBottom = styled.div`
   width: 100%;
-  /* height: 100%; */
   height: 75%;
   display: flex;
   justify-content: center;
@@ -169,7 +166,7 @@ const MyPageBottom = styled.div`
 const ArticleWrap = styled.div`
   height: 85%;
   /* height: 100%; */
-  /* border: 1px solid red; */
+  /* border: 1px solid green; */
   overflow-y: scroll;
   ::-webkit-scrollbar {
     width: 0px;

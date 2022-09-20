@@ -11,10 +11,6 @@ const MyPageCard = ({ myarticle, id }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        dispatch(__getMyArticle())
-    }, [dispatch])
-
     const onClickNavi = () => {
         if (myarticle.articleFlag === "도움요청") {
             navigate(`/helpdetail/${id}`)
@@ -32,29 +28,29 @@ const MyPageCard = ({ myarticle, id }) => {
             <Container onClick={onClickNavi}>
                 <TotalWrap>
                     <CardHead>
-                        <FlagWrap>{myarticle.articleFlag}</FlagWrap>
+                        <FlagWrap>{myarticle && myarticle.articleFlag}</FlagWrap>
                     </CardHead>
                     <CardBody>
-                        <BodyTitle>{myarticle.title}</BodyTitle>
+                        <BodyTitle>{myarticle && myarticle.title}</BodyTitle>
                     </CardBody>
                     <CardFooter>
                         <CardFooterLeft>
-                            <Views>조회수 {myarticle.views}</Views>
+                            <Views>조회수 {myarticle && myarticle.views}</Views>
                             <div>|</div>
-                            <HeadTime>{myarticle.createdAt}</HeadTime>
+                            <HeadTime>{myarticle && myarticle.createdAt}</HeadTime>
                         </CardFooterLeft>
                         <Count>
                             <CommentCount>
                                 <CommentImg>
                                     <img src={commentgray} alt='댓글이미지' />
                                 </CommentImg>
-                                {myarticle.commentCnt}
+                                {myarticle && myarticle.commentCnt}
                             </CommentCount>
                             <HeartCount>
                                 <HeartImg>
                                     <img src={heartgray} alt='댓글이미지' />
                                 </HeartImg>
-                                {myarticle.heartCnt}
+                                {myarticle && myarticle.heartCnt}
                             </HeartCount>
                         </Count>
                         {/* <Division>|</Division> */}
