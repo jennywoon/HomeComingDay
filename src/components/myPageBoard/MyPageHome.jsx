@@ -15,14 +15,10 @@ const MyPageHome = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const myarticles = useSelector((state) => state.mypages.myarticles);
-  // const {error} = useSelector((state) => state.mypages.myarticles)
-  console.log(myarticles);
+  const {myarticles, totalCount} = useSelector((state) => state.mypages);
+  const {error} = useSelector((state) => state.mypages.myarticles)
+  console.log("myarticles", myarticles, totalCount);
   // console.log(error);
-
-  // useEffect(() => {
-  //   dispatch(__getMyArticle());
-  // }, [dispatch]);
 
   //무한 스크롤
 
@@ -41,19 +37,16 @@ const MyPageHome = () => {
 
   useEffect(() => {
     let observer;
-    console.log(Boolean(targetRef))
-    if(targetRef){
+    console.log("length", myarticles.length);
+    console.log("totalCount", totalCount);
+    console.log(myarticles.length !== totalCount)
+    if(targetRef && myarticles.length !== totalCount){
       observer = new IntersectionObserver(checkIntersect, {
         threshold: 0.5,
       })
       observer.observe(targetRef.current);
-      console.log("a")
     }
   }, [myarticles]);
-
-  // console.log("myarticles", myarticles);
-  // console.log("page", page);
-
 
   return (
     <HomeContainer>
@@ -65,6 +58,7 @@ const MyPageHome = () => {
           <TitleWrap>
             <MyPostTitle>내가 쓴 게시글</MyPostTitle>
             <PostCount>{myarticles && myarticles.length}</PostCount>
+            {/* <PostCount>{totalCount}</PostCount> */}
           </TitleWrap>
           <ArticleWrap>
             {myarticles && myarticles.length > 0 ? (
@@ -79,10 +73,8 @@ const MyPageHome = () => {
                 <NoneDataImg />
                 <p>내가 쓴 게시글이 없습니다</p>
               </NoneData>
-            )} 
-            <div ref={targetRef}
-            style={{border: "1px solid red"}}
-            >1</div>
+            )}
+            <div ref={targetRef}>{error}</div>
           </ArticleWrap>
         </BottomWrap>
       </MyPageBottom>
@@ -174,7 +166,7 @@ const MyPageBottom = styled.div`
 const ArticleWrap = styled.div`
   height: 85%;
   /* height: 100%; */
-  border: 1px solid green;
+  /* border: 1px solid green; */
   overflow-y: scroll;
   ::-webkit-scrollbar {
     width: 0px;
