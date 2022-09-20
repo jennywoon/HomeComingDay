@@ -18,7 +18,7 @@ const Help = () => {
   const [select, setSelect] = useState('new');
   // console.log(isLoading)
   // console.log(helps)
-  console.log(helpPopular)
+  // console.log(helpPopular)
 
   useEffect(() => {
     dispatch(__getHelp());
