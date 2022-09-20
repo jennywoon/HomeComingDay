@@ -1,7 +1,6 @@
 import { useEffect ,useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components"
-import Img from "../../assets/naverIcon.png"
 import { __getInformation, __getPopularInformation } from "../../redux/modules/InformationSlice";
 import InformationCard from "./InformationCard";
 import { TiPencil } from "react-icons/ti";
