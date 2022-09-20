@@ -62,13 +62,13 @@ const HelpDetailReplyComment = ({childCommentList,commentId,childComment, replyC
         <div>
              <StReplyCommentBox>
                 <StCommentImgDiv>
-                    <StCommentImg src={childComment.userImage}></StCommentImg>
+                    <StCommentImg src={childComment && childComment.userImage}></StCommentImg>
                 </StCommentImgDiv>
                     <StCommentReplytxt>
                             {!reviseReplyComment ? 
                             <>
-                            <div>{childComment.username}</div>
-                            <div>{childComment.content}</div>
+                            <div>{childComment && childComment.username}</div>
+                            <div>{childComment&& childComment.content}</div>
                             </>
                             :
                             <StReviseBox>

@@ -111,23 +111,23 @@ const DetailComment = ({ comment, modalRef, helpsfind ,data}) => {
             {modalOpen && <HelpCommentDeleteModal setModalOpen={setModalOpen} comment={comment} />}
             <StCommentBox >
                 <StCommentImgDiv>
-                    <StCommentImg src={comment.userImage} alt="" />
+                    <StCommentImg src={comment && comment.userImage} alt="" />
                 </StCommentImgDiv>
                 <StCommentTxt>
-                    <StTxtName>{comment.username}</StTxtName>
-                    <StTxtStudent>{comment.admission} · {comment.departmentName}</StTxtStudent>
+                    <StTxtName>{comment &&comment.username}</StTxtName>
+                    <StTxtStudent>{comment &&comment.admission} · {comment &&comment.departmentName}</StTxtStudent>
                     {isEdit ?
                         <StEditBox>
                             <Input onChange={onChangeEdit} value={editComment} width="100%"/>
                             <StReviseButtonChange type="button" onClick={onClickReviceChange} >수정완료</StReviseButtonChange>
                         </StEditBox>
                         :
-                        <StComment>{comment.content}</StComment>
+                        <StComment>{comment &&comment.content}</StComment>
 
                     }
                    
                         <StTxtFirstWrap>
-                            <StTxtCreateAt> {comment.createdAt}</StTxtCreateAt>
+                            <StTxtCreateAt> {comment &&comment.createdAt}</StTxtCreateAt>
                             <StTxtCreateAt>|</StTxtCreateAt>
                             <StTxtCreateAt 
                             onClick={onCilckReplyShow}
@@ -138,7 +138,7 @@ const DetailComment = ({ comment, modalRef, helpsfind ,data}) => {
                         >
                             {showReplyComment ?
                             <StReplyCommentBox>
-                                <StCommentImg src={comment.userImage}></StCommentImg>
+                                <StCommentImg src={comment &&comment.userImage}></StCommentImg>
                                 <Input 
                                 value={replyComment} onChange={onChangeReplyHandler}
                                  />
