@@ -4,7 +4,7 @@ import { BiDotsVerticalRounded } from "react-icons/bi";
 import { useState } from 'react';
 import Input from "../elements/Input";
 import { useDispatch } from 'react-redux';
-import { __updateHelpReplyComment,__deleteHelpReplyComment } from '../../redux/modules/HelpSlice';
+import { __updateHelpReplyComment,__deleteHelpReplyComment, __getHelp } from '../../redux/modules/HelpSlice';
 import { useParams } from 'react-router-dom';
 
 
@@ -16,9 +16,10 @@ const HelpDetailReplyComment = ({childCommentList,commentId,childComment, replyC
     const [reviseReplyComment,setReviseReplyComment] = useState(false)
     const [modalOpen, setModalOpen] = useState(false);
 
+    // const {childCommentList} = helpsfind.commentList.find((commentmap)=> commentmap)
     const childCommentId = childCommentList.find((comment)=> comment.childCommentId === childComment.childCommentId)
 
-    // console.log("childCommentList",childCommentList , "childCommentId",childCommentId)
+    console.log("childCommentId",childCommentId)
     const showModal = (e) => {
         e.preventDefault();
         setModalOpen(true);
@@ -36,25 +37,29 @@ const HelpDetailReplyComment = ({childCommentList,commentId,childComment, replyC
         setShowReplyComment(!showReplyComment)
     }
 
-    const onClickUpdateReplyComment = () =>{
-        const reviseReplyComments = {
-            articleId: Number(id),
-            commentId: commentId,
-            childCommentId :40, 
-            content: replyComment
-        }
-        dispatch(__updateHelpReplyComment(reviseReplyComments))
-        setReviseReplyComment(!reviseReplyComment)
-    }
-    const onClickDeleteReplyComment = () =>{
+    const onClickDeleteReplyComment = async() =>{
         const deleteReplyComments = {
             articleId: Number(id),
             commentId: commentId,
-            childCommentId :40,
+            childCommentId :childCommentId.childCommentId
         }
-        dispatch(__deleteHelpReplyComment(deleteReplyComments))
+        await dispatch(__deleteHelpReplyComment(deleteReplyComments))
+        await dispatch(__getHelp())
         
     }
+
+    const onClickUpdateReplyComment = async() =>{
+        const reviseReplyComments = {
+            articleId: Number(id),
+            commentId: commentId,
+            childCommentId :childCommentId.childCommentId, 
+            content: replyComment
+        }
+        await dispatch(__updateHelpReplyComment(reviseReplyComments))
+        await dispatch(__getHelp())
+        setReviseReplyComment(!reviseReplyComment)
+    }
+
 
 
 

@@ -22,8 +22,8 @@ const DetailComment = ({ comment, modalRef, helpsfind ,data}) => {
     const {childCommentList} = helpsfind.commentList.find((commentmap)=> commentmap)
     const {username} = helpsfind.commentList.find((commentmap)=>commentmap.username === comment.username)
     console.log("childCommentList",childCommentList)
-    console.log("commentId", commentId)
-    console.log("username", username)
+    // console.log("commentId", commentId)
+    // console.log("username", username)
 
     const [showComment, setShowComment] = useState(false)
     const [showReplyComment,setShowReplyComment] = useState(false)
@@ -72,8 +72,6 @@ const DetailComment = ({ comment, modalRef, helpsfind ,data}) => {
         setIsEdit(!isEdit)
     }
 
-
-
     const onClickReviceChange = async () => {
         const editcomment = {
             articleId: Number(id),
@@ -93,9 +91,11 @@ const DetailComment = ({ comment, modalRef, helpsfind ,data}) => {
             content: replyComment
         }
         await dispatch(__postHelpReplyComment(replyComments))
-        await dispatch(__getHelp())
         setReplyComment("")
         setShowReplyComment(!showReplyComment)
+        await dispatch(__getHelp())
+        
+        
     }
 
     //모달

@@ -39,7 +39,7 @@ export const __getHelp = createAsyncThunk("helps/getHelp", async (payload, thunk
           // RefreshToken : getCookie('refreshToken')
         },
       });
-        console.log(data)
+        // console.log(data)
         return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
         console.log('error', error);
@@ -260,7 +260,7 @@ export const __updateHelpReplyComment = createAsyncThunk("comments/updateHelpRep
   try {
     console.log("payload" , payload)
     const data = await axios({
-      method: 'put',
+      method: 'patch',
       url: `${BASE_URL}/article/help/${payload.articleId}/comment/${payload.commentId}/${payload.childCommentId}`,
       headers: {
         'Content-Type': 'application/json',
@@ -268,7 +268,7 @@ export const __updateHelpReplyComment = createAsyncThunk("comments/updateHelpRep
       },
       data: payload
     });
-    // console.log(data)
+    console.log(data)
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
@@ -437,12 +437,12 @@ export const HelpSlice = createSlice({
         state.isLoading = false;
         console.log('action', action)
         console.log('comment', state.commentList)
-        state.commentList = state.commentList.map((comment) => {
-          if (comment.id === action.payload.id) {
-            comment.comment = action.payload.comment;
-          }
-          return comment;
-        })
+        // state.commentList = state.commentList.map((comment) => {
+        //   if (comment.id === action.payload.id) {
+        //     comment.comment = action.payload.comment;
+        //   }
+        //   return comment;
+        // })
   
       },
       [__updateHelpComment.rejected]: (state, action) => {
@@ -482,11 +482,11 @@ export const HelpSlice = createSlice({
   
       [__updateHelpReplyComment.fulfilled]: (state, action) => {
         state.isLoading = false;
-        console.log('action', action)
-        console.log('comment', state.commentList)
+        console.log('action', action.payload)
+        console.log('comment', state.childCommentList)
         state.commentList = state.commentList.map((comment) => {
-          if (comment.id === action.payload.id) {
-            comment.comment = action.payload.comment;
+          if (comment.childCommentId === action.payload.childCommentId) {
+            comment.content = action.payload.content;
           }
           return comment;
         })
