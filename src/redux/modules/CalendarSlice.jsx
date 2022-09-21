@@ -7,6 +7,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const initialState = {
     calendarsComments:[],
+    calendarsReplyCommentList:[],
     calendars: [],
     calendarPopular:[],
     heart:[],
@@ -186,6 +187,65 @@ export const __updateCalendarComment = createAsyncThunk("comment/updateHelpComme
   }
 }
 );
+
+//대댓글
+export const __postCalendarReplyComment = createAsyncThunk("comments/postcalendarReplyComment", async (payload, thunkAPI) => {
+  try {
+    console.log("payload" , payload)
+    const data = await axios({
+      method: 'post',
+      url: `${BASE_URL}/article/calendar/${payload.articleId}/comment/${payload.commentId}`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+      },
+      data: payload
+    });
+    
+    console.log(data)
+    return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+export const __deleteCalendarReplyComment = createAsyncThunk("comments/deletecalendarReplyComment", async (payload, thunkAPI) => {
+  try {
+    console.log("payload" , payload)
+    const data = await axios({
+      method: 'delete',
+      url: `${BASE_URL}/article/calendar/${payload.articleId}/comment/${payload.commentId}/${payload.childCommentId}`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+      },
+    });
+    console.log(data)
+    return thunkAPI.fulfillWithValue(payload);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+export const __updateCalendarReplyComment = createAsyncThunk("comments/updatecalendarReplyComment", async (payload, thunkAPI) => {
+  try {
+    console.log("payload" , payload)
+    const data = await axios({
+      method: 'patch',
+      url: `${BASE_URL}/article/calendar/${payload.articleId}/comment/${payload.commentId}/${payload.childCommentId}`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+      },
+      data: payload
+    });
+    console.log(data)
+    return thunkAPI.fulfillWithValue(payload);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
 
 // // 날짜 - get
 // export const __getDate = createAsyncThunk("dates/getDate", async (payload, thunkAPI) => {
@@ -377,6 +437,50 @@ export const CalendarSlice = createSlice({
       [__updateCalendarComment.rejected]: (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      },
+
+      //대댓글
+      [__postCalendarReplyComment.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__postCalendarReplyComment.fulfilled]: (state, action) => {
+        state.isLoading = false; 
+        console.log(action.payload)
+        state.calendarsReplyCommentList.push(action.payload);
+      },
+      [__postCalendarReplyComment.rejected]: (state, action) => {
+        state.isLoading = false; 
+        state.error = action.payload;
+      },
+
+      [__deleteCalendarReplyComment.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__deleteCalendarReplyComment.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        // console.log(state.comment)
+        console.log(action)
+        state.calendarsReplyCommentList = state.calendarsReplyCommentList.filter(comment => comment.id !== action.payload)
+      },
+      [__deleteCalendarReplyComment.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+      [__updateCalendarReplyComment.pending]: (state) => {
+        state.isLoading = true;
+      },
+  
+      [__updateCalendarReplyComment.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        console.log('action', action.payload)
+        console.log('comment', state.childCommentList)
+        state.calendarsReplyCommentList = state.calendarsReplyCommentList.map((comment) => {
+          if (comment.childCommentId === action.payload.childCommentId) {
+            comment.content = action.payload.content;
+          }
+          return comment;
+        })
+  
       },
 
 

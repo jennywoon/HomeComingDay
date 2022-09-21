@@ -5,6 +5,7 @@ import { __getFreeTalk, __getPopularFreeTalk } from "../../redux/modules/FreeTal
 import FreeTalkCard from "./FreeTalkCard"
 import freetalkorange from "../../assets/freetalkorange.png"
 import nonedatasquare from "../../assets/nonedatasquare.png"
+import { __getMyPage } from "../../redux/modules/MyPageSlice";
 
 const FreeTalk = () => {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ const FreeTalk = () => {
   console.log(freetalks)
 
   useEffect(() => {
+    dispatch(__getMyPage())
     dispatch(__getFreeTalk());
     dispatch(__getPopularFreeTalk());
   }, [dispatch])
