@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { logout } from '../../shared/cookies';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteHelp } from '../../redux/modules/HelpSlice';
+import { __deleteInformation ,__getInformation} from '../../redux/modules/InformationSlice';
 
 const InformationDetailModal = ({ setModalOpen }) => {
 
@@ -31,7 +31,8 @@ const InformationDetailModal = ({ setModalOpen }) => {
             <ModalBottom onClick={closeModal}>
               <BottomTitle
               onClick={() => {
-                dispatch(__deleteHelp(informationsfind.articleId))
+                dispatch(__deleteInformation(informationsfind.articleId))
+                dispatch(__getInformation())
                 navigate("/information")
               }}
               >삭제하기</BottomTitle>

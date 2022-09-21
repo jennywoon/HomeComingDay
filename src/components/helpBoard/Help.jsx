@@ -7,6 +7,7 @@ import Loading from "../test/Loading";
 import helporange from "../../assets/helporange.png"
 import helpwhite from "../../assets/helpwhite.png"
 import nonedatasquare from "../../assets/nonedatasquare.png"
+import { __getMyPage } from "../../redux/modules/MyPageSlice";
 
 
 const Help = () => {
@@ -21,6 +22,7 @@ const Help = () => {
   // console.log(helpPopular)
 
   useEffect(() => {
+    dispatch(__getMyPage())
     dispatch(__getHelp());
     dispatch(__getPopularHelp());
   }, [dispatch])

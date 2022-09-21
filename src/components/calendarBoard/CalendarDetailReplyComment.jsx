@@ -4,11 +4,11 @@ import { BiDotsVerticalRounded } from "react-icons/bi";
 import { useState } from 'react';
 import Input from "../elements/Input";
 import { useDispatch } from 'react-redux';
-import { __updateHelpReplyComment,__deleteHelpReplyComment, __getHelp } from '../../redux/modules/HelpSlice';
 import { useParams } from 'react-router-dom';
-import HelpReplyCommentDeleteModal from './HelpReplyCommentDeleteModal';
+import { __getCalendar ,__deleteCalendarReplyComment, __updateCalendarReplyComment} from '../../redux/modules/CalendarSlice';
+import CalendarReplyCommentDeleteModal from './CalendarReplyCommentDeleteModal';
 
-const HelpDetailReplyComment = ({childCommentList,commentId,childComment, ids}) => {
+const CalendarDetailReplyComment = ({childCommentList,commentId,childComment, ids}) => {
     const {id} = useParams()
     const dispatch = useDispatch()
 
@@ -57,8 +57,8 @@ const HelpDetailReplyComment = ({childCommentList,commentId,childComment, ids}) 
             commentId: commentId,
             childCommentId : replyTargetId
         }
-        await dispatch(__deleteHelpReplyComment(deleteReplyComments))
-        await dispatch(__getHelp())
+        await dispatch(__deleteCalendarReplyComment(deleteReplyComments))
+        await dispatch(__getCalendar())
         
     }
 
@@ -70,50 +70,47 @@ const HelpDetailReplyComment = ({childCommentList,commentId,childComment, ids}) 
             childCommentId :replyTargetId,
             content: editReplyComment
         }
-        await dispatch(__updateHelpReplyComment(reviseReplyComments))
-        await dispatch(__getHelp())
+        await dispatch(__updateCalendarReplyComment(reviseReplyComments))
+        await dispatch(__getCalendar())
         setReviseReplyComment(!reviseReplyComment)
     }
 
     return (
         <div>
-             <StReplyCommentBox id={ids}>
-             {modalOpen && <HelpReplyCommentDeleteModal setModalOpen={setModalOpen} onClickDeleteReplyComment={onClickDeleteReplyComment}/>}
-             
-                <StCommentImgDiv>
-                    <StCommentImg src={childComment && childComment.userImage}></StCommentImg>
-                </StCommentImgDiv>
-                    <StCommentReplytxt >
-                            {!reviseReplyComment ? 
-                            <>
-                            <StReplyUserName>{childComment && childComment.username} <StUserInfo>{childComment && childComment.admission} · {childComment && childComment.departmentName}</StUserInfo></StReplyUserName>
-                            <StReplyContent>{childComment&& childComment.content}</StReplyContent>
-                            <StReplyTime>{childComment&& childComment.createdAt}</StReplyTime>
-                            </>
-                            :
-                            <StReviseBox>
-                            <Input value={editReplyComment} onChange={onChangeReplyHandler} borderBottom="1px solid #ccc" width="100%"/>
-                            <StReviseButtonChange type="button" onClick={onClickUpdateReplyComment}>수정완료</StReviseButtonChange>
-                            </StReviseBox>}
-                    </StCommentReplytxt>
-                
-                <BiDotsVerticalRounded size="20px" style={{ cursor: "pointer", color: "#bebebe" , position:"relative"}} onClick={onCilckShow}/>
+        <StReplyCommentBox id={ids}>
+        {modalOpen && <CalendarReplyCommentDeleteModal setModalOpen={setModalOpen} onClickDeleteReplyComment={onClickDeleteReplyComment}/>}
+        
+           <StCommentImgDiv>
+               <StCommentImg src={childComment && childComment.userImage}></StCommentImg>
+           </StCommentImgDiv>
+               <StCommentReplytxt >
+                       {!reviseReplyComment ? 
+                       <>
+                       <StReplyUserName>{childComment && childComment.username} <StUserInfo>{childComment && childComment.admission} · {childComment && childComment.departmentName}</StUserInfo></StReplyUserName>
+                       <StReplyContent>{childComment&& childComment.content}</StReplyContent>
+                       <StReplyTime>{childComment&& childComment.createdAt}</StReplyTime>
+                       </>
+                       :
+                       <StReviseBox>
+                       <Input value={editReplyComment} onChange={onChangeReplyHandler} borderBottom="1px solid #ccc" width="100%"/>
+                       <StReviseButtonChange type="button" onClick={onClickUpdateReplyComment}>수정완료</StReviseButtonChange>
+                       </StReviseBox>}
+               </StCommentReplytxt>
+           
+           <BiDotsVerticalRounded size="20px" style={{ cursor: "pointer", color: "#bebebe" , position:"relative"}} onClick={onCilckShow}/>
 
-                {showReplyComment ?
-                    <StRevisebox>
-                        <StReviseButton onClick={onClickRevice} type="button">수정</StReviseButton>
-                        <StDeleteButton onClick={showModal} type="button">삭제</StDeleteButton>
-                    </StRevisebox>
-                    : null}
-                
-
-            </StReplyCommentBox>
-        </div>
+           {showReplyComment ?
+               <StRevisebox>
+                   <StReviseButton onClick={onClickRevice} type="button">수정</StReviseButton>
+                   <StDeleteButton onClick={showModal} type="button">삭제</StDeleteButton>
+               </StRevisebox>
+               : null}
+       </StReplyCommentBox>
+   </div>
     );
 };
 
-export default HelpDetailReplyComment;
-
+export default CalendarDetailReplyComment;
 
 const StReplyCommentBox = styled.div`
     display: flex;
@@ -216,4 +213,3 @@ const StReplyTime = styled.div`
      font-size: 10px;
     color:#bebebe;
 `
-

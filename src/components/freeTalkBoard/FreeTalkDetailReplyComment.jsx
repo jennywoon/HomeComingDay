@@ -4,11 +4,11 @@ import { BiDotsVerticalRounded } from "react-icons/bi";
 import { useState } from 'react';
 import Input from "../elements/Input";
 import { useDispatch } from 'react-redux';
-import { __updateHelpReplyComment,__deleteHelpReplyComment, __getHelp } from '../../redux/modules/HelpSlice';
 import { useParams } from 'react-router-dom';
-import HelpReplyCommentDeleteModal from './HelpReplyCommentDeleteModal';
+import { __getFreeTalk ,__deleteFreeTalkReplyComment,__updateFreeTalkReplyComment} from '../../redux/modules/FreeTalkSlice';
+import FreeTalkReplyCommentDeleteModal from './FreeTalkReplyCommentDeleteModal';
 
-const HelpDetailReplyComment = ({childCommentList,commentId,childComment, ids}) => {
+const FreeTalkDetailReplyComment = ({childCommentList,commentId,childComment, ids}) => {
     const {id} = useParams()
     const dispatch = useDispatch()
 
@@ -57,8 +57,8 @@ const HelpDetailReplyComment = ({childCommentList,commentId,childComment, ids}) 
             commentId: commentId,
             childCommentId : replyTargetId
         }
-        await dispatch(__deleteHelpReplyComment(deleteReplyComments))
-        await dispatch(__getHelp())
+        await dispatch(__deleteFreeTalkReplyComment(deleteReplyComments))
+        await dispatch(__getFreeTalk())
         
     }
 
@@ -70,15 +70,15 @@ const HelpDetailReplyComment = ({childCommentList,commentId,childComment, ids}) 
             childCommentId :replyTargetId,
             content: editReplyComment
         }
-        await dispatch(__updateHelpReplyComment(reviseReplyComments))
-        await dispatch(__getHelp())
+        await dispatch(__updateFreeTalkReplyComment(reviseReplyComments))
+        await dispatch(__getFreeTalk())
         setReviseReplyComment(!reviseReplyComment)
     }
 
     return (
         <div>
              <StReplyCommentBox id={ids}>
-             {modalOpen && <HelpReplyCommentDeleteModal setModalOpen={setModalOpen} onClickDeleteReplyComment={onClickDeleteReplyComment}/>}
+             {modalOpen && <FreeTalkReplyCommentDeleteModal setModalOpen={setModalOpen} onClickDeleteReplyComment={onClickDeleteReplyComment}/>}
              
                 <StCommentImgDiv>
                     <StCommentImg src={childComment && childComment.userImage}></StCommentImg>
@@ -112,7 +112,7 @@ const HelpDetailReplyComment = ({childCommentList,commentId,childComment, ids}) 
     );
 };
 
-export default HelpDetailReplyComment;
+export default FreeTalkDetailReplyComment;
 
 
 const StReplyCommentBox = styled.div`
@@ -216,4 +216,3 @@ const StReplyTime = styled.div`
      font-size: 10px;
     color:#bebebe;
 `
-

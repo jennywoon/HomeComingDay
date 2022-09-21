@@ -27,6 +27,7 @@ import HelpDeleteModal from './HelpDeleteModal';
 import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
 import heartColorImg from '../../assets/heartColor.png';
+import { __getMyPage } from '../../redux/modules/MyPageSlice';
 
 const HelpDetail = () => {
   const dispatch = useDispatch();
@@ -39,13 +40,18 @@ const HelpDetail = () => {
   const modalRef = useRef(null);
 
   const helpsfind = helps.find((help) => help.articleId === Number(id));
+  // const helpsCommentList = helpsfind.commentList.find((helpfind)=>helpfind)
+  // const helpsChildCommentList = helpsCommentList.childCommentList.find((helpsComment)=>helpsComment)
   const data = useSelector((state) => state.mypages.mypages)
   console.log('helpsfind', helpsfind);
-  console.log('heart', helpsfind.heart)
-  console.log('data', data);
+  // console.log("helpsCommentList",helpsCommentList)
+  // console.log('helpsChildCommentList', helpsChildCommentList)
+  // console.log('data', data);
 
   // 조회수 반영
   useEffect(() => {
+    dispatch(__getMyPage())
+    dispatch(__getHelp())
     dispatch(__getDetailHelp(id));
   }, [dispatch]);
 
@@ -164,7 +170,7 @@ const HelpDetail = () => {
                   {showChaet ? <ChaetingBox>1:1채팅</ChaetingBox> : null}
                 </Bodytxt>
 
-                {helpsfind.username === data.username ? 
+                {helpsfind &&helpsfind.username === data.username ? 
                 <BiDotsVerticalRounded
                   size='20px'
                   style={{
