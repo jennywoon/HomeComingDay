@@ -23,9 +23,9 @@ const ChatHome = () => {
   //   }, []);
 
   return (
-    <HomeContainer>
-      <HelpContainer>
-        <Header>
+    <StHomeContainer>
+      <StHelpContainer>
+        <StHeader>
           <IoIosArrowBack
             size='25px'
             cursor='pointer'
@@ -34,15 +34,15 @@ const ChatHome = () => {
               navigate('/main');
             }}
           />
-          <HeaderTitel>알림</HeaderTitel>
+          <StHeaderTitle>알림</StHeaderTitle>
           <div></div>
-        </Header>
+        </StHeader>
         <NoticeList />
-      </HelpContainer>
+      </StHelpContainer>
       {/* <BottomTap /> */}
-      <BottomTapWrap>
-        <Bottom>
-          <Tap
+      <StBottomTapWrap>
+        <StBottom>
+          <StTap
             onClick={() => {
               navigate('/main');
             }}
@@ -53,9 +53,9 @@ const ChatHome = () => {
               alt='홈'
               style={{ width: '45%', margin: '2px' }}
             />
-            <TapTitle style={{ color: '#8E8E8E' }}>홈</TapTitle>
-          </Tap>
-          <Tap
+            <StTapTitle style={{ color: '#8E8E8E' }}>홈</StTapTitle>
+          </StTap>
+          <StTap
             onClick={() => {
               navigate('/search');
             }}
@@ -65,9 +65,9 @@ const ChatHome = () => {
               alt='검색'
               style={{ width: '45%', margin: '2px' }}
             />
-            <TapTitle style={{ color: '#8E8E8E' }}>검색</TapTitle>
-          </Tap>
-          <Tap
+            <StTapTitle style={{ color: '#8E8E8E' }}>검색</StTapTitle>
+          </StTap>
+          <StTap
             onClick={() => {
               navigate('/chat');
             }}
@@ -77,9 +77,9 @@ const ChatHome = () => {
               alt='채팅'
               style={{ width: '45%', margin: '2px' }}
             />
-            <TapTitle style={{ color: '#8E8E8E' }}>채팅</TapTitle>
-          </Tap>
-          <Tap
+            <StTapTitle style={{ color: '#8E8E8E' }}>채팅</StTapTitle>
+          </StTap>
+          <StTap
             style={{ paddingRight: '20px' }}
             onClick={() => {
               navigate('/mypage');
@@ -90,24 +90,24 @@ const ChatHome = () => {
               alt='마이페이지'
               style={{ width: '45%', margin: '2px' }}
             />
-            <TapTitle style={{ color: '#8E8E8E' }}>MY</TapTitle>
-          </Tap>
-        </Bottom>
-      </BottomTapWrap>
-    </HomeContainer>
+            <StTapTitle style={{ color: '#8E8E8E' }}>MY</StTapTitle>
+          </StTap>
+        </StBottom>
+      </StBottomTapWrap>
+    </StHomeContainer>
   );
 };
 
 export default ChatHome;
 
-const HomeContainer = styled.div`
+const StHomeContainer = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
 `;
 
-const HelpContainer = styled.div`
+const StHelpContainer = styled.div`
   /* gap: 8px; */
   height: 100vh;
   /* overflow-y: scroll; */
@@ -118,7 +118,7 @@ const HelpContainer = styled.div`
   /* border: 1px solid blue; */
 `;
 
-const Header = styled.div`
+const StHeader = styled.div`
   width: 100%;
   height: 48px;
   /* border: 1px solid red; */
@@ -128,32 +128,32 @@ const Header = styled.div`
   /* margin-bottom: 10px; */
   border-bottom: 1px solid #f5f5f5;
 `;
-const HeaderTitel = styled.div`
+const StHeaderTitle = styled.div`
   font-size: 16px;
   font-weight: 800;
 `;
 
-const BottomTapWrap = styled.div`
+const StBottomTapWrap = styled.div`
   width: 100%;
   position: sticky;
   background-color: #ffffff;
   bottom: 0;
   box-shadow: 0px 2px 13px rgba(0, 0, 0, 0.2);
 `;
-const Bottom = styled.div`
+const StBottom = styled.div`
   height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
-const Tap = styled.div`
+const StTap = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
 `;
-const TapTitle = styled.div`
+const StTapTitle = styled.div`
   font-size: 11px;
   font-weight: 400;
 `;
