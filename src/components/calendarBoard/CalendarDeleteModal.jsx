@@ -5,7 +5,7 @@ import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { logout } from '../../shared/cookies';
 import { useDispatch, useSelector } from 'react-redux';
 import { __delete } from '../../redux/modules/HelpSlice';
-import { __deleteCalendar } from '../../redux/modules/CalendarSlice';
+import { __deleteCalendar, __getCalendar } from '../../redux/modules/CalendarSlice';
 
 const CalendarDeleteModal = ({ setModalOpen }) => {
 
@@ -33,6 +33,7 @@ const CalendarDeleteModal = ({ setModalOpen }) => {
               <BottomTitle
               onClick={() => {
                 dispatch(__deleteCalendar(calendarsfind.articleId))
+                dispatch(__getCalendar())
                 navigate("/calendar")
               }}
               >삭제하기</BottomTitle>

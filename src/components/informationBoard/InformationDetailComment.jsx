@@ -9,18 +9,21 @@ import { __deleteInfoComment, __updateInfoComment, __getInformation, __getDetail
 import { useParams } from 'react-router-dom';
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import InfoCommentDeleteModal from './InfoCommentDeleteModal';
+import InformationReplyComment from './InformationReplyComment';
 
 const InformationComment = ({ comment, informationsfind, modalRef ,data}) => {
     const dispatch = useDispatch();
     const { id } = useParams();
 
     const { commentId } = informationsfind.commentList.find((commentmap) => commentmap.commentId === comment.commentId)
+    const {childCommentList} = informationsfind.commentList.find((commentmap)=> commentmap)
     const {username} = informationsfind.commentList.find((commentmap)=>commentmap.username === comment.username)
 
     const [showComment, setShowComment] = useState(false)
     const [showReplyComment, setShowReplyComment] = useState(false)
     const [isEdit, setIsEdit] = useState(false)
     const [editComment, setEditComment] = useState("")
+    const [replyComment,setReplyComment] = useState("")
 
     const onChangeEdit = (e) => {
         setEditComment(e.target.value)
@@ -29,9 +32,7 @@ const InformationComment = ({ comment, informationsfind, modalRef ,data}) => {
     const onCilckShow = () => {
         setShowComment(!showComment)
     }
-    const onCilckReplyShow = () => {
-        setShowReplyComment(!showReplyComment)
-    }
+
 
     const onClickRevice = () => {
         setShowComment(!showComment)
@@ -55,79 +56,102 @@ const InformationComment = ({ comment, informationsfind, modalRef ,data}) => {
         setModalOpen(true);
     }
 
-    // 대댓글 구현중
-    const [replyComment, setReplyComment] = useState("");
-    const onChangeReplyHandler = (e) => {
-        setReplyComment(e.target.value);
+
+   //대댓글 토글
+    const onCilckReplyShow = () => {
+        setShowReplyComment(!showReplyComment)
+    }
+    
+    //대댓글 텍스트핸들러
+    const onChangeReplyHandler = (e) =>{
+        setReplyComment(e.target.value)
     }
 
+     //대댓글 post
     const onClickPostReplyComment = async (e) => {
         e.preventDefault();
-        const newReplyComment = {
+        const replyComments = {
             content: replyComment,
             articleId: Number(id),
             commentId: commentId
         }
-        await dispatch(__postInfoReplyComment(newReplyComment));
-        await dispatch(__getInformation());
+        await dispatch(__postInfoReplyComment(replyComments));
         setReplyComment("");
+        setShowReplyComment(!showReplyComment)
+        await dispatch(__getInformation());
+       
     }
 
     return (
-        <CommentContain>
-            {modalOpen && <InfoCommentDeleteModal setModalOpen={setModalOpen} comment={comment} />}
-            <CommentBox>
-                <CommentImg src={comment.userImage} alt="" />
-                <CommentTxt>
-                    <TxtName>{comment.username}</TxtName>
-                    <TxtStudent>{comment.admission} · {comment.departmentName}</TxtStudent>
-                    {isEdit ?
-                        <EditBox>
-                            <Input onChange={onChangeEdit} value={editComment} />
-                            <ReviseButtonChange type="button" onClick={onClickReviceChange} >수정완료</ReviseButtonChange>
-                        </EditBox>
-                        :
-                        <Comment>{comment.content}</Comment>
-                    }
-                    <TxtWrap>
-                        <TxtFirstWrap>
-                            <TxtCreateAt> {comment.createdAt}</TxtCreateAt>
-                            <TxtCreateAt>|</TxtCreateAt>
-                            <TxtCreateAt onClick={onCilckReplyShow}>답글쓰기</TxtCreateAt>
-                        </TxtFirstWrap>
-                        {/* <ReplyInputContainer onSubmit={onClickPostReplyComment}>
-                            {showReplyComment ?
-                                <div>
-                                    <input value={replyComment} onChange={onChangeReplyHandler}/>
-                                    <button>올리기</button>
-                                </div>
-                                : null
-                            }
-                        </ReplyInputContainer> */}
-                    </TxtWrap>
-                </CommentTxt>
-                {username === data.username ? (
-                <BiDotsVerticalRounded
-                    size="20px" style={{ marginLeft: "auto", marginTop: "2px", cursor: "pointer", color: "#bebebe" }}
-                    onClick={onCilckShow} />
-                ) : null}
+        <StCommentContain >
+        {modalOpen && <InfoCommentDeleteModal setModalOpen={setModalOpen} comment={comment} />}
+        <StCommentBox >
+            <StCommentImgDiv>
+                <StCommentImg src={comment && comment.userImage} alt="" />
+            </StCommentImgDiv>
+            <StCommentTxt>
+                <StTxtName>{comment &&comment.username}</StTxtName>
+                <StTxtStudent>{comment &&comment.admission} · {comment &&comment.departmentName}</StTxtStudent>
+                {isEdit ?
+                    <StEditBox>
+                        <Input onChange={onChangeEdit} value={editComment} width="100%" borderBottom="1px solid #ccc" />
+                        <StReviseButtonChange type="button" onClick={onClickReviceChange} >수정완료</StReviseButtonChange>
+                    </StEditBox>
+                    :
+                    <StComment>{comment &&comment.content}</StComment>
 
-                {showComment ?
-                    <Revisebox ref={modalRef}>
-                        <ReviseButton onClick={onClickRevice} type="button">수정</ReviseButton>
-                        <DeleteButton onClick={showModal} type="button">삭제</DeleteButton>
-                    </Revisebox>
-                    : null}
-            </CommentBox>
-        </CommentContain>
+                }
+               
+                    <StTxtFirstWrap>
+                        <StTxtCreateAt> {comment &&comment.createdAt}</StTxtCreateAt>
+                        <StTxtCreateAt>|</StTxtCreateAt>
+                        <StTxtCreateAt 
+                        onClick={onCilckReplyShow}
+                        >답글쓰기</StTxtCreateAt>
+                    </StTxtFirstWrap>
+                    <StReplyInputContainer 
+                    >
+                        {showReplyComment ?
+                        <StReplyCommentBox>
+                            <StCommentImg src={comment &&comment.userImage}></StCommentImg>
+                            <Input value={replyComment} onChange={onChangeReplyHandler} borderBottom="1px solid #ccc" width="100%"/>
+                            <StReviseButtonChange type="button" onClick={onClickPostReplyComment}>댓글달기</StReviseButtonChange>
+                        </StReplyCommentBox>
+                        : null 
+                        }
+                        {/* 대댓글맵돌리기 */}
+                        {comment && comment.childCommentList.map((childComment) =>
+                        <InformationReplyComment ids={childComment.childCommentId} key={childComment.childCommentId} childComment={childComment} commentId={commentId} childCommentList={childCommentList}></InformationReplyComment>
+                        )}
+                    </StReplyInputContainer>
+                
+            </StCommentTxt>
+            {/* <AiOutlineMenu size="18px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }} onClick={onCilckShow}/> */}
+
+            {username === data.username ? (
+            <BiDotsVerticalRounded
+                size="20px" style={{ marginLeft: "auto", marginTop: "2px", cursor: "pointer", color: "#bebebe" }}
+                onClick={onCilckShow} />
+            ) : null
+            }
+
+            {showComment ?
+                <StRevisebox ref={modalRef}>
+                    <StReviseButton onClick={onClickRevice} type="button">수정</StReviseButton>
+                    <StDeleteButton onClick={showModal} type="button">삭제</StDeleteButton>
+                </StRevisebox>
+                : null}
+
+        </StCommentBox>
+    </StCommentContain>
     );
 };
 
 export default InformationComment;
 
 
-const CommentContain = styled.div`
-    margin: 10px 0px;
+const StCommentContain = styled.div`
+    margin: 15px 0px;
     /* border: 1px solid blue; */
     width: 100%;
     height: 100%;
@@ -135,25 +159,31 @@ const CommentContain = styled.div`
     justify-content: center;
 `
 
-const CommentBox = styled.div`
+const StCommentBox = styled.div`
     display:flex;
     position: relative;
     width: 100%;
 `
 
-const CommentImg = styled.img`
+const StCommentImgDiv = styled.div`
+    width:40px;
+`
+
+const StCommentImg = styled.img`
     width:30px;
     height: 30px;
     margin-top: 2px;
     border-radius: 50%;
 `
 
-const CommentTxt = styled.div`
+const StCommentTxt = styled.div`
     display: flex;
     flex-direction: column;
-    margin-left: 10px;   
+    width:100%;
+    
+    /* margin-left: 10px;  */
 `
-const Revisebox = styled.div`
+const StRevisebox = styled.div`
     border: 1px solid #f1f0f0;
     border-radius: 16px;
     position: absolute;
@@ -166,9 +196,10 @@ const Revisebox = styled.div`
     width:58px;
     box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
 `
-const ReviseButton = styled.button`
+const StReviseButton = styled.button`
     border:none;
     border-bottom: 1px solid #f1f0f0;
+    width:100%;
     padding:10px;
     border-radius: 10px 10px 0 0;
     background-color: #fff;
@@ -179,9 +210,10 @@ const ReviseButton = styled.button`
     }
 `
 
-const DeleteButton = styled.button`
+const StDeleteButton = styled.button`
     border:none;
     background-color: #eee;
+    width:100%;
     padding:10px;
     border-radius: 0 0 10px 10px;
     background-color: #fff;
@@ -191,56 +223,73 @@ const DeleteButton = styled.button`
         color: #000;
     }
 `
-const ReviseButtonChange = styled.button`
-    margin-left : auto; 
+const StReviseButtonChange = styled.button`
+   
+    width:50px;
     background-color:white;
-    font-size:12px;
+    font-size:10px;
     /* border:none; */
     border:1px solid gray;
     cursor:pointer;
-    width:70px;
     border-radius: 10px;
+    height:25px;
+    color:gray;
     
 `
-const EditBox = styled.div`
+const StEditBox = styled.div`
     display: flex;
     align-items: center;
+    width:100%;
     /* padding: 0px 20px; */
 `
 
-
-const TxtName = styled.h3`
+const StTxtName = styled.h3`
     margin: 0px;
     font-size:14px;
     font-weight: 700;
 `
-const TxtStudent = styled.p`
+const StTxtStudent = styled.p`
     margin: 0px;
     font-size: 12px;
     font-weight: 500;
     color: #bebebe;
 `
-
-const TxtWrap = styled.div`
+const StTxtWrap = styled.div`
     display: flex;
     flex-direction: column;
     gap: 5px;
 `
 
-const TxtFirstWrap = styled.div`
+const StTxtFirstWrap = styled.div`
     display: flex;
     gap: 5px;
 `
-const TxtCreateAt = styled.div`
+const StTxtCreateAt = styled.div`
     font-size: 12px;
     font-weight: 500;
     color: #bebebe;
     cursor: pointer;
 `
 
-const ReplyInputContainer = styled.form``
-const Comment = styled.p`
-    /* padding: 0px 20px; */
+const StReplyInputContainer = styled.div`
+    /* margin-left:30px; */
+`
+const StReplyCommentBox = styled.div`
+    display: flex;
+    align-items: center;
+    margin-top:6px;
+`
+const StCommentReplytxt = styled.div`
+    font-size:13px;
+    width:100%;
+`
+
+const StReplyCommentImg = styled.img`
+    width:30px;
+    border-radius: 30px;
+`
+
+const StComment = styled.p`
     margin: 5px 0;
     font-size:14px;
     font-weight: 500;

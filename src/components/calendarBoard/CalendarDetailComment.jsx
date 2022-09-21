@@ -4,26 +4,28 @@ import { AiOutlineMenu } from 'react-icons/ai'
 import Img from "../../assets/naverIcon.png"
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { __deleteCalendarComment, __updateCalendarComment, __getCalendar } from '../../redux/modules/CalendarSlice';
+import { __deleteCalendarComment, __updateCalendarComment, __getCalendar ,__postCalendarReplyComment} from '../../redux/modules/CalendarSlice';
 import Input from "../elements/Input";
 import { useParams } from 'react-router-dom';
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import CalendarCommentDeleteModal from './CalendarCommentDeleteModal';
-
+import CalendarDetailReplyComment from './CalendarDetailReplyComment';
 
 const CalendarDetailComment = ({ comment, modalRef, calendarfind ,data}) => {
     const dispatch = useDispatch();
     const { id } = useParams();
 
     const { commentId } = calendarfind.commentList.find((commentmap) => commentmap.commentId === comment.commentId)
+    const {childCommentList} = calendarfind.commentList.find((commentmap)=> commentmap)
     const {username} = calendarfind.commentList.find((commentmap)=>commentmap.username === comment.username)
     console.log("commentId", commentId)
 
 
     const [showComment, setShowComment] = useState(false)
+    const [showReplyComment,setShowReplyComment] = useState(false)
     const [isEdit, setIsEdit] = useState(false)
     const [editComment, setEditComment] = useState("")
-
+    const [replyComment,setReplyComment] = useState("")
     // useEffect(() => {
     //     dispatch(__postHelpComment());
     //     dispatch(__getDetailHelp(id))
@@ -66,6 +68,31 @@ const CalendarDetailComment = ({ comment, modalRef, calendarfind ,data}) => {
         await dispatch(__getCalendar());
         setIsEdit(!isEdit)
     }
+    //대댓글 post
+    const onClickPostReplyComment = async(e)=>{
+        e.preventDefault();
+        const replyComments = {
+            articleId: Number(id),
+            commentId: commentId,
+            content: replyComment
+        }
+        await dispatch(__postCalendarReplyComment(replyComments))
+        setReplyComment("")
+        setShowReplyComment(!showReplyComment)
+        await dispatch(__getCalendar())
+        
+        
+    }
+
+        //대댓글 토글
+        const onCilckReplyShow = () => {
+            setShowReplyComment(!showReplyComment)
+        }
+        
+        //대댓글 텍스트핸들러
+        const onChangeReplyHandler = (e) =>{
+            setReplyComment(e.target.value)
+        }
 
     //모달
     const [modalOpen, setModalOpen] = useState(false);
@@ -75,65 +102,74 @@ const CalendarDetailComment = ({ comment, modalRef, calendarfind ,data}) => {
     }
 
     return (
-        <CommentContain >
+        <StCommentContain >
             {modalOpen && <CalendarCommentDeleteModal setModalOpen={setModalOpen} comment={comment} />}
-            <CommentBox >
-                <CommentImg src={comment.userImage} alt="" />
-                <CommentTxt>
-                    <TxtName>{comment.username}</TxtName>
-                    <TxtStudent>{comment.admission} <span> {comment.createdAt}</span></TxtStudent>
+            <StCommentBox >
+                <StCommentImgDiv>
+                    <StCommentImg src={comment && comment.userImage} alt="" />
+                </StCommentImgDiv>
+                <StCommentTxt>
+                    <StTxtName>{comment &&comment.username}</StTxtName>
+                    <StTxtStudent>{comment &&comment.admission} · {comment &&comment.departmentName}</StTxtStudent>
                     {isEdit ?
-                        <EditBox>
-                            <Input onChange={onChangeEdit} value={editComment} />
-                            <ReviseButtonChange type="button" onClick={onClickReviceChange} >수정완료</ReviseButtonChange>
-                        </EditBox>
+                        <StEditBox>
+                            <Input onChange={onChangeEdit} value={editComment} width="100%" borderBottom="1px solid #ccc" />
+                            <StReviseButtonChange type="button" onClick={onClickReviceChange} >수정완료</StReviseButtonChange>
+                        </StEditBox>
                         :
-                        <Comment>{comment.content}</Comment>
+                        <StComment>{comment &&comment.content}</StComment>
 
                     }
-                    <TxtWrap>
-                        <TxtFirstWrap>
-                            <TxtCreateAt> {comment.createdAt}</TxtCreateAt>
-                            <TxtCreateAt>|</TxtCreateAt>
-                            <TxtCreateAt 
-                            // onClick={onCilckReplyShow}
-                            >답글쓰기</TxtCreateAt>
-                        </TxtFirstWrap>
-                        {/* <ReplyInputContainer onSubmit={onClickPostReplyComment}>
+                   
+                        <StTxtFirstWrap>
+                            <StTxtCreateAt> {comment &&comment.createdAt}</StTxtCreateAt>
+                            <StTxtCreateAt>|</StTxtCreateAt>
+                            <StTxtCreateAt 
+                            onClick={onCilckReplyShow}
+                            >답글쓰기</StTxtCreateAt>
+                        </StTxtFirstWrap>
+                        <StReplyInputContainer 
+                        >
                             {showReplyComment ?
-                                <div>
-                                    <input value={replyComment} onChange={onChangeReplyHandler}/>
-                                    <button>올리기</button>
-                                </div>
-                                : null
+                            <StReplyCommentBox>
+                                <StCommentImg src={comment &&comment.userImage}></StCommentImg>
+                                <Input value={replyComment} onChange={onChangeReplyHandler} borderBottom="1px solid #ccc" width="100%"/>
+                                <StReviseButtonChange type="button" onClick={onClickPostReplyComment}>댓글달기</StReviseButtonChange>
+                            </StReplyCommentBox>
+                            : null 
                             }
-                        </ReplyInputContainer> */}
-                    </TxtWrap>
-                </CommentTxt>
+                            {/* 대댓글맵돌리기 */}
+                            {comment && comment.childCommentList.map((childComment) =>
+                            <CalendarDetailReplyComment ids={childComment.childCommentId} key={childComment.childCommentId} childComment={childComment} commentId={commentId} childCommentList={childCommentList}></CalendarDetailReplyComment>
+                            )}
+                        </StReplyInputContainer>
+                    
+                </StCommentTxt>
                 {/* <AiOutlineMenu size="18px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }} onClick={onCilckShow}/> */}
 
                 {username === data.username ? (
                 <BiDotsVerticalRounded
                     size="20px" style={{ marginLeft: "auto", marginTop: "2px", cursor: "pointer", color: "#bebebe" }}
                     onClick={onCilckShow} />
-                ) : null}
+                ) : null
+                }
 
                 {showComment ?
-                    <Revisebox ref={modalRef}>
-                        <ReviseButton onClick={onClickRevice} type="button">수정</ReviseButton>
-                        <DeleteButton onClick={showModal} type="button">삭제</DeleteButton>
-                    </Revisebox>
+                    <StRevisebox ref={modalRef}>
+                        <StReviseButton onClick={onClickRevice} type="button">수정</StReviseButton>
+                        <StDeleteButton onClick={showModal} type="button">삭제</StDeleteButton>
+                    </StRevisebox>
                     : null}
 
-            </CommentBox>
-        </CommentContain>
+            </StCommentBox>
+        </StCommentContain>
     );
 };
 
 export default CalendarDetailComment;
 
-const CommentContain = styled.div`
-    margin: 10px 0px;
+const StCommentContain = styled.div`
+    margin: 15px 0px;
     /* border: 1px solid blue; */
     width: 100%;
     height: 100%;
@@ -141,43 +177,31 @@ const CommentContain = styled.div`
     justify-content: center;
 `
 
-const CommentBox = styled.div`
+const StCommentBox = styled.div`
     display:flex;
     position: relative;
     width: 100%;
 `
 
-const CommentImg = styled.img`
+const StCommentImgDiv = styled.div`
+    width:40px;
+`
+
+const StCommentImg = styled.img`
     width:30px;
     height: 30px;
     margin-top: 2px;
     border-radius: 50%;
 `
 
-const CommentTxt = styled.div`
+const StCommentTxt = styled.div`
     display: flex;
     flex-direction: column;
-    margin-left: 10px;
+    width:100%;
     
+    /* margin-left: 10px;  */
 `
-const TxtName = styled.h3`
-    margin: 0px;
-    font-size:14px;
-    font-weight: 700;
-`
-const TxtStudent = styled.p`
-    margin: 0px;
-    font-size: 12px;
-    font-weight: 500;
-    color: #bebebe;
-`
-
-const Comment = styled.p`
-    margin: 5px 0;
-    font-size:14px;
-    font-weight: 500;
-`
-const Revisebox = styled.div`
+const StRevisebox = styled.div`
     border: 1px solid #f1f0f0;
     border-radius: 16px;
     position: absolute;
@@ -190,7 +214,7 @@ const Revisebox = styled.div`
     width:58px;
     box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
 `
-const ReviseButton = styled.button`
+const StReviseButton = styled.button`
     border:none;
     border-bottom: 1px solid #f1f0f0;
     width:100%;
@@ -204,7 +228,7 @@ const ReviseButton = styled.button`
     }
 `
 
-const DeleteButton = styled.button`
+const StDeleteButton = styled.button`
     border:none;
     background-color: #eee;
     width:100%;
@@ -217,37 +241,74 @@ const DeleteButton = styled.button`
         color: #000;
     }
 `
-const ReviseButtonChange = styled.button`
-    margin-left : auto; 
-    width:70px;
+const StReviseButtonChange = styled.button`
+   
+    width:50px;
     background-color:white;
-    font-size:12px;
+    font-size:10px;
     /* border:none; */
     border:1px solid gray;
     cursor:pointer;
     border-radius: 10px;
+    height:25px;
+    color:gray;
     
 `
-const EditBox = styled.div`
+const StEditBox = styled.div`
     display: flex;
     align-items: center;
+    width:100%;
     /* padding: 0px 20px; */
 `
-const TxtWrap = styled.div`
+
+const StTxtName = styled.h3`
+    margin: 0px;
+    font-size:14px;
+    font-weight: 700;
+`
+const StTxtStudent = styled.p`
+    margin: 0px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #bebebe;
+`
+const StTxtWrap = styled.div`
     display: flex;
     flex-direction: column;
     gap: 5px;
 `
 
-const TxtFirstWrap = styled.div`
+const StTxtFirstWrap = styled.div`
     display: flex;
     gap: 5px;
 `
-const TxtCreateAt = styled.div`
+const StTxtCreateAt = styled.div`
     font-size: 12px;
     font-weight: 500;
     color: #bebebe;
     cursor: pointer;
 `
 
-const ReplyInputContainer = styled.form``
+const StReplyInputContainer = styled.div`
+    /* margin-left:30px; */
+`
+const StReplyCommentBox = styled.div`
+    display: flex;
+    align-items: center;
+    margin-top:6px;
+`
+const StCommentReplytxt = styled.div`
+    font-size:13px;
+    width:100%;
+`
+
+const StReplyCommentImg = styled.img`
+    width:30px;
+    border-radius: 30px;
+`
+
+const StComment = styled.p`
+    margin: 5px 0;
+    font-size:14px;
+    font-weight: 500;
+`

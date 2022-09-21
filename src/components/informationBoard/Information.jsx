@@ -7,6 +7,7 @@ import { TiPencil } from "react-icons/ti";
 import { useNavigate } from "react-router-dom";
 import informationorange from "../../assets/informationorange.png"
 import nonedatasquare from "../../assets/nonedatasquare.png"
+import { __getMyPage } from "../../redux/modules/MyPageSlice";
 
 const Information = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const Information = () => {
   };
 
   useEffect(() => {
+    dispatch(__getMyPage())
     dispatch(__getInformation());
     dispatch(__getPopularInformation());
   }, [dispatch])

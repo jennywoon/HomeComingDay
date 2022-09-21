@@ -26,6 +26,7 @@ import InformationDetailModal from './InformationDetailModal';
 import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
 import heartColorImg from '../../assets/heartColor.png';
+import { __getMyPage } from '../../redux/modules/MyPageSlice';
 
 const InformationDetail = () => {
   const dispatch = useDispatch();
@@ -50,6 +51,8 @@ const InformationDetail = () => {
 
   //조회수반영
   useEffect(() => {
+    dispatch(__getMyPage())
+    dispatch(__getInformation())
     dispatch(__getDetailInformation(id));
   }, [dispatch]);
 
@@ -59,29 +62,21 @@ const InformationDetail = () => {
     'informationsfind',
     informationsfind
   );
-
+  //프로필 사진 클릭
   const onCilckShow = () => {
     setShow(!show);
   };
+   // 1:1 채팅버튼
   const onCilckChaetShow = () => {
     setShowChaet(!showChaet);
   };
 
-  const onClickDelete = () => {
-    const result = window.confirm('정말 삭제하시겠습니까?');
-    if (result) {
-      dispatch(__deleteInformation(informationsfind.articleId));
-      navigate('/information');
-    } else {
-      navigate('/information');
-      return;
-    }
-  };
-
+  //수정버튼
   const onClickRevice = () => {
     navigate(`/informationupdate/${id}`);
   };
 
+  //댓글
   const onClickPostComment = async (e) => {
     e.preventDefault();
     const newcomment = {
@@ -159,7 +154,7 @@ const InformationDetail = () => {
           <DetailWrap>
             <DetailBody>
               <Bodytop>
-                <Bodyimg src={informationsfind.userImage} alt='' />
+                <Bodyimg src={informationsfind&&informationsfind.userImage} alt='' />
                 <Bodytxt>
                   <Txtname onClick={onCilckChaetShow}>
                     {informationsfind && informationsfind.username}
@@ -174,7 +169,7 @@ const InformationDetail = () => {
                   {showChaet ? <ChaetingBox>1:1채팅</ChaetingBox> : null}
                 </Bodytxt>
 
-                {informationsfind.username === data.username ? 
+                {informationsfind &&informationsfind.username === data.username ? 
                 <BiDotsVerticalRounded
                   size='20px'
                   style={{

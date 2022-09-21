@@ -6,11 +6,18 @@ import { BiSearch } from "react-icons/bi";
 import { IoCloseCircle } from "react-icons/io5";
 import SearchCard from "./SearchCard";
 import { __getSearch, __getSearchArticle, __getSearchArticlePopular, __postSearch } from "../../redux/modules/SearchSlice";
+import { __getMyPage } from "../../redux/modules/MyPageSlice";
 
 const Search = () => {
     const dispatch = useDispatch();
 
     // search post 연습
+    useEffect(() => {
+        dispatch(__getSearchArticle())
+        dispatch(__getSearchArticlePopular())
+        dispatch(__getMyPage())
+    }, [dispatch])
+
     
     const [search, setSearch] = useState()
     const [inputText, setInputText] = useState("");
@@ -103,10 +110,7 @@ const Search = () => {
         dispatch(__postSearch(search))
     }
 
-    useEffect(() => {
-        dispatch(__getSearchArticle())
-        dispatch(__getSearchArticlePopular())
-    }, [dispatch])
+
 
 
     return (

@@ -21,9 +21,9 @@ const DetailComment = ({ comment, modalRef, helpsfind ,data}) => {
     const { commentId } = helpsfind.commentList.find((commentmap) => commentmap.commentId === comment.commentId)
     const {childCommentList} = helpsfind.commentList.find((commentmap)=> commentmap)
     const {username} = helpsfind.commentList.find((commentmap)=>commentmap.username === comment.username)
+    console.log("commentId",commentId)
     console.log("childCommentList",childCommentList)
-    // console.log("commentId", commentId)
-    // console.log("username", username)
+    console.log("username", username)
 
     const [showComment, setShowComment] = useState(false)
     const [showReplyComment,setShowReplyComment] = useState(false)
@@ -40,13 +40,6 @@ const DetailComment = ({ comment, modalRef, helpsfind ,data}) => {
         setEditComment(e.target.value)
     }
 
-    const onCilckReplyShow = () => {
-        setShowReplyComment(!showReplyComment)
-    }
-
-    const onChangeReplyHandler = (e) =>{
-        setReplyComment(e.target.value)
-    }
 
     const onCilckShow = () => {
         setShowComment(!showComment)
@@ -67,6 +60,8 @@ const DetailComment = ({ comment, modalRef, helpsfind ,data}) => {
     //     }
     // }
 
+
+
     const onClickRevice = () => {
         setShowComment(!showComment)
         setIsEdit(!isEdit)
@@ -83,6 +78,8 @@ const DetailComment = ({ comment, modalRef, helpsfind ,data}) => {
         setIsEdit(!isEdit)
     }
 
+
+    //대댓글 post
     const onClickPostReplyComment = async(e)=>{
         e.preventDefault();
         const replyComments = {
@@ -98,6 +95,16 @@ const DetailComment = ({ comment, modalRef, helpsfind ,data}) => {
         
     }
 
+        //대댓글 토글
+        const onCilckReplyShow = () => {
+            setShowReplyComment(!showReplyComment)
+        }
+        
+        //대댓글 텍스트핸들러
+        const onChangeReplyHandler = (e) =>{
+            setReplyComment(e.target.value)
+        }
+
     //모달
     const [modalOpen, setModalOpen] = useState(false);
     const showModal = (e) => {
@@ -106,7 +113,6 @@ const DetailComment = ({ comment, modalRef, helpsfind ,data}) => {
     }
 
     return (
-
         <StCommentContain >
             {modalOpen && <HelpCommentDeleteModal setModalOpen={setModalOpen} comment={comment} />}
             <StCommentBox >
@@ -118,7 +124,7 @@ const DetailComment = ({ comment, modalRef, helpsfind ,data}) => {
                     <StTxtStudent>{comment &&comment.admission} · {comment &&comment.departmentName}</StTxtStudent>
                     {isEdit ?
                         <StEditBox>
-                            <Input onChange={onChangeEdit} value={editComment} width="100%"/>
+                            <Input onChange={onChangeEdit} value={editComment} width="100%" borderBottom="1px solid #ccc" />
                             <StReviseButtonChange type="button" onClick={onClickReviceChange} >수정완료</StReviseButtonChange>
                         </StEditBox>
                         :
@@ -133,23 +139,19 @@ const DetailComment = ({ comment, modalRef, helpsfind ,data}) => {
                             onClick={onCilckReplyShow}
                             >답글쓰기</StTxtCreateAt>
                         </StTxtFirstWrap>
-                        {/* 대댓글 해보는 중 */}
                         <StReplyInputContainer 
                         >
                             {showReplyComment ?
                             <StReplyCommentBox>
                                 <StCommentImg src={comment &&comment.userImage}></StCommentImg>
-                                <Input 
-                                value={replyComment} onChange={onChangeReplyHandler}
-                                 />
+                                <Input value={replyComment} onChange={onChangeReplyHandler} borderBottom="1px solid #ccc" width="100%"/>
                                 <StReviseButtonChange type="button" onClick={onClickPostReplyComment}>댓글달기</StReviseButtonChange>
                             </StReplyCommentBox>
                             : null 
                             }
                             {/* 대댓글맵돌리기 */}
-                            {/* HelpDetailReplyComment */}
                             {comment && comment.childCommentList.map((childComment) =>
-                            <HelpDetailReplyComment key={childComment.childCommentId} childComment={childComment} replyComment={replyComment} setReplyComment={setReplyComment} commentId={commentId} childCommentList={childCommentList}></HelpDetailReplyComment>
+                            <HelpDetailReplyComment ids={childComment.childCommentId} key={childComment.childCommentId} childComment={childComment} commentId={commentId} childCommentList={childCommentList}></HelpDetailReplyComment>
                             )}
                         </StReplyInputContainer>
                     
@@ -179,7 +181,7 @@ export default DetailComment;
 
 
 const StCommentContain = styled.div`
-    margin: 10px 0px;
+    margin: 15px 0px;
     /* border: 1px solid blue; */
     width: 100%;
     height: 100%;
@@ -252,10 +254,10 @@ const StDeleteButton = styled.button`
     }
 `
 const StReviseButtonChange = styled.button`
-    margin-left : auto; 
-    width:70px;
+   
+    width:50px;
     background-color:white;
-    font-size:12px;
+    font-size:10px;
     /* border:none; */
     border:1px solid gray;
     cursor:pointer;

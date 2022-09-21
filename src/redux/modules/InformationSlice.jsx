@@ -7,7 +7,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 const initialState = {
   infoComments: [],
   infoReplyComments: [],
-  information: [],
+  informations: [],
   informationPopular:[],
   heart: [],
   isLoading: false,
@@ -230,7 +230,7 @@ export const __updateInfoComment = createAsyncThunk(
     }
   }
 );
-
+//대댓글
 export const __postInfoReplyComment = createAsyncThunk(
   'replycomennts/postInfoReplyComment',
   async (payload, thunkAPI) => {
@@ -252,6 +252,43 @@ export const __postInfoReplyComment = createAsyncThunk(
     }
   }
 );
+
+export const __deleteInfoReplyComment = createAsyncThunk("comments/deleteHelpReplyComment", async (payload, thunkAPI) => {
+  try {
+    console.log("payload" , payload)
+    const data = await axios({
+      method: 'delete',
+      url: `${BASE_URL}/article/information/${payload.articleId}/comment/${payload.commentId}/${payload.childCommentId}`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+      },
+    });
+    console.log(data)
+    return thunkAPI.fulfillWithValue(payload);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+export const __updateInfoReplyComment = createAsyncThunk("comments/updateHelpReplyComment", async (payload, thunkAPI) => {
+  try {
+    console.log("payload" , payload)
+    const data = await axios({
+      method: 'patch',
+      url: `${BASE_URL}/article/information/${payload.articleId}/comment/${payload.commentId}/${payload.childCommentId}`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+      },
+      data: payload
+    });
+    console.log(data)
+    return thunkAPI.fulfillWithValue(payload);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
 
 // 좋아요
 export const __postInformationHeart = createAsyncThunk(
@@ -392,7 +429,7 @@ export const InformationSlice = createSlice({
       state.error = action.payload;
     },
 
-    // updateComment
+    
     [__updateInfoComment.pending]: (state) => {
       state.isLoading = true;
     },
@@ -412,6 +449,8 @@ export const InformationSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+
+    //대댓글
     [__postInfoReplyComment.pending]: (state) => {
       state.isLoading = true;
     },
@@ -424,6 +463,36 @@ export const InformationSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    [__deleteInfoReplyComment.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__deleteInfoReplyComment.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      // console.log(state.comment)
+      console.log(action)
+      state.infoReplyComments = state.infoReplyComments.filter(comment => comment.id !== action.payload)
+    },
+    [__deleteInfoReplyComment.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [__updateInfoReplyComment.pending]: (state) => {
+      state.isLoading = true;
+    },
+
+    [__updateInfoReplyComment.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      console.log('action', action.payload)
+      console.log('comment', state.childCommentList)
+      state.infoReplyComments = state.infoReplyComments.map((comment) => {
+        if (comment.childCommentId === action.payload.childCommentId) {
+          comment.content = action.payload.content;
+        }
+        return comment;
+      })
+
+    },
+
 
     // 좋아요
     [__postInformationHeart.pending]: (state) => {
