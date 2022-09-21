@@ -1,23 +1,13 @@
-import React, { useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React from 'react';
 import styled from 'styled-components';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
-import { logout } from '../../shared/cookies';
-import { useDispatch, useSelector } from 'react-redux';
-import { __deleteHelp, __getHelp } from '../../redux/modules/HelpSlice';
 
-const HelpDeleteModal = ({ setModalOpen }) => {
 
-  const dispatch = useDispatch();
+const HelpReplyCommentDeleteModal = ({setModalOpen,onClickDeleteReplyComment}) => {
+
   const closeModal = () => {
     setModalOpen(false);
   };
-
-  const navigate = useNavigate();
-  const { helps } = useSelector((state) => state.helps)
-  const { id } = useParams();
-  const helpsfind = helps.find((help) => help.articleId === Number(id))
-
 
   return (
     <Container>
@@ -26,15 +16,11 @@ const HelpDeleteModal = ({ setModalOpen }) => {
           <FirstWrap>
             <ModalTop>
               <AiOutlineInfoCircle style={{ color: '#f7931e' }} size='28' />
-              <TopTitle>해당 게시글을 삭제하시겠습니까?</TopTitle>
+              <TopTitle>해당 댓글을 삭제하시겠습니까?</TopTitle>
             </ModalTop>
             <ModalBottom onClick={closeModal}>
               <BottomTitle
-              onClick={() => {
-                dispatch(__deleteHelp(helpsfind.articleId))
-                dispatch(__getHelp())
-                navigate("/main")
-              }}
+            onClick={onClickDeleteReplyComment}
               >삭제하기</BottomTitle>
               <BottomTitle>돌아가기</BottomTitle>
             </ModalBottom>
@@ -45,7 +31,7 @@ const HelpDeleteModal = ({ setModalOpen }) => {
   );
 };
 
-export default HelpDeleteModal;
+export default HelpReplyCommentDeleteModal;
 
 const Container = styled.div`
   position: fixed;
@@ -57,7 +43,11 @@ const Container = styled.div`
   z-index: 10;
   overflow: hidden;
   /* bottom: 0; */
-  /* border: 1px solid red; */
+  top: 0;
+  left:50%;
+  
+  
+  
   @media screen and (max-width: 1024px) {
     background-image: none;
   }
@@ -94,6 +84,7 @@ position: relative;
 `;
 
 const ModalContainer = styled.div`
+
   width: 80%;
   height: 180px;
   background-color: white;
@@ -101,11 +92,13 @@ const ModalContainer = styled.div`
   flex-direction: column;
   align-items: center;
   border-radius: 16px;
+  
 `;
 
 const FirstWrap = styled.div`
   width: 100%;
   height: 100%;
+  
 `;
 const ModalTop = styled.div`
   width: 100%;

@@ -1,13 +1,13 @@
 import { useEffect ,useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components"
-import Img from "../../assets/naverIcon.png"
 import { __getInformation, __getPopularInformation } from "../../redux/modules/InformationSlice";
 import InformationCard from "./InformationCard";
 import { TiPencil } from "react-icons/ti";
 import { useNavigate } from "react-router-dom";
 import informationorange from "../../assets/informationorange.png"
 import nonedatasquare from "../../assets/nonedatasquare.png"
+import { __getMyPage } from "../../redux/modules/MyPageSlice";
 
 const Information = () => {
   const dispatch = useDispatch();
@@ -23,6 +23,7 @@ const Information = () => {
   };
 
   useEffect(() => {
+    dispatch(__getMyPage())
     dispatch(__getInformation());
     dispatch(__getPopularInformation());
   }, [dispatch])

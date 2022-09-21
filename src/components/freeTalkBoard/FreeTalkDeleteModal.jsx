@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { logout } from '../../shared/cookies';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteFreeTalk } from '../../redux/modules/FreeTalkSlice';
+import { __deleteFreeTalk ,__getFreeTalk} from '../../redux/modules/FreeTalkSlice';
 
 const FreeTalkDeleteModal = ({ setModalOpen }) => {
 
@@ -32,6 +32,7 @@ const FreeTalkDeleteModal = ({ setModalOpen }) => {
               <BottomTitle
               onClick={() => {
                 dispatch(__deleteFreeTalk(freetalksfind.articleId))
+                dispatch(__getFreeTalk())
                 navigate("/freeTalk")
               }}
               >삭제하기</BottomTitle>

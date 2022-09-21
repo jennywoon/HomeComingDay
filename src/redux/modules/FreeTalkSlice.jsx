@@ -9,6 +9,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const initialState = {
     freetalks: [],
+    freetalksReplyCommentList:[],
     freeComments:[],
     freePopular:[],
     heart: [],
@@ -210,6 +211,64 @@ export const __updateFreeTalkComment = createAsyncThunk("comment/updateInfoComme
 }
 );
 
+//대댓글
+export const __postFreeTalkReplyComment = createAsyncThunk("comments/postFreeTalkReplyComment", async (payload, thunkAPI) => {
+  try {
+    console.log("payload" , payload)
+    const data = await axios({
+      method: 'post',
+      url: `${BASE_URL}/article/freeTalk/${payload.articleId}/comment/${payload.commentId}`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+      },
+      data: payload
+    });
+    
+    console.log(data)
+    return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+export const __deleteFreeTalkReplyComment = createAsyncThunk("comments/deleteFreeTalkReplyComment", async (payload, thunkAPI) => {
+  try {
+    console.log("payload" , payload)
+    const data = await axios({
+      method: 'delete',
+      url: `${BASE_URL}/article/freeTalk/${payload.articleId}/comment/${payload.commentId}/${payload.childCommentId}`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+      },
+    });
+    console.log(data)
+    return thunkAPI.fulfillWithValue(payload);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+export const __updateFreeTalkReplyComment = createAsyncThunk("comments/updatefreeTalkReplyComment", async (payload, thunkAPI) => {
+  try {
+    console.log("payload" , payload)
+    const data = await axios({
+      method: 'patch',
+      url: `${BASE_URL}/article/freeTalk/${payload.articleId}/comment/${payload.commentId}/${payload.childCommentId}`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+      },
+      data: payload
+    });
+    console.log(data)
+    return thunkAPI.fulfillWithValue(payload);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
 // 좋아요
 export const __postFreeTalkHeart = createAsyncThunk(
   "postFreeTalkHeart",
@@ -367,6 +426,50 @@ export const FreeTalkSlice = createSlice({
       [__updateFreeTalkComment.rejected]: (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      },
+
+      //대댓글
+      [__postFreeTalkReplyComment.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__postFreeTalkReplyComment.fulfilled]: (state, action) => {
+        state.isLoading = false; 
+        console.log(action.payload)
+        state.freetalksReplyCommentList.push(action.payload);
+      },
+      [__postFreeTalkReplyComment.rejected]: (state, action) => {
+        state.isLoading = false; 
+        state.error = action.payload;
+      },
+
+      [__deleteFreeTalkReplyComment.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__deleteFreeTalkReplyComment.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        // console.log(state.comment)
+        console.log(action)
+        state.freetalksReplyCommentList = state.freetalksReplyCommentList.filter(comment => comment.id !== action.payload)
+      },
+      [__deleteFreeTalkReplyComment.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+      [__updateFreeTalkReplyComment.pending]: (state) => {
+        state.isLoading = true;
+      },
+  
+      [__updateFreeTalkReplyComment.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        console.log('action', action.payload)
+        console.log('comment', state.childCommentList)
+        state.freetalksReplyCommentList = state.freetalksReplyCommentList.map((comment) => {
+          if (comment.childCommentId === action.payload.childCommentId) {
+            comment.content = action.payload.content;
+          }
+          return comment;
+        })
+  
       },
 
       // 좋아요

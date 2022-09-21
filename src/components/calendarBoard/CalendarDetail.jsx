@@ -17,16 +17,13 @@ import {
   __postCalendarHeart,
 } from '../../redux/modules/CalendarSlice';
 import { useRef } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Navigation } from 'swiper';
-import 'swiper/css';
-import 'swiper/css/navigation';
 import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
 import CalendarDeleteModal from './CalendarDeleteModal';
 import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
 import heartColorImg from '../../assets/heartColor.png';
+import { __getMyPage } from '../../redux/modules/MyPageSlice';
 
 const CalendarDetail = () => {
   const dispatch = useDispatch();
@@ -45,18 +42,23 @@ const CalendarDetail = () => {
 
   // 조회수 반영
   useEffect(() => {
+    dispatch(__getMyPage())
+    dispatch(__getCalendar());
     dispatch(__getDetailCalendar(id));
   }, [dispatch]);
+
+  
 
   // 수정 삭제 모달
   const onCilckShow = () => {
     setShow(!show);
   };
-
+  // 댓글
   const onChangePostHandler = (e) => {
     setComment(e.target.value);
   };
 
+   // 1:1 채팅버튼
   const onCilckChaetShow = () => {
     setShowChaet(!showChaet);
   };
@@ -88,27 +90,6 @@ const CalendarDetail = () => {
     setComment('');
   };
 
-  //swiper 옵션
-  SwiperCore.use(Navigation);
-  const [swiper, setSwiper] = useState(null);
-  const [mainImageIndex, setMainImageIndex] = useState(0);
-  const navigationPrevRef = useRef(null);
-  const navigationNextRef = useRef(null);
-
-  const swiperParams = {
-    navigation: {
-      prevEl: navigationPrevRef.current,
-      nextEl: navigationNextRef.current,
-    },
-    onBeforeInit: (swiper) => {
-      swiper.params.navigation.prevEl = navigationPrevRef.current;
-      swiper.params.navigation.nextEl = navigationNextRef.current;
-      // swiper.activeIndex = setMainImageIndex;
-      swiper.navigation.update();
-    },
-    onSwiper: setSwiper,
-    onSlideChange: (e) => setMainImageIndex(e.activeIndex),
-  };
 
   //모달
   const [modalOpen, setModalOpen] = useState(false);
@@ -160,7 +141,7 @@ const heartClick = async () => {
                   </Txtstudent>
                   {showChaet ? <ChaetingBox>1:1채팅</ChaetingBox> : null}
                 </Bodytxt>
-                {calendarfind.username === data.username ? 
+                {calendarfind&&calendarfind.username === data.username ? 
                 <BiDotsVerticalRounded
                   size='20px'
                   style={{

@@ -11,7 +11,6 @@ const HelpCard = ({ help, id }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(__postHelp());
     dispatch(__getHelp());
   }, [dispatch]);
 

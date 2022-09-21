@@ -7,6 +7,7 @@ import CalendarCard from './CalendarCard';
 import calendarorange from '../../assets/calendarorange.png';
 import './CalendarModal.css';
 import nonedatasquare from '../../assets/nonedatasquare.png';
+import { __getMyPage } from "../../redux/modules/MyPageSlice";
 
 const Calendar = () => {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const Calendar = () => {
   const [select, setSelect] = useState('new');
 
   useEffect(() => {
+    dispatch(__getMyPage())
     dispatch(__getCalendar());
     dispatch(__getPopularCalendar());
   }, [dispatch]);
