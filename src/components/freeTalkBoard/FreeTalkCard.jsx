@@ -13,10 +13,10 @@ const FreeTalkCard = ({ freetalk, id }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    dispatch(__postFreeTalk());
-    dispatch(__getFreeTalk());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(__postFreeTalk());
+  //   dispatch(__getFreeTalk());
+  // }, [dispatch]);
 
   const onClickNavi = () => {
     navigate(`/freetalkdetail/${id}`);

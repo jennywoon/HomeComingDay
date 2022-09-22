@@ -8,6 +8,7 @@ import { __deleteCalendarComment, __updateCalendarComment, __getCalendar ,__post
 import Input from "../elements/Input";
 import { useParams } from 'react-router-dom';
 import { BiDotsVerticalRounded } from "react-icons/bi";
+import { GrUploadOption } from "react-icons/gr";
 import CalendarCommentDeleteModal from './CalendarCommentDeleteModal';
 import CalendarDetailReplyComment from './CalendarDetailReplyComment';
 
@@ -109,18 +110,20 @@ const CalendarDetailComment = ({ comment, modalRef, calendarfind ,data}) => {
                     <StCommentImg src={comment && comment.userImage} alt="" />
                 </StCommentImgDiv>
                 <StCommentTxt>
+                    <StComments>
+                        <StCommentsBox>
                     <StTxtName>{comment &&comment.username}</StTxtName>
                     <StTxtStudent>{comment &&comment.admission} · {comment &&comment.departmentName}</StTxtStudent>
                     {isEdit ?
                         <StEditBox>
-                            <Input onChange={onChangeEdit} value={editComment} width="100%" borderBottom="1px solid #ccc" />
-                            <StReviseButtonChange type="button" onClick={onClickReviceChange} >수정완료</StReviseButtonChange>
+                            <StReplyCommentInput onChange={onChangeEdit} value={editComment} width="100%" />
+                            <StUploadBtn onClick={onClickReviceChange}>수정완료</StUploadBtn>
+
+                            {/* // <StReplyCommentInput value={replyComment} onChange={onChangeReplyHandler} width="100%"/>
+                            //     <StUploadBtn onClick={onClickPostReplyComment}></StUploadBtn> */}
                         </StEditBox>
                         :
-                        <StComment>{comment &&comment.content}</StComment>
-
-                    }
-                   
+                        <StComment>{comment &&comment.content}</StComment>}
                         <StTxtFirstWrap>
                             <StTxtCreateAt> {comment &&comment.createdAt}</StTxtCreateAt>
                             <StTxtCreateAt>|</StTxtCreateAt>
@@ -128,32 +131,35 @@ const CalendarDetailComment = ({ comment, modalRef, calendarfind ,data}) => {
                             onClick={onCilckReplyShow}
                             >답글쓰기</StTxtCreateAt>
                         </StTxtFirstWrap>
-                        <StReplyInputContainer 
-                        >
+                        </StCommentsBox>
+                        {username === data.username ? (
+                        <BiDotsVerticalRounded
+                            size="17px" style={{ marginLeft: "auto", marginTop: "5px", cursor: "pointer", color: "#bebebe" }}
+                            onClick={onCilckShow} />
+                        ) : null
+                        }
+                       </StComments>
+                    
+                        <StReplyInputContainer>
+                            {/* 대댓글맵돌리기 */}
+                            {comment && comment.childCommentList.map((childComment) =>
+                            <CalendarDetailReplyComment ids={childComment.childCommentId} key={childComment.childCommentId} childComment={childComment} commentId={commentId} childCommentList={childCommentList} username={username} data={data}></CalendarDetailReplyComment>
+                            )}
                             {showReplyComment ?
                             <StReplyCommentBox>
-                                <StCommentImg src={comment &&comment.userImage}></StCommentImg>
-                                <Input value={replyComment} onChange={onChangeReplyHandler} borderBottom="1px solid #ccc" width="100%"/>
-                                <StReviseButtonChange type="button" onClick={onClickPostReplyComment}>댓글달기</StReviseButtonChange>
+                                <StCommentImg src={data.userImage}></StCommentImg>
+                                <StReplyCommentInput value={replyComment} onChange={onChangeReplyHandler} width="100%"/>
+                                <StUploadBtn onClick={onClickPostReplyComment}></StUploadBtn>
                             </StReplyCommentBox>
                             : null 
                             }
-                            {/* 대댓글맵돌리기 */}
-                            {comment && comment.childCommentList.map((childComment) =>
-                            <CalendarDetailReplyComment ids={childComment.childCommentId} key={childComment.childCommentId} childComment={childComment} commentId={commentId} childCommentList={childCommentList}></CalendarDetailReplyComment>
-                            )}
                         </StReplyInputContainer>
                     
-                </StCommentTxt>
+                
                 {/* <AiOutlineMenu size="18px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }} onClick={onCilckShow}/> */}
 
-                {username === data.username ? (
-                <BiDotsVerticalRounded
-                    size="20px" style={{ marginLeft: "auto", marginTop: "2px", cursor: "pointer", color: "#bebebe" }}
-                    onClick={onCilckShow} />
-                ) : null
-                }
 
+                </StCommentTxt>
                 {showComment ?
                     <StRevisebox ref={modalRef}>
                         <StReviseButton onClick={onClickRevice} type="button">수정</StReviseButton>
@@ -179,12 +185,14 @@ const StCommentContain = styled.div`
 
 const StCommentBox = styled.div`
     display:flex;
-    position: relative;
+    /* position: relative; */
     width: 100%;
+    position:relative;
 `
 
 const StCommentImgDiv = styled.div`
     width:40px;
+    
 `
 
 const StCommentImg = styled.img`
@@ -193,18 +201,44 @@ const StCommentImg = styled.img`
     margin-top: 2px;
     border-radius: 50%;
 `
+const StReplyCommentInput = styled.textarea`
+    width:100%;
+    height:28px;
+    border-radius: 30px;
+    border:1px solid #D9D9D9;
+    background-color: #fff;
+    margin-left:5px;
+    padding:2px 30px 0px 8px;
+    outline:none;
+    resize:none;
+    overflow-y: hidden;
+`
+const StUploadBtn = styled(GrUploadOption)`
+    position:absolute;
+    right:8px;    
+    font-size: 18px;
+    cursor:pointer;
+    opacity: 0.5;
+    color:red;
+`
+
+const StComments =styled.div`
+    display: flex;
+`
+const StCommentsBox = styled.div`
+    width:100%;
+`
 
 const StCommentTxt = styled.div`
     display: flex;
     flex-direction: column;
     width:100%;
-    
     /* margin-left: 10px;  */
 `
 const StRevisebox = styled.div`
     border: 1px solid #f1f0f0;
     border-radius: 16px;
-    position: absolute;
+    position:absolute;
     z-index: 2;
     display: flex;
     flex-direction: column;
@@ -213,6 +247,7 @@ const StRevisebox = styled.div`
     background-color: #fff;
     width:58px;
     box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
+
 `
 const StReviseButton = styled.button`
     border:none;
@@ -242,9 +277,10 @@ const StDeleteButton = styled.button`
     }
 `
 const StReviseButtonChange = styled.button`
-   
     width:50px;
     background-color:white;
+    position:absolute;
+    right:0;
     font-size:10px;
     /* border:none; */
     border:1px solid gray;
@@ -258,6 +294,7 @@ const StEditBox = styled.div`
     display: flex;
     align-items: center;
     width:100%;
+    position:relative;
     /* padding: 0px 20px; */
 `
 
@@ -265,6 +302,7 @@ const StTxtName = styled.h3`
     margin: 0px;
     font-size:14px;
     font-weight: 700;
+    width:100%;
 `
 const StTxtStudent = styled.p`
     margin: 0px;
@@ -290,10 +328,10 @@ const StTxtCreateAt = styled.div`
 `
 
 const StReplyInputContainer = styled.div`
-    /* margin-left:30px; */
 `
 const StReplyCommentBox = styled.div`
     display: flex;
+    position:relative;
     align-items: center;
     margin-top:6px;
 `

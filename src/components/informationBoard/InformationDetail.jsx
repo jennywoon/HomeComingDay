@@ -84,8 +84,8 @@ const InformationDetail = () => {
       articleId: id,
     };
     await dispatch(__postInfoComment(newcomment));
-    await dispatch(__getInformation());
     setComment('');
+    await dispatch(__getInformation());
   };
   // const closeModal = (e) => {
   //     if (!modalRef.current.contains(e.target)) {
@@ -299,14 +299,15 @@ const Container = styled.div`
   overflow-y: hidden;
   display: flex;
   flex-direction: column;
+  margin: auto;
   /* align-items: center; */
+  /* justify-content: center; */
 `;
 
 const FirstWrap = styled.div`
   display: flex;
-  /* align-items: center; */
-  justify-content: center;
   flex-direction: column;
+  justify-content: center;
   /* border:1px solid blue; */
   width: 90%;
   height: 60px;
@@ -320,6 +321,7 @@ const DetailHeader = styled.div`
   justify-content: space-between;
   position: sticky;
 `;
+
 const InformationContainer = styled.div`
   width: 90%;
   height: 86%;
@@ -358,7 +360,6 @@ const HeaderTitle = styled.div`
 const Revisebox = styled.div`
   border: 1px solid #f1f0f0;
   z-index: 5;
-  border-radius: 16px;
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -368,6 +369,7 @@ const Revisebox = styled.div`
   box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
   border-radius: 16px;
   width:58px;
+  /* box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.05); */
 `;
 const ReviseButton = styled.button`
   border: none;
@@ -404,7 +406,6 @@ const DetailBody = styled.div`
 const Bodytop = styled.div`
   display: flex;
   align-items: center;
-  /* padding:20px 20px 10px 20px; */
   position: relative;
   margin: 10px 0;
 `;
@@ -452,7 +453,6 @@ const ChaetingBox = styled.div`
 `;
 
 const BodyContent = styled.div`
-  /* padding: 0px 20px; */
   width: 100%;
   /* height: 370px; */
   display: flex;
@@ -461,19 +461,17 @@ const BodyContent = styled.div`
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 `;
 const ContentTitle = styled.h3`
-  /* margin:10px 0px; */
   font-weight: 600;
   font-size: 18px;
   width: 100%;
-  /* height: 100%; */
-  /* border: 1px solid green; */
 `;
-const ContentBody = styled.div`
+const ContentBody = styled.p`
   /* border: 1px solid blue; */
   color: #000;
   font-size: 14px;
   font-weight: 400;
   width: 100%;
+  /* margin: 10px 0; */
   margin-top: 10px;
   margin-bottom: 20px;
   height: 100%;
@@ -527,7 +525,7 @@ const ContentView = styled.p`
   line-height: 40px;
   height: 40px;
   /* margin:30px 0px 10px; */
-  color: #bebebe;
+  color: #8e8e8e;
   /* border: 1px solid blue; */
 `;
 const BodyTxtBox = styled.div`
@@ -549,23 +547,15 @@ const BodyContainer = styled.div`
   /* overflow-y: scroll; */
 `;
 const BodyCommentBox = styled.div`
-  /* border-top : 1px solid rgba(0,0,0,0.1); */
-  /* margin:20px; */
-  /* overflow-y: scroll; */
   height: 100%;
   width: 100%;
-  /* position:relative; */
-  /* height: 70%; */
-  /* border: 1px solid orangered; */
 `;
 
 const CommentContainer = styled.form`
   position: sticky;
-  /* bottom: 20px; */
+  /* bottom: 0;
+  bottom: 10px; */
   width: 100%;
-  /* height: 100%; */
-  /* border: 1px solid blue; */
-  /* max-width:500px; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -625,6 +615,7 @@ const Count = styled.div`
   display: flex;
   /* border: 1px solid blue; */
   align-items: center;
+  color: black;
 `;
 
 const CommentCount = styled.div`
