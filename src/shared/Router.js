@@ -37,6 +37,7 @@ import { useSelector } from "react-redux";
 import { getCookie } from "./cookies";
 import { Navigate } from "react-router-dom";
 import FormPage from "../pages/FormPage";
+import ChatFrontTest from "../components/chatBoard/ChatFrontTest";
 
 const Router = () => {
 
@@ -79,7 +80,7 @@ const Router = () => {
         <Route path="/freetalkupdate/:id" element={<FreeTalkUpdate />} />
         <Route path="/calendardetail/:id" element={<CalendarDetail />} />
         <Route path="/calendarupdate/:id" element={<CalendarUpdate />} />
-        {/* <Route path="/loginerrormodal" element={<LoginErrorModal />} /> */}
+        <Route path="/chattest" element={<ChatFrontTest />} />
 
       </Routes>
     </BrowserRouter>

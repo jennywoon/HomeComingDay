@@ -35,7 +35,7 @@ const Navbar = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 `
 const ChatInfo = styled.div`
     display: flex;
