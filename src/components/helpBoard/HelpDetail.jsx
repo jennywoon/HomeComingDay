@@ -51,7 +51,7 @@ const HelpDetail = () => {
   // 조회수 반영
   useEffect(() => {
     dispatch(__getMyPage())
-    dispatch(__getHelp())
+    dispatch(__getHelp());
     dispatch(__getDetailHelp(id));
   }, [dispatch]);
 
@@ -82,8 +82,8 @@ const HelpDetail = () => {
       articleId: id,
     };
     await dispatch(__postHelpComment(newcomment));
-    await dispatch(__getHelp());
     setComment('');
+    await dispatch(__getHelp());
   };
 
   // const closeModal = (e) => {
@@ -146,7 +146,7 @@ const HelpDetail = () => {
             size='25px'
             cursor='pointer'
             onClick={() => {
-              navigate(-1);
+              navigate('/main');
             }}
           />
           <HeaderTitle>도움요청</HeaderTitle>
