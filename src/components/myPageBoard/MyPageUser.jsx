@@ -13,14 +13,15 @@ const MyPageUser = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const mypages = useSelector((state) => state.mypages.mypages);
-    console.log(mypages);
+    // const mypages = useSelector((state) => state.mypages.mypages);
+    const {mypages, totalCount} = useSelector((state) => state.mypages);
+    // console.log(mypages, totalCount);
 
     useEffect(() => {
         dispatch(__getMyPage())
     }, [dispatch])
 
-    //이미지 업로드
+    //프로필 이미지 PATCH 기능
 
     const [imageUrl, setImageUrl] = useState("");
     const imgRef = useRef();
@@ -52,6 +53,7 @@ const MyPageUser = () => {
         e.target.src = profileorange
     }
 
+    // 마이페이지 로그아웃 모달
     const [modalOpen, setModalOpen] = useState(false);
     const showModal = (e) => {
         e.preventDefault();
@@ -78,6 +80,12 @@ const MyPageUser = () => {
                         <UserWrap>
                             <UserName>{mypages.username}</UserName>
                             <UserAdmission>| {mypages.admission}</UserAdmission>
+                            <UserLank>
+                                {totalCount < 5 ? <img src={camera}/> : 
+                                totalCount < 10 ? "고수" : 
+                                totalCount < 15 ? "왕" : <img src={camera}/>
+                                }
+                            </UserLank>
                         </UserWrap>
                         <UserWrap>
                             <UserUniversity>{mypages.schoolName}</UserUniversity>
@@ -199,6 +207,10 @@ const UserName = styled.div`
     font-size: 20px;
 `
 const UserAdmission = styled.div`
+    color: white;
+`
+
+const UserLank = styled.div`
     color: white;
 `
 const UserEmail = styled.div`
