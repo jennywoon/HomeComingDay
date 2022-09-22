@@ -19,6 +19,7 @@ import FreeTalkDeleteModal from './FreeTalkDeleteModal';
 import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
 import heartColorImg from '../../assets/heartColor.png';
+import { __getMyPage } from '../../redux/modules/MyPageSlice';
 
 const FreeTalkDetail = () => {
     const dispatch = useDispatch();
@@ -33,27 +34,29 @@ const FreeTalkDetail = () => {
     const [comment, setComment] = useState("")
     const modalRef = useRef(null);
 
+    const freetalksfind = freetalks.find((freetalk) => freetalk.articleId === Number(id))
+
+    // 댓글
     const onChangePostHandler = (e) => {
         setComment(e.target.value)
     }
 
     //조회수반영
     useEffect(() => {
+        dispatch(__getMyPage())
+        dispatch(__getFreeTalk())
         dispatch(__getDetailFreeTalk(id));
     }, [dispatch])
 
-    const freetalksfind = freetalks.find((freetalk) => freetalk.articleId === Number(id))
-
-    console.log("freetalks", freetalks, "freetalksfind", freetalksfind)
 
     const onCilckShow = () => {
         setShow(!show)
     }
-
+    // 1:1 채팅버튼
     const onCilckChaetShow = () => {
         setShowChaet(!showChaet)
     }
-
+    // 수정버튼
     const onClickRevice = () => {
         navigate(`/freetalkupdate/${id}`)
     }
@@ -148,7 +151,7 @@ const FreeTalkDetail = () => {
                                 </Bodytxt>
                                 {/* <AiOutlineMenu size="20px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }}
                                     onClick={onCilckShow} /> */}
-                                {freetalksfind.username === data.username ?
+                                {freetalksfind&&freetalksfind.username === data.username ?
                                 <BiDotsVerticalRounded
                                     size="20px" style={{ marginLeft: "auto", cursor: "pointer", color: "#bebebe" }}
                                     onClick={onCilckShow} /> 

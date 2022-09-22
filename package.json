@@ -72,5 +72,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/jennywoon/HomeComingDay.git",
+  "author": "jennywoon <109018926+jennywoon@users.noreply.github.com>",
+  "license": "MIT"
 }

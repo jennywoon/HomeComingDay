@@ -88,7 +88,7 @@ export const __getPopularHelp = createAsyncThunk("helps/getPopularHelp", async (
 
 export const __postHelp = createAsyncThunk(
   "helps/postHelp", async (payload, thunkAPI) => {
-    console.log('payload', payload)
+    // console.log('payload', payload)
       for (var value of payload.values()) {
         console.log("formdata value", value);
       }
@@ -428,7 +428,6 @@ export const HelpSlice = createSlice({
         state.error = action.payload;
       },
   
-      // updateComment
       [__updateHelpComment.pending]: (state) => {
         state.isLoading = true;
       },
@@ -437,12 +436,12 @@ export const HelpSlice = createSlice({
         state.isLoading = false;
         console.log('action', action)
         console.log('comment', state.commentList)
-        // state.commentList = state.commentList.map((comment) => {
-        //   if (comment.id === action.payload.id) {
-        //     comment.comment = action.payload.comment;
-        //   }
-        //   return comment;
-        // })
+        state.commentList = state.commentList.map((comment) => {
+          if (comment.id === action.payload.id) {
+            comment.comment = action.payload.comment;
+          }
+          return comment;
+        })
   
       },
       [__updateHelpComment.rejected]: (state, action) => {

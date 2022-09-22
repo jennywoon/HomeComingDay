@@ -4,6 +4,7 @@ import './App.css'
 import styled from "styled-components";
 // import background from "./assets/background.png"
 import background2 from "./assets/background2.png"
+import feedback from "./assets/feedback.png"
 
 function App() {
 
@@ -26,7 +27,9 @@ function App() {
       <div className='wrap' >
         <Router />
       </div>
-      {/* <GoogleForm>안녕</GoogleForm> */}
+      <StGoogleFeedback>
+        <StFeedbackImg/>
+      </StGoogleFeedback>
     </Container>
   )
 
@@ -92,12 +95,20 @@ const SiteTitle = styled.div`
   font-size: 30px;
   font-weight: 700;
 `
-// const GoogleForm = styled.div`
-//     position: fixed;
-//   bottom: 10%;
-//   right: 10%;
-//   cursor: pointer;
-//   @media screen and (max-width: 1400px) {
-//     display: none;
-//   }
-// `
+const StGoogleFeedback = styled.div`
+  position: fixed;
+  bottom: 10%;
+  right: 9%;
+  cursor: pointer;
+  @media screen and (max-width: 1400px) {
+    display: none;
+  }
+`
+
+const StFeedbackImg = styled.div`
+  width: 140px;
+  height: 140px;
+  background-image: url(${feedback});
+  background-size: 100% 100%;
+  background-position: center;
+`

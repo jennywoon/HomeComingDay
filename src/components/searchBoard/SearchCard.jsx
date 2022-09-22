@@ -2,11 +2,12 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { IoClose } from "react-icons/io5";
-import { __getSearch } from '../../redux/modules/SearchSlice';
+import { __getSearch, __getSearchArticle, __getSearchArticlePopular, __postSearch } from "../../redux/modules/SearchSlice";
 import { useNavigate } from 'react-router-dom';
 import { BsQuestionSquare } from "react-icons/bs";
 import commentgray from "../../assets/commentgray.png"
 import heartgray from '../../assets/heartgray.png';
+
 
 const SearchCard = ({ search, id }) => {
     const dispatch = useDispatch();
@@ -14,6 +15,12 @@ const SearchCard = ({ search, id }) => {
     // useEffect(() => {
     //     dispatch(__getSearch());
     // },[dispatch])
+
+    useEffect(() => {
+        dispatch(__getSearchArticle())
+        dispatch(__getSearchArticlePopular())
+    }, [dispatch])
+
 
     const onClickNavi = () => {
         if (search.articleFlag === "도움요청") {

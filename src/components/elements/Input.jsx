@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 
-const Input = ({ borderRadius, height, defaultValue, disabled, id, className, type, value, placeholder, width, padding, onChange, minLength, maxLength, text , border, style}) => {
+const Input = ({ borderRadius, height, defaultValue, disabled, id, className, type, value, placeholder, width, padding, onChange, minLength, maxLength, text , border, style,borderBottom}) => {
   return (
     <StyledButtonField >
       <StyledInput
@@ -21,6 +21,7 @@ const Input = ({ borderRadius, height, defaultValue, disabled, id, className, ty
         height={height}
         borderRadius={borderRadius}
         border={border}
+        borderBottom={borderBottom}
         style={style}
       />
       <StyledText>{text}</StyledText>
@@ -57,7 +58,7 @@ const StyledInput = styled.input`
   width: ${(props) => props.width};
   padding: ${(props) => props.padding};
   border: none;
-  /* border-bottom: 1px solid #ccc; */
+  border-bottom: ${(props) => props.borderBottom};
   /* border: 1px solid #ccc; */
   /* border-radius: 3px; */
 `;
