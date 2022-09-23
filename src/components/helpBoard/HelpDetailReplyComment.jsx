@@ -6,9 +6,10 @@ import Input from "../elements/Input";
 import { useDispatch } from 'react-redux';
 import { __updateHelpReplyComment,__deleteHelpReplyComment, __getHelp } from '../../redux/modules/HelpSlice';
 import { useParams } from 'react-router-dom';
+import { GrUploadOption } from "react-icons/gr";
 import HelpReplyCommentDeleteModal from './HelpReplyCommentDeleteModal';
 
-const HelpDetailReplyComment = ({childCommentList,commentId,childComment, ids}) => {
+const HelpDetailReplyComment = ({childCommentList,commentId,childComment, ids , username , data}) => {
     const {id} = useParams()
     const dispatch = useDispatch()
 
@@ -71,8 +72,9 @@ const HelpDetailReplyComment = ({childCommentList,commentId,childComment, ids}) 
             content: editReplyComment
         }
         await dispatch(__updateHelpReplyComment(reviseReplyComments))
-        await dispatch(__getHelp())
         setReviseReplyComment(!reviseReplyComment)
+        await dispatch(__getHelp())
+        
     }
 
     return (
@@ -86,18 +88,20 @@ const HelpDetailReplyComment = ({childCommentList,commentId,childComment, ids}) 
                     <StCommentReplytxt >
                             {!reviseReplyComment ? 
                             <>
-                            <StReplyUserName>{childComment && childComment.username} <StUserInfo>{childComment && childComment.admission} · {childComment && childComment.departmentName}</StUserInfo></StReplyUserName>
+                            <StReplyUserName>{childComment && childComment.username} </StReplyUserName>
+                            <StUserInfo>{childComment && childComment.admission} · {childComment && childComment.departmentName}</StUserInfo>
                             <StReplyContent>{childComment&& childComment.content}</StReplyContent>
                             <StReplyTime>{childComment&& childComment.createdAt}</StReplyTime>
                             </>
                             :
                             <StReviseBox>
-                            <Input value={editReplyComment} onChange={onChangeReplyHandler} borderBottom="1px solid #ccc" width="100%"/>
-                            <StReviseButtonChange type="button" onClick={onClickUpdateReplyComment}>수정완료</StReviseButtonChange>
+                            <StReplyCommentInput value={editReplyComment} onChange={onChangeReplyHandler} borderBottom="1px solid #ccc" width="100%"/>
+                            <StUploadBtn onClick={onClickUpdateReplyComment}></StUploadBtn>
                             </StReviseBox>}
                     </StCommentReplytxt>
-                
-                <BiDotsVerticalRounded size="20px" style={{ cursor: "pointer", color: "#bebebe" , position:"relative"}} onClick={onCilckShow}/>
+                {childComment.username === data.username ?
+                <BiDotsVerticalRounded size="20px" style={{ marginLeft: "auto",cursor: "pointer", color: "#bebebe" , position:"relative"}} onClick={onCilckShow}/>
+                : null}
 
                 {showReplyComment ?
                     <StRevisebox>
@@ -120,6 +124,7 @@ const StReplyCommentBox = styled.div`
     position:relative;
     align-items: flex-start;
     margin-top:6px;
+    width:100%;
 `
 const StCommentImgDiv = styled.div`
     width:40px;
@@ -134,25 +139,45 @@ const StCommentReplytxt = styled.div`
     font-size:13px;
     width:100%;
 `
+const StReplyCommentInput = styled.textarea`
+    width:100%;
+    height:28px;
+    border-radius: 30px;
+    border:1px solid #D9D9D9;
+    background-color: #fff;
+    margin-left:5px;
+    padding:2px 30px 0px 8px;
+    outline:none;
+    resize:none;
+    overflow-y: hidden;
+`
+const StUploadBtn = styled(GrUploadOption)`
+    position:absolute;
+    right:20px;    
+    font-size: 18px;
+    cursor:pointer;
+    opacity: 0.5;
+`
+
 const StRevisebox = styled.div`
     border: 1px solid #f1f0f0;
     border-radius: 16px;
-    position: absolute;
+    position:absolute;
     z-index: 2;
     display: flex;
     flex-direction: column;
     right: 0;
-    top:25px;
+    top:30px;
     background-color: #fff;
     width:58px;
     box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
+
 `
 const StReviseButton = styled.button`
     border:none;
     border-bottom: 1px solid #f1f0f0;
     width:100%;
     padding:10px;
-    font-size:12px;
     border-radius: 10px 10px 0 0;
     background-color: #fff;
     color:gray;
@@ -167,7 +192,6 @@ const StDeleteButton = styled.button`
     background-color: #eee;
     width:100%;
     padding:10px;
-    font-size:12px;
     border-radius: 0 0 10px 10px;
     background-color: #fff;
     color:gray;
@@ -177,7 +201,6 @@ const StDeleteButton = styled.button`
     }
 `
 const StReviseButtonChange = styled.button`
-    margin-left : auto; 
     width:50px;
     background-color:white;
     font-size:10px;
@@ -190,6 +213,7 @@ const StReviseButtonChange = styled.button`
 `
 const StReviseBox = styled.div`
     display: flex;
+    align-items: center;
 `
 // const StReplyInput = styled.input`
 //     border
@@ -201,19 +225,23 @@ const StReplyUserName = styled.div`
     font-weight: bold;
     display:flex;
     align-items: center;
+    font-size:14px;
     width:100%;
 `
 const StUserInfo = styled.div`
-    font-size: 10px;
+    font-size: 12px;
+    width:100%;
     color:#bebebe;
-    margin-left:5px;
     
 `
 const StReplyContent = styled.div`
+    font-size:14px;
+    width:100%;
+    word-break:break-all;
 
 `
 const StReplyTime = styled.div`
-     font-size: 10px;
+     font-size: 12px;
     color:#bebebe;
 `
 
