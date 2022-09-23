@@ -8,13 +8,16 @@ import { __getMyPage, __patchProfileImage } from '../../redux/modules/MyPageSlic
 import MyPageLogoutModal from "./MyPageLogoutModal"
 import profileorange from "../../assets/profileorange.png"
 import camera from "../../assets/camera.png"
+import goldmedal from "../../assets/goldmedal.png"
+import silvermedal from "../../assets/silvermedal.png"
+import bronzemedal from "../../assets/bronzemedal.png"
 
 const MyPageUser = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
     // const mypages = useSelector((state) => state.mypages.mypages);
-    const {mypages, totalCount} = useSelector((state) => state.mypages);
+    const { mypages, totalCount } = useSelector((state) => state.mypages);
     // console.log(mypages, totalCount);
 
     useEffect(() => {
@@ -65,32 +68,35 @@ const MyPageUser = () => {
             {modalOpen && <MyPageLogoutModal setModalOpen={setModalOpen} />}
             <UserContainer>
                 <UserImgWrap>
-                        <UserImg 
-                        src={mypages.userImage} onClick={() => { onClickFileBtn() }} 
+                    <UserImg
+                        src={mypages.userImage} onClick={() => { onClickFileBtn() }}
                         onError={onErrorImg}
-                        >
-                        </UserImg>
-                        <input type="file" ref={imgRef} onChange={onChangeImage} style={{ display: "none" }}></input>
+                    >
+                    </UserImg>
+                    <input type="file" ref={imgRef} onChange={onChangeImage} style={{ display: "none" }}></input>
                         <UserImgUpload onClick={() => { onClickFileBtn() }}>
-                            <CameraIcon/>
+                            <CameraIcon />
                         </UserImgUpload>
                 </UserImgWrap>
                 <UserInfo>
                     <FirstWrap>
-                        <UserWrap>
-                            <UserName>{mypages.username}</UserName>
-                            <UserAdmission>| {mypages.admission}</UserAdmission>
-                            <UserLank>
-                                {totalCount < 5 ? <img src={camera}/> : 
-                                totalCount < 10 ? "고수" : 
-                                totalCount < 15 ? "왕" : <img src={camera}/>
-                                }
-                            </UserLank>
-                        </UserWrap>
-                        <UserWrap>
+                        <StUserContainer>
+                            <StFirstUserWrap>
+                                <StUserName>{mypages.username}</StUserName>
+                                <UserAdmission>| {mypages.admission}</UserAdmission>
+                            </StFirstUserWrap>
+                            <StUserLankWrap>
+                                <StUserLank>
+                                    {totalCount < 5 ? <img src={bronzemedal} /> :
+                                    totalCount < 10 ? <img src={silvermedal} /> : <img src={goldmedal} />}
+                                </StUserLank>
+                                {/* <StUserLankContent>게시글 개수 5개 이상 실버 왕관, 10개 이상 골드 왕관</StUserLankContent> */}
+                            </StUserLankWrap>
+                        </StUserContainer>
+                        <StUserWrap>
                             <UserUniversity>{mypages.schoolName}</UserUniversity>
                             <UserDepartment>{mypages.departmentName}</UserDepartment>
-                        </UserWrap>
+                        </StUserWrap>
                         <UserEmail>{mypages.email}</UserEmail>
                     </FirstWrap>
                     <SecondWrap>
@@ -118,25 +124,25 @@ const StLoginContainer = styled.form`
 `;
 
 const UserContainer = styled.div`
-    width: 85%;
+    width: 100%;
     height: 78%;
     /* height: 200px; */
     display: flex;
-    /* border: 1px solid green; */
-    gap: 10px;
+    gap: 15px;
 `
 
 const UserImgWrap = styled.div`
     width: 25%;
-    height: 100%;
-    /* border: 1px solid green; */
+    height: 90px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
+    margin-left: 30px;
+    align-items: flex-end;
 `
 
 const UserImg = styled.img`
-    width: 90px;
-    height: 90px;
+    width: 85px;
+    height: 85px;
     border-radius: 50%;
     background-color: #f9f9f9;
     display: flex;
@@ -144,6 +150,7 @@ const UserImg = styled.img`
     justify-content: flex-end;
     display: block;
     cursor: pointer;
+    position: relative;
 `
 
 const UserImgUpload = styled.div`
@@ -155,8 +162,8 @@ const UserImgUpload = styled.div`
     justify-content: center;
     align-items: center;
     position: absolute;
-    bottom: 81%;
-    right: 70%;
+    /* bottom: 81%;
+    right: 70%; */
     cursor: pointer;
 `
 
@@ -168,9 +175,8 @@ const CameraIcon = styled.div`
     background-size: 100% 100%;
 `
 const UserInfo = styled.div`
-    width: 75%;
+    width: 80%;
     height: 100%;
-    /* border: 1px solid purple; */
     display: flex;
     flex-direction: column;
     /* justify-content: space-between; */
@@ -178,8 +184,7 @@ const UserInfo = styled.div`
 `
 
 const FirstWrap = styled.div`
-    /* border: 1px solid red; */
-    width: 95%;
+    width: 100%;
     /* height: 100%; */
     margin: 5px 0 15px 0;
 `
@@ -197,12 +202,26 @@ const UserDepartment = styled.div`
     font-weight: 600;
     font-size: 16px;
 `
-const UserWrap = styled.div`
+
+const StUserContainer = styled.div`
+    display: flex;
+    /* flex-direction: row; */
+    align-items: center;
+    gap: 5px;
+    height: 40px;
+    width: 100%;
+`
+const StUserWrap = styled.div`
+    display: flex;
+    gap: 5px;
+`
+
+const StFirstUserWrap = styled.div`
     display: flex;
     align-items: center;
     gap: 5px;
 `
-const UserName = styled.div`
+const StUserName = styled.div`
     font-weight: 700;
     font-size: 20px;
 `
@@ -210,9 +229,28 @@ const UserAdmission = styled.div`
     color: white;
 `
 
-const UserLank = styled.div`
-    color: white;
+const StUserLankWrap = styled.p`
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    /* justify-content: space-between; */
 `
+
+const StUserLank = styled.p`
+    margin: 0 8px 3px 5px;
+    /* &:hover {
+    ~div{
+        display: block;
+    }
+    } */
+`
+
+// const StUserLankContent = styled.div`
+//     display: none;
+//     color: white;
+//     font-size: 8px;
+//     width: 130px;
+// `
 const UserEmail = styled.div`
     font-weight: 500;
     font-size: 12px;
