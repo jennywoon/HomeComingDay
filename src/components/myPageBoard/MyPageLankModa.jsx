@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { logout } from '../../shared/cookies';
-import goldmedal from "../../assets/goldmedal.png"
-import silvermedal from "../../assets/silvermedal.png"
-import bronzemedal from "../../assets/bronzemedal.png"
+import goldtitle from "../../assets/goldtitle.png"
+import silvertitle from "../../assets/silvertitle.png"
+import bronzetitle from "../../assets/bronzetitle.png"
+import xcircle from "../../assets/xcircle.png"
 
 const MyPageLankModal = ({ setLankModalOpen }) => {
     const closeModal = () => {
@@ -18,24 +19,31 @@ const MyPageLankModal = ({ setLankModalOpen }) => {
         <Container>
             <Wrap>
                 <ModalContainer>
+                    <StModalTop>
+                      <StClose/>등급안내
+                      <StCloseX onClick={closeModal}/>
+                    </StModalTop>
                     <FirstWrap>
                         <StTopWrap>
                             <ModalTop>
                                 <StBronzeLank />
-                                <TopTitle>게시글 작성 개수 0개 이상</TopTitle>
+                                <TopTitle>게시글 작성 개수</TopTitle>
+                                <StTotTotileSecond>0개 이상</StTotTotileSecond>
                             </ModalTop>
                             <ModalTop>
                                 <StSilverLank />
-                                <TopTitle>게시글 작성 개수 5개 이상</TopTitle>
+                                <TopTitle>게시글 작성 개수</TopTitle>
+                                <StTotTotileSecond>5개 이상</StTotTotileSecond>
                             </ModalTop>
                             <ModalTop>
                                 <StGoldLank />
-                                <TopTitle>게시글 작성 개수 10개 이상</TopTitle>
+                                <TopTitle>게시글 작성 개수</TopTitle>
+                                <StTotTotileSecond>10개 이상</StTotTotileSecond>
                             </ModalTop>
                         </StTopWrap>
-                        <ModalBottom onClick={closeModal}>
+                        {/* <ModalBottom onClick={closeModal}>
                             <BottomTitle>돌아가기</BottomTitle>
-                        </ModalBottom>
+                        </ModalBottom> */}
                     </FirstWrap>
                 </ModalContainer>
             </Wrap>
@@ -89,8 +97,8 @@ const Wrap = styled.div`
 `;
 
 const ModalContainer = styled.div`
-  width: 70%;
-  height: 180px;
+  width: 80%;
+  height: 220px;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -98,16 +106,42 @@ const ModalContainer = styled.div`
   border-radius: 16px;
 `;
 
+const StModalTop = styled.div`
+  width: 90%;
+  height: 25%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 600;
+`
+const StClose = styled.div`
+  width: 30px;
+  heighT: 30px;
+`
+const StCloseX = styled.div`
+  width: 30px;
+  height: 30px;
+  background-image: url(${xcircle});
+  background-size: 100% 100%;
+  background-position: center;
+  cursor: pointer;
+`
+
 const FirstWrap = styled.div`
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid #d9d9d9;
 `;
 
 const StTopWrap = styled.div`
-    width: 100%;
-    height: 70%;
+    width: 95%;
+    height: 80%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 5px;
@@ -116,64 +150,50 @@ const ModalTop = styled.div`
   width: 70%;
   /* height: 10%; */
   display: flex;
-  /* flex-direction: column; */
+  flex-direction: column;
   /* justify-content: center; */
   align-items: center;
-  gap: 12px;
+  color: #bebebe;
 `;
 const StBronzeLank = styled.div`
-    width: 20px;
-    height: 20px;
-    background-image: url(${bronzemedal});
+    width: 60px;
+    height: 75px;
+    background-image: url(${bronzetitle});
     background-size: 100% 100%;
     background-position: center;
+    margin-bottom: 8px;
 `
+
 const StSilverLank = styled.div`
-    width: 20px;
-    height: 20px;
-    background-image: url(${silvermedal});
+    width: 50px;
+    height: 75px;
+    background-image: url(${silvertitle});
     background-size: 100% 100%;
     background-position: center;
+    margin-bottom: 8px;
 `
 const StGoldLank = styled.div`
-    width: 20px;
-    height: 20px;
-    background-image: url(${goldmedal});
+    width: 43px;
+    height: 75px;
+    background-image: url(${goldtitle});
     background-size: 100% 100%;
     background-position: center;
+    margin-bottom: 8px;
 `
 
 const TopTitle = styled.div`
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
-  padding: 0 10px;
-  /* text-align: center; */
-  /* word-break: keep-all; */
-  width: 100%;
-`;
-const ModalBottom = styled.div`
-  width: 100%;
-  height: 25%;
-  color: white;
   display: flex;
   justify-content: center;
-  align-items: center;
-  border-bottom-left-radius: 16px;
-  border-bottom-right-radius: 16px;
-  cursor: pointer;
-  gap: 10px;
+  /* width: 100px; */
+  /* padding: 0 10px; */
+  text-align: center;
+  /* word-break: keep-all; */
+  /* width: 100%; */
 `;
 
-const BottomTitle = styled.div`
-  font-size: 16px;
-  font-weight: 700;
-  /* border: 1px solid red; */
-  background-color: #f7931e;
-  border-radius: 16px;
-  width: 40%;
-  height: 80%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 10px;
-`;
+const StTotTotileSecond = styled.div`
+  font-weight: 600;
+  font-size: 15px;
+`
