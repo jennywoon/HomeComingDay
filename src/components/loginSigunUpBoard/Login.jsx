@@ -176,7 +176,7 @@ const Login = () => {
           </StLoginWrap>
         </StLoginWraps>
         <StPrivacy>
-          첫 로그인시<StPrivacyText onClick={showPrivacyModal}> 이용약관</StPrivacyText> 및 <StPrivacyText onClick={showPrivacyModal}>개인정보처리방침</StPrivacyText> 동의로 간주됩니다
+          회원가입시<StPrivacyText onClick={showPrivacyModal}> 이용약관</StPrivacyText> 및 <StPrivacyText onClick={showPrivacyModal}>개인정보처리방침</StPrivacyText> 동의로 간주됩니다
         </StPrivacy>
       </StLoginContainer>
     </>
@@ -280,12 +280,13 @@ const ButtonTitle = styled.div`
 const StPrivacy = styled.div`
   position: fixed;
   bottom: 0;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   display: flex;
   flex-direction: row;
   gap: 5px;
   color: #b3b3b3;
   font-weight: 400;
+  justify-content: center;
 `
 
 const StPrivacyText = styled.div`

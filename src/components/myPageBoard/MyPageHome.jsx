@@ -10,6 +10,7 @@ import Homeimg from '../../assets/Home.png';
 import Searchimg from '../../assets/Search.png';
 import Chatimg from '../../assets/Chat.png';
 import MyColorimg from '../../assets/MyColor.png';
+import refresh from "../../assets/refresh.png"
 
 const MyPageHome = () => {
   const navigate = useNavigate();
@@ -48,6 +49,10 @@ const MyPageHome = () => {
     }
   }, [myarticles]);
 
+  const refreshPage = () => {
+    window.location.reload();
+  }
+
   return (
     <HomeContainer>
       <MyPageTop>
@@ -58,6 +63,7 @@ const MyPageHome = () => {
           <TitleWrap>
             <MyPostTitle>내가 쓴 게시글</MyPostTitle>
             <PostCount>{myarticles && myarticles.length}</PostCount>
+            <StRefresh onClick={refreshPage}/>
             {/* <PostCount>{totalCount}</PostCount> */}
           </TitleWrap>
           <ArticleWrap>
@@ -212,6 +218,15 @@ const MyPostTitle = styled.div`
 const PostCount = styled.div`
   color: #f7931e;
 `;
+
+const StRefresh = styled.div`
+  width: 20px;
+  height: 20px;
+  background-image: url(${refresh});
+  background-position: center;
+  background-size: 100% 100%;
+  cursor: pointer;
+`
 const SecondWrap = styled.div`
   width: 100%;
   position: sticky;
