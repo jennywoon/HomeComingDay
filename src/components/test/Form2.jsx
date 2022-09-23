@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import DaumPostcode from 'react-daum-postcode';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -18,12 +19,9 @@ import Button from '../elements/Button';
 import moment from 'moment';
 import { TimePicker } from 'antd';
 import '../calendarBoard/Time.css';
-// import '../calendarBoard/TimePicker.css';
 import Calendar from 'react-calendar';
 import '../calendarBoard/CalendarModal.css';
-// import '../calendarBoard/Calendar.css';
 import { useDropzone } from 'react-dropzone';
-import dayjs from 'dayjs';
 
 const Form2 = () => {
   const dispatch = useDispatch();
@@ -151,7 +149,7 @@ const Form2 = () => {
     calendartitle: '',
     calendarDate: '',
     calendartime: '',
-    calendarlocation: '',
+    calendarLocation: '',
     calendarcontent: '',
   });
   const [date, setDate] = useState({
@@ -165,7 +163,7 @@ const Form2 = () => {
     calendartitle,
     calendarDate,
     calendartime,
-    calendarlocation,
+    calendarLocation,
     calendarcontent,
   } = calendar;
 
@@ -188,6 +186,28 @@ const Form2 = () => {
     setSelect(e.target.value);
   };
 
+  // 카카오 주소 검색하기
+  const [openPostcode, setOpenPostcode] = useState(false);
+  const [calendarlocation, setCalendarLocation] = useState({
+    calendarLocation: "",
+  })
+  const locations = { calendarLocation: calendarlocation }
+  const handle = {
+    // 버튼 클릭 이벤트
+    clickButton: () => {
+      setOpenPostcode(current => !current);
+    },
+
+    // 주소 선택 이벤트
+    selectAddress: (data) => {
+      console.log(`
+            주소: ${data.address},
+            우편번호: ${data.zonecode}
+        `)
+      setCalendarLocation(data.address);
+      setOpenPostcode(false);
+    },
+  }
   const formdata = new FormData();
   //등록하기
   const [isOnActive, setIsOnActive] = useState(false);
@@ -219,6 +239,7 @@ const Form2 = () => {
     const now = new Date()
     const defaultValue = moment(now.toString()).format('MM월 DD일 dddd')
     console.log(defaultValue)
+
 
 
     //-추가
@@ -352,12 +373,12 @@ const Form2 = () => {
   }, [freetitle, freecontent])
 
   useEffect(() => {
-    if (calendartitle !== '' && selectedTime !== '' && calendarlocation !== '' && calendarcontent !== '') {
+    if (calendartitle !== '' && selectedTime !== '' && calendarcontent !== '') {
       handleCheck(true);
     } else {
       handleCheck(false);
     }
-  }, [calendartitle, selectedTime, calendarlocation, calendarcontent])
+  }, [calendartitle, selectedTime, calendarcontent])
 
   return (
     <TotalCatiner>
@@ -382,14 +403,14 @@ const Form2 = () => {
           </FormSelection>
           {select === 'help' ? (
             <>
-                <FormInput
-                  name='title'
-                  value={title}
-                  onChange={onChangeHandler}
-                  placeholder='제목을 입력해주세요'
-                  maxLength='40'
-                ></FormInput>
-                   <FormCheckWrap>
+              <FormInput
+                name='title'
+                value={title}
+                onChange={onChangeHandler}
+                placeholder='제목을 입력해주세요'
+                maxLength='40'
+              ></FormInput>
+              <FormCheckWrap>
                 <StCard>
                   <StTextArea>
                     <Textarea
@@ -463,10 +484,10 @@ const Form2 = () => {
                               </StImgList>
                             ))}
                         </StImgContainer>
-                    </>
-                  </FooterContain>
-                </FormFooter>
-              </StCard>
+                      </>
+                    </FooterContain>
+                  </FormFooter>
+                </StCard>
               </FormCheckWrap>
             </>
           ) : select === 'info' ? (
@@ -479,84 +500,84 @@ const Form2 = () => {
                 maxLength='40'
               ></FormInput>
               <FormCheckWrap>
-              <StCard>
-              <StTextArea>
-                <Textarea
-                  name='infocontent'
-                  value={infocontent}
-                  onChange={infoonChangeHandler}
-                  placeholder='내용을 입력해주세요'
-                  maxLength='300'
-                  style={{ height: "100%" }}
-                ></Textarea>
-                </StTextArea>
-                <FormFooter>
-                  <FooterContain>
+                <StCard>
+                  <StTextArea>
+                    <Textarea
+                      name='infocontent'
+                      value={infocontent}
+                      onChange={infoonChangeHandler}
+                      placeholder='내용을 입력해주세요'
+                      maxLength='300'
+                      style={{ height: "100%" }}
+                    ></Textarea>
+                  </StTextArea>
+                  <FormFooter>
+                    <FooterContain>
 
-                    <>
-                      <GetRootProps>
-                        <StImaBox>
-                          <StImgUpload
-                            {...getRootProps({ className: 'dropzone' })}
-                          >
-                            <Imgadd size='24px' />
-                            <Imgtxt>이미지 첨부</Imgtxt>
-                            {/* <button width="300px" text="컴퓨터에서 선택" /> */}
-                            <input {...getInputProps()} />
-                          </StImgUpload>
-                          <TxtWarning>* 이미지 최대 3장</TxtWarning>
-                        </StImaBox>
-                      </GetRootProps>
-                      <StImgContainer>
-                        {files.length !== 0 &&
-                          files.map((file, i) => (
-                            // console.log("file!!!!!!!", file)
-                            <StImgList key={i} style={{ display: 'flex' }}>
-                              <div
-                                style={{
-                                  width: '122px',
-                                  height: '110px',
-                                  overflow: 'hidden',
-                                  display: 'flex',
-                                  justifyContent: 'center',
-                                  alignItems: 'center',
-                                  position: 'relative',
-                                }}
-                              >
-                                <img
-                                  src={file.preview}
+                      <>
+                        <GetRootProps>
+                          <StImaBox>
+                            <StImgUpload
+                              {...getRootProps({ className: 'dropzone' })}
+                            >
+                              <Imgadd size='24px' />
+                              <Imgtxt>이미지 첨부</Imgtxt>
+                              {/* <button width="300px" text="컴퓨터에서 선택" /> */}
+                              <input {...getInputProps()} />
+                            </StImgUpload>
+                            <TxtWarning>* 이미지 최대 3장</TxtWarning>
+                          </StImaBox>
+                        </GetRootProps>
+                        <StImgContainer>
+                          {files.length !== 0 &&
+                            files.map((file, i) => (
+                              // console.log("file!!!!!!!", file)
+                              <StImgList key={i} style={{ display: 'flex' }}>
+                                <div
                                   style={{
-                                    width: '100px',
-                                    height: '100px',
-                                    backgroundSize: 'cover',
+                                    width: '122px',
+                                    height: '110px',
+                                    overflow: 'hidden',
+                                    display: 'flex',
                                     justifyContent: 'center',
-                                    objectFit: 'cover',
-                                    borderRadius: '16px',
+                                    alignItems: 'center',
+                                    position: 'relative',
                                   }}
-                                // onLoad={() => {
-                                //   URL.revokeObjectURL(file.preview);
-                                // }}
-                                />
-                                <CancelBtn
-                                  onClick={() => deleteImage(i)}
-                                  size='20px'
-                                  style={{
-                                    color: '#F7931E',
-                                    position: 'absolute',
-                                    right: '5px',
-                                    top: '0px',
-                                    cursor: 'pointer',
-                                  }}
-                                />
-                              </div>
-                            </StImgList>
-                          ))}
-                      </StImgContainer>
-                    </>
+                                >
+                                  <img
+                                    src={file.preview}
+                                    style={{
+                                      width: '100px',
+                                      height: '100px',
+                                      backgroundSize: 'cover',
+                                      justifyContent: 'center',
+                                      objectFit: 'cover',
+                                      borderRadius: '16px',
+                                    }}
+                                  // onLoad={() => {
+                                  //   URL.revokeObjectURL(file.preview);
+                                  // }}
+                                  />
+                                  <CancelBtn
+                                    onClick={() => deleteImage(i)}
+                                    size='20px'
+                                    style={{
+                                      color: '#F7931E',
+                                      position: 'absolute',
+                                      right: '5px',
+                                      top: '0px',
+                                      cursor: 'pointer',
+                                    }}
+                                  />
+                                </div>
+                              </StImgList>
+                            ))}
+                        </StImgContainer>
+                      </>
 
-                  </FooterContain>
-                </FormFooter>
-              </StCard>
+                    </FooterContain>
+                  </FormFooter>
+                </StCard>
               </FormCheckWrap>
             </>
           ) : select === 'meet' ? (
@@ -568,9 +589,7 @@ const Form2 = () => {
                 placeholder='제목을 입력해주세요'
                 maxLength='40'
               ></FormInput>
-              <CalendarButton
-              // onClick={showModal}
-              >
+              <CalendarButton>
                 <CalendarTitle>날짜</CalendarTitle>
                 <DateDiv onClick={() => setIsActive(!isActive)}>
                   {moment(date).format('YYYY년 MM월 DD일')}
@@ -583,7 +602,6 @@ const Form2 = () => {
                     name='calendarDate'
                     value={calendarDate}
                     onChange={onChange}
-
                   />
                 )}
               </CalendarWrap>
@@ -600,17 +618,28 @@ const Form2 = () => {
                   value={moment(selectedTime, 'hh:mm a')}
                   onSelect={onSelectTimeHandler}
                 />
-                {/* <IoIosArrowForward /> */}
               </TimeDiv>
               <CalendarDiv>
-                <CalendarTitle>장소</CalendarTitle>
-                <CalendarInput
-                  name='calendarlocation'
-                  value={calendarlocation}
-                  onChange={calendaronChangeHandler}
-                  placeholder='장소를 입력해주세요'
-                ></CalendarInput>
-              </CalendarDiv>
+                  <CalendarTitle>장소</CalendarTitle>
+                  <DateDiv
+                    name='calendarlocation'
+                    value={calendarlocation}
+                    onChange={calendaronChangeHandler}
+                    placeholder='장소를 입력해주세요'
+                    onClick={handle.clickButton}
+                  >
+                    {/* {calendarlocation} */}
+                    <IoIosArrowForward />
+                  </DateDiv>
+                  </CalendarDiv>
+                <StKakaoMap>
+                  {openPostcode &&
+                    <DaumPostcode
+                      onComplete={handle.selectAddress}  // 값을 선택할 경우 실행되는 이벤트
+                      autoClose={false} // 값을 선택할 경우 사용되는 DOM을 제거하여 자동 닫힘 설정
+                      defaultQuery='판교역로 235' // 팝업을 열때 기본적으로 입력되는 검색어 
+                    />}
+                </StKakaoMap>
               <TextDiv>
                 <CalendarTitle>내용</CalendarTitle>
                 <CalendarTextarea
@@ -632,83 +661,83 @@ const Form2 = () => {
                 maxLength='40'
               ></FormInput>
               <FormCheckWrap>
-              <StCard>
-              <StTextArea>
-                <Textarea
-                  name='freecontent'
-                  value={freecontent}
-                  onChange={freeonChangeHandler}
-                  placeholder='내용을 입력해주세요'
-                  maxLength='300'
-                  style={{ height: "100%" }}
-                ></Textarea>
-                </StTextArea>
-                <FormFooter>
-                  <FooterContain>
-                    <>
-                      <GetRootProps>
-                        <StImaBox>
-                          <StImgUpload
-                            {...getRootProps({ className: 'dropzone' })}
-                          >
-                            <Imgadd size='24px' />
-                            <Imgtxt>이미지 첨부</Imgtxt>
-                            {/* <button width="300px" text="컴퓨터에서 선택" /> */}
-                            <input {...getInputProps()} />
-                          </StImgUpload>
-                          <TxtWarning>* 이미지 최대 3장</TxtWarning>
-                        </StImaBox>
-                      </GetRootProps>
-                      <StImgContainer>
-                        {files.length !== 0 &&
-                          files.map((file, i) => (
-                            // console.log("file!!!!!!!", file)
-                            <StImgList key={i} style={{ display: 'flex' }}>
-                              <div
-                                style={{
-                                  width: '122px',
-                                  height: '110px',
-                                  overflow: 'hidden',
-                                  display: 'flex',
-                                  justifyContent: 'center',
-                                  alignItems: 'center',
-                                  position: 'relative',
-                                }}
-                              >
-                                <img
-                                  src={file.preview}
+                <StCard>
+                  <StTextArea>
+                    <Textarea
+                      name='freecontent'
+                      value={freecontent}
+                      onChange={freeonChangeHandler}
+                      placeholder='내용을 입력해주세요'
+                      maxLength='300'
+                      style={{ height: "100%" }}
+                    ></Textarea>
+                  </StTextArea>
+                  <FormFooter>
+                    <FooterContain>
+                      <>
+                        <GetRootProps>
+                          <StImaBox>
+                            <StImgUpload
+                              {...getRootProps({ className: 'dropzone' })}
+                            >
+                              <Imgadd size='24px' />
+                              <Imgtxt>이미지 첨부</Imgtxt>
+                              {/* <button width="300px" text="컴퓨터에서 선택" /> */}
+                              <input {...getInputProps()} />
+                            </StImgUpload>
+                            <TxtWarning>* 이미지 최대 3장</TxtWarning>
+                          </StImaBox>
+                        </GetRootProps>
+                        <StImgContainer>
+                          {files.length !== 0 &&
+                            files.map((file, i) => (
+                              // console.log("file!!!!!!!", file)
+                              <StImgList key={i} style={{ display: 'flex' }}>
+                                <div
                                   style={{
-                                    width: '100px',
-                                    height: '100px',
-                                    backgroundSize: 'cover',
+                                    width: '122px',
+                                    height: '110px',
+                                    overflow: 'hidden',
+                                    display: 'flex',
                                     justifyContent: 'center',
-                                    objectFit: 'cover',
-                                    borderRadius: '16px',
+                                    alignItems: 'center',
+                                    position: 'relative',
                                   }}
-                                // onLoad={() => {
-                                //   URL.revokeObjectURL(file.preview);
-                                // }}
-                                />
-                                <CancelBtn
-                                  onClick={() => deleteImage(i)}
-                                  size='20px'
-                                  style={{
-                                    color: '#F7931E',
-                                    position: 'absolute',
-                                    right: '5px',
-                                    top: '0px',
-                                    cursor: 'pointer',
-                                  }}
-                                />
-                              </div>
-                            </StImgList>
-                          ))}
-                      </StImgContainer>
-                    </>
+                                >
+                                  <img
+                                    src={file.preview}
+                                    style={{
+                                      width: '100px',
+                                      height: '100px',
+                                      backgroundSize: 'cover',
+                                      justifyContent: 'center',
+                                      objectFit: 'cover',
+                                      borderRadius: '16px',
+                                    }}
+                                  // onLoad={() => {
+                                  //   URL.revokeObjectURL(file.preview);
+                                  // }}
+                                  />
+                                  <CancelBtn
+                                    onClick={() => deleteImage(i)}
+                                    size='20px'
+                                    style={{
+                                      color: '#F7931E',
+                                      position: 'absolute',
+                                      right: '5px',
+                                      top: '0px',
+                                      cursor: 'pointer',
+                                    }}
+                                  />
+                                </div>
+                              </StImgList>
+                            ))}
+                        </StImgContainer>
+                      </>
 
-                  </FooterContain>
-                </FormFooter>
-              </StCard>
+                    </FooterContain>
+                  </FormFooter>
+                </StCard>
               </FormCheckWrap>
             </>
           ) : null}
@@ -946,6 +975,9 @@ const CalendarDiv = styled.div`
   align-items: center;
   padding: 0 20px;
 `;
+
+const StKakaoMap = styled.div`
+`
 const CalendarInput = styled.input`
   width: 65%;
   height: 30px;
