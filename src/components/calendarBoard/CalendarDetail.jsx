@@ -39,6 +39,23 @@ const CalendarDetail = () => {
     (calendar) => calendar.articleId === Number(id)
   );
   const data = useSelector((state) => state.mypages.mypages)
+  
+    //모달닫기
+  const node = useRef();
+
+  useEffect(() => {
+    const clickOutside = (e) => {
+      // 모달이 열려 있고 모달의 바깥쪽을 눌렀을 때 창 닫기
+      if (show && node.current && !node.current.contains(e.target)) {
+        setShow(false);
+      }
+  };
+    document.addEventListener("mousedown", clickOutside);
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener("mousedown", clickOutside);
+    };
+  }, [show]);
 
   // 조회수 반영
   useEffect(() => {
@@ -109,7 +126,7 @@ const heartClick = async () => {
   };
 
   return (
-    <Container>
+    <Container ref={node}>
       {modalOpen && <CalendarDeleteModal setModalOpen={setModalOpen} />}
       <Header />
       <FirstWrap>
@@ -153,7 +170,7 @@ const heartClick = async () => {
                 /> : null}
 
                 {show ? (
-                  <Revisebox ref={modalRef}>
+                  <Revisebox ref={node}>
                     <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
                     <DeleteButton onClick={showModal}>삭제</DeleteButton>
                   </Revisebox>
