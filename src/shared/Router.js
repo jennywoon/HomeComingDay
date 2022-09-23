@@ -38,7 +38,8 @@ import { getCookie } from "./cookies";
 import { Navigate } from "react-router-dom";
 import FormPage from "../pages/FormPage";
 import ChatFrontTest from "../components/chatBoard/ChatFrontTest";
-
+import TimeTest from "../components/test/TimeTest";
+import FormTest from "../components/test/FormTest.jsx"
 const Router = () => {
 
   const token = getCookie("accessToken")
@@ -81,6 +82,8 @@ const Router = () => {
         <Route path="/calendardetail/:id" element={<CalendarDetail />} />
         <Route path="/calendarupdate/:id" element={<CalendarUpdate />} />
         <Route path="/chattest" element={<ChatFrontTest />} />
+        <Route path="/timetest" element={<TimeTest />} />
+        <Route path="/formtest" element={<FormTest />} />
 
       </Routes>
     </BrowserRouter>
