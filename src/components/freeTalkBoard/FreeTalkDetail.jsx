@@ -36,6 +36,24 @@ const FreeTalkDetail = () => {
 
     const freetalksfind = freetalks.find((freetalk) => freetalk.articleId === Number(id))
 
+    //모달닫기
+  const node = useRef();
+
+  useEffect(() => {
+    const clickOutside = (e) => {
+      // 모달이 열려 있고 모달의 바깥쪽을 눌렀을 때 창 닫기
+      if (show && node.current && !node.current.contains(e.target)) {
+        setShow(false);
+      }
+  };
+    document.addEventListener("mousedown", clickOutside);
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener("mousedown", clickOutside);
+    };
+  }, [show]);
+
+
     // 댓글
     const onChangePostHandler = (e) => {
         setComment(e.target.value)
@@ -125,7 +143,7 @@ const FreeTalkDetail = () => {
   };
 
     return (
-        <Container>
+        <Container ref={node}>
             {modalOpen && <FreeTalkDeleteModal setModalOpen={setModalOpen} />}
             <Header />
             <FirstWrap>
@@ -158,7 +176,7 @@ const FreeTalkDetail = () => {
                                     : null}
 
                                 {show ?
-                                    <Revisebox ref={modalRef}>
+                                    <Revisebox ref={node}>
                                         <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
                                         <DeleteButton onClick={showModal}>삭제</DeleteButton>
                                     </Revisebox>

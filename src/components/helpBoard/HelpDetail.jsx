@@ -35,6 +35,7 @@ const HelpDetail = () => {
   const { helps } = useSelector((state) => state.helps);
   const { id } = useParams();
   const [show, setShow] = useState(false);
+  const [showComment, setShowComment] = useState(false)
   const [showChaet, setShowChaet] = useState(false);
   const [comment, setComment] = useState('');
   const modalRef = useRef(null);
@@ -47,6 +48,25 @@ const HelpDetail = () => {
   // console.log("helpsCommentList",helpsCommentList)
   // console.log('helpsChildCommentList', helpsChildCommentList)
   // console.log('data', data);
+
+  //모달닫기
+  const node = useRef();
+
+  useEffect(() => {
+    const clickOutside = (e) => {
+      // 모달이 열려 있고 모달의 바깥쪽을 눌렀을 때 창 닫기
+      if (show && node.current && !node.current.contains(e.target)) {
+        setShow(false);
+      }
+  };
+    document.addEventListener("mousedown", clickOutside);
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener("mousedown", clickOutside);
+    };
+  }, [show]);
+
+
 
   // 조회수 반영
   useEffect(() => {
@@ -136,11 +156,11 @@ const HelpDetail = () => {
     dispatch(__getHelp());
   };
 
-  return (
-    <Container>
+  return ( 
+    <Container ref={node}> 
       {modalOpen && <HelpDeleteModal setModalOpen={setModalOpen} />}
       <Header />
-      <FirstWrap>
+      <FirstWrap >
         <DetailHeader>
           <IoIosArrowBack
             size='25px'
@@ -178,11 +198,13 @@ const HelpDetail = () => {
                     cursor: 'pointer',
                     color: '#bebebe',
                   }}
+                  
                   onClick={onCilckShow}
+                  
                 /> : null}
 
                 {show ? (
-                  <Revisebox ref={modalRef}>
+                  <Revisebox ref={node}>
                     <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
                     <DeleteButton onClick={showModal}>삭제</DeleteButton>
                   </Revisebox>
@@ -258,7 +280,6 @@ const HelpDetail = () => {
                             key={comment.commentId}
                             comment={comment}
                             helpsfind={helpsfind}
-                            modalRef={modalRef}
                             data={data}
                           />
                         ))}
@@ -296,6 +317,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin: auto;
+  z-index:1;
   /* align-items: center; */
   /* justify-content: center; */
 `;
