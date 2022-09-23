@@ -3,15 +3,17 @@ import styled from 'styled-components';
 import { TbBellRinging } from 'react-icons/tb';
 import { IoMdClose } from 'react-icons/io';
 
-const NoticeCard = () => {
+const NoticeCard = ({ item }) => {
+
+  const { notificationId, username, title, createdAt, noticeType, articlesId } = item;
+
   return (
-      <StNoticeCard>
-      <StChatCardContainer style={{ cursor: 'pointer' }}>
+    <StNoticeCard>
+      <StNoticeCardContainer style={{ cursor: 'pointer' }}>
         <StHeadImg>
           <TbBellRinging size='32' color='white' />
         </StHeadImg>
-        <StChatContainer>
-          {/* map 돌릴 예정, 맵 돌리고 게시글 없을때 이미지 추가 */}
+        <StNoticeContainer>
           <StFirstContainer>
             <StUserName>
               [마케팅 신입인데 뭘 해야...]게시글에 댓글(2)이 달렸습니다
@@ -21,25 +23,25 @@ const NoticeCard = () => {
           <StSecondContainer>
             <IoMdClose size='22' color='#8E8E8E' />
           </StSecondContainer>
-        </StChatContainer>
-      </StChatCardContainer>
-      </StNoticeCard>
+        </StNoticeContainer>
+      </StNoticeCardContainer>
+    </StNoticeCard>
   );
 };
 
 export default NoticeCard;
 
 const StNoticeCard = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-border-bottom: 1px solid #F5F5F5;
-/* border: 1px solid red; */
-`
-
-const StChatCardContainer = styled.div`
   display: flex;
-  border-bottom: 1px solid #F5F5F5;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #f5f5f5;
+  /* border: 1px solid red; */
+`;
+
+const StNoticeCardContainer = styled.div`
+  display: flex;
+  border-bottom: 1px solid #f5f5f5;
   /* border: 1px solid green; */
   width: 90%;
   height: 80px;
@@ -47,7 +49,7 @@ const StChatCardContainer = styled.div`
   align-items: center;
   gap: 5px;
 `;
-const StChatContainer = styled.div`
+const StNoticeContainer = styled.div`
   width: 90%;
   /* height: 80px; */
   /* border: 1px solid red; */
