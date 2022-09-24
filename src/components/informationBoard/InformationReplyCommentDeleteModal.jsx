@@ -44,7 +44,7 @@ const InformationReplyCommentDeleteModal = ({setModalOpen,onClickDeleteReplyComm
     overflow: hidden;
     /* bottom: 0; */
     top: 0;
-    left:50%;
+    transform: translateX(-80px);
     
     
     
