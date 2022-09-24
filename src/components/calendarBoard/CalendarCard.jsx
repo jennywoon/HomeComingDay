@@ -15,9 +15,9 @@ const CalendarCard = ({ calendar, id }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   dispatch(__getCalendar());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(__getCalendar());
+  }, [dispatch]);
 
   const onClickNavi = () => {
     navigate(`/calendardetail/${id}`)

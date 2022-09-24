@@ -10,9 +10,9 @@ const HelpCard = ({ help, id }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   dispatch(__getHelp());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(__getHelp());
+  }, [dispatch]);
 
   const onClickNavi = () => {
     navigate(`/helpdetail/${id}`);

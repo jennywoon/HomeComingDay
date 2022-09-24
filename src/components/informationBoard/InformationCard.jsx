@@ -13,10 +13,10 @@ const InformationCard = ({ information, id }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   dispatch(__postInformation());
-  //   dispatch(__getInformation());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(__postInformation());
+    dispatch(__getInformation());
+  }, [dispatch]);
 
   const onClickNavi = () => {
     navigate(`/informationdetail/${id}`);

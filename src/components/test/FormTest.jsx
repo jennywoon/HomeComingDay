@@ -56,11 +56,14 @@ const Form2 = () => {
   //이미지 Dropzone -추가
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
-    accept: {
-      'image/png': ['.png'],
-      'image/jpg': ['.jpg'],
-      'image/jpeg': ['.jpeg'],
-    },
+    accept: 
+    'image/*',
+    // {
+    //   'image/png': ['.png'],
+    //   'image/jpg': ['.jpg'],
+    //   'image/jpeg': ['.jpeg'],
+    //   'image/heic': ['.heic'],
+    // },
     maxFiles: 3,
     onDrop: (acceptedFiles) => {
       setFiles(
@@ -135,8 +138,6 @@ const Form2 = () => {
     calendarcontent,
   } = calendar;
 
-  const [selectedTime, setSelectedTime] = useState('00:00');
-  console.log(selectedTime);
   const calendaronChangeHandler = (e) => {
     const { value, name } = e.target;
     setCalendar({
@@ -145,11 +146,45 @@ const Form2 = () => {
     });
   };
 
-  const onSelectTimeHandler = (value) => {
-    const timeString = moment(value).format('hh:mm a');
-    setSelectedTime(timeString);
-    console.log(selectedTime);
+  // 시간 구현
+
+  const [dateShow, setDateShow] = useState(true);
+  const [timeShow, setTimeShow] = useState(false);
+  const [selectTime, setSelectTime] = useState("오전");
+  const [selectHour, setSelectHour] = useState("01");
+  const [selectMinute, setSelectMinute] = useState("00");
+
+  const division = ["오전", "오후"];
+  const hourSelect = [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+  ];
+  const minuteSelect = ["00", "10", "20", "30", "40", "50"];
+  const hour = String(
+    Number(selectHour) + Number(selectTime === "오후" ? 12 : 0)
+  ).padStart(2, "0");
+
+
+  const timeShowBtn = () => {
+    setDateShow(false);
+    setTimeShow(!timeShow);
   };
+
+  const closeTimeShowBtn = () => {
+    setTimeShow(!timeShow);
+  }
+  console.log(hour+":"+selectMinute)
+  const [selectedTime, setSelectedTime] = useState('00:00');
 
   const handleSelect = (e) => {
     setSelect(e.target.value);
@@ -255,7 +290,7 @@ const Form2 = () => {
     } else if (select === 'meet') {
       const newcalendar = {
         title: calendartitle,
-        calendarTime: selectedTime,
+        calendarTime: hour+":"+selectMinute,
         calendarLocation: calendarlocation,
         content: calendarcontent,
         calendarDate: realCalendar,
@@ -324,43 +359,7 @@ const Form2 = () => {
     }
   }, [calendartitle, selectedTime, calendarcontent])
 
-  // 시간 구현
 
-  const [dateShow, setDateShow] = useState(true);
-  const [timeShow, setTimeShow] = useState(false);
-  const [selectTime, setSelectTime] = useState("오전");
-  const [selectHour, setSelectHour] = useState("01");
-  const [selectMinute, setSelectMinute] = useState("00");
-
-  const division = ["오전", "오후"];
-  const hourSelect = [
-    "01",
-    "02",
-    "03",
-    "04",
-    "05",
-    "06",
-    "07",
-    "08",
-    "09",
-    "10",
-    "11",
-    "12",
-  ];
-  const minuteSelect = ["00", "10", "20", "30", "40", "50"];
-  const hour = String(
-    Number(selectHour) + Number(selectTime === "오후" ? 12 : 0)
-  ).padStart(2, "0");
-
-
-  const timeShowBtn = () => {
-    setDateShow(false);
-    setTimeShow(!timeShow);
-  };
-
-  const closeTimeShowBtn = () => {
-    setTimeShow(!timeShow);
-  }
 
   return (
     <TotalCatiner>
@@ -586,23 +585,11 @@ const Form2 = () => {
               </CalendarWrap>
               <TimeDiv>
                 <CalendarTitle>시간</CalendarTitle>
-                {/* <StTimePicker
-                  use12Hours
-                  format='hh:mm a'
-                  name='calendartime'
-                  // value={calendartime}
-                  // onChange={calendarTimeChangeHandler}
-                  placeholder='시간을 선택해주세요'
-                  // showNow={false}
-                  // value={moment(selectedTime, 'hh:mm a')}
-                  // onSelect={onSelectTimeHandler}
-                /> */}
                 <TimeOpenBtn
                   onClick={timeShowBtn}
                   timeShow={timeShow}
-                  name='selectedTime'
-                  value={selectedTime}
-                // onSelect={onSelectTimeHandler}
+                  name='calendartime'
+                  value={`${hour}:${selectMinute}`}
                 >{`${hour}:${selectMinute}`}</TimeOpenBtn>
               </TimeDiv>
               <StKakaoMap>
@@ -680,7 +667,7 @@ const Form2 = () => {
                   placeholder='장소를 입력해주세요'
                   onClick={handle.clickButton}
                 >
-                  {/* {calendarlocation} */}
+                  {calendarlocation}
                   <IoIosArrowForward />
                 </DateDiv>
               </CalendarDiv>
