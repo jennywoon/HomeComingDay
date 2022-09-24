@@ -31,6 +31,25 @@ export const __getMyPage = createAsyncThunk("mypages/getMyPage", async (payload,
   }
 });
 
+export const __getReset = createAsyncThunk("mypages/getReset", async (payload, thunkAPI) => {
+  try {
+    const data = await axios({
+      method: 'get',
+      url: `${BASE_URL}/myPage/reset`,
+      headers: {
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+        // RefreshToken : getCookie('refreshToken')
+      },
+    });
+    console.log(data.data)
+    return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+    console.log('error', error);
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+
 // 프로필 이미지 수정
 export const __patchProfileImage = createAsyncThunk("mypages/patchProfileImage", async (payload, thunkAPI) => {
   try {
@@ -95,6 +114,20 @@ export const MyPageSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    //리셋용
+    [__getReset.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getReset.fulfilled]: (state, action) => {
+      state.isLoading= false;
+      console.log("action.payload",action.payload)
+      state.myarticles = []
+    },
+    [__getReset.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
     [__patchProfileImage.pending]: (state) => {
       state.isLoading = true;
     },
