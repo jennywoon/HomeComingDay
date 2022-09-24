@@ -48,20 +48,6 @@ const Form2 = () => {
   const [isActive, setIsActive] = useState(false);
   const [select, setSelect] = useState('help');
 
-
-
-
-  // const onClickDate = () => {
-  //   setIsActive(current => !current)
-  // }
-
-  //캘린더
-  // const [showCalendar, setShowCalendar] = useState(false);
-  // const handleChange = value => {
-  //   setDate(value);
-  //   setShowCalendar(false);
-  // };
-
   const [reactCalendar, setReactCalendar] = useState('');
   const onChangeCalendar = (e) => {
     setReactCalendar(e.target.value);
@@ -77,7 +63,6 @@ const Form2 = () => {
     },
     maxFiles: 3,
     onDrop: (acceptedFiles) => {
-      // console.log(files.length);
       setFiles(
         acceptedFiles.map((file) =>
           Object.assign(file, {
@@ -95,30 +80,13 @@ const Form2 = () => {
     return;
   };
 
-  // selectedImage.filter((img,id)=>{
-  //     URL.revokeObjectURL(img);
-  // })
-  // setSelectedImage([])
-
-  // console.log(selectedImage)
-
   useEffect(() => {
     dispatch(__getHelp());
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   dispatch(__getCalendar());
-  // }, [dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(__getDate());
-  // }, [dispatch]);
-
   const { title, content, imgUrl } = help;
   const { infotitle, infocontent, infoimageUrl } = info;
   const { freetitle, freecontent, freeimageUrl } = freetalk;
-
-  // console.log("help", title.length , "info" , info.length , "free" , freetalk.length)
 
   const onChangeHandler = (e) => {
     const { value, name } = e.target;
@@ -168,6 +136,7 @@ const Form2 = () => {
   } = calendar;
 
   const [selectedTime, setSelectedTime] = useState('00:00');
+  console.log(selectedTime);
   const calendaronChangeHandler = (e) => {
     const { value, name } = e.target;
     setCalendar({
@@ -209,6 +178,7 @@ const Form2 = () => {
     },
   }
   const formdata = new FormData();
+
   //등록하기
   const [isOnActive, setIsOnActive] = useState(false);
   const onSubmitHandler = (e) => {
@@ -230,17 +200,9 @@ const Form2 = () => {
       return alert('내용을 입력해주세요');
     }
 
-    // if (title && infotitle && freetitle && calendartitle === "") {
-    //     return alert("제목을 입력해주세요");
-    // } else if (content && infocontent && freecontent && calendarcontent === "") {
-    //     return alert("내용을 입력해주세요");
-    // }
-
     const now = new Date()
     const defaultValue = moment(now.toString()).format('MM월 DD일 dddd')
     console.log(defaultValue)
-
-
 
     //-추가
     if (select === 'help') {
@@ -326,24 +288,6 @@ const Form2 = () => {
     setModalOpen(true);
   };
 
-  // useEffect(()=>{
-  //     setHelp({
-  //         title: "",
-  //         content: "",
-  //         imgUrl : ""
-  //     }),
-  //     setInfo({
-  //         infotitle: "",
-  //         infocontent: "",
-  //         infoimageUrl:""
-  //     }),
-  //     setFreetalk({
-  //         freetitle: "",
-  //         freecontent: "",
-  //         freeimageUrl : ""
-  //     })
-  // },[handleSelect])
-
   const handleCheck = (e) => {
     setIsOnActive(e);
   };
@@ -380,6 +324,44 @@ const Form2 = () => {
     }
   }, [calendartitle, selectedTime, calendarcontent])
 
+  // 시간 구현
+
+  const [dateShow, setDateShow] = useState(true);
+  const [timeShow, setTimeShow] = useState(false);
+  const [selectTime, setSelectTime] = useState("오전");
+  const [selectHour, setSelectHour] = useState("01");
+  const [selectMinute, setSelectMinute] = useState("00");
+
+  const division = ["오전", "오후"];
+  const hourSelect = [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+  ];
+  const minuteSelect = ["00", "10", "20", "30", "40", "50"];
+  const hour = String(
+    Number(selectHour) + Number(selectTime === "오후" ? 12 : 0)
+  ).padStart(2, "0");
+
+
+  const timeShowBtn = () => {
+    setDateShow(false);
+    setTimeShow(!timeShow);
+  };
+
+  const closeTimeShowBtn = () => {
+    setTimeShow(!timeShow);
+  }
+
   return (
     <TotalCatiner>
       {/* <FormContainer> */}
@@ -390,9 +372,6 @@ const Form2 = () => {
             cursor='pointer'
             onClick={() => navigate('/main')}
           />
-          {/* <Button type='submit' backgroundColor='white'>
-            올리기
-          </Button> */}
         </FormHeader>
         <FormBody>
           <FormSelection name='category' onChange={handleSelect}>
@@ -598,48 +577,121 @@ const Form2 = () => {
               </CalendarButton>
               <CalendarWrap value={reactCalendar} onClick={onChangeCalendar}>
                 {isActive && (
-                  <Calendar
-                    name='calendarDate'
-                    value={calendarDate}
-                    onChange={onChange}
-                  />
+                    <Calendar
+                      name='calendarDate'
+                      value={calendarDate}
+                      onChange={onChange}
+                    />
                 )}
               </CalendarWrap>
               <TimeDiv>
                 <CalendarTitle>시간</CalendarTitle>
-                <StTimePicker
+                {/* <StTimePicker
                   use12Hours
                   format='hh:mm a'
                   name='calendartime'
                   // value={calendartime}
                   // onChange={calendarTimeChangeHandler}
                   placeholder='시간을 선택해주세요'
-                  showNow={false}
-                  value={moment(selectedTime, 'hh:mm a')}
-                  onSelect={onSelectTimeHandler}
-                />
+                  // showNow={false}
+                  // value={moment(selectedTime, 'hh:mm a')}
+                  // onSelect={onSelectTimeHandler}
+                /> */}
+                <TimeOpenBtn
+                  onClick={timeShowBtn}
+                  timeShow={timeShow}
+                  name='selectedTime'
+                  value={selectedTime}
+                // onSelect={onSelectTimeHandler}
+                >{`${hour}:${selectMinute}`}</TimeOpenBtn>
               </TimeDiv>
+              <StKakaoMap>
+                {timeShow && (
+                  <StTimeWrap>
+                    <StTimeModal className="modal">
+                      <div className="section">
+                        <div className="select-time">
+                          <div className="division">
+                            {division.map((e, idx) => {
+                              const color =
+                                selectTime === e ? "var(--black)" : "var(--gray2)";
+                              return (
+                                <SelectTimeBtn
+                                  type="button"
+                                  key={idx}
+                                  onClick={() => {
+                                    setSelectTime(e);
+                                  }}
+                                  color={color}
+                                >
+                                  {e}
+                                </SelectTimeBtn>
+                              );
+                            })}
+                          </div>
+                          <div className="hour">
+                            {hourSelect.map((e, idx) => {
+                              const color =
+                                selectHour === e ? "var(--black)" : "var(--gray2)";
+                              return (
+                                <SelectTimeBtn
+                                  type="button"
+                                  key={idx}
+                                  onClick={() => {
+                                    setSelectHour(e);
+                                  }}
+                                  color={color}
+                                >
+                                  {e}
+                                </SelectTimeBtn>
+                              );
+                            })}
+                          </div>
+                          <div className="minute">
+                            {minuteSelect.map((e, idx) => {
+                              const color =
+                                selectMinute === e ? "var(--black)" : "var(--gray2)";
+                              return (
+                                <SelectTimeBtn
+                                  key={idx}
+                                  onClick={() => {
+                                    setSelectMinute(e);
+                                  }}
+                                  color={color}
+                                >
+                                  {e}
+                                </SelectTimeBtn>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    </StTimeModal>
+                    <StTimeClose onClick={closeTimeShowBtn}>확인</StTimeClose>
+                  </StTimeWrap>
+                )}
+              </StKakaoMap>
               <CalendarDiv>
-                  <CalendarTitle>장소</CalendarTitle>
-                  <DateDiv
-                    name='calendarlocation'
-                    value={calendarlocation}
-                    onChange={calendaronChangeHandler}
-                    placeholder='장소를 입력해주세요'
-                    onClick={handle.clickButton}
-                  >
-                    {/* {calendarlocation} */}
-                    <IoIosArrowForward />
-                  </DateDiv>
-                  </CalendarDiv>
-                <StKakaoMap>
-                  {openPostcode &&
-                    <DaumPostcode
-                      onComplete={handle.selectAddress}  // 값을 선택할 경우 실행되는 이벤트
-                      autoClose={false} // 값을 선택할 경우 사용되는 DOM을 제거하여 자동 닫힘 설정
-                      defaultQuery='판교역로 235' // 팝업을 열때 기본적으로 입력되는 검색어 
-                    />}
-                </StKakaoMap>
+                <CalendarTitle>장소</CalendarTitle>
+                <DateDiv
+                  name='calendarlocation'
+                  value={calendarlocation}
+                  onChange={calendaronChangeHandler}
+                  placeholder='장소를 입력해주세요'
+                  onClick={handle.clickButton}
+                >
+                  {/* {calendarlocation} */}
+                  <IoIosArrowForward />
+                </DateDiv>
+              </CalendarDiv>
+              <StKakaoMap>
+                {openPostcode &&
+                  <DaumPostcode
+                    onComplete={handle.selectAddress}  // 값을 선택할 경우 실행되는 이벤트
+                    autoClose={false} // 값을 선택할 경우 사용되는 DOM을 제거하여 자동 닫힘 설정
+                    defaultQuery='판교역로 235' // 팝업을 열때 기본적으로 입력되는 검색어 
+                  />}
+              </StKakaoMap>
               <TextDiv>
                 <CalendarTitle>내용</CalendarTitle>
                 <CalendarTextarea
@@ -1026,7 +1078,7 @@ const CalendarTextarea = styled.textarea`
   text-align: right;
 `;
 
-const StTimePicker = styled(TimePicker)`
+const StTimePicker = styled.input`
   width: 160px;
   justify-content: space-between;
   border: none;
@@ -1096,3 +1148,91 @@ const CalendarWrap = styled.div`
   justify-content: right;
   /* padding-right: 10px; */
 `;
+
+// 시간 스타일
+
+const TimeOpenBtn = styled.div`
+font-weight: 500;
+color: var(--blue3);
+padding: 7px 10px;
+background-color: ${(props) =>
+    props.timeShow ? "var(--blue1)" : "transparent"};
+border-radius: 35px;
+`;
+
+const StTimeWrap = styled.div`
+  border: 1px solid #d9d9d9;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+`
+
+const StTimeModal = styled.div`
+  /* background-color: var(--blue1); */
+  /* box-shadow: 0px 14px 24px -4px rgba(117, 146, 189, 0.32),
+    inset 0px 8px 14px rgba(255, 255, 255, 0.3); */
+  border-radius: 6.83801px;
+  border: none;
+  height: 150px;
+  overflow: hidden;
+  padding: 18px;
+  text-align: center;
+  /* margin-bottom: 16px; */
+  width: 80%;
+  /* border: 1px solid red; */
+
+  .select-time {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: auto;
+
+    div {
+      :nth-child(1) {
+        justify-content: center;
+      }
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 150px;
+      padding: 10px 10px;
+      width: auto;
+      box-sizing: border-box;
+      text-align: center;
+      flex: 1;
+      text-align: center;
+      overflow-y: scroll;
+      ::-webkit-scrollbar{
+    width: 0px;
+  }
+    }
+  }
+`;
+
+const SelectTimeBtn = styled.p`
+  background-color: transparent;
+  padding: 10px;
+  font-weight: 700;
+  font-size: 20px;
+  color: ${(props) => props.color && props.color};
+  /* color: #bebebe; */
+  border: 1px solid white;
+  cursor: pointer;
+`;
+
+const StTimeClose = styled.div`
+  background-color: #f7931e;
+  border-radius: 20px;
+  width: 70%;
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+  height: 36px;
+  cursor: pointer;
+`

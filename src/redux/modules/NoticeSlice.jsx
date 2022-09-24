@@ -12,7 +12,7 @@ export const __getNotice = createAsyncThunk("getNotice", async(payload, thunkAPI
   try {
     const data = await axios({
       method: 'get',
-      url: `${BASE_URL}/notice`,
+      url: `${BASE_URL}/notification`,
       headers: {
         'Content-Type': 'text/event-stream',
         Authorization: `Bearer ${getCookie("accessToken")}`,
@@ -26,11 +26,29 @@ export const __getNotice = createAsyncThunk("getNotice", async(payload, thunkAPI
   }
 })
 
+export const __deleteAllNotice = createAsyncThunk("deleteAllNotice", async (payload, thunkAPI) => {
+  try {
+    const data = await axios({
+      method: 'delete',
+      url: `${BASE_URL}/notification`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+      },
+    });
+    return thunkAPI.fulfillWithValue(payload);
+  } catch (error) {
+    // console.log('error', error)
+    return thunkAPI.rejectWithValue(error);
+  }
+}
+);
+
 export const __deleteNotice = createAsyncThunk("deleteNotice", async (payload, thunkAPI) => {
   try {
     const data = await axios({
       method: 'delete',
-      url: `${BASE_URL}/notice/${payload.noticeId}`,
+      url: `${BASE_URL}/notification/${payload.notificationId}`,
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${getCookie("accessToken")}`,
@@ -57,6 +75,19 @@ export const NoticeSlice = createSlice({
       state.notices = action.payload;
     },
     [__getNotice.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
+    [__deleteAllNotice.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__deleteAllNotice.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      // console.log(action)
+      state.notices = state.notices.filter(notices => notices.id !== action.payload)
+    },
+    [__deleteAllNotice.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
