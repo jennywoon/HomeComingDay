@@ -666,7 +666,7 @@ const Form2 = () => {
                   placeholder='장소를 입력해주세요'
                   onClick={handle.clickButton}
                 >
-                  {calendarlocation}
+                  {/* {calendarlocation} */}
                   <IoIosArrowForward />
                 </DateDiv>
               </CalendarDiv>
