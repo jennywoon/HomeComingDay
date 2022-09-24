@@ -21,7 +21,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
+import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md';
+import { GoPrimitiveDot } from 'react-icons/go';
 import InformationDetailModal from './InformationDetailModal';
 import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
@@ -47,12 +48,29 @@ const InformationDetail = () => {
   const informationsfind = informations.find(
     (info) => info.articleId === Number(id)
   );
-  const data = useSelector((state) => state.mypages.mypages)
+  const data = useSelector((state) => state.mypages.mypages);
+
+  //모달닫기
+  const node = useRef();
+
+  useEffect(() => {
+    const clickOutside = (e) => {
+      // 모달이 열려 있고 모달의 바깥쪽을 눌렀을 때 창 닫기
+      if (show && node.current && !node.current.contains(e.target)) {
+        setShow(false);
+      }
+    };
+    document.addEventListener('mousedown', clickOutside);
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener('mousedown', clickOutside);
+    };
+  }, [show]);
 
   //조회수반영
   useEffect(() => {
-    dispatch(__getMyPage())
-    dispatch(__getInformation())
+    dispatch(__getMyPage());
+    dispatch(__getInformation());
     dispatch(__getDetailInformation(id));
   }, [dispatch]);
 
@@ -66,7 +84,7 @@ const InformationDetail = () => {
   const onCilckShow = () => {
     setShow(!show);
   };
-   // 1:1 채팅버튼
+  // 1:1 채팅버튼
   const onCilckChaetShow = () => {
     setShowChaet(!showChaet);
   };
@@ -133,7 +151,7 @@ const InformationDetail = () => {
   };
 
   return (
-    <Container>
+    <Container ref={node}>
       {modalOpen && <InformationDetailModal setModalOpen={setModalOpen} />}
       <Header />
       <FirstWrap>
@@ -154,7 +172,10 @@ const InformationDetail = () => {
           <DetailWrap>
             <DetailBody>
               <Bodytop>
-                <Bodyimg src={informationsfind&&informationsfind.userImage} alt='' />
+                <Bodyimg
+                  src={informationsfind && informationsfind.userImage}
+                  alt=''
+                />
                 <Bodytxt>
                   <Txtname onClick={onCilckChaetShow}>
                     {informationsfind && informationsfind.username}
@@ -169,19 +190,21 @@ const InformationDetail = () => {
                   {showChaet ? <ChaetingBox>1:1채팅</ChaetingBox> : null}
                 </Bodytxt>
 
-                {informationsfind &&informationsfind.username === data.username ? 
-                <BiDotsVerticalRounded
-                  size='20px'
-                  style={{
-                    marginLeft: 'auto',
-                    cursor: 'pointer',
-                    color: '#bebebe',
-                  }}
-                  onClick={onCilckShow}
-                  /> : null}
+                {informationsfind &&
+                informationsfind.username === data.username ? (
+                  <BiDotsVerticalRounded
+                    size='20px'
+                    style={{
+                      marginLeft: 'auto',
+                      cursor: 'pointer',
+                      color: '#bebebe',
+                    }}
+                    onClick={onCilckShow}
+                  />
+                ) : null}
 
                 {show ? (
-                  <Revisebox ref={modalRef}>
+                  <Revisebox ref={node}>
                     <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
                     <DeleteButton onClick={showModal}>삭제</DeleteButton>
                   </Revisebox>
@@ -210,6 +233,11 @@ const InformationDetail = () => {
                             </SwiperSlide>
                           );
                         })}
+                              {/* <StDots>
+                                <StDot />
+                                <StDot />
+                                <StDot />
+                              </StDots> */}
                       <PrevButton ref={navigationPrevRef}>
                         <PreviousBtn />
                       </PrevButton>
@@ -232,7 +260,7 @@ const InformationDetail = () => {
                       댓글 {informationsfind && informationsfind.commentCnt}
                     </CommentCount>
                     <HeartCount onClick={heartClick}>
-                      {informationsfind &&informationsfind.heart === true ? (
+                      {informationsfind && informationsfind.heart === true ? (
                         <HeartImg>
                           <img src={heartColorImg} alt='좋아요이미지' />
                         </HeartImg>
@@ -368,7 +396,7 @@ const Revisebox = styled.div`
   background-color: #fff;
   box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
   border-radius: 16px;
-  width:58px;
+  width: 58px;
   /* box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.05); */
 `;
 const ReviseButton = styled.button`
@@ -494,31 +522,49 @@ const ContentImg = styled.img`
   /* background-repeat: no-repeat;
     background-size: cover; */
 `;
-const PrevButton = styled.button`
-  font-size: 20px;
+const PrevButton = styled.div``;
+const NextButton = styled.div``;
+
+const PreviousBtn = styled(MdOutlineArrowBackIos)`
+  color: #fff;
+  /* font-size: 20px; */
+  width: 20px;
+  height: 20px;
   display: flex;
+  align-items: center;
   position: absolute;
   border: none;
-  border-radius: 20px;
   top: 50%;
-  left: 0;
+  left: 10px;
   z-index: 2;
   transform: translatey(-50%);
 `;
-const NextButton = styled.button`
-  font-size: 20px;
+const NextBtn = styled(MdOutlineArrowForwardIos)`
+  color: #fff;
+  /* font-size: 20px; */
+  width: 20px;
+  height: 20px;
   display: flex;
+  align-items: center;
   position: absolute;
   border: none;
   border-radius: 20px;
   top: 50%;
-  right: 0;
+  right: 10px;
   z-index: 2;
   transform: translatey(-50%);
 `;
 
-const PreviousBtn = styled(GrFormPrevious)``;
-const NextBtn = styled(GrFormNext)``;
+const StDots = styled.div`
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  z-index: 2;
+  transform: translate(-50%, 0);
+`;
+const StDot = styled(GoPrimitiveDot)`
+  color: #ddd;
+`;
 
 const ContentView = styled.p`
   font-size: 12px;
@@ -598,7 +644,7 @@ const CommentPost = styled.input`
 const CommentButton = styled.button`
   border: none;
   cursor: pointer;
-  color: black;
+  color: #F7931E;
   font-weight: 600;
 `;
 const BodyComment = styled.div`

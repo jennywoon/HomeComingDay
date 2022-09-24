@@ -16,10 +16,10 @@ const SearchCard = ({ search, id }) => {
     //     dispatch(__getSearch());
     // },[dispatch])
 
-    useEffect(() => {
-        dispatch(__getSearchArticle())
-        dispatch(__getSearchArticlePopular())
-    }, [dispatch])
+    // useEffect(() => {
+    //     dispatch(__getSearchArticle())
+    //     dispatch(__getSearchArticlePopular())
+    // }, [dispatch])
 
 
     const onClickNavi = () => {

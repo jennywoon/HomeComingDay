@@ -14,7 +14,7 @@ import SwiperCore, { Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import { BiDotsVerticalRounded } from "react-icons/bi";
-import { GrFormPrevious, GrFormNext } from "react-icons/gr";
+import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md';
 import FreeTalkDeleteModal from './FreeTalkDeleteModal';
 import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
@@ -35,6 +35,24 @@ const FreeTalkDetail = () => {
     const modalRef = useRef(null);
 
     const freetalksfind = freetalks.find((freetalk) => freetalk.articleId === Number(id))
+
+    //모달닫기
+  const node = useRef();
+
+  useEffect(() => {
+    const clickOutside = (e) => {
+      // 모달이 열려 있고 모달의 바깥쪽을 눌렀을 때 창 닫기
+      if (show && node.current && !node.current.contains(e.target)) {
+        setShow(false);
+      }
+  };
+    document.addEventListener("mousedown", clickOutside);
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener("mousedown", clickOutside);
+    };
+  }, [show]);
+
 
     // 댓글
     const onChangePostHandler = (e) => {
@@ -125,7 +143,7 @@ const FreeTalkDetail = () => {
   };
 
     return (
-        <Container>
+        <Container ref={node}>
             {modalOpen && <FreeTalkDeleteModal setModalOpen={setModalOpen} />}
             <Header />
             <FirstWrap>
@@ -158,7 +176,7 @@ const FreeTalkDetail = () => {
                                     : null}
 
                                 {show ?
-                                    <Revisebox ref={modalRef}>
+                                    <Revisebox ref={node}>
                                         <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
                                         <DeleteButton onClick={showModal}>삭제</DeleteButton>
                                     </Revisebox>
@@ -458,36 +476,38 @@ const ContentImg = styled.img`
     /* background-repeat: no-repeat;
     background-size: cover; */
 `
-const PrevButton = styled.button`
-    font-size: 20px;
-    display: flex;
-    position:absolute;
-    border:none;
-    border-radius: 20px;
-    top:50%;
-    left:0;
-    z-index: 2;
-    transform: translatey(-50%);
-    
-`
-const NextButton = styled.button`
-    font-size: 20px;
-    display: flex;
-    position:absolute;
-    border:none;
-    border-radius: 20px;
-    top:50%;
-    right:0;
-    z-index: 2;
-    transform: translatey(-50%);
-`
+const PrevButton = styled.div``;
+const NextButton = styled.div``;
 
-const PreviousBtn = styled(GrFormPrevious)`
-    
-`
-const NextBtn = styled(GrFormNext)`
-   
-`
+const PreviousBtn = styled(MdOutlineArrowBackIos)`
+  color: #fff;
+  /* font-size: 20px; */
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  border: none;
+  top: 50%;
+  left: 10px;
+  z-index: 2;
+  transform: translatey(-50%);
+`;
+const NextBtn = styled(MdOutlineArrowForwardIos)`
+  color: #fff;
+  /* font-size: 20px; */
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  border: none;
+  border-radius: 20px;
+  top: 50%;
+  right: 10px;
+  z-index: 2;
+  transform: translatey(-50%);
+`;
 
 
 const ContentView = styled.p`
@@ -577,7 +597,7 @@ const CommentPost = styled.input`
 const CommentButton = styled.button`
     border: none;
     cursor: pointer;
-    color: black;
+    color: #F7931E;
     font-weight: 600;
 `
 const BodyComment = styled.div`

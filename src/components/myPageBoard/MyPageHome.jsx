@@ -11,13 +11,14 @@ import Searchimg from '../../assets/Search.png';
 import Chatimg from '../../assets/Chat.png';
 import MyColorimg from '../../assets/MyColor.png';
 import refresh from "../../assets/refresh.png"
+import MyPageLankModal from './MyPageLankModa';
 
 const MyPageHome = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const {myarticles, totalCount} = useSelector((state) => state.mypages);
-  const {error} = useSelector((state) => state.mypages.myarticles)
+  const { myarticles, totalCount } = useSelector((state) => state.mypages);
+  const { error } = useSelector((state) => state.mypages.myarticles)
   console.log("myarticles", myarticles, totalCount);
   // console.log(error);
 
@@ -26,9 +27,9 @@ const MyPageHome = () => {
   const targetRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [page, setPage] = useState(0);
-  
+
   const checkIntersect = useCallback(([entry], observer) => {
-    if(entry.isIntersecting && !isLoaded){
+    if (entry.isIntersecting && !isLoaded) {
       console.log("page", page);
       dispatch(__getMyArticle(page));
       observer.unobserve(entry.target);
@@ -41,7 +42,7 @@ const MyPageHome = () => {
     console.log("length", myarticles.length);
     console.log("totalCount", totalCount);
     console.log(myarticles.length !== totalCount)
-    if(targetRef && myarticles.length !== totalCount){
+    if (targetRef && myarticles.length !== totalCount) {
       observer = new IntersectionObserver(checkIntersect, {
         threshold: 0.5,
       })
@@ -53,26 +54,37 @@ const MyPageHome = () => {
     window.location.reload();
   }
 
+  // 마이페이지 등급안내 모달
+  const [lankModalOpen, setLankModalOpen] = useState(false);
+  const showLankModal = (e) => {
+    e.preventDefault();
+    setLankModalOpen(true);
+  }
+
   return (
     <HomeContainer>
+      {lankModalOpen && <MyPageLankModal setLankModalOpen={setLankModalOpen} />}
       <MyPageTop>
         <MyPageUser />
       </MyPageTop>
       <MyPageBottom>
         <BottomWrap>
           <TitleWrap>
-            <MyPostTitle>내가 쓴 게시글</MyPostTitle>
-            <PostCount>{myarticles && myarticles.length}</PostCount>
-            <StRefresh onClick={refreshPage}/>
+            <StMyPosTitletWrap>
+              <MyPostTitle>내가 쓴 게시글</MyPostTitle>
+              <PostCount>{myarticles && myarticles.length}</PostCount>
+              <StRefresh onClick={refreshPage} />
+            </StMyPosTitletWrap>
+            <StLank onClick={showLankModal}>등급안내</StLank>
             {/* <PostCount>{totalCount}</PostCount> */}
           </TitleWrap>
           <ArticleWrap>
             {myarticles && myarticles.length > 0 ? (
               <div>
                 {myarticles && myarticles.map((myarticle) => (
-                      <MyPageCard key={myarticle.articleId} id={myarticle.articleId} myarticle={myarticle}
-                      />
-                    ))}
+                  <MyPageCard key={myarticle.articleId} id={myarticle.articleId} myarticle={myarticle}
+                  />
+                ))}
               </div>
             ) : (
               <NoneData>
@@ -149,6 +161,7 @@ const HomeContainer = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 
 const MyPageTop = styled.div`
@@ -190,6 +203,7 @@ const TitleWrap = styled.div`
   font-weight: 600;
   margin: 20px 0 15px 0;
   gap: 10px;
+  justify-content: space-between;
 `;
 const NoneData = styled.div`
   width: 100%;
@@ -210,13 +224,17 @@ const NoneDataImg = styled.div`
   background-position: center;
   background-size: 100% 100%;
 `;
-
+const StMyPosTitletWrap = styled.div`
+  display: flex;
+  align-items: center;
+`
 const MyPostTitle = styled.div`
   color: #bebebe;
 `;
 
 const PostCount = styled.div`
   color: #f7931e;
+  margin: 0 5px 0 10px;
 `;
 
 const StRefresh = styled.div`
@@ -226,6 +244,14 @@ const StRefresh = styled.div`
   background-position: center;
   background-size: 100% 100%;
   cursor: pointer;
+`
+
+const StLank = styled.div`
+  cursor: pointer;
+  color: #bebebe;
+  font-size: 14px;
+  font-weight: 400;
+  text-decoration: underline;
 `
 const SecondWrap = styled.div`
   width: 100%;

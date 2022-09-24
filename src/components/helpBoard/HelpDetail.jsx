@@ -22,7 +22,7 @@ import SwiperCore, { Navigation } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
-import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
+import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md';
 import HelpDeleteModal from './HelpDeleteModal';
 import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
@@ -35,6 +35,7 @@ const HelpDetail = () => {
   const { helps } = useSelector((state) => state.helps);
   const { id } = useParams();
   const [show, setShow] = useState(false);
+  const [showComment, setShowComment] = useState(false)
   const [showChaet, setShowChaet] = useState(false);
   const [comment, setComment] = useState('');
   const modalRef = useRef(null);
@@ -47,6 +48,25 @@ const HelpDetail = () => {
   // console.log("helpsCommentList",helpsCommentList)
   // console.log('helpsChildCommentList', helpsChildCommentList)
   // console.log('data', data);
+
+  //모달닫기
+  const node = useRef();
+
+  useEffect(() => {
+    const clickOutside = (e) => {
+      // 모달이 열려 있고 모달의 바깥쪽을 눌렀을 때 창 닫기
+      if (show && node.current && !node.current.contains(e.target)) {
+        setShow(false);
+      }
+  };
+    document.addEventListener("mousedown", clickOutside);
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener("mousedown", clickOutside);
+    };
+  }, [show]);
+
+
 
   // 조회수 반영
   useEffect(() => {
@@ -136,11 +156,11 @@ const HelpDetail = () => {
     dispatch(__getHelp());
   };
 
-  return (
-    <Container>
+  return ( 
+    <Container ref={node}> 
       {modalOpen && <HelpDeleteModal setModalOpen={setModalOpen} />}
       <Header />
-      <FirstWrap>
+      <FirstWrap >
         <DetailHeader>
           <IoIosArrowBack
             size='25px'
@@ -178,11 +198,13 @@ const HelpDetail = () => {
                     cursor: 'pointer',
                     color: '#bebebe',
                   }}
+                  
                   onClick={onCilckShow}
+                  
                 /> : null}
 
                 {show ? (
-                  <Revisebox ref={modalRef}>
+                  <Revisebox ref={node}>
                     <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
                     <DeleteButton onClick={showModal}>삭제</DeleteButton>
                   </Revisebox>
@@ -258,7 +280,6 @@ const HelpDetail = () => {
                             key={comment.commentId}
                             comment={comment}
                             helpsfind={helpsfind}
-                            modalRef={modalRef}
                             data={data}
                           />
                         ))}
@@ -296,6 +317,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin: auto;
+  z-index:1;
   /* align-items: center; */
   /* justify-content: center; */
 `;
@@ -490,31 +512,38 @@ const ContentImg = styled.img`
   /* background-repeat: no-repeat;
     background-size: cover; */
 `;
-const PrevButton = styled.button`
-  font-size: 20px;
-  display: flex;
-  position: absolute;
-  border: none;
-  border-radius: 20px;
-  top: 50%;
-  left: 0;
-  z-index: 2;
-  transform: translatey(-50%);
-`;
-const NextButton = styled.button`
-  font-size: 20px;
-  display: flex;
-  position: absolute;
-  border: none;
-  border-radius: 20px;
-  top: 50%;
-  right: 0;
-  z-index: 2;
-  transform: translatey(-50%);
-`;
+const PrevButton = styled.div``;
+const NextButton = styled.div``;
 
-const PreviousBtn = styled(GrFormPrevious)``;
-const NextBtn = styled(GrFormNext)``;
+const PreviousBtn = styled(MdOutlineArrowBackIos)`
+  color: #fff;
+  /* font-size: 20px; */
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  border: none;
+  top: 50%;
+  left: 10px;
+  z-index: 2;
+  transform: translatey(-50%);
+`;
+const NextBtn = styled(MdOutlineArrowForwardIos)`
+  color: #fff;
+  /* font-size: 20px; */
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  border: none;
+  border-radius: 20px;
+  top: 50%;
+  right: 10px;
+  z-index: 2;
+  transform: translatey(-50%);
+`;
 
 const ContentView = styled.p`
   font-size: 12px;
@@ -594,7 +623,7 @@ const CommentPost = styled.input`
 const CommentButton = styled.button`
   border: none;
   cursor: pointer;
-  color: black;
+  color: #F7931E;
   font-weight: 600;
 `;
 const BodyComment = styled.div`

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect ,useRef} from 'react';
 import styled from 'styled-components';
 import { AiOutlineMenu } from 'react-icons/ai'
 import Img from "../../assets/naverIcon.png"
@@ -38,6 +38,22 @@ const DetailComment = ({ comment, modalRef, helpsfind ,data}) => {
     //     dispatch(__getDetailHelp(id))
     // }, [dispatch])
 
+    //모달닫기
+  const node = useRef();
+
+  useEffect(() => {
+    const clickOutside = (e) => {
+      // 모달이 열려 있고 모달의 바깥쪽을 눌렀을 때 창 닫기
+      if (showComment && node.current && !node.current.contains(e.target)) {
+        setShowComment(false);
+      }
+  };
+    document.addEventListener("mousedown", clickOutside);
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener("mousedown", clickOutside);
+    };
+  }, [showComment]);
     
 
     const onChangeEdit = (e) => {
@@ -117,9 +133,9 @@ const DetailComment = ({ comment, modalRef, helpsfind ,data}) => {
     }
 
     return (
-        <StCommentContain >
+        <StCommentContain ref={node}>
             {modalOpen && <HelpCommentDeleteModal setModalOpen={setModalOpen} comment={comment} />}
-            <StCommentBox >
+            <StCommentBox>
                 <StCommentImgDiv>
                     <StCommentImg src={comment && comment.userImage} alt="" />
                 </StCommentImgDiv>
@@ -175,7 +191,7 @@ const DetailComment = ({ comment, modalRef, helpsfind ,data}) => {
 
                 </StCommentTxt>
                 {showComment ?
-                    <StRevisebox ref={modalRef}>
+                    <StRevisebox ref={node}>
                         <StReviseButton onClick={onClickRevice} type="button">수정</StReviseButton>
                         <StDeleteButton onClick={showModal} type="button">삭제</StDeleteButton>
                     </StRevisebox>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React , { useRef ,useEffect }from 'react';
 import styled from 'styled-components';
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { useState } from 'react';
@@ -22,6 +22,24 @@ const InformationReplyComment = ({childCommentList,commentId,childComment, ids ,
 
     // console.log("childCommentList",childCommentList)
     // console.log("childCommentId",childCommentId)
+
+    //모달닫기
+    const node = useRef();
+
+    useEffect(() => {
+        const clickOutside = (e) => {
+        // 모달이 열려 있고 모달의 바깥쪽을 눌렀을 때 창 닫기
+        if (showReplyComment && node.current && !node.current.contains(e.target)) {
+            setShowReplyComment(false);
+        }
+    };
+        document.addEventListener("mousedown", clickOutside);
+        return () => {
+        // Cleanup the event listener
+        document.removeEventListener("mousedown", clickOutside);
+        };
+    }, [showReplyComment]);
+
 
     const closeModal = () => {
         setModalOpen(false);
@@ -81,7 +99,7 @@ const InformationReplyComment = ({childCommentList,commentId,childComment, ids ,
 
     return (
         <div>
-        <StReplyCommentBox id={ids}>
+        <StReplyCommentBox id={ids} ref={node}>
         {modalOpen && <InformationReplyCommentDeleteModal setModalOpen={setModalOpen} onClickDeleteReplyComment={onClickDeleteReplyComment}/>}
         
            <StCommentImgDiv>
@@ -106,7 +124,7 @@ const InformationReplyComment = ({childCommentList,commentId,childComment, ids ,
            : null}
 
            {showReplyComment ?
-               <StRevisebox>
+               <StRevisebox ref={node}>
                    <StReviseButton onClick={onClickRevice} type="button">수정</StReviseButton>
                    <StDeleteButton onClick={showModal} type="button">삭제</StDeleteButton>
                </StRevisebox>
