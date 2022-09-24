@@ -1,13 +1,21 @@
-import React from 'react';
+import React , {useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Homeimg from '../../assets/Home.png';
 import Searchimg from '../../assets/Search.png';
 import ChatColorimg from '../../assets/ChatColor.png';
 import Myimg from '../../assets/My.png';
+import { useDispatch } from 'react-redux';
+import { __getReset } from '../../redux/modules/MyPageSlice';
 
 const ChatHome = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    dispatch(__getReset())
+  },[])
+
 
   return (
     <HomeContainer>
