@@ -10,17 +10,10 @@ import Myimg from '../../assets/My.png';
 import NoticeList from './NoticeList';
 // import { initSocketConnection, disconnectSocket } from './Socketio';
 
-const ChatHome = () => {
+const NoticeHome = () => {
   const navigate = useNavigate();
   const userinfo = useSelector((state) => state);
   console.log(userinfo)
-
-  //   useEffect(() => {
-  //     initSocketConnection();
-  //     return () => {
-  //       disconnectSocket();
-  //     };
-  //   }, []);
 
   return (
     <StHomeContainer>
@@ -98,7 +91,7 @@ const ChatHome = () => {
   );
 };
 
-export default ChatHome;
+export default NoticeHome;
 
 const StHomeContainer = styled.div`
   width: 100%;

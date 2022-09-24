@@ -22,7 +22,7 @@ import SwiperCore, { Navigation } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
-import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
+import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md';
 import HelpDeleteModal from './HelpDeleteModal';
 import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
@@ -512,31 +512,38 @@ const ContentImg = styled.img`
   /* background-repeat: no-repeat;
     background-size: cover; */
 `;
-const PrevButton = styled.button`
-  font-size: 20px;
-  display: flex;
-  position: absolute;
-  border: none;
-  border-radius: 20px;
-  top: 50%;
-  left: 0;
-  z-index: 2;
-  transform: translatey(-50%);
-`;
-const NextButton = styled.button`
-  font-size: 20px;
-  display: flex;
-  position: absolute;
-  border: none;
-  border-radius: 20px;
-  top: 50%;
-  right: 0;
-  z-index: 2;
-  transform: translatey(-50%);
-`;
+const PrevButton = styled.div``;
+const NextButton = styled.div``;
 
-const PreviousBtn = styled(GrFormPrevious)``;
-const NextBtn = styled(GrFormNext)``;
+const PreviousBtn = styled(MdOutlineArrowBackIos)`
+  color: #fff;
+  /* font-size: 20px; */
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  border: none;
+  top: 50%;
+  left: 10px;
+  z-index: 2;
+  transform: translatey(-50%);
+`;
+const NextBtn = styled(MdOutlineArrowForwardIos)`
+  color: #fff;
+  /* font-size: 20px; */
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  border: none;
+  border-radius: 20px;
+  top: 50%;
+  right: 10px;
+  z-index: 2;
+  transform: translatey(-50%);
+`;
 
 const ContentView = styled.p`
   font-size: 12px;
@@ -616,7 +623,7 @@ const CommentPost = styled.input`
 const CommentButton = styled.button`
   border: none;
   cursor: pointer;
-  color: black;
+  color: #F7931E;
   font-weight: 600;
 `;
 const BodyComment = styled.div`

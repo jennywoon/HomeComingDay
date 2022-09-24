@@ -6,7 +6,6 @@ import { getCookie } from '../shared/cookies';
 import goldmedal from "../assets/goldmedal.png"
 
 const FormPage = () => {
-
   // 토큰 만료되면 로그아웃
   const token = getCookie("accessToken");
   const navigate = useNavigate();

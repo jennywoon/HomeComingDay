@@ -75,7 +75,9 @@ const MyPageHome = () => {
               <PostCount>{myarticles && myarticles.length}</PostCount>
               <StRefresh onClick={refreshPage} />
             </StMyPosTitletWrap>
-            <StLank onClick={showLankModal}>등급안내</StLank>
+            <StLankWrap onClick={showLankModal}>
+              <StLank>등급안내</StLank>
+            </StLankWrap>
             {/* <PostCount>{totalCount}</PostCount> */}
           </TitleWrap>
           <ArticleWrap>
@@ -245,13 +247,18 @@ const StRefresh = styled.div`
   background-size: 100% 100%;
   cursor: pointer;
 `
-
-const StLank = styled.div`
+const StLankWrap = styled.div`
+  border: 1px solid #b3b3b3;
+  border-radius: 20px;
+  width: 60px;
+  display: flex;
+  justify-content: center;
   cursor: pointer;
+`
+const StLank = styled.div`
   color: #bebebe;
-  font-size: 14px;
-  font-weight: 400;
-  text-decoration: underline;
+  font-size: 12px;
+  font-weight: 500;
 `
 const SecondWrap = styled.div`
   width: 100%;

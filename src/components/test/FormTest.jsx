@@ -666,7 +666,7 @@ const Form2 = () => {
                   placeholder='장소를 입력해주세요'
                   onClick={handle.clickButton}
                 >
-                  {/* {calendarlocation} */}
+                  {calendarlocation}
                   <IoIosArrowForward />
                 </DateDiv>
               </CalendarDiv>
@@ -1200,9 +1200,9 @@ const SelectTimeBtn = styled.p`
   font-weight: 700;
   font-size: 20px;
   color: ${(props) => props.color && props.color};
-  /* color: #bebebe; */
   border: 1px solid white;
   cursor: pointer;
+  /* border: 1px solid red; */
 `;
 
 const StTimeClose = styled.div`

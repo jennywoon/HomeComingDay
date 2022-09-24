@@ -7,8 +7,8 @@ import Header from '../components/Header';
 import styled from 'styled-components';
 import MyPageHome from '../components/myPageBoard/MyPageHome';
 import { VscBell } from "react-icons/vsc";
-import mypagelogo from "../assets/mypagelogo.png"
 import goldmedal from "../assets/goldmedal.png"
+import mypagelogo from "../assets/mypagelogo.png"
 
 const MyPage = () => {
 

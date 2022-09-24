@@ -6,7 +6,6 @@ import { BiSearch } from "react-icons/bi";
 import { IoCloseCircle } from "react-icons/io5";
 import SearchCard from "./SearchCard";
 import { __getSearch, __getSearchArticle, __getSearchArticlePopular, __postSearch } from "../../redux/modules/SearchSlice";
-import { __getMyPage } from "../../redux/modules/MyPageSlice";
 
 const Search = () => {
     const dispatch = useDispatch();
@@ -15,7 +14,6 @@ const Search = () => {
     useEffect(() => {
         dispatch(__getSearchArticle())
         dispatch(__getSearchArticlePopular())
-        dispatch(__getMyPage())
     }, [dispatch])
 
     

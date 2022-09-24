@@ -5,7 +5,7 @@ import { IoMdClose } from 'react-icons/io';
 
 const NoticeCard = ({ item }) => {
 
-  const { notificationId, username, title, createdAt, noticeType, articlesId } = item;
+  // const { notificationId, username, title, createdAt, noticeType, articlesId } = item;
 
   return (
     <StNoticeCard>
@@ -15,10 +15,10 @@ const NoticeCard = ({ item }) => {
         </StHeadImg>
         <StNoticeContainer>
           <StFirstContainer>
-            <StUserName>
+            <StArticle>
               [마케팅 신입인데 뭘 해야...]게시글에 댓글(2)이 달렸습니다
-            </StUserName>
-            <StChatContent>15분 전</StChatContent>
+            </StArticle>
+            <StCreatAt>15분 전</StCreatAt>
           </StFirstContainer>
           <StSecondContainer>
             <IoMdClose size='22' color='#8E8E8E' />
@@ -76,7 +76,7 @@ const StFirstContainer = styled.div`
   flex-direction: column;
   padding: 0 10px;
 `;
-const StUserName = styled.div`
+const StArticle = styled.div`
   font-weight: 600;
   font-size: 16px;
   width: 90%;
@@ -84,7 +84,7 @@ const StUserName = styled.div`
 const StSecondContainer = styled.div`
   padding: 0 10px;
 `;
-const StChatContent = styled.div`
+const StCreatAt = styled.div`
   font-weight: 400;
   font-size: 12px;
   color: #8e8e8e;

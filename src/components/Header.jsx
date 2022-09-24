@@ -25,7 +25,11 @@ const Header = () => {
 
     return (
         <>
+<<<<<<< HEAD
         {loginOn ? (
+=======
+            {loginOn ? (
+>>>>>>> ad93339ae146f226c40c2534c218be65d4bb1a23
                 ""
             ) : (
                 <NeedLogin>
@@ -47,6 +51,7 @@ const Header = () => {
                     </NeedLoginModal>
                 </NeedLogin>
             )}
+<<<<<<< HEAD
         <HeaderContainer>
             <HeaderWrap>
                 <Logo onClick={() => { navigate("/main") }} style={{ cursor: "pointer" }} />
@@ -66,6 +71,26 @@ const Header = () => {
 
         </HeaderContainer>
         </>
+=======
+            <HeaderContainer>
+                <HeaderWrap>
+                    <Logo onClick={() => { navigate("/main") }} style={{ cursor: "pointer" }} />
+                    <div style={{ fontSize: "20px" }}>
+                        {data && data.schoolName}
+                    </div>
+                    <IconWrap>
+                        <VscBell size="27"
+                            onClick={() => { navigate("/notice") }} style={{ cursor: "pointer" }}
+                        />
+                        <NewDiv>
+                            <NewTitle>N</NewTitle>
+                        </NewDiv>
+                    </IconWrap>
+                </HeaderWrap>
+
+            </HeaderContainer>
+            </>
+>>>>>>> ad93339ae146f226c40c2534c218be65d4bb1a23
     );
 };
 
@@ -121,6 +146,10 @@ const NewTitle = styled.div`
     font-weight: 600;
     color: white;
 `
+<<<<<<< HEAD
+=======
+
+>>>>>>> ad93339ae146f226c40c2534c218be65d4bb1a23
 const NeedLogin = styled.div`
   position: absolute;
   top: 50%;
@@ -168,4 +197,8 @@ const NeedLoginModal = styled.div`
   padding: 40px 80px;
   width: 80%;
   text-align: center;
+<<<<<<< HEAD
 `;
+=======
+`;
+>>>>>>> ad93339ae146f226c40c2534c218be65d4bb1a23
