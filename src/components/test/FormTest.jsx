@@ -56,11 +56,14 @@ const Form2 = () => {
   //이미지 Dropzone -추가
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
-    accept: {
-      'image/png': ['.png'],
-      'image/jpg': ['.jpg'],
-      'image/jpeg': ['.jpeg'],
-    },
+    accept: 
+    'image/*',
+    // {
+    //   'image/png': ['.png'],
+    //   'image/jpg': ['.jpg'],
+    //   'image/jpeg': ['.jpeg'],
+    //   'image/heic': ['.heic'],
+    // },
     maxFiles: 3,
     onDrop: (acceptedFiles) => {
       setFiles(
@@ -135,8 +138,6 @@ const Form2 = () => {
     calendarcontent,
   } = calendar;
 
-  const [selectedTime, setSelectedTime] = useState('00:00');
-  console.log(selectedTime);
   const calendaronChangeHandler = (e) => {
     const { value, name } = e.target;
     setCalendar({
@@ -145,11 +146,45 @@ const Form2 = () => {
     });
   };
 
-  const onSelectTimeHandler = (value) => {
-    const timeString = moment(value).format('hh:mm a');
-    setSelectedTime(timeString);
-    console.log(selectedTime);
+  // 시간 구현
+
+  const [dateShow, setDateShow] = useState(true);
+  const [timeShow, setTimeShow] = useState(false);
+  const [selectTime, setSelectTime] = useState("오전");
+  const [selectHour, setSelectHour] = useState("01");
+  const [selectMinute, setSelectMinute] = useState("00");
+
+  const division = ["오전", "오후"];
+  const hourSelect = [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+  ];
+  const minuteSelect = ["00", "10", "20", "30", "40", "50"];
+  const hour = String(
+    Number(selectHour) + Number(selectTime === "오후" ? 12 : 0)
+  ).padStart(2, "0");
+
+
+  const timeShowBtn = () => {
+    setDateShow(false);
+    setTimeShow(!timeShow);
   };
+
+  const closeTimeShowBtn = () => {
+    setTimeShow(!timeShow);
+  }
+  console.log(hour+":"+selectMinute)
+  const [selectedTime, setSelectedTime] = useState('00:00');
 
   const handleSelect = (e) => {
     setSelect(e.target.value);
@@ -255,7 +290,7 @@ const Form2 = () => {
     } else if (select === 'meet') {
       const newcalendar = {
         title: calendartitle,
-        calendarTime: selectedTime,
+        calendarTime: hour+":"+selectMinute,
         calendarLocation: calendarlocation,
         content: calendarcontent,
         calendarDate: realCalendar,
@@ -324,43 +359,6 @@ const Form2 = () => {
     }
   }, [calendartitle, selectedTime, calendarcontent])
 
-  // 시간 구현
-
-  const [dateShow, setDateShow] = useState(true);
-  const [timeShow, setTimeShow] = useState(false);
-  const [selectTime, setSelectTime] = useState("오전");
-  const [selectHour, setSelectHour] = useState("01");
-  const [selectMinute, setSelectMinute] = useState("00");
-
-  const division = ["오전", "오후"];
-  const hourSelect = [
-    "01",
-    "02",
-    "03",
-    "04",
-    "05",
-    "06",
-    "07",
-    "08",
-    "09",
-    "10",
-    "11",
-    "12",
-  ];
-  const minuteSelect = ["00", "10", "20", "30", "40", "50"];
-  const hour = String(
-    Number(selectHour) + Number(selectTime === "오후" ? 12 : 0)
-  ).padStart(2, "0");
-
-
-  const timeShowBtn = () => {
-    setDateShow(false);
-    setTimeShow(!timeShow);
-  };
-
-  const closeTimeShowBtn = () => {
-    setTimeShow(!timeShow);
-  }
 
   return (
     <TotalCatiner>
@@ -586,23 +584,11 @@ const Form2 = () => {
               </CalendarWrap>
               <TimeDiv>
                 <CalendarTitle>시간</CalendarTitle>
-                {/* <StTimePicker
-                  use12Hours
-                  format='hh:mm a'
-                  name='calendartime'
-                  // value={calendartime}
-                  // onChange={calendarTimeChangeHandler}
-                  placeholder='시간을 선택해주세요'
-                  // showNow={false}
-                  // value={moment(selectedTime, 'hh:mm a')}
-                  // onSelect={onSelectTimeHandler}
-                /> */}
                 <TimeOpenBtn
                   onClick={timeShowBtn}
                   timeShow={timeShow}
-                  name='selectedTime'
-                  value={selectedTime}
-                // onSelect={onSelectTimeHandler}
+                  name='calendartime'
+                  value={`${hour}:${selectMinute}`}
                 >{`${hour}:${selectMinute}`}</TimeOpenBtn>
               </TimeDiv>
               <StKakaoMap>
@@ -614,7 +600,7 @@ const Form2 = () => {
                           <div className="division">
                             {division.map((e, idx) => {
                               const color =
-                                selectTime === e ? "var(--black)" : "var(--gray2)";
+                              selectTime === e ? "#black" : "#bebebe";
                               return (
                                 <SelectTimeBtn
                                   type="button"
@@ -632,7 +618,7 @@ const Form2 = () => {
                           <div className="hour">
                             {hourSelect.map((e, idx) => {
                               const color =
-                                selectHour === e ? "var(--black)" : "var(--gray2)";
+                              selectTime === e ? "#black" : "#bebebe";
                               return (
                                 <SelectTimeBtn
                                   type="button"
@@ -650,7 +636,7 @@ const Form2 = () => {
                           <div className="minute">
                             {minuteSelect.map((e, idx) => {
                               const color =
-                                selectMinute === e ? "var(--black)" : "var(--gray2)";
+                              selectTime === e ? "#black" : "#bebebe";
                               return (
                                 <SelectTimeBtn
                                   key={idx}
@@ -1153,10 +1139,7 @@ const CalendarWrap = styled.div`
 
 const TimeOpenBtn = styled.div`
 font-weight: 500;
-color: var(--blue3);
 padding: 7px 10px;
-background-color: ${(props) =>
-    props.timeShow ? "var(--blue1)" : "transparent"};
 border-radius: 35px;
 `;
 
@@ -1175,12 +1158,12 @@ const StTimeModal = styled.div`
     inset 0px 8px 14px rgba(255, 255, 255, 0.3); */
   border-radius: 6.83801px;
   border: none;
-  height: 150px;
+  height: 130px;
   overflow: hidden;
-  padding: 18px;
+  /* padding: 18px; */
   text-align: center;
   /* margin-bottom: 16px; */
-  width: 80%;
+  width: 85%;
   /* border: 1px solid red; */
 
   .select-time {
@@ -1197,7 +1180,7 @@ const StTimeModal = styled.div`
       flex-direction: column;
       align-items: center;
       height: 150px;
-      padding: 10px 10px;
+      padding: 21px 10px;
       width: auto;
       box-sizing: border-box;
       text-align: center;
@@ -1217,9 +1200,9 @@ const SelectTimeBtn = styled.p`
   font-weight: 700;
   font-size: 20px;
   color: ${(props) => props.color && props.color};
-  /* color: #bebebe; */
   border: 1px solid white;
   cursor: pointer;
+  /* border: 1px solid red; */
 `;
 
 const StTimeClose = styled.div`
@@ -1232,7 +1215,7 @@ const StTimeClose = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 15px;
+  margin: 10px 0 15px 0;
   height: 36px;
   cursor: pointer;
 `

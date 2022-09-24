@@ -70,11 +70,14 @@ const Form2 = () => {
   //이미지 Dropzone -추가
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
-    accept: {
-      'image/png': ['.png'],
-      'image/jpg': ['.jpg'],
-      'image/jpeg': ['.jpeg'],
-    },
+    accept: 
+    'image/*',
+    // {
+    //   'image/png': ['.png'],
+    //   'image/jpg': ['.jpg'],
+    //   'image/jpeg': ['.jpeg'],
+    //   'image/heic': ['.heic'],
+    // },
     maxFiles: 3,
     onDrop: (acceptedFiles) => {
       // console.log(files.length);
@@ -1054,6 +1057,9 @@ const StImaBox = styled.div`
 `;
 const TxtWarning = styled.div`
   font-size:12px;
+  align-items: center;
+  display: flex;
+  margin-left: 10px;
 `
 const StImgList = styled.div`
   justify-items: baseline;

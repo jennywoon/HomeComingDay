@@ -229,14 +229,14 @@ const UserAdmission = styled.div`
     color: white;
 `
 
-const StUserLankWrap = styled.p`
+const StUserLankWrap = styled.div`
     display: flex;
     align-items: center;
     flex-direction: row;
     /* justify-content: space-between; */
 `
 
-const StUserLank = styled.p`
+const StUserLank = styled.div`
     margin: 0 8px 3px 5px;
     /* &:hover {
     ~div{
