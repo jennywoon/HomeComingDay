@@ -614,7 +614,7 @@ const Form2 = () => {
                           <div className="division">
                             {division.map((e, idx) => {
                               const color =
-                                selectTime === e ? "var(--black)" : "var(--gray2)";
+                                selectTime === e ? "#black" : "#bebebe";
                               return (
                                 <SelectTimeBtn
                                   type="button"
@@ -632,7 +632,7 @@ const Form2 = () => {
                           <div className="hour">
                             {hourSelect.map((e, idx) => {
                               const color =
-                                selectHour === e ? "var(--black)" : "var(--gray2)";
+                                selectHour === e ? "#black" : "#bebebe";
                               return (
                                 <SelectTimeBtn
                                   type="button"
@@ -650,7 +650,7 @@ const Form2 = () => {
                           <div className="minute">
                             {minuteSelect.map((e, idx) => {
                               const color =
-                                selectMinute === e ? "var(--black)" : "var(--gray2)";
+                                selectMinute === e ? "#black" : "#bebebe";
                               return (
                                 <SelectTimeBtn
                                   key={idx}
@@ -1153,10 +1153,10 @@ const CalendarWrap = styled.div`
 
 const TimeOpenBtn = styled.div`
 font-weight: 500;
-color: var(--blue3);
+/* color: black; */
 padding: 7px 10px;
-background-color: ${(props) =>
-    props.timeShow ? "var(--blue1)" : "transparent"};
+/* background-color: ${(props) =>
+    props.timeShow ? "var(--blue1)" : "transparent"}; */
 border-radius: 35px;
 `;
 
@@ -1175,12 +1175,12 @@ const StTimeModal = styled.div`
     inset 0px 8px 14px rgba(255, 255, 255, 0.3); */
   border-radius: 6.83801px;
   border: none;
-  height: 150px;
+  height: 130px;
   overflow: hidden;
-  padding: 18px;
+  /* padding: 18px; */
   text-align: center;
   /* margin-bottom: 16px; */
-  width: 80%;
+  width: 85%;
   /* border: 1px solid red; */
 
   .select-time {
@@ -1197,7 +1197,7 @@ const StTimeModal = styled.div`
       flex-direction: column;
       align-items: center;
       height: 150px;
-      padding: 10px 10px;
+      padding: 21px 10px;
       width: auto;
       box-sizing: border-box;
       text-align: center;
@@ -1217,9 +1217,9 @@ const SelectTimeBtn = styled.p`
   font-weight: 700;
   font-size: 20px;
   color: ${(props) => props.color && props.color};
-  /* color: #bebebe; */
   border: 1px solid white;
   cursor: pointer;
+  /* border: 1px solid red; */
 `;
 
 const StTimeClose = styled.div`
@@ -1232,7 +1232,7 @@ const StTimeClose = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 15px;
+  margin: 10px 0 15px 0;
   height: 36px;
   cursor: pointer;
 `
