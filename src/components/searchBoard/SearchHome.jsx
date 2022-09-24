@@ -23,7 +23,6 @@ const SearchHome = () => {
     return (
         <HomeContainer>
             <Search/>
-            {/* <SearchTest/> */}
             <SecondWrap>
                 <Bottom>
                     <Tap onClick={() => { navigate("/main") }}

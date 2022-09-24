@@ -12,9 +12,6 @@ import heartgray from '../../assets/heartgray.png';
 const SearchCard = ({ search, id }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    // useEffect(() => {
-    //     dispatch(__getSearch());
-    // },[dispatch])
 
     // useEffect(() => {
     //     dispatch(__getSearchArticle())
