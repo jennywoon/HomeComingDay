@@ -7,14 +7,23 @@ import Homeimg from "../../assets/Home.png"
 import SearchColorimg from "../../assets/SearchColor.png"
 import Chatimg from "../../assets/Chat.png"
 import Myimg from "../../assets/My.png"
+import { __getSearch, __getSearchArticle, __getSearchArticlePopular, __postSearch } from "../../redux/modules/SearchSlice";
+import { __getMyPage } from "../../redux/modules/MyPageSlice";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const SearchHome = () => {
     const navigate = useNavigate();
 
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(__getMyPage())
+    }, [dispatch])
+
     return (
         <HomeContainer>
             <Search/>
-            <SearchTest/>
+            {/* <SearchTest/> */}
             <SecondWrap>
                 <Bottom>
                     <Tap onClick={() => { navigate("/main") }}
