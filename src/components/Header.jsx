@@ -23,6 +23,11 @@ const Header = () => {
         }
     }, [loginOn]);
 
+    const onClickLogin = () => {
+        // removeCookie("accessToken");
+        navigate("/login")
+    }
+
     return (
         <>
             {loginOn ? (
@@ -38,9 +43,7 @@ const Header = () => {
                             이용할 수 있습니다.
                         </span>
                         <NeedLoginBtn
-                            onClick={() => {
-                                navigate("/login");
-                            }}
+                            onClick={onClickLogin}
                         >
                             로그인하러가기
                         </NeedLoginBtn>

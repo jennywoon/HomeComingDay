@@ -39,7 +39,6 @@ import { Navigate } from "react-router-dom";
 import FormPage from "../pages/FormPage";
 import ChatFrontTest from "../components/chatBoard/ChatFrontTest";
 import TimeTest from "../components/test/TimeTest";
-import FormTest from "../components/test/FormTest.jsx"
 const Router = () => {
 
   const token = getCookie("accessToken")
@@ -51,8 +50,8 @@ const Router = () => {
         <Route path="/main" element={<MainPage />} />
         <Route path="/naverlogin" element={<NaverLogin />} />
         <Route path="/schoolinfo" element={<SchoolInfoPage />}></Route>
-        <Route path="/login" element={token ? <Navigate to="/main" /> : <LoginPage />}/>
-        {/* <Route path="/login" element={token ? <Navigate to="/main" /> : <Navigate to="/login" />}/> */}
+        {/* <Route path="/login" element={token ? <Navigate to="/main" /> : <LoginPage />}/> */}
+        <Route path="/login" element={<LoginPage />}/>
         <Route path="/signup" element={token ? <Navigate to="/main" /> :<SignUpPage />}/>
         <Route path="/helpform" element={<HelpForm />}/>
         <Route path="/informationform" element={<InformationForm />}/>
@@ -83,7 +82,6 @@ const Router = () => {
         <Route path="/calendarupdate/:id" element={<CalendarUpdate />} />
         <Route path="/chattest" element={<ChatFrontTest />} />
         <Route path="/timetest" element={<TimeTest />} />
-        <Route path="/formtest" element={<FormTest />} />
 
       </Routes>
     </BrowserRouter>
