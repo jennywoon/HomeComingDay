@@ -12,6 +12,7 @@ import logoname from "../../assets/logoname.png"
 import LoginErrorModal from './LoginErrorModal';
 import { getUser } from '../../redux/modules/UserSlice';
 import PrivacyPolicy from './PrivacyPolicy';
+import PwaApp from './PwaApp';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -173,6 +174,7 @@ const Login = () => {
             >
               이메일로 회원가입
             </StGoToSignup>
+            <PwaApp/>
           </StLoginWrap>
         </StLoginWraps>
         <StPrivacy>
