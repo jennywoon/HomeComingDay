@@ -115,7 +115,7 @@ const Login = () => {
         }}
       >
         {modalOpen && <LoginErrorModal setModalOpen={setModalOpen} />}
-        {privcayModal && <PrivacyPolicy setPrivacyModal={setPrivacyModal}/>}
+        {privcayModal && <PrivacyPolicy setPrivacyModal={setPrivacyModal} />}
         <StLoginWraps>
           <StLoginTitle>
             <LogoImg />
@@ -174,7 +174,9 @@ const Login = () => {
             >
               이메일로 회원가입
             </StGoToSignup>
-            <PwaApp/>
+            <NaverContainer>
+              <PwaApp />
+            </NaverContainer>
           </StLoginWrap>
         </StLoginWraps>
         <StPrivacy>

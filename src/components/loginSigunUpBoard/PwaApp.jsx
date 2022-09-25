@@ -1,6 +1,7 @@
 import React from 'react';
 import { useReactPWAInstall } from "react-pwa-install";
-import logoname from "../../assets/logoname.png"
+import logo from "../../assets/logo.png"
+import profileorange from "../../assets/profileorange.png"
 import styled from 'styled-components';
 import { Button } from 'antd';
 
@@ -9,7 +10,8 @@ const PwaApp = () => {
     const pwaClick = () => {
         pwaInstall({
             title: "홈커밍데이 다운받기",
-            logo: logoname,
+            // logo: logo,
+            logo: profileorange,
         })
             .then(() => { })
             .catch(() => { });
@@ -18,7 +20,8 @@ const PwaApp = () => {
     return (
         <>
             {supported() && !isInstalled() && (
-                <Button click={pwaClick} text="어플 다운받기" theme="dark"/>
+                <Button click={pwaClick}
+                >어플 다운받기</Button>
             )}
         </>
     );
