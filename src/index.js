@@ -12,9 +12,12 @@ import ReactPWAInstallProvider from "react-pwa-install";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      suspense: true
+    // retry: 0,
+    suspense: true,
+    useErrorBoundary: true,
+    // refetchInterval: 3000,
     }
-  }
+    }
 });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

@@ -20,6 +20,7 @@
     "express": "^4.18.1",
     "json-server": "^0.17.0",
     "moment": "^2.29.4",
+    "net": "^1.0.2",
     "nodemailer": "^6.7.8",
     "rc-time-picker": "^3.7.3",
     "react": "^18.2.0",
@@ -46,11 +47,14 @@
     "redux": "^4.2.0",
     "socket.io": "^4.5.2",
     "socket.io-client": "^4.5.2",
+    "sockjs-client": "^1.6.1",
+    "stompjs": "^2.3.3",
     "styled-components": "^5.3.5",
     "sweetalert2": "^11.4.32",
     "swiper": "^8.3.2",
     "universal-cookie": "^4.0.4",
-    "web-vitals": "^2.1.0"
+    "web-vitals": "^2.1.0",
+    "zustand": "^4.1.1"
   },
   "scripts": {
     "start": "react-scripts start",

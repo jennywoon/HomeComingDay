@@ -36,8 +36,10 @@ import { useSelector } from "react-redux";
 import { getCookie } from "./cookies";
 import { Navigate } from "react-router-dom";
 import FormPage from "../pages/FormPage";
-import ChatFrontTest from "../components/chatBoard/ChatFrontTest";
+// import ChatFrontTest from "../components/chatBoard/ChatFrontTest";
 import TimeTest from "../components/test/TimeTest";
+import ChatDetail from "../components/chatBoard/ChatDetail"
+
 const Router = () => {
 
   const token = getCookie("accessToken")
@@ -78,9 +80,9 @@ const Router = () => {
         <Route path="/freetalkupdate/:id" element={<FreeTalkUpdate />} />
         <Route path="/calendardetail/:id" element={<CalendarDetail />} />
         <Route path="/calendarupdate/:id" element={<CalendarUpdate />} />
-        <Route path="/chattest" element={<ChatFrontTest />} />
+        {/* <Route path="/chattest" element={<ChatFrontTest />} /> */}
         <Route path="/timetest" element={<TimeTest />} />
-
+        <Route path="/chat/:id" element={<ChatDetail />} />
       </Routes>
     </BrowserRouter>
   );
