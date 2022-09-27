@@ -13,7 +13,7 @@ import NoticeList from './NoticeList';
 const NoticeHome = () => {
   const navigate = useNavigate();
   const userinfo = useSelector((state) => state);
-  console.log(userinfo)
+  // console.log(userinfo)
 
   return (
     <StHomeContainer>
