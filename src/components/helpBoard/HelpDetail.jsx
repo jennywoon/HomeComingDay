@@ -28,6 +28,7 @@ import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
 import heartColorImg from '../../assets/heartColor.png';
 import { __getMyPage } from '../../redux/modules/MyPageSlice';
+import { chatApi } from '../chatBoard/ChatApi';
 
 const HelpDetail = () => {
   const dispatch = useDispatch();
@@ -156,6 +157,20 @@ const HelpDetail = () => {
     dispatch(__getHelp());
   };
 
+  // 채팅 생성
+  const createChat = (userId) => {
+    chatApi
+      .createChat(userId)
+      .then((response) => {
+        navigate(`/chat/$(response.data)`);
+        console.log("userId", userId)
+        console.log("response", response.data)
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
+
   return ( 
     <Container ref={node}> 
       {modalOpen && <HelpDeleteModal setModalOpen={setModalOpen} />}
@@ -187,7 +202,11 @@ const HelpDetail = () => {
                     {helpsfind && helpsfind.departmentName}{' '}
                     <span> {helpsfind && helpsfind.admission} </span>
                   </Txtstudent>
-                  {showChaet ? <ChaetingBox>1:1채팅</ChaetingBox> : null}
+                  {showChaet ? 
+                  
+                  <ChaetingBox 
+                  onClick={() => createChat(helpsfind.userId)}>
+                    1:1채팅</ChaetingBox> : null}
                 </Bodytxt>
 
                 {helpsfind &&helpsfind.username === data.username ? 

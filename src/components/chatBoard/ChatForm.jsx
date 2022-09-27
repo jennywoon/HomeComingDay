@@ -1,39 +1,60 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useRef, useCallback } from 'react';
 import styled from 'styled-components';
 import { AiOutlinePlus } from "react-icons/ai";
-import ChatHeaderTap from './ChatHeaderTap';
 import { BsArrowUpCircle } from "react-icons/bs";
 
-const ChatForm = () => {
-    const navigate = useNavigate();
+ChatForm.propTypes = {};
+
+function ChatForm(props) {
+    const { onSend, text, setText } = props;
+    const ws = useRef();
+
+    const onKeyPressHandler = (e) => {
+        if (e.key === "Enter") {
+            onSend();
+        }
+    };
+
+    const onChangeChatHandler = useCallback((e) => {
+        setText(e.target.value);
+    }, []);
+
+    const onClick = (e) => {
+        onSend();
+    }
 
     return (
-        <HomeContainer>
-            <ChatHeaderTap />
-            <HelpContainer>
-                <HelpWrap>
-                    <ChatDiv>
-                        <ChatDate>2022년 9월 1일</ChatDate>
-                    </ChatDiv>
-                </HelpWrap>
-            </HelpContainer>
-            <MessageBox>
-                <AiOutlinePlus
-                    style={{ paddingLeft: "20px", color: "#969696" }} size="37"
-                />
-                <ChatInput
-                    placeholder="메세지를 입력해주세요"
-                />
-                <BsArrowUpCircle
-                    style={{ paddingRight: "20px", color: "#969696" }} size="37"
-                />
-            </MessageBox>
-        </HomeContainer>
+        <React.Fragment>
+            <HomeContainer>
+                <HelpContainer>
+                    <HelpWrap>
+                        <ChatDiv>
+                            <ChatDate>2022년 9월 1일</ChatDate>
+                        </ChatDiv>
+                    </HelpWrap>
+                </HelpContainer>
+                <MessageBox>
+                    <AiOutlinePlus
+                        style={{ paddingLeft: "20px", color: "#969696" }} size="37"
+                    />
+                    <ChatInput
+                        placeholder="메세지를 입력해주세요"
+                        type="text"
+                        onChange={onChangeChatHandler}
+                        onKeyPress={onKeyPressHandler}
+                        value={text}
+                    />
+                    <BsArrowUpCircle
+                        onClick={onClick}
+                        style={{ paddingRight: "20px", color: "#969696" }} size="37"
+                    />
+                </MessageBox>
+            </HomeContainer>
+        </React.Fragment>
     );
 };
 
-export default ChatForm;
+export default React.memo(ChatForm);
 
 const HomeContainer = styled.div`
     width: 100%;
