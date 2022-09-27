@@ -1,16 +1,20 @@
 import React from 'react';
-import {useState, useEffect } from 'react';
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
 import { __getNotice } from '../../redux/modules/NoticeSlice';
 import NoticeCard from './NoticeCard';
 import { getCookie } from '../../shared/cookies';
 import { NativeEventSource, EventSourcePolyfill } from 'event-source-polyfill';
-import axios from "axios";
+import axios from 'axios';
 import { __getMyPage } from '../../redux/modules/MyPageSlice';
 
 const NoticeList = () => {
+  //   console.warn = console.error = () => {};
+  // // or IIFE
+  // (() => { console.warn = console.error = () => {}} )();
+
   const dispatch = useDispatch();
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [listening, setListening] = useState(false);
@@ -18,7 +22,7 @@ const NoticeList = () => {
   const [value, setValue] = useState(null);
   const [eventSourceStatus, setEventSourceStatus] = useState(null);
 
-  const token = getCookie("accessToken")
+  const token = getCookie('accessToken');
   // console.log(token);
 
   // const { status, data, error } = useQuery('noticeList', __getNotice, {
@@ -32,7 +36,7 @@ const NoticeList = () => {
   // });
   // console.log(data);
 
-  const EventSource = EventSourcePolyfill || NativeEventSource;
+  const EventSource = EventSourcePolyfill;
 
   // fetch('https://homecomingdays.net', {
   //   credentials: 'include'
@@ -45,17 +49,19 @@ const NoticeList = () => {
       try {
         const eventSource = new EventSource(`${BASE_URL}/subscribe`, {
           headers: {
-            'Authorization': `Bearer ${getCookie("accessToken")}`,
+            Authorization: `Bearer ${getCookie('accessToken')}`,
             // 'Content-Type': 'application/event-stream',
-            // Connection: 'keep-alive',
-            },
+            Connection: 'keep-alive',
+            heartbeatTimeout: 180 * 1000,
+          },
           // https
           withCredentials: true,
+          lastEventIdQueryParameterName: 'Last-Event-ID',
           // credentials: 'include'
         });
         console.log(eventSource);
 
-        eventSource.onopen = async(e) => {
+        eventSource.onopen = async (e) => {
           const result = await e;
           console.log('Connection is open', result);
           setEventSourceStatus(result.type);
@@ -69,10 +75,11 @@ const NoticeList = () => {
 
         eventSource.onerror = async (e) => {
           const result = await e;
-          console.log('onerror: ', result.error.message);
-          result.error.message.includes("No activity within 45000 milliseconds.")
-          ? setEventSourceStatus(result.type) //구독
-          : eventSource.close();
+          // console.log('onerror: ', result.error.message);
+          result.error.message.includes('45000 milliseconds')
+            ? setEventSourceStatus(result.type)
+            : eventSource.close();
+          // eventSource.close();
         };
         setListening(true);
       } catch (error) {
@@ -81,7 +88,7 @@ const NoticeList = () => {
     };
     subscription();
     // return () => eventSource.close();
-  });
+  }, []);
 
   // if (status === 'loading') {
   //   return <span>Loading...</span>;
@@ -91,9 +98,9 @@ const NoticeList = () => {
   //   return <span>Error: {error.message}</span>;
   // }
 
-  useEffect(()=>{
-    dispatch(__getMyPage())
-  }, [dispatch])
+  useEffect(() => {
+    dispatch(__getMyPage());
+  }, [dispatch]);
 
   return (
     <StNoticeList>
