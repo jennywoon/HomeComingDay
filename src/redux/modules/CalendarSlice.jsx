@@ -11,6 +11,8 @@ const initialState = {
     calendars: [],
     calendarPopular:[],
     heart:[],
+    joinPeopleList :[],
+    calendarJoin:[],
     isLoading: false,
     error: null,
 };
@@ -73,6 +75,8 @@ export const __getPopularCalendar = createAsyncThunk("calendar/getPopularcalenda
 
 export const __postCalendar = createAsyncThunk("calendars/postcalendars", async (payload, thunkAPI) => {
   try {
+
+
     const data = await axios({
       method: 'post',
       url: `${BASE_URL}/article/calendar`,
@@ -320,6 +324,51 @@ export const __postCalendarHeart = createAsyncThunk(
   }
 );
 
+//참여하기
+export const __getJoin = createAsyncThunk("calendars/getCalendarJoin", async (payload, thunkAPI) => {
+  try {
+    const data = await axios({
+      method: 'get',
+      url: `${BASE_URL}/article/calendar/join/${payload}`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+      },
+    });
+    console.log(data)
+      return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+      console.log('error', error);
+      return thunkAPI.rejectWithValue(error);
+  }
+});
+
+
+export const __postJoin = createAsyncThunk(
+  'postCalendarJoin',
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios({
+        method: 'post',
+        url: `${BASE_URL}/article/calendar/join/${payload.articleId}`,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getCookie('accessToken')}`,
+        },
+        data: payload,
+      });
+      console.log(data);
+      console.log('data', data.data);
+      console.log(payload);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+
 export const CalendarSlice = createSlice({
     name: "calendars",
     initialState,
@@ -545,6 +594,34 @@ export const CalendarSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+
+    //참여하기
+    [__getJoin.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getJoin.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.calendarJoin = action.payload;
+    },
+    [__getJoin.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
+
+    [__postJoin.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__postJoin.fulfilled]: (state, action) => {
+      console.log('__postJoin.fulfilled', action.payload);
+      state.isLoading = false;
+      state.joinPeopleList.push(action.payload);
+    },
+    [__postJoin.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
     },
 });
 
