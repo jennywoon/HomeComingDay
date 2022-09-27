@@ -162,7 +162,7 @@ const HelpDetail = () => {
     chatApi
       .createChat(userId)
       .then((response) => {
-        navigate(`/chat/$(response.data)`);
+        navigate(`/chat/${response.data}`);
         console.log("userId", userId)
         console.log("response", response.data)
       })

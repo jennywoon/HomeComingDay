@@ -31,6 +31,7 @@ import joinUserPlus from '../../assets/userPlus.png';
 import joinUserMinus from '../../assets/userMinus.png';
 import { __getMyPage } from '../../redux/modules/MyPageSlice';
 import CalendarJoiinModal from './CalendarJoiinModal';
+import { chatApi } from '../chatBoard/ChatApi';
 
 
 const CalendarDetail = () => {
@@ -46,29 +47,29 @@ const CalendarDetail = () => {
   const calendarfind = calendars.find(
     (calendar) => calendar.articleId === Number(id)
   );
-  
-  const {calendarJoin} = useSelector((state) => state.calendars);
-  const {joinPeopleList} = useSelector((state) => state.calendars.calendarJoin);
+
+  const { calendarJoin } = useSelector((state) => state.calendars);
+  const { joinPeopleList } = useSelector((state) => state.calendars.calendarJoin);
   const joinPeopleLists = useSelector((state) => state.calendars.joinPeopleList);
   const data = useSelector((state) => state.mypages.mypages)
-  
 
-  const trueList = joinPeopleList&&joinPeopleList.map((list)=>{if(list.email === data.email) return list.joinCheck})
-  const joinTrueFalse = trueList&&trueList.includes(true)
-    // console.log("trueList",trueList&&trueList.includes(true))
-  const joinPeopleListfind = joinPeopleLists&&joinPeopleLists.map((list)=> list.joinCheck)
-  const joinBooline = joinPeopleListfind[joinPeopleListfind.length-1]
-    console.log("joinPeopleLists",joinPeopleLists)
-    // console.log(joinPeopleListfind)
-  console.log("calendars",calendars)
-  console.log("calendarJoin",calendarJoin)
-  console.log("joinPeopleList",joinPeopleList)
-  console.log("joinPeopleLists",joinPeopleLists)
 
-  
-  
+  const trueList = joinPeopleList && joinPeopleList.map((list) => { if (list.email === data.email) return list.joinCheck })
+  const joinTrueFalse = trueList && trueList.includes(true)
+  // console.log("trueList",trueList&&trueList.includes(true))
+  const joinPeopleListfind = joinPeopleLists && joinPeopleLists.map((list) => list.joinCheck)
+  const joinBooline = joinPeopleListfind[joinPeopleListfind.length - 1]
+  console.log("joinPeopleLists", joinPeopleLists)
+  // console.log(joinPeopleListfind)
+  console.log("calendars", calendars)
+  console.log("calendarJoin", calendarJoin)
+  console.log("joinPeopleList", joinPeopleList)
+  console.log("joinPeopleLists", joinPeopleLists)
 
-    //모달닫기
+
+
+
+  //모달닫기
   const node = useRef();
 
   useEffect(() => {
@@ -77,7 +78,7 @@ const CalendarDetail = () => {
       if (show && node.current && !node.current.contains(e.target)) {
         setShow(false);
       }
-  };
+    };
     document.addEventListener("mousedown", clickOutside);
     return () => {
       // Cleanup the event listener
@@ -93,7 +94,7 @@ const CalendarDetail = () => {
     dispatch(__getDetailCalendar(id));
   }, [dispatch]);
 
-  
+
 
   // 수정 삭제 모달
   const onCilckShow = () => {
@@ -104,7 +105,7 @@ const CalendarDetail = () => {
     setComment(e.target.value);
   };
 
-   // 1:1 채팅버튼
+  // 1:1 채팅버튼
   const onCilckChaetShow = () => {
     setShowChaet(!showChaet);
   };
@@ -137,14 +138,14 @@ const CalendarDetail = () => {
   };
 
 
-  const onClickJoin = async(e) =>{
+  const onClickJoin = async (e) => {
     e.preventDefault();
     const newJoin = {
       articleId: id,
-      email : data.email
+      email: data.email
     };
-   await dispatch(__postJoin(newJoin))
-   await dispatch(__getJoin(id));
+    await dispatch(__postJoin(newJoin))
+    await dispatch(__getJoin(id));
   }
 
   //모달
@@ -154,14 +155,14 @@ const CalendarDetail = () => {
     setModalOpen(true);
   };
 
-  const [joinModalOpen , setJoinModalOpen] = useState(false);
+  const [joinModalOpen, setJoinModalOpen] = useState(false);
   const showJoinModal = (e) => {
     e.preventDefault();
     setJoinModalOpen(true);
   };
 
   // 좋아요
-const heartClick = async () => {
+  const heartClick = async () => {
     const newHeart = {
       articleId: id,
     };
@@ -170,10 +171,23 @@ const heartClick = async () => {
     dispatch(__getCalendar());
   };
 
+  // 채팅 생성
+  const createChat = (userId) => {
+    chatApi
+      .createChat(userId)
+      .then((response) => {
+        navigate(`/chat/${response.data}`);
+        console.log("userId", userId)
+        console.log("response", response.data)
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
   return (
     <Container ref={node}>
       {modalOpen && <CalendarDeleteModal setModalOpen={setModalOpen} />}
-      {joinModalOpen && <CalendarJoiinModal setJoinModalOpen={setJoinModalOpen} joinPeopleList={joinPeopleList} id={id}/>}
+      {joinModalOpen && <CalendarJoiinModal setJoinModalOpen={setJoinModalOpen} joinPeopleList={joinPeopleList} id={id} />}
       <Header />
       <FirstWrap>
         <DetailHeader>
@@ -202,18 +216,20 @@ const heartClick = async () => {
                     {calendarfind && calendarfind.departmentName}{' '}
                     <span> {calendarfind && calendarfind.admission} </span>
                   </Txtstudent>
-                  {showChaet ? <ChaetingBox>1:1채팅</ChaetingBox> : null}
+                  {showChaet ? <ChaetingBox
+                  onClick={() => createChat(calendarfind.userId)}>
+                  1:1채팅</ChaetingBox> : null}
                 </Bodytxt>
-                {calendarfind&&calendarfind.username === data.username ? 
-                <BiDotsVerticalRounded
-                  size='20px'
-                  style={{
-                    marginLeft: 'auto',
-                    cursor: 'pointer',
-                    color: '#bebebe',
-                  }}
-                  onClick={onCilckShow}
-                /> : null}
+                {calendarfind && calendarfind.username === data.username ?
+                  <BiDotsVerticalRounded
+                    size='20px'
+                    style={{
+                      marginLeft: 'auto',
+                      cursor: 'pointer',
+                      color: '#bebebe',
+                    }}
+                    onClick={onCilckShow}
+                  /> : null}
 
                 {show ? (
                   <Revisebox ref={node}>
@@ -230,66 +246,66 @@ const heartClick = async () => {
                   <Contentget>
                     <ContentgetTitle>날짜 </ContentgetTitle>
                     <ContentgetContent>
-                    {calendarfind && calendarfind.calendarDate}
+                      {calendarfind && calendarfind.calendarDate}
                     </ContentgetContent>
                   </Contentget>
                   <Contentget>
                     <ContentgetTitle>시간 </ContentgetTitle>
                     <ContentgetContent>
-                    {calendarfind && calendarfind.calendarTime}
+                      {calendarfind && calendarfind.calendarTime}
                     </ContentgetContent>
                   </Contentget>
                   <Contentget>
                     <ContentgetTitle>초대 </ContentgetTitle>
                     <ContentgetContent>
-                    {calendarfind && calendarfind.maxPeople} 명
+                      {calendarfind && calendarfind.maxPeople} 명
                     </ContentgetContent>
                   </Contentget>
                   <Contentget>
                     <ContentgetTitle>장소 </ContentgetTitle>
                     <ContentgetContent>
-                    {calendarfind && calendarfind.calendarLocation}
+                      {calendarfind && calendarfind.calendarLocation}
                     </ContentgetContent>
                   </Contentget>
                   <Contentget>
                     <ContentgetTitle>내용 </ContentgetTitle>
                     <ContentgetContent>
-                    {calendarfind && calendarfind.content}
+                      {calendarfind && calendarfind.content}
                     </ContentgetContent>
                   </Contentget>
                 </ContentBody>
                 {/* <ContentImg src=''></ContentImg> */}
 
-                  <StJoinContain>
-                    <StJoinPart className="look"type="button" onClick={showJoinModal}>
-                      <img src={joinUser} alt="참여자조회"/>
-                      참여자보기
-                      </StJoinPart>
-                    
-                    {(joinPeopleList&&joinPeopleList.length) === (calendarfind&&calendarfind.maxPeople) && joinTrueFalse === false? 
-                      <StJoinPart className="last" type="button">
-                      <GiPunchBlast size="20px"/>
-                        참여마감
-                      </StJoinPart>
-                      :
-                    (calendarfind&&calendarfind.username) !== data.username ? (
-                   ((joinBooline&&joinBooline === false) || (joinTrueFalse === false)?
-                    <StJoinPart type="button" onClick={onClickJoin}>
-                    <img src={joinUserPlus} alt="참여하기" />
-                      참여하기
-                    </StJoinPart> 
-                    : 
-                    <StJoinPart className="cancel" type="button" onClick={onClickJoin}>
-                    <img src={joinUserMinus} alt="참여불가" />
-                      참여취소
+                <StJoinContain>
+                  <StJoinPart className="look" type="button" onClick={showJoinModal}>
+                    <img src={joinUser} alt="참여자조회" />
+                    참여자보기
+                  </StJoinPart>
+
+                  {(joinPeopleList && joinPeopleList.length) === (calendarfind && calendarfind.maxPeople) && joinTrueFalse === false ?
+                    <StJoinPart className="last" type="button">
+                      <GiPunchBlast size="20px" />
+                      참여마감
                     </StJoinPart>
-                     ))
-                    : null
-                     }
+                    :
+                    (calendarfind && calendarfind.username) !== data.username ? (
+                      ((joinBooline && joinBooline === false) || (joinTrueFalse === false) ?
+                        <StJoinPart type="button" onClick={onClickJoin}>
+                          <img src={joinUserPlus} alt="참여하기" />
+                          참여하기
+                        </StJoinPart>
+                        :
+                        <StJoinPart className="cancel" type="button" onClick={onClickJoin}>
+                          <img src={joinUserMinus} alt="참여불가" />
+                          참여취소
+                        </StJoinPart>
+                      ))
+                      : null
+                  }
 
-                     {/* : null}  */}
+                  {/* : null}  */}
 
-                  </StJoinContain>
+                </StJoinContain>
 
                 <BodyTxtBox>
                   <ContentView>
@@ -304,7 +320,7 @@ const heartClick = async () => {
                       댓글 {calendarfind && calendarfind.commentCnt}
                     </CommentCount>
                     <HeartCount onClick={heartClick}>
-                      {calendarfind &&calendarfind.heart === true ? (
+                      {calendarfind && calendarfind.heart === true ? (
                         <HeartImg>
                           <img src={heartColorImg} alt='좋아요이미지' />
                         </HeartImg>
