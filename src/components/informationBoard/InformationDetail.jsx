@@ -28,6 +28,7 @@ import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
 import heartColorImg from '../../assets/heartColor.png';
 import { __getMyPage } from '../../redux/modules/MyPageSlice';
+import { chatApi } from '../chatBoard/ChatApi';
 
 const InformationDetail = () => {
   const dispatch = useDispatch();
@@ -150,6 +151,21 @@ const InformationDetail = () => {
     dispatch(__getInformation());
   };
 
+  // 채팅 생성
+  const createChat = (userId) => {
+    chatApi
+      .createChat(userId)
+      .then((response) => {
+        navigate(`/chat/${response.data}`);
+        console.log("userId", userId)
+        console.log("response", response.data)
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
+
+
   return (
     <Container ref={node}>
       {modalOpen && <InformationDetailModal setModalOpen={setModalOpen} />}
@@ -187,11 +203,13 @@ const InformationDetail = () => {
                       {informationsfind && informationsfind.admission}{' '}
                     </span>
                   </Txtstudent>
-                  {showChaet ? <ChaetingBox>1:1채팅</ChaetingBox> : null}
+                  {showChaet ? <ChaetingBox
+                  onClick={() => createChat(informationsfind.userId)}>
+                  1:1채팅</ChaetingBox> : null}
                 </Bodytxt>
 
                 {informationsfind &&
-                informationsfind.username === data.username ? (
+                  informationsfind.username === data.username ? (
                   <BiDotsVerticalRounded
                     size='20px'
                     style={{
@@ -233,7 +251,7 @@ const InformationDetail = () => {
                             </SwiperSlide>
                           );
                         })}
-                              {/* <StDots>
+                      {/* <StDots>
                                 <StDot />
                                 <StDot />
                                 <StDot />
@@ -278,7 +296,7 @@ const InformationDetail = () => {
               <BodyContainer>
                 <BodyCommentBox>
                   {informationsfind &&
-                  informationsfind.commentList.length === 0 ? (
+                    informationsfind.commentList.length === 0 ? (
                     <BodyComment>
                       작성한 댓글이 없습니다 <br></br> 첫번째 댓글을 남겨보세요{' '}
                     </BodyComment>

@@ -65,7 +65,7 @@ const ChatDetail = () => {
             .catch((error) => {
                 console.log(error);
             });
-            console.log(roomId);
+        console.log(roomId);
     }, [])
 
     // 채팅방 이전 메시지 가져오기
@@ -75,7 +75,6 @@ const ChatDetail = () => {
         ws.current = client;
 
         dispatch(getChatMessage(roomId));
-        console.log(roomId);
     }, []);
 
     // 방 입장 시 스크롤 아래로 이동
@@ -94,7 +93,7 @@ const ChatDetail = () => {
         return () => {
             wsDisConnect();
         }
-    })
+    }, []);
 
     function wsConnect() {
         try {
@@ -103,7 +102,8 @@ const ChatDetail = () => {
             // type: "CHAT"을 보내는 용도는 채팅방에 들어갈 때를 알기 위해서
             ws.current.connect({ token: token, type: "CHAT" }, () => {
                 // connect 이후 subscribe
-                ws.current.subscribe(`${BASE_URL}/sub/chat/room/${roomId}`, (response) => {
+                // ws.current.subscribe(`${BASE_URL}/sub/chat/room/${roomId}`, (response) => {
+                ws.current.subscribe(`/sub/chat/room/${roomId}`, (response) => {
                     const newMessage = JSON.parse(response.body);
                     dispatch(subMessage(newMessage));
                 });
@@ -113,7 +113,8 @@ const ChatDetail = () => {
                 const message = {
                     roomId: roomId,
                 };
-                ws.current.send(`${BASE_URL}/pub/chat/enter`, { token: token }, JSON.stringify(message));
+                // ws.current.send(`${BASE_URL}/pub/chat/enter`, { token: token }, JSON.stringify(message));
+                ws.current.send(`/pub/chat/enter`, { token: token }, JSON.stringify(message));
             });
         } catch (error) {
             console.log(error);
@@ -146,6 +147,7 @@ const ChatDetail = () => {
             }
             // send message
             ws.current.send("/pub/chat/message", { token: token }, JSON.stringify(message));
+            // ws.current.send(`${BASE_URL}/pub/chat/message`, { token: token }, JSON.stringify(message));
             setText("");
         } catch (error) {
             console.log(error);
@@ -158,22 +160,22 @@ const ChatDetail = () => {
 
     return (
         <StContainer>
-            <Header/>
+            <Header />
             <Navbar>
-            <IoIosArrowBack
-                size="37" cursor="pointer" style={{ paddingLeft: "20px" }}
-                onClick={() => navigate("/chat")} />
-            <ChatInfo>
-                <NavbarTitle>{otherUserInfo.otherUsername}</NavbarTitle>
-                <InfoWrap>
-                    <HeadDepartment>학과 · </HeadDepartment>
-                    <HeadStudent> 학번</HeadStudent>
-                </InfoWrap>
-            </ChatInfo>
-            <BiDotsVerticalRounded
-                size="37" style={{ paddingRight: "20px" }}
-            />
-        </Navbar>
+                <IoIosArrowBack
+                    size="37" cursor="pointer" style={{ paddingLeft: "20px" }}
+                    onClick={() => navigate("/chat")} />
+                <ChatInfo>
+                    <NavbarTitle>{otherUserInfo.otherUsername}</NavbarTitle>
+                    <InfoWrap>
+                        <HeadDepartment>{otherUserInfo.otherDepartment} · </HeadDepartment>
+                        <HeadStudent> {otherUserInfo.otherAdmission}</HeadStudent>
+                    </InfoWrap>
+                </ChatInfo>
+                <BiDotsVerticalRounded
+                    size="37" style={{ paddingRight: "20px" }}
+                />
+            </Navbar>
             <StChatContainer>
                 <StChatWrap>
                     {/* <StChatDiv>
@@ -181,10 +183,10 @@ const ChatDetail = () => {
                     </StChatDiv> */}
                 </StChatWrap>
             </StChatContainer>
-            <ChatMessageBox messages={messages} scrollRef={scrollRef}/>
+            <ChatMessageBox messages={messages} scrollRef={scrollRef} />
             <ChatInput
-            mypages={mypages} 
-            onSend={onSend} text={text} setText={setText}/>
+                mypages={mypages}
+                onSend={onSend} text={text} setText={setText} />
         </StContainer>
     );
 };
