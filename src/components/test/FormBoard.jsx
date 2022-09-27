@@ -19,7 +19,6 @@ import { TiDelete } from 'react-icons/ti';
 import { GrImage } from 'react-icons/gr';
 import Button from '../elements/Button';
 import moment from 'moment';
-import { TimePicker } from 'antd';
 import '../calendarBoard/Time.css';
 import Calendar from 'react-calendar';
 import '../calendarBoard/CalendarModal.css';
@@ -145,7 +144,7 @@ const Form2 = () => {
     calendarDate: '',
   });
   const onChange = (value) => setDate(value);
-  const realCalendar = moment(date.toString()).format('MM월 DD일 dddd');
+  const realCalendar = moment(date.toString()).format('YYYY년 MM월 DD일 dddd');
   const dates = { calendarDate: realCalendar };
 
   const {
