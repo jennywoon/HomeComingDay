@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { __getHelp, __postHelp } from '../../redux/modules/HelpSlice';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
+import { AiOutlinePlusCircle,AiOutlineMinusCircle  } from 'react-icons/ai';
 import TimeRangePicker from '@wojtekmaj/react-timerange-picker';
 import Button from '../elements/Button';
 import {
@@ -36,7 +37,7 @@ const CalendarUpdate = () => {
   const [date, setDate] = useState({
     calendarDate: '',
   });
-  const realCalendar = moment(date.toString()).format('YYYY년 MM월 DD일');
+  const realCalendar = moment(date.toString()).format('YYYY년 MM월 DD일 dddd');
   const dates = { calendarDate: realCalendar };
   const [isOnActive, setIsOnActive] = useState(false);
   const [isActive, setIsActive] = useState(false);
@@ -67,6 +68,7 @@ const CalendarUpdate = () => {
   const [selectedTime, setSelectedTime] = useState(
     calendarfind && calendarfind.calendarTime
     );
+  const [joinNumber , setJoinNumber] = useState(calendarfind && calendarfind.maxPeople);
 
   const onChangeCalendar = (e) => {
     setReactCalendar(e.target.value);
@@ -78,7 +80,17 @@ const CalendarUpdate = () => {
     console.log(selectedTime);
   };
 
-  
+  //참여하기 인원 수정
+
+  const joinMinusHandle =()=>{
+    if(joinNumber > 1){
+    setJoinNumber(joinNumber -1)
+  }
+  }
+  const joinPlusHandle =()=>{
+    if(joinNumber < 5)
+    setJoinNumber(joinNumber +1)
+  }
 
   const onChangeTitle = (e) => {
     setEditTitle(e.target.value);
@@ -121,7 +133,8 @@ const CalendarUpdate = () => {
       content: EditContent,
       calendarLocation: EditLocation,
       calendarDate:realCalendar,
-      calendarTime:selectedTime
+      calendarTime:selectedTime,
+      maxPeople : joinNumber
     };
     await dispatch(__updateCalendar(editcalendarfind));
     await dispatch(__getCalendar())
@@ -191,6 +204,14 @@ const CalendarUpdate = () => {
                 />
                 {/* <IoIosArrowForward /> */}
               </TimeDiv>
+              <StJoinPeople>
+                <CalendarTitle>인원</CalendarTitle>
+                <StJoinDiv>
+                  {/* <AiOutlineMinusCircle size="20px" onClick={joinMinusHandle}/> */}
+                    {joinNumber}명
+                  {/* <AiOutlinePlusCircle size="20px" onClick={joinPlusHandle}/> */}
+                </StJoinDiv>
+              </StJoinPeople>
           <CalendarDiv>
             <CalendarTitle>장소</CalendarTitle>
             <CalendarInput
@@ -399,3 +420,26 @@ const StTimePicker = styled(TimePicker)`
     color: gray;
   }
 `;
+const StJoinPeople = styled.div`
+  height: 40px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 1px solid #9b9999;
+  background-color: transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+
+`
+const StJoinDiv = styled.div`
+  height: 30px;
+  font-size: 14px;
+  width: 80%;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  border:none;
+`
