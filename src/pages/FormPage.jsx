@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Form2 from "../components/test/Form2"
 import { getCookie } from '../shared/cookies';
 import goldmedal from "../assets/goldmedal.png"
+import FormBoard from "../components/test/FormBoard"
 
 const FormPage = () => {
   // 토큰 만료되면 로그아웃
@@ -42,7 +43,8 @@ const FormPage = () => {
         </NeedLogin>
       )}
       <Container>
-        <Form2 />
+        {/* <Form2 /> */}
+        <FormBoard/>
       </Container>
     </>
   );

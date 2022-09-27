@@ -8,9 +8,13 @@ import helporange from "../../assets/helporange.png"
 import helpwhite from "../../assets/helpwhite.png"
 import nonedatasquare from "../../assets/nonedatasquare.png"
 import { __getMyPage } from "../../redux/modules/MyPageSlice";
-
+import { __getReset } from "../../redux/modules/MyPageSlice";
 
 const Help = () => {
+
+  useEffect(()=>{
+    dispatch(__getReset())
+  },[])
 
   const dispatch = useDispatch();
   const { helps } = useSelector((state) => state.helps);

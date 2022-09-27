@@ -56,8 +56,9 @@ const Form2 = () => {
   //이미지 Dropzone -추가
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
-    accept: 
-    'image/*',
+    // accept:
+    //   'image/*',
+    accept: ".heic, .heif, image/*",
     // {
     //   'image/png': ['.png'],
     //   'image/jpg': ['.jpg'],
@@ -183,7 +184,7 @@ const Form2 = () => {
   const closeTimeShowBtn = () => {
     setTimeShow(!timeShow);
   }
-  console.log(hour+":"+selectMinute)
+  console.log(hour + ":" + selectMinute)
   const [selectedTime, setSelectedTime] = useState('00:00');
 
   const handleSelect = (e) => {
@@ -192,10 +193,13 @@ const Form2 = () => {
 
   // 카카오 주소 검색하기
   const [openPostcode, setOpenPostcode] = useState(false);
-  const [calendarlocation, setCalendarLocation] = useState({
-    calendarLocation: "",
-  })
+  // const [calendarlocation, setCalendarLocation] = useState({
+  //   calendarLocation: "",
+  // })
+  const [calendarlocation, setCalendarLocation] = useState("")
   const locations = { calendarLocation: calendarlocation }
+
+  console.log(calendarlocation);
   const handle = {
     // 버튼 클릭 이벤트
     clickButton: () => {
@@ -290,7 +294,7 @@ const Form2 = () => {
     } else if (select === 'meet') {
       const newcalendar = {
         title: calendartitle,
-        calendarTime: hour+":"+selectMinute,
+        calendarTime: hour + ":" + selectMinute,
         calendarLocation: calendarlocation,
         content: calendarcontent,
         calendarDate: realCalendar,
@@ -575,11 +579,11 @@ const Form2 = () => {
               </CalendarButton>
               <CalendarWrap value={reactCalendar} onClick={onChangeCalendar}>
                 {isActive && (
-                    <Calendar
-                      name='calendarDate'
-                      value={calendarDate}
-                      onChange={onChange}
-                    />
+                  <Calendar
+                    name='calendarDate'
+                    value={calendarDate}
+                    onChange={onChange}
+                  />
                 )}
               </CalendarWrap>
               <TimeDiv>
@@ -589,7 +593,10 @@ const Form2 = () => {
                   timeShow={timeShow}
                   name='calendartime'
                   value={`${hour}:${selectMinute}`}
-                >{`${hour}:${selectMinute}`}</TimeOpenBtn>
+                >
+                  {`${hour}:${selectMinute}`}
+                  <IoIosArrowForward />
+                  </TimeOpenBtn>
               </TimeDiv>
               <StKakaoMap>
                 {timeShow && (
@@ -600,7 +607,7 @@ const Form2 = () => {
                           <div className="division">
                             {division.map((e, idx) => {
                               const color =
-                              selectTime === e ? "#black" : "#bebebe";
+                                selectTime === e ? "#black" : "#bebebe";
                               return (
                                 <SelectTimeBtn
                                   type="button"
@@ -618,7 +625,7 @@ const Form2 = () => {
                           <div className="hour">
                             {hourSelect.map((e, idx) => {
                               const color =
-                              selectTime === e ? "#black" : "#bebebe";
+                                selectHour === e ? "#black" : "#bebebe";
                               return (
                                 <SelectTimeBtn
                                   type="button"
@@ -636,7 +643,7 @@ const Form2 = () => {
                           <div className="minute">
                             {minuteSelect.map((e, idx) => {
                               const color =
-                              selectTime === e ? "#black" : "#bebebe";
+                                selectMinute === e ? "#black" : "#bebebe";
                               return (
                                 <SelectTimeBtn
                                   key={idx}
@@ -663,10 +670,11 @@ const Form2 = () => {
                   name='calendarlocation'
                   value={calendarlocation}
                   onChange={calendaronChangeHandler}
-                  placeholder='장소를 입력해주세요'
+                  // placeholder='장소를 입력해주세요'
                   onClick={handle.clickButton}
+                  style={{}}
                 >
-                  {/* {calendarlocation} */}
+                  {calendarlocation ? calendarlocation : "장소를 검색해주세요"}
                   <IoIosArrowForward />
                 </DateDiv>
               </CalendarDiv>
@@ -680,6 +688,7 @@ const Form2 = () => {
               </StKakaoMap>
               <TextDiv>
                 <CalendarTitle>내용</CalendarTitle>
+                <StTextareaDiv>
                 <CalendarTextarea
                   name='calendarcontent'
                   value={calendarcontent}
@@ -687,6 +696,7 @@ const Form2 = () => {
                   placeholder='내용을 입력해주세요'
                   maxLength='400'
                 ></CalendarTextarea>
+                </StTextareaDiv>
               </TextDiv>
             </>
           ) : select === 'freetalk' ? (
@@ -992,7 +1002,7 @@ const CalendarTitle = styled.div`
 `;
 
 const DateDiv = styled.div`
-  width: 90%;
+  width: 80%;
   height: 30px;
   display: flex;
   justify-content: right;
@@ -1043,25 +1053,36 @@ const TextDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 0 0 20px;
 `;
 
-const CalendarTextarea = styled.textarea`
-  width: 65%;
+const StTextareaDiv = styled.div`
+  width: 80%;
   height: 200px;
-  resize: none;
-  border-radius: 10px;
-  border: none;
-  background-color: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
-  outline:none;
-  textarea::placeholder {
+  /* border: 1px solid red; */
+`
+const CalendarTextarea = styled.textarea`
+  width: 95%;
+  height: 200px;
+  resize: none;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  /* border: 1px solid red; */
+  ::placeholder {
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+    line-height: 200px;
+    top: 50%;
+    /* transform: translate(-50%) */
     text-align: right;
   }
   padding: 0 10px;
-  text-align: right;
+  /* text-align: right; */
 `;
 
 const StTimePicker = styled.input`
@@ -1139,8 +1160,14 @@ const CalendarWrap = styled.div`
 
 const TimeOpenBtn = styled.div`
 font-weight: 500;
-padding: 7px 10px;
-border-radius: 35px;
+height: 30px;
+font-size: 14px;
+width: 80%;
+display: flex;
+justify-content: right;
+align-items: center;
+gap: 10px;
+cursor: pointer;
 `;
 
 const StTimeWrap = styled.div`
