@@ -12,6 +12,8 @@ import {
   __postTime,
 } from '../../redux/modules/CalendarSlice';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { AiOutlinePlusCircle,AiOutlineMinusCircle  } from 'react-icons/ai';
+
 import { MdCancel } from 'react-icons/md';
 import { TiDelete } from 'react-icons/ti';
 import { GrImage } from 'react-icons/gr';
@@ -22,6 +24,7 @@ import '../calendarBoard/Time.css';
 import Calendar from 'react-calendar';
 import '../calendarBoard/CalendarModal.css';
 import { useDropzone } from 'react-dropzone';
+
 
 const Form2 = () => {
   const dispatch = useDispatch();
@@ -47,11 +50,25 @@ const Form2 = () => {
   const [valueDate, onChageDate] = useState(new Date());
   const [isActive, setIsActive] = useState(false);
   const [select, setSelect] = useState('help');
+  const [joinNumber , setJoinNumber] = useState(1);
 
   const [reactCalendar, setReactCalendar] = useState('');
   const onChangeCalendar = (e) => {
     setReactCalendar(e.target.value);
   };
+
+  //참여하기 인원
+
+  const joinMinusHandle =()=>{
+    if(joinNumber > 1){
+    setJoinNumber(joinNumber -1)
+  }
+  }
+
+  const joinPlusHandle =()=>{
+    if(joinNumber < 5)
+    setJoinNumber(joinNumber +1)
+  }
 
   //이미지 Dropzone -추가
   const [files, setFiles] = useState([]);
@@ -240,7 +257,7 @@ const Form2 = () => {
     }
 
     const now = new Date()
-    const defaultValue = moment(now.toString()).format('MM월 DD일 dddd')
+    const defaultValue = moment(now.toString()).format('YYYY년 MM월 DD일 dddd')
     console.log(defaultValue)
 
     //-추가
@@ -298,8 +315,9 @@ const Form2 = () => {
         calendarLocation: calendarlocation,
         content: calendarcontent,
         calendarDate: realCalendar,
+        maxPeople : joinNumber
       };
-
+      
       if (newcalendar.calendarDate === "Invalid date") {
         newcalendar.calendarDate = defaultValue
       }
@@ -664,6 +682,18 @@ const Form2 = () => {
                   </StTimeWrap>
                 )}
               </StKakaoMap>
+              
+              <StJoinPeople>
+                <CalendarTitle>인원</CalendarTitle>
+                <StJoinDiv>
+                  <AiOutlineMinusCircle size="20px" onClick={joinMinusHandle}/>
+                    {joinNumber}명
+                  <AiOutlinePlusCircle size="20px" onClick={joinPlusHandle}/>
+                </StJoinDiv>
+              </StJoinPeople>
+
+
+
               <CalendarDiv>
                 <CalendarTitle>장소</CalendarTitle>
                 <DateDiv
@@ -1011,6 +1041,7 @@ const DateDiv = styled.div`
   cursor: pointer;
   gap: 10px;
 `;
+
 const CalendarDiv = styled.div`
   height: 40px;
   margin-top: 10px;
@@ -1026,6 +1057,8 @@ const CalendarDiv = styled.div`
 
 const StKakaoMap = styled.div`
 `
+
+
 const CalendarInput = styled.input`
   width: 65%;
   height: 30px;
@@ -1245,4 +1278,31 @@ const StTimeClose = styled.div`
   margin: 10px 0 15px 0;
   height: 36px;
   cursor: pointer;
+`
+//참여하기 스타일
+
+const StJoinPeople = styled.div`
+  height: 40px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 1px solid #d9d9d9;
+  box-shadow: 0px 2px 14px rgba(0, 0, 0, 0.05);
+  background-color: transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+
+`
+const StJoinDiv = styled.div`
+  font-weight: 500;
+  height: 30px;
+  font-size: 14px;
+  width: 80%;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  border:none;
 `

@@ -15,15 +15,23 @@ import {
   __getDetailCalendar,
   __postCalendarComment,
   __postCalendarHeart,
+  __postJoin,
+  __getJoin,
 } from '../../redux/modules/CalendarSlice';
 import { useRef } from 'react';
 import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
+import { GiPunchBlast } from 'react-icons/gi';
 import CalendarDeleteModal from './CalendarDeleteModal';
 import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
 import heartColorImg from '../../assets/heartColor.png';
+import joinUser from '../../assets/users.png';
+import joinUserPlus from '../../assets/userPlus.png';
+import joinUserMinus from '../../assets/userMinus.png';
 import { __getMyPage } from '../../redux/modules/MyPageSlice';
+import CalendarJoiinModal from './CalendarJoiinModal';
+
 
 const CalendarDetail = () => {
   const dispatch = useDispatch();
@@ -38,8 +46,28 @@ const CalendarDetail = () => {
   const calendarfind = calendars.find(
     (calendar) => calendar.articleId === Number(id)
   );
+  
+  const {calendarJoin} = useSelector((state) => state.calendars);
+  const {joinPeopleList} = useSelector((state) => state.calendars.calendarJoin);
+  const joinPeopleLists = useSelector((state) => state.calendars.joinPeopleList);
   const data = useSelector((state) => state.mypages.mypages)
   
+
+  const trueList = joinPeopleList&&joinPeopleList.map((list)=>{if(list.email === data.email) return list.joinCheck})
+  const joinTrueFalse = trueList&&trueList.includes(true)
+    // console.log("trueList",trueList&&trueList.includes(true))
+  const joinPeopleListfind = joinPeopleLists&&joinPeopleLists.map((list)=> list.joinCheck)
+  const joinBooline = joinPeopleListfind[joinPeopleListfind.length-1]
+    console.log("joinPeopleLists",joinPeopleLists)
+    // console.log(joinPeopleListfind)
+  console.log("calendars",calendars)
+  console.log("calendarJoin",calendarJoin)
+  console.log("joinPeopleList",joinPeopleList)
+  console.log("joinPeopleLists",joinPeopleLists)
+
+  
+  
+
     //모달닫기
   const node = useRef();
 
@@ -61,6 +89,7 @@ const CalendarDetail = () => {
   useEffect(() => {
     dispatch(__getMyPage())
     dispatch(__getCalendar());
+    dispatch(__getJoin(id));
     dispatch(__getDetailCalendar(id));
   }, [dispatch]);
 
@@ -108,11 +137,27 @@ const CalendarDetail = () => {
   };
 
 
+  const onClickJoin = async(e) =>{
+    e.preventDefault();
+    const newJoin = {
+      articleId: id,
+      email : data.email
+    };
+   await dispatch(__postJoin(newJoin))
+   await dispatch(__getJoin(id));
+  }
+
   //모달
   const [modalOpen, setModalOpen] = useState(false);
   const showModal = (e) => {
     e.preventDefault();
     setModalOpen(true);
+  };
+
+  const [joinModalOpen , setJoinModalOpen] = useState(false);
+  const showJoinModal = (e) => {
+    e.preventDefault();
+    setJoinModalOpen(true);
   };
 
   // 좋아요
@@ -128,6 +173,7 @@ const heartClick = async () => {
   return (
     <Container ref={node}>
       {modalOpen && <CalendarDeleteModal setModalOpen={setModalOpen} />}
+      {joinModalOpen && <CalendarJoiinModal setJoinModalOpen={setJoinModalOpen} joinPeopleList={joinPeopleList} id={id}/>}
       <Header />
       <FirstWrap>
         <DetailHeader>
@@ -194,6 +240,12 @@ const heartClick = async () => {
                     </ContentgetContent>
                   </Contentget>
                   <Contentget>
+                    <ContentgetTitle>초대 </ContentgetTitle>
+                    <ContentgetContent>
+                    {calendarfind && calendarfind.maxPeople} 명
+                    </ContentgetContent>
+                  </Contentget>
+                  <Contentget>
                     <ContentgetTitle>장소 </ContentgetTitle>
                     <ContentgetContent>
                     {calendarfind && calendarfind.calendarLocation}
@@ -207,6 +259,38 @@ const heartClick = async () => {
                   </Contentget>
                 </ContentBody>
                 {/* <ContentImg src=''></ContentImg> */}
+
+                  <StJoinContain>
+                    <StJoinPart className="look"type="button" onClick={showJoinModal}>
+                      <img src={joinUser} alt="참여자조회"/>
+                      참여자보기
+                      </StJoinPart>
+                    
+                    {(joinPeopleList&&joinPeopleList.length) === (calendarfind&&calendarfind.maxPeople) && joinTrueFalse === false? 
+                      <StJoinPart className="last" type="button">
+                      <GiPunchBlast size="20px"/>
+                        참여마감
+                      </StJoinPart>
+                      :
+                    (calendarfind&&calendarfind.username) !== data.username ? (
+                   ((joinBooline&&joinBooline === false) || (joinTrueFalse === false)?
+                    <StJoinPart type="button" onClick={onClickJoin}>
+                    <img src={joinUserPlus} alt="참여하기" />
+                      참여하기
+                    </StJoinPart> 
+                    : 
+                    <StJoinPart className="cancel" type="button" onClick={onClickJoin}>
+                    <img src={joinUserMinus} alt="참여불가" />
+                      참여취소
+                    </StJoinPart>
+                     ))
+                    : null
+                     }
+
+                     {/* : null}  */}
+
+                  </StJoinContain>
+
                 <BodyTxtBox>
                   <ContentView>
                     {calendarfind && calendarfind.createdAt} | 조회수{' '}
@@ -654,3 +738,43 @@ const HeartCount = styled.div`
 const HeartImg = styled.div`
   margin-right: 5px;
 `;
+
+//참여하기
+const StJoinContain = styled.div`
+  width:100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap:10px;
+`
+
+const StJoinPart = styled.button`
+  background: #F7931E;
+  width: 136px;
+  height: 32px;
+  border: 1px solid #F7931E;
+  border-radius: 12px;
+  color: #fff;
+  font-weight: 600;
+font-size: 12px;
+cursor:pointer;
+&.cancel {
+    background: #9c9c9c;
+    border: 1px solid #9c9c9c;
+    color:#fff
+  }
+ &.look{
+  background: #FFFFFF;
+  color: #8E8E8E;
+  border: 1px solid #8E8E8E;
+ } 
+ &.last{
+  cursor:default;
+  background: #FFFFFF;
+  color: #8E8E8E;
+  border: 1px solid #8E8E8E;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+ }
+`

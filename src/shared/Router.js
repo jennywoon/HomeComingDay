@@ -10,7 +10,6 @@ import HelpForm from "../components/helpBoard/HelpForm";
 import InformationPage from "../pages/InformationPage";
 import FreeTalkPage from "../pages/FreeTalkPage";
 import SchoolInfoPage from '../pages/SchoolInfoPage';
-import ScrollTest from "../components/test/ScrollTest"
 import InformationForm from "../components/informationBoard/InformationForm";
 import HelpCard from "../components/helpBoard/HelpCard";
 import FreeTalkForm from "../components/freeTalkBoard/FreeTalkForm"
@@ -37,8 +36,10 @@ import { useSelector } from "react-redux";
 import { getCookie } from "./cookies";
 import { Navigate } from "react-router-dom";
 import FormPage from "../pages/FormPage";
-import ChatFrontTest from "../components/chatBoard/ChatFrontTest";
+// import ChatFrontTest from "../components/chatBoard/ChatFrontTest";
 import TimeTest from "../components/test/TimeTest";
+import ChatDetail from "../components/chatBoard/ChatDetail"
+
 const Router = () => {
 
   const token = getCookie("accessToken")
@@ -66,7 +67,6 @@ const Router = () => {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/" element={<Splash />} />
         {/* 하단 페이지 추후 정리 */}
-        <Route path="/test" element={<ScrollTest />} />
         <Route path="/helpcard" element={<HelpCard />} />
         <Route path="/freetest" element={<FreeTalkForm />} />
         <Route path="/searchcard" element={<SearchCard />} />
@@ -80,9 +80,9 @@ const Router = () => {
         <Route path="/freetalkupdate/:id" element={<FreeTalkUpdate />} />
         <Route path="/calendardetail/:id" element={<CalendarDetail />} />
         <Route path="/calendarupdate/:id" element={<CalendarUpdate />} />
-        <Route path="/chattest" element={<ChatFrontTest />} />
+        {/* <Route path="/chattest" element={<ChatFrontTest />} /> */}
         <Route path="/timetest" element={<TimeTest />} />
-
+        <Route path="/chat/:id" element={<ChatDetail />} />
       </Routes>
     </BrowserRouter>
   );
