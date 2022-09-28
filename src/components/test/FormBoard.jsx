@@ -65,7 +65,7 @@ const Form2 = () => {
   }
 
   const joinPlusHandle =()=>{
-    if(joinNumber < 5)
+    if(joinNumber < 50)
     setJoinNumber(joinNumber +1)
   }
 
@@ -591,7 +591,7 @@ const Form2 = () => {
                 <CalendarTitle>날짜</CalendarTitle>
                 <DateDiv onClick={() => setIsActive(!isActive)}>
                   {moment(date).format('YYYY년 MM월 DD일')}
-                  <IoIosArrowForward />
+                  <ArrowForward />
                 </DateDiv>
               </CalendarButton>
               <CalendarWrap value={reactCalendar} onClick={onChangeCalendar}>
@@ -612,7 +612,7 @@ const Form2 = () => {
                   value={`${hour}:${selectMinute}`}
                 >
                   {`${hour}:${selectMinute}`}
-                  <IoIosArrowForward />
+                  <ArrowForward />
                   </TimeOpenBtn>
               </TimeDiv>
               <StKakaoMap>
@@ -685,9 +685,9 @@ const Form2 = () => {
               <StJoinPeople>
                 <CalendarTitle>인원</CalendarTitle>
                 <StJoinDiv>
-                  <AiOutlineMinusCircle size="20px" onClick={joinMinusHandle}/>
+                  <MinusCircle size="20px" onClick={joinMinusHandle}/>
                     {joinNumber}명
-                  <AiOutlinePlusCircle size="20px" onClick={joinPlusHandle}/>
+                  <PlusCircle size="20px" onClick={joinPlusHandle}/>
                 </StJoinDiv>
               </StJoinPeople>
 
@@ -704,7 +704,7 @@ const Form2 = () => {
                   style={{}}
                 >
                   {calendarlocation ? calendarlocation : "장소를 검색해주세요"}
-                  <IoIosArrowForward />
+                  <ArrowForward />
                 </DateDiv>
               </CalendarDiv>
               <StKakaoMap>
@@ -1304,4 +1304,13 @@ const StJoinDiv = styled.div`
   gap: 10px;
   cursor: pointer;
   border:none;
+`
+const ArrowForward = styled(IoIosArrowForward)`
+  color:#8E8E8E;
+`
+const MinusCircle = styled(AiOutlineMinusCircle)`
+  color:#8E8E8E;
+`
+const PlusCircle = styled(AiOutlinePlusCircle)`
+  color:#8E8E8E;
 `
