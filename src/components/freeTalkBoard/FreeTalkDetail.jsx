@@ -20,6 +20,7 @@ import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
 import heartColorImg from '../../assets/heartColor.png';
 import { __getMyPage } from '../../redux/modules/MyPageSlice';
+import { chatApi } from '../chatBoard/ChatApi';
 
 const FreeTalkDetail = () => {
     const dispatch = useDispatch();
@@ -37,21 +38,21 @@ const FreeTalkDetail = () => {
     const freetalksfind = freetalks.find((freetalk) => freetalk.articleId === Number(id))
 
     //모달닫기
-  const node = useRef();
+    const node = useRef();
 
-  useEffect(() => {
-    const clickOutside = (e) => {
-      // 모달이 열려 있고 모달의 바깥쪽을 눌렀을 때 창 닫기
-      if (show && node.current && !node.current.contains(e.target)) {
-        setShow(false);
-      }
-  };
-    document.addEventListener("mousedown", clickOutside);
-    return () => {
-      // Cleanup the event listener
-      document.removeEventListener("mousedown", clickOutside);
-    };
-  }, [show]);
+    useEffect(() => {
+        const clickOutside = (e) => {
+            // 모달이 열려 있고 모달의 바깥쪽을 눌렀을 때 창 닫기
+            if (show && node.current && !node.current.contains(e.target)) {
+                setShow(false);
+            }
+        };
+        document.addEventListener("mousedown", clickOutside);
+        return () => {
+            // Cleanup the event listener
+            document.removeEventListener("mousedown", clickOutside);
+        };
+    }, [show]);
 
 
     // 댓글
@@ -132,15 +133,30 @@ const FreeTalkDetail = () => {
         setModalOpen(true);
     }
 
-  // 좋아요
-  const heartClick = async () => {
-    const newHeart = {
-      articleId: id,
+    // 좋아요
+    const heartClick = async () => {
+        const newHeart = {
+            articleId: id,
+        };
+        const response = await dispatch(__postFreeTalkHeart(newHeart));
+        // console.log(response.payload);
+        dispatch(__getFreeTalk());
     };
-    const response = await dispatch(__postFreeTalkHeart(newHeart));
-    // console.log(response.payload);
-    dispatch(__getFreeTalk());
-  };
+
+    // 채팅 생성
+    const createChat = (userId) => {
+        chatApi
+            .createChat(userId)
+            .then((response) => {
+                navigate(`/chat/${response.data}`);
+                console.log("userId", userId)
+                console.log("response", response.data)
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
 
     return (
         <Container ref={node}>
@@ -163,16 +179,18 @@ const FreeTalkDetail = () => {
                                     <Txtname onClick={onCilckChaetShow}>{freetalksfind && freetalksfind.username}</Txtname>
                                     <Txtstudent>{freetalksfind && freetalksfind.departmentName} <span> {freetalksfind && freetalksfind.admission} </span></Txtstudent>
                                     {showChaet ?
-                                        <ChaetingBox>1:1채팅</ChaetingBox>
+                                        <ChaetingBox
+                                        onClick={() => createChat(freetalksfind.userId)}>
+                                        1:1채팅</ChaetingBox>
                                         : null
                                     }
                                 </Bodytxt>
                                 {/* <AiOutlineMenu size="20px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }}
                                     onClick={onCilckShow} /> */}
-                                {freetalksfind&&freetalksfind.username === data.username ?
-                                <BiDotsVerticalRounded
-                                    size="20px" style={{ marginLeft: "auto", cursor: "pointer", color: "#bebebe" }}
-                                    onClick={onCilckShow} /> 
+                                {freetalksfind && freetalksfind.username === data.username ?
+                                    <BiDotsVerticalRounded
+                                        size="20px" style={{ marginLeft: "auto", cursor: "pointer", color: "#bebebe" }}
+                                        onClick={onCilckShow} />
                                     : null}
 
                                 {show ?
@@ -226,7 +244,7 @@ const FreeTalkDetail = () => {
                                         <HeartCount
                                             onClick={heartClick}
                                         >
-                                            {freetalksfind &&freetalksfind.heart === true ? (
+                                            {freetalksfind && freetalksfind.heart === true ? (
                                                 <HeartImg>
                                                     <img src={heartColorImg} alt='좋아요이미지' />
                                                 </HeartImg>
@@ -235,7 +253,7 @@ const FreeTalkDetail = () => {
                                                     <img src={heartImg} alt='좋아요이미지' />
                                                 </HeartImg>
                                             )}
-                                        좋아요 {freetalksfind && freetalksfind.heartCnt}
+                                            좋아요 {freetalksfind && freetalksfind.heartCnt}
                                         </HeartCount>
                                     </Count>
                                 </BodyTxtBox>
@@ -249,7 +267,7 @@ const FreeTalkDetail = () => {
                                         :
                                         <>
                                             {freetalksfind && freetalksfind.commentList.map((comment) => (
-                                                <FreeTalkDetailComment key={comment.commentId} comment={comment} freetalksfind={freetalksfind} modalRef={modalRef} data={data}/>
+                                                <FreeTalkDetailComment key={comment.commentId} comment={comment} freetalksfind={freetalksfind} modalRef={modalRef} data={data} />
                                             ))}
                                         </>
                                     }
@@ -412,23 +430,27 @@ const Txtstudent = styled.p`
     color: #bebebe;
 `
 const ChaetingBox = styled.div`
-    border: 1px solid #f1f0f0;
-    border-radius: 16px;
-    position: absolute;
-    text-align: center;
-    line-height: 30px;
-    top:25px;
-    z-index: 1;
-    width:60px;
-    height:30px;
-    background-color: #fff;
-    cursor:pointer;
-    box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
-    color:gray;
-    cursor:pointer;
-    :hover {
-        color: #000;
-    }
+  border: 1px solid #f1f0f0;
+  border-radius: 16px;
+  position: absolute;
+  /* text-align: center; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 30px;
+  top: 25px;
+  z-index: 1;
+  width: 70px;
+  height: 40px;
+  background-color: #fff;
+  cursor: pointer;
+  box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  :hover {
+    color: #000;
+  }
 `
 
 const BodyContent = styled.div`

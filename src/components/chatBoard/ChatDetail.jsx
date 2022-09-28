@@ -14,6 +14,8 @@ import ChatInput from './ChatInput';
 import Header from "../Header"
 import { IoIosArrowBack } from 'react-icons/io'
 import { BiDotsVerticalRounded } from "react-icons/bi";
+import { deleteChatList } from '../../redux/modules/ChatSlice';
+import ChatDeleteModal from './ChatDeleteModal';
 
 const ChatDetail = () => {
 
@@ -31,6 +33,7 @@ const ChatDetail = () => {
 
     // 보내는 사람
     const isLoading = useSelector((state) => state.user.isLoading);
+    const chatList = useSelector((state) => state.chat.chatList);
     // const isLoading = useSelector((state) => state.userSlice.isLoading);
     // const userInfo = useSelector((state) => state.userSlice.userInfo);
     const mypages = useSelector((state) => state.mypages.mypages);
@@ -65,7 +68,7 @@ const ChatDetail = () => {
             .catch((error) => {
                 console.log(error);
             });
-            console.log(roomId);
+        console.log(roomId);
     }, [])
 
     // 채팅방 이전 메시지 가져오기
@@ -75,7 +78,6 @@ const ChatDetail = () => {
         ws.current = client;
 
         dispatch(getChatMessage(roomId));
-        console.log(roomId);
     }, []);
 
     // 방 입장 시 스크롤 아래로 이동
@@ -94,7 +96,24 @@ const ChatDetail = () => {
         return () => {
             wsDisConnect();
         }
-    })
+    }, []);
+
+    // 채팅방 나가기 모달창
+    const [isOpenPopup, setIsOpenPopup] = useState(false);
+    const [clickedChatId, setClickChatId] = useState("");
+    const PopupRef = useRef();
+
+    // 채팅방 나가기
+    const deleteChat = () => {
+        chatApi.deleteChat(clickedChatId).then((response) => {
+            if (response.status === 200) {
+                setIsOpenPopup(false);
+                dispatch(deleteChatList(clickedChatId));
+            } else {
+                window.alert("에러처리")
+            }
+        })
+    }
 
     function wsConnect() {
         try {
@@ -103,7 +122,8 @@ const ChatDetail = () => {
             // type: "CHAT"을 보내는 용도는 채팅방에 들어갈 때를 알기 위해서
             ws.current.connect({ token: token, type: "CHAT" }, () => {
                 // connect 이후 subscribe
-                ws.current.subscribe(`${BASE_URL}/sub/chat/room/${roomId}`, (response) => {
+                // ws.current.subscribe(`${BASE_URL}/sub/chat/room/${roomId}`, (response) => {
+                ws.current.subscribe(`/sub/chat/room/${roomId}`, (response) => {
                     const newMessage = JSON.parse(response.body);
                     dispatch(subMessage(newMessage));
                 });
@@ -113,7 +133,8 @@ const ChatDetail = () => {
                 const message = {
                     roomId: roomId,
                 };
-                ws.current.send(`${BASE_URL}/pub/chat/enter`, { token: token }, JSON.stringify(message));
+                // ws.current.send(`${BASE_URL}/pub/chat/enter`, { token: token }, JSON.stringify(message));
+                ws.current.send(`/pub/chat/enter`, { token: token }, JSON.stringify(message));
             });
         } catch (error) {
             console.log(error);
@@ -146,6 +167,7 @@ const ChatDetail = () => {
             }
             // send message
             ws.current.send("/pub/chat/message", { token: token }, JSON.stringify(message));
+            // ws.current.send(`${BASE_URL}/pub/chat/message`, { token: token }, JSON.stringify(message));
             setText("");
         } catch (error) {
             console.log(error);
@@ -158,33 +180,31 @@ const ChatDetail = () => {
 
     return (
         <StContainer>
-            <Header/>
+            <Header />
             <Navbar>
-            <IoIosArrowBack
-                size="37" cursor="pointer" style={{ paddingLeft: "20px" }}
-                onClick={() => navigate("/chat")} />
-            <ChatInfo>
-                <NavbarTitle>{otherUserInfo.otherUsername}</NavbarTitle>
-                <InfoWrap>
-                    <HeadDepartment>학과 · </HeadDepartment>
-                    <HeadStudent> 학번</HeadStudent>
-                </InfoWrap>
-            </ChatInfo>
-            <BiDotsVerticalRounded
-                size="37" style={{ paddingRight: "20px" }}
-            />
-        </Navbar>
+                <IoIosArrowBack
+                    size="37" cursor="pointer" style={{ paddingLeft: "20px" }}
+                    onClick={() => navigate("/chat")} />
+                <ChatInfo>
+                    <NavbarTitle>{otherUserInfo.otherUsername}</NavbarTitle>
+                    <InfoWrap>
+                        <HeadDepartment>{otherUserInfo.otherDepartment} · </HeadDepartment>
+                        <HeadStudent> {otherUserInfo.otherAdmission}</HeadStudent>
+                    </InfoWrap>
+                </ChatInfo>
+                <div style={{ paddingRight: "20px" }}></div>
+            </Navbar>
             <StChatContainer>
                 <StChatWrap>
                     {/* <StChatDiv>
-                        <StChatDate>날짜</StChatDate>
+                        <StChatDate>{otherUserInfo.createdAt}</StChatDate>
                     </StChatDiv> */}
                 </StChatWrap>
             </StChatContainer>
-            <ChatMessageBox messages={messages} scrollRef={scrollRef}/>
+            <ChatMessageBox messages={messages} scrollRef={scrollRef} />
             <ChatInput
-            mypages={mypages} 
-            onSend={onSend} text={text} setText={setText}/>
+                mypages={mypages}
+                onSend={onSend} text={text} setText={setText} />
         </StContainer>
     );
 };
@@ -205,7 +225,7 @@ const StChatContainer = styled.div`
 
 const Navbar = styled.div`
     width: 100%;
-    height: 50px;
+    height: 60px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -242,9 +262,10 @@ const StChatWrap = styled.div`
 
 const StChatDiv = styled.div`
     width: 100%;
-    /* border: 1px solid red; */
+    border: 1px solid red;
     display: flex;
     justify-content: center;
+    color: black;
 `
 const StChatDate = styled.div`
     margin-top: 15px;

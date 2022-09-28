@@ -11,7 +11,7 @@ import SchoolInfoSlice from "../modules/SchoolInfoSlice";
 import MyPageSlice from "../modules/MyPageSlice";
 import ChatSlice from "../modules/ChatSlice";
 import { getDefaultMiddleware } from "@reduxjs/toolkit";
-import { NoticeSlice } from "../modules/NoticeSlice";
+import NoticeSlice from "../modules/NoticeSlice";
 
 export const store = configureStore({
   // devTools: process.env.NODE_ENV !== "production",

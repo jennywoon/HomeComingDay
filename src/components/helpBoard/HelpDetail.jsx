@@ -162,7 +162,7 @@ const HelpDetail = () => {
     chatApi
       .createChat(userId)
       .then((response) => {
-        navigate(`/chat/$(response.data)`);
+        navigate(`/chat/${response.data}`);
         console.log("userId", userId)
         console.log("response", response.data)
       })
@@ -473,16 +473,20 @@ const ChaetingBox = styled.div`
   border: 1px solid #f1f0f0;
   border-radius: 16px;
   position: absolute;
-  text-align: center;
+  /* text-align: center; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   line-height: 30px;
   top: 25px;
   z-index: 1;
-  width: 60px;
-  height: 30px;
+  width: 70px;
+  height: 40px;
   background-color: #fff;
   cursor: pointer;
   box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
-  color: gray;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
   :hover {
     color: #000;

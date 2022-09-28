@@ -1,14 +1,40 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { TbBellRinging } from 'react-icons/tb';
 import { IoMdClose } from 'react-icons/io';
+import { __deleteNotice, __getNotice } from '../../redux/modules/NoticeSlice';
+import { useEffect } from 'react';
 
 const NoticeCard = ({ item }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  // const { notificationId, username, title, createdAt, noticeType, articlesId } = item;
+  const { notificationId, username, title, createdAt, noticeType, articlesId } = item;
+
+  const deleteHandler = () => {
+    dispatch(__deleteNotice(notificationId))
+  }
+  
+  // useEffect(()=>{
+  //   dispatch(__getNotice());
+  // },[dispatch])
+
+  const onClickNavi = () => {
+    // if (item.articleFlag === "도움요청") {
+    //     navigate(`/helpdetail/${articlesId}`)
+    // } else if (item.articleFlag === "정보공유") {
+    //     navigate(`/informationdetail/${articlesId}`)
+    // } else if (item.articleFlag === "만남일정") {
+    //     navigate(`/calendardetail/${articlesId}`)
+    // } else if (item.articleFlag === "자유토크") {
+    //     navigate(`/freetalkdetail/${articlesId}`)
+    // }
+};
 
   return (
-    <StNoticeCard>
+    <StNoticeCard onClick={onClickNavi}>
       <StNoticeCardContainer style={{ cursor: 'pointer' }}>
         <StHeadImg>
           <TbBellRinging size='32' color='white' />
@@ -16,11 +42,11 @@ const NoticeCard = ({ item }) => {
         <StNoticeContainer>
           <StFirstContainer>
             <StArticle>
-              [마케팅 신입인데 뭘 해야...]게시글에 댓글(2)이 달렸습니다
+              <StTitle>[{title}]</StTitle> 게시글에 {noticeType}이 달렸습니다
             </StArticle>
-            <StCreatAt>15분 전</StCreatAt>
+            <StCreatAt>{createdAt}</StCreatAt>
           </StFirstContainer>
-          <StSecondContainer>
+          <StSecondContainer onClick={deleteHandler}>
             <IoMdClose size='22' color='#8E8E8E' />
           </StSecondContainer>
         </StNoticeContainer>
@@ -77,10 +103,15 @@ const StFirstContainer = styled.div`
   padding: 0 10px;
 `;
 const StArticle = styled.div`
-  font-weight: 600;
+  font-weight: 400;
   font-size: 16px;
   width: 90%;
 `;
+
+const StTitle = styled.span`
+  font-weight: 700;
+`
+
 const StSecondContainer = styled.div`
   padding: 0 10px;
 `;

@@ -26,17 +26,14 @@ import FreeTalkUpdate from "../components/freeTalkBoard/FreeTalkUpdate"
 import SearchPage from "../pages/SearchPage";
 import SearchCard from "../components/searchBoard/SearchCard";
 import ChatPage from "../pages/ChatPage"
-import ChatFormPage from "../pages/ChatFormPage"
 import SignupCompletePage from '../pages/SignupCompletePage';
 import NoticePage from "../pages/NoticePage";
 import MyPage from "../pages/MyPage";
 import Splash from "../components/loginSigunUpBoard/Splash";
-// import LoginErrorModal from "../components/loginSigunUpBoard/LoginErrorModal";
 import { useSelector } from "react-redux";
 import { getCookie } from "./cookies";
 import { Navigate } from "react-router-dom";
 import FormPage from "../pages/FormPage";
-// import ChatFrontTest from "../components/chatBoard/ChatFrontTest";
 import TimeTest from "../components/test/TimeTest";
 import ChatDetail from "../components/chatBoard/ChatDetail"
 
@@ -61,7 +58,6 @@ const Router = () => {
         <Route path="/calendar" element={<CalendarPage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/chat" element={<ChatPage />} />
-        <Route path="/chatform" element={<ChatFormPage />} />
         <Route path="/signupcomplete" element={<SignupCompletePage />} />
         <Route path="/notice" element={<NoticePage />} />
         <Route path="/mypage" element={<MyPage />} />
@@ -70,7 +66,6 @@ const Router = () => {
         <Route path="/helpcard" element={<HelpCard />} />
         <Route path="/freetest" element={<FreeTalkForm />} />
         <Route path="/searchcard" element={<SearchCard />} />
-        {/* <Route path="/form" element={<Form2 />} /> */}
         <Route path="/form" element={<FormPage />} />
         <Route path="/helpdetail/:id" element={<HelpDetail />} />
         <Route path="/helpupdate/:id" element={<HelpUpdate />} />
@@ -80,7 +75,6 @@ const Router = () => {
         <Route path="/freetalkupdate/:id" element={<FreeTalkUpdate />} />
         <Route path="/calendardetail/:id" element={<CalendarDetail />} />
         <Route path="/calendarupdate/:id" element={<CalendarUpdate />} />
-        {/* <Route path="/chattest" element={<ChatFrontTest />} /> */}
         <Route path="/timetest" element={<TimeTest />} />
         <Route path="/chat/:id" element={<ChatDetail />} />
       </Routes>
