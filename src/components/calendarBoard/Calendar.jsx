@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect ,useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -65,7 +66,7 @@ const Calendar = () => {
   );
 };
 
-export default Calendar;
+export default React.memo(Calendar);
 
 const HelpContainer = styled.div`
   gap: 12px;

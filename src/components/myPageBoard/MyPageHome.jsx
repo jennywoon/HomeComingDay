@@ -225,6 +225,7 @@ const NoneDataImg = styled.div`
   background-image: url(${nonedatasquare});
   background-position: center;
   background-size: 100% 100%;
+  margin-bottom: 10px;
 `;
 const StMyPosTitletWrap = styled.div`
   display: flex;

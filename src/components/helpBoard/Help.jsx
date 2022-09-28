@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import styled from "styled-components"
 import { useSelector, useDispatch } from "react-redux";
@@ -79,7 +80,7 @@ const Help = () => {
   );
 };
 
-export default Help;
+export default React.memo(Help);
 
 const HelpContainer = styled.div`
   width: 100%;
