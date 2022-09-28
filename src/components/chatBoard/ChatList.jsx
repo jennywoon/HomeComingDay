@@ -18,6 +18,7 @@ import ChatDeleteModal from './ChatDeleteModal';
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import profileorange from "../../assets/profileorange.png"
 import { IoMdClose } from 'react-icons/io';
+import nonedataballoon from "../../assets/nonedataballoon.png"
 
 const ChatList = () => {
 
@@ -105,8 +106,12 @@ const ChatList = () => {
         <StContainer>
             <StChatContainer>
                 {/* 아직 채팅방 없을 때 아이콘 추가 */}
+                {chatList.length === 0 && 
+                    <NoneData>
+                        <NoneDataImg />
+                        <p>참여 중인 채팅이 없습니다</p>
+                    </NoneData>}
                 <StChatWrap ref={InfinityScrollRef} onScroll={InfinityScroll}>
-                    {chatList.lenghth === 0 && <div>아직 개설된 채팅방이 없습니다</div>}
                     {chatList.length > 0 &&
                         chatList.map((chat, i) => {
                             return (
@@ -134,7 +139,7 @@ const ChatList = () => {
                                                 </StSecondWrap>
                                             </StFirstContainer>
                                             <StSecondContainer>
-                                                <StChatContent>{chat.lastMessage.substr(0,25)}</StChatContent>
+                                                <StChatContent>{chat.lastMessage.substr(0, 25)}</StChatContent>
                                             </StSecondContainer>
                                         </StSecondChatWithWrap>
                                     </StChatWidthWrap>
@@ -267,6 +272,27 @@ const StChatWrap = styled.div`
   margin-top: 10px;
 `
 
+const NoneData = styled.div`
+  width: 100%;
+  height: 93%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #b3b3b3;
+  font-weight: 500;
+  font-size: 16px;
+  /* border: 1px solid red; */
+`;
+
+const NoneDataImg = styled.div`
+  width: 50px;
+  height: 50px;
+  background-image: url(${nonedataballoon});
+  background-position: center;
+  background-size: 100% 100%;
+  margin-bottom: 10px;
+`;
 const StChatRoomContainer = styled.div`
   cursor: pointer;
   display: flex;

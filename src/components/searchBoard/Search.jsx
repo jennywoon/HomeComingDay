@@ -20,7 +20,18 @@ const Search = () => {
   
   const [search, setSearch] = useState();
   const [inputText, setInputText] = useState('');
-  const [select, setSelect] = useState('');
+  const [select, setSelect] = useState('new');
+
+  useEffect(() => {
+    setSelect('new')
+},[])
+
+useEffect(() => {
+dispatch(__getSearchArticle());
+dispatch(__getSearchArticlePopular());
+}, [dispatch]);
+
+
   
   const searchArticle = useSelector((state) => state.searchs.searchs);
   const searchArticlePopular = useSelector((state) => state.searchs.popular);
@@ -28,15 +39,7 @@ const Search = () => {
   console.log(searchArticle);
   console.log(searchArticlePopular);
 
-    useEffect(() => {
-        setSelect('new')
-    },[])
-
-  useEffect(() => {
-    dispatch(__getSearchArticle());
-    dispatch(__getSearchArticlePopular());
-  }, [dispatch]);
-  
+ 
   useEffect(()=>{
     dispatch(__getReset())
     },[])
@@ -154,17 +157,6 @@ const Search = () => {
           </SearchDiv>
         </SearchWrap>
 
-        <SearchFilterBox>
-          {/* 필터검색용 */}
-          {/* <SearchFilter>
-                    <FilterMenu>
-                        <FilterList show={helpBtn} onClick={helpSearchFilter}>도움요청</FilterList>
-                        <FilterList show={informationBtn} onClick={informationSearchFilter}>정보공유</FilterList>
-                        <FilterList show={freeTalkBtn} onClick={freeTalkSearchFilter}>만남공유</FilterList>
-                        <FilterList show={calendarBtn} onClick={calendarSearchFilter}>자유토크</FilterList>
-                    </FilterMenu>
-                </SearchFilter> */}
-        </SearchFilterBox>
         <SelectBox>
             <SelectInBox>
           <Select name='state' onChange={handleSelect}>
@@ -177,7 +169,7 @@ const Search = () => {
           <RecentWrap id='item-list'>
             {/* <RecentTitle>최근 검색어</RecentTitle> */}
             {/* search card 맵 돌릴 예정 */}
-            {select === 'new' && filteredList && filteredList.length > 0 ? (
+            {select === 'new' && (filteredList && filteredList.length > 0) ? (
               <>
                 {filteredList &&
                   filteredList?.map((search) => (
@@ -189,8 +181,8 @@ const Search = () => {
                   ))}
               </>
             ) : select === 'popular' &&
-              filteredPopularList &&
-              filteredPopularList.length > 0 ? (
+              (filteredPopularList &&
+              filteredPopularList.length) > 0 ? (
               <>
                 {filteredPopularList &&
                   filteredPopularList?.map((search) => (

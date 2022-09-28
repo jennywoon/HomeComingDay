@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect ,useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components"
@@ -67,7 +68,7 @@ const Information = () => {
   );
 }
 
-export default Information;
+export default React.memo(Information);
 
 const InformationContainer = styled.div`
   width: 100%;

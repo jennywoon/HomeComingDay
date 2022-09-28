@@ -29,6 +29,7 @@ import heartImg from '../../assets/heartImg.png';
 import heartColorImg from '../../assets/heartColor.png';
 import { __getMyPage } from '../../redux/modules/MyPageSlice';
 import { chatApi } from '../chatBoard/ChatApi';
+import { __getNoticeCount } from '../../redux/modules/NoticeSlice';
 
 const HelpDetail = () => {
   const dispatch = useDispatch();
@@ -59,7 +60,7 @@ const HelpDetail = () => {
       if (show && node.current && !node.current.contains(e.target)) {
         setShow(false);
       }
-  };
+    };
     document.addEventListener("mousedown", clickOutside);
     return () => {
       // Cleanup the event listener
@@ -105,6 +106,7 @@ const HelpDetail = () => {
     await dispatch(__postHelpComment(newcomment));
     setComment('');
     await dispatch(__getHelp());
+    await dispatch(__getNoticeCount());
   };
 
   // const closeModal = (e) => {
@@ -171,8 +173,8 @@ const HelpDetail = () => {
       })
   }
 
-  return ( 
-    <Container ref={node}> 
+  return (
+    <Container ref={node}>
       {modalOpen && <HelpDeleteModal setModalOpen={setModalOpen} />}
       <Header />
       <FirstWrap >
@@ -202,25 +204,27 @@ const HelpDetail = () => {
                     {helpsfind && helpsfind.departmentName}{' '}
                     <span> {helpsfind && helpsfind.admission} </span>
                   </Txtstudent>
-                  {showChaet ? 
-                  
-                  <ChaetingBox 
-                  onClick={() => createChat(helpsfind.userId)}>
-                    1:1채팅</ChaetingBox> : null}
+                  {showChaet ?
+                    <StChatWrap onClick={() => createChat(helpsfind.userId)}>
+                      {helpsfind && helpsfind.username !== data.username ?
+                      <ChaetingBox>
+                        1:1채팅
+                      </ChaetingBox>: null}
+                    </StChatWrap> : null}
                 </Bodytxt>
 
-                {helpsfind &&helpsfind.username === data.username ? 
-                <BiDotsVerticalRounded
-                  size='20px'
-                  style={{
-                    marginLeft: 'auto',
-                    cursor: 'pointer',
-                    color: '#bebebe',
-                  }}
-                  
-                  onClick={onCilckShow}
-                  
-                /> : null}
+                {helpsfind && helpsfind.username === data.username ?
+                  <BiDotsVerticalRounded
+                    size='20px'
+                    style={{
+                      marginLeft: 'auto',
+                      cursor: 'pointer',
+                      color: '#bebebe',
+                    }}
+
+                    onClick={onCilckShow}
+
+                  /> : null}
 
                 {show ? (
                   <Revisebox ref={node}>
@@ -270,7 +274,7 @@ const HelpDetail = () => {
                       댓글 {helpsfind && helpsfind.commentCnt}
                     </CommentCount>
                     <HeartCount onClick={heartClick}>
-                      {helpsfind &&helpsfind.heart === true ? (
+                      {helpsfind && helpsfind.heart === true ? (
                         <HeartImg>
                           <img src={heartColorImg} alt='좋아요이미지' />
                         </HeartImg>
@@ -469,6 +473,8 @@ const Txtstudent = styled.p`
   font-size: 12px;
   color: #bebebe;
 `;
+
+const StChatWrap = styled.div``
 const ChaetingBox = styled.div`
   border: 1px solid #f1f0f0;
   border-radius: 16px;
