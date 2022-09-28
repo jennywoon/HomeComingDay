@@ -30,8 +30,9 @@ const NoticeList = () => {
   }, [dispatch]);
 
   const data = useSelector((state) => state.notice.notices);
-  console.log(data);
+  // console.log(data);
 
+  // 알림 구독
   const EventSource = EventSourcePolyfill;
 
   useEffect(() => {
@@ -51,23 +52,23 @@ const NoticeList = () => {
           lastEventIdQueryParameterName: 'Last-Event-ID',
           // credentials: 'include'
         });
-        console.log(eventSource);
+        // console.log(eventSource);
 
         eventSource.onopen = async (e) => {
           const result = await e;
-          console.log('Connection is open', result);
+          // console.log('Connection is open', result);
           setEventSourceStatus(result.type);
         };
 
         eventSource.onmessage = async (e) => {
           const result = await JSON.parse(e.data);
-          console.log('onmessage: ', result);
+          // console.log('onmessage: ', result);
           setAlarms((prev) => [...prev, result]);
         };
 
         eventSource.onerror = async (e) => {
           const result = await e;
-          console.log('onerror: ', result);
+          // console.log('onerror: ', result);
           // result.error.message.includes('45000 milliseconds')
           //   ? setEventSourceStatus(result.type)
           //   : eventSource.close();
@@ -75,7 +76,7 @@ const NoticeList = () => {
         };
         setListening(true);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     };
     subscription();
@@ -83,21 +84,21 @@ const NoticeList = () => {
   }, []);
   return (
     <StNoticeList>
-      {data.length > 0 ? (
-        <div>
-          {data &&
-            data.map((notice) => (
-              <NoticeCard item={notice} key={notice.notificationId} />
-            ))}
-        </div>
-      ) : (
-        <StNone>
-          <StNoneData>
-            <StNoneDataImg></StNoneDataImg>
-            <p>받은 알림이 없습니다</p>
-          </StNoneData>
-        </StNone>
-      )}
+        {data.length > 0 ? (
+          <StNoticeWrap>
+            {data &&
+              data.map((notice) => (
+                <NoticeCard item={notice} key={notice.notificationId} />
+              ))}
+          </StNoticeWrap>
+        ) : (
+          <StNone>
+            <StNoneData>
+              <StNoneDataImg></StNoneDataImg>
+              <p>받은 알림이 없습니다</p>
+            </StNoneData>
+          </StNone>
+        )}
     </StNoticeList>
   );
 };
@@ -105,18 +106,26 @@ const NoticeList = () => {
 export default NoticeList;
 
 const StNoticeList = styled.div`
+width: 100%;
 height: 100vh;
   overflow: scroll;
   /* scrollbar-width: 0; */
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: center;
   ::-webkit-scrollbar {
     width: 0px;
   }
-`;
+  `;
 
+const StNoticeWrap = styled.div`
+width: 100%;
+  /* border: 1px solid blue; */
+`
 const StNone = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+display: flex;
+justify-content: center;
+align-items: center;
 `;
 
 const StNoneData = styled.div`

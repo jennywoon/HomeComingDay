@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect ,useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components"
@@ -66,7 +67,7 @@ const FreeTalk = () => {
   );
 }
 
-export default FreeTalk;
+export default React.memo(FreeTalk);
 
 const FreeTalkContainer = styled.div`
   width: 100%;
