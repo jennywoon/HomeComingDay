@@ -74,6 +74,7 @@ const FreeTalkContainer = styled.div`
   height: 100%;
   /* height: 100vh; */
   gap: 12px;
+  overflow-x: hidden;
 `;
 
 const BannerWrap = styled.div`

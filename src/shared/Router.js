@@ -16,7 +16,6 @@ import FreeTalkForm from "../components/freeTalkBoard/FreeTalkForm"
 import CalendarDetail from "../components/calendarBoard/CalendarDetail"
 import CalendarUpdate from "../components/calendarBoard/CalendarUpdate"
 import CalendarPage from "../pages/CalendarPage"
-import Form2 from "../components/test/Form2";
 import HelpDetail from "../components/helpBoard/HelpDetail";
 import HelpUpdate from "../components/helpBoard/HelpUpdate";
 import InformationDetail from "../components/informationBoard/InformationDetail";
