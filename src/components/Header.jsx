@@ -10,6 +10,7 @@ import { getCookie, removeCookie } from '../shared/cookies';
 import goldmedal from '../assets/goldmedal.png';
 import logoutAlert from '../assets/logoutAlert.png';
 import { __getNoticeCount } from '../redux/modules/NoticeSlice';
+import bell from '../assets/Bell.png';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -77,7 +78,9 @@ const Header = () => {
           />
           <div style={{ fontSize: '20px' }}>{data && data.schoolName}</div>
           <IconWrap>
-            <VscBell
+            <img
+              src={bell}
+              alt='알림 아이콘'
               size='27'
               onClick={() => {
                 navigate('/notice');
