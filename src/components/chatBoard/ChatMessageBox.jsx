@@ -7,14 +7,14 @@ const ChatMessageBox = ({ messages, scrollRef }) => {
         <MessageWrapper>
             {/* {messages.length > 0 &&
                 messages.map((message, idx) => {
-                    return (
+                    return ( */}
                         <ChatMessage
-                            key={idx}
-                            message={message.message}
-                            userId={message.userId}
-                            createdAt={message.createdAt}
+                            // key={idx}
+                            // message={message.message}
+                            // userId={message.userId}
+                            // createdAt={message.createdAt}
                         />
-                    );
+                    {/* );
                 })} */}
             <div ref={scrollRef} />
         </MessageWrapper>
@@ -31,7 +31,7 @@ const MessageWrapper = styled.div`
     height: 100%;
     /* margin-top: 19px; */
     overflow-y: auto;
-    /* border: 1px solid red; */
+    border: 1px solid red;
     &::-webkit-scrollbar {
         width: 5px;
     }

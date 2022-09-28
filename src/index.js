@@ -16,6 +16,8 @@ const queryClient = new QueryClient({
     suspense: true,
     useErrorBoundary: true,
     // refetchInterval: 3000,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
     }
     }
 });

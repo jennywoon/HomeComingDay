@@ -38,7 +38,7 @@ function ChatInput(props) {
                 />
                 <BsArrowUpCircle
                     onClick={onClick}
-                    style={{ paddingRight: "20px", color: "#969696" }} size="37"
+                    style={{ paddingRight: "20px", color: "#969696", cursor:"pointer" }} size="37"
                 />
             </MessageBox>
         </React.Fragment>
