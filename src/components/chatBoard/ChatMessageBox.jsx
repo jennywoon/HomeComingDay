@@ -5,17 +5,17 @@ import styled from "styled-components";
 const ChatMessageBox = ({ messages, scrollRef }) => {
     return (
         <MessageWrapper>
-            {/* {messages.length > 0 &&
+            {messages.length > 0 &&
                 messages.map((message, idx) => {
-                    return ( */}
+                    return (
                         <ChatMessage
-                            // key={idx}
-                            // message={message.message}
-                            // userId={message.userId}
-                            // createdAt={message.createdAt}
+                            key={idx}
+                            message={message.message}
+                            userId={message.userId}
+                            createdAt={message.createdAt}
                         />
-                    {/* );
-                })} */}
+                    );
+                })}
             <div ref={scrollRef} />
         </MessageWrapper>
     );
@@ -31,9 +31,10 @@ const MessageWrapper = styled.div`
     height: 100%;
     /* margin-top: 19px; */
     overflow-y: auto;
-    border: 1px solid red;
+    /* border: 1px solid red; */
+    background-color: #f9f9f9;
     &::-webkit-scrollbar {
-        width: 5px;
+        width: 0px;
     }
     &::-webkit-scrollbar-thumb {
         background-color: #d3d3d3;
