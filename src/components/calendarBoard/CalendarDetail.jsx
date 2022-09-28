@@ -32,6 +32,7 @@ import joinUserMinus from '../../assets/userMinus.png';
 import { __getMyPage } from '../../redux/modules/MyPageSlice';
 import CalendarJoiinModal from './CalendarJoiinModal';
 import { chatApi } from '../chatBoard/ChatApi';
+import { __getNoticeCount } from '../../redux/modules/NoticeSlice';
 
 
 const CalendarDetail = () => {
@@ -133,8 +134,9 @@ const CalendarDetail = () => {
       articleId: id,
     };
     await dispatch(__postCalendarComment(newcomment));
-    await dispatch(__getCalendar());
     setComment('');
+    await dispatch(__getCalendar());
+    await dispatch(__getNoticeCount());
   };
 
 
@@ -216,9 +218,13 @@ const CalendarDetail = () => {
                     {calendarfind && calendarfind.departmentName}{' '}
                     <span> {calendarfind && calendarfind.admission} </span>
                   </Txtstudent>
-                  {showChaet ? <ChaetingBox
-                  onClick={() => createChat(calendarfind.userId)}>
-                  1:1채팅</ChaetingBox> : null}
+                  {showChaet ?
+                    <StChatWrap onClick={() => createChat(calendarfind.userId)}>
+                      {calendarfind && calendarfind.username !== data.username ?
+                        <ChaetingBox>
+                          1:1채팅
+                        </ChaetingBox> : null}
+                    </StChatWrap> : null}
                 </Bodytxt>
                 {calendarfind && calendarfind.username === data.username ?
                   <BiDotsVerticalRounded
@@ -518,6 +524,8 @@ const Txtstudent = styled.p`
   font-size: 12px;
   color: #bebebe;
 `;
+
+const StChatWrap = styled.div``
 const ChaetingBox = styled.div`
   border: 1px solid #f1f0f0;
   border-radius: 16px;
