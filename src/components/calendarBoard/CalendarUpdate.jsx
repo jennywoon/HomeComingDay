@@ -660,5 +660,5 @@ const StJoinDiv = styled.div`
   border:none;
 `
 const ArrowForward = styled(IoIosArrowForward)`
-  color:#8E8E8E;
+  color:#cfcfcf;
 `
