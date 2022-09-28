@@ -30,11 +30,12 @@ function ChatInput(props) {
                     style={{ paddingLeft: "20px", color: "#969696" }} size="37"
                 />
                 <StChatInput
-                    placeholder="메세지를 입력해주세요"
+                    placeholder="채팅 메세지를 입력해주세요(1,000자 제한)"
                     type="text"
                     onChange={onChangeChatHandler}
                     onKeyPress={onKeyPressHandler}
                     value={text}
+                    maxLength="1000"
                 />
                 <BsArrowUpCircle
                     onClick={onClick}
