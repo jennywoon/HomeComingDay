@@ -15,13 +15,13 @@ export const __getNotice = createAsyncThunk("getNotice", async(payload, thunkAPI
       method: 'get',
       url: `${BASE_URL}/notification`,
       headers: {
-        // Authorization: `Bearer ${getCookie("accessToken")}`,
+        Authorization: `Bearer ${getCookie("accessToken")}`,
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache',
         Connection: 'keep-alive',
       }
     });
-      // console.log(data)
+      console.log(data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
       console.log('error', error);
@@ -92,7 +92,7 @@ export const __deleteNotice = createAsyncThunk("deleteNotice", async (payload, t
   try {
     const data = await axios({
       method: 'delete',
-      url: `${BASE_URL}/notification/${payload.notificationId}`,
+      url: `${BASE_URL}/notification/${payload}`,
       headers: {
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache',
@@ -100,6 +100,7 @@ export const __deleteNotice = createAsyncThunk("deleteNotice", async (payload, t
         Authorization: `Bearer ${getCookie("accessToken")}`,
       },
     });
+    console.log(data)
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
     // console.log('error', error)

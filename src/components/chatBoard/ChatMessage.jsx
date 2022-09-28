@@ -44,7 +44,6 @@ const Box = styled.div`
     align-items: ${(props) => (props.user ? "flex-end" : "flex-start")};
     margin-bottom: 15px;
     word-break: break-all;
-  
 `;
 
 const MessageBox = styled.div`
@@ -60,19 +59,21 @@ const MessageBox = styled.div`
 const Message = styled.div`
     max-width: 70%;
     padding: 10px 15px;
-    border-radius: 8px;
-    background-color: ${(props) => (props.user ? "rgba(8, 17, 52, 0.6);" : "rgba(163, 171, 199, 0.6);")};
+    /* border-radius: 20px; */
+    border-radius: ${(props) => (props.user ? "20px 0 20px 20px" : "0 20px 20px 20px")};
+    background-color: ${(props) => (props.user ? "rgba(247,147,30);" : "#ffffff")};
+    color: ${(props) => (props.user ? "#ffffff" : "#000000")};
     margin: ${(props) => (props.user ? "0 0 0 5px" : "0 5px 0 0")};
     flex-direction: ${(props) => (props.user ? "row-reverse" : "row")};
-  
     font-size: 14px;
     line-height: 18px;
-    color: #ffffff;
+    /* color: #ffffff; */
     @media only screen and (max-width: 420px) {
         padding: 14px 10px;
         font-size: 12px;
         line-height: 15px;
     }
+    /* border: 1px solid red; */
 `;
 
 const CreatedAt = styled.div`
@@ -81,7 +82,8 @@ const CreatedAt = styled.div`
     font-size: 10px;
     line-height: 13px;
     text-align: center;
-    color: #c6d3ec;
+    /* color: #c6d3ec; */
+    color: #bebebe;
     @media only screen and (max-width: 420px) {
         font-size: 8px;
         line-height: 10px;

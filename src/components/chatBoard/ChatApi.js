@@ -32,7 +32,6 @@ export const chatApi = {
     // 이전 채팅 메시지 불러오기
     getChatMessage: async(roomId) => {
         // const data = await instance.get(`/chat/rooms/${roomId}/messages`);
-        // const data = await instance.get(`${BASE_URL}/chat/rooms/9118e16a-8a69-4835-8497-6595648977bf/messages`);
         const data = await instance.get(`${BASE_URL}/chat/rooms/${roomId}/messages`);
         return data;
     },

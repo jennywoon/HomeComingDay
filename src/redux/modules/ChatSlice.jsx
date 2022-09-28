@@ -82,14 +82,14 @@ const ChatSlice = createSlice({
             state.isLoading = true;
         },
         deleteChatList(state, action) {
-            // state.chatList = state.chatList.filter((chat) => chat.chatRoomUuid !== action.payload);
-            state.chatList = state.chatList.filter((chat) => chat.chatRoomId !== action.payload);
+            state.chatList = state.chatList.filter((chat) => chat.chatRoomUuid !== action.payload);
+            // state.chatList = state.chatList.filter((chat) => chat.chatRoomId !== action.payload);
         },
     },
 
     extraReducers: (builder) => {
         builder.addCase(getChatMessage.fulfilled, (state, action) => {
-            state.messages = action.payload.datel
+            state.messages = action.payload.data;
         });
         builder.addCase(getChatList.fulfilled, (state, action) => {
             if(state.page === 1){

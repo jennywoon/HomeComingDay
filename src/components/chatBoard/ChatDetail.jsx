@@ -14,6 +14,8 @@ import ChatInput from './ChatInput';
 import Header from "../Header"
 import { IoIosArrowBack } from 'react-icons/io'
 import { BiDotsVerticalRounded } from "react-icons/bi";
+import { deleteChatList } from '../../redux/modules/ChatSlice';
+import ChatDeleteModal from './ChatDeleteModal';
 
 const ChatDetail = () => {
 
@@ -31,6 +33,7 @@ const ChatDetail = () => {
 
     // 보내는 사람
     const isLoading = useSelector((state) => state.user.isLoading);
+    const chatList = useSelector((state) => state.chat.chatList);
     // const isLoading = useSelector((state) => state.userSlice.isLoading);
     // const userInfo = useSelector((state) => state.userSlice.userInfo);
     const mypages = useSelector((state) => state.mypages.mypages);
@@ -94,6 +97,23 @@ const ChatDetail = () => {
             wsDisConnect();
         }
     }, []);
+
+    // 채팅방 나가기 모달창
+    const [isOpenPopup, setIsOpenPopup] = useState(false);
+    const [clickedChatId, setClickChatId] = useState("");
+    const PopupRef = useRef();
+
+    // 채팅방 나가기
+    const deleteChat = () => {
+        chatApi.deleteChat(clickedChatId).then((response) => {
+            if (response.status === 200) {
+                setIsOpenPopup(false);
+                dispatch(deleteChatList(clickedChatId));
+            } else {
+                window.alert("에러처리")
+            }
+        })
+    }
 
     function wsConnect() {
         try {
@@ -172,14 +192,12 @@ const ChatDetail = () => {
                         <HeadStudent> {otherUserInfo.otherAdmission}</HeadStudent>
                     </InfoWrap>
                 </ChatInfo>
-                <BiDotsVerticalRounded
-                    size="37" style={{ paddingRight: "20px" }}
-                />
+                <div style={{ paddingRight: "20px" }}></div>
             </Navbar>
             <StChatContainer>
                 <StChatWrap>
                     {/* <StChatDiv>
-                        <StChatDate>날짜</StChatDate>
+                        <StChatDate>{otherUserInfo.createdAt}</StChatDate>
                     </StChatDiv> */}
                 </StChatWrap>
             </StChatContainer>
@@ -207,7 +225,7 @@ const StChatContainer = styled.div`
 
 const Navbar = styled.div`
     width: 100%;
-    height: 50px;
+    height: 60px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -244,9 +262,10 @@ const StChatWrap = styled.div`
 
 const StChatDiv = styled.div`
     width: 100%;
-    /* border: 1px solid red; */
+    border: 1px solid red;
     display: flex;
     justify-content: center;
+    color: black;
 `
 const StChatDate = styled.div`
     margin-top: 15px;
