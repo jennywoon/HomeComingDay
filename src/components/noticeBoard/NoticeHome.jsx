@@ -8,12 +8,9 @@ import Searchimg from '../../assets/Search.png';
 import Chatimg from '../../assets/Chat.png';
 import Myimg from '../../assets/My.png';
 import NoticeList from './NoticeList';
-// import { initSocketConnection, disconnectSocket } from './Socketio';
 
 const NoticeHome = () => {
   const navigate = useNavigate();
-  const userinfo = useSelector((state) => state);
-  // console.log(userinfo)
 
   return (
     <StHomeContainer>
@@ -101,24 +98,17 @@ const StHomeContainer = styled.div`
 `;
 
 const StHelpContainer = styled.div`
-  /* gap: 8px; */
-  /* height: 100vh; */
-  /* overflow-y: scroll; */
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   flex-direction: column;
-  /* border: 1px solid blue; */
 `;
 
 const StHeader = styled.div`
   width: 100%;
   height: 48px;
-  /* border: 1px solid red; */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* margin-bottom: 10px; */
   border-bottom: 1px solid #f5f5f5;
 `;
 const StHeaderTitle = styled.div`

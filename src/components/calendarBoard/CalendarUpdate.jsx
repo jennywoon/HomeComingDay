@@ -32,7 +32,7 @@ const CalendarUpdate = () => {
       e.preventDefault();
       setModalOpen(true);
   }
-
+console.log(calendarfind)
   const onChange = (value) => setDate(value);
   const [date, setDate] = useState({
     calendarDate: '',
@@ -75,15 +75,15 @@ const CalendarUpdate = () => {
 
   //참여하기 인원 수정
 
-  const joinMinusHandle =()=>{
-    if(joinNumber > 1){
-    setJoinNumber(joinNumber -1)
-  }
-  }
-  const joinPlusHandle =()=>{
-    if(joinNumber < 5)
-    setJoinNumber(joinNumber +1)
-  }
+  // const joinMinusHandle =()=>{
+  //   if(joinNumber > 1){
+  //   setJoinNumber(joinNumber -1)
+  // }
+  // }
+  // const joinPlusHandle =()=>{
+  //   if(joinNumber < 5)
+  //   setJoinNumber(joinNumber +1)
+  // }
 
   const onChangeTitle = (e) => {
     setEditTitle(e.target.value);
@@ -162,7 +162,6 @@ const CalendarUpdate = () => {
     setTimeShow(!timeShow);
   }
   console.log(hour + ":" + selectMinute)
-  const [selectedTime, setSelectedTime] = useState('00:00');
 
   // 카카오 주소 검색하기
   const [openPostcode, setOpenPostcode] = useState(false);
@@ -238,7 +237,7 @@ const CalendarUpdate = () => {
                 <CalendarTitle>날짜</CalendarTitle>
                 <DateDiv onClick={() => setIsActive(!isActive)}>
                   {moment(date).format('YYYY년 MM월 DD일')}
-                  <IoIosArrowForward />
+                  <ArrowForward />
                 </DateDiv>
               </CalendarButton>
               <CalendarWrap value={reactCalendar} onClick={onChangeCalendar}>
@@ -260,7 +259,7 @@ const CalendarUpdate = () => {
                   value={`${hour}:${selectMinute}`}
                 >
                 {`${hour}:${selectMinute}`}
-                <IoIosArrowForward />
+                <ArrowForward />
                 </TimeOpenBtn>
               </TimeDiv>
               <StKakaoMap>
@@ -347,7 +346,7 @@ const CalendarUpdate = () => {
               onClick={handle.clickButton}
             >
               {calendarlocation ? calendarlocation : "장소를 검색해주세요"}
-              <IoIosArrowForward />
+              <ArrowForward />
             </CalendarInput>
           </CalendarDiv>
           <StKakaoMap>
@@ -472,7 +471,7 @@ const CalendarInput = styled.div`
   gap: 10px;
 `
 const CalendarTextarea = styled.textarea`
-  width: 65%;
+  width: 85%;
   height: 200px;
   resize: none;
   border-radius: 10px;
@@ -481,6 +480,7 @@ const CalendarTextarea = styled.textarea`
   display: flex;
   justify-content: center;
   align-items: center;
+  outline: none;
   textarea::placeholder {
     text-align: right;
   }
@@ -658,4 +658,7 @@ const StJoinDiv = styled.div`
   gap: 10px;
   cursor: pointer;
   border:none;
+`
+const ArrowForward = styled(IoIosArrowForward)`
+  color:#8E8E8E;
 `
