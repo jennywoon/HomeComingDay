@@ -30,8 +30,8 @@ const NoticeHome = () => {
           <StHeaderTitle>알림</StHeaderTitle>
           <div></div>
         </StHeader>
-        <NoticeList />
       </StHelpContainer>
+        <NoticeList />
       {/* <BottomTap /> */}
       <StBottomTapWrap>
         <StBottom>
@@ -102,7 +102,7 @@ const StHomeContainer = styled.div`
 
 const StHelpContainer = styled.div`
   /* gap: 8px; */
-  height: 100vh;
+  /* height: 100vh; */
   /* overflow-y: scroll; */
   display: flex;
   /* justify-content: center; */
