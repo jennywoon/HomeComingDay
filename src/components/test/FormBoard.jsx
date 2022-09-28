@@ -72,9 +72,9 @@ const Form2 = () => {
   //이미지 Dropzone -추가
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
+    accept: ".heic, .heif, image/*",
     // accept:
     //   'image/*',
-    accept: ".heic, .heif, image/*",
     // {
     //   'image/png': ['.png'],
     //   'image/jpg': ['.jpg'],

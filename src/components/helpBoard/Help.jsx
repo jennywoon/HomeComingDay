@@ -55,14 +55,14 @@ const Help = () => {
           <>
             {select === "new"&& helps && helps.length > 0 ? (
               <div>
-                {helps && helps.slice(0).map((help) => (
+                {helps && helps.map((help) => (
                   <HelpCard key={help.articleId} id={help.articleId} help={help} />
                 ))}
               </div>
             ) : 
             select === "popular"&& helpPopular && helpPopular.length > 0 ?
            (<div>
-            {helpPopular && helpPopular.slice(0).map((help) => (
+            {helpPopular && helpPopular.map((help) => (
               <HelpCard key={help.articleId} id={help.articleId} help={help} />
             ))}
           </div>) :
