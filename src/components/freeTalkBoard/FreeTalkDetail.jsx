@@ -21,6 +21,7 @@ import heartImg from '../../assets/heartImg.png';
 import heartColorImg from '../../assets/heartColor.png';
 import { __getMyPage } from '../../redux/modules/MyPageSlice';
 import { chatApi } from '../chatBoard/ChatApi';
+import { __getNoticeCount } from '../../redux/modules/NoticeSlice';
 
 const FreeTalkDetail = () => {
     const dispatch = useDispatch();
@@ -98,8 +99,9 @@ const FreeTalkDetail = () => {
             articleId: id
         }
         await dispatch(__postFreeTalkComment(newcomment));
-        await dispatch(__getFreeTalk());
         setComment("");
+        await dispatch(__getFreeTalk());
+        await dispatch(__getNoticeCount());
     }
     // const closeModal = (e) => {
     //     if (!modalRef.current.contains(e.target)) {
@@ -179,11 +181,12 @@ const FreeTalkDetail = () => {
                                     <Txtname onClick={onCilckChaetShow}>{freetalksfind && freetalksfind.username}</Txtname>
                                     <Txtstudent>{freetalksfind && freetalksfind.departmentName} <span> {freetalksfind && freetalksfind.admission} </span></Txtstudent>
                                     {showChaet ?
-                                        <ChaetingBox
-                                        onClick={() => createChat(freetalksfind.userId)}>
-                                        1:1채팅</ChaetingBox>
-                                        : null
-                                    }
+                                        <StChatWrap onClick={() => createChat(freetalksfind.userId)}>
+                                            {freetalksfind && freetalksfind.username !== data.username ?
+                                                <ChaetingBox>
+                                                    1:1채팅
+                                                </ChaetingBox> : null}
+                                        </StChatWrap> : null}
                                 </Bodytxt>
                                 {/* <AiOutlineMenu size="20px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }}
                                     onClick={onCilckShow} /> */}
@@ -429,6 +432,7 @@ const Txtstudent = styled.p`
     font-size: 12px;
     color: #bebebe;
 `
+const StChatWrap = styled.div``
 const ChaetingBox = styled.div`
   border: 1px solid #f1f0f0;
   border-radius: 16px;

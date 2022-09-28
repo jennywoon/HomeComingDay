@@ -29,6 +29,7 @@ import heartImg from '../../assets/heartImg.png';
 import heartColorImg from '../../assets/heartColor.png';
 import { __getMyPage } from '../../redux/modules/MyPageSlice';
 import { chatApi } from '../chatBoard/ChatApi';
+import { __getNoticeCount } from '../../redux/modules/NoticeSlice';
 
 const InformationDetail = () => {
   const dispatch = useDispatch();
@@ -105,6 +106,7 @@ const InformationDetail = () => {
     await dispatch(__postInfoComment(newcomment));
     setComment('');
     await dispatch(__getInformation());
+    await dispatch(__getNoticeCount());
   };
   // const closeModal = (e) => {
   //     if (!modalRef.current.contains(e.target)) {
@@ -203,13 +205,16 @@ const InformationDetail = () => {
                       {informationsfind && informationsfind.admission}{' '}
                     </span>
                   </Txtstudent>
-                  {showChaet ? <ChaetingBox
-                  onClick={() => createChat(informationsfind.userId)}>
-                  1:1채팅</ChaetingBox> : null}
+                  {showChaet ?
+                    <StChatWrap onClick={() => createChat(informationsfind.userId)}>
+                      {informationsfind && informationsfind.username !== data.username ?
+                      <ChaetingBox>
+                        1:1채팅
+                      </ChaetingBox>: null}
+                    </StChatWrap> : null}
                 </Bodytxt>
 
-                {informationsfind &&
-                  informationsfind.username === data.username ? (
+                {informationsfind && informationsfind.username === data.username ? (
                   <BiDotsVerticalRounded
                     size='20px'
                     style={{
@@ -478,6 +483,8 @@ const Txtstudent = styled.p`
   font-size: 12px;
   color: #bebebe;
 `;
+
+const StChatWrap = styled.div``
 const ChaetingBox = styled.div`
   border: 1px solid #f1f0f0;
   border-radius: 16px;
