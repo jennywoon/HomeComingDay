@@ -32,73 +32,23 @@ const NoticeList = () => {
   const data = useSelector((state) => state.notice.notices);
   // console.log(data);
 
-  // 알림 구독
-  const EventSource = EventSourcePolyfill;
-
-  useEffect(() => {
-    let eventSource;
-
-    const subscription = async () => {
-      try {
-        const eventSource = new EventSource(`${BASE_URL}/subscribe`, {
-          headers: {
-            Authorization: `Bearer ${getCookie('accessToken')}`,
-            // 'Content-Type': 'application/event-stream',
-            Connection: 'keep-alive',
-            heartbeatTimeout: 180 * 1000,
-          },
-          // https
-          withCredentials: true,
-          lastEventIdQueryParameterName: 'Last-Event-ID',
-          // credentials: 'include'
-        });
-        // console.log(eventSource);
-
-        eventSource.onopen = async (e) => {
-          const result = await e;
-          // console.log('Connection is open', result);
-          setEventSourceStatus(result.type);
-        };
-
-        eventSource.onmessage = async (e) => {
-          const result = await JSON.parse(e.data);
-          // console.log('onmessage: ', result);
-          setAlarms((prev) => [...prev, result]);
-        };
-
-        eventSource.onerror = async (e) => {
-          const result = await e;
-          // console.log('onerror: ', result);
-          // result.error.message.includes('45000 milliseconds')
-          //   ? setEventSourceStatus(result.type)
-          //   : eventSource.close();
-          eventSource.close();
-        };
-        setListening(true);
-      } catch (error) {
-        // console.log(error);
-      }
-    };
-    subscription();
-    // return () => eventSource.close();
-  }, []);
   return (
     <StNoticeList>
-        {data.length > 0 ? (
-          <StNoticeWrap>
-            {data &&
-              data.map((notice) => (
-                <NoticeCard item={notice} key={notice.notificationId} />
-              ))}
-          </StNoticeWrap>
-        ) : (
-          <StNone>
-            <StNoneData>
-              <StNoneDataImg></StNoneDataImg>
-              <p>받은 알림이 없습니다</p>
-            </StNoneData>
-          </StNone>
-        )}
+      {data.length > 0 ? (
+        <StNoticeWrap>
+          {data &&
+            data.map((notice) => (
+              <NoticeCard item={notice} key={notice.notificationId} />
+            ))}
+        </StNoticeWrap>
+      ) : (
+        <StNone>
+          <StNoneData>
+            <StNoneDataImg />
+            <StNoneDataMsg>받은 알림이 없습니다</StNoneDataMsg>
+          </StNoneData>
+        </StNone>
+      )}
     </StNoticeList>
   );
 };
@@ -106,30 +56,26 @@ const NoticeList = () => {
 export default NoticeList;
 
 const StNoticeList = styled.div`
-width: 100%;
-height: 100vh;
+  width: 100%;
+  height: 100vh;
   overflow: scroll;
-  /* scrollbar-width: 0; */
-  /* border: 1px solid red; */
   display: flex;
   justify-content: center;
   ::-webkit-scrollbar {
     width: 0px;
   }
-  `;
+`;
 
 const StNoticeWrap = styled.div`
-width: 100%;
-  /* border: 1px solid blue; */
-`
+  width: 100%;
+`;
 const StNone = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const StNoneData = styled.div`
-  /* margin-top: 300px; */
   width: 100%;
   height: 100%;
   display: flex;
@@ -148,3 +94,5 @@ const StNoneDataImg = styled.div`
   background-position: center;
   background-size: 100% 100%;
 `;
+
+const StNoneDataMsg = styled.p``;
