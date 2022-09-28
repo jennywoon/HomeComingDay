@@ -84,21 +84,21 @@ const NoticeList = () => {
   }, []);
   return (
     <StNoticeList>
-      {data.length > 0 ? (
-        <div>
-          {data &&
-            data.map((notice) => (
-              <NoticeCard item={notice} key={notice.notificationId} />
-            ))}
-        </div>
-      ) : (
-        <StNone>
-          <StNoneData>
-            <StNoneDataImg></StNoneDataImg>
-            <p>받은 알림이 없습니다</p>
-          </StNoneData>
-        </StNone>
-      )}
+        {data.length > 0 ? (
+          <StNoticeWrap>
+            {data &&
+              data.map((notice) => (
+                <NoticeCard item={notice} key={notice.notificationId} />
+              ))}
+          </StNoticeWrap>
+        ) : (
+          <StNone>
+            <StNoneData>
+              <StNoneDataImg></StNoneDataImg>
+              <p>받은 알림이 없습니다</p>
+            </StNoneData>
+          </StNone>
+        )}
     </StNoticeList>
   );
 };
@@ -106,14 +106,22 @@ const NoticeList = () => {
 export default NoticeList;
 
 const StNoticeList = styled.div`
+width: 100%;
 height: 100vh;
   overflow: scroll;
   /* scrollbar-width: 0; */
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: center;
   ::-webkit-scrollbar {
     width: 0px;
   }
   `;
 
+const StNoticeWrap = styled.div`
+width: 100%;
+  /* border: 1px solid blue; */
+`
 const StNone = styled.div`
 display: flex;
 justify-content: center;
