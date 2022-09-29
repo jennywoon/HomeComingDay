@@ -16,7 +16,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.mypages.mypages);
   const count = useSelector((state) => state.notice.notices.count);
-  console.log(count);
+  // console.log(count);
 
   // 토큰 만료되면 로그아웃
   const navigate = useNavigate();
