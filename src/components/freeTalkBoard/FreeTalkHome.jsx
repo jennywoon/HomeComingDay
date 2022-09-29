@@ -12,102 +12,82 @@ const FreeTalkHome = () => {
   const navigate = useNavigate();
 
   return (
-    <HomeContainer>
+    <StHomeContainer>
       <FreeTalk />
-      <IconWrap>
-        <Iconbox onClick={() => navigate('/form')}>
-          <TiPencil color='white' size='40px' />
-        </Iconbox>
-      </IconWrap>
-      <SecondWrap>
-        <Bottom>
-          <Tap
+      <StIconWrap>
+        <StIconbox onClick={() => navigate('/form')}>
+          <TiPencil color='white' size= "32" />
+        </StIconbox>
+      </StIconWrap>
+      <StSecondWrap>
+        <StBottom>
+          <StFirstTap
             onClick={() => {
               navigate('/main');
             }}
-            style={{ paddingLeft: '20px', color: '#f7931e' }}
           >
-            <img
+            <StImg
               src={HomeColorimg}
               alt='홈'
-              style={{ width: '45%', margin: '2px' }}
             />
-            <TapTitle style={{ fontWeight: 'bold' }}>홈</TapTitle>
-          </Tap>
-          <Tap
+            <StHomeTitle>홈</StHomeTitle>
+          </StFirstTap>
+          <StTap
             onClick={() => {
               navigate('/search');
             }}
           >
-            <img
+            <StImg
               src={Searchimg}
               alt='검색'
-              style={{ width: '45%', margin: '2px' }}
             />
-            <TapTitle style={{ color: '#8E8E8E' }}>검색</TapTitle>
-          </Tap>
-          <Tap
+            <StTapTitle>검색</StTapTitle>
+          </StTap>
+          <StTap
             onClick={() => {
               navigate('/chat');
             }}
           >
-            <img
+            <StImg
               src={Chatimg}
               alt='채팅'
-              style={{ width: '45%', margin: '2px' }}
             />
-            <TapTitle style={{ color: '#8E8E8E' }}>채팅</TapTitle>
-          </Tap>
-          <Tap
-            style={{ paddingRight: '20px' }}
+            <StTapTitle>채팅</StTapTitle>
+          </StTap>
+          <StLastTap
             onClick={() => {
               navigate('/mypage');
             }}
           >
-            <img
+            <StImg
               src={Myimg}
               alt='마이페이지'
-              style={{ width: '45%', margin: '2px' }}
             />
-            <TapTitle style={{ color: '#8E8E8E' }}>MY</TapTitle>
-          </Tap>
-        </Bottom>
-      </SecondWrap>
-    </HomeContainer>
+            <StTapTitle>MY</StTapTitle>
+          </StLastTap>
+        </StBottom>
+      </StSecondWrap>
+    </StHomeContainer>
   );
 };
 
 export default FreeTalkHome;
 
-const HomeContainer = styled.div`
+const StHomeContainer = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  /* flex-wrap: wrap; */
 `;
 
-const Navbar = styled.div`
-  width: 100%;
-  height: 50px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 15px;
-  /* font-weight: bold; */ ;
-`;
-
-const NavbarTitle = styled.div`
-  cursor: pointer;
-`;
-const SecondWrap = styled.div`
+const StSecondWrap = styled.div`
   width: 100%;
   position: sticky;
   background-color: #ffffff;
   bottom: 0;
   box-shadow: 0px 2px 13px rgba(0, 0, 0, 0.2);
 `;
-const Bottom = styled.div`
+const StBottom = styled.div`
   height: 60px;
   display: flex;
   justify-content: space-between;
@@ -115,23 +95,50 @@ const Bottom = styled.div`
   font-weight: 600;
 `;
 
-const Tap = styled.div`
+const StFirstTap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding-left: 20px;
+`
+
+const StTap = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
 `;
-const TapTitle = styled.div`
+
+const StLastTap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding-right: 20px;
+`
+const StImg = styled.img`
+  width: 45%;
+  margin: 2px;
+`
+
+const StHomeTitle = styled.div`
+  font-size: 11px;
+  font-weight: 600;
+  color: #f7931e;
+`
+const StTapTitle = styled.div`
   font-size: 11px;
   font-weight: 400;
+  color: #8e8e8e;
 `;
 
-const IconWrap = styled.div`
+const StIconWrap = styled.div`
   width: 95%;
   display: flex;
   justify-content: right;
 `;
-const Iconbox = styled.div`
+const StIconbox = styled.div`
   width: 50px;
   height: 50px;
   background-color: #f7931e;

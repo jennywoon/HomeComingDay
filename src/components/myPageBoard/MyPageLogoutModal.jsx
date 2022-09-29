@@ -1,8 +1,8 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { logout } from '../../shared/cookies';
+import exclamation from '../../assets/exclamation.png';
 
 const MyPageLogoutModal = ({ setModalOpen }) => {
   const closeModal = () => {
@@ -12,33 +12,33 @@ const MyPageLogoutModal = ({ setModalOpen }) => {
   const navigate = useNavigate();
 
   return (
-    <Container>
-      <Wrap>
-        <ModalContainer>
-          <FirstWrap>
-            <ModalTop>
-              <AiOutlineInfoCircle style={{ color: '#f7931e' }} size='28' />
-              <TopTitle>정말 로그아웃 하시겠습니까?</TopTitle>
-            </ModalTop>
-            <ModalBottom onClick={closeModal}>
-              <BottomTitle
+    <StContainer>
+      <StWrap>
+        <StModalContainer>
+          <StFirstWrap>
+            <StModalTop>
+            <StExclamation />
+              <StTopTitle>정말 로그아웃 하시겠습니까?</StTopTitle>
+            </StModalTop>
+            <StModalBottom onClick={closeModal}>
+              <StBottomTitle
               onClick={() => {
                 logout();
                 navigate("/")
               }}
-              >로그아웃</BottomTitle>
-              <BottomTitle>돌아가기</BottomTitle>
-            </ModalBottom>
-          </FirstWrap>
-        </ModalContainer>
-      </Wrap>
-    </Container>
+              >로그아웃</StBottomTitle>
+              <StBottomTitle>돌아가기</StBottomTitle>
+            </StModalBottom>
+          </StFirstWrap>
+        </StModalContainer>
+      </StWrap>
+    </StContainer>
   );
 };
 
 export default MyPageLogoutModal;
 
-const Container = styled.div`
+const StContainer = styled.div`
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -68,7 +68,7 @@ const Container = styled.div`
   }
 `;
 
-const Wrap = styled.div`
+const StWrap = styled.div`
   width: 100%;
   max-width: 420px;
   height: 100vh;
@@ -81,7 +81,7 @@ const Wrap = styled.div`
   overflow-y: hidden;
 `;
 
-const ModalContainer = styled.div`
+const StModalContainer = styled.div`
   width: 80%;
   height: 180px;
   background-color: white;
@@ -91,11 +91,20 @@ const ModalContainer = styled.div`
   border-radius: 16px;
 `;
 
-const FirstWrap = styled.div`
+const StFirstWrap = styled.div`
   width: 100%;
   height: 100%;
 `;
-const ModalTop = styled.div`
+
+const StExclamation = styled.div`
+  width: 30px;
+  height: 30px;
+  background-image: url(${exclamation});
+  background-position: center;
+  background-size: 100% 100%;
+`;
+
+const StModalTop = styled.div`
   width: 100%;
   height: 75%;
   display: flex;
@@ -105,14 +114,14 @@ const ModalTop = styled.div`
   gap: 12px;
 `;
 
-const TopTitle = styled.div`
+const StTopTitle = styled.div`
   font-size: 16px;
   font-weight: 500;
   padding: 0 10px;
   text-align: center;
   word-break: keep-all;
 `;
-const ModalBottom = styled.div`
+const StModalBottom = styled.div`
   width: 100%;
   height: 25%;
   color: white;
@@ -125,7 +134,7 @@ const ModalBottom = styled.div`
   gap: 10px;
 `;
 
-const BottomTitle = styled.div`
+const StBottomTitle = styled.div`
   font-size: 16px;
   font-weight: 700;
   /* border: 1px solid red; */

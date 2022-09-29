@@ -62,25 +62,25 @@ const MyPageHome = () => {
   }
 
   return (
-    <HomeContainer>
+    <StHomeContainer>
       {lankModalOpen && <MyPageLankModal setLankModalOpen={setLankModalOpen} />}
-      <MyPageTop>
+      <StMyPageTop>
         <MyPageUser />
-      </MyPageTop>
-      <MyPageBottom>
-        <BottomWrap>
-          <TitleWrap>
+      </StMyPageTop>
+      <StMyPageBottom>
+        <StBottomWrap>
+          <StTitleWrap>
             <StMyPosTitletWrap>
-              <MyPostTitle>내가 쓴 게시글</MyPostTitle>
-              <PostCount>{myarticles && myarticles.length}</PostCount>
+              <StMyPostTitle>내가 쓴 게시글</StMyPostTitle>
+              <StPostCount>{myarticles && myarticles.length}</StPostCount>
               <StRefresh onClick={refreshPage} />
             </StMyPosTitletWrap>
             <StLankWrap onClick={showLankModal}>
               <StLank>등급안내</StLank>
             </StLankWrap>
             {/* <PostCount>{totalCount}</PostCount> */}
-          </TitleWrap>
-          <ArticleWrap>
+          </StTitleWrap>
+          <StArticleWrap>
             {myarticles && myarticles.length > 0 ? (
               <div>
                 {myarticles && myarticles.map((myarticle) => (
@@ -89,76 +89,70 @@ const MyPageHome = () => {
                 ))}
               </div>
             ) : (
-              <NoneData>
-                <NoneDataImg />
+              <StNoneData>
+                <StNoneDataImg />
                 <p>내가 쓴 게시글이 없습니다</p>
-              </NoneData>
+              </StNoneData>
             )}
             <div ref={targetRef}>{error}</div>
-          </ArticleWrap>
-        </BottomWrap>
-      </MyPageBottom>
+          </StArticleWrap>
+        </StBottomWrap>
+      </StMyPageBottom>
       <SecondWrap>
-        <Bottom>
-          <Tap
+        <StBottom>
+          <StFirstTap
             onClick={() => {
               navigate('/main');
             }}
-            style={{ paddingLeft: '20px' }}
           >
-            <img
+            <StImg
               src={Homeimg}
               alt='홈'
-              style={{ width: '45%', margin: '2px' }}
             />
-            <TapTitle style={{ color: '#8E8E8E' }}>홈</TapTitle>
-          </Tap>
-          <Tap
+            <StTapTitle>홈</StTapTitle>
+          </StFirstTap>
+          <StTap
             onClick={() => {
               navigate('/search');
             }}
           >
-            <img
+            <StImg
               src={Searchimg}
               alt='검색'
-              style={{ width: '45%', margin: '2px' }}
             />
-            <TapTitle style={{ color: '#8E8E8E' }}>검색</TapTitle>
-          </Tap>
-          <Tap
+            <StTapTitle>검색</StTapTitle>
+          </StTap>
+          <StTap
             onClick={() => {
               navigate('/chat');
             }}
           >
-            <img
+            <StImg
               src={Chatimg}
               alt='채팅'
-              style={{ width: '45%', margin: '2px' }}
             />
-            <TapTitle style={{ color: '#8E8E8E' }}>채팅</TapTitle>
-          </Tap>
-          <Tap
-            style={{ paddingRight: '20px', color: '#f7931e' }}
+            <StTapTitle>채팅</StTapTitle>
+          </StTap>
+          <StLastTap
             onClick={() => {
               navigate('/mypage');
             }}
           >
-            <img
+            <StImg
               src={MyColorimg}
               alt='마이페이지'
-              style={{ width: '45%', margin: '2px' }}
             />
-            <TapTitle style={{ fontWeight: 'bold' }}>MY</TapTitle>
-          </Tap>
-        </Bottom>
+            <StLastTapTitle>MY</StLastTapTitle>
+          </StLastTap>
+        </StBottom>
       </SecondWrap>
-    </HomeContainer>
+    </StHomeContainer>
   );
 };
 
 export default MyPageHome;
 
-const HomeContainer = styled.div`
+const StHomeContainer = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
@@ -166,7 +160,7 @@ const HomeContainer = styled.div`
   align-items: center;
 `;
 
-const MyPageTop = styled.div`
+const StMyPageTop = styled.div`
   width: 100%;
   /* height: 200px; */
   height: 25%;
@@ -177,14 +171,14 @@ const MyPageTop = styled.div`
   /* border: 1px solid red; */
 `;
 
-const MyPageBottom = styled.div`
+const StMyPageBottom = styled.div`
   width: 100%;
   height: 75%;
   display: flex;
   justify-content: center;
   /* border: 1px solid blue; */
 `;
-const ArticleWrap = styled.div`
+const StArticleWrap = styled.div`
   height: 85%;
   /* height: 100%; */
   /* border: 1px solid green; */
@@ -194,11 +188,11 @@ const ArticleWrap = styled.div`
     /* background-color: red; */
   }
 `;
-const BottomWrap = styled.div`
+const StBottomWrap = styled.div`
   width: 90%;
   height: 100%;
 `;
-const TitleWrap = styled.div`
+const StTitleWrap = styled.div`
   display: flex;
   align-items: center;
   font-size: 16px;
@@ -207,7 +201,7 @@ const TitleWrap = styled.div`
   gap: 10px;
   justify-content: space-between;
 `;
-const NoneData = styled.div`
+const StNoneData = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
@@ -219,7 +213,7 @@ const NoneData = styled.div`
   font-size: 16px;
 `;
 
-const NoneDataImg = styled.div`
+const StNoneDataImg = styled.div`
   width: 50px;
   height: 50px;
   background-image: url(${nonedatasquare});
@@ -231,11 +225,11 @@ const StMyPosTitletWrap = styled.div`
   display: flex;
   align-items: center;
 `
-const MyPostTitle = styled.div`
+const StMyPostTitle = styled.div`
   color: #bebebe;
 `;
 
-const PostCount = styled.div`
+const StPostCount = styled.div`
   color: #f7931e;
   margin: 0 5px 0 10px;
 `;
@@ -268,20 +262,46 @@ const SecondWrap = styled.div`
   bottom: 0;
   box-shadow: 0px 2px 13px rgba(0, 0, 0, 0.2);
 `;
-const Bottom = styled.div`
+const StBottom = styled.div`
   height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
-const Tap = styled.div`
+const StFirstTap = styled.div`
+    display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding-left: 20px;
+`
+const StTap = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
 `;
-const TapTitle = styled.div`
+
+const StLastTap = styled.div`
+    display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding-right: 20px;
+`
+const StImg = styled.img`
+  width: 45%;
+  margin: 2px;
+`
+const StTapTitle = styled.div`
   font-size: 11px;
   font-weight: 400;
+  color: #8e8e8e;
 `;
+
+const StLastTapTitle = styled.div`
+    font-size: 11px;
+  font-weight: 600;
+  color: #f7931e;
+`

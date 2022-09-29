@@ -16,7 +16,6 @@ const MyPageUser = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    // const mypages = useSelector((state) => state.mypages.mypages);
     const { mypages, totalCount } = useSelector((state) => state.mypages);
     // console.log(mypages, totalCount);
 
@@ -66,24 +65,24 @@ const MyPageUser = () => {
     return (
         <StLoginContainer>
             {modalOpen && <MyPageLogoutModal setModalOpen={setModalOpen} />}
-            <UserContainer>
-                <UserImgWrap>
-                    <UserImg
+            <StUserContainerWrap>
+                <StUserImgWrap>
+                    <StUserImg
                         src={mypages.userImage} onClick={() => { onClickFileBtn() }}
                         onError={onErrorImg}
                     >
-                    </UserImg>
+                    </StUserImg>
                     <input type="file" ref={imgRef} onChange={onChangeImage} style={{ display: "none" }}></input>
-                        <UserImgUpload onClick={() => { onClickFileBtn() }}>
-                            <CameraIcon />
-                        </UserImgUpload>
-                </UserImgWrap>
-                <UserInfo>
-                    <FirstWrap>
+                        <StUserImgUpload onClick={() => { onClickFileBtn() }}>
+                            <StCameraIcon />
+                        </StUserImgUpload>
+                </StUserImgWrap>
+                <StUserInfo>
+                    <StFirstWrap>
                         <StUserContainer>
                             <StFirstUserWrap>
                                 <StUserName>{mypages.username}</StUserName>
-                                <UserAdmission>| {mypages.admission}</UserAdmission>
+                                <StUserAdmission>| {mypages.admission}</StUserAdmission>
                             </StFirstUserWrap>
                             <StUserLankWrap>
                                 <StUserLank>
@@ -94,20 +93,20 @@ const MyPageUser = () => {
                             </StUserLankWrap>
                         </StUserContainer>
                         <StUserWrap>
-                            <UserUniversity>{mypages.schoolName}</UserUniversity>
-                            <UserDepartment>{mypages.departmentName}</UserDepartment>
+                            <StUserUniversity>{mypages.schoolName}</StUserUniversity>
+                            <StUserDepartment>{mypages.departmentName}</StUserDepartment>
                         </StUserWrap>
-                        <UserEmail>{mypages.email}</UserEmail>
-                    </FirstWrap>
-                    <SecondWrap>
-                        <LogoutButton
+                        <StUserEmail>{mypages.email}</StUserEmail>
+                    </StFirstWrap>
+                    <StSecondWrap>
+                        <StLogoutButton
                             onClick={showModal}
                         >
-                            <LogoutTitle>로그아웃</LogoutTitle>
-                        </LogoutButton>
-                    </SecondWrap>
-                </UserInfo>
-            </UserContainer>
+                            <StLogoutTitle>로그아웃</StLogoutTitle>
+                        </StLogoutButton>
+                    </StSecondWrap>
+                </StUserInfo>
+            </StUserContainerWrap>
         </StLoginContainer>
     );
 };
@@ -123,7 +122,7 @@ const StLoginContainer = styled.form`
   align-items: center;
 `;
 
-const UserContainer = styled.div`
+const StUserContainerWrap = styled.div`
     width: 100%;
     height: 78%;
     /* height: 200px; */
@@ -131,7 +130,7 @@ const UserContainer = styled.div`
     gap: 15px;
 `
 
-const UserImgWrap = styled.div`
+const StUserImgWrap = styled.div`
     width: 25%;
     height: 90px;
     display: flex;
@@ -140,7 +139,7 @@ const UserImgWrap = styled.div`
     align-items: flex-end;
 `
 
-const UserImg = styled.img`
+const StUserImg = styled.img`
     width: 85px;
     height: 85px;
     border-radius: 50%;
@@ -153,7 +152,7 @@ const UserImg = styled.img`
     position: relative;
 `
 
-const UserImgUpload = styled.div`
+const StUserImgUpload = styled.div`
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -167,14 +166,14 @@ const UserImgUpload = styled.div`
     cursor: pointer;
 `
 
-const CameraIcon = styled.div`
+const StCameraIcon = styled.div`
     width: 20px;
     height: 20px;
     background-image: url(${camera});
     background-position: center;
     background-size: 100% 100%;
 `
-const UserInfo = styled.div`
+const StUserInfo = styled.div`
     width: 80%;
     height: 100%;
     display: flex;
@@ -183,22 +182,22 @@ const UserInfo = styled.div`
     align-items: center;
 `
 
-const FirstWrap = styled.div`
+const StFirstWrap = styled.div`
     width: 100%;
     /* height: 100%; */
     margin: 5px 0 15px 0;
 `
-const SecondWrap = styled.div`
+const StSecondWrap = styled.div`
     width: 95%;
     /* border: 1px solid red; */
 `
 
-const UserUniversity = styled.div`
+const StUserUniversity = styled.div`
     font-weight: 600;
     font-size: 16px;
 `
 
-const UserDepartment = styled.div`
+const StUserDepartment = styled.div`
     font-weight: 600;
     font-size: 16px;
 `
@@ -225,7 +224,7 @@ const StUserName = styled.div`
     font-weight: 700;
     font-size: 20px;
 `
-const UserAdmission = styled.div`
+const StUserAdmission = styled.div`
     color: white;
 `
 
@@ -251,13 +250,13 @@ const StUserLank = styled.div`
 //     font-size: 8px;
 //     width: 130px;
 // `
-const UserEmail = styled.div`
+const StUserEmail = styled.div`
     font-weight: 500;
     font-size: 12px;
     /* color: #f7931e; */
     color: #fff4cc;
 `
-const LogoutButton = styled.div`
+const StLogoutButton = styled.div`
     width: 76px;
     height: 22px;
     /* height: 100%; */
@@ -269,7 +268,7 @@ const LogoutButton = styled.div`
     bottom: 0;
     cursor: pointer;
 `
-const LogoutTitle = styled.div`
+const StLogoutTitle = styled.div`
     font-size: 13px;
     font-weight: 500;
     color: white;

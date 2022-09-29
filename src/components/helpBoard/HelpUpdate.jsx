@@ -227,7 +227,7 @@ const StFooterBtn = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  margin-bottom: 50px;
+  /* margin-bottom: 50px; */
 `;
 
 const StChangediv = styled.div`
