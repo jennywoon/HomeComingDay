@@ -14,7 +14,7 @@ import { getDefaultMiddleware } from "@reduxjs/toolkit";
 import NoticeSlice from "../modules/NoticeSlice";
 
 export const store = configureStore({
-  // devTools: process.env.NODE_ENV !== "production",
+  devTools: process.env.NODE_ENV !== "production",
   reducer: {
     user: UserSlice.reducer,
     informations: InformationSlice,

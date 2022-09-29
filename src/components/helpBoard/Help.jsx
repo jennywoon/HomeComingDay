@@ -20,7 +20,8 @@ const Help = () => {
   const dispatch = useDispatch();
   const { helps } = useSelector((state) => state.helps);
   const {helpPopular} = useSelector((state)=>state.helps)
-  const { isLoading } = useSelector((state) => state.helps);
+  // const { isLoading } = useSelector((state) => state.helps);
+  const isLoading = useSelector((state) => state.helps.isLoading);
   const [select, setSelect] = useState('new');
   // console.log(isLoading)
   // console.log(helps)
@@ -51,7 +52,6 @@ const Help = () => {
           <option value='new'>최신순</option>
           <option value='popular'>인기순</option>
         </Select>
-        {/* <Loading /> */}
         <HelpList>
           <>
             {select === "new"&& helps && helps.length > 0 ? (
@@ -87,6 +87,8 @@ const HelpContainer = styled.div`
   height: 100%;
   /* height: 100vh; */
   gap: 12px;
+  overflow-x: hidden;
+
 `;
 
 const BannerWrap = styled.div`

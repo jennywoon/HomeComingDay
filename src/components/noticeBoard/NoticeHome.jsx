@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from "react-redux";
 import { IoIosArrowBack } from 'react-icons/io';
 import Homeimg from '../../assets/Home.png';
 import Searchimg from '../../assets/Search.png';
@@ -28,8 +27,7 @@ const NoticeHome = () => {
           <div></div>
         </StHeader>
       </StHelpContainer>
-        <NoticeList />
-      {/* <BottomTap /> */}
+      <NoticeList />
       <StBottomTapWrap>
         <StBottom>
           <StTap
