@@ -223,7 +223,6 @@ const StReviseButtonChange = styled.button`
     width:50px;
     background-color:white;
     font-size:10px;
-    /* border:none; */
     border:1px solid gray;
     cursor:pointer;
     border-radius: 10px;
@@ -234,12 +233,6 @@ const StReviseBox = styled.div`
     display: flex;
     align-items: center;
 `
-// const StReplyInput = styled.input`
-//     border
-//     border-bottom: 1px solid #ccc;
-//     width:100%;
-// `
-
 const StReplyUserName = styled.div`
     font-weight: bold;
     display:flex;

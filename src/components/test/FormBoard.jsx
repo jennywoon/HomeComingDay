@@ -396,15 +396,15 @@ const Form2 = () => {
               ></FormInput>
               <FormCheckWrap>
                 <StCard>
-                  <StTextArea>
-                    <Textarea
+                  <StTextAreaBox>
+                    <StTextarea
                       name='content'
                       value={content}
                       onChange={onChangeHandler}
                       placeholder='내용을 입력해주세요'
                       maxLength='300'
-                    ></Textarea>
-                  </StTextArea>
+                    ></StTextarea>
+                  </StTextAreaBox>
                   <FormFooter>
                     <FooterContain>
                       <>
@@ -413,7 +413,7 @@ const Form2 = () => {
                             <StImgUpload
                               {...getRootProps({ className: 'dropzone' })}
                             >
-                              <Imgadd size='24px' />
+                              <Imgadd />
                               <Imgtxt>이미지 첨부</Imgtxt>
 
                               
@@ -481,15 +481,15 @@ const Form2 = () => {
               ></FormInput>
               <FormCheckWrap>
                 <StCard>
-                  <StTextArea>
-                    <Textarea
+                  <StTextAreaBox>
+                    <StTextarea
                       name='infocontent'
                       value={infocontent}
                       onChange={infoonChangeHandler}
                       placeholder='내용을 입력해주세요'
                       maxLength='300'
-                    ></Textarea>
-                  </StTextArea>
+                    ></StTextarea>
+                  </StTextAreaBox>
                   <FormFooter>
                     <FooterContain>
 
@@ -499,7 +499,7 @@ const Form2 = () => {
                             <StImgUpload
                               {...getRootProps({ className: 'dropzone' })}
                             >
-                              <Imgadd size='24px' />
+                              <Imgadd />
                               <Imgtxt>이미지 첨부</Imgtxt>
             
                               <input {...getInputProps()} />
@@ -720,15 +720,15 @@ const Form2 = () => {
               ></FormInput>
               <FormCheckWrap>
                 <StCard>
-                  <StTextArea>
-                    <Textarea
+                  <StTextAreaBox>
+                    <StTextarea
                       name='freecontent'
                       value={freecontent}
                       onChange={freeonChangeHandler}
                       placeholder='내용을 입력해주세요'
                       maxLength='300'
-                    ></Textarea>
-                  </StTextArea>
+                    ></StTextarea>
+                  </StTextAreaBox>
                   <FormFooter>
                     <FooterContain>
                       <>
@@ -737,7 +737,7 @@ const Form2 = () => {
                             <StImgUpload
                               {...getRootProps({ className: 'dropzone' })}
                             >
-                              <Imgadd size='24px' />
+                              <Imgadd />
                               <Imgtxt>이미지 첨부</Imgtxt>
                               
                               <input {...getInputProps()} />
@@ -894,17 +894,19 @@ const StCard = styled.div`
   padding: 5px;
 `;
 
-const StTextArea = styled.div`
+const StTextAreaBox = styled.div`
   width: 100%;
   height: 300px;
 `
 
-const Textarea = styled.textarea`
-  width: 100%;
-  height: 100%;
+const StTextarea = styled.textarea`
+  width: 95%;
+  /* height: 100%; */
+  height:200px;
   border: none;
   padding: 10px 5px;
   outline: none;
+  resize: none;
   ::placeholder {
     font-size: 16px;
     color: #aaa;
@@ -926,6 +928,7 @@ const FooterContain = styled.div`
 
 const Imgadd = styled(GrImage)`
   opacity: 0.3;
+  font-size:20px;
 `;
 
 const FooterBtn = styled.div`
@@ -1110,12 +1113,12 @@ const TxtWarning = styled.div`
 `
 const StImgList = styled.div`
   justify-items: baseline;
+  
 `
 
 const StImgUpload = styled.div`
   display: flex;
   width: 111px;
-  height: 100%;
   justify-content: center;
   flex-direction: row;
   align-items: center;
@@ -1130,7 +1133,7 @@ const StImgUpload = styled.div`
 const StImgContainer = styled.div`
   display: flex;
   width: 100%;
-  height: 110px;
+  height: 120px;
   box-sizing: border-box;
   background: #fff;
   scrollbar-width: none;
@@ -1138,6 +1141,8 @@ const StImgContainer = styled.div`
 const Imgtxt = styled.div`
   width: 80px;
   text-align: center;
+  font-size:14px;
+  
 `;
 const CancelBtn = styled(MdCancel)`
   position: absolute;
