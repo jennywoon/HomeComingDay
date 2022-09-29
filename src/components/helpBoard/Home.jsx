@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Help from './Help';
@@ -26,10 +26,7 @@ const Home = () => {
               navigate('/main');
             }}
           >
-            <StImg
-              src={HomeColorimg}
-              alt='홈'
-            />
+            <StImg src={HomeColorimg} alt='홈' />
             <StHomeTitle>홈</StHomeTitle>
           </StFirstTap>
           <StTap
@@ -37,10 +34,7 @@ const Home = () => {
               navigate('/search');
             }}
           >
-            <StImg
-              src={Searchimg}
-              alt='검색'
-            />
+            <StImg src={Searchimg} alt='검색' />
             <StTapTitle>검색</StTapTitle>
           </StTap>
           <StTap
@@ -48,10 +42,7 @@ const Home = () => {
               navigate('/chat');
             }}
           >
-            <StImg
-              src={Chatimg}
-              alt='채팅'
-            />
+            <StImg src={Chatimg} alt='채팅' />
             <StTapTitle>채팅</StTapTitle>
           </StTap>
           <StLastTap
@@ -59,10 +50,7 @@ const Home = () => {
               navigate('/mypage');
             }}
           >
-            <StImg
-              src={Myimg}
-              alt='마이페이지'
-            />
+            <StImg src={Myimg} alt='마이페이지' />
             <StTapTitle>MY</StTapTitle>
           </StLastTap>
         </StBottom>
@@ -94,16 +82,15 @@ const StBottom = styled.div`
   justify-content: space-between;
   align-items: center;
   font-weight: 600;
-  `;
+`;
 
-  const StFirstTap = styled.div`
-      display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    padding-left: 20px;
-    color: #f7931e;
-  `
+const StFirstTap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding-left: 20px;
+`;
 
 const StTap = styled.div`
   display: flex;
@@ -113,23 +100,23 @@ const StTap = styled.div`
 `;
 
 const StLastTap = styled.div`
-    display: flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
   padding-right: 20px;
-`
+`;
 
 const StImg = styled.img`
   width: 45%;
   margin: 2px;
-`
+`;
 
 const StHomeTitle = styled.div`
   font-size: 11px;
-  font-weight: 400;
+  font-weight: 800;
   color: #f7931e;
-`
+`;
 
 const StTapTitle = styled.div`
   font-size: 11px;
