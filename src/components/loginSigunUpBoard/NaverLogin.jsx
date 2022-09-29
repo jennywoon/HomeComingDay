@@ -49,6 +49,7 @@ const NaverLogin = () => {
                     alert("이름은 필수 동의 입니다. 정보제공을 동의해주세요.");
                     naverLogin.reprompt();
                     return;
+                    console.log("네이버 로그인 ok");
                 }
             } else {
                 console.log("Naver 비 로그인 상태");
