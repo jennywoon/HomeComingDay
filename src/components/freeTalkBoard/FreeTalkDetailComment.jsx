@@ -1,16 +1,13 @@
 import React, { useEffect ,useRef} from 'react';
 import styled from 'styled-components';
-import { AiOutlineMenu } from 'react-icons/ai'
-import Img from "../../assets/naverIcon.png"
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import Input from "../elements/Input";
-import { __deleteFreeTalkComment, __getFreeTalk, __updateFreeTalkComment , __postFreeTalkReplyComment } from '../../redux/modules/FreeTalkSlice';
+import { __getFreeTalk, __updateFreeTalkComment , __postFreeTalkReplyComment } from '../../redux/modules/FreeTalkSlice';
 import { useParams } from 'react-router-dom';
 import { GrUploadOption } from "react-icons/gr";
-import { BiDotsVerticalRounded } from "react-icons/bi";
 import FreeTalkCommentDeleteModal from './FreeTalkCommentDeleteModal';
 import FreeTalkDetailReplyComment from './FreeTalkDetailReplyComment';
+import dots from "../../assets/dots.png"
 
 const FreeTalkDetailComment = ({ comment, freetalksfind, modalRef ,data}) => {
     const dispatch = useDispatch();
@@ -144,8 +141,7 @@ const FreeTalkDetailComment = ({ comment, freetalksfind, modalRef ,data}) => {
                         </StTxtFirstWrap>
                         </StCommentsBox>
                         {username === data.username ? (
-                        <BiDotsVerticalRounded
-                            size="17px" style={{ marginLeft: "auto", marginTop: "5px", cursor: "pointer", color: "#bebebe" }}
+                        <StDots
                             onClick={onCilckShow} />
                         ) : null
                         }
@@ -188,7 +184,6 @@ export default FreeTalkDetailComment;
 
 const StCommentContain = styled.div`
     margin: 15px 0px;
-    /* border: 1px solid blue; */
     width: 100%;
     height: 100%;
     display: flex;
@@ -197,9 +192,19 @@ const StCommentContain = styled.div`
 
 const StCommentBox = styled.div`
     display:flex;
-    /* position: relative; */
     width: 100%;
     position:relative;
+`
+
+const StDots = styled.div`
+  width: 20px;
+  height: 20px;
+  background-image: url(${dots});
+  background-size: 100% 100%;
+  background-position: center;
+  margin-left: auto;
+  cursor: pointer;
+  margin-top: 5px;
 `
 
 const StCommentImgDiv = styled.div`
@@ -245,7 +250,6 @@ const StCommentTxt = styled.div`
     display: flex;
     flex-direction: column;
     width:100%;
-    /* margin-left: 10px;  */
 `
 const StRevisebox = styled.div`
     border: 1px solid #f1f0f0;
@@ -288,20 +292,7 @@ const StDeleteButton = styled.button`
         color: #000;
     }
 `
-const StReviseButtonChange = styled.button`
-    width:50px;
-    background-color:white;
-    position:absolute;
-    right:0;
-    font-size:10px;
-    /* border:none; */
-    border:1px solid gray;
-    cursor:pointer;
-    border-radius: 10px;
-    height:25px;
-    color:gray;
-    
-`
+
 const StEditBox = styled.div`
     display: flex;
     align-items: center;
@@ -322,11 +313,6 @@ const StTxtStudent = styled.p`
     font-weight: 500;
     color: #bebebe;
 `
-const StTxtWrap = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-`
 
 const StTxtFirstWrap = styled.div`
     display: flex;
@@ -346,15 +332,6 @@ const StReplyCommentBox = styled.div`
     position:relative;
     align-items: center;
     margin-top:6px;
-`
-const StCommentReplytxt = styled.div`
-    font-size:13px;
-    width:100%;
-`
-
-const StReplyCommentImg = styled.img`
-    width:30px;
-    border-radius: 30px;
 `
 
 const StComment = styled.p`
