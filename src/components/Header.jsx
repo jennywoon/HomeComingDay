@@ -29,11 +29,6 @@ const Header = () => {
     }
   }, [loginOn]);
 
-  const onClickLogin = () => {
-    // removeCookie("accessToken");
-    navigate('/login');
-  };
-
   useEffect(() => {
     dispatch(__getNoticeCount());
   }, [dispatch]);
