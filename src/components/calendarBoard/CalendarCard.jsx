@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import Img from '../../assets/naverIcon.png';
-import { BsCalendarCheck } from 'react-icons/bs';
 import { __getCalendar } from '../../redux/modules/CalendarSlice';
-import { useNavigate, useParams } from 'react-router-dom';
-import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 import commentgray from '../../assets/commentgray.png';
 import heartgray from '../../assets/heartgray.png';
 import calendarCheck from "../../assets/calendarCheck.png"
@@ -25,53 +22,53 @@ const CalendarCard = ({ calendar, id }) => {
 
   return (
     <StCalendarCard onClick={onClickNavi}>
-      <Card>
-        <CardHead>
+      <StCard>
+        <StCardHead>
               <StImg>
-                <HeadImg src={calendar.userImage} />
+                <StHeadImg src={calendar.userImage} />
               </StImg>
-              <HeadUser>
-              <HeadTop>
-                <HeadName>{calendar.username}</HeadName>
-                <HeadTime>{calendar.createdAt}</HeadTime>
-                </HeadTop>
-                <HeadBottom>
-                  <HeadDepartment>{calendar.departmentName}</HeadDepartment>
-                  <HeadStudent>· {calendar.admission}</HeadStudent>
-                </HeadBottom>
-              </HeadUser>
-              </CardHead>
-        <CardBody>
-          <BodyTitle>{calendar.title}</BodyTitle>
-          <BodyContent>
-            <CheckLeft>
+              <StHeadUser>
+              <StHeadTop>
+                <StHeadName>{calendar.username}</StHeadName>
+                <StHeadTime>{calendar.createdAt}</StHeadTime>
+                </StHeadTop>
+                <StHeadBottom>
+                  <StHeadDepartment>{calendar.departmentName}</StHeadDepartment>
+                  <StHeadStudent>· {calendar.admission}</StHeadStudent>
+                </StHeadBottom>
+              </StHeadUser>
+              </StCardHead>
+        <StCardBody>
+          <StBodyTitle>{calendar.title}</StBodyTitle>
+          <StBodyContent>
+            <StCheckLeft>
               <CalendarCheck />
               {calendar.calendarDate}
-            </CheckLeft>
-            <CheckLeft>
+            </StCheckLeft>
+            <StCheckLeft>
               <Clock/>
               {calendar.calendarTime}
-            </CheckLeft>
-          </BodyContent>
-        </CardBody>
-        <CardFooter>
-          <Views>조회수 {calendar.views}</Views>
-          <Count>
-            <CommentCount>
-              <CommentImg>
+            </StCheckLeft>
+          </StBodyContent>
+        </StCardBody>
+        <StCardFooter>
+          <StViews>조회수 {calendar.views}</StViews>
+          <StCount>
+            <StCommentCount>
+              <StCommentImg>
                 <img src={commentgray} alt='댓글이미지' />
-              </CommentImg>
+              </StCommentImg>
               {calendar.commentCnt}
-            </CommentCount>
-            <HeartCount>
-              <HeartImg>
+            </StCommentCount>
+            <StHeartCount>
+              <StHeartImg>
                 <img src={heartgray} alt='댓글이미지' />
-              </HeartImg>
+              </StHeartImg>
               {calendar.heartCnt}
-            </HeartCount>
-          </Count>
-        </CardFooter>
-      </Card>
+            </StHeartCount>
+          </StCount>
+        </StCardFooter>
+      </StCard>
     </StCalendarCard >
   );
 };
@@ -91,22 +88,21 @@ const StCalendarCard = styled.div`
   align-items: center;
 `;
 
-const Card = styled.div`
+const StCard = styled.div`
   width: 97%;
   margin: 0 auto;
 `;
 
-const CardHead = styled.div`
+const StCardHead = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 20px;
 `;
 
 const StImg = styled.div`
-  /* margin-top: 3px; */
 `;
 
-const HeadImg = styled.img`
+const StHeadImg = styled.img`
   width: 30px;
   height: 30px;
   display: flex;
@@ -116,72 +112,65 @@ const HeadImg = styled.img`
   margin-right: 7px;
 `;
 
-const HeadUser = styled.div`
+const StHeadUser = styled.div`
   width: 100%;
-  /* height: 100%; */
   display: flex;
   flex-direction: column;
   margin: 0px 5px;
 `;
 
-const HeadTop = styled.div`
+const StHeadTop = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: space-between;
-  /* border: 1px solid red; */
 `;
-const HeadStudent = styled.p``;
+const StHeadStudent = styled.p``;
 
-const HeadName = styled.div`
+const StHeadName = styled.div`
   font-size: 14px;
   font-weight: 600;
   color: #000;
-  /* border: 1px solid red; */
 `;
 
-const HeadBottom = styled.div`
+const StHeadBottom = styled.div`
   display: flex;
   font-size: 12px;
   color: gray;
   gap: 5px;
-  /* border: 1px solid blue; */
 `;
 
-const HeadDepartment = styled.div``;
+const StHeadDepartment = styled.div``;
 
-const HeadTime = styled.p`
+const StHeadTime = styled.p`
   font-size: 12px;
   color: gray;
   margin-left: auto;
   font-weight: 500;
 `;
 
-const CardBody = styled.div`
+const StCardBody = styled.div`
   height: 70px;
-  /* height: 100%; */
   margin-bottom: 15px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* border: 1px solid red; */
 `;
 
-const BodyTitle = styled.div`
+const StBodyTitle = styled.div`
   margin: 5px 0px;
   font-size: 16px;
   font-weight: 600;
   color: #000;
-  /* border: 1px solid red; */
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
 `;
 
-const BodyContent = styled.div`
+const StBodyContent = styled.div`
   width: 80%;
   height: 100%;
   font-size: 12px;
@@ -194,7 +183,7 @@ const BodyContent = styled.div`
   border-radius: 4px;
 `;
 
-const CheckLeft = styled.div`
+const StCheckLeft = styled.div`
   display: flex;
   gap: 5px;
   align-items: center;
@@ -216,45 +205,37 @@ const Clock = styled.div`
   background-position: center;
 `
 
-const CardFooter = styled.div`
+const StCardFooter = styled.div`
   display: flex;
   justify-content: space-between;
 `;
 
-const Views = styled.div`
+const StViews = styled.div`
   font-size: 12px;
-  color: gray;
-  /* margin-right:10px; */
-`;
-
-const Division = styled.div`
-  font-size: 12px;
-  align-items: center;
-  margin: 0 5px;
   color: gray;
 `;
 
-const Count = styled.div`
+const StCount = styled.div`
   display: flex;
 `;
 
-const CommentCount = styled.div`
+const StCommentCount = styled.div`
   font-size: 12px;
   color: gray;
   display: flex;
   margin-right: 10px;
 `;
 
-const CommentImg = styled.div`
+const StCommentImg = styled.div`
   margin-right: 5px;
 `
 
-const HeartCount = styled.div`
+const StHeartCount = styled.div`
   font-size: 12px;
   color: gray;
   display: flex;
 `;
 
-const HeartImg = styled.div`
+const StHeartImg = styled.div`
   margin-right: 5px;
 `

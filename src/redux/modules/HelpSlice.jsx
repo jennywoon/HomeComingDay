@@ -1,9 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { getCookie, setCookie } from '../../shared/cookies';
-// import Cookies from "universal-cookie"
-
-// const cookies = new Cookies();
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -17,17 +14,6 @@ const initialState = {
     error: null,
 };
 
-// const config = {
-  
-//   headers: {
-//     'Content-Type': 'application/json',
-//     Authorization : `Bearer ${getCookie('accessToken')}`,
-//     // RefreshToken : `${getCookie('refreshToken')}`
-  
-//   },
-// };
-
-
 export const __getHelp = createAsyncThunk("helps/getHelp", async (payload, thunkAPI) => {
     try {
       const data = await axios({
@@ -35,14 +21,13 @@ export const __getHelp = createAsyncThunk("helps/getHelp", async (payload, thunk
         url: `${BASE_URL}/article/help`,
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${getCookie("accessToken")}`,
-          // RefreshToken : getCookie('refreshToken')
+          Authorization: `Bearer ${getCookie("accessToken")}`
         },
       });
         // console.log(data)
         return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-        console.log('error', error);
+        // console.log('error', error);
         return thunkAPI.rejectWithValue(error);
     }
 });
@@ -54,14 +39,13 @@ export const __getDetailHelp = createAsyncThunk("helps/getDetailHelp", async (pa
       url: `${BASE_URL}/article/help/${payload}`,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${getCookie("accessToken")}`,
-        // RefreshToken : getCookie('refreshToken')
+        Authorization: `Bearer ${getCookie("accessToken")}`
       },
     });
     console.log(data.data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
-      console.log('error', error);
+      // console.log('error', error);
       return thunkAPI.rejectWithValue(error);
   }
 });
@@ -77,10 +61,10 @@ export const __getPopularHelp = createAsyncThunk("helps/getPopularHelp", async (
         // RefreshToken : getCookie('refreshToken')
       },
     });
-    console.log(data.data)
+    // console.log(data.data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
-      console.log('error', error);
+      // console.log('error', error);
       return thunkAPI.rejectWithValue(error);
   }
 });
@@ -90,22 +74,21 @@ export const __postHelp = createAsyncThunk(
   "helps/postHelp", async (payload, thunkAPI) => {
     // console.log('payload', payload)
       for (var value of payload.values()) {
-        console.log("formdata value", value);
+        // console.log("formdata value", value);
       }
     try {
       const config = {
         headers: {
           "Content-Type": "multipart/form-data",
           responseType: "blob",
-          Authorization: `Bearer ${getCookie("accessToken")}`,
-          // RefreshToken : `${getCookie("refreshToken")}`
+          Authorization: `Bearer ${getCookie("accessToken")}`
         }
       }
         const data = await axios.post(`${BASE_URL}/article/help`, payload, config);
         // console.log('data', data)
         return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      console.log('error', error);
+      // console.log('error', error);
         return thunkAPI.rejectWithValue(error);
     }
 });
@@ -208,10 +191,10 @@ export const __updateHelpComment = createAsyncThunk("comment/updateHelpComment",
       },
       data: payload
     });
-    console.log("payload",payload)
+    // console.log("payload",payload)
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
-    console.log(payload)
+    // console.log(payload)
     return thunkAPI.rejectWithValue(error);
   }
 }
@@ -220,7 +203,7 @@ export const __updateHelpComment = createAsyncThunk("comment/updateHelpComment",
 //대댓글
 export const __postHelpReplyComment = createAsyncThunk("comments/postHelpReplyComment", async (payload, thunkAPI) => {
   try {
-    console.log("payload" , payload)
+    // console.log("payload" , payload)
     const data = await axios({
       method: 'post',
       url: `${BASE_URL}/article/help/${payload.articleId}/comment/${payload.commentId}`,
@@ -231,7 +214,7 @@ export const __postHelpReplyComment = createAsyncThunk("comments/postHelpReplyCo
       data: payload
     });
     
-    console.log(data)
+    // console.log(data)
     return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
@@ -240,7 +223,7 @@ export const __postHelpReplyComment = createAsyncThunk("comments/postHelpReplyCo
 
 export const __deleteHelpReplyComment = createAsyncThunk("comments/deleteHelpReplyComment", async (payload, thunkAPI) => {
   try {
-    console.log("payload" , payload)
+    // console.log("payload" , payload)
     const data = await axios({
       method: 'delete',
       url: `${BASE_URL}/article/help/${payload.articleId}/comment/${payload.commentId}/${payload.childCommentId}`,
@@ -249,7 +232,7 @@ export const __deleteHelpReplyComment = createAsyncThunk("comments/deleteHelpRep
         Authorization: `Bearer ${getCookie("accessToken")}`,
       },
     });
-    console.log(data)
+    // console.log(data)
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
@@ -258,7 +241,7 @@ export const __deleteHelpReplyComment = createAsyncThunk("comments/deleteHelpRep
 
 export const __updateHelpReplyComment = createAsyncThunk("comments/updateHelpReplyComment", async (payload, thunkAPI) => {
   try {
-    console.log("payload" , payload)
+    // console.log("payload" , payload)
     const data = await axios({
       method: 'patch',
       url: `${BASE_URL}/article/help/${payload.articleId}/comment/${payload.commentId}/${payload.childCommentId}`,
@@ -268,7 +251,7 @@ export const __updateHelpReplyComment = createAsyncThunk("comments/updateHelpRep
       },
       data: payload
     });
-    console.log(data)
+    // console.log(data)
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
@@ -289,12 +272,10 @@ export const __postHelpHeart = createAsyncThunk(
         },
         data: payload,
       });
-      console.log(data)
-      console.log("data",data.data)
-      // console.log(payload)
+      // console.log("data",data.data)
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -307,14 +288,13 @@ export const __getHelpHeart = createAsyncThunk("helps/getHelpHeart", async (payl
       url: `${BASE_URL}/article/help/${payload.articleId}/heart`,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${getCookie("accessToken")}`,
-        // RefreshToken : getCookie('refreshToken')
+        Authorization: `Bearer ${getCookie("accessToken")}`
       },
     });
-    console.log(data.data)
+    // console.log(data.data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
-      console.log('error', error);
+      // console.log('error', error);
       return thunkAPI.rejectWithValue(error);
   }
 });

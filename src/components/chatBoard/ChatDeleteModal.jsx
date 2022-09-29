@@ -1,12 +1,7 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import PropTypes from "prop-types";
-import { useMediaQuery } from "react-responsive";
-import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
-import { logout } from '../../shared/cookies';
-import { useDispatch, useSelector } from 'react-redux';
-import { __deleteHelp, __getHelp } from '../../redux/modules/HelpSlice';
 
 ChatDeleteModal.propTypes = {
     title: PropTypes.string,
@@ -16,11 +11,7 @@ ChatDeleteModal.propTypes = {
 
 function ChatDeleteModal(props) {
 
-    const { title, event, close, width, height, padding } = props;
-
-    const isMobileQuery = useMediaQuery({
-        query: "(max-width: 420px)"
-    });
+    const { event, close } = props;
 
     const confirmHandler = (e) => {
         e.stopPropagation();

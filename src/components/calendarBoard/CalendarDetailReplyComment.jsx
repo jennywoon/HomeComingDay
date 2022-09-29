@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import { GrUploadOption } from "react-icons/gr";
 import { __getCalendar ,__deleteCalendarReplyComment, __updateCalendarReplyComment} from '../../redux/modules/CalendarSlice';
 import CalendarReplyCommentDeleteModal from './CalendarReplyCommentDeleteModal';
+import dots from "../../assets/dots.png"
 
 const CalendarDetailReplyComment = ({childCommentList,commentId,childComment, ids ,data}) => {
     const {id} = useParams()
@@ -116,7 +117,7 @@ const CalendarDetailReplyComment = ({childCommentList,commentId,childComment, id
                             </StReviseBox>}
                     </StCommentReplytxt>
                 {childComment.username === data.username ?
-                <BiDotsVerticalRounded size="20px" style={{ marginLeft: "auto",cursor: "pointer", color: "#bebebe" , position:"relative"}} onClick={onCilckShow}/>
+                <StDots onClick={onCilckShow}/>
                 : null}
 
                 {showReplyComment ?
@@ -174,6 +175,17 @@ const StUploadBtn = styled(GrUploadOption)`
     opacity: 0.5;
 `
 
+const StDots = styled.div`
+  width: 20px;
+  height: 20px;
+  background-image: url(${dots});
+  background-size: 100% 100%;
+  background-position: center;
+  margin-left: auto;
+  cursor: pointer;
+  position: relative;
+`
+
 const StRevisebox = styled.div`
     border: 1px solid #f1f0f0;
     border-radius: 16px;
@@ -215,26 +227,11 @@ const StDeleteButton = styled.button`
         color: #000;
     }
 `
-const StReviseButtonChange = styled.button`
-    width:50px;
-    background-color:white;
-    font-size:10px;
-    /* border:none; */
-    border:1px solid gray;
-    cursor:pointer;
-    border-radius: 10px;
-    height:25px;
-    color:gray;
-`
+
 const StReviseBox = styled.div`
     display: flex;
     align-items: center;
 `
-// const StReplyInput = styled.input`
-//     border
-//     border-bottom: 1px solid #ccc;
-//     width:100%;
-// `
 
 const StReplyUserName = styled.div`
     font-weight: bold;

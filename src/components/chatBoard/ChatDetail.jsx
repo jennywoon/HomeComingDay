@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled from "styled-components"
 import { useDispatch, useSelector } from 'react-redux';
-import { useMediaQuery } from 'react-responsive';
 import { useNavigate, useParams } from 'react-router-dom';
 import { chatApi } from './ChatApi';
 import { getCookie } from '../../shared/cookies';
@@ -13,9 +12,7 @@ import ChatMessageBox from "./ChatMessageBox"
 import ChatInput from './ChatInput';
 import Header from "../Header"
 import { IoIosArrowBack } from 'react-icons/io'
-import { BiDotsVerticalRounded } from "react-icons/bi";
 import { deleteChatList } from '../../redux/modules/ChatSlice';
-import ChatDeleteModal from './ChatDeleteModal';
 
 const ChatDetail = () => {
 
@@ -27,15 +24,9 @@ const ChatDetail = () => {
     const roomId = params.id;
     const { setCurrentHeader } = useStore();
 
-    const isMobile = useMediaQuery({
-        query: "(max-width: 420px)",
-    })
-
     // 보내는 사람
     const isLoading = useSelector((state) => state.user.isLoading);
     const chatList = useSelector((state) => state.chat.chatList);
-    // const isLoading = useSelector((state) => state.userSlice.isLoading);
-    // const userInfo = useSelector((state) => state.userSlice.userInfo);
     const mypages = useSelector((state) => state.mypages.mypages);
     console.log(mypages);
     useEffect(() => {
@@ -53,7 +44,6 @@ const ChatDetail = () => {
     const [otherUserInfo, setOtherUserInfo] = useState([]);
 
     // messages
-    // const messages = useSelector((state) => state.ChatSlice.messages);
     const messages = useSelector((state) => state.chat.messages);
     console.log(messages);
 
@@ -98,23 +88,6 @@ const ChatDetail = () => {
         }
     }, []);
 
-    // 채팅방 나가기 모달창
-    const [isOpenPopup, setIsOpenPopup] = useState(false);
-    const [clickedChatId, setClickChatId] = useState("");
-    const PopupRef = useRef();
-
-    // 채팅방 나가기
-    const deleteChat = () => {
-        chatApi.deleteChat(clickedChatId).then((response) => {
-            if (response.status === 200) {
-                setIsOpenPopup(false);
-                dispatch(deleteChatList(clickedChatId));
-            } else {
-                window.alert("에러처리")
-            }
-        })
-    }
-
     function wsConnect() {
         try {
             ws.current.debug = function (str) { };
@@ -122,7 +95,6 @@ const ChatDetail = () => {
             // type: "CHAT"을 보내는 용도는 채팅방에 들어갈 때를 알기 위해서
             ws.current.connect({ token: token, type: "CHAT" }, () => {
                 // connect 이후 subscribe
-                // ws.current.subscribe(`${BASE_URL}/sub/chat/room/${roomId}`, (response) => {
                 ws.current.subscribe(`/sub/chat/room/${roomId}`, (response) => {
                     const newMessage = JSON.parse(response.body);
                     dispatch(subMessage(newMessage));
@@ -133,7 +105,6 @@ const ChatDetail = () => {
                 const message = {
                     roomId: roomId,
                 };
-                // ws.current.send(`${BASE_URL}/pub/chat/enter`, { token: token }, JSON.stringify(message));
                 ws.current.send(`/pub/chat/enter`, { token: token }, JSON.stringify(message));
             });
         } catch (error) {
@@ -167,7 +138,6 @@ const ChatDetail = () => {
             }
             // send message
             ws.current.send("/pub/chat/message", { token: token }, JSON.stringify(message));
-            // ws.current.send(`${BASE_URL}/pub/chat/message`, { token: token }, JSON.stringify(message));
             setText("");
         } catch (error) {
             console.log(error);
@@ -181,26 +151,19 @@ const ChatDetail = () => {
     return (
         <StContainer>
             <Header />
-            <Navbar>
+            <StNavbar>
                 <IoIosArrowBack
                     size="37" cursor="pointer" style={{ paddingLeft: "20px" }}
                     onClick={() => navigate("/chat")} />
-                <ChatInfo>
-                    <NavbarTitle>{otherUserInfo.otherUsername}</NavbarTitle>
-                    <InfoWrap>
-                        <HeadDepartment>{otherUserInfo.otherDepartment} · </HeadDepartment>
-                        <HeadStudent> {otherUserInfo.otherAdmission}</HeadStudent>
-                    </InfoWrap>
-                </ChatInfo>
-                <div style={{ paddingRight: "20px" }}></div>
-            </Navbar>
-            <StChatContainer>
-                <StChatWrap>
-                    {/* <StChatDiv>
-                        <StChatDate>{otherUserInfo.createdAt}</StChatDate>
-                    </StChatDiv> */}
-                </StChatWrap>
-            </StChatContainer>
+                <StChatInfo>
+                    <StNavbarTitle>{otherUserInfo.otherUsername}</StNavbarTitle>
+                    <StInfoWrap>
+                        <StHeadDepartment>{otherUserInfo.otherDepartment} · </StHeadDepartment>
+                        <StHeadStudent> {otherUserInfo.otherAdmission}</StHeadStudent>
+                    </StInfoWrap>
+                </StChatInfo>
+                <StChatDiv/>
+            </StNavbar>
             <ChatMessageBox messages={messages} scrollRef={scrollRef} />
             <ChatInput
                 mypages={mypages}
@@ -217,33 +180,29 @@ const StContainer = styled.div`
     display: flex;
     flex-direction: column;
 `
-const StChatContainer = styled.div`
-    gap: 12px;
-    /* height: 100%; */
-    /* border: 1px solid blue; */
-`
 
-const Navbar = styled.div`
+const StNavbar = styled.div`
     width: 100%;
     height: 60px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* border: 1px solid red; */
 `
-const ChatInfo = styled.div`
+const StChatInfo = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* gap: 5px; */
 `
-const NavbarTitle = styled.div`
+
+const StChatDiv = styled.div`
+    padding-right: 20px;
+`
+
+const StNavbarTitle = styled.div`
     font-size: 16px;
-    /* height: 100%; */
     font-weight: 800;
-    /* border: 1px solid blue; */
 `
-const InfoWrap = styled.div`
+const StInfoWrap = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -251,25 +210,6 @@ const InfoWrap = styled.div`
     color: #bebebe;
     font-weight: 500;
 `
-const HeadDepartment = styled.div``
-const HeadStudent = styled.p`
-`
-
-const StChatWrap = styled.div`
-  width: 100%;
-  height: 100%;
-`
-
-const StChatDiv = styled.div`
-    width: 100%;
-    border: 1px solid red;
-    display: flex;
-    justify-content: center;
-    color: black;
-`
-const StChatDate = styled.div`
-    margin-top: 15px;
-    font-size: 14px;
-    font-weight: 500;
-    color: #bebebe;
+const StHeadDepartment = styled.div``
+const StHeadStudent = styled.p`
 `

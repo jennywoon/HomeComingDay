@@ -29,7 +29,7 @@ const NoticeDeleteModal = ({ setModalOpen, notificationId }) => {
           <StFirstWrap>
             <StModalTop>
               <AiOutlineInfoCircle color='#f7931e' size='28' />
-              <StTopTitle>해당 게시글을 삭제하시겠습니까?</StTopTitle>
+              <StTopTitle>해당 알림을 삭제하시겠습니까?</StTopTitle>
             </StModalTop>
             <StModalBottom onClick={closeModal}>
               <StBottomTitle onClick={deleteHandler}>삭제하기</StBottomTitle>

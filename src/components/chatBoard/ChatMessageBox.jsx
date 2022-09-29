@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const ChatMessageBox = ({ messages, scrollRef }) => {
     return (
-        <MessageWrapper>
+        <StMessageWrapper>
             {messages.length > 0 &&
                 messages.map((message, idx) => {
                     return (
@@ -17,21 +17,17 @@ const ChatMessageBox = ({ messages, scrollRef }) => {
                     );
                 })}
             <div ref={scrollRef} />
-        </MessageWrapper>
+        </StMessageWrapper>
     );
 };
 
 // 성능 최적화. React.memo()를 사용, props 값이 변하지 않으면 리랜더링 되지 않음.
 export default React.memo(ChatMessageBox);
 
-const MessageWrapper = styled.div`
-    /* width: 942px;
-    height: 375px; */
+const StMessageWrapper = styled.div`
     width: 100%;
     height: 100%;
-    /* margin-top: 19px; */
     overflow-y: auto;
-    /* border: 1px solid red; */
     background-color: #f9f9f9;
     &::-webkit-scrollbar {
         width: 0px;
