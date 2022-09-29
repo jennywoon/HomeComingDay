@@ -26,7 +26,7 @@ function ChatInput(props) {
         <React.Fragment>
             <StMessageBox>
                 <AiOutlinePlus
-                    style={{ paddingLeft: "20px", color: "#969696" }} size="37"
+                    style={{ paddingLeft: "20px", color: "#969696" }} size="22px"
                 />
                 <StChatInput
                     placeholder="채팅 메세지를 입력해주세요(1,000자 제한)"
@@ -38,7 +38,7 @@ function ChatInput(props) {
                 />
                 <BsArrowUpCircle
                     onClick={onClick}
-                    style={{ paddingRight: "20px", color: "#969696", cursor:"pointer" }} size="37"
+                    style={{ paddingRight: "20px", color: "#969696", cursor:"pointer" }} size="22px"
                 />
             </StMessageBox>
         </React.Fragment>

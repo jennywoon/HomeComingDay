@@ -71,14 +71,14 @@ const NaverLogin = () => {
         });
         setCookie("accessToken", `${data.data.accessToken}`)
         setCookie("refreshToken", `${data.data.refreshToken}`)
-        // setCookie("userName", `${data.data.username}`)
+        setCookie("userName", `${data.data.username}`)
         // window.location.replace("/")
         console.log(data.data.accessToken);
-        console.log(data.data.username)
-        console.log(data.data.schoolInfo)
+        console.log(data.data.username);
+        console.log(data.data.schoolInfo);
         const schoolInfo = data.data.schoolInfo
         if(schoolInfo === true) {
-            window.location.replace("/")
+            window.location.replace("/main")
         }else{
             window.location.replace("/schoolinfo")
         }

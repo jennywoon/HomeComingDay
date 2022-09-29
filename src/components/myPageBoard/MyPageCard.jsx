@@ -25,46 +25,44 @@ const MyPageCard = ({ myarticle, id }) => {
 
     return (
         <>
-            <Container onClick={onClickNavi}>
-                <TotalWrap>
-                    <CardHead>
-                        <FlagWrap>{myarticle && myarticle.articleFlag}</FlagWrap>
-                    </CardHead>
-                    <CardBody>
-                        <BodyTitle>{myarticle && myarticle.title}</BodyTitle>
-                    </CardBody>
-                    <CardFooter>
-                        <CardFooterLeft>
-                            <Views>조회수 {myarticle && myarticle.views}</Views>
+            <StContainer onClick={onClickNavi}>
+                <StTotalWrap>
+                    <StCardHead>
+                        <StFlagWrap>{myarticle && myarticle.articleFlag}</StFlagWrap>
+                    </StCardHead>
+                    <StCardBody>
+                        <StBodyTitle>{myarticle && myarticle.title}</StBodyTitle>
+                    </StCardBody>
+                    <StCardFooter>
+                        <StCardFooterLeft>
+                            <StViews>조회수 {myarticle && myarticle.views}</StViews>
                             <div>|</div>
-                            <HeadTime>{myarticle && myarticle.createdAt}</HeadTime>
-                        </CardFooterLeft>
-                        <Count>
-                            <CommentCount>
-                                <CommentImg>
+                            <StHeadTime>{myarticle && myarticle.createdAt}</StHeadTime>
+                        </StCardFooterLeft>
+                        <StCount>
+                            <StCommentCount>
+                                <StCommentImg>
                                     <img src={commentgray} alt='댓글이미지' />
-                                </CommentImg>
+                                </StCommentImg>
                                 {myarticle && myarticle.commentCnt}
-                            </CommentCount>
-                            <HeartCount>
-                                <HeartImg>
+                            </StCommentCount>
+                            <StHeartCount>
+                                <StHeartImg>
                                     <img src={heartgray} alt='댓글이미지' />
-                                </HeartImg>
+                                </StHeartImg>
                                 {myarticle && myarticle.heartCnt}
-                            </HeartCount>
-                        </Count>
-                        {/* <Division>|</Division> */}
-                        {/* <CommentCount>댓글 {help.commentCnt}</CommentCount> */}
-                    </CardFooter>
-                </TotalWrap>
-            </Container>
+                            </StHeartCount>
+                        </StCount>
+                    </StCardFooter>
+                </StTotalWrap>
+            </StContainer>
         </>
     );
 };
 
 export default MyPageCard;
 
-const Container = styled.div`
+const StContainer = styled.div`
   height: 120px;
   /* padding: 10px; */
   border: 1px solid #eee;
@@ -77,18 +75,18 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const TotalWrap = styled.div`
+const StTotalWrap = styled.div`
     width: 90%;
     /* height: 100%; */
 `
 
-const CardHead = styled.div`
+const StCardHead = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 10px;
 `;
 
-const FlagWrap = styled.div`
+const StFlagWrap = styled.div`
     width: 60px;
     height: 20px;
     background-color: #fff4cc;
@@ -100,12 +98,12 @@ const FlagWrap = styled.div`
     color: #f7931e
 `
 
-const CardBody = styled.div`
+const StCardBody = styled.div`
   /* height: 50px; */
   /* margin-bottom: 20px; */
 `;
 
-const BodyTitle = styled.div`
+const StBodyTitle = styled.div`
   height: 45px;
   margin: 5px 0px;
   font-size: 16px;
@@ -113,49 +111,49 @@ const BodyTitle = styled.div`
   color: #000;
 `;
 
-const CardFooter = styled.div`
+const StCardFooter = styled.div`
   display: flex;
   /* justify-content: start; */
   justify-content: space-between;
 `;
 
-const CardFooterLeft = styled.div`
+const StCardFooterLeft = styled.div`
     display: flex;
     gap: 10px;
     color: gray;
     align-items: center;
 `
 
-const HeadTime = styled.p`
+const StHeadTime = styled.p`
   font-size: 12px;
   margin-left: auto;
   font-weight: 500;
 `;
-const Views = styled.div`
+const StViews = styled.div`
   font-size: 12px;
 `;
 
-const Count = styled.div`
+const StCount = styled.div`
   display: flex;
 `;
 
-const CommentCount = styled.div`
+const StCommentCount = styled.div`
   font-size: 12px;
   color: gray;
   display: flex;
   margin-right: 10px;
 `;
 
-const CommentImg = styled.div`
+const StCommentImg = styled.div`
   margin-right: 5px;
 `
 
-const HeartCount = styled.div`
+const StHeartCount = styled.div`
   font-size: 12px;
   color: gray;
   display: flex;
 `;
 
-const HeartImg = styled.div`
+const StHeartImg = styled.div`
   margin-right: 5px;
 `

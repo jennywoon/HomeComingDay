@@ -7,7 +7,6 @@ const FreeTalkPage = () => {
 
     return (
         <Container>
-             <Header />
             <ChatList/>
         </Container>
     );
