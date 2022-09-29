@@ -3,60 +3,60 @@
   "name": "Homecoming Day",
   "icons": [
     {
-      "src": "/assets/logosize/logo57.png",
+      "src": "./logosize/logo57.png",
       "sizes": "57x57",
       "type": "image/png"
     },
     {
-      "src": "/assets/logosize/logo60.png",
+      "src": "./logosize/logo60.png",
       "sizes": "60x60",
       "type": "image/png"
     },
     {
-      "src": "/assets/logosize/logo72.png",
+      "src": "./logosize/logo72.png",
       "sizes": "72x72",
       "type": "image/png"
     },
     {
-      "src": "/assets/logosize/logo76.png",
+      "src": "./logosize/logo76.png",
       "sizes": "76x76",
       "type": "image/png"
     },
     {
-      "src": "/assets/logosize/logo114.png",
+      "src": "./logosize/logo114.png",
       "sizes": "114x114",
       "type": "image/png"
     },
     {
-      "src": "/assets/logosize/logo120.png",
+      "src": "./logosize/logo120.png",
       "sizes": "120x120",
       "type": "image/png"
     },
     {
-      "src": "/assets/logosize/logo144.png",
+      "src": "./logosize/logo144.png",
       "sizes": "144x144",
       "type": "image/png"
     },
     {
-      "src": "/assets/logosize/logo196.png",
+      "src": "./logosize/logo196.png",
       "sizes": "196x196",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/assets/logosize/logo310.png",
+      "src": "./logosize/logo310.png",
       "sizes": "310x310",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/assets/logosize/logo512.png",
+      "src": "./logosize/logo512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
   ],
-  "start_url": "https://www.homecomingdaycare.com/login",
+  "start_url": "https://www.homecomingdaycare.com/",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
