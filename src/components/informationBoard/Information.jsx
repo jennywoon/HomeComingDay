@@ -76,6 +76,7 @@ const InformationContainer = styled.div`
   /* height: 100vh; */
   gap: 12px;
   /* border: 1px solid red; */
+  overflow-x: hidden;
 `;
 
 const BannerWrap = styled.div`

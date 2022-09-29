@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { useMediaQuery } from "react-responsive";
 
 ChatMessage.propTypes = {
     message: PropTypes.string,
@@ -14,7 +13,6 @@ function ChatMessage(props) {
     const { message, userId, createdAt } = props;
 
     // 보내는 사람
-    // const userInfo = useSelector((state) => state.UserSlice.user);
     const userInfo = useSelector((state) => state.mypages.mypages);
     console.log(userInfo);
 
@@ -22,31 +20,27 @@ function ChatMessage(props) {
     // 본인이 보낸 채팅 메시지는 오른쪽에 표시, 아닌 사람은 왼쪽에 표시한다.
     const user = userId === userInfo.userId ? true : false;
 
-    const isMobile = useMediaQuery({
-        query: "(max-width: 420px)",
-    });
-
     return (
         <React.Fragment>
-            <Box user={user}>
-                <MessageBox user={user}>
-                    <Message user={user}>{message}</Message>
-                    <CreatedAt>{createdAt}</CreatedAt>
-                </MessageBox>
-            </Box>
+            <StBox user={user}>
+                <StMessageBox user={user}>
+                    <StMessage user={user}>{message}</StMessage>
+                    <StCreatedAt>{createdAt}</StCreatedAt>
+                </StMessageBox>
+            </StBox>
         </React.Fragment>
     );
 }
 
 export default ChatMessage;
 
-const Box = styled.div`
+const StBox = styled.div`
     align-items: ${(props) => (props.user ? "flex-end" : "flex-start")};
     margin-bottom: 15px;
     word-break: break-all;
 `;
 
-const MessageBox = styled.div`
+const StMessageBox = styled.div`
     display: flex;
     flex-direction: ${(props) => (props.user ? "row-reverse" : "row")};
     align-items: flex-end;
@@ -56,10 +50,9 @@ const MessageBox = styled.div`
     }
 `;
 
-const Message = styled.div`
+const StMessage = styled.div`
     max-width: 70%;
     padding: 10px 15px;
-    /* border-radius: 20px; */
     border-radius: ${(props) => (props.user ? "20px 0 20px 20px" : "0 20px 20px 20px")};
     background-color: ${(props) => (props.user ? "rgba(247,147,30);" : "#ffffff")};
     color: ${(props) => (props.user ? "#ffffff" : "#000000")};
@@ -67,22 +60,19 @@ const Message = styled.div`
     flex-direction: ${(props) => (props.user ? "row-reverse" : "row")};
     font-size: 14px;
     line-height: 18px;
-    /* color: #ffffff; */
     @media only screen and (max-width: 420px) {
         padding: 14px 10px;
         font-size: 12px;
         line-height: 15px;
     }
-    /* border: 1px solid red; */
 `;
 
-const CreatedAt = styled.div`
+const StCreatedAt = styled.div`
     display: table-cell;
     vertical-align: middle;
     font-size: 10px;
     line-height: 13px;
     text-align: center;
-    /* color: #c6d3ec; */
     color: #bebebe;
     @media only screen and (max-width: 420px) {
         font-size: 8px;

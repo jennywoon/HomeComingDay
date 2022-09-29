@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Form2 from "../components/test/Form2"
 import { getCookie } from '../shared/cookies';
 import goldmedal from "../assets/goldmedal.png"
 import FormBoard from "../components/test/FormBoard"

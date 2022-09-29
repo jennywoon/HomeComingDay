@@ -13,13 +13,12 @@ import {
 } from '../../redux/modules/CalendarSlice';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { AiOutlinePlusCircle,AiOutlineMinusCircle  } from 'react-icons/ai';
-
 import { MdCancel } from 'react-icons/md';
 import { TiDelete } from 'react-icons/ti';
 import { GrImage } from 'react-icons/gr';
 import Button from '../elements/Button';
 import moment from 'moment';
-import '../calendarBoard/Time.css';
+// import '../calendarBoard/Time.css';
 import Calendar from 'react-calendar';
 import '../calendarBoard/CalendarModal.css';
 import { useDropzone } from 'react-dropzone';
@@ -72,15 +71,10 @@ const Form2 = () => {
   //이미지 Dropzone -추가
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
-    accept: ".heic, .heif, image/*",
-    // accept:
-    //   'image/*',
-    // {
-    //   'image/png': ['.png'],
-    //   'image/jpg': ['.jpg'],
-    //   'image/jpeg': ['.jpeg'],
-    //   'image/heic': ['.heic'],
-    // },
+    // accept: ".heic, .heif, image/*",
+    accept:{
+      'image/*': ['.png','.jpg','.jpeg','.heic','.heif'],
+    },
     maxFiles: 3,
     onDrop: (acceptedFiles) => {
       setFiles(
@@ -135,13 +129,13 @@ const Form2 = () => {
   // 만남일정
   const [calendar, setCalendar] = useState({
     calendartitle: '',
-    calendarDate: '',
+    calendarDate: null,
     calendartime: '',
     calendarLocation: '',
     calendarcontent: '',
   });
   const [date, setDate] = useState({
-    calendarDate: '',
+    calendarDate: null,
   });
   const onChange = (value) => setDate(value);
   const realCalendar = moment(date.toString()).format('YYYY년 MM월 DD일 dddd');
@@ -200,7 +194,7 @@ const Form2 = () => {
   const closeTimeShowBtn = () => {
     setTimeShow(!timeShow);
   }
-  console.log(hour + ":" + selectMinute)
+  
   const [selectedTime, setSelectedTime] = useState('00:00');
 
   const handleSelect = (e) => {
@@ -209,13 +203,10 @@ const Form2 = () => {
 
   // 카카오 주소 검색하기
   const [openPostcode, setOpenPostcode] = useState(false);
-  // const [calendarlocation, setCalendarLocation] = useState({
-  //   calendarLocation: "",
-  // })
   const [calendarlocation, setCalendarLocation] = useState("")
   const locations = { calendarLocation: calendarlocation }
 
-  console.log(calendarlocation);
+  
   const handle = {
     // 버튼 클릭 이벤트
     clickButton: () => {
@@ -224,10 +215,6 @@ const Form2 = () => {
 
     // 주소 선택 이벤트
     selectAddress: (data) => {
-      console.log(`
-            주소: ${data.address},
-            우편번호: ${data.zonecode}
-        `)
       setCalendarLocation(data.address);
       setOpenPostcode(false);
     },
@@ -257,7 +244,6 @@ const Form2 = () => {
 
     const now = new Date()
     const defaultValue = moment(now.toString()).format('YYYY년 MM월 DD일 dddd')
-    console.log(defaultValue)
 
     //-추가
     if (select === 'help') {
@@ -417,7 +403,6 @@ const Form2 = () => {
                       onChange={onChangeHandler}
                       placeholder='내용을 입력해주세요'
                       maxLength='300'
-                      style={{ height: "100%" }}
                     ></Textarea>
                   </StTextArea>
                   <FormFooter>
@@ -431,7 +416,7 @@ const Form2 = () => {
                               <Imgadd size='24px' />
                               <Imgtxt>이미지 첨부</Imgtxt>
 
-                              {/* <button width="300px" text="컴퓨터에서 선택" /> */}
+                              
                               <input {...getInputProps()} />
                             </StImgUpload>
                             <TxtWarning>* 이미지 최대 3장</TxtWarning>
@@ -440,7 +425,7 @@ const Form2 = () => {
                         <StImgContainer>
                           {files.length !== 0 &&
                             files.map((file, i) => (
-                              // console.log("file!!!!!!!", file)
+                              
                               <StImgList key={i} style={{ display: 'flex' }}>
                                 <div
                                   style={{
@@ -463,9 +448,6 @@ const Form2 = () => {
                                       objectFit: 'cover',
                                       borderRadius: '16px',
                                     }}
-                                  // onLoad={() => {
-                                  //   URL.revokeObjectURL(file.preview);
-                                  // }}
                                   />
                                   <CancelBtn
                                     onClick={() => deleteImage(i)}
@@ -506,7 +488,6 @@ const Form2 = () => {
                       onChange={infoonChangeHandler}
                       placeholder='내용을 입력해주세요'
                       maxLength='300'
-                      style={{ height: "100%" }}
                     ></Textarea>
                   </StTextArea>
                   <FormFooter>
@@ -520,7 +501,7 @@ const Form2 = () => {
                             >
                               <Imgadd size='24px' />
                               <Imgtxt>이미지 첨부</Imgtxt>
-                              {/* <button width="300px" text="컴퓨터에서 선택" /> */}
+            
                               <input {...getInputProps()} />
                             </StImgUpload>
                             <TxtWarning>* 이미지 최대 3장</TxtWarning>
@@ -529,7 +510,7 @@ const Form2 = () => {
                         <StImgContainer>
                           {files.length !== 0 &&
                             files.map((file, i) => (
-                              // console.log("file!!!!!!!", file)
+                              
                               <StImgList key={i} style={{ display: 'flex' }}>
                                 <div
                                   style={{
@@ -552,9 +533,7 @@ const Form2 = () => {
                                       objectFit: 'cover',
                                       borderRadius: '16px',
                                     }}
-                                  // onLoad={() => {
-                                  //   URL.revokeObjectURL(file.preview);
-                                  // }}
+                            
                                   />
                                   <CancelBtn
                                     onClick={() => deleteImage(i)}
@@ -594,7 +573,9 @@ const Form2 = () => {
                   <ArrowForward />
                 </DateDiv>
               </CalendarButton>
-              <CalendarWrap value={reactCalendar} onClick={onChangeCalendar}>
+              <CalendarWrap 
+              value={reactCalendar} onClick={onChangeCalendar}
+              >
                 {isActive && (
                   <Calendar
                     name='calendarDate'
@@ -699,7 +680,7 @@ const Form2 = () => {
                   name='calendarlocation'
                   value={calendarlocation}
                   onChange={calendaronChangeHandler}
-                  // placeholder='장소를 입력해주세요'
+                  
                   onClick={handle.clickButton}
                   style={{}}
                 >
@@ -746,7 +727,6 @@ const Form2 = () => {
                       onChange={freeonChangeHandler}
                       placeholder='내용을 입력해주세요'
                       maxLength='300'
-                      style={{ height: "100%" }}
                     ></Textarea>
                   </StTextArea>
                   <FormFooter>
@@ -759,7 +739,7 @@ const Form2 = () => {
                             >
                               <Imgadd size='24px' />
                               <Imgtxt>이미지 첨부</Imgtxt>
-                              {/* <button width="300px" text="컴퓨터에서 선택" /> */}
+                              
                               <input {...getInputProps()} />
                             </StImgUpload>
                             <TxtWarning>* 이미지 최대 3장</TxtWarning>
@@ -768,7 +748,7 @@ const Form2 = () => {
                         <StImgContainer>
                           {files.length !== 0 &&
                             files.map((file, i) => (
-                              // console.log("file!!!!!!!", file)
+                              
                               <StImgList key={i} style={{ display: 'flex' }}>
                                 <div
                                   style={{
@@ -791,9 +771,7 @@ const Form2 = () => {
                                       objectFit: 'cover',
                                       borderRadius: '16px',
                                     }}
-                                  // onLoad={() => {
-                                  //   URL.revokeObjectURL(file.preview);
-                                  // }}
+     
                                   />
                                   <CancelBtn
                                     onClick={() => deleteImage(i)}
@@ -833,7 +811,7 @@ const Form2 = () => {
           </FooterBtn>
         </FormBody>
       </FormWrap>
-      {/* </FormContainer> */}
+ 
     </TotalCatiner>
   );
 };
@@ -862,7 +840,6 @@ const FormContainer = styled.div`
 const FormWrap = styled.form`
   width: 90%;
   height: 90%;
-  /* border: 1px solid red; */
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -879,7 +856,6 @@ const FormHeader = styled.div`
 const FormBody = styled.div`
   width: 100%;
   height: 100%;
-  /* border: 1px solid green; */
   display: flex;
   flex-direction: column;
 `;
@@ -910,7 +886,6 @@ const FormInput = styled.input`
 const FormCheckWrap = styled.div`
   width: 100%;
   height: 100%;
-  /* border: 1px solid green; */
 `
 const StCard = styled.div`
   border: 1px solid #eee;
@@ -922,12 +897,11 @@ const StCard = styled.div`
 const StTextArea = styled.div`
   width: 100%;
   height: 300px;
-  /* border: 1px solid red; */
 `
 
 const Textarea = styled.textarea`
   width: 100%;
-  height: 400px;
+  height: 100%;
   border: none;
   padding: 10px 5px;
   outline: none;
@@ -955,12 +929,10 @@ const Imgadd = styled(GrImage)`
 `;
 
 const FooterBtn = styled.div`
-  /* margin: 0 auto; */
   width: 100%;
   height: 100%;
   position: sticky;
   bottom: 0;
-  /* border: 1px solid red; */
   display: flex;
   align-items: flex-end;
 `;
@@ -1094,7 +1066,6 @@ const StTextareaDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* border: 1px solid red; */
 `
 const CalendarTextarea = styled.textarea`
   width: 95%;
@@ -1103,18 +1074,12 @@ const CalendarTextarea = styled.textarea`
   border: none;
   background-color: transparent;
   outline: none;
-  /* border: 1px solid red; */
   ::placeholder {
-    /* display: flex;
-    align-items: center;
-    justify-content: center; */
     line-height: 200px;
     top: 50%;
-    /* transform: translate(-50%) */
     text-align: right;
   }
   padding: 0 10px;
-  /* text-align: right; */
 `;
 
 const StTimePicker = styled.input`
@@ -1129,8 +1094,6 @@ const StTimePicker = styled.input`
 
 //Dropzone추가
 const GetRootProps = styled.div`
-  /* width: 100%; */
-  /* height: 300px; */
   display: flex;
   justify-content: center;
 `;
@@ -1140,8 +1103,7 @@ const StImaBox = styled.div`
   width: 100%;
   height: 36px;
   margin: 10px;
-  /* cursor: pointer; */
-  /* border: 1px solid blue; */
+ 
 `;
 const TxtWarning = styled.div`
   font-size:12px;
@@ -1162,14 +1124,13 @@ const StImgUpload = styled.div`
   border: 1px solid #e3e3e3;
   border-radius: 20px;
   cursor: pointer;
-  /* border: 1px solid red; */
+  
 `;
 
 const StImgContainer = styled.div`
   display: flex;
   width: 100%;
   height: 110px;
-  /* border: 1px solid blue; */
   box-sizing: border-box;
   background: #fff;
   scrollbar-width: none;
@@ -1185,7 +1146,6 @@ const CancelBtn = styled(MdCancel)`
 const CalendarWrap = styled.div`
   display: flex;
   justify-content: right;
-  /* padding-right: 10px; */
 `;
 
 // 시간 스타일
@@ -1212,18 +1172,16 @@ const StTimeWrap = styled.div`
 `
 
 const StTimeModal = styled.div`
-  /* background-color: var(--blue1); */
-  /* box-shadow: 0px 14px 24px -4px rgba(117, 146, 189, 0.32),
-    inset 0px 8px 14px rgba(255, 255, 255, 0.3); */
+  
   border-radius: 6.83801px;
   border: none;
   height: 130px;
   overflow: hidden;
-  /* padding: 18px; */
+  
   text-align: center;
-  /* margin-bottom: 16px; */
+
   width: 85%;
-  /* border: 1px solid red; */
+ 
 
   .select-time {
     display: flex;
@@ -1261,7 +1219,7 @@ const SelectTimeBtn = styled.p`
   color: ${(props) => props.color && props.color};
   border: 1px solid white;
   cursor: pointer;
-  /* border: 1px solid red; */
+
 `;
 
 const StTimeClose = styled.div`
@@ -1306,11 +1264,11 @@ const StJoinDiv = styled.div`
   border:none;
 `
 const ArrowForward = styled(IoIosArrowForward)`
-  color:#8E8E8E;
+  color:#cfcfcf;
 `
 const MinusCircle = styled(AiOutlineMinusCircle)`
-  color:#8E8E8E;
+  color:#cfcfcf;
 `
 const PlusCircle = styled(AiOutlinePlusCircle)`
-  color:#8E8E8E;
+  color:#cfcfcf;
 `

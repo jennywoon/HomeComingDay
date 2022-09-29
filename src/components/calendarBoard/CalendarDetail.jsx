@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import JustLayout from '../JustLayout';
-import Layout from '../Layout';
 import Header from '../Header';
 import { IoIosArrowBack } from 'react-icons/io';
-import { AiOutlineMenu } from 'react-icons/ai';
-import Img from '../../assets/naverIcon.png';
 import CalendarDetailComment from './CalendarDetailComment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   __getCalendar,
-  __deleteCalendar,
   __getDetailCalendar,
   __postCalendarComment,
   __postCalendarHeart,
@@ -20,7 +15,6 @@ import {
 } from '../../redux/modules/CalendarSlice';
 import { useRef } from 'react';
 import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
-import { BiDotsVerticalRounded } from 'react-icons/bi';
 import { GiPunchBlast } from 'react-icons/gi';
 import CalendarDeleteModal from './CalendarDeleteModal';
 import commentImg from '../../assets/commentImg.png';
@@ -33,6 +27,7 @@ import { __getMyPage } from '../../redux/modules/MyPageSlice';
 import CalendarJoiinModal from './CalendarJoiinModal';
 import { chatApi } from '../chatBoard/ChatApi';
 import { __getNoticeCount } from '../../redux/modules/NoticeSlice';
+import dots from "../../assets/dots.png"
 
 
 const CalendarDetail = () => {
@@ -57,18 +52,13 @@ const CalendarDetail = () => {
 
   const trueList = joinPeopleList && joinPeopleList.map((list) => { if (list.email === data.email) return list.joinCheck })
   const joinTrueFalse = trueList && trueList.includes(true)
-  // console.log("trueList",trueList&&trueList.includes(true))
   const joinPeopleListfind = joinPeopleLists && joinPeopleLists.map((list) => list.joinCheck)
   const joinBooline = joinPeopleListfind[joinPeopleListfind.length - 1]
-  console.log("joinPeopleLists", joinPeopleLists)
-  // console.log(joinPeopleListfind)
-  console.log("calendars", calendars)
-  console.log("calendarJoin", calendarJoin)
-  console.log("joinPeopleList", joinPeopleList)
-  console.log("joinPeopleLists", joinPeopleLists)
-
-
-
+  // console.log("joinPeopleLists", joinPeopleLists)
+  // console.log("calendars", calendars)
+  // console.log("calendarJoin", calendarJoin)
+  // console.log("joinPeopleList", joinPeopleList)
+  // console.log("joinPeopleLists", joinPeopleLists)
 
   //모달닫기
   const node = useRef();
@@ -95,8 +85,6 @@ const CalendarDetail = () => {
     dispatch(__getDetailCalendar(id));
   }, [dispatch]);
 
-
-
   // 수정 삭제 모달
   const onCilckShow = () => {
     setShow(!show);
@@ -110,17 +98,6 @@ const CalendarDetail = () => {
   const onCilckChaetShow = () => {
     setShowChaet(!showChaet);
   };
-
-  // // 삭제
-  // const onClickDelete = () => {
-  //   const result = window.confirm("정말 삭제하시겠습니까?")
-  //   if (result) {
-  //     dispatch(__deleteCalendar(id))
-  //     navigate("/calendar")
-  //   } else {
-  //     return null
-  //   }
-  // }
 
   // 수정
   const onClickRevice = () => {
@@ -187,12 +164,12 @@ const CalendarDetail = () => {
       })
   }
   return (
-    <Container ref={node}>
+    <StContainer ref={node}>
       {modalOpen && <CalendarDeleteModal setModalOpen={setModalOpen} />}
       {joinModalOpen && <CalendarJoiinModal setJoinModalOpen={setJoinModalOpen} joinPeopleList={joinPeopleList} id={id} />}
       <Header />
-      <FirstWrap>
-        <DetailHeader>
+      <StFirstWrap>
+        <StDetailHeader>
           <IoIosArrowBack
             size='25px'
             cursor='pointer'
@@ -200,86 +177,80 @@ const CalendarDetail = () => {
               navigate('/calendar');
             }}
           />
-          <HeaderTitle>만남일정</HeaderTitle>
-          <div style={{ width: '25px', height: '25px' }}></div>
-        </DetailHeader>
-      </FirstWrap>
-      <CalendarContainer>
-        <CalendarWrap>
-          <DetailWrap>
-            <DetailBody>
-              <Bodytop>
-                <Bodyimg src={calendarfind && calendarfind.userImage} alt='' />
-                <Bodytxt>
-                  <Txtname onClick={onCilckChaetShow}>
+          <StHeaderTitle>만남일정</StHeaderTitle>
+          <StHeaderDiv/>
+        </StDetailHeader>
+      </StFirstWrap>
+      <StCalendarContainer>
+        <StCalendarWrap>
+          <StDetailWrap>
+            <StDetailBody>
+              <StBodytop>
+                <StBodyimg src={calendarfind && calendarfind.userImage} alt='' />
+                <StBodytxt>
+                  <StTxtname onClick={onCilckChaetShow}>
                     {calendarfind && calendarfind.username}
-                  </Txtname>
-                  <Txtstudent>
+                  </StTxtname>
+                  <StTxtstudent>
                     {calendarfind && calendarfind.departmentName}{' '}
                     <span> {calendarfind && calendarfind.admission} </span>
-                  </Txtstudent>
+                  </StTxtstudent>
                   {showChaet ?
                     <StChatWrap onClick={() => createChat(calendarfind.userId)}>
                       {calendarfind && calendarfind.username !== data.username ?
-                        <ChaetingBox>
+                        <StChatingBox>
                           1:1채팅
-                        </ChaetingBox> : null}
+                        </StChatingBox> : null}
                     </StChatWrap> : null}
-                </Bodytxt>
+                </StBodytxt>
                 {calendarfind && calendarfind.username === data.username ?
-                  <BiDotsVerticalRounded
-                    size='20px'
-                    style={{
-                      marginLeft: 'auto',
-                      cursor: 'pointer',
-                      color: '#bebebe',
-                    }}
+                  <StDots
                     onClick={onCilckShow}
                   /> : null}
 
                 {show ? (
-                  <Revisebox ref={node}>
-                    <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
-                    <DeleteButton onClick={showModal}>삭제</DeleteButton>
-                  </Revisebox>
+                  <StRevisebox ref={node}>
+                    <StReviseButton onClick={onClickRevice}>수정</StReviseButton>
+                    <StDeleteButton onClick={showModal}>삭제</StDeleteButton>
+                  </StRevisebox>
                 ) : null}
-              </Bodytop>
-              <BodyContent>
-                <ContentBody>
-                  <ContentTitle>
+              </StBodytop>
+              <StBodyContent>
+                <StContentBody>
+                  <StContentTitle>
                     {calendarfind && calendarfind.title}
-                  </ContentTitle>
-                  <Contentget>
-                    <ContentgetTitle>날짜 </ContentgetTitle>
-                    <ContentgetContent>
+                  </StContentTitle>
+                  <StContentget>
+                    <StContentgetTitle>날짜 </StContentgetTitle>
+                    <StContentgetContent>
                       {calendarfind && calendarfind.calendarDate}
-                    </ContentgetContent>
-                  </Contentget>
-                  <Contentget>
-                    <ContentgetTitle>시간 </ContentgetTitle>
-                    <ContentgetContent>
+                    </StContentgetContent>
+                  </StContentget>
+                  <StContentget>
+                    <StContentgetTitle>시간 </StContentgetTitle>
+                    <StContentgetContent>
                       {calendarfind && calendarfind.calendarTime}
-                    </ContentgetContent>
-                  </Contentget>
-                  <Contentget>
-                    <ContentgetTitle>초대 </ContentgetTitle>
-                    <ContentgetContent>
+                    </StContentgetContent>
+                  </StContentget>
+                  <StContentget>
+                    <StContentgetTitle>초대 </StContentgetTitle>
+                    <StContentgetContent>
                       {calendarfind && calendarfind.maxPeople} 명
-                    </ContentgetContent>
-                  </Contentget>
-                  <Contentget>
-                    <ContentgetTitle>장소 </ContentgetTitle>
-                    <ContentgetContent>
+                    </StContentgetContent>
+                  </StContentget>
+                  <StContentget>
+                    <StContentgetTitle>장소 </StContentgetTitle>
+                    <StContentgetContent>
                       {calendarfind && calendarfind.calendarLocation}
-                    </ContentgetContent>
-                  </Contentget>
-                  <Contentget>
-                    <ContentgetTitle>내용 </ContentgetTitle>
-                    <ContentgetContent>
+                    </StContentgetContent>
+                  </StContentget>
+                  <StContentget>
+                    <StContentgetTitle>내용 </StContentgetTitle>
+                    <StContentgetContent>
                       {calendarfind && calendarfind.content}
-                    </ContentgetContent>
-                  </Contentget>
-                </ContentBody>
+                    </StContentgetContent>
+                  </StContentget>
+                </StContentBody>
                 {/* <ContentImg src=''></ContentImg> */}
 
                 <StJoinContain>
@@ -313,40 +284,40 @@ const CalendarDetail = () => {
 
                 </StJoinContain>
 
-                <BodyTxtBox>
-                  <ContentView>
+                <StBodyTxtBox>
+                  <StContentView>
                     {calendarfind && calendarfind.createdAt} | 조회수{' '}
                     {calendarfind && calendarfind.views}
-                  </ContentView>
-                  <Count>
-                    <CommentCount>
-                      <CommentImg>
+                  </StContentView>
+                  <StCount>
+                    <StCommentCount>
+                      <StCommentImg>
                         <img src={commentImg} alt='댓글이미지' />
-                      </CommentImg>
+                      </StCommentImg>
                       댓글 {calendarfind && calendarfind.commentCnt}
-                    </CommentCount>
-                    <HeartCount onClick={heartClick}>
+                    </StCommentCount>
+                    <StHeartCount onClick={heartClick}>
                       {calendarfind && calendarfind.heart === true ? (
-                        <HeartImg>
+                        <StHeartImg>
                           <img src={heartColorImg} alt='좋아요이미지' />
-                        </HeartImg>
+                        </StHeartImg>
                       ) : (
-                        <HeartImg>
+                        <StHeartImg>
                           <img src={heartImg} alt='좋아요이미지' />
-                        </HeartImg>
+                        </StHeartImg>
                       )}
                       좋아요 {calendarfind && calendarfind.heartCnt}
-                    </HeartCount>
-                  </Count>
-                </BodyTxtBox>
-              </BodyContent>
+                    </StHeartCount>
+                  </StCount>
+                </StBodyTxtBox>
+              </StBodyContent>
 
-              <BodyContainer>
-                <BodyCommentBox>
+              <StBodyContainer>
+                <StBodyCommentBox>
                   {calendarfind && calendarfind.commentList.length === 0 ? (
-                    <BodyComment>
+                    <StBodyComment>
                       작성한 댓글이 없습니다 <br></br> 첫번째 댓글을 남겨보세요{' '}
-                    </BodyComment>
+                    </StBodyComment>
                   ) : (
                     <>
                       {calendarfind &&
@@ -361,50 +332,47 @@ const CalendarDetail = () => {
                         ))}
                     </>
                   )}
-                </BodyCommentBox>
-              </BodyContainer>
-            </DetailBody>
-          </DetailWrap>
-        </CalendarWrap>
-        <CommentContainer onSubmit={onClickPostComment}>
-          <CommentBox>
-            <CommentDiv>
-              <CommentPost
+                </StBodyCommentBox>
+              </StBodyContainer>
+            </StDetailBody>
+          </StDetailWrap>
+        </StCalendarWrap>
+        <StCommentContainer onSubmit={onClickPostComment}>
+          <StCommentBox>
+            <StCommentDiv>
+              <StCommentPost
                 placeholder='댓글을 입력해주세요'
                 value={comment}
                 onChange={onChangePostHandler}
-              ></CommentPost>
-              <CommentButton type='submit'>올리기</CommentButton>
-            </CommentDiv>
-          </CommentBox>
-        </CommentContainer>
-      </CalendarContainer>
-    </Container>
+              ></StCommentPost>
+              <StCommentButton type='submit'>올리기</StCommentButton>
+            </StCommentDiv>
+          </StCommentBox>
+        </StCommentContainer>
+      </StCalendarContainer>
+    </StContainer>
   );
 };
 
 export default CalendarDetail;
 
-const Container = styled.div`
+const StContainer = styled.div`
   position: relative;
   width: 100%;
   height: 100vh;
   overflow-y: hidden;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
 `;
-const FirstWrap = styled.div`
+const StFirstWrap = styled.div`
   display: flex;
-  /* align-items: center; */
   justify-content: center;
   flex-direction: column;
-  /* border:1px solid blue; */
   width: 90%;
   height: 60px;
   margin: auto;
 `;
-const DetailHeader = styled.div`
+const StDetailHeader = styled.div`
   width: 100%;
   height: 50px;
   display: flex;
@@ -412,7 +380,7 @@ const DetailHeader = styled.div`
   justify-content: space-between;
   position: sticky;
 `;
-const CalendarContainer = styled.div`
+const StCalendarContainer = styled.div`
   width: 90%;
   height: 86%;
   border: 1px solid #eee;
@@ -425,28 +393,31 @@ const CalendarContainer = styled.div`
   margin: auto;
 `;
 
-const CalendarWrap = styled.div`
+const StCalendarWrap = styled.div`
   width: 90%;
   height: 100%;
-  /* border: 1px solid blue; */
   overflow-y: scroll;
   ::-webkit-scrollbar {
     width: 0px;
   }
 `;
-const DetailWrap = styled.form`
+const StDetailWrap = styled.form`
   width: 100%;
-  /* height:100%; */
   background-color: white;
   display: flex;
   flex-direction: column;
 `;
 
-const HeaderTitle = styled.div`
+const StHeaderTitle = styled.div`
   font-weight: 700;
   font-size: 16px;
 `;
-const Revisebox = styled.div`
+
+const StHeaderDiv = styled.div`
+  width: 25px;
+  height: 25px;
+`
+const StRevisebox = styled.div`
   border: 1px solid #f1f0f0;
   z-index: 5;
   border-radius: 10px;
@@ -460,7 +431,7 @@ const Revisebox = styled.div`
   border-radius: 16px;
   width:58px;
 `;
-const ReviseButton = styled.button`
+const StReviseButton = styled.button`
   border: none;
   border-bottom: 1px solid #f1f0f0;
   padding: 10px;
@@ -474,7 +445,7 @@ const ReviseButton = styled.button`
   }
 `;
 
-const DeleteButton = styled.button`
+const StDeleteButton = styled.button`
   border: none;
   background-color: #eee;
   padding: 10px;
@@ -488,49 +459,54 @@ const DeleteButton = styled.button`
   }
 `;
 
-const DetailBody = styled.div`
+const StDetailBody = styled.div`
   border-radius: 20px;
   width: 100%;
   height: 100%;
 `;
 
-const Bodytop = styled.div`
+const StBodytop = styled.div`
   display: flex;
   align-items: center;
-  /* padding:20px 20px 10px 20px; */
   position: relative;
   margin: 10px 0;
 `;
 
-const Bodyimg = styled.img`
+const StBodyimg = styled.img`
   width: 40px;
   height: 40px;
   border-radius: 50%;
 `;
 
-const Bodytxt = styled.div`
+const StBodytxt = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 10px;
   position: relative;
 `;
 
-const Txtname = styled.h3`
+const StDots = styled.div`
+  width: 20px;
+  height: 20px;
+  background-image: url(${dots});
+  background-size: 100% 100%;
+  background-position: center;
+  margin-left: auto;
   cursor: pointer;
-  /* margin: 0px; */
+`
+const StTxtname = styled.h3`
+  cursor: pointer;
 `;
-const Txtstudent = styled.p`
-  /* margin: 0px; */
+const StTxtstudent = styled.p`
   font-size: 12px;
   color: #bebebe;
 `;
 
 const StChatWrap = styled.div``
-const ChaetingBox = styled.div`
+const StChatingBox = styled.div`
   border: 1px solid #f1f0f0;
   border-radius: 16px;
   position: absolute;
-  /* text-align: center; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -550,25 +526,19 @@ const ChaetingBox = styled.div`
   }
 `;
 
-const BodyContent = styled.div`
-  /* padding: 0px 20px; */
+const StBodyContent = styled.div`
   width: 100%;
-  /* height: 370px; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 `;
-const ContentTitle = styled.h3`
-  /* margin:10px 0px; */
+const StContentTitle = styled.h3`
   font-weight: 600;
   font-size: 18px;
   width: 100%;
-  /* height: 100%; */
-  /* border: 1px solid green; */
 `;
-const ContentBody = styled.div`
-  /* border: 1px solid blue; */
+const StContentBody = styled.div`
   color: #000;
   font-size: 14px;
   font-weight: 400;
@@ -577,110 +547,46 @@ const ContentBody = styled.div`
   margin-bottom: 20px;
   height: 100%;
 `;
-const Contentget = styled.div`
+const StContentget = styled.div`
   color: #000;
-  /* height: 30px; */
   display: flex;
   align-items: center;
 `;
 
-const ContentgetTitle = styled.span`
+const StContentgetTitle = styled.span`
   color: #f7931e;
   font-weight: 600;
   width:10%;
 `;
 
-const ContentgetContent = styled.div`
+const StContentgetContent = styled.div`
   width:80%;
 `
-
-const ContentImgBox = styled.div`
-  width: 100%;
-  height: 250px;
-  border-radius: 20px;
-  position: relative;
-`;
-const ContentImg = styled.img`
-  /* border:1px solid gray; */
-  width: 100%;
-  height: 250px;
-  display: flex;
-  border-radius: 20px;
-  /* margin : 20px 0px; */
-  /* background-repeat: no-repeat;
-    background-size: cover; */
-`;
-const PrevButton = styled.button`
-  font-size: 20px;
-  display: flex;
-  position: absolute;
-  border: none;
-  border-radius: 20px;
-  top: 50%;
-  left: 0;
-  z-index: 2;
-  transform: translatey(-50%);
-`;
-const NextButton = styled.button`
-  font-size: 20px;
-  display: flex;
-  position: absolute;
-  border: none;
-  border-radius: 20px;
-  top: 50%;
-  right: 0;
-  z-index: 2;
-  transform: translatey(-50%);
-`;
-
-const PreviousBtn = styled(GrFormPrevious)``;
-const NextBtn = styled(GrFormNext)``;
-
-const ContentView = styled.p`
+const StContentView = styled.p`
   font-size: 12px;
   line-height: 40px;
   height: 40px;
-  /* margin:30px 0px 10px; */
   color: #bebebe;
-  /* border: 1px solid blue; */
 `;
-const BodyTxtBox = styled.div`
+const StBodyTxtBox = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: space-between;
 `;
-const ContentTime = styled.div`
-  color: gray;
-  font-size: 14px;
-  margin-left: auto;
-`;
 
-const BodyContainer = styled.div`
+const StBodyContainer = styled.div`
   width: 100%;
   height: 100%;
-  /* border: 1px solid green; */
-  /* overflow-y: scroll; */
 `;
-const BodyCommentBox = styled.div`
-  /* border-top : 1px solid rgba(0,0,0,0.1); */
-  /* margin:20px; */
-  /* overflow-y: scroll; */
+const StBodyCommentBox = styled.div`
   height: 100%;
   width: 100%;
-  /* position:relative; */
-  /* height: 70%; */
-  /* border: 1px solid orangered; */
 `;
 
-const CommentContainer = styled.form`
+const StCommentContainer = styled.form`
   position: sticky;
-  /* bottom: 0;
-    bottom: 10px; */
   width: 100%;
-  /* height: 100%; */
-  /* border: 1px solid blue; */
-  /* max-width:500px; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -688,45 +594,38 @@ const CommentContainer = styled.form`
   margin-bottom: 10px;
 `;
 
-const CommentBox = styled.div`
+const StCommentBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* height: 60px; */
   width: 95%;
-  /* border: 1px solid red; */
 `;
 
-const CommentDiv = styled.div`
-  /* width : 370px; */
+const StCommentDiv = styled.div`
   width: 100%;
-  /* height: 50px; */
   padding: 10px;
   background-color: #eeeeee;
   border-radius: 16px;
   display: flex;
   align-items: center;
-  /* margin-bottom: 20px; */
   justify-content: space-between;
 `;
 
-const CommentPost = styled.input`
+const StCommentPost = styled.input`
   width: 80%;
-  /* width: 100%; */
-  /* bottom : 0; */
   background-color: #eeeeee;
   height: 30px;
   border-radius: 10px;
   border: none;
   outline: none;
 `;
-const CommentButton = styled.button`
+const StCommentButton = styled.button`
   border: none;
   cursor: pointer;
   color: black;
   font-weight: 600;
 `;
-const BodyComment = styled.div`
+const StBodyComment = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -737,13 +636,12 @@ const BodyComment = styled.div`
   text-align: center;
 `;
 
-const Count = styled.div`
+const StCount = styled.div`
   display: flex;
-  /* border: 1px solid blue; */
   align-items: center;
 `;
 
-const CommentCount = styled.div`
+const StCommentCount = styled.div`
   font-size: 12px;
   font-weight: 500;
   color: black;
@@ -751,11 +649,11 @@ const CommentCount = styled.div`
   margin-right: 15px;
 `;
 
-const CommentImg = styled.div`
+const StCommentImg = styled.div`
   margin-right: 5px;
 `;
 
-const HeartCount = styled.div`
+const StHeartCount = styled.div`
   font-size: 12px;
   font-weight: 500;
   color: black;
@@ -763,7 +661,7 @@ const HeartCount = styled.div`
   cursor: pointer;
 `;
 
-const HeartImg = styled.div`
+const StHeartImg = styled.div`
   margin-right: 5px;
 `;
 

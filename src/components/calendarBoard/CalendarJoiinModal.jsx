@@ -1,11 +1,11 @@
-import React, { useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React from 'react';
 import styled from 'styled-components';
 import { IoMdClose } from 'react-icons/io';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import joinUser from '../../assets/users.png';
 import { useEffect } from 'react';
 import { __getJoin } from '../../redux/modules/CalendarSlice';
+import xcircle from "../../assets/xcircle.png"
 
 const CalendarJoiinModal = ({setJoinModalOpen,joinPeopleList,id}) => {
   const dispatch = useDispatch();
@@ -25,11 +25,11 @@ const CalendarJoiinModal = ({setJoinModalOpen,joinPeopleList,id}) => {
       <StWrap>
         <StModalContainer>
           <StFirstWrap>
-            <div style={{width:"35px"}}></div>
+            <StFirstDiv/>
             <StModalTop>참여자보기</StModalTop>
-            <IconBox>
-            <IoMdClose size="20px" style={{marginLeft:"auto",cursor:"pointer"}} onClick={closeModal}/>
-            </IconBox>
+            <StIconBox>
+            <StClose onClick={closeModal}/>
+            </StIconBox>
           </StFirstWrap>
 
           {/* 참여자리스트 맵돌리기 */}
@@ -45,7 +45,7 @@ const CalendarJoiinModal = ({setJoinModalOpen,joinPeopleList,id}) => {
           )) : 
           (
             <StJoinNone>
-                <img src={joinUser} style={{width:"30px"}}alt="참여자조회"/>
+                <StImg src={joinUser} alt="참여자조회"/>
                 <StNonetxt>참석자가 없습니다 <br/> 참석하기 버튼을 눌러 모임에 참석해보세요</StNonetxt>
             </StJoinNone>
           )
@@ -121,6 +121,10 @@ const StFirstWrap = styled.div`
   display: flex;
   align-items: center;
 `;
+
+const StFirstDiv = styled.div`
+  width: 35px;
+`
 const StModalTop = styled.div`
   width: 100%;
   display: flex;
@@ -131,12 +135,20 @@ const StModalTop = styled.div`
 font-size: 16px;
 `;
 
-const IconBox = styled.div`
+const StIconBox = styled.div`
   display: flex;
   width:35px;
   padding-right: 8px;
 `
-
+const StClose = styled.div`
+  width: 28px;
+  height: 28px;
+  background-image: url(${xcircle});
+  background-position: center;
+  background-size: 100% 100%;
+  margin-left: auto;
+  cursor: pointer;
+`
 const StJoinList = styled.div`
   display: flex;
   width:100%;
@@ -171,10 +183,16 @@ width:100%;
 const StJoinNone = styled.div`
   display: flex;
   width:100%;
+  height: 80%;
+  justify-content: center;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  margin-top:100px;
+  /* margin-top:100px; */
+`
+
+const StImg = styled.img`
+  width: 30px;
 `
 const StNonetxt = styled.div`
   font-weight: 500;
