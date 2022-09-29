@@ -291,6 +291,7 @@ const StPrivacy = styled.div`
   color: #b3b3b3;
   font-weight: 400;
   justify-content: center;
+  font-size: 15px;
 `
 
 const StPrivacyText = styled.div`

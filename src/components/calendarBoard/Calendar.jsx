@@ -72,7 +72,7 @@ const StHelpContainer = styled.div`
   gap: 12px;
   width: 100%;
   height: 100%;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 `;
 
 const StBannerWrap = styled.div`
@@ -97,7 +97,7 @@ const StBanner = styled.div`
 const StHelpWrap = styled.div`
   position: relative;
   top: 170px;
-  width: 100%;
+  /* width: 100%; */
   height: 62%;
   border-radius: 20px;
   background-color: white;

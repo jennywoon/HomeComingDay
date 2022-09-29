@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import {
   __getFreeTalk,
@@ -23,51 +23,51 @@ const FreeTalkCard = ({ freetalk, id }) => {
   };
 
   return (
-    <FreeTalkContainer onClick={onClickNavi}>
-      <Card>
-        <CardHead>
+    <StFreeTalkContainer onClick={onClickNavi}>
+      <StCard>
+        <StCardHead>
           <StImg>
-            <HeadImg src={freetalk.userImage}/>
+            <StHeadImg src={freetalk.userImage}/>
           </StImg>
-          <HeadUser>
-            <HeadTop>
-              <HeadName>{freetalk.username}</HeadName>
-              <HeadTime>{freetalk.createdAt}</HeadTime>
-            </HeadTop>
-            <HeadBottom>
-              <HeadDepartment>{freetalk.departmentName}</HeadDepartment>
-              <HeadStudent>· {freetalk.admission}</HeadStudent>
-            </HeadBottom>
-          </HeadUser>
-        </CardHead>
-        <CardBody>
-          <BodyTitle>{freetalk.title}</BodyTitle>
-        </CardBody>
-        <CardFooter>
-          <Views>조회수 {freetalk.views}</Views>
-          <Count>
-            <CommentCount>
-              <CommentImg>
+          <StHeadUser>
+            <StHeadTop>
+              <StHeadName>{freetalk.username}</StHeadName>
+              <StHeadTime>{freetalk.createdAt}</StHeadTime>
+            </StHeadTop>
+            <StHeadBottom>
+              <StHeadDepartment>{freetalk.departmentName}</StHeadDepartment>
+              <StHeadStudent>· {freetalk.admission}</StHeadStudent>
+            </StHeadBottom>
+          </StHeadUser>
+        </StCardHead>
+        <StCardBody>
+          <StBodyTitle>{freetalk.title}</StBodyTitle>
+        </StCardBody>
+        <StCardFooter>
+          <StViews>조회수 {freetalk.views}</StViews>
+          <StCount>
+            <StCommentCount>
+              <StCommentImg>
               <img src={commentgray} alt='댓글이미지' />
-              </CommentImg>
+              </StCommentImg>
               {freetalk.commentCnt}
-            </CommentCount>
-            <HeartCount>
-              <HeartImg>
+            </StCommentCount>
+            <StHeartCount>
+              <StHeartImg>
               <img src={heartgray} alt='댓글이미지' />
-              </HeartImg>
+              </StHeartImg>
               {freetalk.heartCnt}
-            </HeartCount>
-          </Count>
-        </CardFooter>
-      </Card>
-    </FreeTalkContainer>
+            </StHeartCount>
+          </StCount>
+        </StCardFooter>
+      </StCard>
+    </StFreeTalkContainer>
   );
 };
 
 export default FreeTalkCard;
 
-const FreeTalkContainer = styled.div`
+const StFreeTalkContainer = styled.div`
   height: 175px;
   padding: 10px;
   border: 1px solid #eee;
@@ -80,13 +80,13 @@ const FreeTalkContainer = styled.div`
   align-items: center;
 `;
 
-const Card = styled.div`
+const StCard = styled.div`
   width: 97%;
   /* border: 1px solid red; */
   margin: 0 auto;
 `;
 
-const CardHead = styled.div`
+const StCardHead = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 20px;
@@ -96,7 +96,7 @@ const StImg = styled.div`
   /* border: 1px solid red; */
 `;
 
-const HeadImg = styled.img`
+const StHeadImg = styled.img`
   width: 30px;
   height: 30px;
   display: flex;
@@ -106,48 +106,48 @@ const HeadImg = styled.img`
   margin-right: 7px;
 `;
 
-const HeadUser = styled.div`
+const StHeadUser = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   margin: 0px 5px;
 `;
-const HeadTop = styled.div`
+const StHeadTop = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: space-between;
   /* border: 1px solid red; */
 `;
-const HeadBottom = styled.div`
+const StHeadBottom = styled.div`
   display: flex;
   font-size: 12px;
   color: gray;
   gap: 5px;
 `;
-const HeadDepartment = styled.div``;
+const StHeadDepartment = styled.div``;
 
-const HeadName = styled.h2`
+const StHeadName = styled.h2`
   font-size: 14px;
   font-weight: 600;
   color: #000;
   /* margin: 0px 5px; */
 `;
-const HeadStudent = styled.p``;
+const StHeadStudent = styled.p``;
 
-const HeadTime = styled.p`
+const StHeadTime = styled.p`
   font-size: 12px;
   color: gray;
   margin-left: auto;
   font-weight: 500;
 `;
 
-const CardBody = styled.div`
+const StCardBody = styled.div`
   height: 50px;
   margin-bottom: 20px;
 `;
 
-const BodyTitle = styled.div`
+const StBodyTitle = styled.div`
   margin: 5px 0px;
   font-size: 16px;
   font-weight: 600;
@@ -159,12 +159,12 @@ const BodyContent = styled.div`
   margin: 5px 0px;
 `;
 
-const CardFooter = styled.div`
+const StCardFooter = styled.div`
   display: flex;
   justify-content: space-between;
 `;
 
-const Views = styled.div`
+const StViews = styled.div`
   font-size: 12px;
   color: gray;
   /* margin-right:10px; */
@@ -177,27 +177,27 @@ const Division = styled.div`
   color: gray;
 `;
 
-const Count = styled.div`
+const StCount = styled.div`
   display: flex;
 `;
 
-const CommentCount = styled.div`
+const StCommentCount = styled.div`
   font-size: 12px;
   color: gray;
   display: flex;
   margin-right: 10px;
 `;
 
-const CommentImg = styled.div`
+const StCommentImg = styled.div`
   margin-right: 5px;
 `
 
-const HeartCount = styled.div`
+const StHeartCount = styled.div`
   font-size: 12px;
   color: gray;
   display: flex;
 `;
 
-const HeartImg = styled.div`
+const StHeartImg = styled.div`
   margin-right: 5px;
 `

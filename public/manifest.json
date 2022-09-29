@@ -34,29 +34,29 @@
     },
     {
       "src": "../src/assets/logosize/logo144.png",
-      "sizes": "144*144",
+      "sizes": "144x144",
       "type": "image/png"
     },
     {
       "src": "../src/assets/logosize/logo196.png",
-      "sizes": "196*196",
+      "sizes": "196x196",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
       "src": "../src/assets/logosize/logo310.png",
-      "sizes": "310*310",
+      "sizes": "310x310",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
       "src": "../src/assets/logosize/logo512.png",
-      "sizes": "512*512",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
   ],
-  "start_url": "public/index.html",
+  "start_url": "/",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"

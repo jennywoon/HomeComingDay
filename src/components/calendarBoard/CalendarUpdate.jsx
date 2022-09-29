@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { __getHelp, __postHelp } from '../../redux/modules/HelpSlice';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
-import { AiOutlinePlusCircle,AiOutlineMinusCircle  } from 'react-icons/ai';
+import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai';
 import TimeRangePicker from '@wojtekmaj/react-timerange-picker';
 import Button from '../elements/Button';
 import {
@@ -29,10 +29,10 @@ const CalendarUpdate = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const showModal = (e) => {
-      e.preventDefault();
-      setModalOpen(true);
+    e.preventDefault();
+    setModalOpen(true);
   }
-console.log(calendarfind)
+  console.log(calendarfind)
   const onChange = (value) => setDate(value);
   const [date, setDate] = useState({
     calendarDate: '',
@@ -64,9 +64,9 @@ console.log(calendarfind)
   );
   const [reactCalendar, setReactCalendar] = useState(
     calendarfind && calendarfind.calendarDate
-    );
+  );
 
-  const [joinNumber , setJoinNumber] = useState(calendarfind && calendarfind.maxPeople);
+  const [joinNumber, setJoinNumber] = useState(calendarfind && calendarfind.maxPeople);
 
   const onChangeCalendar = (e) => {
     setReactCalendar(e.target.value);
@@ -108,7 +108,7 @@ console.log(calendarfind)
     } else {
       handleCheck(false);
     }
-  },[EditTitle, EditContent, EditLocation])
+  }, [EditTitle, EditContent, EditLocation])
 
   useEffect(() => {
     dispatch(__getCalendar());
@@ -122,9 +122,9 @@ console.log(calendarfind)
     });
   };
 
-  
 
-    // 시간 구현
+
+  // 시간 구현
 
   const [dateShow, setDateShow] = useState(true);
   const [timeShow, setTimeShow] = useState(false);
@@ -189,7 +189,7 @@ console.log(calendarfind)
     },
   }
 
-  const onUpdateHandler = async(e) => {
+  const onUpdateHandler = async (e) => {
     e.preventDefault();
     const editcalendarfind = {
       ...calendarfind,
@@ -197,9 +197,9 @@ console.log(calendarfind)
       title: EditTitle,
       content: EditContent,
       calendarLocation: calendarlocation,
-      calendarDate:realCalendar,
-      calendarTime:hour + ":" + selectMinute,
-      maxPeople : joinNumber
+      calendarDate: realCalendar,
+      calendarTime: hour + ":" + selectMinute,
+      maxPeople: joinNumber
     };
     await dispatch(__updateCalendar(editcalendarfind));
     await dispatch(__getCalendar())
@@ -210,185 +210,187 @@ console.log(calendarfind)
 
   return (
     <>
-    <FormContainer>
-      <FormWrap 
-      onSubmit={onUpdateHandler}
-      >
-        <FormHeader>
-          <IoIosArrowBack size='25px' cursor='pointer' onClick={() => {navigate(`/calendardetail/${id}`)}} />
-        </FormHeader>
-        <FormBody>
-          <FormSelection name='category'>
-            <option value=''>만남일정</option>
-            {/* <option value='help'>도움요청</option>
-            <option value='information'>정보공유</option>
-            <option value='freetalk'>자유토크</option> */}
-          </FormSelection>
-          <FormInput
-                name='calendartitle'
-                value={EditTitle}
-                onChange={onChangeTitle}
-                placeholder='제목을 입력해주세요'
-                maxLength='40'
-              ></FormInput>
-              <CalendarButton type="button"
-              // onClick={showModal}
-              >
-                <CalendarTitle>날짜</CalendarTitle>
-                <DateDiv onClick={() => setIsActive(!isActive)}>
-                  {moment(date).format('YYYY년 MM월 DD일')}
-                  <ArrowForward />
-                </DateDiv>
-              </CalendarButton>
-              <CalendarWrap value={reactCalendar} onClick={onChangeCalendar}>
-                {isActive && (
-                  <Calendar
-                    name='calendarDate'
-                    value={calendarDate}
-                    onChange={onChange}
-                  />
-                )}
-                </CalendarWrap>
+      <StFormContainer>
+        <StFormWrap
+          onSubmit={onUpdateHandler}
+        >
+          <StFormHeader>
+            <IoIosArrowBack size='25px' cursor='pointer' onClick={() => { navigate(`/calendardetail/${id}`) }} />
+          </StFormHeader>
+          <StFormBody>
+            <StFormSelection name='category'>
+              <option value=''>만남일정</option>
+            </StFormSelection>
+            <StFormInput
+              name='calendartitle'
+              value={EditTitle}
+              onChange={onChangeTitle}
+              placeholder='제목을 입력해주세요'
+              maxLength='40'
+            ></StFormInput>
+            <StCalendarButton type="button"
+            // onClick={showModal}
+            >
+              <StCalendarTitle>날짜</StCalendarTitle>
+              <StDateDiv onClick={() => setIsActive(!isActive)}>
+                {moment(date).format('YYYY년 MM월 DD일')}
+                <ArrowForward />
+              </StDateDiv>
+            </StCalendarButton>
+            <StCalendarWrap value={reactCalendar} onClick={onChangeCalendar}>
+              {isActive && (
+                <Calendar
+                  name='calendarDate'
+                  value={calendarDate}
+                  onChange={onChange}
+                />
+              )}
+            </StCalendarWrap>
 
-          <TimeDiv>
-                <CalendarTitle>시간</CalendarTitle>
-                <TimeOpenBtn
-                  onClick={timeShowBtn}
-                  timeShow={timeShow}
-                  name='calendartime'
-                  value={`${hour}:${selectMinute}`}
-                >
+            <StTimeDiv>
+              <StCalendarTitle>시간</StCalendarTitle>
+              <StTimeOpenBtn
+                onClick={timeShowBtn}
+                timeShow={timeShow}
+                name='calendartime'
+                value={`${hour}:${selectMinute}`}
+              >
                 {`${hour}:${selectMinute}`}
                 <ArrowForward />
-                </TimeOpenBtn>
-              </TimeDiv>
-              <StKakaoMap>
-                {timeShow && (
-                  <StTimeWrap>
-                    <StTimeModal className="modal">
-                      <div className="section">
-                        <div className="select-time">
-                          <div className="division">
-                            {division.map((e, idx) => {
-                              const color =
-                                selectTime === e ? "#black" : "#bebebe";
-                              return (
-                                <SelectTimeBtn
-                                  type="button"
-                                  key={idx}
-                                  onClick={() => {
-                                    setSelectTime(e);
-                                  }}
-                                  color={color}
-                                >
-                                  {e}
-                                </SelectTimeBtn>
-                              );
-                            })}
-                          </div>
-                          <div className="hour">
-                            {hourSelect.map((e, idx) => {
-                              const color =
-                                selectHour === e ? "#black" : "#bebebe";
-                              return (
-                                <SelectTimeBtn
-                                  type="button"
-                                  key={idx}
-                                  onClick={() => {
-                                    setSelectHour(e);
-                                  }}
-                                  color={color}
-                                >
-                                  {e}
-                                </SelectTimeBtn>
-                              );
-                            })}
-                          </div>
-                          <div className="minute">
-                            {minuteSelect.map((e, idx) => {
-                              const color =
-                                selectMinute === e ? "#black" : "#bebebe";
-                              return (
-                                <SelectTimeBtn
-                                  key={idx}
-                                  onClick={() => {
-                                    setSelectMinute(e);
-                                  }}
-                                  color={color}
-                                >
-                                  {e}
-                                </SelectTimeBtn>
-                              );
-                            })}
-                          </div>
+              </StTimeOpenBtn>
+            </StTimeDiv>
+            <StKakaoMap>
+              {timeShow && (
+                <StTimeWrap>
+                  <StTimeModal className="modal">
+                    <div className="section">
+                      <div className="select-time">
+                        <div className="division">
+                          {division.map((e, idx) => {
+                            const color =
+                              selectTime === e ? "#black" : "#bebebe";
+                            return (
+                              <StSelectTimeBtn
+                                type="button"
+                                key={idx}
+                                onClick={() => {
+                                  setSelectTime(e);
+                                }}
+                                color={color}
+                              >
+                                {e}
+                              </StSelectTimeBtn>
+                            );
+                          })}
+                        </div>
+                        <div className="hour">
+                          {hourSelect.map((e, idx) => {
+                            const color =
+                              selectHour === e ? "#black" : "#bebebe";
+                            return (
+                              <StSelectTimeBtn
+                                type="button"
+                                key={idx}
+                                onClick={() => {
+                                  setSelectHour(e);
+                                }}
+                                color={color}
+                              >
+                                {e}
+                              </StSelectTimeBtn>
+                            );
+                          })}
+                        </div>
+                        <div className="minute">
+                          {minuteSelect.map((e, idx) => {
+                            const color =
+                              selectMinute === e ? "#black" : "#bebebe";
+                            return (
+                              <StSelectTimeBtn
+                                key={idx}
+                                onClick={() => {
+                                  setSelectMinute(e);
+                                }}
+                                color={color}
+                              >
+                                {e}
+                              </StSelectTimeBtn>
+                            );
+                          })}
                         </div>
                       </div>
-                    </StTimeModal>
-                    <StTimeClose onClick={closeTimeShowBtn}>확인</StTimeClose>
-                  </StTimeWrap>
-                )}
-              </StKakaoMap>
-              <StJoinPeople>
-                <CalendarTitle>인원</CalendarTitle>
-                <StJoinDiv>
-                  {/* <AiOutlineMinusCircle size="20px" onClick={joinMinusHandle}/> */}
-                    {joinNumber}명
-                  {/* <AiOutlinePlusCircle size="20px" onClick={joinPlusHandle}/> */}
-                </StJoinDiv>
-              </StJoinPeople>
+                    </div>
+                  </StTimeModal>
+                  <StTimeClose onClick={closeTimeShowBtn}>확인</StTimeClose>
+                </StTimeWrap>
+              )}
+            </StKakaoMap>
+            <StJoinPeople>
+              <StCalendarTitle>인원</StCalendarTitle>
+              <StJoinDiv>
+                {/* <AiOutlineMinusCircle size="20px" onClick={joinMinusHandle}/> */}
+                {joinNumber}명
+                {/* <AiOutlinePlusCircle size="20px" onClick={joinPlusHandle}/> */}
+              </StJoinDiv>
+            </StJoinPeople>
 
-          <CalendarDiv>
-            <CalendarTitle>장소</CalendarTitle>
-            <CalendarInput
-              name='calendarlocation'
-              value={calendarlocation}
-              onChange={calendaronChangeHandler}
-              onClick={handle.clickButton}
-            >
-              {calendarlocation ? calendarlocation : "장소를 검색해주세요"}
-              <ArrowForward />
-            </CalendarInput>
-          </CalendarDiv>
-          <StKakaoMap>
-                {openPostcode &&
-                  <DaumPostcode
-                    onComplete={handle.selectAddress}  // 값을 선택할 경우 실행되는 이벤트
-                    autoClose={false} // 값을 선택할 경우 사용되는 DOM을 제거하여 자동 닫힘 설정
-                    defaultQuery='판교역로 235' // 팝업을 열때 기본적으로 입력되는 검색어 
-                  />}
-              </StKakaoMap>
-          <TextDiv>
-            <CalendarTitle>내용</CalendarTitle>
-            <CalendarTextarea
-              name='calendarcontent'
-              value={EditContent}
-              onChange={onChangeContent}
-              placeholder='내용을 입력해주세요'
-              maxLength='400'
-            ></CalendarTextarea>
-          </TextDiv>
-          {/* <CalendarTest/> */}
-        </FormBody>
-        <FooterBtn>
-          <Button type='submit' backgroundColor='#F7931E' width="90%" height="40px" color="white" style={{ display: "block", margin: "15px auto" ,backgroundColor:'#F7931E'}} isDisabled={isOnActive ? false : true}>
-            <div style={{ fontWeight: "500", fontSize: "16px" }}>수정하기</div>
-          </Button>
-        </FooterBtn>
-      </FormWrap>
-    </FormContainer>
+            <StCalendarDiv>
+              <StCalendarTitle>장소</StCalendarTitle>
+              <StCalendarInput
+                name='calendarlocation'
+                value={calendarlocation}
+                onChange={calendaronChangeHandler}
+                onClick={handle.clickButton}
+              >
+                {calendarlocation ? calendarlocation : "장소를 검색해주세요"}
+                <ArrowForward />
+              </StCalendarInput>
+            </StCalendarDiv>
+            <StKakaoMap>
+              {openPostcode &&
+                <DaumPostcode
+                  onComplete={handle.selectAddress}  // 값을 선택할 경우 실행되는 이벤트
+                  autoClose={false} // 값을 선택할 경우 사용되는 DOM을 제거하여 자동 닫힘 설정
+                  defaultQuery='판교역로 235' // 팝업을 열때 기본적으로 입력되는 검색어 
+                />}
+            </StKakaoMap>
+            <StTextDiv>
+              <StCalendarTitle>내용</StCalendarTitle>
+              <StCalendarTextarea
+                name='calendarcontent'
+                value={EditContent}
+                onChange={onChangeContent}
+                placeholder='내용을 입력해주세요'
+                maxLength='400'
+              ></StCalendarTextarea>
+            </StTextDiv>
+            {/* <CalendarTest/> */}
+          </StFormBody>
+          <StFooterBtn>
+            <Button 
+            type='submit' 
+            backgroundColor='#F7931E' 
+            width="100%" height="40px" color="white" 
+            style={{ width: "90%", backgroundColor: '#F7931E' }} isDisabled={isOnActive ? false : true}>
+              <StChangediv>수정하기</StChangediv>
+            </Button>
+          </StFooterBtn>
+        </StFormWrap>
+      </StFormContainer>
     </>
-);
+  );
 };
 
 export default CalendarUpdate;
 
-const FormContainer = styled.div`
+const StFormContainer = styled.div`
   margin: 0 auto;
   width: 100%;
   height: 100%;
   background-color: #f7ede2;
   display: flex;
   justify-content: center;
+  overflow: hidden;
   @media only screen and (max-width: 768px) {
     width: 100%;
     height: 100%;
@@ -397,15 +399,15 @@ const FormContainer = styled.div`
   }
 `;
 
-const FormWrap = styled.form`
-  width: 500px;
-  height:100vh;
+const StFormWrap = styled.form`
+  width: 100%;
+  height: 100%;
   background-color: white;
   display: flex;
   flex-direction: column;
   
 `;
-const FormHeader = styled.div`
+const StFormHeader = styled.div`
   width: 100%;
   padding-left:15px;
   height: 50px;
@@ -415,11 +417,12 @@ const FormHeader = styled.div`
   margin: 40px 0px;
 `
 
-const CalendarButton = styled.button`
+const StCalendarButton = styled.button`
     height: 40px;
     margin-top: 10px;
     border-radius: 10px;
-    border: 1px solid #9b9999;
+    border: 1px solid #d9d9d9;
+    box-shadow: 0px 2px 14px rgba(0, 0, 0, 0.05);
     background-color: transparent;
     display: flex;
     justify-content: space-between;
@@ -428,11 +431,12 @@ const CalendarButton = styled.button`
     cursor: pointer;
 `
 
-const TimeDiv = styled.div`
+const StTimeDiv = styled.div`
     height: 40px;
     margin-top: 10px;
     border-radius: 10px;
-    border: 1px solid #9b9999;
+    border: 1px solid #d9d9d9;
+    box-shadow: 0px 2px 14px rgba(0, 0, 0, 0.05);
     background-color: transparent;
     display: flex;
     justify-content: space-between;
@@ -440,16 +444,17 @@ const TimeDiv = styled.div`
     padding: 0 20px;
     /* cursor: pointer; */
 `
-const CalendarTitle = styled.div`
+const StCalendarTitle = styled.div`
     font-size: 14px;
   color: #f7931e;
   font-weight: 600;
 `
-const CalendarDiv = styled.div`
+const StCalendarDiv = styled.div`
     height: 40px;
     margin-top: 10px;
     border-radius: 10px;
-    border: 1px solid #9b9999;
+    border: 1px solid #d9d9d9;
+    box-shadow: 0px 2px 14px rgba(0, 0, 0, 0.05);
     background-color: transparent;
     display: flex;
     justify-content: space-between;
@@ -460,7 +465,7 @@ const StKakaoMap = styled.div`
 `
 
 
-const CalendarInput = styled.div`
+const StCalendarInput = styled.div`
  width: 80%;
   height: 30px;
   display: flex;
@@ -470,7 +475,7 @@ const CalendarInput = styled.div`
   cursor: pointer;
   gap: 10px;
 `
-const CalendarTextarea = styled.textarea`
+const StCalendarTextarea = styled.textarea`
   width: 85%;
   height: 200px;
   resize: none;
@@ -488,11 +493,12 @@ const CalendarTextarea = styled.textarea`
   text-align: right;
 `;
 
-const TextDiv = styled.div`
+const StTextDiv = styled.div`
   height: 210px;
   margin-top: 10px;
   border-radius: 10px;
-  border: 1px solid #9b9999;
+  border: 1px solid #d9d9d9;
+  box-shadow: 0px 2px 14px rgba(0, 0, 0, 0.05);
   background-color: transparent;
   display: flex;
   justify-content: space-between;
@@ -500,12 +506,12 @@ const TextDiv = styled.div`
   padding: 0 20px;
   
 `;
-const FormBody = styled.div`
+const StFormBody = styled.div`
     display: flex;
     flex-direction: column;
     padding : 10px 20px;
 `
-const FormSelection = styled.select`
+const StFormSelection = styled.select`
      border: none;
     margin-bottom: 25px;
     width: 75px;
@@ -513,7 +519,7 @@ const FormSelection = styled.select`
     font-size: 14px;
     font-weight: 600;
 `
-const FormInput = styled.input`
+const StFormInput = styled.input`
     font-size: 20px;
     border: none;
     border-bottom:1px solid gray;
@@ -528,12 +534,23 @@ const FormInput = styled.input`
     font-weight: 600;
   }
 `
-const FooterBtn = styled.div`
-        margin:0 auto;
-        width:100%;       
+const StFooterBtn = styled.div`
+  width: 100%;
+  height: 100%;
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 50px;
 `
 
-const DateDiv = styled.div`
+const StChangediv = styled.div`
+  font-weight: 500;
+  font-size: 16px;
+`
+
+const StDateDiv = styled.div`
   width: 90%;
   height: 30px;
   display: flex;
@@ -543,12 +560,12 @@ const DateDiv = styled.div`
   cursor: pointer;
   gap: 10px;
 `
-const CalendarWrap = styled.div`
+const StCalendarWrap = styled.div`
   display: flex;
   justify-content: right;
   /* padding-right: 10px; */
 `;
-const TimeOpenBtn = styled.div`
+const StTimeOpenBtn = styled.div`
   font-weight: 500;
 height: 30px;
 font-size: 14px;
@@ -610,7 +627,7 @@ const StTimeModal = styled.div`
   }
 `;
 
-const SelectTimeBtn = styled.p`
+const StSelectTimeBtn = styled.p`
   background-color: transparent;
   padding: 10px;
   font-weight: 700;
@@ -640,7 +657,8 @@ const StJoinPeople = styled.div`
   height: 40px;
   margin-top: 10px;
   border-radius: 10px;
-  border: 1px solid #9b9999;
+  border: 1px solid #d9d9d9;
+  box-shadow: 0px 2px 14px rgba(0, 0, 0, 0.05);
   background-color: transparent;
   display: flex;
   justify-content: space-between;
