@@ -27,13 +27,13 @@ const NoticeCard = ({ item }) => {
 
   const onClickNavi = () => {
     setIsOnCheck(true)
-    if (articleFlag === "help") {
+    if (articleFlag === "도움요청") {
         navigate(`/helpdetail/${articleId}`)
-    } else if (articleFlag === "information") {
+    } else if (articleFlag === "정보공유") {
         navigate(`/informationdetail/${articleId}`)
-    } else if (articleFlag === "calendar") {
+    } else if (articleFlag === "만남일정") {
         navigate(`/calendardetail/${articleId}`)
-    } else if (articleFlag === "freeTalk") {
+    } else if (articleFlag === "자유토크") {
         navigate(`/freetalkdetail/${articleId}`)
     }
   };
@@ -58,7 +58,7 @@ const NoticeCard = ({ item }) => {
               </StBold>{' '}
               게시글에{' '}
               <StBold>{username}</StBold>
-              님이 댓글을 남겼습니다
+              님이 {noticeType}을 남겼습니다
             </StArticle>
             <StCreatAt>{createdAt}</StCreatAt>
           </StFirstContainer>
