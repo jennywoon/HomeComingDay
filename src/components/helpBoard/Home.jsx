@@ -114,13 +114,13 @@ const StImg = styled.img`
 
 const StHomeTitle = styled.div`
   font-size: 11px;
-  font-weight: 800;
+  font-weight: 600;
   color: #f7931e;
 `;
 
 const StTapTitle = styled.div`
   font-size: 11px;
-  font-weight: 800;
+  font-weight: 400;
   color: #696969;
 `;
 

@@ -12,7 +12,6 @@ import ChatMessageBox from "./ChatMessageBox"
 import ChatInput from './ChatInput';
 import Header from "../Header"
 import { IoIosArrowBack } from 'react-icons/io'
-import { deleteChatList } from '../../redux/modules/ChatSlice';
 
 const ChatDetail = () => {
 
@@ -149,31 +148,38 @@ const ChatDetail = () => {
     }
 
     return (
-        <StContainer>
+        <StChatDetailContainer>
             <Header />
-            <StNavbar>
-                <IoIosArrowBack
-                    size="37" cursor="pointer" style={{ paddingLeft: "20px" }}
-                    onClick={() => navigate("/chat")} />
-                <StChatInfo>
-                    <StNavbarTitle>{otherUserInfo.otherUsername}</StNavbarTitle>
-                    <StInfoWrap>
-                        <StHeadDepartment>{otherUserInfo.otherDepartment} · </StHeadDepartment>
-                        <StHeadStudent> {otherUserInfo.otherAdmission}</StHeadStudent>
-                    </StInfoWrap>
-                </StChatInfo>
-                <StChatDiv/>
-            </StNavbar>
-            <ChatMessageBox messages={messages} scrollRef={scrollRef} />
-            <ChatInput
-                mypages={mypages}
-                onSend={onSend} text={text} setText={setText} />
-        </StContainer>
+            <StContainer>
+                <StNavbar>
+                    <IoIosArrowBack
+                        size="25px" cursor="pointer" style={{ paddingLeft: "20px" }}
+                        onClick={() => navigate("/chat")} />
+                    <StChatInfo>
+                        <StNavbarTitle>{otherUserInfo.otherUsername}</StNavbarTitle>
+                        <StInfoWrap>
+                            <StHeadDepartment>{otherUserInfo.otherDepartment} · </StHeadDepartment>
+                            <StHeadStudent> {otherUserInfo.otherAdmission}</StHeadStudent>
+                        </StInfoWrap>
+                    </StChatInfo>
+                    <StChatDiv />
+                </StNavbar>
+                <ChatMessageBox messages={messages} scrollRef={scrollRef} />
+                <ChatInput
+                    mypages={mypages}
+                    onSend={onSend} text={text} setText={setText} />
+            </StContainer>
+        </StChatDetailContainer>
     );
 };
 
 export default React.memo(ChatDetail);
 
+const StChatDetailContainer = styled.div`
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+`
 const StContainer = styled.div`
     width: 100%;
     height: 100%;

@@ -13,47 +13,45 @@ const MyPageLankModal = ({ setLankModalOpen }) => {
         setLankModalOpen(false);
     };
 
-    const navigate = useNavigate();
-
     return (
-        <Container>
-            <Wrap>
-                <ModalContainer>
-                    <StModalTop>
+        <StContainer>
+            <StWrap>
+                <StModalContainer>
+                    <StFirstModalTop>
                       <StClose/>등급안내
                       <StCloseX onClick={closeModal}/>
-                    </StModalTop>
-                    <FirstWrap>
+                    </StFirstModalTop>
+                    <StFirstWrap>
                         <StTopWrap>
-                            <ModalTop>
+                            <StModalTop>
                                 <StBronzeLank />
-                                <TopTitle>게시글 작성 개수</TopTitle>
+                                <StTopTitle>게시글 작성 개수</StTopTitle>
                                 <StTotTotileSecond>0개 이상</StTotTotileSecond>
-                            </ModalTop>
-                            <ModalTop>
+                            </StModalTop>
+                            <StModalTop>
                                 <StSilverLank />
-                                <TopTitle>게시글 작성 개수</TopTitle>
+                                <StTopTitle>게시글 작성 개수</StTopTitle>
                                 <StTotTotileSecond>5개 이상</StTotTotileSecond>
-                            </ModalTop>
-                            <ModalTop>
+                            </StModalTop>
+                            <StModalTop>
                                 <StGoldLank />
-                                <TopTitle>게시글 작성 개수</TopTitle>
+                                <StTopTitle>게시글 작성 개수</StTopTitle>
                                 <StTotTotileSecond>10개 이상</StTotTotileSecond>
-                            </ModalTop>
+                            </StModalTop>
                         </StTopWrap>
                         {/* <ModalBottom onClick={closeModal}>
                             <BottomTitle>돌아가기</BottomTitle>
                         </ModalBottom> */}
-                    </FirstWrap>
-                </ModalContainer>
-            </Wrap>
-        </Container>
+                    </StFirstWrap>
+                </StModalContainer>
+            </StWrap>
+        </StContainer>
     );
 };
 
 export default MyPageLankModal;
 
-const Container = styled.div`
+const StContainer = styled.div`
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -83,7 +81,7 @@ const Container = styled.div`
   }
 `;
 
-const Wrap = styled.div`
+const StWrap = styled.div`
   width: 100%;
   max-width: 420px;
   height: 100vh;
@@ -96,7 +94,7 @@ const Wrap = styled.div`
   overflow-y: hidden;
 `;
 
-const ModalContainer = styled.div`
+const StModalContainer = styled.div`
   width: 80%;
   height: 220px;
   background-color: white;
@@ -106,7 +104,7 @@ const ModalContainer = styled.div`
   border-radius: 16px;
 `;
 
-const StModalTop = styled.div`
+const StFirstModalTop = styled.div`
   width: 90%;
   height: 25%;
   display: flex;
@@ -128,7 +126,7 @@ const StCloseX = styled.div`
   cursor: pointer;
 `
 
-const FirstWrap = styled.div`
+const StFirstWrap = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
@@ -146,7 +144,7 @@ const StTopWrap = styled.div`
     justify-content: center;
     gap: 5px;
 `
-const ModalTop = styled.div`
+const StModalTop = styled.div`
   width: 70%;
   /* height: 10%; */
   display: flex;
@@ -181,7 +179,7 @@ const StGoldLank = styled.div`
     margin-bottom: 8px;
 `
 
-const TopTitle = styled.div`
+const StTopTitle = styled.div`
   font-size: 12px;
   font-weight: 500;
   display: flex;
