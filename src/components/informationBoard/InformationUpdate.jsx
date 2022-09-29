@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import {IoIosArrowBack} from 'react-icons/io'
-import {GrImage} from 'react-icons/gr'
 import Button from '../elements/Button';
 import { useSelector } from 'react-redux';
 import { __getInformation, __updateInformation } from '../../redux/modules/InformationSlice';
@@ -16,15 +15,6 @@ const InformationUpdate = () => {
     const {informations} = useSelector((state) => state.informations)
     const informationsfind = informations.find((info)=> info.articleId === Number(id))
 
-    // const [updateHelp, setUpdateHelp] = useState({
-    //     title: "",
-    //     content: "",
-    //     imgUrl:""
-    // });
-
-    // const [title, content , imgUrl] = updateHelp
-
-    // console.log("helps", helps , "helpsfind" , helpsfind)
     const [EditTitle, setEditTitle] = useState(informationsfind&&informationsfind.title)
     const [EditContent, setEditContent] = useState(informationsfind&&informationsfind.content)
     const [EditImg, setEditImg] = useState('');
@@ -36,10 +26,6 @@ const InformationUpdate = () => {
 
     const onChangeContent = (e) =>{
         setEditContent(e.target.value)
-    }
-
-    const onChangeImg = (e) =>{
-        setEditImg(e.target.value)
     }
 
     useEffect(() => {
@@ -75,39 +61,31 @@ const InformationUpdate = () => {
     
 
     return (
-        <FormContainer>
-            <FormWrap onSubmit={onUpdateHandler}>
-                <FormHeader>
+        <StFormContainer>
+            <StFormWrap onSubmit={onUpdateHandler}>
+                <StFormHeader>
                     <IoIosArrowBack size="25px" cursor="pointer" onClick={() => {navigate(`/informationdetail/${id}`)}}/>
-                </FormHeader>
-                <FormBody>
-                    <FormSelection name="category">
-                        {/* <option value="">도움요청</option> */}
+                </StFormHeader>
+                <StFormBody>
+                    <StFormSelection name="category">
                         <option value="informationform">정보공유</option>
-                        {/* <option value="">만남일정</option>
-                        <option value="">자유토크</option> */}
-                    </FormSelection>
-                <FormInput name="title" value={EditTitle} onChange={onChangeTitle} placeholder="제목을 입력해주세요"></FormInput>
+                    </StFormSelection>
+                <StFormInput name="title" value={EditTitle} onChange={onChangeTitle} placeholder="제목을 입력해주세요"></StFormInput>
                 <StCard>
-                <Textarea name="content" value={EditContent} onChange={onChangeContent} placeholder="내용을 입력해주세요"></Textarea>
+                <StTextarea name="content" value={EditContent} onChange={onChangeContent} placeholder="내용을 입력해주세요"></StTextarea>
                 </StCard>
-                </FormBody>
-                <FormFooter>
-                    {/* <Filelabel className="fileUpload-button" htmlFor="fileUpload">
-                    <GrImage size="24px" />
-                    </Filelabel>
-                    <Addfile type="file" multiple={true} id="fileUpload" name="imgUrl" value={EditImg || ""} onChange={onChangeImg}>
-                    </Addfile> */}
-                    <FooterBtn>
+                </StFormBody>
+                <StFormFooter>
+                    <StFooterBtn>
                         <Button type='submit' backgroundColor='#F7931E' width="90%" height="40px" color="white" style={{ display: "block", margin: "15px auto", backgroundColor:'#F7931E'}} isDisabled={isOnActive ? false : true}>
-                            <div style={{ fontWeight: "500", fontSize: "16px" }}>수정하기</div>
+                            <StChangediv>수정하기</StChangediv>
                         </Button>
-                    </FooterBtn>
+                    </StFooterBtn>
 
                     
-                </FormFooter>
-            </FormWrap>
-        </FormContainer>
+                </StFormFooter>
+            </StFormWrap>
+        </StFormContainer>
        
     );
 };
@@ -115,13 +93,15 @@ const InformationUpdate = () => {
 export default InformationUpdate;
 
 
-const FormContainer = styled.div`
+const StFormContainer = styled.div`
   margin: 0 auto;
   width: 100%;
   height: 100%;
   background-color: #f7ede2;
   display: flex;
   justify-content: center;
+  overflow:hidden;
+  
   @media only screen and (max-width: 768px) {
     width: 100%;
     height: 100%;
@@ -130,15 +110,15 @@ const FormContainer = styled.div`
   }
 `;
 
-const FormWrap = styled.form`
-  width: 500px;
-  height:100vh;
+const StFormWrap = styled.form`
+  width: 100%;
+  height:100%;
   background-color: white;
   display: flex;
   flex-direction: column;
   
 `;
-const FormHeader = styled.div`
+const StFormHeader = styled.div`
     width: 100%;
     padding-left:15px;
   height: 50px;
@@ -147,12 +127,12 @@ const FormHeader = styled.div`
   justify-content: space-between;
   margin: 40px 0px;
 `
-const FormBody = styled.div`
+const StFormBody = styled.div`
     display: flex;
     flex-direction: column;
     padding : 10px 20px;
 `
-const FormSelection = styled.select`
+const StFormSelection = styled.select`
     border: none;
     margin-bottom: 25px;
     width: 75px;
@@ -160,7 +140,7 @@ const FormSelection = styled.select`
     font-size: 14px;
     font-weight: 600;
 `
-const FormInput =styled.input`
+const StFormInput =styled.input`
     font-size: 20px;
     border: none;
     border-bottom:1px solid gray;
@@ -175,33 +155,30 @@ const FormInput =styled.input`
     font-weight: 600;
     }
 `
-const Textarea = styled.textarea`
+const StTextarea = styled.textarea`
     width: 100%;
-    height:400px;
+    height:300px;
+    resize:none;
     outline: none;
     border:none;
     padding: 10px 5px;
 `
 
-const FormFooter = styled.div`
+const StFormFooter = styled.div`
     display: flex;
     width:100%;
-    /* background-color: yellow; */
-    /* border-top: 1px solid gray; */
 
 `
-const Filelabel = styled.label`
-    margin : 10px 20px;
+const StFooterBtn = styled.div`
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 5%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    /* margin-bottom: 50px;     */
     
-`
-
-const Addfile = styled.input`
-    display: none;
-`
-
-const FooterBtn = styled.div`
-        margin:0 auto;
-        width:100%;       
 `
 const StCard = styled.div`
   border: 1px solid #eee;
@@ -209,3 +186,8 @@ const StCard = styled.div`
   box-shadow: 0px 2px 14px rgba(0, 0, 0, 0.05);
   padding: 5px;
 `;
+
+const StChangediv = styled.div`
+font-weight: 500;
+font-size: 16px;
+`

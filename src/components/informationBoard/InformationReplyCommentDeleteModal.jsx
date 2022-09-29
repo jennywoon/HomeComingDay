@@ -10,39 +10,37 @@ const InformationReplyCommentDeleteModal = ({setModalOpen,onClickDeleteReplyComm
     };
   
     return (
-      <Container>
-        <Wrap>
-          <ModalContainer>
-            <FirstWrap>
-              <ModalTop>
+      <StContainer>
+        <StWrap>
+          <StModalContainer>
+            <StFirstWrap>
+              <StModalTop>
                 <AiOutlineInfoCircle style={{ color: '#f7931e' }} size='28' />
-                <TopTitle>해당 댓글을 삭제하시겠습니까?</TopTitle>
-              </ModalTop>
-              <ModalBottom onClick={closeModal}>
-                <BottomTitle
+                <StTopTitle>해당 댓글을 삭제하시겠습니까?</StTopTitle>
+              </StModalTop>
+              <StModalBottom onClick={closeModal}>
+                <StBottomTitle
               onClick={onClickDeleteReplyComment}
-                >삭제하기</BottomTitle>
-                <BottomTitle>돌아가기</BottomTitle>
-              </ModalBottom>
-            </FirstWrap>
-          </ModalContainer>
-        </Wrap>
-      </Container>
+                >삭제하기</StBottomTitle>
+                <StBottomTitle>돌아가기</StBottomTitle>
+              </StModalBottom>
+            </StFirstWrap>
+          </StModalContainer>
+        </StWrap>
+      </StContainer>
     );
   };
   
   export default InformationReplyCommentDeleteModal;
   
-  const Container = styled.div`
+  const StContainer = styled.div`
     position: fixed;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* align-items: center; */
     width: 100%;
     z-index: 10;
     overflow: hidden;
-    /* bottom: 0; */
     top: 0;
     transform: translateX(-80px);
     
@@ -68,10 +66,10 @@ const InformationReplyCommentDeleteModal = ({setModalOpen,onClickDeleteReplyComm
     }
   `;
   
-  const Wrap = styled.div`
+  const StWrap = styled.div`
   position: relative;
     width: 100%;
-    /* width: 420px; */
+    width: 420px;
     max-width: 420px;
     height: 100vh;
     /* height: 100%; */
@@ -83,7 +81,7 @@ const InformationReplyCommentDeleteModal = ({setModalOpen,onClickDeleteReplyComm
     overflow-y: hidden;
   `;
   
-  const ModalContainer = styled.div`
+  const StModalContainer = styled.div`
   
     width: 80%;
     height: 180px;
@@ -95,12 +93,12 @@ const InformationReplyCommentDeleteModal = ({setModalOpen,onClickDeleteReplyComm
     
   `;
   
-  const FirstWrap = styled.div`
+  const StFirstWrap = styled.div`
     width: 100%;
     height: 100%;
     
   `;
-  const ModalTop = styled.div`
+  const StModalTop = styled.div`
     width: 100%;
     height: 75%;
     display: flex;
@@ -110,14 +108,14 @@ const InformationReplyCommentDeleteModal = ({setModalOpen,onClickDeleteReplyComm
     gap: 12px;
   `;
   
-  const TopTitle = styled.div`
+  const StTopTitle = styled.div`
     font-size: 16px;
     font-weight: 500;
     padding: 0 10px;
     text-align: center;
     word-break: keep-all;
   `;
-  const ModalBottom = styled.div`
+  const StModalBottom = styled.div`
     width: 100%;
     height: 25%;
     color: white;
@@ -130,10 +128,9 @@ const InformationReplyCommentDeleteModal = ({setModalOpen,onClickDeleteReplyComm
     gap: 10px;
   `;
   
-  const BottomTitle = styled.div`
+  const StBottomTitle = styled.div`
     font-size: 16px;
     font-weight: 700;
-    /* border: 1px solid red; */
     background-color: #f7931e;
     border-radius: 16px;
     width: 40%;

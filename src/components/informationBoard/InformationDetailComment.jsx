@@ -1,10 +1,7 @@
 import React, { useEffect ,useRef} from 'react';
 import styled from 'styled-components';
-import { AiOutlineMenu } from 'react-icons/ai'
-import Img from "../../assets/naverIcon.png"
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import Input from "../elements/Input";
 import { __deleteInfoComment, __updateInfoComment, __getInformation, __getDetailInformation, __postInformation, __postInfoReplyComment } from '../../redux/modules/InformationSlice';
 import { useParams } from 'react-router-dom';
 import { BiDotsVerticalRounded } from "react-icons/bi";
@@ -98,7 +95,6 @@ const InformationComment = ({ comment, informationsfind, modalRef ,data}) => {
         setReplyComment("");
         setShowReplyComment(!showReplyComment)
         await dispatch(__getInformation());
-       
     }
 
     return (
@@ -118,8 +114,6 @@ const InformationComment = ({ comment, informationsfind, modalRef ,data}) => {
                             <StReplyCommentInput onChange={onChangeEdit} value={editComment} width="100%" />
                             <StUploadBtn onClick={onClickReviceChange}>수정완료</StUploadBtn>
 
-                            {/* // <StReplyCommentInput value={replyComment} onChange={onChangeReplyHandler} width="100%"/>
-                            //     <StUploadBtn onClick={onClickPostReplyComment}></StUploadBtn> */}
                         </StEditBox>
                         :
                         <StComment>{comment &&comment.content}</StComment>}
@@ -140,10 +134,11 @@ const InformationComment = ({ comment, informationsfind, modalRef ,data}) => {
                        </StComments>
                     
                         <StReplyInputContainer>
-                            {/* 대댓글맵돌리기 */}
+                            
                             {comment && comment.childCommentList.map((childComment) =>
                             <InformationReplyComment ids={childComment.childCommentId} key={childComment.childCommentId} childComment={childComment} commentId={commentId} childCommentList={childCommentList} username={username} data={data}></InformationReplyComment>
                             )}
+                            
                             {showReplyComment ?
                             <StReplyCommentBox>
                                 <StCommentImg src={data.userImage}></StCommentImg>
@@ -153,9 +148,6 @@ const InformationComment = ({ comment, informationsfind, modalRef ,data}) => {
                             : null 
                             }
                         </StReplyInputContainer>
-                    
-                
-                {/* <AiOutlineMenu size="18px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }} onClick={onCilckShow}/> */}
 
 
                 </StCommentTxt>
@@ -176,7 +168,6 @@ export default InformationComment;
 
 const StCommentContain = styled.div`
     margin: 15px 0px;
-    /* border: 1px solid blue; */
     width: 100%;
     height: 100%;
     display: flex;
@@ -185,7 +176,6 @@ const StCommentContain = styled.div`
 
 const StCommentBox = styled.div`
     display:flex;
-    /* position: relative; */
     width: 100%;
     position:relative;
 `
@@ -203,12 +193,12 @@ const StCommentImg = styled.img`
 `
 const StReplyCommentInput = styled.textarea`
     width:100%;
-    height:28px;
+    height:24px;
+    line-height: 24px;
     border-radius: 30px;
     border:1px solid #D9D9D9;
     background-color: #fff;
     margin-left:5px;
-    padding:2px 30px 0px 8px;
     outline:none;
     resize:none;
     overflow-y: hidden;
@@ -233,7 +223,6 @@ const StCommentTxt = styled.div`
     display: flex;
     flex-direction: column;
     width:100%;
-    /* margin-left: 10px;  */
 `
 const StRevisebox = styled.div`
     border: 1px solid #f1f0f0;
@@ -282,7 +271,6 @@ const StReviseButtonChange = styled.button`
     position:absolute;
     right:0;
     font-size:10px;
-    /* border:none; */
     border:1px solid gray;
     cursor:pointer;
     border-radius: 10px;
@@ -295,7 +283,6 @@ const StEditBox = styled.div`
     align-items: center;
     width:100%;
     position:relative;
-    /* padding: 0px 20px; */
 `
 
 const StTxtName = styled.h3`
@@ -335,16 +322,6 @@ const StReplyCommentBox = styled.div`
     align-items: center;
     margin-top:6px;
 `
-const StCommentReplytxt = styled.div`
-    font-size:13px;
-    width:100%;
-`
-
-const StReplyCommentImg = styled.img`
-    width:30px;
-    border-radius: 30px;
-`
-
 const StComment = styled.p`
     margin: 5px 0;
     font-size:14px;
