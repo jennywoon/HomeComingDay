@@ -1,13 +1,12 @@
 import React , { useRef ,useEffect }from 'react';
 import styled from 'styled-components';
-import { BiDotsVerticalRounded } from "react-icons/bi";
 import { useState } from 'react';
-import Input from "../elements/Input";
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { GrUploadOption } from "react-icons/gr";
 import InformationReplyCommentDeleteModal from './InformationReplyCommentDeleteModal';
 import { __deleteInfoReplyComment, __getInformation ,__updateInfoReplyComment} from '../../redux/modules/InformationSlice';
+import dots from "../../assets/dots.png"
 
 const InformationReplyComment = ({childCommentList,commentId,childComment, ids , data}) => {
     const {id} = useParams()
@@ -120,7 +119,7 @@ const InformationReplyComment = ({childCommentList,commentId,childComment, ids ,
                        </StReviseBox>}
                </StCommentReplytxt>
            {childComment.username === data.username ?
-           <BiDotsVerticalRounded size="20px" style={{ marginLeft: "auto",cursor: "pointer", color: "#bebebe" , position:"relative"}} onClick={onCilckShow}/>
+           <StDots onClick={onCilckShow}/>
            : null}
 
            {showReplyComment ?
@@ -158,6 +157,18 @@ const StCommentReplytxt = styled.div`
     font-size:13px;
     width:100%;
 `
+const StDots = styled.div`
+  width: 20px;
+  height: 20px;
+  background-image: url(${dots});
+  background-size: 100% 100%;
+  background-position: center;
+  margin-left: auto;
+  cursor: pointer;
+  position: relative;
+`
+
+
 const StReplyCommentInput = styled.textarea`
     width:100%;
     height:28px;

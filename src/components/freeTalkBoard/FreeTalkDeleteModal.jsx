@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { logout } from '../../shared/cookies';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteFreeTalk, __getFreeTalk } from '../../redux/modules/FreeTalkSlice';
+import { __deleteFreeTalk, __getFreeTalk ,__getDetailFreeTalk} from '../../redux/modules/FreeTalkSlice';
 import exclamation from "../../assets/exclamation.png"
 
 const FreeTalkDeleteModal = ({ setModalOpen }) => {
@@ -15,9 +15,9 @@ const FreeTalkDeleteModal = ({ setModalOpen }) => {
   };
 
   const navigate = useNavigate();
-  const { freetalks } = useSelector((state) => state.freetalks)
+  // const { freetalks } = useSelector((state) => state.freetalks)
   const { id } = useParams();
-  const freetalksfind = freetalks.find((freetalk) => freetalk.articleId === Number(id))
+  const {freetalksfind} = useSelector((state) => state.freetalks)
 
 
   return (
@@ -33,7 +33,7 @@ const FreeTalkDeleteModal = ({ setModalOpen }) => {
               <StBottomTitle
                 onClick={() => {
                   dispatch(__deleteFreeTalk(freetalksfind.articleId))
-                  dispatch(__getFreeTalk())
+                  dispatch(__getDetailFreeTalk(id))
                   navigate("/freeTalk")
                 }}
               >삭제하기</StBottomTitle>

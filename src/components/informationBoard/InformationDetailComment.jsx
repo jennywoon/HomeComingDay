@@ -4,10 +4,10 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { __deleteInfoComment, __updateInfoComment, __getInformation, __getDetailInformation, __postInformation, __postInfoReplyComment } from '../../redux/modules/InformationSlice';
 import { useParams } from 'react-router-dom';
-import { BiDotsVerticalRounded } from "react-icons/bi";
 import { GrUploadOption } from "react-icons/gr";
 import InfoCommentDeleteModal from './InfoCommentDeleteModal';
 import InformationReplyComment from './InformationReplyComment';
+import dots from "../../assets/dots.png"
 
 const InformationComment = ({ comment, informationsfind, modalRef ,data}) => {
     const dispatch = useDispatch();
@@ -126,9 +126,8 @@ const InformationComment = ({ comment, informationsfind, modalRef ,data}) => {
                         </StTxtFirstWrap>
                         </StCommentsBox>
                         {username === data.username ? (
-                        <BiDotsVerticalRounded
-                            size="17px" style={{ marginLeft: "auto", marginTop: "5px", cursor: "pointer", color: "#bebebe" }}
-                            onClick={onCilckShow} />
+                       <StDots
+                       onClick={onCilckShow} />
                         ) : null
                         }
                        </StComments>
@@ -179,6 +178,17 @@ const StCommentBox = styled.div`
     width: 100%;
     position:relative;
 `
+const StDots = styled.div`
+  width: 20px;
+  height: 20px;
+  background-image: url(${dots});
+  background-size: 100% 100%;
+  background-position: center;
+  margin-left: auto;
+  cursor: pointer;
+  margin-top: 5px;
+`
+
 
 const StCommentImgDiv = styled.div`
     width:40px;
