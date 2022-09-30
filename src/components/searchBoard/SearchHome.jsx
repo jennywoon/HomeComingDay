@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const SearchHome = () => {
     const navigate = useNavigate();
+    const chatList = useSelector((state) => state.chat.chatList);
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -22,30 +23,37 @@ const SearchHome = () => {
 
     return (
         <HomeContainer>
-            <Search/>
+            <Search />
             <SecondWrap>
                 <Bottom>
                     <Tap onClick={() => { navigate("/main") }}
                         style={{ paddingLeft: "20px" }}
                     >
-                        <img src={Homeimg} alt='홈' style={{ width: '45%', margin:'2px' }} />
+                        <img src={Homeimg} alt='홈' style={{ width: '45%', margin: '2px' }} />
                         <TapTitle style={{ color: "#8E8E8E" }}>홈</TapTitle>
                     </Tap>
                     <Tap onClick={() => { navigate("/search") }}
-                        style={{ color:"#f7931e" }}
+                        style={{ color: "#f7931e" }}
                     >
-                        <img src={SearchColorimg} alt='검색' style={{ width: '45%', margin:'2px' }} />
+                        <img src={SearchColorimg} alt='검색' style={{ width: '45%', margin: '2px' }} />
                         <TapTitle style={{ fontWeight: "bold" }}>검색</TapTitle>
                     </Tap>
                     <Tap onClick={() => { navigate("/chat") }}>
-                    <img src={Chatimg} alt='채팅' style={{ width: '45%', margin:'2px' }} />
+                        <StIconWrap>
+                            <img src={Chatimg} alt='채팅' style={{ width: '45%', margin: '2px' }} />
+                            {chatList.totalCnt > 0 ? (
+                                <StNewDiv>
+                                    <StNewTitle>N</StNewTitle>
+                                </StNewDiv>
+                            ) : null}
+                        </StIconWrap>
                         <TapTitle style={{ color: "#8E8E8E" }}>채팅</TapTitle>
                     </Tap>
                     <Tap
                         style={{ paddingRight: "20px" }}
                         onClick={() => { navigate("/mypage") }}
                     >
-                        <img src={Myimg} alt='마이페이지' style={{ width: '45%', margin:'2px' }} />
+                        <img src={Myimg} alt='마이페이지' style={{ width: '45%', margin: '2px' }} />
                         <TapTitle style={{ color: "#8E8E8E" }}>MY</TapTitle>
                     </Tap>
                 </Bottom>
@@ -76,6 +84,13 @@ const Bottom = styled.div`
     align-items: center;
     font-weight: 600;
 `
+const StIconWrap = styled.div`
+  display: flex;
+  /* border: 1px solid red; */
+  justify-content: center;
+  /* align-items: start; */
+  position: relative;
+`
 
 const Tap = styled.div`
     display: flex;
@@ -83,6 +98,23 @@ const Tap = styled.div`
     align-items: center;
     cursor: pointer;
 `
+const StNewDiv = styled.div`
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #f7931e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 12px;
+  position: absolute;
+`;
+const StNewTitle = styled.div`
+  font-size: 10px;
+  font-weight: 600;
+  color: white;
+`;
+
 const TapTitle = styled.div`
     font-size: 11px;
     font-weight: 400;

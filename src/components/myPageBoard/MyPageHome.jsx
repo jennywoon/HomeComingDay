@@ -16,7 +16,8 @@ import MyPageLankModal from './MyPageLankModa';
 const MyPageHome = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  
+  const chatList = useSelector((state) => state.chat.chatList);
   const { myarticles, totalCount } = useSelector((state) => state.mypages);
   const { error } = useSelector((state) => state.mypages.myarticles)
   console.log("myarticles", myarticles, totalCount);
@@ -127,10 +128,17 @@ const MyPageHome = () => {
               navigate('/chat');
             }}
           >
-            <StImg
-              src={Chatimg}
-              alt='채팅'
-            />
+            <StIconWrap>
+              <StImg
+                src={Chatimg}
+                alt='채팅'
+              />
+              {chatList.totalCnt > 0 ? (
+                <StNewDiv>
+                  <StNewTitle>N</StNewTitle>
+                </StNewDiv>
+              ) : null}
+            </StIconWrap>
             <StTapTitle>채팅</StTapTitle>
           </StTap>
           <StLastTap
@@ -281,6 +289,31 @@ const StTap = styled.div`
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+`;
+
+const StIconWrap = styled.div`
+  display: flex;
+  /* border: 1px solid red; */
+  justify-content: center;
+  /* align-items: start; */
+  position: relative;
+`
+
+const StNewDiv = styled.div`
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #f7931e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 12px;
+  position: absolute;
+`;
+const StNewTitle = styled.div`
+  font-size: 10px;
+  font-weight: 600;
+  color: white;
 `;
 
 const StLastTap = styled.div`

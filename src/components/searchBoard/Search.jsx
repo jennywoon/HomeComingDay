@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { IoCloseCircle } from 'react-icons/io5';
 import SearchCard from './SearchCard';
 import {
   __getSearch,
@@ -11,6 +10,7 @@ import {
   __postSearch,
 } from '../../redux/modules/SearchSlice';
 import SearchColorimg from '../../assets/SearchColor.png';
+import Xcircle from '../../assets/x-circle.png';
 import { __getReset } from "../../redux/modules/MyPageSlice";
 
 const Search = () => {
@@ -70,16 +70,11 @@ dispatch(__getSearchArticlePopular());
   //Articles
   const [filteredList, setFilteredList] = new useState(searchArticle);
   const filterBySearch = (e) => {
-    // Access input value
     const query = e.target.value;
-    // console.log(query)
-    // Create copy of item list
     let updatedList = [...searchArticle];
-    // Include all elements which includes the search query
     updatedList = updatedList.filter((item) => {
       return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
     });
-    // Trigger render with updated values
     setFilteredList(updatedList);
   };
 
@@ -88,16 +83,11 @@ dispatch(__getSearchArticlePopular());
     searchArticlePopular
   );
   const filterByPopularSearch = (e) => {
-    // Access input value
     const query = e.target.value;
-    // console.log(query)
-    // Create copy of item list
     let updatedList = [...searchArticlePopular];
-    // Include all elements which includes the search query
     updatedList = updatedList.filter((item) => {
       return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
     });
-    // Trigger render with updated values
     setFilteredPopularList(updatedList);
   };
 
@@ -122,53 +112,46 @@ dispatch(__getSearchArticlePopular());
   };
 
   return (
-    <HelpContainer onSubmit={onSubmitHandler}>
-      <HelpWrap>
-        <SearchWrap>
-          <SearchDiv>
-            <img
+    <StContainer onSubmit={onSubmitHandler}>
+      <StWrap>
+        <StSearchWrap>
+          <StSearchDiv>
+            <StImg
               src={SearchColorimg}
               alt='검색'
-              style={{ paddingLeft: '20px', width: '11%', color: '#F7931E' }}
             />
 
             {select === 'new' ? (
-              <SearchInput
+              <StSearchInput
                 id='search-box'
                 onChange={filterBySearch}
                 placeholder='검색어를 입력해주세요'
               />
             ) : select === 'popular' ? (
-              <SearchInput
+              <StSearchInput
                 id='search-box'
                 onChange={filterByPopularSearch}
                 placeholder='검색어를 입력해주세요'
               />
             ) : null}
-            <IoCloseCircle
-              onClick={onReset}
-              size='37'
-              style={{
-                paddingRight: '20px',
-                cursor: 'pointer',
-                color: '#F7931E',
-              }}
+            <StClose
+              onClick = {onReset}
+              src={Xcircle}
+              alt='검색'
             />
-          </SearchDiv>
-        </SearchWrap>
+          </StSearchDiv>
+        </StSearchWrap>
 
-        <SelectBox>
-            <SelectInBox>
-          <Select name='state' onChange={handleSelect}>
+        <StSelectBox>
+            <StSelectInBox>
+          <StSelect name='state' onChange={handleSelect}>
             <option value='new'>최신순</option>
             <option value='popular'>인기순</option>
-          </Select>
-          </SelectInBox>
-        </SelectBox>
-        <RecentSearch>
-          <RecentWrap id='item-list'>
-            {/* <RecentTitle>최근 검색어</RecentTitle> */}
-            {/* search card 맵 돌릴 예정 */}
+          </StSelect>
+          </StSelectInBox>
+        </StSelectBox>
+        <StRecentSearch>
+          <StRecentWrap id='item-list'>
             {select === 'new' && (filteredList && filteredList.length > 0) ? (
               <>
                 {filteredList &&
@@ -194,29 +177,26 @@ dispatch(__getSearchArticlePopular());
                   ))}
               </>
             ) : null}
-          </RecentWrap>
-        </RecentSearch>
-      </HelpWrap>
-    </HelpContainer>
+          </StRecentWrap>
+        </StRecentSearch>
+      </StWrap>
+    </StContainer>
   );
 };
 
 export default Search;
 
-const HelpContainer = styled.form`
+const StContainer = styled.form`
   gap: 12px;
   height: 100%;
-  /* overflow-y: scroll; */
 `;
 
-const HelpWrap = styled.div`
-  /* padding: 0 10px; */
+const StWrap = styled.div`
   width: 100%;
   height: 87%;
-  /* border: 1px solid red; */
 `;
 
-const SearchWrap = styled.div`
+const StSearchWrap = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -224,10 +204,9 @@ const SearchWrap = styled.div`
   align-items: center;
 `;
 
-const SearchDiv = styled.div`
+const StSearchDiv = styled.div`
   width: 90%;
   height: 48px;
-  /* top: 129px; */
   margin-top: 30px;
   border: 1px solid #f7931e;
   border-radius: 24px;
@@ -236,14 +215,28 @@ const SearchDiv = styled.div`
   align-items: center;
 `;
 
-const SearchInput = styled.input`
+const StImg = styled.img`
+padding-left: 20px;
+ width: 5%;
+  color: #F7931E;
+`
+
+const StSearchInput = styled.input`
   width: 70%;
   height: 60%;
   border: none;
   outline: none;
   font-size: 16px;
 `;
-const SelectBox = styled.div`
+
+const StClose = styled.img`
+  padding-right: 20px;
+  cursor: pointer;
+  color: #F7931E;
+  width: 5%;
+`
+
+const StSelectBox = styled.div`
   display: flex;
   width: 100%;
   margin-top: 12px;
@@ -251,13 +244,13 @@ const SelectBox = styled.div`
   justify-content: center;
 `;
 
-const SelectInBox = styled.div`
+const StSelectInBox = styled.div`
     width: 90%;
     display: flex;
     justify-content: right;
 `
 
-const Select = styled.select`
+const StSelect = styled.select`
   display: flex;
   margin-left: auto;
   text-align: center;
@@ -271,7 +264,7 @@ const Select = styled.select`
   outline: none;
 `;
 
-const RecentSearch = styled.div`
+const StRecentSearch = styled.div`
   width: 100%;
   height: 85%;
   display: flex;
@@ -280,43 +273,9 @@ const RecentSearch = styled.div`
   ::-webkit-scrollbar {
     width: 0px;
   }
-  /* border: 1px solid blue; */
 `;
 
-const RecentWrap = styled.div`
+const StRecentWrap = styled.div`
   width: 90%;
   height: 100vh;
-`;
-const RecentTitle = styled.div`
-  margin: 50px 0 20px 0;
-  font-size: 20px;
-  font-weight: 700;
-`;
-const SearchFilter = styled.div``;
-const SearchFilterBox = styled.div`
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-const FilterMenu = styled.ul`
-  display: flex;
-  width: 90%;
-  text-align: center;
-  justify-content: space-between;
-
-  height: 25px;
-  margin: 10px 0px;
-`;
-const FilterList = styled.li`
-  width: 70px;
-  text-align: center;
-  border-radius: 20px;
-  display: inline-block;
-  /* border:1px solid red; */
-  background-color: ${(props) => (props.show ? '#F7931E' : 'white')};
-  color: ${(props) => (props.show ? 'white' : 'black')};
-  list-style: none;
-  cursor: pointer;
 `;
