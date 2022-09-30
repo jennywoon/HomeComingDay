@@ -21,10 +21,10 @@ export const __getNotice = createAsyncThunk("getNotice", async(payload, thunkAPI
         Connection: 'keep-alive',
       }
     });
-      console.log(data)
+      // console.log(data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
-      console.log('error', error);
+      // console.log('error', error);
       return thunkAPI.rejectWithValue(error);
   }
 })
@@ -43,7 +43,7 @@ export const __getNoticeCount = createAsyncThunk("getNoticeCount", async(payload
       // console.log(data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
-      console.log('error', error);
+      // console.log('error', error);
       return thunkAPI.rejectWithValue(error);
   }
 })
@@ -62,7 +62,7 @@ export const __getNoticeRead = createAsyncThunk("getNoticeRead", async(payload, 
       // console.log(data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
-      console.log('error', error);
+      // console.log('error', error);
       return thunkAPI.rejectWithValue(error);
   }
 })
@@ -100,7 +100,7 @@ export const __deleteNotice = createAsyncThunk("deleteNotice", async (payload, t
         Authorization: `Bearer ${getCookie("accessToken")}`,
       },
     });
-    console.log(data)
+    // console.log(data)
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
     // console.log('error', error)
@@ -155,7 +155,6 @@ export const NoticeSlice = createSlice({
     },
     [__deleteAllNotice.fulfilled]: (state, action) => {
       state.isLoading = false;
-      // console.log(action)
       state.notices = state.notices.filter(notices => notices.id !== action.payload)
     },
     [__deleteAllNotice.rejected]: (state, action) => {
@@ -168,7 +167,6 @@ export const NoticeSlice = createSlice({
     },
     [__deleteNotice.fulfilled]: (state, action) => {
       state.isLoading = false;
-      // console.log(action)
       state.notices = state.notices.filter(notices => notices.id !== action.payload)
     },
     [__deleteNotice.rejected]: (state, action) => {

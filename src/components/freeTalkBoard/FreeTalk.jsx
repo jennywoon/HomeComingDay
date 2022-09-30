@@ -13,7 +13,7 @@ const FreeTalk = () => {
   const { freetalks } = useSelector((state) => state.freetalks);
   const { freePopular } = useSelector((state) => state.freetalks);
   const [select, setSelect] = useState('new');
-  console.log(freetalks)
+  // console.log(freetalks)
 
   useEffect(() => {
     dispatch(__getMyPage())
@@ -26,19 +26,16 @@ const FreeTalk = () => {
   };
   
   return (
-    <FreeTalkContainer>
-      <BannerWrap>
-        <Banner />
-      </BannerWrap>
-      <FreeTalkWrap>
-      <Select name='state' onChange={handleSelect}>
+    <StFreeTalkContainer>
+      <StBannerWrap>
+        <StBanner />
+      </StBannerWrap>
+      <StFreeTalkWrap>
+      <StSelect name='state' onChange={handleSelect}>
           <option value='new'>최신순</option>
           <option value='popular'>인기순</option>
-        </Select>
-        {/* <Iconbox onClick={()=>navigate('/informationform')}>
-          <TiPencil color="white" size="40px"/>
-        </Iconbox> */}
-        <FreeTalkList>
+        </StSelect>
+        <StFreeTalkList>
           <>
             {select === "new"&& freetalks && freetalks.length > 0 ? (
               <div>
@@ -54,22 +51,22 @@ const FreeTalk = () => {
              ))}
            </div>) :
             (
-              <NoneData>
-                <NoneDataImg></NoneDataImg>
+              <StNoneData>
+                <StNoneDataImg></StNoneDataImg>
                 <p>내가 쓴 게시글이 없습니다</p>
-              </NoneData>
+              </StNoneData>
             )}
           </>
-        </FreeTalkList>
+        </StFreeTalkList>
 
-      </FreeTalkWrap>
-    </FreeTalkContainer>
+      </StFreeTalkWrap>
+    </StFreeTalkContainer>
   );
 }
 
 export default React.memo(FreeTalk);
 
-const FreeTalkContainer = styled.div`
+const StFreeTalkContainer = styled.div`
   width: 100%;
   height: 100%;
   /* height: 100vh; */
@@ -77,7 +74,7 @@ const FreeTalkContainer = styled.div`
   overflow-x: hidden;
 `;
 
-const BannerWrap = styled.div`
+const StBannerWrap = styled.div`
   width: 100%;
   height: 190px;
   /* height: 20% */
@@ -88,7 +85,7 @@ const BannerWrap = styled.div`
   margin-bottom: 12px;
   position: absolute;
 `
-const Banner = styled.div`
+const StBanner = styled.div`
   height: 190px;
   /* height: 20% */
   width: 95%;
@@ -98,10 +95,10 @@ const Banner = styled.div`
   background-size: 100% 100%;
 `
 
-const FreeTalkWrap = styled.div`
+const StFreeTalkWrap = styled.div`
   position: relative;
   top: 170px;
-  width: 100%;
+  /* width: 100%; */
   /* height: 100vh; */
   height: 62%;
   border-radius: 20px;
@@ -110,7 +107,7 @@ const FreeTalkWrap = styled.div`
   /* border: 1px solid red; */
 `;
 
-const Select = styled.select`
+const StSelect = styled.select`
   display: flex;
   margin-left: auto;
   margin-right: 10px;
@@ -125,7 +122,7 @@ const Select = styled.select`
   outline: none;
 `;
 
-const FreeTalkList = styled.div`
+const StFreeTalkList = styled.div`
   /* height: 100%; */
   width: 95%;
   height: 95%;
@@ -146,7 +143,7 @@ const FreeTalkList = styled.div`
   } */
 `;
 
-const NoneData = styled.div`
+const StNoneData = styled.div`
     width: 100%;
     height: 100%;
     display: flex;
@@ -157,7 +154,7 @@ const NoneData = styled.div`
     font-weight: 500;
     font-size: 16px;
 `
-const NoneDataImg = styled.div`
+const StNoneDataImg = styled.div`
     width: 50px;
     height: 50px;
     background-image: url(${nonedatasquare});

@@ -551,6 +551,9 @@ const StContentget = styled.div`
   color: #000;
   display: flex;
   align-items: center;
+  /* border: 1px solid red; */
+  margin: 8px 0;
+  font-size: 14px;
 `;
 
 const StContentgetTitle = styled.span`
@@ -684,6 +687,10 @@ const StJoinPart = styled.button`
   font-weight: 600;
 font-size: 12px;
 cursor:pointer;
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 5px;
 &.cancel {
     background: #9c9c9c;
     border: 1px solid #9c9c9c;

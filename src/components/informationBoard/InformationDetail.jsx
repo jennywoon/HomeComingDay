@@ -21,7 +21,6 @@ import SwiperCore, { Navigation } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md';
-import { GoPrimitiveDot } from 'react-icons/go';
 import InformationDetailModal from './InformationDetailModal';
 import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
@@ -244,11 +243,7 @@ const InformationDetail = () => {
                             </SwiperSlide>
                           );
                         })}
-                      {/* <StDots>
-                                <StDot />
-                                <StDot />
-                                <StDot />
-                              </StDots> */}
+                      
                       <StPrevButton ref={navigationPrevRef}>
                         <StPreviousBtn />
                       </StPrevButton>
@@ -565,9 +560,7 @@ const StDots = styled.div`
   margin-left: auto;
   cursor: pointer;
 `;
-const StDot = styled(GoPrimitiveDot)`
-  color: #ddd;
-`;
+
 
 const StContentView = styled.p`
   font-size: 12px;

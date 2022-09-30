@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { logout } from '../../shared/cookies';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteFreeTalk ,__getFreeTalk} from '../../redux/modules/FreeTalkSlice';
+import { __deleteFreeTalk, __getFreeTalk ,__getDetailFreeTalk} from '../../redux/modules/FreeTalkSlice';
+import exclamation from "../../assets/exclamation.png"
 
 const FreeTalkDeleteModal = ({ setModalOpen }) => {
 
@@ -14,40 +15,40 @@ const FreeTalkDeleteModal = ({ setModalOpen }) => {
   };
 
   const navigate = useNavigate();
-  const { freetalks } = useSelector((state) => state.freetalks)
+  // const { freetalks } = useSelector((state) => state.freetalks)
   const { id } = useParams();
-  const freetalksfind = freetalks.find((freetalk) => freetalk.articleId === Number(id))
+  const {freetalksfind} = useSelector((state) => state.freetalks)
 
 
   return (
-    <Container>
-      <Wrap>
-        <ModalContainer>
-          <FirstWrap>
-            <ModalTop>
-              <AiOutlineInfoCircle style={{ color: '#f7931e' }} size='28' />
-              <TopTitle>해당 게시글을 삭제하시겠습니까?</TopTitle>
-            </ModalTop>
-            <ModalBottom onClick={closeModal}>
-              <BottomTitle
-              onClick={() => {
-                dispatch(__deleteFreeTalk(freetalksfind.articleId))
-                dispatch(__getFreeTalk())
-                navigate("/freeTalk")
-              }}
-              >삭제하기</BottomTitle>
-              <BottomTitle>돌아가기</BottomTitle>
-            </ModalBottom>
-          </FirstWrap>
-        </ModalContainer>
-      </Wrap>
-    </Container>
+    <StContainer>
+      <StWrap>
+        <StModalContainer>
+          <StFirstWrap>
+            <StModalTop>
+              <StExclamation />
+              <StTopTitle>해당 게시글을 삭제하시겠습니까?</StTopTitle>
+            </StModalTop>
+            <StModalBottom onClick={closeModal}>
+              <StBottomTitle
+                onClick={() => {
+                  dispatch(__deleteFreeTalk(freetalksfind.articleId))
+                  dispatch(__getDetailFreeTalk(id))
+                  navigate("/freeTalk")
+                }}
+              >삭제하기</StBottomTitle>
+              <StBottomTitle>돌아가기</StBottomTitle>
+            </StModalBottom>
+          </StFirstWrap>
+        </StModalContainer>
+      </StWrap>
+    </StContainer>
   );
 };
 
 export default FreeTalkDeleteModal;
 
-const Container = styled.div`
+const StContainer = styled.div`
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -77,7 +78,7 @@ const Container = styled.div`
   }
 `;
 
-const Wrap = styled.div`
+const StWrap = styled.div`
 position: relative;
   width: 100%;
   /* width: 420px; */
@@ -92,7 +93,7 @@ position: relative;
   overflow-y: hidden;
 `;
 
-const ModalContainer = styled.div`
+const StModalContainer = styled.div`
   width: 80%;
   height: 180px;
   background-color: white;
@@ -102,11 +103,11 @@ const ModalContainer = styled.div`
   border-radius: 16px;
 `;
 
-const FirstWrap = styled.div`
+const StFirstWrap = styled.div`
   width: 100%;
   height: 100%;
 `;
-const ModalTop = styled.div`
+const StModalTop = styled.div`
   width: 100%;
   height: 75%;
   display: flex;
@@ -116,14 +117,22 @@ const ModalTop = styled.div`
   gap: 12px;
 `;
 
-const TopTitle = styled.div`
+const StExclamation = styled.div`
+  width: 30px;
+  height: 30px;
+  background-image: url(${exclamation});
+  background-position: center;
+  background-size: 100% 100%;
+`
+
+const StTopTitle = styled.div`
   font-size: 16px;
   font-weight: 500;
   padding: 0 10px;
   text-align: center;
   word-break: keep-all;
 `;
-const ModalBottom = styled.div`
+const StModalBottom = styled.div`
   width: 100%;
   height: 25%;
   color: white;
@@ -136,7 +145,7 @@ const ModalBottom = styled.div`
   gap: 10px;
 `;
 
-const BottomTitle = styled.div`
+const StBottomTitle = styled.div`
   font-size: 16px;
   font-weight: 700;
   /* border: 1px solid red; */

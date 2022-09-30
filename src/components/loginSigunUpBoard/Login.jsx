@@ -18,10 +18,10 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isLogin, schoolInfo, error } = useSelector((state) => state.user)
-  console.log(isLogin)
-  console.log(schoolInfo)
+  // console.log(isLogin)
+  // console.log(schoolInfo)
   const state = useSelector((state) => state)
-  console.log(state)
+  // console.log(state)
   const [formValue, setFormValue] = useState({
     email: '',
     password: '',
@@ -118,7 +118,7 @@ const Login = () => {
         {privcayModal && <PrivacyPolicy setPrivacyModal={setPrivacyModal} />}
         <StLoginWraps>
           <StLoginTitle>
-            <LogoImg />
+            <StLogoImg />
           </StLoginTitle>
           <StLoginWrap>
             <StEmail>
@@ -161,11 +161,11 @@ const Login = () => {
               color='white'
               style={{ marginTop: '50px', backgroundColor: "#f7931e" }}
             >
-              <ButtonTitle>로그인</ButtonTitle>
+              <StButtonTitle>로그인</StButtonTitle>
             </Button>
-            <NaverContainer>
+            <StNaverContainer>
               <NaverLogin />
-            </NaverContainer>
+            </StNaverContainer>
             <StGoToSignup
               type='button'
               onClick={() => {
@@ -174,9 +174,9 @@ const Login = () => {
             >
               이메일로 회원가입
             </StGoToSignup>
-            <NaverContainer>
+            <StNaverContainer>
               <PwaApp />
-            </NaverContainer>
+            </StNaverContainer>
           </StLoginWrap>
         </StLoginWraps>
         <StPrivacy>
@@ -217,7 +217,7 @@ const StLoginTitle = styled.div`
   align-items: center;
 `;
 
-const LogoImg = styled.div`
+const StLogoImg = styled.div`
   width: 180px;
   height: 120px;
   background-image: url(${logoname});
@@ -264,7 +264,7 @@ const StErrorMessage = styled.p`
   font-size: 12px;
 `;
 
-const NaverContainer = styled.div`
+const StNaverContainer = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
@@ -273,7 +273,7 @@ const NaverContainer = styled.div`
   margin-bottom: 20px;
 `
 
-const ButtonTitle = styled.div`
+const StButtonTitle = styled.div`
   width: 100%;
   height: 40px;
   display: flex;
@@ -291,6 +291,7 @@ const StPrivacy = styled.div`
   color: #b3b3b3;
   font-weight: 400;
   justify-content: center;
+  font-size: 15px;
 `
 
 const StPrivacyText = styled.div`
