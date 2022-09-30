@@ -79,7 +79,7 @@ const CalendarUpdate = () => {
   //참여하기 인원 수정
 
   const joinMinusHandle =()=>{
-    if(calendarJoin.joinPeople < joinNumber ){
+    if(calendarJoin.joinPeople < joinNumber && joinNumber > 1){
     setJoinNumber(joinNumber -1)
   }
   }
