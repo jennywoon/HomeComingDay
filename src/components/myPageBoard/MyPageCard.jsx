@@ -93,6 +93,7 @@ const StFlagWrap = styled.div`
     border-radius: 20px;
     display: flex;
     justify-content: center;
+    align-items: center;
     font-size: 12px;
     font-weight: 700;
     color: #f7931e

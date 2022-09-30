@@ -35,7 +35,7 @@ const Header = () => {
 
   return (
     <>
-      {/* {loginOn ? (
+      {loginOn ? (
         ''
       ) : (
         <NeedLogin>
@@ -62,7 +62,7 @@ const Header = () => {
             </NeedLoginBtn>
           </NeedLoginModal>
         </NeedLogin>
-      )} */}
+      )}
       <HeaderContainer>
         <HeaderWrap>
           <Logo

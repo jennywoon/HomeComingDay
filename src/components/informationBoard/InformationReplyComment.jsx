@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { GrUploadOption } from "react-icons/gr";
 import InformationReplyCommentDeleteModal from './InformationReplyCommentDeleteModal';
-import { __deleteInfoReplyComment, __getInformation ,__updateInfoReplyComment} from '../../redux/modules/InformationSlice';
+import { __deleteInfoReplyComment, __getDetailInformation, __getInformation ,__updateInfoReplyComment} from '../../redux/modules/InformationSlice';
 import dots from "../../assets/dots.png"
 
 const InformationReplyComment = ({childCommentList,commentId,childComment, ids , data}) => {
@@ -76,7 +76,7 @@ const InformationReplyComment = ({childCommentList,commentId,childComment, ids ,
             childCommentId : replyTargetId
         }
         await dispatch(__deleteInfoReplyComment(deleteReplyComments))
-        await dispatch(__getInformation())
+        await dispatch(__getDetailInformation(id))
         
     }
 
@@ -89,8 +89,8 @@ const InformationReplyComment = ({childCommentList,commentId,childComment, ids ,
             content: editReplyComment
         }
         await dispatch(__updateInfoReplyComment(reviseReplyComments))
-        await dispatch(__getInformation())
         setReviseReplyComment(!reviseReplyComment)
+        await dispatch(__getDetailInformation(id))
     }
 
 
@@ -171,7 +171,8 @@ const StDots = styled.div`
 
 const StReplyCommentInput = styled.textarea`
     width:100%;
-    height:28px;
+    height: 25px;
+  line-height: 25px;
     border-radius: 30px;
     border:1px solid #D9D9D9;
     background-color: #fff;

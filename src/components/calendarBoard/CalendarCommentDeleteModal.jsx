@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { __getCalendar, __deleteCalendarComment } from '../../redux/modules/CalendarSlice';
+import { __getCalendar, __deleteCalendarComment, __getDetailCalendar } from '../../redux/modules/CalendarSlice';
 import exclamation from "../../assets/exclamation.png"
 
 const CalendarCommentDeleteModal = ({ setModalOpen, comment, setShowComment}) => {
@@ -14,8 +14,9 @@ const CalendarCommentDeleteModal = ({ setModalOpen, comment, setShowComment}) =>
 
   const { calendars } = useSelector((state) => state.calendars)
   const { id } = useParams();
-  const calendarsfind = calendars.find((Calendar) => Calendar.articleId === Number(id))
-  const { commentId } = calendarsfind.commentList.find((commentmap) => commentmap.commentId === comment.commentId)
+  const { calendarfind } = useSelector((state) => state.calendars)
+  // const calendarsfind = calendars.find((Calendar) => Calendar.articleId === Number(id))
+  const { commentId } = calendarfind.commentList.find((commentmap) => commentmap.commentId === comment.commentId)
 
     const onClickDelete = async () => {
         const commentDelete = {
@@ -23,7 +24,7 @@ const CalendarCommentDeleteModal = ({ setModalOpen, comment, setShowComment}) =>
             commentId: commentId
         }
        await dispatch(__deleteCalendarComment(commentDelete))
-       await dispatch(__getCalendar())
+       await dispatch(__getDetailCalendar(id))
     }
   return (
     <StContainer>

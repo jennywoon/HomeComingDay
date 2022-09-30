@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { __getHelp, __postHelp } from '../../redux/modules/HelpSlice';
+import { __getDetailHelp, __getHelp, __postHelp } from '../../redux/modules/HelpSlice';
 import { IoIosArrowBack } from 'react-icons/io';
 import { GrImage } from 'react-icons/gr';
 import Button from '../elements/Button';
@@ -16,7 +16,8 @@ const HelpUpdate = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { helps } = useSelector((state) => state.helps);
-  const helpsfind = helps.find((help) => help.articleId === Number(id));
+  const { helpsfind } = useSelector((state) => state.helps);
+  // const helpsfind = helps.find((help) => help.articleId === Number(id));
 
   // const [updateHelp, setUpdateHelp] = useState({
   //     title: "",
@@ -68,7 +69,7 @@ const HelpUpdate = () => {
       imgUrl: EditImg,
     };
     await dispatch(__updateHelp(edithelpsfind));
-    await dispatch(__getHelp());
+    await dispatch(__getDetailHelp(id));
     navigate(`/helpdetail/${id}`);
   };
 
@@ -222,8 +223,8 @@ const StCard = styled.div`
 const StFooterBtn = styled.div`
   width: 100%;
   height: 100%;
-  position: absolute;
-  bottom: 5%;
+  position: sticky;
+  bottom:0;
   display: flex;
   align-items: flex-end;
   justify-content: center;
