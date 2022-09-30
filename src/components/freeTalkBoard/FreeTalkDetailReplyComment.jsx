@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { GrUploadOption } from "react-icons/gr";
-import { __getFreeTalk ,__deleteFreeTalkReplyComment,__updateFreeTalkReplyComment} from '../../redux/modules/FreeTalkSlice';
+import { __getFreeTalk ,__deleteFreeTalkReplyComment,__updateFreeTalkReplyComment, __getDetailFreeTalk} from '../../redux/modules/FreeTalkSlice';
 import FreeTalkReplyCommentDeleteModal from './FreeTalkReplyCommentDeleteModal';
 import dots from "../../assets/dots.png"
 
@@ -75,7 +75,7 @@ const FreeTalkDetailReplyComment = ({childCommentList,commentId,childComment, id
             childCommentId : replyTargetId
         }
         await dispatch(__deleteFreeTalkReplyComment(deleteReplyComments))
-        await dispatch(__getFreeTalk())
+        await dispatch(__getDetailFreeTalk(id))
         
     }
 
@@ -88,7 +88,7 @@ const FreeTalkDetailReplyComment = ({childCommentList,commentId,childComment, id
             content: editReplyComment
         }
         await dispatch(__updateFreeTalkReplyComment(reviseReplyComments))
-        await dispatch(__getFreeTalk())
+        await dispatch(__getDetailFreeTalk(id))
         setReviseReplyComment(!reviseReplyComment)
     }
 

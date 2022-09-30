@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteFreeTalkComment, __getFreeTalk } from '../../redux/modules/FreeTalkSlice';
+import { __deleteFreeTalkComment, __getFreeTalk ,__getDetailFreeTalk} from '../../redux/modules/FreeTalkSlice';
 import exclamation from "../../assets/exclamation.png"
 
 const FreeTalkCommentDeleteModal = ({ setModalOpen, comment, setShowComment }) => {
@@ -13,10 +13,10 @@ const FreeTalkCommentDeleteModal = ({ setModalOpen, comment, setShowComment }) =
   };
 
   const navigate = useNavigate();
-  const { freetalks } = useSelector((state) => state.freetalks)
+  // const { freetalks } = useSelector((state) => state.freetalks)
   const { id } = useParams();
-  const freetalksfind = freetalks.find((freetalk) => freetalk.articleId === Number(id))
-
+  // const freetalksfind = freetalks.find((freetalk) => freetalk.articleId === Number(id))
+  const {freetalksfind} = useSelector((state) => state.freetalks)
   const { commentId } = freetalksfind.commentList.find((commentmap) => commentmap.commentId === comment.commentId)
   // console.log("commentId", commentId)
   // console.log(comment)
@@ -38,7 +38,7 @@ const FreeTalkCommentDeleteModal = ({ setModalOpen, comment, setShowComment }) =
       commentId: commentId
     }
     await dispatch(__deleteFreeTalkComment(commentDelete))
-    await dispatch(__getFreeTalk())
+    await dispatch(__getDetailFreeTalk(id))
     // setShowComment(false)
   }
   return (
