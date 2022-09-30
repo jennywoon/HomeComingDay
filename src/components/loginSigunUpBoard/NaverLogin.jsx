@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import naverIcon from "../../assets/naverIcon.png"
 import whtienaversquare from "../../assets/whitenaversquare.png"
@@ -10,6 +11,7 @@ import Cookies from "universal-cookie"
 
 const NaverLogin = () => {
 
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const cookies = new Cookies();
     // const location = useLocation();
@@ -77,11 +79,11 @@ const NaverLogin = () => {
         console.log(data.data.accessToken);
         console.log(data.data.username);
         console.log(data.data.schoolInfo);
-        const schoolInfo = data.data.schoolInfo
+        const schoolInfo = data.data.schoolInfo;
         if(schoolInfo === true) {
-            window.location.replace("/main")
+            navigate("/main")
         }else{
-            window.location.replace("/schoolinfo")
+            navigate("/schoolinfo")
         }
     }
 
