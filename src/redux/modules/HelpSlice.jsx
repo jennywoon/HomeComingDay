@@ -7,6 +7,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 const initialState = {
     commentList : [],
     childCommentList:[],
+    helpsfind:[],
     helps : [],
     heart: [],
     helpPopular:[],
@@ -42,7 +43,7 @@ export const __getDetailHelp = createAsyncThunk("helps/getDetailHelp", async (pa
         Authorization: `Bearer ${getCookie("accessToken")}`
       },
     });
-    console.log(data.data)
+    // console.log(data.data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
       // console.log('error', error);
@@ -141,7 +142,7 @@ export const __getHelpComment = createAsyncThunk("comments/getHelpComment", asyn
 
 export const __postHelpComment = createAsyncThunk("comments/postHelpComment", async (payload, thunkAPI) => {
   try {
-    console.log("payload" , payload)
+    // console.log("payload" , payload)
     const data = await axios({
       method: 'post',
       url: `${BASE_URL}/article/help/comment/${payload.articleId}`,
@@ -152,7 +153,7 @@ export const __postHelpComment = createAsyncThunk("comments/postHelpComment", as
       data: payload
     });
     
-    console.log(data)
+    // console.log(data)
     return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
@@ -161,7 +162,7 @@ export const __postHelpComment = createAsyncThunk("comments/postHelpComment", as
 
 export const __deleteHelpComment = createAsyncThunk("comments/deleteHelpComment", async (payload, thunkAPI) => {
   try {
-    console.log(payload)
+    // console.log(payload)
     const data = await axios({
       method: 'delete',
       url: `${BASE_URL}/article/help/${payload.articleId}/comment/${payload.commentId}`,
@@ -315,6 +316,21 @@ export const HelpSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       },
+
+      [__getDetailHelp.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__getDetailHelp.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        // console.log(action.payload)
+        state.helpsfind = action.payload;
+      },
+      [__getDetailHelp.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+
+
       [__getPopularHelp.pending]: (state) => {
         state.isLoading = true;
       },
@@ -357,8 +373,8 @@ export const HelpSlice = createSlice({
   
       [__updateHelp.fulfilled]: (state, action) => {
         state.isLoading = false;
-        console.log('action', action)
-        console.log('action.payload', action.payload)
+        // console.log('action', action)
+        // console.log('action.payload', action.payload)
         state.helps = state.helps.map((help) => {
           if (help.id === action.payload.id) {
             help = action.payload;
@@ -386,7 +402,7 @@ export const HelpSlice = createSlice({
       },
       [__postHelpComment.fulfilled]: (state, action) => {
         state.isLoading = false; 
-        console.log(action.payload)
+        // console.log(action.payload)
         state.commentList.push(action.payload);
       },
       [__postHelpComment.rejected]: (state, action) => {
@@ -400,7 +416,7 @@ export const HelpSlice = createSlice({
       [__deleteHelpComment.fulfilled]: (state, action) => {
         state.isLoading = false;
         // console.log(state.comment)
-        console.log(action)
+        // console.log(action)
         state.commentList = state.commentList.filter(comment => comment.id !== action.payload)
       },
       [__deleteHelpComment.rejected]: (state, action) => {
@@ -414,8 +430,8 @@ export const HelpSlice = createSlice({
   
       [__updateHelpComment.fulfilled]: (state, action) => {
         state.isLoading = false;
-        console.log('action', action)
-        console.log('comment', state.commentList)
+        // console.log('action', action)
+        // console.log('comment', state.commentList)
         state.commentList = state.commentList.map((comment) => {
           if (comment.id === action.payload.id) {
             comment.comment = action.payload.comment;
@@ -434,7 +450,7 @@ export const HelpSlice = createSlice({
       },
       [__postHelpReplyComment.fulfilled]: (state, action) => {
         state.isLoading = false; 
-        console.log(action.payload)
+        // console.log(action.payload)
         state.commentList.push(action.payload);
       },
       [__postHelpReplyComment.rejected]: (state, action) => {
@@ -448,7 +464,7 @@ export const HelpSlice = createSlice({
       [__deleteHelpReplyComment.fulfilled]: (state, action) => {
         state.isLoading = false;
         // console.log(state.comment)
-        console.log(action)
+        // console.log(action)
         state.commentList = state.commentList.filter(comment => comment.id !== action.payload)
       },
       [__deleteHelpReplyComment.rejected]: (state, action) => {
@@ -461,8 +477,8 @@ export const HelpSlice = createSlice({
   
       [__updateHelpReplyComment.fulfilled]: (state, action) => {
         state.isLoading = false;
-        console.log('action', action.payload)
-        console.log('comment', state.childCommentList)
+        // console.log('action', action.payload)
+        // console.log('comment', state.childCommentList)
         state.commentList = state.commentList.map((comment) => {
           if (comment.childCommentId === action.payload.childCommentId) {
             comment.content = action.payload.content;
@@ -478,7 +494,7 @@ export const HelpSlice = createSlice({
         state.isLoading = true;
       },
       [__postHelpHeart.fulfilled]: (state, action) => {
-        console.log("__postHeart.fulfilled", action);
+        // console.log("__postHeart.fulfilled", action);
         state.isLoading = false;
         state.heart.unshift(action);
       },

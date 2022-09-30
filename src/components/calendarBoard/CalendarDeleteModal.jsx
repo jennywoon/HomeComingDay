@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteCalendar, __getCalendar } from '../../redux/modules/CalendarSlice';
+import { __deleteCalendar, __getCalendar, __getDetailCalendar } from '../../redux/modules/CalendarSlice';
 import exclamation from "../../assets/exclamation.png"
 
 const CalendarDeleteModal = ({ setModalOpen }) => {
@@ -15,7 +15,8 @@ const CalendarDeleteModal = ({ setModalOpen }) => {
   const navigate = useNavigate();
   const { calendars } = useSelector((state) => state.calendars)
   const { id } = useParams();
-  const calendarsfind = calendars.find((calendar) => calendar.articleId === Number(id))
+  const { calendarsfind } = useSelector((state) => state.calendars)
+  // const calendarsfind = calendars.find((calendar) => calendar.articleId === Number(id))
 
 
   return (
@@ -31,7 +32,7 @@ const CalendarDeleteModal = ({ setModalOpen }) => {
               <StBottomTitle
               onClick={() => {
                 dispatch(__deleteCalendar(calendarsfind.articleId))
-                dispatch(__getCalendar())
+                dispatch(__getDetailCalendar(id))
                 navigate("/calendar")
               }}
               >삭제하기</StBottomTitle>

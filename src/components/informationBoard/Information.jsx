@@ -16,7 +16,7 @@ const Information = () => {
   const { informations } = useSelector((state) => state.informations);
   const {informationPopular} = useSelector((state)=>state.informations)
   const [select, setSelect] = useState('new');
-  console.log(informationPopular)
+  // console.log(informationPopular)
 
   const handleSelect = (e) => {
     setSelect(e.target.value);

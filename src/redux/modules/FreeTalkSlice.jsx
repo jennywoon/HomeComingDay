@@ -30,10 +30,10 @@ export const __getFreeTalk = createAsyncThunk("freetalks/getFreeTalk", async (pa
           // RefreshToken : getCookie('refreshToken')
         },
       });
-        console.log(data)
+        // console.log(data)
         return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-        console.log('error', error);
+        // console.log('error', error);
         return thunkAPI.rejectWithValue(error);
     }
 });
@@ -49,10 +49,10 @@ export const __getDetailFreeTalk = createAsyncThunk("freetalks/getDetailFreeTalk
         // RefreshToken : getCookie('refreshToken')
       },
     });
-    console.log(data)
+    // console.log(data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
-      console.log('error', error);
+      // console.log('error', error);
       return thunkAPI.rejectWithValue(error);
   }
 });
@@ -68,19 +68,19 @@ export const __getPopularFreeTalk = createAsyncThunk("freetalk/getPopularfreetal
         // RefreshToken : getCookie('refreshToken')
       },
     });
-    console.log(data.data)
+    // console.log(data.data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
-      console.log('error', error);
+      // console.log('error', error);
       return thunkAPI.rejectWithValue(error);
   }
 });
 
 export const __postFreeTalk = createAsyncThunk(
   "freetalks/postFreeTalk", async (payload, thunkAPI) => {
-    console.log('payload', payload)
+    // console.log('payload', payload)
       for (var value of payload.values()) {
-        console.log("formdata value", value);
+        // console.log("formdata value", value);
       }
     try {
       const config = {
@@ -91,10 +91,10 @@ export const __postFreeTalk = createAsyncThunk(
         }
       }
         const data = await axios.post(`${BASE_URL}/article/freeTalk`, payload ,config);
-        console.log('data', data)
+        // console.log('data', data)
         return thunkAPI.fulfillWithValue(data.data);
     } catch (error) { 
-      console.log('error', error)
+      // console.log('error', error)
         return thunkAPI.rejectWithValue(error);
     }
 });
@@ -157,8 +157,8 @@ export const __postFreeTalkComment = createAsyncThunk("comments/postInfoComment"
       },
       data: payload
     });
-    console.log("payload" , payload)
-    console.log(data)
+    // console.log("payload" , payload)
+    // console.log(data)
     return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
     
@@ -196,10 +196,10 @@ export const __updateFreeTalkComment = createAsyncThunk("comment/updateInfoComme
       },
       data: payload
     });
-    console.log("payload",payload)
+    // console.log("payload",payload)
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
-    console.log(payload)
+    // console.log(payload)
     return thunkAPI.rejectWithValue(error);
   }
 }
@@ -219,7 +219,7 @@ export const __postFreeTalkReplyComment = createAsyncThunk("comments/postFreeTal
       data: payload
     });
     
-    console.log(data)
+    // console.log(data)
     return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
@@ -237,7 +237,7 @@ export const __deleteFreeTalkReplyComment = createAsyncThunk("comments/deleteFre
         Authorization: `Bearer ${getCookie("accessToken")}`,
       },
     });
-    console.log(data)
+    // console.log(data)
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
@@ -256,7 +256,7 @@ export const __updateFreeTalkReplyComment = createAsyncThunk("comments/updatefre
       },
       data: payload
     });
-    console.log(data)
+    // console.log(data)
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
@@ -277,12 +277,12 @@ export const __postFreeTalkHeart = createAsyncThunk(
         },
         data: payload,
       });
-      console.log(data)
-      console.log("data",data.data)
-      console.log(payload)
+      // console.log(data)
+      // console.log("data",data.data)
+      // console.log(payload)
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -311,7 +311,7 @@ export const FreeTalkSlice = createSlice({
       },
       [__getDetailFreeTalk.fulfilled]: (state, action) => {
         state.isLoading = false;
-        console.log(action.payload)
+        // console.log(action.payload)
         state.freetalksfind = action.payload;
       },
       [__getDetailFreeTalk.rejected]: (state, action) => {
@@ -362,8 +362,8 @@ export const FreeTalkSlice = createSlice({
   
       [__updateFreeTalk.fulfilled]: (state, action) => {
         state.isLoading = false;
-        console.log('action', action)
-        console.log('action.payload', action.payload)
+        // console.log('action', action)
+        // console.log('action.payload', action.payload)
         state.freetalks = state.freetalks.map((freetalk) => {
           if (freetalk.id === action.payload.id) {
             freetalk = action.payload;
@@ -392,7 +392,7 @@ export const FreeTalkSlice = createSlice({
       },
       [__postFreeTalkComment.fulfilled]: (state, action) => {
         state.isLoading = false; 
-        console.log(action.payload)
+        // console.log(action.payload)
         state.freeComments.push(action.payload);
       },
       [__postFreeTalkComment.rejected]: (state, action) => {
@@ -406,7 +406,7 @@ export const FreeTalkSlice = createSlice({
       [__deleteFreeTalkComment.fulfilled]: (state, action) => {
         state.isLoading = false;
         // console.log(state.comment)
-        console.log(action)
+        // console.log(action)
         state.freeComments = state.freeComments.filter(comment => comment.id !== action.payload)
       },
       [__deleteFreeTalkComment.rejected]: (state, action) => {
@@ -421,8 +421,8 @@ export const FreeTalkSlice = createSlice({
   
       [__updateFreeTalkComment.fulfilled]: (state, action) => {
         state.isLoading = false;
-        console.log('action', action)
-        console.log('comment', state.freeComments)
+        // console.log('action', action)
+        // console.log('comment', state.freeComments)
         state.freeComments = state.freeComments.map((comment) => {
           if (comment.id === action.payload.id) {
             comment.comment = action.payload.comment;
@@ -442,7 +442,7 @@ export const FreeTalkSlice = createSlice({
       },
       [__postFreeTalkReplyComment.fulfilled]: (state, action) => {
         state.isLoading = false; 
-        console.log(action.payload)
+        // console.log(action.payload)
         state.freetalksReplyCommentList.push(action.payload);
       },
       [__postFreeTalkReplyComment.rejected]: (state, action) => {
@@ -456,7 +456,7 @@ export const FreeTalkSlice = createSlice({
       [__deleteFreeTalkReplyComment.fulfilled]: (state, action) => {
         state.isLoading = false;
         // console.log(state.comment)
-        console.log(action)
+        // console.log(action)
         state.freetalksReplyCommentList = state.freetalksReplyCommentList.filter(comment => comment.id !== action.payload)
       },
       [__deleteFreeTalkReplyComment.rejected]: (state, action) => {
