@@ -13,7 +13,7 @@ import Myimg from '../../assets/My.png';
 
 const InformationHome = () => {
   const navigate = useNavigate();
-  const chatList = useSelector((state) => state.chat.chatList);
+  const chatList = useSelector((state) => state.chat.chatList[0]);
 
   return (
     <StHomeContainer>
@@ -59,10 +59,10 @@ const InformationHome = () => {
                 alt='채팅'
 
               />
-              {chatList.totalCnt > 0 ? (
+              {chatList && chatList.totalCnt > 0 ? (
                 <StNewDiv>
-                  <StNewTitle>N</StNewTitle>
-                </StNewDiv>
+                <StNewTitle>N</StNewTitle>
+              </StNewDiv>
               ) : null}
             </StChatIconWrap>
             <StTapTitle>채팅</StTapTitle>

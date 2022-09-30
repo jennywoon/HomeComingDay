@@ -37,7 +37,7 @@ export default ChatMessage;
 const StBox = styled.div`
     align-items: ${(props) => (props.user ? "flex-end" : "flex-start")};
     margin-bottom: 15px;
-    word-break: break-all;
+    word-break: break-word;
 `;
 
 const StMessageBox = styled.div`
@@ -54,7 +54,7 @@ const StMessage = styled.div`
     max-width: 70%;
     padding: 10px 15px;
     border-radius: ${(props) => (props.user ? "20px 0 20px 20px" : "0 20px 20px 20px")};
-    background-color: ${(props) => (props.user ? "rgba(247,147,30);" : "#ffffff")};
+    background-color: ${(props) => (props.user ? "rgba(247,147,30)" : "#ffffff")};
     color: ${(props) => (props.user ? "#ffffff" : "#000000")};
     margin: ${(props) => (props.user ? "0 0 0 5px" : "0 5px 0 0")};
     flex-direction: ${(props) => (props.user ? "row-reverse" : "row")};

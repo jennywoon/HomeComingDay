@@ -28,17 +28,20 @@ const StMessageWrapper = styled.div`
     width: 100%;
     height: 81.3%;
     overflow-y: auto;
+    overflow-x: hidden;
     background-color: #f9f9f9;
     &::-webkit-scrollbar {
         width: 0px;
     }
     &::-webkit-scrollbar-thumb {
-        background-color: #d3d3d3;
+        /* background-color: #d3d3d3; */
         border-radius: 50px;
+        width: 0px;
     }
     &::-webkit-scrollbar-track {
-        background-color: #08105d;
+        /* background-color: #08105d; */
         border-radius: 50px;
+        width: 0px;
     }
     @media only screen and (max-width: 420px) {
         /* width: 319px; */

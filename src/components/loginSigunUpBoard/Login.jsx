@@ -17,18 +17,14 @@ import PwaApp from './PwaApp';
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLogin, schoolInfo, error } = useSelector((state) => state.user)
+  const { isLogin, error } = useSelector((state) => state.user)
   // console.log(isLogin)
-  // console.log(schoolInfo)
-  const state = useSelector((state) => state)
-  // console.log(state)
   const [formValue, setFormValue] = useState({
     email: '',
     password: '',
   });
   const { email, password } = formValue;
   const [isActive, setIsActive] = useState(false);
-  const [loginFail, setLoginFail] = useState('');
 
   const handleCheck = (e) => {
     setIsActive(e);
@@ -196,16 +192,13 @@ const StLoginContainer = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* border: 1px solid blue; */
 `;
 
 const StLoginWraps = styled.div`
   width: 80%;
-  /* border: 1px solid red; */
 `;
 
-const StLoginWrap = styled.div`
-`;
+const StLoginWrap = styled.div``;
 
 const StLoginTitle = styled.div`
   text-align: center;
@@ -224,6 +217,7 @@ const StLogoImg = styled.div`
   background-position: center;
   background-size: 100% 100%;
 `
+
 const StEmail = styled.div`
   margin-bottom: 30px;
 `;
@@ -256,13 +250,6 @@ const StGoToSignup = styled.p`
   font-weight: 500;
   text-decoration: underline;
 `
-
-const StErrorMessage = styled.p`
-  margin: 0;
-  color: red;
-  margin-bottom: 20px;
-  font-size: 12px;
-`;
 
 const StNaverContainer = styled.div`
   width: 100%;
