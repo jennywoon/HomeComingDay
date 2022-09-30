@@ -8,6 +8,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 const initialState = {
     calendarsComments:[],
     calendarsReplyCommentList:[],
+    calendarfind:[],
     calendars: [],
     calendarPopular:[],
     heart:[],
@@ -27,10 +28,10 @@ export const __getCalendar = createAsyncThunk("calendars/getCalendar", async (pa
           Authorization: `Bearer ${getCookie("accessToken")}`,
         },
       });
-      console.log(data)
+      // console.log(data)
         return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-        console.log('error', error);
+        // console.log('error', error);
         return thunkAPI.rejectWithValue(error);
     }
 });
@@ -46,10 +47,10 @@ export const __getDetailCalendar = createAsyncThunk("calendars/getDetailcalendar
         // RefreshToken : getCookie('refreshToken')
       },
     });
-    console.log(data)
+    // console.log(data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
-      console.log('error', error);
+      // console.log('error', error);
       return thunkAPI.rejectWithValue(error);
   }
 });
@@ -65,10 +66,10 @@ export const __getPopularCalendar = createAsyncThunk("calendar/getPopularcalenda
         // RefreshToken : getCookie('refreshToken')
       },
     });
-    console.log(data.data)
+    // console.log(data.data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
-      console.log('error', error);
+      // console.log('error', error);
       return thunkAPI.rejectWithValue(error);
   }
 });
@@ -87,10 +88,10 @@ export const __postCalendar = createAsyncThunk("calendars/postcalendars", async 
       },
       data: payload
     });
-    console.log(data)
+    // console.log(data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
-      console.log('error', error);
+      // console.log('error', error);
       return thunkAPI.rejectWithValue(error);
   }
 });
@@ -134,7 +135,7 @@ export const __updateCalendar = createAsyncThunk("calendars/updateCalendar", asy
 
 export const __postCalendarComment = createAsyncThunk("comments/postHelpComment", async (payload, thunkAPI) => {
   try {
-    console.log("payload" , payload)
+    // console.log("payload" , payload)
     const data = await axios({
       method: 'post',
       url: `${BASE_URL}/article/calendar/comment/${payload.articleId}`,
@@ -145,7 +146,6 @@ export const __postCalendarComment = createAsyncThunk("comments/postHelpComment"
       data: payload
     });
     
-    console.log(data)
     return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
@@ -183,10 +183,10 @@ export const __updateCalendarComment = createAsyncThunk("comment/updateHelpComme
       },
       data: payload
     });
-    console.log("payload",payload)
+    // console.log("payload",payload)
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
-    console.log(payload)
+    // console.log(payload)
     return thunkAPI.rejectWithValue(error);
   }
 }
@@ -206,7 +206,7 @@ export const __postCalendarReplyComment = createAsyncThunk("comments/postcalenda
       data: payload
     });
     
-    console.log(data)
+    // console.log(data)
     return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
@@ -224,7 +224,7 @@ export const __deleteCalendarReplyComment = createAsyncThunk("comments/deletecal
         Authorization: `Bearer ${getCookie("accessToken")}`,
       },
     });
-    console.log(data)
+    // console.log(data)
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
@@ -243,7 +243,7 @@ export const __updateCalendarReplyComment = createAsyncThunk("comments/updatecal
       },
       data: payload
     });
-    console.log(data)
+    // console.log(data)
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
@@ -313,12 +313,12 @@ export const __postCalendarHeart = createAsyncThunk(
         },
         data: payload,
       });
-      console.log(data);
-      console.log('data', data.data);
-      console.log(payload);
+      // console.log(data);
+      // console.log('data', data.data);
+      // console.log(payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -335,7 +335,7 @@ export const __getJoin = createAsyncThunk("calendars/getCalendarJoin", async (pa
         Authorization: `Bearer ${getCookie("accessToken")}`,
       },
     });
-    console.log(data)
+    // console.log(data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
       console.log('error', error);
@@ -357,12 +357,12 @@ export const __postJoin = createAsyncThunk(
         },
         data: payload,
       });
-      console.log(data);
-      console.log('data', data.data);
-      console.log(payload);
+      // console.log(data);
+      // console.log('data', data.data);
+      // console.log(payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -385,6 +385,21 @@ export const CalendarSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       },
+
+      [__getDetailCalendar.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__getDetailCalendar.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        // console.log(action.payload)
+        state.calendarfind = action.payload;
+      },
+      [__getDetailCalendar.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+
+
       [__getPopularCalendar.pending]: (state) => {
         state.isLoading = true;
       },
@@ -425,8 +440,8 @@ export const CalendarSlice = createSlice({
       },
       [__updateCalendar.fulfilled]: (state, action) => {
         state.isLoading = false;
-        console.log('action', action)
-        console.log('action.payload', action.payload)
+        // console.log('action', action)
+        // console.log('action.payload', action.payload)
         state.calendars = state.calendars.map((calendar) => {
           if (calendar.id === action.payload.id) {
             calendar = action.payload;
@@ -444,7 +459,7 @@ export const CalendarSlice = createSlice({
       },
       [__postCalendarComment.fulfilled]: (state, action) => {
         state.isLoading = false; 
-        console.log(action.payload)
+        // console.log(action.payload)
         state.calendarsComments.push(action.payload);
       },
       [__postCalendarComment.rejected]: (state, action) => {
@@ -458,7 +473,7 @@ export const CalendarSlice = createSlice({
       [__deleteCalendarComment.fulfilled]: (state, action) => {
         state.isLoading = false;
         // console.log(state.comment)
-        console.log(action)
+        // console.log(action)
         state.calendarsComments = state.calendarsComments.filter(comment => comment.id !== action.payload)
       },
       [__deleteCalendarComment.rejected]: (state, action) => {
@@ -473,8 +488,8 @@ export const CalendarSlice = createSlice({
   
       [__updateCalendarComment.fulfilled]: (state, action) => {
         state.isLoading = false;
-        console.log('action', action)
-        console.log('comment', state.commentList)
+        // console.log('action', action)
+        // console.log('comment', state.commentList)
         state.calendarsComments = state.calendarsComments.map((comment) => {
           if (comment.id === action.payload.id) {
             comment.comment = action.payload.comment;
@@ -494,7 +509,7 @@ export const CalendarSlice = createSlice({
       },
       [__postCalendarReplyComment.fulfilled]: (state, action) => {
         state.isLoading = false; 
-        console.log(action.payload)
+        // console.log(action.payload)
         state.calendarsReplyCommentList.push(action.payload);
       },
       [__postCalendarReplyComment.rejected]: (state, action) => {
@@ -508,7 +523,7 @@ export const CalendarSlice = createSlice({
       [__deleteCalendarReplyComment.fulfilled]: (state, action) => {
         state.isLoading = false;
         // console.log(state.comment)
-        console.log(action)
+        // console.log(action)
         state.calendarsReplyCommentList = state.calendarsReplyCommentList.filter(comment => comment.id !== action.payload)
       },
       [__deleteCalendarReplyComment.rejected]: (state, action) => {
@@ -521,8 +536,8 @@ export const CalendarSlice = createSlice({
   
       [__updateCalendarReplyComment.fulfilled]: (state, action) => {
         state.isLoading = false;
-        console.log('action', action.payload)
-        console.log('comment', state.childCommentList)
+        // console.log('action', action.payload)
+        // console.log('comment', state.childCommentList)
         state.calendarsReplyCommentList = state.calendarsReplyCommentList.map((comment) => {
           if (comment.childCommentId === action.payload.childCommentId) {
             comment.content = action.payload.content;
@@ -586,7 +601,7 @@ export const CalendarSlice = createSlice({
       state.isLoading = true;
     },
     [__postCalendarHeart.fulfilled]: (state, action) => {
-      console.log('__postHeart.fulfilled', action);
+      // console.log('__postHeart.fulfilled', action);
       state.isLoading = false;
       state.heart.unshift(action);
     },
@@ -613,7 +628,7 @@ export const CalendarSlice = createSlice({
       state.isLoading = true;
     },
     [__postJoin.fulfilled]: (state, action) => {
-      console.log('__postJoin.fulfilled', action.payload);
+      // console.log('__postJoin.fulfilled', action.payload);
       state.isLoading = false;
       state.joinPeopleList.push(action.payload);
     },

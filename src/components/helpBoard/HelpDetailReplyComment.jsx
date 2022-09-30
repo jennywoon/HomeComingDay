@@ -6,6 +6,7 @@ import {
   __updateHelpReplyComment,
   __deleteHelpReplyComment,
   __getHelp,
+  __getDetailHelp
 } from '../../redux/modules/HelpSlice';
 import { useParams } from 'react-router-dom';
 import { GrUploadOption } from 'react-icons/gr';
@@ -86,7 +87,7 @@ const HelpDetailReplyComment = ({
       childCommentId: replyTargetId,
     };
     await dispatch(__deleteHelpReplyComment(deleteReplyComments));
-    await dispatch(__getHelp());
+    await dispatch(__getDetailHelp(id));
   };
 
   //대댓글 수정하기
@@ -99,7 +100,7 @@ const HelpDetailReplyComment = ({
     };
     await dispatch(__updateHelpReplyComment(reviseReplyComments));
     setReviseReplyComment(!reviseReplyComment);
-    await dispatch(__getHelp());
+    await dispatch(__getDetailHelp(id));
   };
 
   return (
@@ -193,7 +194,8 @@ const StCommentReplytxt = styled.div`
 
 const StReplyCommentInput = styled.textarea`
   width: 100%;
-  height: 28px;
+  height: 25px;
+  line-height: 25px;
   border-radius: 30px;
   border: 1px solid #d9d9d9;
   background-color: #fff;

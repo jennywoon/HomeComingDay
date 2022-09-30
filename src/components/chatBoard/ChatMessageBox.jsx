@@ -26,7 +26,7 @@ export default React.memo(ChatMessageBox);
 
 const StMessageWrapper = styled.div`
     width: 100%;
-    height: 100%;
+    height: 81.3%;
     overflow-y: auto;
     background-color: #f9f9f9;
     &::-webkit-scrollbar {
@@ -41,8 +41,9 @@ const StMessageWrapper = styled.div`
         border-radius: 50px;
     }
     @media only screen and (max-width: 420px) {
-        width: 319px;
-        height: 65vh;
+        /* width: 319px; */
+        min-width: 280px;
+        /* height: 65vh; */
         top: 0;
         left: 0;
         margin-top: 12px;

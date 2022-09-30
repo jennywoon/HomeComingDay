@@ -2,7 +2,7 @@ import React from 'react';
 import { useReactPWAInstall } from "react-pwa-install";
 // import logo from "../../assets/logo.png"
 // import profileorange from "../../assets/profileorange.png"
-import logo60 from "../../assets/logosize/logo60.png";
+import logo60 from "../../assets/logo60.png";
 // import styled from 'styled-components';
 import { Button } from 'antd';
 
@@ -19,10 +19,10 @@ const PwaApp = () => {
 
     return (
         <>
-            {supported() && !isInstalled() && (
+            {/* {supported() && !isInstalled() && ( */}
                 <Button click={pwaClick}
                 >어플 다운받기</Button>
-            )}
+            {/* )} */}
         </>
     );
 };

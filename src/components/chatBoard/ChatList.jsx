@@ -3,8 +3,7 @@ import styled from "styled-components";
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useStore } from 'zustand';
-import { deleteChatList, deleteUnreadCount, getChatList } from '../../redux/modules/ChatSlice';
+import { deleteChatList, getChatList } from '../../redux/modules/ChatSlice';
 import Loading from '../test/Loading';
 import { chatApi } from './ChatApi';
 import _ from "lodash";
@@ -14,9 +13,9 @@ import ChatColorimg from '../../assets/ChatColor.png';
 import Myimg from '../../assets/My.png';
 import { __getReset } from '../../redux/modules/MyPageSlice';
 import ChatDeleteModal from './ChatDeleteModal';
-import { IoMdClose } from 'react-icons/io';
 import nonedataballoon from "../../assets/nonedataballoon.png"
 import xgray from "../../assets/xgray.png"
+import Header from '../Header';
 
 const ChatList = () => {
 
@@ -97,6 +96,8 @@ const ChatList = () => {
     }
 
     return (
+        <>
+        <Header/>
         <StContainer>
             <StChatContainer>
                 {chatList.length === 0 && 
@@ -207,6 +208,7 @@ const ChatList = () => {
                 </StBottom>
             </StBottomTapWrap>
         </StContainer>
+        </>
     );
 };
 

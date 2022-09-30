@@ -34,6 +34,7 @@ const InformationDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { informations } = useSelector((state) => state.informations);
+  const { informationsfind } = useSelector((state) => state.informations);
   // const { infoComments } = useSelector((state) => state.informations)
   const { id } = useParams();
 
@@ -46,9 +47,9 @@ const InformationDetail = () => {
     setComment(e.target.value);
   };
 
-  const informationsfind = informations.find(
-    (info) => info.articleId === Number(id)
-  );
+  // const informationsfind = informations.find(
+  //   (info) => info.articleId === Number(id)
+  // );
   const data = useSelector((state) => state.mypages.mypages);
 
   //모달닫기
@@ -75,12 +76,12 @@ const InformationDetail = () => {
     dispatch(__getDetailInformation(id));
   }, [dispatch]);
 
-  console.log(
-    'information',
-    informations,
-    'informationsfind',
-    informationsfind
-  );
+  // console.log(
+  //   'information',
+  //   informations,
+  //   'informationsfind',
+  //   informationsfind
+  // );
   //프로필 사진 클릭
   const onCilckShow = () => {
     setShow(!show);
@@ -104,7 +105,7 @@ const InformationDetail = () => {
     };
     await dispatch(__postInfoComment(newcomment));
     setComment('');
-    await dispatch(__getInformation());
+    await dispatch(__getDetailInformation(id));
     await dispatch(__getNoticeCount());
   };
 
@@ -143,7 +144,7 @@ const InformationDetail = () => {
       articleId: id,
     };
     const response = await dispatch(__postInformationHeart(newHeart));
-    dispatch(__getInformation());
+    dispatch(__getDetailInformation(id));
   };
 
   // 채팅 생성
@@ -227,7 +228,7 @@ const InformationDetail = () => {
                 <StContentBody>
                   {informationsfind && informationsfind.content}
                 </StContentBody>
-                {informationsfind && informationsfind.imageList.length > 0 ? (
+                {informationsfind && informationsfind.imageList?.length !== 0 ? (
                   <StContentImgBox>
                     <Swiper
                       {...swiperParams}
@@ -236,7 +237,7 @@ const InformationDetail = () => {
                       slidesPerView={1}
                     >
                       {informationsfind &&
-                        informationsfind.imageList.map((image) => {
+                        informationsfind.imageList?.map((image) => {
                           return (
                             <SwiperSlide key={image.imageId}>
                               <StContentImg src={image.imgUrl}></StContentImg>
@@ -284,14 +285,14 @@ const InformationDetail = () => {
               <StBodyContainer>
                 <StBodyCommentBox>
                   {informationsfind &&
-                    informationsfind.commentList.length === 0 ? (
+                    informationsfind.commentList?.length === 0 ? (
                     <StBodyComment>
                       작성한 댓글이 없습니다 <br></br> 첫번째 댓글을 남겨보세요{' '}
                     </StBodyComment>
                   ) : (
                     <>
                       {informationsfind &&
-                        informationsfind.commentList.map((comment) => (
+                        informationsfind.commentList?.map((comment) => (
                           <InformationDetailComment
                             key={comment.commentId}
                             comment={comment}

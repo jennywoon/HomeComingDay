@@ -32,6 +32,7 @@ const CalendarJoiinModal = ({setJoinModalOpen,joinPeopleList,id}) => {
             </StIconBox>
           </StFirstWrap>
 
+          <StJoinContain> 
           {/* 참여자리스트 맵돌리기 */}
           {joinPeopleList.length !== 0 ?
           (joinPeopleList && joinPeopleList.map((joinList,i)=>
@@ -50,7 +51,7 @@ const CalendarJoiinModal = ({setJoinModalOpen,joinPeopleList,id}) => {
             </StJoinNone>
           )
           }
-          
+          </StJoinContain>
         </StModalContainer>
       </StWrap>
     </StContainer>
@@ -114,12 +115,21 @@ const StModalContainer = styled.div`
   border-radius: 16px;
 `;
 
+const StJoinContain = styled.div`
+width:100%;
+overflow:scroll;
+::-webkit-scrollbar {
+    width: 0px;
+  }
+`
+
 const StFirstWrap = styled.div`
   width: 100%;
   height: 50px;
   border-bottom: 1px solid #D9D9D9;
   display: flex;
   align-items: center;
+  
 `;
 
 const StFirstDiv = styled.div`
@@ -151,10 +161,11 @@ const StClose = styled.div`
 `
 const StJoinList = styled.div`
   display: flex;
-  width:100%;
+  width:88%;
   align-items: center;
   padding:15px 20px;
   border-bottom: 1px solid #F5F5F5;
+
 `
 const StJoinMyImg = styled.img`
   width:30px;
@@ -183,7 +194,7 @@ width:100%;
 const StJoinNone = styled.div`
   display: flex;
   width:100%;
-  height: 80%;
+  height: 300px;
   justify-content: center;
   flex-direction: column;
   align-items: center;

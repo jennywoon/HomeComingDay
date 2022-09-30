@@ -37,7 +37,7 @@ const NaverLogin = () => {
         })
         naverLogin.init();
         // 네이버 로그인은 계속 유지되는 경우가 있어서, 초기화시 로그아웃 되도록 설정
-        naverLogin.logout();
+        // naverLogin.logout();
         naverLogin.getLoginStatus((status) => {
             if (status) {
                 console.log("Naver 로그인 상태", naverLogin.user);
@@ -49,6 +49,7 @@ const NaverLogin = () => {
                     alert("이름은 필수 동의 입니다. 정보제공을 동의해주세요.");
                     naverLogin.reprompt();
                     return;
+                    console.log("네이버 로그인 ok");
                 }
             } else {
                 console.log("Naver 비 로그인 상태");
@@ -71,14 +72,14 @@ const NaverLogin = () => {
         });
         setCookie("accessToken", `${data.data.accessToken}`)
         setCookie("refreshToken", `${data.data.refreshToken}`)
-        // setCookie("userName", `${data.data.username}`)
+        setCookie("userName", `${data.data.username}`)
         // window.location.replace("/")
         console.log(data.data.accessToken);
-        console.log(data.data.username)
-        console.log(data.data.schoolInfo)
+        console.log(data.data.username);
+        console.log(data.data.schoolInfo);
         const schoolInfo = data.data.schoolInfo
         if(schoolInfo === true) {
-            window.location.replace("/")
+            window.location.replace("/main")
         }else{
             window.location.replace("/schoolinfo")
         }

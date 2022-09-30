@@ -10,6 +10,7 @@ import TimeRangePicker from '@wojtekmaj/react-timerange-picker';
 import Button from '../elements/Button';
 import {
   __getCalendar,
+  __getDetailCalendar,
   __updateCalendar,
 } from '../../redux/modules/CalendarSlice';
 import { useSelector } from 'react-redux';
@@ -23,8 +24,10 @@ const CalendarUpdate = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { calendars } = useSelector((state) => state.calendars);
-  const calendarfind = calendars.find((calendar) => calendar.articleId === Number(id));
-  console.log(calendarfind)
+  const {calendarJoin} = useSelector((state) => state.calendars)
+  const { calendarfind } = useSelector((state) => state.calendars);
+  // const calendarfind = calendars.find((calendar) => calendar.articleId === Number(id));
+  // console.log(calendarfind)
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -75,15 +78,16 @@ const CalendarUpdate = () => {
 
   //참여하기 인원 수정
 
-  // const joinMinusHandle =()=>{
-  //   if(joinNumber > 1){
-  //   setJoinNumber(joinNumber -1)
-  // }
-  // }
-  // const joinPlusHandle =()=>{
-  //   if(joinNumber < 5)
-  //   setJoinNumber(joinNumber +1)
-  // }
+  const joinMinusHandle =()=>{
+    if(calendarJoin.joinPeople < joinNumber ){
+    setJoinNumber(joinNumber -1)
+  }
+  }
+  const joinPlusHandle =()=>{
+    if(joinNumber < 50)
+    setJoinNumber(joinNumber +1)
+  }
+
 
   const onChangeTitle = (e) => {
     setEditTitle(e.target.value);
@@ -102,17 +106,7 @@ const CalendarUpdate = () => {
     calendarcontent,
   } = calendar;
 
-  useEffect(() => {
-    if (EditTitle !== '' && EditLocation !== '' && EditContent !== '') {
-      handleCheck(true);
-    } else {
-      handleCheck(false);
-    }
-  }, [EditTitle, EditContent, EditLocation])
-
-  useEffect(() => {
-    dispatch(__getCalendar());
-  }, [dispatch]);
+  
 
   const calendaronChangeHandler = (e) => {
     const { value, name } = e.target;
@@ -202,10 +196,22 @@ const CalendarUpdate = () => {
       maxPeople: joinNumber
     };
     await dispatch(__updateCalendar(editcalendarfind));
-    await dispatch(__getCalendar())
+    await dispatch(__getDetailCalendar(id))
     navigate(`/calendardetail/${id}`)
     // window.location.reload();
   };
+
+  useEffect(() => {
+    if (EditTitle !== '' && calendarlocation !== '' && EditContent !== '') {
+      handleCheck(true);
+    } else {
+      handleCheck(false);
+    }
+  }, [EditTitle, EditContent, calendarlocation])
+
+  useEffect(() => {
+    dispatch(__getDetailCalendar(id));
+  }, [dispatch]);
 
 
   return (
@@ -328,10 +334,13 @@ const CalendarUpdate = () => {
             <StJoinPeople>
               <StCalendarTitle>인원</StCalendarTitle>
               <StJoinDiv>
-                {/* <AiOutlineMinusCircle size="20px" onClick={joinMinusHandle}/> */}
+                {calendarJoin.joinPeople < joinNumber ? 
+                <MinusCircle size="20px" onClick={joinMinusHandle}/>
+               : null}
                 {joinNumber}명
-                {/* <AiOutlinePlusCircle size="20px" onClick={joinPlusHandle}/> */}
+                <PlusCircle size="20px" onClick={joinPlusHandle}/>
               </StJoinDiv>
+
             </StJoinPeople>
 
             <StCalendarDiv>
@@ -678,5 +687,11 @@ const StJoinDiv = styled.div`
   border:none;
 `
 const ArrowForward = styled(IoIosArrowForward)`
+  color:#cfcfcf;
+`
+const MinusCircle = styled(AiOutlineMinusCircle)`
+color:#cfcfcf;
+`
+const PlusCircle = styled(AiOutlinePlusCircle)`
   color:#cfcfcf;
 `
