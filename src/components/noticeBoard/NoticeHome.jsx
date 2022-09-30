@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { IoIosArrowBack } from 'react-icons/io';
 import Homeimg from '../../assets/Home.png';
@@ -10,6 +11,7 @@ import NoticeList from './NoticeList';
 
 const NoticeHome = () => {
   const navigate = useNavigate();
+  const chatList = useSelector((state) => state.chat.chatList);
 
   return (
     <StHomeContainer>
@@ -60,11 +62,18 @@ const NoticeHome = () => {
               navigate('/chat');
             }}
           >
-            <img
-              src={Chatimg}
-              alt='채팅'
-              style={{ width: '45%', margin: '2px' }}
-            />
+            <StIconWrap>
+              <img
+                src={Chatimg}
+                alt='채팅'
+                style={{ width: '45%', margin: '2px' }}
+              />
+              {chatList.totalCnt > 0 ? (
+                <StNewDiv>
+                  <StNewTitle>N</StNewTitle>
+                </StNewDiv>
+              ) : null}
+            </StIconWrap>
             <StTapTitle style={{ color: '#8E8E8E' }}>채팅</StTapTitle>
           </StTap>
           <StTap
@@ -133,6 +142,31 @@ const StTap = styled.div`
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+`;
+
+const StIconWrap = styled.div`
+  display: flex;
+  /* border: 1px solid red; */
+  justify-content: center;
+  /* align-items: start; */
+  position: relative;
+`
+
+const StNewDiv = styled.div`
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #f7931e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 12px;
+  position: absolute;
+`;
+const StNewTitle = styled.div`
+  font-size: 10px;
+  font-weight: 600;
+  color: white;
 `;
 const StTapTitle = styled.div`
   font-size: 11px;

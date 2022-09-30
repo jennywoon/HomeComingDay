@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useSelector } from "react-redux";
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Help from './Help';
@@ -10,6 +11,7 @@ import Myimg from '../../assets/My.png';
 
 const Home = () => {
   const navigate = useNavigate();
+  const chatList = useSelector((state) => state.chat.chatList);
 
   return (
     <StHomeContainer>
@@ -42,7 +44,14 @@ const Home = () => {
               navigate('/chat');
             }}
           >
+            <StChatIconWrap>
             <StImg src={Chatimg} alt='채팅' />
+            {chatList.totalCnt > 0 ? (
+              <StNewDiv>
+                <StNewTitle>N</StNewTitle>
+              </StNewDiv>
+            ) : null}
+            </StChatIconWrap>
             <StTapTitle>채팅</StTapTitle>
           </StTap>
           <StLastTap
@@ -107,9 +116,34 @@ const StLastTap = styled.div`
   padding-right: 20px;
 `;
 
+const StChatIconWrap = styled.div`
+  display: flex;
+  /* border: 1px solid red; */
+  justify-content: center;
+  /* align-items: start; */
+  position: relative;
+`
+
 const StImg = styled.img`
   width: 45%;
   margin: 2px;
+`;
+
+const StNewDiv = styled.div`
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #f7931e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 12px;
+  position: absolute;
+`;
+const StNewTitle = styled.div`
+  font-size: 10px;
+  font-weight: 600;
+  color: white;
 `;
 
 const StHomeTitle = styled.div`

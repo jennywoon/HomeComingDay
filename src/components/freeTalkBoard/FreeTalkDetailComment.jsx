@@ -220,7 +220,8 @@ const StCommentImg = styled.img`
 `
 const StReplyCommentInput = styled.textarea`
     width:100%;
-    height:28px;
+    height:25px;
+    line-height:25px;
     border-radius: 30px;
     border:1px solid #D9D9D9;
     background-color: #fff;

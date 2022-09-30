@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteHelp, __getHelp } from '../../redux/modules/HelpSlice';
+import { __deleteHelp, __getHelp , __getDetailHelp} from '../../redux/modules/HelpSlice';
 import exclamation from "../../assets/exclamation.png"
 
 const HelpDeleteModal = ({ setModalOpen }) => {
@@ -15,7 +15,8 @@ const HelpDeleteModal = ({ setModalOpen }) => {
   const navigate = useNavigate();
   const { helps } = useSelector((state) => state.helps)
   const { id } = useParams();
-  const helpsfind = helps.find((help) => help.articleId === Number(id))
+  // const helpsfind = helps.find((help) => help.articleId === Number(id))
+  const { helpsfind } = useSelector((state) => state.helps);
 
 
   return (
@@ -31,7 +32,7 @@ const HelpDeleteModal = ({ setModalOpen }) => {
               <StBottomTitle
               onClick={() => {
                 dispatch(__deleteHelp(helpsfind.articleId))
-                dispatch(__getHelp())
+                dispatch(__getDetailHelp(id))
                 navigate("/main")
               }}
               >삭제하기</StBottomTitle>

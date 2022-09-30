@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { deleteChatList, getChatList, deleteUnreadCount } from '../../redux/modules/ChatSlice';
 import Loading from '../test/Loading';
 import { chatApi } from './ChatApi';
-import _ from "lodash";
+import _, { flatMap } from "lodash";
 import Homeimg from '../../assets/Home.png';
 import Searchimg from '../../assets/Search.png';
 import ChatColorimg from '../../assets/ChatColor.png';
@@ -14,8 +14,9 @@ import Myimg from '../../assets/My.png';
 import { __getReset } from '../../redux/modules/MyPageSlice';
 import ChatDeleteModal from './ChatDeleteModal';
 import nonedataballoon from "../../assets/nonedataballoon.png"
-import xgray from "../../assets/xgray.png"
+import xorange from "../../assets/xorange.png"
 import Header from '../Header';
+import bell from "../../assets/Bell.png"
 
 const ChatList = () => {
 
@@ -55,7 +56,24 @@ const ChatList = () => {
     // 채팅방 나가기 모달창
     const [isOpenPopup, setIsOpenPopup] = useState(false);
     const [clickedChatId, setClickChatId] = useState("");
-    // const PopupRef = useRef();
+
+    // 채팅 목록 편집 눌러야 x 버튼 뜨도록 설정 + 버튼 누르면 글자 변경
+    const [closeModal, setCloseModal] = useState({
+        visible: false,
+    })
+    const [isOnCheck, setIsOnCheck] = useState(false);
+
+    const handlerCloseModal = (e) => {
+        setIsOnCheck(true);
+        setCloseModal(() => {
+            if (!closeModal.visible) {
+                return { visible: true };
+            } else {
+                setIsOnCheck(false);
+                return { visible: false };
+            }
+        });
+    }
 
     // 채팅방 나가기
     const deleteChat = () => {
@@ -108,8 +126,8 @@ const ChatList = () => {
                             <p>참여 중인 채팅이 없습니다</p>
                         </StNoneData>}
                     <StChatWrap ref={InfinityScrollRef} onScroll={InfinityScroll}>
-                        {chatList.length > 0 &&
-                            chatList.map((chat, i) => {
+                        {chatList.chatRoomResponseDto.length > 0 &&
+                            chatList.chatRoomResponseDto.map((chat, i) => {
                                 return (
                                     <StChatRoomContainer
                                         roomName={chat.roomName}
@@ -118,6 +136,24 @@ const ChatList = () => {
                                             navigate(`/chat/${chat.chatRoomUuid}`)
                                         }}
                                     >
+                                        {closeModal.visible ? (
+                                            <StCloseIcon
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setIsOpenPopup(true);
+                                                    setClickChatId(chat.chatRoomUuid);
+                                                }}
+                                                chatRoomUuid={chat.chatRoomUuid}
+                                            />
+                                        ) : null}
+                                        {isOpenPopup && (
+                                            <ChatDeleteModal
+                                                close={() => setIsOpenPopup(false)}
+                                                event={() => {
+                                                    deleteChat();
+                                                }}
+                                            />
+                                        )}
                                         <StChatWidthWrap>
                                             <StImg>
                                                 <StHeadImg
@@ -135,36 +171,25 @@ const ChatList = () => {
                                                     </StSecondWrap>
                                                 </StFirstContainer>
                                                 <StSecondContainer>
-                                                    <StChatContent>{chat.lastMessage.substr(0, 25)}</StChatContent>
+                                                    <StChatContent>{chat.lastMessage.substr(0, 20)}</StChatContent>
+                                                    <StUnreadCount>
+                                                        {chat.unreadCount > 0 ? (
+                                                            <StUnreadCountWrap>{chat.unreadCount}</StUnreadCountWrap>
+                                                        ) : null}
+                                                    </StUnreadCount>
                                                 </StSecondContainer>
-                                                <StUnreadCount>
-                                                    {chat.unreadCount > 0 ? (
-                                                        <div>{chat.unreadCount}</div>    
-                                                    ) : null }
-                                                </StUnreadCount>
                                             </StSecondChatWithWrap>
                                         </StChatWidthWrap>
-                                        <StCloseIcon
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                setIsOpenPopup(true);
-                                                setClickChatId(chat.chatRoomUuid);
-                                            }}
-                                            chatRoomUuid={chat.chatRoomUuid}
-                                        />
-                                        {isOpenPopup && (
-                                            <ChatDeleteModal
-                                                close={() => setIsOpenPopup(false)}
-                                                event={() => {
-                                                    deleteChat();
-                                                }}
-                                            />
-                                        )}
                                     </StChatRoomContainer>
                                 )
                             })
                         }
                     </StChatWrap>
+                    <StListEdit
+                        isOnCheck={isOnCheck}
+                        onClick={handlerCloseModal}
+                    >
+                        {isOnCheck ? "확인" : "채팅 목록 편집"}</StListEdit>
                 </StChatContainer>
                 <StBottomTapWrap>
                     <StBottom>
@@ -195,10 +220,17 @@ const ChatList = () => {
                                 navigate('/chat');
                             }}
                         >
-                            <StBottomImg
-                                src={ChatColorimg}
-                                alt='채팅'
-                            />
+                            <StIconWrap>
+                                <StBottomImg
+                                    src={ChatColorimg}
+                                    alt='채팅'
+                                />
+                                {chatList.totalCnt > 0 ? (
+                                    <StNewDiv>
+                                        <StNewTitle>N</StNewTitle>
+                                    </StNewDiv>
+                                ) : null}
+                            </StIconWrap>
                             <StTapChatTitle>채팅</StTapChatTitle>
                         </StChatTap>
                         <StLastTap
@@ -239,7 +271,9 @@ const StChatContainer = styled.div`
   flex-direction: column;
 `
 
-const StImg = styled.div``
+const StImg = styled.div`
+    padding: 0 3px 0 3px;
+`
 
 const StHeadImg = styled.img`
   width: 50px;
@@ -284,10 +318,32 @@ const StChatRoomContainer = styled.div`
   cursor: pointer;
   display: flex;
   width: 100%;
-  height: 80px;
+  /* height: 80px; */
   border-bottom: 1px solid rgba(245,245,245,1);
   align-items: center;
   justify-content: center;
+  /* border: 1px solid blue; */
+  /* margin: 10px 0; */
+  padding: 5px 0;
+`
+
+const StListEdit = styled.div`
+    width: 90%;
+    height: 32px;
+    /* border: 1px solid #f7931e; */
+    border-radius: 8px;
+    /* color: #f7931e; */
+    color: ${({ isOnCheck }) => (isOnCheck ? '#03C75A' : '#f7931e')};
+    border: 1px solid ${({ isOnCheck }) => (isOnCheck ? '#03C75A' : '#f7931e')};
+    position: absolute;
+    /* position: fixed; */
+    bottom: 10%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 600;
 `
 
 const StChatWidthWrap = styled.div`
@@ -296,12 +352,13 @@ const StChatWidthWrap = styled.div`
     align-items: center;
     margin-bottom: 10px;
     padding-right: 5px;
+    /* border: 1px solid red; */
 `
 
 const StCloseIcon = styled.div`
     width: 18px;
     height: 18px;
-    background-image: url(${xgray});
+    background-image: url(${xorange});
     background-size: 100% 100%;
     background-position: center;
     cursor: pointer;
@@ -310,17 +367,18 @@ const StCloseIcon = styled.div`
 
 const StSecondChatWithWrap = styled.div`
     width: 100%;
+    height: 100%;
     display: flex;
   flex-direction: column;
   /* border: 1px solid red; */
 `
 const StFirstContainer = styled.div`
-  width: 100%;
+  width: 97%;
   height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 10px;
+  padding-left: 10px;
 `;
 
 const StFirstWrap = styled.div`
@@ -331,7 +389,7 @@ const StFirstWrap = styled.div`
 
 const StUserName = styled.div`
   font-weight: 600;
-  font-size: 18px;
+  font-size: 17px;
 `;
 const StAdmission = styled.div`
   font-weight: 500;
@@ -340,7 +398,7 @@ const StAdmission = styled.div`
 `;
 
 const StSecondWrap = styled.div`
-  display: flex;
+  /* display: flex; */
 `;
 const StTimeCheck = styled.div`
   font-weight: 400;
@@ -349,18 +407,39 @@ const StTimeCheck = styled.div`
 `;
 
 const StSecondContainer = styled.div`
-    width: 100%;
-  padding: 0 10px;
+    width: 97%;
+  /* padding: 0 10px; */
+  padding-left: 10px;
   display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  /* border: 1px solid blue; */
+  margin-top: 2px;
 `;
+
 const StUnreadCount = styled.div`
     /* border: 1px solid red; */
     display : flex;
     justify-content: flex-end;
-` 
+    /* align-items: flex-end; */
+    /* border: 1px solid blue; */
+`
+
+const StUnreadCountWrap = styled.div`
+    background-color: #f7931e;
+    padding: 4px 7px;
+    border-radius: 8px;
+    font-size: 11px;
+    color: white;
+    /* height: 40%; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
 const StChatContent = styled.div`
   font-weight: 400;
   font-size: 14px;
+  /* padding-top: 3px; */
 `;
 
 const StBottomTapWrap = styled.div`
@@ -396,6 +475,7 @@ const StChatTap = styled.div`
       display: flex;
   flex-direction: column;
   align-items: center;
+  /* border: 1px solid red; */
   cursor: pointer;
   color: #f7931e;
 `
@@ -410,6 +490,31 @@ const StBottomImg = styled.img`
     width: 45%;
     margin: 2px;
 `
+
+const StIconWrap = styled.div`
+  display: flex;
+  /* border: 1px solid red; */
+  justify-content: center;
+  /* align-items: start; */
+  position: relative;
+`
+
+const StNewDiv = styled.div`
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #f7931e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 12px;
+  position: absolute;
+`;
+const StNewTitle = styled.div`
+  font-size: 10px;
+  font-weight: 600;
+  color: white;
+`;
 const StTapTitle = styled.div`
   font-size: 11px;
   font-weight: 800;

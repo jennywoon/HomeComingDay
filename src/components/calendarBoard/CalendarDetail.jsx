@@ -40,11 +40,12 @@ const CalendarDetail = () => {
   const modalRef = useRef(null);
 
   const { calendars } = useSelector((state) => state.calendars);
-  const calendarfind = calendars.find(
-    (calendar) => calendar.articleId === Number(id)
-  );
-
-  const { calendarJoin } = useSelector((state) => state.calendars);
+  const { calendarfind } = useSelector((state) => state.calendars);
+  // const calendarfind = calendars.find(
+  //   (calendar) => calendar.articleId === Number(id)
+  // );
+  // console.log("calendarfind",calendarfind)
+  // const { calendarJoin } = useSelector((state) => state.calendars);
   const { joinPeopleList } = useSelector((state) => state.calendars.calendarJoin);
   const joinPeopleLists = useSelector((state) => state.calendars.joinPeopleList);
   const data = useSelector((state) => state.mypages.mypages)
@@ -112,7 +113,7 @@ const CalendarDetail = () => {
     };
     await dispatch(__postCalendarComment(newcomment));
     setComment('');
-    await dispatch(__getCalendar());
+    await dispatch(__getDetailCalendar(id));
     await dispatch(__getNoticeCount());
   };
 
@@ -147,7 +148,7 @@ const CalendarDetail = () => {
     };
     const response = await dispatch(__postCalendarHeart(newHeart));
     // console.log(response.payload);
-    dispatch(__getCalendar());
+    dispatch(__getDetailCalendar(id));
   };
 
   // 채팅 생성
@@ -314,14 +315,14 @@ const CalendarDetail = () => {
 
               <StBodyContainer>
                 <StBodyCommentBox>
-                  {calendarfind && calendarfind.commentList.length === 0 ? (
+                  {calendarfind && calendarfind.commentList?.length === 0 ? (
                     <StBodyComment>
                       작성한 댓글이 없습니다 <br></br> 첫번째 댓글을 남겨보세요{' '}
                     </StBodyComment>
                   ) : (
                     <>
                       {calendarfind &&
-                        calendarfind.commentList.map((comment) => (
+                        calendarfind.commentList?.map((comment) => (
                           <CalendarDetailComment
                             key={comment.commentId}
                             comment={comment}

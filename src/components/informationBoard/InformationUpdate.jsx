@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import {IoIosArrowBack} from 'react-icons/io'
 import Button from '../elements/Button';
 import { useSelector } from 'react-redux';
-import { __getInformation, __updateInformation } from '../../redux/modules/InformationSlice';
+import { __getDetailInformation, __getInformation, __updateInformation } from '../../redux/modules/InformationSlice';
 
 
 const InformationUpdate = () => {
@@ -13,7 +13,8 @@ const InformationUpdate = () => {
     const navigate = useNavigate();
     const {id} = useParams();
     const {informations} = useSelector((state) => state.informations)
-    const informationsfind = informations.find((info)=> info.articleId === Number(id))
+    const {informationsfind} = useSelector((state) => state.informations)
+    // const informationsfind = informations.find((info)=> info.articleId === Number(id))
 
     const [EditTitle, setEditTitle] = useState(informationsfind&&informationsfind.title)
     const [EditContent, setEditContent] = useState(informationsfind&&informationsfind.content)
@@ -44,7 +45,7 @@ const InformationUpdate = () => {
         }
       },[EditTitle, EditContent])
 
-    const onUpdateHandler = (e) => {
+    const onUpdateHandler = async(e) => {
         e.preventDefault();
         setIsOnActive(false);
          const editinformationsfind = {
@@ -54,7 +55,8 @@ const InformationUpdate = () => {
             content: EditContent,
             imageList : EditImg
         }
-        dispatch(__updateInformation(editinformationsfind))
+       await dispatch(__updateInformation(editinformationsfind))
+       await dispatch(__getDetailInformation(id));
         navigate(`/informationdetail/${id}`)
     } 
 
@@ -172,8 +174,8 @@ const StFormFooter = styled.div`
 const StFooterBtn = styled.div`
     width: 100%;
     height: 100%;
-    position: absolute;
-    bottom: 5%;
+    position: sticky;
+    bottom:0;
     display: flex;
     align-items: flex-end;
     justify-content: center;

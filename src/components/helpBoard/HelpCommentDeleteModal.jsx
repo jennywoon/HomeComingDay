@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { __getHelp, __deleteHelpComment } from '../../redux/modules/HelpSlice';
+import { __getHelp, __deleteHelpComment ,__getDetailHelp} from '../../redux/modules/HelpSlice';
 import exclamation from "../../assets/exclamation.png"
 
 const HelpCommentDeleteModal = ({ setModalOpen, comment }) => {
@@ -13,7 +13,8 @@ const HelpCommentDeleteModal = ({ setModalOpen, comment }) => {
 
   const { helps } = useSelector((state) => state.helps);
   const { id } = useParams();
-  const helpsfind = helps.find((help) => help.articleId === Number(id));
+  // const helpsfind = helps.find((help) => help.articleId === Number(id));
+  const { helpsfind } = useSelector((state) => state.helps);
   const { commentId } = helpsfind.commentList.find(
     (commentmap) => commentmap.commentId === comment.commentId
   );
@@ -24,7 +25,7 @@ const HelpCommentDeleteModal = ({ setModalOpen, comment }) => {
       commentId: commentId,
     };
     await dispatch(__deleteHelpComment(commentDelete));
-    await dispatch(__getHelp());
+    await dispatch(__getDetailHelp(id));
   };
   
   return (

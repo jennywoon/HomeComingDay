@@ -20,7 +20,7 @@ const PwaApp = () => {
   return (
     <>
       {supported() && !isInstalled() && (
-        <StPwaButton click={pwaClick}>어플 다운받기</StPwaButton>
+        <StPwaButton type='button' click={pwaClick}>어플 다운받기</StPwaButton>
       )}
     </>
   );

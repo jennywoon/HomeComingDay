@@ -38,12 +38,13 @@ const HelpDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { helps } = useSelector((state) => state.helps);
+  const { helpsfind } = useSelector((state) => state.helps);
   const { id } = useParams();
   const [show, setShow] = useState(false);
   const [showChaet, setShowChaet] = useState(false);
   const [comment, setComment] = useState('');
 
-  const helpsfind = helps.find((help) => help.articleId === Number(id));
+  // const helpsfind = helps.find((help) => help.articleId === Number(id));
   // const helpsCommentList = helpsfind.commentList.find((helpfind)=>helpfind)
   // const helpsChildCommentList = helpsCommentList.childCommentList.find((helpsComment)=>helpsComment)
   const data = useSelector((state) => state.mypages.mypages);
@@ -104,7 +105,7 @@ const HelpDetail = () => {
     };
     await dispatch(__postHelpComment(newcomment));
     setComment('');
-    await dispatch(__getHelp());
+    await dispatch(__getDetailHelp(id))
     await dispatch(__getNoticeCount());
   };
 
@@ -142,7 +143,7 @@ const HelpDetail = () => {
       articleId: id,
     };
     const response = await dispatch(__postHelpHeart(newHeart));
-    dispatch(__getHelp());
+    dispatch(__getDetailHelp(id));
   };
 
   // 채팅 생성
@@ -215,7 +216,7 @@ const HelpDetail = () => {
               <StBodyContent>
                 <StContentTitle>{helpsfind && helpsfind.title}</StContentTitle>
                 <StContentBody>{helpsfind && helpsfind.content}</StContentBody>
-                {helpsfind && helpsfind.imageList.length > 0 ? (
+                {helpsfind && helpsfind.imageList?.length !== 0 ? (
                   <StContentImgBox>
                     <Swiper
                       {...swiperParams}
@@ -224,7 +225,7 @@ const HelpDetail = () => {
                       slidesPerView={1}
                     >
                       {helpsfind &&
-                        helpsfind.imageList.map((image) => {
+                        helpsfind.imageList?.map((image) => {
                           return (
                             <SwiperSlide key={image.imageId}>
                               <StContentImg src={image.imgUrl}></StContentImg>
@@ -270,14 +271,14 @@ const HelpDetail = () => {
 
               <StBodyContainer>
                 <StBodyCommentBox>
-                  {helpsfind && helpsfind.commentList.length === 0 ? (
+                  {helpsfind && helpsfind.commentList?.length === 0 ? (
                     <StBodyComment>
                       작성한 댓글이 없습니다 <br></br> 첫번째 댓글을 남겨보세요{' '}
                     </StBodyComment>
                   ) : (
                     <>
                       {helpsfind &&
-                        helpsfind.commentList.map((comment) => (
+                        helpsfind.commentList?.map((comment) => (
                           <HelpDetailComment
                             key={comment.commentId}
                             comment={comment}

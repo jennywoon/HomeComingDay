@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from "react-redux";
 import styled from 'styled-components';
 import FreeTalk from './FreeTalk';
 import { useNavigate } from 'react-router-dom';
@@ -10,13 +11,14 @@ import Myimg from '../../assets/My.png';
 
 const FreeTalkHome = () => {
   const navigate = useNavigate();
+  const chatList = useSelector((state) => state.chat.chatList);
 
   return (
     <StHomeContainer>
       <FreeTalk />
       <StIconWrap>
         <StIconbox onClick={() => navigate('/form')}>
-          <TiPencil color='white' size= "32" />
+          <TiPencil color='white' size="32" />
         </StIconbox>
       </StIconWrap>
       <StSecondWrap>
@@ -48,10 +50,17 @@ const FreeTalkHome = () => {
               navigate('/chat');
             }}
           >
-            <StImg
-              src={Chatimg}
-              alt='채팅'
-            />
+            <StChatIconWrap>
+              <StImg
+                src={Chatimg}
+                alt='채팅'
+              />
+              {chatList.totalCnt > 0 ? (
+                <StNewDiv>
+                  <StNewTitle>N</StNewTitle>
+                </StNewDiv>
+              ) : null}
+            </StChatIconWrap>
             <StTapTitle>채팅</StTapTitle>
           </StTap>
           <StLastTap
@@ -108,6 +117,31 @@ const StTap = styled.div`
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+`;
+
+const StChatIconWrap = styled.div`
+  display: flex;
+  /* border: 1px solid red; */
+  justify-content: center;
+  /* align-items: start; */
+  position: relative;
+`
+
+const StNewDiv = styled.div`
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #f7931e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 12px;
+  position: absolute;
+`;
+const StNewTitle = styled.div`
+  font-size: 10px;
+  font-weight: 600;
+  color: white;
 `;
 
 const StLastTap = styled.div`

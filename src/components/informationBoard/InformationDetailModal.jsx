@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteInformation ,__getInformation} from '../../redux/modules/InformationSlice';
+import { __deleteInformation ,__getDetailInformation,__getInformation} from '../../redux/modules/InformationSlice';
 import exclamation from "../../assets/exclamation.png"
 
 const InformationDetailModal = ({ setModalOpen }) => {
@@ -16,7 +16,8 @@ const InformationDetailModal = ({ setModalOpen }) => {
   const navigate = useNavigate();
   const { informations } = useSelector((state) => state.informations)
   const { id } = useParams();
-  const informationsfind = informations.find((info) => info.articleId === Number(id))
+  const { informationsfind } = useSelector((state) => state.informations)
+  // const informationsfind = informations.find((info) => info.articleId === Number(id))
 
 
   return (
@@ -32,7 +33,7 @@ const InformationDetailModal = ({ setModalOpen }) => {
               <StBottomTitle
               onClick={() => {
                 dispatch(__deleteInformation(informationsfind.articleId))
-                dispatch(__getInformation())
+                dispatch(__getDetailInformation(id))
                 navigate("/information")
               }}
               >삭제하기</StBottomTitle>
