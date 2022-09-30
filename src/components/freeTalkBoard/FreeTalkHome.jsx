@@ -164,7 +164,7 @@ const StHomeTitle = styled.div`
 const StTapTitle = styled.div`
   font-size: 11px;
   font-weight: 400;
-  color: #8e8e8e;
+  color: #696969;
 `;
 
 const StIconWrap = styled.div`

@@ -127,8 +127,10 @@ const StChatIconWrap = styled.div`
 `
 
 const StImg = styled.img`
-  width: 45%;
-  height: 45%;
+  /* width: 45%;
+  height: */
+  width: 25px;
+  height: 25px;
   margin: 2px;
 `;
 
