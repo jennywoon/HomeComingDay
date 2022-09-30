@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const SearchHome = () => {
     const navigate = useNavigate();
-    const chatList = useSelector((state) => state.chat.chatList);
+    const chatList = useSelector((state) => state.chat.chatList[0]);
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -41,7 +41,7 @@ const SearchHome = () => {
                     <Tap onClick={() => { navigate("/chat") }}>
                         <StIconWrap>
                             <img src={Chatimg} alt='채팅' style={{ width: '45%', margin: '2px' }} />
-                            {chatList.totalCnt > 0 ? (
+                            {chatList && chatList.totalCnt > 0 ? (
                                 <StNewDiv>
                                     <StNewTitle>N</StNewTitle>
                                 </StNewDiv>
