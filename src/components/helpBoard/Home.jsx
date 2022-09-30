@@ -142,7 +142,7 @@ const StNewDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  right: 12px;
+  right: 1px;
   position: absolute;
 `;
 const StNewTitle = styled.div`
