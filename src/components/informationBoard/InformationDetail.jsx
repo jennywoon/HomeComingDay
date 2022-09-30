@@ -454,6 +454,8 @@ const StBodytxt = styled.div`
 
 const StTxtname = styled.h3`
   cursor: pointer;
+  font-weight: 600;
+font-size: 16px;
 `;
 const StTxtstudent = styled.p`
   font-size: 12px;
@@ -492,10 +494,11 @@ const StBodyContent = styled.div`
   flex-direction: column;
   justify-content: space-between;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 14px;
 `;
 const StContentTitle = styled.h3`
   font-weight: 600;
-  font-size: 18px;
+  font-size: 16px;
   width: 100%;
 `;
 const StContentBody = styled.p`
@@ -642,6 +645,7 @@ const StBodyComment = styled.div`
   height: 100px;
   width: 100%;
   text-align: center;
+  font-size: 14px;
 `;
 const StCount = styled.div`
   display: flex;
