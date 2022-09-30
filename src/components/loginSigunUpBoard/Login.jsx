@@ -159,9 +159,9 @@ const Login = () => {
             >
               <StButtonTitle>로그인</StButtonTitle>
             </Button>
-            <StNaverContainer>
+            {/* <StNaverContainer>
               <NaverLogin />
-            </StNaverContainer>
+            </StNaverContainer> */}
             <StGoToSignup
               type='button'
               onClick={() => {

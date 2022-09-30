@@ -190,6 +190,7 @@ const StCommentImg = styled.img`
 const StCommentReplytxt = styled.div`
   font-size: 13px;
   width: 100%;
+  padding-left:5px;
 `;
 
 const StReplyCommentInput = styled.textarea`
@@ -273,11 +274,12 @@ const StReviseBox = styled.div`
 `;
 
 const StReplyUserName = styled.div`
-  font-weight: bold;
+  /* font-weight: bold; */
   display: flex;
   align-items: center;
   font-size: 14px;
   width: 100%;
+  font-weight: 600;
 `;
 
 const StUserInfo = styled.div`
@@ -290,6 +292,8 @@ const StReplyContent = styled.div`
   font-size: 14px;
   width: 100%;
   word-break: break-all;
+  margin: 5px 0;
+  font-weight: 400;
 `;
 
 const StReplyTime = styled.div`

@@ -3,10 +3,10 @@ import styled from "styled-components";
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { deleteChatList, getChatList, deleteUnreadCount } from '../../redux/modules/ChatSlice';
+import { deleteChatList, getChatList } from '../../redux/modules/ChatSlice';
 import Loading from '../test/Loading';
 import { chatApi } from './ChatApi';
-import _, { flatMap } from "lodash";
+import _ from "lodash";
 import Homeimg from '../../assets/Home.png';
 import Searchimg from '../../assets/Search.png';
 import ChatColorimg from '../../assets/ChatColor.png';
@@ -16,7 +16,6 @@ import ChatDeleteModal from './ChatDeleteModal';
 import nonedataballoon from "../../assets/nonedataballoon.png"
 import xorange from "../../assets/xorange.png"
 import Header from '../Header';
-import bell from "../../assets/Bell.png"
 
 const ChatList = () => {
 
@@ -37,13 +36,12 @@ const ChatList = () => {
         }
     }, []);
 
-    const chatList = useSelector((state) => state.chat.chatList);
-    const isLoading = useSelector((state) => state.chat.isLoading);
-    const unreadCount = useSelector((state) => state.chat.unreadCount);
-    const hasNext = useSelector((state) => state.chat.hasNext);
-    const page = useSelector((state) => state.chat.page);
+    // const chatList = useSelector((state) => state.chat.chatList);
+    // const isLoading = useSelector((state) => state.chat.isLoading);
+    // const hasNext = useSelector((state) => state.chat.hasNext);
+    // const page = useSelector((state) => state.chat.page);
+    const { chatList, isLoading, hasNext, page } = useSelector((state) => state.chat);
     console.log(chatList);
-    console.log(chatList.unreadCount)
 
     const inicialRoom = {
         roomname: null,
@@ -98,11 +96,6 @@ const ChatList = () => {
         }
     }, 300);
 
-    //카테고리바에 별 표시 삭제
-    useEffect(() => {
-        dispatch(deleteUnreadCount());
-    }, [])
-
     // 채팅방 리스트 조회  api
     useEffect(() => {
         if (page === 1) {
@@ -120,14 +113,15 @@ const ChatList = () => {
             <Header />
             <StContainer>
                 <StChatContainer>
+                    {/* {chatList.chatRoomResponseDto.length === 0 && */}
                     {chatList.length === 0 &&
                         <StNoneData>
                             <StNoneDataImg />
                             <p>참여 중인 채팅이 없습니다</p>
                         </StNoneData>}
                     <StChatWrap ref={InfinityScrollRef} onScroll={InfinityScroll}>
-                        {chatList.chatRoomResponseDto.length > 0 &&
-                            chatList.chatRoomResponseDto.map((chat, i) => {
+                        {chatList.length > 0 &&
+                            chatList.map((chat, i) => {
                                 return (
                                     <StChatRoomContainer
                                         roomName={chat.roomName}
@@ -225,7 +219,7 @@ const ChatList = () => {
                                     src={ChatColorimg}
                                     alt='채팅'
                                 />
-                                {chatList.totalCnt > 0 ? (
+                                {chatList[0] && chatList[0].totalCnt > 0 ? (
                                     <StNewDiv>
                                         <StNewTitle>N</StNewTitle>
                                     </StNewDiv>
@@ -272,7 +266,7 @@ const StChatContainer = styled.div`
 `
 
 const StImg = styled.div`
-    padding: 0 3px 0 3px;
+    padding: 0 3px 0 5px;
 `
 
 const StHeadImg = styled.img`
@@ -356,8 +350,8 @@ const StChatWidthWrap = styled.div`
 `
 
 const StCloseIcon = styled.div`
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     background-image: url(${xorange});
     background-size: 100% 100%;
     background-position: center;

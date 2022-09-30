@@ -11,7 +11,7 @@ import NoticeList from './NoticeList';
 
 const NoticeHome = () => {
   const navigate = useNavigate();
-  const chatList = useSelector((state) => state.chat.chatList);
+  const chatList = useSelector((state) => state.chat.chatList[0]);
 
   return (
     <StHomeContainer>
@@ -68,10 +68,10 @@ const NoticeHome = () => {
                 alt='채팅'
                 style={{ width: '45%', margin: '2px' }}
               />
-              {chatList.totalCnt > 0 ? (
+              {chatList && chatList.totalCnt > 0 ? (
                 <StNewDiv>
-                  <StNewTitle>N</StNewTitle>
-                </StNewDiv>
+                <StNewTitle>N</StNewTitle>
+              </StNewDiv>
               ) : null}
             </StIconWrap>
             <StTapTitle style={{ color: '#8E8E8E' }}>채팅</StTapTitle>

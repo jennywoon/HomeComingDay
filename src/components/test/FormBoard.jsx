@@ -22,6 +22,7 @@ import moment from 'moment';
 import Calendar from 'react-calendar';
 import '../calendarBoard/CalendarModal.css';
 import { useDropzone } from 'react-dropzone';
+import imageCompression from 'browser-image-compression';
 
 
 const Form2 = () => {
@@ -67,6 +68,28 @@ const Form2 = () => {
     if(joinNumber < 50)
     setJoinNumber(joinNumber +1)
   }
+
+  // 이미지 압축하기
+  // const handleImageUpload = async(e) =>{
+  //   const imageFile = e.target.files[0];
+  //   const options = {
+  //     maxSizeMB: 1, // 허용하는 최대 사이즈 지정
+  //     maxWidthOrHeight: 400, // 허용하는 최대 width, height 값 지정
+  //     useWebWorker: true // webworker 사용 여부
+  //   }
+  //   try {
+  //     const compressedFile = await imageCompression(imageFile, options);
+  //     setFile(compressedFile);
+      
+  //     // resize된 이미지의 url을 받아 fileUrl에 저장
+  //     const promise = imageCompression.getDataUrlFromFile(compressedFile);
+  //     promise.then(result => {
+  //       setFileUrl(result);
+  //     })
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
   //이미지 Dropzone -추가
   const [files, setFiles] = useState([]);
@@ -242,6 +265,13 @@ const Form2 = () => {
       return alert('내용을 입력해주세요');
     }
 
+    const options = {
+      maxSizeMB: 1, // 허용하는 최대 사이즈 지정
+      maxWidthOrHeight: 400, // 허용하는 최대 width, height 값 지정
+      useWebWorker: true // webworker 사용 여부
+    }
+
+
     const now = new Date()
     const defaultValue = moment(now.toString()).format('YYYY년 MM월 DD일 dddd')
 
@@ -251,6 +281,10 @@ const Form2 = () => {
         title: title,
         content: content,
       };
+    
+      
+
+
       files.map((image) => {
         formdata.append('files', image);
       });
