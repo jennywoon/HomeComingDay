@@ -20,14 +20,14 @@ const MyPageHome = () => {
   const chatList = useSelector((state) => state.chat.chatList[0]);
   const { myarticles, totalCount } = useSelector((state) => state.mypages);
   const { error } = useSelector((state) => state.mypages.myarticles)
-  console.log("myarticles", myarticles, totalCount);
+  // console.log("myarticles", myarticles, totalCount);
   // console.log(error);
 
   useEffect(()=>{
     if(totalCount === 0 ) {
       dispatch(__getMyArticle())
     }
-  })
+  }, [])
 
   //무한 스크롤
 
@@ -39,7 +39,7 @@ const MyPageHome = () => {
 
   const checkIntersect = useCallback(([entry], observer) => {
     if (entry.isIntersecting && !isLoaded) {
-      console.log("page", page);
+      // console.log("page", page);
       dispatch(__getMyArticle(page));
       observer.unobserve(entry.target);
       setPage((prev) => prev + 1);
@@ -48,9 +48,9 @@ const MyPageHome = () => {
 
   useEffect(() => {
     let observer;
-    console.log("length", myarticles.length);
-    console.log("totalCount", totalCount);
-    console.log(myarticles.length !== totalCount)
+    // console.log("length", myarticles.length);
+    // console.log("totalCount", totalCount);
+    // console.log(myarticles.length !== totalCount)
     if (targetRef && myarticles.length !== totalCount) {
       observer = new IntersectionObserver(checkIntersect, {
         threshold: 0.5,
@@ -178,13 +178,11 @@ const StHomeContainer = styled.div`
 
 const StMyPageTop = styled.div`
   width: 100%;
-  /* height: 200px; */
   height: 25%;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #f7931e;
-  /* border: 1px solid red; */
 `;
 
 const StMyPageBottom = styled.div`
@@ -192,22 +190,21 @@ const StMyPageBottom = styled.div`
   height: 75%;
   display: flex;
   justify-content: center;
-  /* border: 1px solid blue; */
 `;
+
 const StArticleWrap = styled.div`
   height: 85%;
-  /* height: 100%; */
-  /* border: 1px solid green; */
   overflow-y: scroll;
   ::-webkit-scrollbar {
     width: 0px;
-    /* background-color: red; */
   }
 `;
+
 const StBottomWrap = styled.div`
   width: 90%;
   height: 100%;
 `;
+
 const StTitleWrap = styled.div`
   display: flex;
   align-items: center;
@@ -217,6 +214,7 @@ const StTitleWrap = styled.div`
   gap: 10px;
   justify-content: space-between;
 `;
+
 const StNoneData = styled.div`
   width: 100%;
   height: 100%;
@@ -237,10 +235,12 @@ const StNoneDataImg = styled.div`
   background-size: 100% 100%;
   margin-bottom: 10px;
 `;
+
 const StMyPosTitletWrap = styled.div`
   display: flex;
   align-items: center;
 `
+
 const StMyPostTitle = styled.div`
   color: #bebebe;
 `;
@@ -258,6 +258,7 @@ const StRefresh = styled.div`
   background-size: 100% 100%;
   cursor: pointer;
 `
+
 const StLankWrap = styled.div`
   border: 1px solid #b3b3b3;
   border-radius: 20px;
@@ -280,6 +281,7 @@ const SecondWrap = styled.div`
   bottom: 0;
   box-shadow: 0px 2px 13px rgba(0, 0, 0, 0.2);
 `;
+
 const StBottom = styled.div`
   height: 60px;
   display: flex;
@@ -303,9 +305,7 @@ const StTap = styled.div`
 
 const StIconWrap = styled.div`
   display: flex;
-  /* border: 1px solid red; */
   justify-content: center;
-  /* align-items: start; */
   position: relative;
 `
 
@@ -317,9 +317,10 @@ const StNewDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  right: 12px;
+  right: 1px;
   position: absolute;
 `;
+
 const StNewTitle = styled.div`
   font-size: 10px;
   font-weight: 600;
@@ -334,13 +335,15 @@ const StLastTap = styled.div`
   padding-right: 20px;
 `
 const StImg = styled.img`
-  width: 45%;
+  width: 25px;
+  height: 25px;
   margin: 2px;
 `
+
 const StTapTitle = styled.div`
   font-size: 11px;
   font-weight: 400;
-  color: #8e8e8e;
+  color: #696969;
 `;
 
 const StLastTapTitle = styled.div`
