@@ -17,8 +17,7 @@ export const __getNotice = createAsyncThunk("getNotice", async(payload, thunkAPI
       headers: {
         Authorization: `Bearer ${getCookie("accessToken")}`,
         'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache',
-        Connection: 'keep-alive',
+        'Cache-Control': 'no-cache'
       }
     });
       // console.log(data)
@@ -96,7 +95,6 @@ export const __deleteNotice = createAsyncThunk("deleteNotice", async (payload, t
       headers: {
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache',
-        Connection: 'keep-alive',
         Authorization: `Bearer ${getCookie("accessToken")}`,
       },
     });
