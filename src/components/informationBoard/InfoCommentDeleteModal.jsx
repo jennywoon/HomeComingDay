@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteInfoComment, __getInformation } from '../../redux/modules/InformationSlice';
+import { __deleteInfoComment, __getDetailInformation, __getInformation } from '../../redux/modules/InformationSlice';
 import exclamation from "../../assets/exclamation.png"
 
 const InfoCommentDeleteModal = ({ setModalOpen, comment, setShowComment}) => {
@@ -14,7 +14,8 @@ const InfoCommentDeleteModal = ({ setModalOpen, comment, setShowComment}) => {
 
   const { informations } = useSelector((state) => state.informations)
   const { id } = useParams();
-  const informationsfind = informations.find((info) => info.articleId === Number(id))
+  const { informationsfind } = useSelector((state) => state.informations)
+  // const informationsfind = informations.find((info) => info.articleId === Number(id))
   const { commentId } = informationsfind.commentList.find((commentmap) => commentmap.commentId === comment.commentId)
 
     const onClickDelete = async () => {
@@ -23,7 +24,7 @@ const InfoCommentDeleteModal = ({ setModalOpen, comment, setShowComment}) => {
             commentId: commentId
         }
        await dispatch(__deleteInfoComment(commentDelete))
-       await dispatch(__getInformation())
+       await dispatch(__getDetailInformation(id))
     }
   return (
     <StContainer>

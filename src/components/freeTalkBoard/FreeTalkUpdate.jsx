@@ -5,14 +5,15 @@ import { useDispatch } from 'react-redux';
 import {IoIosArrowBack} from 'react-icons/io'
 import Button from '../elements/Button';
 import { useSelector } from 'react-redux';
-import { __getFreeTalk, __updateFreeTalk } from '../../redux/modules/FreeTalkSlice';
+import { __getDetailFreeTalk, __getFreeTalk, __updateFreeTalk } from '../../redux/modules/FreeTalkSlice';
 
 const FreeTalkUpdate = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {id} = useParams();
     const {freetalks} = useSelector((state) => state.freetalks)
-    const freetalksfind = freetalks.find((freetalk)=> freetalk.articleId === Number(id))
+    const {freetalksfind} = useSelector((state) => state.freetalks)
+    // const freetalksfind = freetalks.find((freetalk)=> freetalk.articleId === Number(id))
 
     // const [updateHelp, setUpdateHelp] = useState({
     //     title: "",
@@ -75,7 +76,7 @@ const FreeTalkUpdate = () => {
             imageList : EditImg
         }
         await dispatch(__updateFreeTalk(editfreetalksfind))
-        await dispatch(__getFreeTalk());
+        await dispatch(__getDetailFreeTalk(id));
         navigate(`/freetalkdetail/${id}`)
     } 
 

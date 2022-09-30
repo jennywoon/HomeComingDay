@@ -1,13 +1,9 @@
 import React, { useEffect ,useRef} from 'react';
 import styled from 'styled-components';
-import { AiOutlineMenu } from 'react-icons/ai'
-import Img from "../../assets/naverIcon.png"
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { __deleteCalendarComment, __updateCalendarComment, __getCalendar ,__postCalendarReplyComment} from '../../redux/modules/CalendarSlice';
-import Input from "../elements/Input";
+import { __deleteCalendarComment, __updateCalendarComment, __getCalendar ,__postCalendarReplyComment, __getDetailCalendar} from '../../redux/modules/CalendarSlice';
 import { useParams } from 'react-router-dom';
-import { BiDotsVerticalRounded } from "react-icons/bi";
 import { GrUploadOption } from "react-icons/gr";
 import CalendarCommentDeleteModal from './CalendarCommentDeleteModal';
 import CalendarDetailReplyComment from './CalendarDetailReplyComment';
@@ -20,7 +16,7 @@ const CalendarDetailComment = ({ comment, modalRef, calendarfind ,data}) => {
     const { commentId } = calendarfind.commentList.find((commentmap) => commentmap.commentId === comment.commentId)
     const {childCommentList} = calendarfind.commentList.find((commentmap)=> commentmap)
     const {username} = calendarfind.commentList.find((commentmap)=>commentmap.username === comment.username)
-    console.log("commentId", commentId)
+    // console.log("commentId", commentId)
 
 
     const [showComment, setShowComment] = useState(false)
@@ -84,7 +80,7 @@ const CalendarDetailComment = ({ comment, modalRef, calendarfind ,data}) => {
             content: editComment
         }
         await dispatch(__updateCalendarComment(editcomment))
-        await dispatch(__getCalendar());
+        await dispatch(__getDetailCalendar(id));
         setIsEdit(!isEdit)
     }
     //대댓글 post
@@ -98,7 +94,7 @@ const CalendarDetailComment = ({ comment, modalRef, calendarfind ,data}) => {
         await dispatch(__postCalendarReplyComment(replyComments))
         setReplyComment("")
         setShowReplyComment(!showReplyComment)
-        await dispatch(__getCalendar())
+        await dispatch(__getDetailCalendar(id))
         
         
     }
@@ -213,7 +209,8 @@ const StCommentImg = styled.img`
 `
 const StReplyCommentInput = styled.textarea`
     width:100%;
-    height:28px;
+    height: 25px;
+  line-height: 25px;
     border-radius: 30px;
     border:1px solid #D9D9D9;
     background-color: #fff;

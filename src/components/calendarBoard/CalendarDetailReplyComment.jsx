@@ -6,7 +6,7 @@ import Input from "../elements/Input";
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { GrUploadOption } from "react-icons/gr";
-import { __getCalendar ,__deleteCalendarReplyComment, __updateCalendarReplyComment} from '../../redux/modules/CalendarSlice';
+import { __getCalendar ,__deleteCalendarReplyComment, __updateCalendarReplyComment, __getDetailCalendar} from '../../redux/modules/CalendarSlice';
 import CalendarReplyCommentDeleteModal from './CalendarReplyCommentDeleteModal';
 import dots from "../../assets/dots.png"
 
@@ -77,7 +77,7 @@ const CalendarDetailReplyComment = ({childCommentList,commentId,childComment, id
             childCommentId : replyTargetId
         }
         await dispatch(__deleteCalendarReplyComment(deleteReplyComments))
-        await dispatch(__getCalendar())
+        await dispatch(__getDetailCalendar(id))
         
     }
 
@@ -90,8 +90,8 @@ const CalendarDetailReplyComment = ({childCommentList,commentId,childComment, id
             content: editReplyComment
         }
         await dispatch(__updateCalendarReplyComment(reviseReplyComments))
-        await dispatch(__getCalendar())
         setReviseReplyComment(!reviseReplyComment)
+        await dispatch(__getDetailCalendar(id))
     }
 
     return (
@@ -157,7 +157,8 @@ const StCommentReplytxt = styled.div`
 `
 const StReplyCommentInput = styled.textarea`
     width:100%;
-    height:28px;
+    height: 25px;
+  line-height: 25px;
     border-radius: 30px;
     border:1px solid #D9D9D9;
     background-color: #fff;

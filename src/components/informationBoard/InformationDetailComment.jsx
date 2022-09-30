@@ -61,7 +61,7 @@ const InformationComment = ({ comment, informationsfind, modalRef ,data}) => {
             content: editComment
         }
         await dispatch(__updateInfoComment(editcomment))
-        await dispatch(__getInformation());
+        await dispatch(__getDetailInformation(id));
         setIsEdit(!isEdit)
     }
 
@@ -94,7 +94,7 @@ const InformationComment = ({ comment, informationsfind, modalRef ,data}) => {
         await dispatch(__postInfoReplyComment(replyComments));
         setReplyComment("");
         setShowReplyComment(!showReplyComment)
-        await dispatch(__getInformation());
+        await dispatch(__getDetailInformation(id));
     }
 
     return (
@@ -202,16 +202,17 @@ const StCommentImg = styled.img`
     border-radius: 50%;
 `
 const StReplyCommentInput = styled.textarea`
-    width:100%;
-    height:24px;
-    line-height: 24px;
-    border-radius: 30px;
-    border:1px solid #D9D9D9;
-    background-color: #fff;
-    margin-left:5px;
-    outline:none;
-    resize:none;
-    overflow-y: hidden;
+     width: 100%;
+  height: 25px;
+  line-height: 25px;
+  border-radius: 30px;
+  border: 1px solid #d9d9d9;
+  background-color: #fff;
+  margin-left: 5px;
+  padding: 2px 30px 0px 8px;
+  outline: none;
+  resize: none;
+  overflow-y: hidden;
 `
 const StUploadBtn = styled(GrUploadOption)`
     position:absolute;

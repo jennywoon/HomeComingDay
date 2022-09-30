@@ -39,7 +39,7 @@ const FreeTalkDetail = () => {
     const modalRef = useRef(null);
     
     // const freetalksfind = freetalks.find((freetalk) => freetalk.articleId === Number(id))
-    console.log("freetalksfind",freetalksfind)
+    // console.log("freetalksfind",freetalksfind)
     // console.log("detailFreeTalks",detailFreeTalkss)
     //모달닫기
     const node = useRef();

@@ -8,10 +8,9 @@ import {
   __getHelp,
   __getDetailHelp,
   __postHelpComment,
-  __postHelpReplyComment,
+  __postHelpReplyComment
 } from '../../redux/modules/HelpSlice';
 import { useParams } from 'react-router-dom';
-import { BiDotsVerticalRounded } from 'react-icons/bi';
 import { GrUploadOption } from 'react-icons/gr';
 import HelpCommentDeleteModal from './HelpCommentDeleteModal';
 import HelpDetailReplyComment from './HelpDetailReplyComment';
@@ -85,7 +84,7 @@ const DetailComment = ({ comment, helpsfind, data }) => {
       content: editComment,
     };
     await dispatch(__updateHelpComment(editcomment));
-    await dispatch(__getHelp());
+    await dispatch(__getDetailHelp(id));
     setIsEdit(!isEdit);
   };
 
@@ -100,7 +99,7 @@ const DetailComment = ({ comment, helpsfind, data }) => {
     await dispatch(__postHelpReplyComment(replyComments));
     setReplyComment('');
     setShowReplyComment(!showReplyComment);
-    await dispatch(__getHelp());
+    await dispatch(__getDetailHelp(id));
   };
 
   //대댓글 토글
@@ -237,7 +236,8 @@ const StCommentImg = styled.img`
 
 const StReplyCommentInput = styled.textarea`
   width: 100%;
-  height: 28px;
+  height: 25px;
+  line-height: 25px;
   border-radius: 30px;
   border: 1px solid #d9d9d9;
   background-color: #fff;

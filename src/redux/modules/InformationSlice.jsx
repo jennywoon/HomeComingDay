@@ -8,6 +8,7 @@ const initialState = {
   infoComments: [],
   infoReplyComments: [],
   informations: [],
+  informationsfind:[],
   informationPopular:[],
   heart: [],
   isLoading: false,
@@ -35,10 +36,10 @@ export const __getInformation = createAsyncThunk(
           Authorization: `Bearer ${getCookie('accessToken')}`,
         },
       });
-      console.log(data.data);
+      // console.log(data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      console.log('error', error);
+      // console.log('error', error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -57,10 +58,10 @@ export const __getDetailInformation = createAsyncThunk(
           // RefreshToken : getCookie('refreshToken')
         },
       });
-      console.log(data);
+      // console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      console.log('error', error);
+      // console.log('error', error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -77,10 +78,10 @@ export const __getPopularInformation = createAsyncThunk("information/getPopularI
         // RefreshToken : getCookie('refreshToken')
       },
     });
-    console.log(data.data)
+    // console.log(data.data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
-      console.log('error', error);
+      // console.log('error', error);
       return thunkAPI.rejectWithValue(error);
   }
 });
@@ -88,9 +89,9 @@ export const __getPopularInformation = createAsyncThunk("information/getPopularI
 export const __postInformation = createAsyncThunk(
   'informations/postInformation',
   async (payload, thunkAPI) => {
-    console.log('payload', payload);
+    // console.log('payload', payload);
     for (var value of payload.values()) {
-      console.log('formdata value', value);
+      // console.log('formdata value', value);
     }
     try {
       const config = {
@@ -106,7 +107,7 @@ export const __postInformation = createAsyncThunk(
         payload,
         config
       );
-      console.log('data', data);
+      // console.log('data', data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -180,8 +181,8 @@ export const __postInfoComment = createAsyncThunk(
         },
         data: payload,
       });
-      console.log('payload', payload);
-      console.log(data);
+      // console.log('payload', payload);
+      // console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -222,10 +223,10 @@ export const __updateInfoComment = createAsyncThunk(
         },
         data: payload,
       });
-      console.log('payload', payload);
+      // console.log('payload', payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
-      console.log(payload);
+      // console.log(payload);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -244,8 +245,8 @@ export const __postInfoReplyComment = createAsyncThunk(
         },
         data: payload,
       });
-      console.log('payload', payload);
-      console.log(data);
+      // console.log('payload', payload);
+      // console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -255,7 +256,6 @@ export const __postInfoReplyComment = createAsyncThunk(
 
 export const __deleteInfoReplyComment = createAsyncThunk("comments/deleteHelpReplyComment", async (payload, thunkAPI) => {
   try {
-    console.log("payload" , payload)
     const data = await axios({
       method: 'delete',
       url: `${BASE_URL}/article/information/${payload.articleId}/comment/${payload.commentId}/${payload.childCommentId}`,
@@ -264,7 +264,7 @@ export const __deleteInfoReplyComment = createAsyncThunk("comments/deleteHelpRep
         Authorization: `Bearer ${getCookie("accessToken")}`,
       },
     });
-    console.log(data)
+    // console.log(data)
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
@@ -273,7 +273,7 @@ export const __deleteInfoReplyComment = createAsyncThunk("comments/deleteHelpRep
 
 export const __updateInfoReplyComment = createAsyncThunk("comments/updateHelpReplyComment", async (payload, thunkAPI) => {
   try {
-    console.log("payload" , payload)
+
     const data = await axios({
       method: 'patch',
       url: `${BASE_URL}/article/information/${payload.articleId}/comment/${payload.commentId}/${payload.childCommentId}`,
@@ -283,7 +283,7 @@ export const __updateInfoReplyComment = createAsyncThunk("comments/updateHelpRep
       },
       data: payload
     });
-    console.log(data)
+    // console.log(data)
     return thunkAPI.fulfillWithValue(payload);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
@@ -304,12 +304,12 @@ export const __postInformationHeart = createAsyncThunk(
         },
         data: payload,
       });
-      console.log(data);
-      console.log('data', data.data);
-      console.log(payload);
+      // console.log(data);
+      // console.log('data', data.data);
+      // console.log(payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -331,6 +331,21 @@ export const InformationSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+
+    [__getDetailInformation.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getDetailInformation.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      // console.log(action.payload)
+      state.informationsfind = action.payload;
+    },
+    [__getDetailInformation.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
+
     [__getPopularInformation.pending]: (state) => {
       state.isLoading = true;
     },
@@ -376,8 +391,8 @@ export const InformationSlice = createSlice({
 
     [__updateInformation.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log('action', action);
-      console.log('action.payload', action.payload);
+      // console.log('action', action);
+      // console.log('action.payload', action.payload);
       state.informations = state.informations.map((info) => {
         if (info.id === action.payload.id) {
           info = action.payload;
@@ -405,7 +420,6 @@ export const InformationSlice = createSlice({
     },
     [__postInfoComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log(action.payload);
       state.infoComments.push(action.payload);
     },
     [__postInfoComment.rejected]: (state, action) => {
@@ -419,7 +433,7 @@ export const InformationSlice = createSlice({
     [__deleteInfoComment.fulfilled]: (state, action) => {
       state.isLoading = false;
       // console.log(state.comment)
-      console.log(action);
+      // console.log(action);
       state.infoComments = state.infoComments.filter(
         (comment) => comment.id !== action.payload
       );
@@ -436,8 +450,8 @@ export const InformationSlice = createSlice({
 
     [__updateInfoComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log('action', action);
-      console.log('comment', state.helpcomments);
+      // console.log('action', action);
+      // console.log('comment', state.helpcomments);
       state.infoComments = state.infoComments.map((comment) => {
         if (comment.id === action.payload.id) {
           comment.comment = action.payload.content;
@@ -456,7 +470,7 @@ export const InformationSlice = createSlice({
     },
     [__postInfoReplyComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log(action.payload);
+      // console.log(action.payload);
       state.infoReplyComments.push(action.payload);
     },
     [__postInfoReplyComment.rejected]: (state, action) => {
@@ -469,7 +483,7 @@ export const InformationSlice = createSlice({
     [__deleteInfoReplyComment.fulfilled]: (state, action) => {
       state.isLoading = false;
       // console.log(state.comment)
-      console.log(action)
+      // console.log(action)
       state.infoReplyComments = state.infoReplyComments.filter(comment => comment.id !== action.payload)
     },
     [__deleteInfoReplyComment.rejected]: (state, action) => {
@@ -482,8 +496,8 @@ export const InformationSlice = createSlice({
 
     [__updateInfoReplyComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log('action', action.payload)
-      console.log('comment', state.childCommentList)
+      // console.log('action', action.payload)
+      // console.log('comment', state.childCommentList)
       state.infoReplyComments = state.infoReplyComments.map((comment) => {
         if (comment.childCommentId === action.payload.childCommentId) {
           comment.content = action.payload.content;
@@ -499,7 +513,7 @@ export const InformationSlice = createSlice({
       state.isLoading = true;
     },
     [__postInformationHeart.fulfilled]: (state, action) => {
-      console.log('__postHeart.fulfilled', action);
+      // console.log('__postHeart.fulfilled', action);
       state.isLoading = false;
       state.heart.unshift(action);
     },
