@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { deleteChatList, getChatList } from '../../redux/modules/ChatSlice';
+import { deleteChatList, getChatList, deleteUnreadCount } from '../../redux/modules/ChatSlice';
 import Loading from '../test/Loading';
 import { chatApi } from './ChatApi';
 import _ from "lodash";
@@ -38,9 +38,11 @@ const ChatList = () => {
 
     const chatList = useSelector((state) => state.chat.chatList);
     const isLoading = useSelector((state) => state.chat.isLoading);
+    const unreadCount = useSelector((state) => state.chat.unreadCount);
     const hasNext = useSelector((state) => state.chat.hasNext);
     const page = useSelector((state) => state.chat.page);
     console.log(chatList);
+    console.log(chatList.unreadCount)
 
     const inicialRoom = {
         roomname: null,
@@ -78,10 +80,10 @@ const ChatList = () => {
         }
     }, 300);
 
-    // 카테고리바에 별 표시 삭제
-    // useEffect(() => {
-    //     dispatch(deleteUnreadCount());
-    // }, [])
+    //카테고리바에 별 표시 삭제
+    useEffect(() => {
+        dispatch(deleteUnreadCount());
+    }, [])
 
     // 채팅방 리스트 조회  api
     useEffect(() => {
@@ -97,117 +99,122 @@ const ChatList = () => {
 
     return (
         <>
-        <Header/>
-        <StContainer>
-            <StChatContainer>
-                {chatList.length === 0 && 
-                    <StNoneData>
-                        <StNoneDataImg />
-                        <p>참여 중인 채팅이 없습니다</p>
-                    </StNoneData>}
-                <StChatWrap ref={InfinityScrollRef} onScroll={InfinityScroll}>
-                    {chatList.length > 0 &&
-                        chatList.map((chat, i) => {
-                            return (
-                                <StChatRoomContainer
-                                    roomName={chat.roomName}
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        navigate(`/chat/${chat.chatRoomUuid}`)
-                                    }}
-                                >
-                                    <StChatWidthWrap>
-                                        <StImg>
-                                            <StHeadImg
-                                                src={chat.otherUserImage}
-                                            />
-                                        </StImg>
-                                        <StSecondChatWithWrap>
-                                            <StFirstContainer>
-                                                <StFirstWrap>
-                                                    <StUserName>{chat.roomName}</StUserName>
-                                                    <StAdmission>{chat.departmentName} · {chat.admission}</StAdmission>
-                                                </StFirstWrap>
-                                                <StSecondWrap>
-                                                    <StTimeCheck>{chat.dayBefore}</StTimeCheck>
-                                                </StSecondWrap>
-                                            </StFirstContainer>
-                                            <StSecondContainer>
-                                                <StChatContent>{chat.lastMessage.substr(0, 25)}</StChatContent>
-                                            </StSecondContainer>
-                                        </StSecondChatWithWrap>
-                                    </StChatWidthWrap>
-                                    <StCloseIcon
+            <Header />
+            <StContainer>
+                <StChatContainer>
+                    {chatList.length === 0 &&
+                        <StNoneData>
+                            <StNoneDataImg />
+                            <p>참여 중인 채팅이 없습니다</p>
+                        </StNoneData>}
+                    <StChatWrap ref={InfinityScrollRef} onScroll={InfinityScroll}>
+                        {chatList.length > 0 &&
+                            chatList.map((chat, i) => {
+                                return (
+                                    <StChatRoomContainer
+                                        roomName={chat.roomName}
                                         onClick={(e) => {
-                                            e.stopPropagation();
-                                            setIsOpenPopup(true);
-                                            setClickChatId(chat.chatRoomUuid);
+                                            e.preventDefault();
+                                            navigate(`/chat/${chat.chatRoomUuid}`)
                                         }}
-                                        chatRoomUuid={chat.chatRoomUuid}
-                                    />
-                                    {isOpenPopup && (
-                                        <ChatDeleteModal
-                                            close={() => setIsOpenPopup(false)}
-                                            event={() => {
-                                                deleteChat();
+                                    >
+                                        <StChatWidthWrap>
+                                            <StImg>
+                                                <StHeadImg
+                                                    src={chat.otherUserImage}
+                                                />
+                                            </StImg>
+                                            <StSecondChatWithWrap>
+                                                <StFirstContainer>
+                                                    <StFirstWrap>
+                                                        <StUserName>{chat.roomName}</StUserName>
+                                                        <StAdmission>{chat.departmentName} · {chat.admission}</StAdmission>
+                                                    </StFirstWrap>
+                                                    <StSecondWrap>
+                                                        <StTimeCheck>{chat.dayBefore}</StTimeCheck>
+                                                    </StSecondWrap>
+                                                </StFirstContainer>
+                                                <StSecondContainer>
+                                                    <StChatContent>{chat.lastMessage.substr(0, 25)}</StChatContent>
+                                                </StSecondContainer>
+                                                <StUnreadCount>
+                                                    {chat.unreadCount > 0 ? (
+                                                        <div>{chat.unreadCount}</div>    
+                                                    ) : null }
+                                                </StUnreadCount>
+                                            </StSecondChatWithWrap>
+                                        </StChatWidthWrap>
+                                        <StCloseIcon
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setIsOpenPopup(true);
+                                                setClickChatId(chat.chatRoomUuid);
                                             }}
+                                            chatRoomUuid={chat.chatRoomUuid}
                                         />
-                                    )}
-                                </StChatRoomContainer>
-                            )
-                        })
-                    }
-                </StChatWrap>
-            </StChatContainer>
-            <StBottomTapWrap>
-                <StBottom>
-                    <StFirstTap
-                        onClick={() => {
-                            navigate('/main');
-                        }}
-                    >
-                        <StBottomImg
-                            src={Homeimg}
-                            alt='홈'
-                        />
-                        <StTapTitle>홈</StTapTitle>
-                    </StFirstTap>
-                    <StTap
-                        onClick={() => {
-                            navigate('/search');
-                        }}
-                    >
-                        <StBottomImg
-                            src={Searchimg}
-                            alt='검색'
-                        />
-                        <StTapTitle>검색</StTapTitle>
-                    </StTap>
-                    <StChatTap
-                        onClick={() => {
-                            navigate('/chat');
-                        }}
-                    >
-                        <StBottomImg
-                            src={ChatColorimg}
-                            alt='채팅'
-                        />
-                        <StTapChatTitle>채팅</StTapChatTitle>
-                    </StChatTap>
-                    <StLastTap
-                        onClick={() => {
-                            navigate('/mypage');
-                        }}
-                    >
-                        <StBottomImg
-                            src={Myimg}
-                            alt='마이페이지'
-                        />
-                        <StTapTitle>MY</StTapTitle>
-                    </StLastTap>
-                </StBottom>
-            </StBottomTapWrap>
-        </StContainer>
+                                        {isOpenPopup && (
+                                            <ChatDeleteModal
+                                                close={() => setIsOpenPopup(false)}
+                                                event={() => {
+                                                    deleteChat();
+                                                }}
+                                            />
+                                        )}
+                                    </StChatRoomContainer>
+                                )
+                            })
+                        }
+                    </StChatWrap>
+                </StChatContainer>
+                <StBottomTapWrap>
+                    <StBottom>
+                        <StFirstTap
+                            onClick={() => {
+                                navigate('/main');
+                            }}
+                        >
+                            <StBottomImg
+                                src={Homeimg}
+                                alt='홈'
+                            />
+                            <StTapTitle>홈</StTapTitle>
+                        </StFirstTap>
+                        <StTap
+                            onClick={() => {
+                                navigate('/search');
+                            }}
+                        >
+                            <StBottomImg
+                                src={Searchimg}
+                                alt='검색'
+                            />
+                            <StTapTitle>검색</StTapTitle>
+                        </StTap>
+                        <StChatTap
+                            onClick={() => {
+                                navigate('/chat');
+                            }}
+                        >
+                            <StBottomImg
+                                src={ChatColorimg}
+                                alt='채팅'
+                            />
+                            <StTapChatTitle>채팅</StTapChatTitle>
+                        </StChatTap>
+                        <StLastTap
+                            onClick={() => {
+                                navigate('/mypage');
+                            }}
+                        >
+                            <StBottomImg
+                                src={Myimg}
+                                alt='마이페이지'
+                            />
+                            <StTapTitle>MY</StTapTitle>
+                        </StLastTap>
+                    </StBottom>
+                </StBottomTapWrap>
+            </StContainer>
         </>
     );
 };
@@ -305,6 +312,7 @@ const StSecondChatWithWrap = styled.div`
     width: 100%;
     display: flex;
   flex-direction: column;
+  /* border: 1px solid red; */
 `
 const StFirstContainer = styled.div`
   width: 100%;
@@ -345,6 +353,11 @@ const StSecondContainer = styled.div`
   padding: 0 10px;
   display: flex;
 `;
+const StUnreadCount = styled.div`
+    /* border: 1px solid red; */
+    display : flex;
+    justify-content: flex-end;
+` 
 const StChatContent = styled.div`
   font-weight: 400;
   font-size: 14px;
