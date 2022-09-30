@@ -23,11 +23,19 @@ const MyPageHome = () => {
   console.log("myarticles", myarticles, totalCount);
   // console.log(error);
 
+  useEffect(()=>{
+    if(totalCount === 0 ) {
+      dispatch(__getMyArticle())
+    }
+  })
+
   //무한 스크롤
 
   const targetRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [page, setPage] = useState(0);
+
+  
 
   const checkIntersect = useCallback(([entry], observer) => {
     if (entry.isIntersecting && !isLoaded) {
