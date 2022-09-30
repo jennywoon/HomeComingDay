@@ -58,7 +58,7 @@ const NoticeCard = ({ item }) => {
               </StBold>{' '}
               게시글에{' '}
               <StBold>{username}</StBold>
-              님이 {noticeType}을 남겼습니다
+              님이 <StBold>{noticeType}</StBold>{noticeType==='댓글'?'을':'를'} 남겼습니다
             </StArticle>
             <StCreatAt>{createdAt}</StCreatAt>
           </StFirstContainer>
