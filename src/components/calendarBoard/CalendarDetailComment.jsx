@@ -251,6 +251,7 @@ const StCommentTxt = styled.div`
     display: flex;
     flex-direction: column;
     width:100%;
+    padding-left: 5px;
 `
 const StRevisebox = styled.div`
     border: 1px solid #f1f0f0;
@@ -305,13 +306,13 @@ const StEditBox = styled.div`
 const StTxtName = styled.h3`
     margin: 0px;
     font-size:14px;
-    font-weight: 700;
+    font-weight: 600;
     width:100%;
 `
 const StTxtStudent = styled.p`
     margin: 0px;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 400;
     color: #bebebe;
 `
 
@@ -338,5 +339,5 @@ const StReplyCommentBox = styled.div`
 const StComment = styled.p`
     margin: 5px 0;
     font-size:14px;
-    font-weight: 500;
+    font-weight: 400;
 `
