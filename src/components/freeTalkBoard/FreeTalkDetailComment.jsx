@@ -2,7 +2,7 @@ import React, { useEffect ,useRef} from 'react';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { __getFreeTalk, __updateFreeTalkComment , __postFreeTalkReplyComment } from '../../redux/modules/FreeTalkSlice';
+import { __getFreeTalk, __updateFreeTalkComment , __postFreeTalkReplyComment,__getDetailFreeTalk } from '../../redux/modules/FreeTalkSlice';
 import { useParams } from 'react-router-dom';
 import { GrUploadOption } from "react-icons/gr";
 import FreeTalkCommentDeleteModal from './FreeTalkCommentDeleteModal';
@@ -73,7 +73,7 @@ const FreeTalkDetailComment = ({ comment, freetalksfind, modalRef ,data}) => {
             content: editComment
         }
         await dispatch(__updateFreeTalkComment(editcomment))
-        await dispatch(__getFreeTalk());
+        await dispatch(__getDetailFreeTalk(id));
         setIsEdit(!isEdit)
     }
 
@@ -88,7 +88,7 @@ const FreeTalkDetailComment = ({ comment, freetalksfind, modalRef ,data}) => {
         await dispatch(__postFreeTalkReplyComment(replyComments))
         setReplyComment("")
         setShowReplyComment(!showReplyComment)
-        await dispatch(__getFreeTalk())
+        await dispatch(__getDetailFreeTalk(id));
         
         
     }

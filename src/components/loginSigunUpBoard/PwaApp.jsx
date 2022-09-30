@@ -19,10 +19,10 @@ const PwaApp = () => {
 
     return (
         <>
-            {/* {supported() && !isInstalled() && ( */}
+            {supported() && !isInstalled() && (
                 <Button click={pwaClick}
                 >어플 다운받기</Button>
-            {/* )} */}
+            )} 
         </>
     );
 };

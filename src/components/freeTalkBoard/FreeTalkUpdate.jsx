@@ -197,8 +197,8 @@ const Addfile = styled.input`
 const StFooterBtn = styled.div`
   width: 100%;
   height: 100%;
-  position: absolute;
-  bottom: 5%;
+  position: sticky;
+  bottom:0;
   display: flex;
   align-items: flex-end;
   justify-content: center;

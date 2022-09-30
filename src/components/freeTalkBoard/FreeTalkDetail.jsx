@@ -24,7 +24,11 @@ import dots from "../../assets/dots.png"
 const FreeTalkDetail = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+
+
     const { freetalks } = useSelector((state) => state.freetalks)
+    const {freetalksfind} = useSelector((state) => state.freetalks)
     const data = useSelector((state) => state.mypages.mypages)
     // const { freeComments } = useSelector((state) => state.freetalks)
     const { id } = useParams();
@@ -33,9 +37,10 @@ const FreeTalkDetail = () => {
     const [showChaet, setShowChaet] = useState(false)
     const [comment, setComment] = useState("")
     const modalRef = useRef(null);
-
-    const freetalksfind = freetalks.find((freetalk) => freetalk.articleId === Number(id))
-
+    
+    // const freetalksfind = freetalks.find((freetalk) => freetalk.articleId === Number(id))
+    console.log("freetalksfind",freetalksfind)
+    // console.log("detailFreeTalks",detailFreeTalkss)
     //모달닫기
     const node = useRef();
 
@@ -61,10 +66,10 @@ const FreeTalkDetail = () => {
 
     //조회수반영
     useEffect(() => {
-        dispatch(__getMyPage())
-        dispatch(__getFreeTalk())
-        dispatch(__getDetailFreeTalk(id));
-    }, [dispatch])
+    dispatch(__getDetailFreeTalk(id));
+    dispatch(__getMyPage())
+    dispatch(__getFreeTalk())
+}, [dispatch])
 
 
     const onCilckShow = () => {
@@ -94,11 +99,11 @@ const FreeTalkDetail = () => {
         e.preventDefault();
         const newcomment = {
             content: comment,
-            articleId: id
+            articleId: Number(id)
         }
         await dispatch(__postFreeTalkComment(newcomment));
         setComment("");
-        await dispatch(__getFreeTalk());
+        await dispatch(__getDetailFreeTalk(id));
         await dispatch(__getNoticeCount());
     }
     // const closeModal = (e) => {
@@ -140,7 +145,7 @@ const FreeTalkDetail = () => {
         };
         const response = await dispatch(__postFreeTalkHeart(newHeart));
         // console.log(response.payload);
-        dispatch(__getFreeTalk());
+        await dispatch(__getDetailFreeTalk(id));
     };
 
     // 채팅 생성
@@ -205,7 +210,7 @@ const FreeTalkDetail = () => {
                             <StBodyContent>
                                 <StContentTitle>{freetalksfind && freetalksfind.title}</StContentTitle>
                                 <StContentBody>{freetalksfind && freetalksfind.content}</StContentBody>
-                                {freetalksfind && freetalksfind.imageList.length > 0 ?
+                                {freetalksfind && freetalksfind.imageList?.length !== 0 ?
                                     <StContentImgBox>
                                         <Swiper
                                             {...swiperParams}
@@ -213,7 +218,7 @@ const FreeTalkDetail = () => {
                                             spaceBetween={50}
                                             slidesPerView={1}
                                         >
-                                            {freetalksfind && freetalksfind.imageList.map((image) => {
+                                            {freetalksfind && freetalksfind.imageList?.map((image) => {
                                                 return (
                                                     <SwiperSlide key={image.imageId}>
                                                         <StContentImg src={image.imgUrl}></StContentImg>
@@ -262,11 +267,11 @@ const FreeTalkDetail = () => {
                             <StBodyContainer>
 
                                 <StBodyCommentBox>
-                                    {freetalksfind && freetalksfind.commentList.length === 0 ?
+                                    {freetalksfind && freetalksfind.commentList?.length === 0 ?
                                         <StBodyComment>작성한 댓글이 없습니다 <br></br> 첫번째 댓글을 남겨보세요 </StBodyComment>
                                         :
                                         <>
-                                            {freetalksfind && freetalksfind.commentList.map((comment) => (
+                                            {freetalksfind && freetalksfind.commentList?.map((comment) => (
                                                 <FreeTalkDetailComment key={comment.commentId} comment={comment} freetalksfind={freetalksfind} modalRef={modalRef} data={data} />
                                             ))}
                                         </>

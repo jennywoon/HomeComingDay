@@ -9,6 +9,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const initialState = {
     freetalks: [],
+    freetalksfind:[],
     freetalksReplyCommentList:[],
     freeComments:[],
     freePopular:[],
@@ -17,13 +18,6 @@ const initialState = {
     error: null,
 };
 
-// const config = {
-//   headers: {
-//     'Content-Type': 'application/json',
-//     Authorization: `Bearer ${getCookie('accessToken')}`,
-//     RefreshToken : `${getCookie('refreshToken')}`
-//   },
-// };
 
 export const __getFreeTalk = createAsyncThunk("freetalks/getFreeTalk", async (payload, thunkAPI) => {
     try {
@@ -311,6 +305,20 @@ export const FreeTalkSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       },
+
+      [__getDetailFreeTalk.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__getDetailFreeTalk.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        console.log(action.payload)
+        state.freetalksfind = action.payload;
+      },
+      [__getDetailFreeTalk.rejected]: (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      },
+
 
       [__getPopularFreeTalk.pending]: (state) => {
         state.isLoading = true;
