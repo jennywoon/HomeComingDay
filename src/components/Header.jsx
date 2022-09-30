@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { VscBell } from 'react-icons/vsc';
 import logo from '../assets/logo.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { __getMyPage } from '../redux/modules/MyPageSlice';
-import Cookies from 'universal-cookie';
-import { getCookie, removeCookie } from '../shared/cookies';
-import goldmedal from '../assets/goldmedal.png';
+import { getCookie } from '../shared/cookies';
 import logoutAlert from '../assets/logoutAlert.png';
 import { __getNoticeCount } from '../redux/modules/NoticeSlice';
 import bell from '../assets/Bell.png';
@@ -38,65 +35,61 @@ const Header = () => {
       {loginOn ? (
         ''
       ) : (
-        <NeedLogin>
-          <NeedLoginModal>
-            <LoginModalTop>자동 로그아웃 안내</LoginModalTop>
-            <LoginModalImg>
-              <img
+        <StNeedLogin>
+          <StNeedLoginModal>
+            <StLoginModalTop>자동 로그아웃 안내</StLoginModalTop>
+            <StLoginModalImg>
+              <StLogoutAlert
                 src={logoutAlert}
-                style={{ width: '63px' }}
                 alt='로그인 필요'
               />
-            </LoginModalImg>
-            <LoginModaltxt>
+            </StLoginModalImg>
+            <StLoginModaltxt>
               로그인 후 1시간이 경과되어
               <br />
               자동 로그아웃 되었습니다
-            </LoginModaltxt>
-            <NeedLoginBtn
+            </StLoginModaltxt>
+            <StNeedLoginBtn
               onClick={() => {
                 navigate('/login');
               }}
             >
               다시 로그인 하기
-            </NeedLoginBtn>
-          </NeedLoginModal>
-        </NeedLogin>
+            </StNeedLoginBtn>
+          </StNeedLoginModal>
+        </StNeedLogin>
       )}
-      <HeaderContainer>
-        <HeaderWrap>
-          <Logo
+      <StHeaderContainer>
+        <StHeaderWrap>
+          <StLogo
             onClick={() => {
               navigate('/main');
             }}
-            style={{ cursor: 'pointer' }}
           />
-          <div style={{ fontSize: '20px' }}>{data && data.schoolName}</div>
-          <IconWrap>
-            <img
+          <StSchoolName>{data && data.schoolName}</StSchoolName>
+          <StIconWrap>
+            <StBellimg
               src={bell}
               alt='알림 아이콘'
-              size='27'
               onClick={() => {
                 navigate('/notice');
               }}
-              style={{ cursor: 'pointer' }}
             />
             {count > 0 ? (
-              <NewDiv>
-                <NewTitle>N</NewTitle>
-              </NewDiv>
+              <StNewDiv>
+                <StNewTitle>N</StNewTitle>
+              </StNewDiv>
             ) : null}
-          </IconWrap>
-        </HeaderWrap>
-      </HeaderContainer>
+          </StIconWrap>
+        </StHeaderWrap>
+      </StHeaderContainer>
     </>
   );
 };
 
 export default Header;
 
-const HeaderContainer = styled.div`
+const StHeaderContainer = styled.div`
   width: 100%;
   height: 60px;
   display: flex;
@@ -107,29 +100,38 @@ const HeaderContainer = styled.div`
   border-bottom: 1px solid #eeeded;
 `;
 
-const Logo = styled.div`
+const StLogo = styled.div`
   width: 27px;
   height: 36px;
   background-image: url(${logo});
   background-position: center;
   background-size: 100% 100%;
+  cursor: pointer;
 `;
-const HeaderWrap = styled.div`
+
+const StHeaderWrap = styled.div`
   width: 90%;
   height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* border: 1px solid red; */
 `;
-const HeaderTitle = styled.div``;
-const IconWrap = styled.div`
+
+const StSchoolName = styled.div`
+  font-size: 20px;
+`
+
+const StIconWrap = styled.div`
   display: flex;
-  /* border: 1px solid red; */
   align-items: start;
   position: relative;
 `;
-const NewDiv = styled.div`
+
+const StBellimg = styled.img`
+  cursor: pointer;
+`
+
+const StNewDiv = styled.div`
   width: 12px;
   height: 12px;
   border-radius: 50%;
@@ -140,12 +142,14 @@ const NewDiv = styled.div`
   left: 15px;
   position: absolute;
 `;
-const NewTitle = styled.div`
+
+const StNewTitle = styled.div`
   font-size: 10px;
   font-weight: 600;
   color: white;
 `;
-const NeedLogin = styled.div`
+
+const StNeedLogin = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -155,7 +159,8 @@ const NeedLogin = styled.div`
   background-color: rgba(87, 87, 87, 0.3);
   z-index: 99999;
 `;
-const NeedLoginBtn = styled.button`
+
+const StNeedLoginBtn = styled.button`
   background: #ffffff;
   padding: 10px 0px;
   color: #f7931e;
@@ -166,14 +171,14 @@ const NeedLoginBtn = styled.button`
   border-radius: 12px;
   cursor: pointer;
 `;
-const NeedLoginModal = styled.div`
+
+const StNeedLoginModal = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
   background-color: #fff;
   height: 240px;
@@ -185,7 +190,7 @@ const NeedLoginModal = styled.div`
   text-align: center;
 `;
 
-const LoginModalTop = styled.div`
+const StLoginModalTop = styled.div`
   width: 100%;
   height: 44px;
   background: #f7931e;
@@ -195,12 +200,18 @@ const LoginModalTop = styled.div`
   color: #ffffff;
   line-height: 44px;
 `;
-const LoginModalImg = styled.div`
+
+const StLoginModalImg = styled.div`
   width: 100%;
   height: 70px;
   line-height: 70px;
 `;
-const LoginModaltxt = styled.div`
+
+const StLogoutAlert = styled.img`
+  width: 63px;
+`
+
+const StLoginModaltxt = styled.div`
   width: 100%;
   text-align: center;
   font-size: 14px;
