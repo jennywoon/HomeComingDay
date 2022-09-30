@@ -15,7 +15,7 @@ const CalendarDeleteModal = ({ setModalOpen }) => {
   const navigate = useNavigate();
   const { calendars } = useSelector((state) => state.calendars)
   const { id } = useParams();
-  const { calendarsfind } = useSelector((state) => state.calendars)
+  const { calendarfind } = useSelector((state) => state.calendars)
   // const calendarsfind = calendars.find((calendar) => calendar.articleId === Number(id))
 
 
@@ -31,7 +31,7 @@ const CalendarDeleteModal = ({ setModalOpen }) => {
             <StModalBottom onClick={closeModal}>
               <StBottomTitle
               onClick={() => {
-                dispatch(__deleteCalendar(calendarsfind.articleId))
+                dispatch(__deleteCalendar(calendarfind.articleId))
                 dispatch(__getDetailCalendar(id))
                 navigate("/calendar")
               }}
