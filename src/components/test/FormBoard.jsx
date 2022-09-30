@@ -99,6 +99,7 @@ const Form2 = () => {
       'image/*': ['.png','.jpg','.jpeg','.heic','.heif'],
     },
     maxFiles: 3,
+
     onDrop: (acceptedFiles) => {
       setFiles(
         acceptedFiles.map((file) =>
