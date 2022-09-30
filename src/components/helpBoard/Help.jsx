@@ -6,21 +6,19 @@ import { __getHelp, __getPopularHelp } from "../../redux/modules/HelpSlice";
 import HelpCard from "./HelpCard";
 import helporange from "../../assets/helporange.png"
 import nonedatasquare from "../../assets/nonedatasquare.png"
-import { __getMyPage } from "../../redux/modules/MyPageSlice";
-import { __getReset } from "../../redux/modules/MyPageSlice";
+import { __getMyPage,__getReset  } from "../../redux/modules/MyPageSlice";
 
 const Help = () => {
-
-  useEffect(()=>{
-    dispatch(__getReset())
-  },[])
-
   const dispatch = useDispatch();
   const { helps } = useSelector((state) => state.helps);
   const {helpPopular} = useSelector((state)=>state.helps)
   const [select, setSelect] = useState('new');
   // console.log(helps)
   // console.log(helpPopular)
+
+  useEffect(()=>{
+    dispatch(__getReset())
+  },[])
 
   useEffect(() => {
     dispatch(__getMyPage())

@@ -254,8 +254,10 @@ const StLankWrap = styled.div`
   border: 1px solid #b3b3b3;
   border-radius: 20px;
   width: 60px;
+  height: 20px;
   display: flex;
   justify-content: center;
+  align-items: center;
   cursor: pointer;
 `
 const StLank = styled.div`
