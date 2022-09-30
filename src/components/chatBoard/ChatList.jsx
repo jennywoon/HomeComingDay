@@ -36,11 +36,11 @@ const ChatList = () => {
         }
     }, []);
 
-    const chatList = useSelector((state) => state.chat.chatList);
-    const isLoading = useSelector((state) => state.chat.isLoading);
-    const hasNext = useSelector((state) => state.chat.hasNext);
-    const page = useSelector((state) => state.chat.page);
-    // const { chatList, isLoading, hasNext, page } = useSelector((state) => state.chat);
+    // const chatList = useSelector((state) => state.chat.chatList);
+    // const isLoading = useSelector((state) => state.chat.isLoading);
+    // const hasNext = useSelector((state) => state.chat.hasNext);
+    // const page = useSelector((state) => state.chat.page);
+    const { chatList, isLoading, hasNext, page } = useSelector((state) => state.chat);
     console.log(chatList);
 
     const inicialRoom = {
@@ -122,8 +122,6 @@ const ChatList = () => {
                     <StChatWrap ref={InfinityScrollRef} onScroll={InfinityScroll}>
                         {chatList.length > 0 &&
                             chatList.map((chat, i) => {
-                                {/* {chatList.chatRoomResponseDto.length > 0 &&
-                            chatList.chatRoomResponseDto.map((chat, i) => { */}
                                 return (
                                     <StChatRoomContainer
                                         roomName={chat.roomName}

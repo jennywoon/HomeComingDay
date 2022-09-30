@@ -73,13 +73,13 @@ const MyPageHome = () => {
           <StTitleWrap>
             <StMyPosTitletWrap>
               <StMyPostTitle>내가 쓴 게시글</StMyPostTitle>
-              <StPostCount>{myarticles && myarticles.length}</StPostCount>
+              {/* <StPostCount>{myarticles && myarticles.length}</StPostCount> */}
+              <StPostCount>{totalCount && totalCount}</StPostCount>
               <StRefresh onClick={refreshPage} />
             </StMyPosTitletWrap>
             <StLankWrap onClick={showLankModal}>
               <StLank>등급안내</StLank>
             </StLankWrap>
-            {/* <PostCount>{totalCount}</PostCount> */}
           </StTitleWrap>
           <StArticleWrap>
             {myarticles && myarticles.length > 0 ? (
