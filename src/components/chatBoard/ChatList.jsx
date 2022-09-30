@@ -36,11 +36,11 @@ const ChatList = () => {
         }
     }, []);
 
-    const chatList = useSelector((state) => state.chat.chatList);
-    const isLoading = useSelector((state) => state.chat.isLoading);
-    const hasNext = useSelector((state) => state.chat.hasNext);
-    const page = useSelector((state) => state.chat.page);
-    // const { chatList, isLoading, hasNext, page } = useSelector((state) => state.chat);
+    // const chatList = useSelector((state) => state.chat.chatList);
+    // const isLoading = useSelector((state) => state.chat.isLoading);
+    // const hasNext = useSelector((state) => state.chat.hasNext);
+    // const page = useSelector((state) => state.chat.page);
+    const { chatList, isLoading, hasNext, page } = useSelector((state) => state.chat);
     console.log(chatList);
 
     const inicialRoom = {
@@ -117,7 +117,7 @@ const ChatList = () => {
                     {chatList.length === 0 &&
                         <StNoneData>
                             <StNoneDataImg />
-                            <p>참여 중인 채팅이 없습니다</p>
+                            <StNoneText>참여 중인 채팅이 없습니다<br/><br/>모든 게시글 상세 페이지의 동문 이름을 클릭하면<br/> 1:1 채팅을 시작하실 수 있어요</StNoneText>
                         </StNoneData>}
                     <StChatWrap ref={InfinityScrollRef} onScroll={InfinityScroll}>
                         {chatList.length > 0 &&
@@ -308,6 +308,13 @@ const StNoneDataImg = styled.div`
   background-size: 100% 100%;
   margin-bottom: 10px;
 `;
+
+const StNoneText = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+`
 const StChatRoomContainer = styled.div`
   cursor: pointer;
   display: flex;

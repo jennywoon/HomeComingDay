@@ -393,12 +393,12 @@ const Form2 = () => {
   }, [freetitle, freecontent])
 
   useEffect(() => {
-    if (calendartitle !== '' && selectedTime !== '' && calendarcontent !== '') {
+    if (calendartitle !== '' && calendarlocation !== '' && calendarcontent !== '') {
       handleCheck(true);
     } else {
       handleCheck(false);
     }
-  }, [calendartitle, selectedTime, calendarcontent])
+  }, [calendartitle, calendarlocation, calendarcontent])
 
 
   return (
@@ -1299,7 +1299,7 @@ const StJoinDiv = styled.div`
   justify-content: right;
   align-items: center;
   gap: 10px;
-  cursor: pointer;
+
   border:none;
 `
 const ArrowForward = styled(IoIosArrowForward)`

@@ -23,11 +23,19 @@ const MyPageHome = () => {
   console.log("myarticles", myarticles, totalCount);
   // console.log(error);
 
+  useEffect(()=>{
+    if(totalCount === 0 ) {
+      dispatch(__getMyArticle())
+    }
+  })
+
   //무한 스크롤
 
   const targetRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [page, setPage] = useState(0);
+
+  
 
   const checkIntersect = useCallback(([entry], observer) => {
     if (entry.isIntersecting && !isLoaded) {
@@ -254,8 +262,10 @@ const StLankWrap = styled.div`
   border: 1px solid #b3b3b3;
   border-radius: 20px;
   width: 60px;
+  height: 20px;
   display: flex;
   justify-content: center;
+  align-items: center;
   cursor: pointer;
 `
 const StLank = styled.div`
