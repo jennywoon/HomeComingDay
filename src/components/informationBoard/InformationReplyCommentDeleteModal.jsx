@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AiOutlineInfoCircle } from 'react-icons/ai';
+import exclamation from "../../assets/exclamation.png"
 
 
 const InformationReplyCommentDeleteModal = ({setModalOpen,onClickDeleteReplyComment}) => {
@@ -15,7 +15,7 @@ const InformationReplyCommentDeleteModal = ({setModalOpen,onClickDeleteReplyComm
           <StModalContainer>
             <StFirstWrap>
               <StModalTop>
-                <AiOutlineInfoCircle style={{ color: '#f7931e' }} size='28' />
+              <StExclamation/>
                 <StTopTitle>해당 댓글을 삭제하시겠습니까?</StTopTitle>
               </StModalTop>
               <StModalBottom onClick={closeModal}>
@@ -108,6 +108,14 @@ const InformationReplyCommentDeleteModal = ({setModalOpen,onClickDeleteReplyComm
     gap: 12px;
   `;
   
+  const StExclamation = styled.div`
+  width: 30px;
+  height: 30px;
+  background-image: url(${exclamation});
+  background-position: center;
+  background-size: 100% 100%;
+`
+
   const StTopTitle = styled.div`
     font-size: 16px;
     font-weight: 500;
