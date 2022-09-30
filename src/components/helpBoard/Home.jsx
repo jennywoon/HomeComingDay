@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Help from './Help';
@@ -8,15 +8,12 @@ import HomeColorimg from '../../assets/HomeColor.png';
 import Searchimg from '../../assets/Search.png';
 import Chatimg from '../../assets/Chat.png';
 import Myimg from '../../assets/My.png';
-import { getChatList } from '../../redux/modules/ChatSlice';
 
 const Home = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   
   // const chatList = useSelector((state) => state.chat.chatList[0]);
-  const chatList = useSelector((state) => state.chat.chatList[0]);
-  console.log(chatList);
+  // console.log(chatList);
 
   return (
     <StHomeContainer>
@@ -51,11 +48,11 @@ const Home = () => {
           >
             <StChatIconWrap>
               <StImg src={Chatimg} alt='채팅' />
-              {chatList && chatList.totalCnt > 0 ? (
+              {/* {chatList && chatList.totalCnt > 0 ? (
                 <StNewDiv>
                 <StNewTitle>N</StNewTitle>
               </StNewDiv>
-              ) : null}
+              ) : null} */}
             </StChatIconWrap>
             <StTapTitle>채팅</StTapTitle>
           </StTap>

@@ -36,11 +36,11 @@ const ChatList = () => {
         }
     }, []);
 
-    // const chatList = useSelector((state) => state.chat.chatList);
-    // const isLoading = useSelector((state) => state.chat.isLoading);
-    // const hasNext = useSelector((state) => state.chat.hasNext);
-    // const page = useSelector((state) => state.chat.page);
-    const { chatList, isLoading, hasNext, page } = useSelector((state) => state.chat);
+    const chatList = useSelector((state) => state.chat.chatList);
+    const isLoading = useSelector((state) => state.chat.isLoading);
+    const hasNext = useSelector((state) => state.chat.hasNext);
+    const page = useSelector((state) => state.chat.page);
+    // const { chatList, isLoading, hasNext, page } = useSelector((state) => state.chat);
     console.log(chatList);
 
     const inicialRoom = {
