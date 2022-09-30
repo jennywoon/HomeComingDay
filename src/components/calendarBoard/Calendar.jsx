@@ -8,7 +8,7 @@ import CalendarCard from './CalendarCard';
 import calendarorange from '../../assets/calendarorange.png';
 import './CalendarModal.css';
 import nonedatasquare from '../../assets/nonedatasquare.png';
-import { __getMyPage } from "../../redux/modules/MyPageSlice";
+import { __getMyPage, __getReset } from "../../redux/modules/MyPageSlice";
 
 const Calendar = () => {
   const dispatch = useDispatch();
@@ -16,6 +16,10 @@ const Calendar = () => {
   const { calendars } = useSelector((state) => state.calendars);
   const { calendarPopular } = useSelector((state) => state.calendars);
   const [select, setSelect] = useState('new');
+
+  useEffect(()=>{
+    dispatch(__getReset())
+  },[])
 
   useEffect(() => {
     dispatch(__getMyPage())

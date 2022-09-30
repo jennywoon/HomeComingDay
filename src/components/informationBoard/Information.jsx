@@ -7,7 +7,7 @@ import InformationCard from "./InformationCard";
 import { useNavigate } from "react-router-dom";
 import informationorange from "../../assets/informationorange.png"
 import nonedatasquare from "../../assets/nonedatasquare.png"
-import { __getMyPage } from "../../redux/modules/MyPageSlice";
+import { __getMyPage,__getReset} from "../../redux/modules/MyPageSlice";
 
 const Information = () => {
   const dispatch = useDispatch();
@@ -21,6 +21,10 @@ const Information = () => {
   const handleSelect = (e) => {
     setSelect(e.target.value);
   };
+
+  useEffect(()=>{
+    dispatch(__getReset())
+  },[])
 
   useEffect(() => {
     dispatch(__getMyPage())
