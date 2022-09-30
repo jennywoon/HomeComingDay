@@ -17,7 +17,7 @@ const MyPageHome = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   
-  const chatList = useSelector((state) => state.chat.chatList);
+  const chatList = useSelector((state) => state.chat.chatList[0]);
   const { myarticles, totalCount } = useSelector((state) => state.mypages);
   const { error } = useSelector((state) => state.mypages.myarticles)
   console.log("myarticles", myarticles, totalCount);
@@ -133,10 +133,10 @@ const MyPageHome = () => {
                 src={Chatimg}
                 alt='채팅'
               />
-              {chatList.totalCnt > 0 ? (
+              {chatList && chatList.totalCnt > 0 ? (
                 <StNewDiv>
-                  <StNewTitle>N</StNewTitle>
-                </StNewDiv>
+                <StNewTitle>N</StNewTitle>
+              </StNewDiv>
               ) : null}
             </StIconWrap>
             <StTapTitle>채팅</StTapTitle>
