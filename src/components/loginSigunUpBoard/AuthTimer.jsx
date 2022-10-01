@@ -18,7 +18,7 @@ const AuthTimer = () => {
 
     useEffect(() => {
         if(time.current <= 0){
-            console.log("타임 아웃");
+            // console.log("타임 아웃");
             clearInterval(timerId.current);
         }
     }, [sec])
