@@ -8,27 +8,31 @@ const SignupModal = ({ setModalOpen }) => {
   };
 
   return (
-    <Container>
-      <Wrap>
-        <ModalContainer>
-          <FirstWrap>
-            <ModalTop>
+    <StContainer>
+      <StWrap>
+        <StModalContainer>
+          <StFirstWrap>
+            <StModalTop>
               <AiOutlineCheckCircle style={{ color: '#f7931e' }} size='28' />
-              <TopTitle>인증번호가 발송되었습니다<br/>이메일을 확인하세요</TopTitle>
-            </ModalTop>
-            <ModalBottom onClick={closeModal}>
-              <BottomTitle>확인</BottomTitle>
-            </ModalBottom>
-          </FirstWrap>
-        </ModalContainer>
-      </Wrap>
-    </Container>
+              <StTopTitle>
+                인증번호가 발송되었습니다
+                <br />
+                이메일을 확인하세요(유효시간 3분)
+              </StTopTitle>
+            </StModalTop>
+            <StModalBottom onClick={closeModal}>
+              <StBottomTitle>확인</StBottomTitle>
+            </StModalBottom>
+          </StFirstWrap>
+        </StModalContainer>
+      </StWrap>
+    </StContainer>
   );
 };
 
 export default SignupModal;
 
-const Container = styled.div`
+const StContainer = styled.div`
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -56,7 +60,7 @@ const Container = styled.div`
   }
 `;
 
-const Wrap = styled.div`
+const StWrap = styled.div`
   position: relative;
   width: 100%;
   max-width: 420px;
@@ -67,7 +71,7 @@ const Wrap = styled.div`
   background-color: rgba(87, 87, 87, 0.3);
   overflow-y: hidden;
 `;
-const ModalContainer = styled.div`
+const StModalContainer = styled.div`
   width: 80%;
   height: 180px;
   background-color: white;
@@ -77,11 +81,11 @@ const ModalContainer = styled.div`
   border-radius: 16px;
 `;
 
-const FirstWrap = styled.div`
+const StFirstWrap = styled.div`
   width: 100%;
   height: 100%;
 `;
-const ModalTop = styled.div`
+const StModalTop = styled.div`
   width: 100%;
   height: 75%;
   display: flex;
@@ -91,14 +95,14 @@ const ModalTop = styled.div`
   gap: 12px;
 `;
 
-const TopTitle = styled.div`
+const StTopTitle = styled.div`
   font-size: 16px;
   font-weight: 500;
   padding: 0 10px;
   text-align: center;
   word-break: keep-all;
 `;
-const ModalBottom = styled.div`
+const StModalBottom = styled.div`
   width: 100%;
   height: 25%;
   background-color: #f7931e;
@@ -111,7 +115,7 @@ const ModalBottom = styled.div`
   cursor: pointer;
 `;
 
-const BottomTitle = styled.div`
+const StBottomTitle = styled.div`
   font-size: 16px;
   font-weight: 700;
 `;

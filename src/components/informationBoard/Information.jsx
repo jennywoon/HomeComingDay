@@ -1,13 +1,13 @@
+import React from "react";
 import { useEffect ,useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components"
-import Img from "../../assets/naverIcon.png"
 import { __getInformation, __getPopularInformation } from "../../redux/modules/InformationSlice";
 import InformationCard from "./InformationCard";
-import { TiPencil } from "react-icons/ti";
 import { useNavigate } from "react-router-dom";
 import informationorange from "../../assets/informationorange.png"
 import nonedatasquare from "../../assets/nonedatasquare.png"
+import { __getMyPage,__getReset} from "../../redux/modules/MyPageSlice";
 
 const Information = () => {
   const dispatch = useDispatch();
@@ -16,28 +16,33 @@ const Information = () => {
   const { informations } = useSelector((state) => state.informations);
   const {informationPopular} = useSelector((state)=>state.informations)
   const [select, setSelect] = useState('new');
-  console.log(informationPopular)
+  // console.log(informationPopular)
 
   const handleSelect = (e) => {
     setSelect(e.target.value);
   };
 
+  useEffect(()=>{
+    dispatch(__getReset())
+  },[])
+
   useEffect(() => {
+    dispatch(__getMyPage())
     dispatch(__getInformation());
     dispatch(__getPopularInformation());
   }, [dispatch])
 
   return (
-    <InformationContainer>
-      <BannerWrap>
-        <Banner />
-      </BannerWrap>
-      <InformationWrap>
-      <Select name='state' onChange={handleSelect}>
+    <StInformationContainer>
+      <StBannerWrap>
+        <StBanner />
+      </StBannerWrap>
+      <StInformationWrap>
+      <StSelect name='state' onChange={handleSelect}>
           <option value='new'>최신순</option>
           <option value='popular'>인기순</option>
-        </Select>
-         <InformationList>
+        </StSelect>
+         <StInformationList>
           <>
             {select === "new"&&informations && informations.length > 0 ? (
               <div>
@@ -53,33 +58,30 @@ const Information = () => {
              ))}
            </div>) :
              (
-               <NoneData>
-                 <NoneDataImg></NoneDataImg>
+               <StNoneData>
+                 <StNoneDataImg></StNoneDataImg>
                  <p>내가 쓴 게시글이 없습니다</p>
-               </NoneData>
+               </StNoneData>
              )}
           </>
-        </InformationList>
+        </StInformationList>
 
-      </InformationWrap>
-    </InformationContainer>
+      </StInformationWrap>
+    </StInformationContainer>
   );
 }
 
-export default Information;
+export default React.memo(Information);
 
-const InformationContainer = styled.div`
+const StInformationContainer = styled.div`
   width: 100%;
   height: 100%;
-  /* height: 100vh; */
   gap: 12px;
-  /* border: 1px solid red; */
 `;
 
-const BannerWrap = styled.div`
+const StBannerWrap = styled.div`
   width: 100%;
   height: 190px;
-  /* height: 22% */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -87,29 +89,24 @@ const BannerWrap = styled.div`
   margin-bottom: 12px;
   position: absolute;
 `
-const Banner = styled.div`
+const StBanner = styled.div`
   height: 190px;
-  /* height: 22% */
   width: 95%;
-  /* border: 1px solid red; */
   background-image: url(${informationorange});
   background-position: center;
   background-size: 100% 100%;
 `
 
-const InformationWrap = styled.div`
+const StInformationWrap = styled.div`
   position: relative;
   top: 170px;
-  width: 100%;
-  /* height: 100vh; */
   height: 62%;
   border-radius: 20px;
   background-color: white;
   padding: 10px 5px 10px 5px;
-  /* border: 1px solid blue; */
 `;
 
-const Select = styled.select`
+const StSelect = styled.select`
   display: flex;
   margin-left: auto;
   margin-right: 10px;
@@ -124,28 +121,17 @@ const Select = styled.select`
   outline: none;
 `;
 
-const InformationList = styled.div`
-  /* height: 100%; */
+const StInformationList = styled.div`
   width: 95%;
   height: 95%;
   margin: 0 auto;
-  /* border: 1px solid green; */
   overflow-y: scroll;
-  /* overflow-y: auto; */
   ::-webkit-scrollbar{
     width: 0px;
-    /* height: 100vh; */
   }
-  /* ::-webkit-scrollbar-thumb{
-    background: #f7931e;
-    height: 100%;
-  }
-  ::-webkit-scrollbar-track{
-    background: #f7931e;
-  } */
 `;
 
-const NoneData = styled.div`
+const StNoneData = styled.div`
     width: 100%;
     height: 100%;
     display: flex;
@@ -156,10 +142,11 @@ const NoneData = styled.div`
     font-weight: 500;
     font-size: 16px;
 `
-const NoneDataImg = styled.div`
+const StNoneDataImg = styled.div`
     width: 50px;
     height: 50px;
     background-image: url(${nonedatasquare});
     background-position: center;
     background-size: 100% 100%;
+    margin-bottom: 5px;
 `

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 import {
   __getInformation,
@@ -23,51 +23,51 @@ const InformationCard = ({ information, id }) => {
   };
 
   return (
-    <InformationContainer onClick={onClickNavi}>
-      <Card>
-        <CardHead>
+    <StInformationContainer onClick={onClickNavi}>
+      <StCard>
+        <StCardHead>
           <StImg>
-            <HeadImg src={information.userImage}/>
+            <StHeadImg src={information.userImage}/>
           </StImg>
-          <HeadUser>
-            <HeadTop>
-              <HeadName>{information.username}</HeadName>
-              <HeadTime>{information.createdAt}</HeadTime>
-            </HeadTop>
-            <HeadBottom>
-              <HeadDepartment>{information.departmentName}</HeadDepartment>
-              <HeadStudent>· {information.admission}</HeadStudent>
-            </HeadBottom>
-          </HeadUser>
-        </CardHead>
-        <CardBody>
-          <BodyTitle>{information.title}</BodyTitle>
-        </CardBody>
-        <CardFooter>
-          <Views>조회수 {information.views}</Views>
-          <Count>
-            <CommentCount>
-              <CommentImg>
+          <StHeadUser>
+            <StHeadTop>
+              <StHeadName>{information.username}</StHeadName>
+              <StHeadTime>{information.createdAt}</StHeadTime>
+            </StHeadTop>
+            <StHeadBottom>
+              <StHeadDepartment>{information.departmentName}</StHeadDepartment>
+              <StHeadStudent>· {information.admission}</StHeadStudent>
+            </StHeadBottom>
+          </StHeadUser>
+        </StCardHead>
+        <StCardBody>
+          <StBodyTitle>{information.title}</StBodyTitle>
+        </StCardBody>
+        <StCardFooter>
+          <StViews>조회수 {information.views}</StViews>
+          <StCount>
+            <StCommentCount>
+              <StCommentImg>
               <img src={commentgray} alt='댓글이미지' />
-              </CommentImg>
+              </StCommentImg>
               {information.commentCnt}
-            </CommentCount>
-            <HeartCount>
-              <HeartImg>
+            </StCommentCount>
+            <StHeartCount>
+              <StHeartImg>
               <img src={heartgray} alt='댓글이미지' />
-              </HeartImg>
+              </StHeartImg>
               {information.heartCnt}
-            </HeartCount>
-          </Count>
-        </CardFooter>
-      </Card>
-    </InformationContainer>
+            </StHeartCount>
+          </StCount>
+        </StCardFooter>
+      </StCard>
+    </StInformationContainer>
   );
 };
 
 export default InformationCard;
 
-const InformationContainer = styled.div`
+const StInformationContainer = styled.div`
   height: 175px;
   padding: 10px;
   border: 1px solid #eee;
@@ -80,23 +80,21 @@ const InformationContainer = styled.div`
   align-items: center;
 `;
 
-const Card = styled.div`
+const StCard = styled.div`
   width: 97%;
-  /* border: 1px solid red; */
   margin: 0 auto;
 `;
 
-const CardHead = styled.div`
+const StCardHead = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 20px;
 `;
 
 const StImg = styled.div`
-  /* border: 1px solid red; */
 `;
 
-const HeadImg = styled.img`
+const StHeadImg = styled.img`
   width: 30px;
   height: 30px;
   display: flex;
@@ -106,101 +104,99 @@ const HeadImg = styled.img`
   margin-right: 7px;
 `;
 
-const HeadUser = styled.div`
+const StHeadUser = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   margin: 0px 5px;
 `;
 
-const HeadTop = styled.div`
+const StHeadTop = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: space-between;
-  /* border: 1px solid red; */
 `;
 
-const HeadBottom = styled.div`
+const StHeadBottom = styled.div`
   display: flex;
   font-size: 12px;
   color: gray;
   gap: 5px;
 `;
 
-const HeadDepartment = styled.div``;
+const StHeadDepartment = styled.div``;
 
-const HeadName = styled.h2`
+const StHeadName = styled.h2`
   font-size: 14px;
   font-weight: 600;
   color: #000;
 `;
 
-const HeadStudent = styled.p``;
+const StHeadStudent = styled.p``;
 
-const HeadTime = styled.p`
+const StHeadTime = styled.p`
   font-size: 12px;
   color: gray;
   margin-left: auto;
   font-weight: 500;
 `;
 
-const CardBody = styled.div`
+const StCardBody = styled.div`
   height: 50px;
   margin-bottom: 20px;
 `;
 
-const BodyTitle = styled.div`
+const StBodyTitle = styled.div`
   margin: 5px 0px;
   font-size: 16px;
   font-weight: 600;
   color: #000;
 `;
 
-const BodyContent = styled.div`
+const StBodyContent = styled.div`
   font-size: 12px;
   margin: 5px 0px;
 `;
 
-const CardFooter = styled.div`
+const StCardFooter = styled.div`
   display: flex;
   justify-content: space-between;
 `;
 
-const Views = styled.div`
+const StViews = styled.div`
   font-size: 12px;
   color: gray;
-  /* margin-right:10px; */
 `;
 
-const Division = styled.div`
+const StDivision = styled.div`
   font-size: 12px;
   align-items: center;
   margin: 0 5px;
   color: gray;
 `;
 
-const Count = styled.div`
+const StCount = styled.div`
   display: flex;
 `;
 
-const CommentCount = styled.div`
+const StCommentCount = styled.div`
   font-size: 12px;
   color: gray;
   display: flex;
   margin-right: 10px;
 `;
 
-const CommentImg = styled.div`
+const StCommentImg = styled.div`
   margin-right: 5px;
 `
 
-const HeartCount = styled.div`
+const StHeartCount = styled.div`
   font-size: 12px;
   color: gray;
   display: flex;
 `;
 
-const HeartImg = styled.div`
+const StHeartImg = styled.div`
   margin-right: 5px;
 `

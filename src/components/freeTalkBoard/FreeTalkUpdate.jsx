@@ -3,18 +3,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import {IoIosArrowBack} from 'react-icons/io'
-import {GrImage} from 'react-icons/gr'
 import Button from '../elements/Button';
 import { useSelector } from 'react-redux';
-import { __getFreeTalk, __updateFreeTalk } from '../../redux/modules/FreeTalkSlice';
-
+import { __getDetailFreeTalk, __getFreeTalk, __updateFreeTalk } from '../../redux/modules/FreeTalkSlice';
 
 const FreeTalkUpdate = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {id} = useParams();
     const {freetalks} = useSelector((state) => state.freetalks)
-    const freetalksfind = freetalks.find((freetalk)=> freetalk.articleId === Number(id))
+    const {freetalksfind} = useSelector((state) => state.freetalks)
+    // const freetalksfind = freetalks.find((freetalk)=> freetalk.articleId === Number(id))
 
     // const [updateHelp, setUpdateHelp] = useState({
     //     title: "",
@@ -77,40 +76,35 @@ const FreeTalkUpdate = () => {
             imageList : EditImg
         }
         await dispatch(__updateFreeTalk(editfreetalksfind))
-        await dispatch(__getFreeTalk());
+        await dispatch(__getDetailFreeTalk(id));
         navigate(`/freetalkdetail/${id}`)
     } 
 
-    
 
     return (
-        <FormContainer>
-            <FormWrap onSubmit={onUpdateHandler}>
-                <FormHeader>
+        <StFormContainer>
+            <StFormWrap onSubmit={onUpdateHandler}>
+                <StFormHeader>
                     <IoIosArrowBack size="25px" cursor="pointer" onClick={() => {navigate(`/freetalkdetail/${id}`)}}/>
-                </FormHeader>
-                <FormBody>
-                    <FormSelection name="category">
-                        {/* <option value="">도움요청</option>
-                        <option value="informationform">정보공유</option>
-                        <option value="">만남일정</option> */}
+                </StFormHeader>
+                <StFormBody>
+                    <StFormSelection name="category">
                         <option value="">자유토크</option>
-                    </FormSelection>
-                <FormInput name="title" value={EditTitle} onChange={onChangeTitle} placeholder="제목을 입력해주세요"></FormInput>
+                    </StFormSelection>
+                <StFormInput name="title" value={EditTitle} onChange={onChangeTitle} placeholder="제목을 입력해주세요"></StFormInput>
                 <StCard>
-                <Textarea name="content" value={EditContent} onChange={onChangeContent} placeholder="내용을 입력해주세요"></Textarea>
+                <StTextarea name="content" value={EditContent} onChange={onChangeContent} placeholder="내용을 입력해주세요"></StTextarea>
                 </StCard>
-                </FormBody>
-                <FormFooter>
-                    <FooterBtn>
+                </StFormBody>
+                <StFormFooter>
+                    <StFooterBtn>
                         <Button type='submit' backgroundColor='#F7931E' width="90%" height="40px" color="white" style={{ display: "block", margin: "15px auto" ,backgroundColor:'#F7931E'}} isDisabled={isOnActive ? false : true}>
-                            <div style={{ fontWeight: "500", fontSize: "16px" }}>수정하기</div>
+                            <StChangediv>수정하기</StChangediv>
                         </Button>
-                    </FooterBtn>
-                    
-                </FormFooter>
-            </FormWrap>
-        </FormContainer>
+                    </StFooterBtn>  
+                </StFormFooter>
+            </StFormWrap>
+        </StFormContainer>
        
     );
 };
@@ -118,13 +112,14 @@ const FreeTalkUpdate = () => {
 export default FreeTalkUpdate;
 
 
-const FormContainer = styled.div`
+const StFormContainer = styled.div`
   margin: 0 auto;
   width: 100%;
   height: 100%;
   background-color: #f7ede2;
   display: flex;
   justify-content: center;
+  overflow: hidden;
   @media only screen and (max-width: 768px) {
     width: 100%;
     height: 100%;
@@ -133,15 +128,14 @@ const FormContainer = styled.div`
   }
 `;
 
-const FormWrap = styled.form`
+const StFormWrap = styled.form`
   width: 100%;
-  height:100vh;
+  height:100%;
   background-color: white;
   display: flex;
   flex-direction: column;
-  
 `;
-const FormHeader = styled.div`
+const StFormHeader = styled.div`
   width: 100%;
   padding-left:15px;
   height: 50px;
@@ -150,12 +144,12 @@ const FormHeader = styled.div`
   justify-content: space-between;
   margin: 40px 0px;
 `
-const FormBody = styled.div`
+const StFormBody = styled.div`
     display: flex;
     flex-direction: column;
     padding : 10px 20px;
 `
-const FormSelection = styled.select`
+const StFormSelection = styled.select`
     border: none;
     margin-bottom: 25px;
     width: 75px;
@@ -163,7 +157,7 @@ const FormSelection = styled.select`
     font-size: 14px;
     font-weight: 600;
 `
-const FormInput =styled.input`
+const StFormInput =styled.input`
     font-size: 20px;
     border: none;
     border-bottom:1px solid gray;
@@ -178,15 +172,15 @@ const FormInput =styled.input`
     font-weight: 600;
   }
 `
-const Textarea = styled.textarea`
+const StTextarea = styled.textarea`
     width: 100%;
-    height:400px;
+    height:300px;
     border:none;
     padding: 10px 5px;
     outline: none;
 `
 
-const FormFooter = styled.div`
+const StFormFooter = styled.div`
     display: flex;
     width:100%;
     /* background-color: yellow; */
@@ -201,9 +195,20 @@ const Filelabel = styled.label`
 const Addfile = styled.input`
     display: none;
 `
-const FooterBtn = styled.div`
-        margin:0 auto;
-        width:100%;       
+const StFooterBtn = styled.div`
+  width: 100%;
+  height: 100%;
+  position: sticky;
+  bottom:0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  /* margin-bottom: 150px; */
+`
+
+const StChangediv = styled.div`
+  font-weight: 500;
+  font-size: 16px;
 `
 const StCard = styled.div`
   border: 1px solid #eee;

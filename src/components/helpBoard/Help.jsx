@@ -1,26 +1,27 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import styled from "styled-components"
 import { useSelector, useDispatch } from "react-redux";
 import { __getHelp, __getPopularHelp } from "../../redux/modules/HelpSlice";
 import HelpCard from "./HelpCard";
-import Loading from "../test/Loading";
 import helporange from "../../assets/helporange.png"
-import helpwhite from "../../assets/helpwhite.png"
 import nonedatasquare from "../../assets/nonedatasquare.png"
-
+import { __getMyPage,__getReset  } from "../../redux/modules/MyPageSlice";
 
 const Help = () => {
-
   const dispatch = useDispatch();
   const { helps } = useSelector((state) => state.helps);
   const {helpPopular} = useSelector((state)=>state.helps)
-  const { isLoading } = useSelector((state) => state.helps);
   const [select, setSelect] = useState('new');
-  // console.log(isLoading)
   // console.log(helps)
-  console.log(helpPopular)
+  // console.log(helpPopular)
+
+  useEffect(()=>{
+    dispatch(__getReset())
+  },[])
 
   useEffect(() => {
+    dispatch(__getMyPage())
     dispatch(__getHelp());
     dispatch(__getPopularHelp());
   }, [dispatch])
@@ -30,62 +31,55 @@ const Help = () => {
     setSelect(e.target.value);
   };
 
-  // if (isLoading) {
-  //   return <Loading />;
-  // }
-
   return (
-    <HelpContainer>
-      <BannerWrap>
-        <Banner />
-      </BannerWrap>
-      <HelpWrap>
-        <Select name='state' onChange={handleSelect}>
+    <StHelpContainer>
+      <StBannerWrap>
+        <StBanner />
+      </StBannerWrap>
+      <StHelpWrap>
+        <StSelect name='state' onChange={handleSelect}>
           <option value='new'>최신순</option>
           <option value='popular'>인기순</option>
-        </Select>
-        {/* <Loading /> */}
-        <HelpList>
+        </StSelect>
+        <StHelpList>
           <>
             {select === "new"&& helps && helps.length > 0 ? (
               <div>
-                {helps && helps.slice(0).map((help) => (
+                {helps && helps.map((help) => (
                   <HelpCard key={help.articleId} id={help.articleId} help={help} />
                 ))}
               </div>
             ) : 
             select === "popular"&& helpPopular && helpPopular.length > 0 ?
            (<div>
-            {helpPopular && helpPopular.slice(0).map((help) => (
+            {helpPopular && helpPopular.map((help) => (
               <HelpCard key={help.articleId} id={help.articleId} help={help} />
             ))}
           </div>) :
             (
-              <NoneData>
-                <NoneDataImg></NoneDataImg>
+              <StNoneData>
+                <StNoneDataImg></StNoneDataImg>
                 <p>내가 쓴 게시글이 없습니다</p>
-              </NoneData>
+              </StNoneData>
             )}
           </>
-        </HelpList>
-      </HelpWrap>
-    </HelpContainer>
+        </StHelpList>
+      </StHelpWrap>
+    </StHelpContainer>
   );
 };
 
-export default Help;
+export default React.memo(Help);
 
-const HelpContainer = styled.div`
+const StHelpContainer = styled.div`
   width: 100%;
   height: 100%;
-  /* height: 100vh; */
   gap: 12px;
 `;
 
-const BannerWrap = styled.div`
+const StBannerWrap = styled.div`
   width: 100%;
   height: 190px;
-  /* height: 20% */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -93,32 +87,26 @@ const BannerWrap = styled.div`
   margin-bottom: 12px;
   position: absolute;
 `
-const Banner = styled.div`
+const StBanner = styled.div`
   height: 190px;
-  /* height: 20% */
   width: 95%;
-  /* border: 1px solid red; */
   background-image: url(${helporange});
-  /* background-image: url(${helpwhite}); */
   background-position: center;
   background-size: 100% 100%;
 `
 
-const HelpWrap = styled.div`
+const StHelpWrap = styled.div`
   position: relative;
   top: 170px;
-  width: 100%;
-  /* height: 100vh; */
+  /* width: 100%; */
   height: 62%;
   border-radius: 20px;
   background-color: white;
   padding: 10px 5px 10px 5px;
-  /* border: 1px solid red; */
 `;
 
-const Select = styled.select`
+const StSelect = styled.select`
   display: flex;
-  /* margin: 0 auto; */
   margin-left: auto;
   margin-right: 10px;
   margin-bottom: 10px;
@@ -132,28 +120,17 @@ const Select = styled.select`
   outline: none;
 `;
 
-const HelpList = styled.div`
-  /* height: 100%; */
+const StHelpList = styled.div`
   width: 95%;
   height: 95%;
   margin: 0 auto;
-  /* border: 1px solid green; */
   overflow-y: scroll;
-  /* overflow-y: auto; */
   ::-webkit-scrollbar{
     width: 0px;
-    /* height: 100vh; */
   }
-  /* ::-webkit-scrollbar-thumb{
-    background: #f7931e;
-    height: 100%;
-  }
-  ::-webkit-scrollbar-track{
-    background: #f7931e;
-  } */
 `;
 
-const NoneData = styled.div`
+const StNoneData = styled.div`
     width: 100%;
     height: 100%;
     display: flex;
@@ -164,7 +141,7 @@ const NoneData = styled.div`
     font-weight: 500;
     font-size: 16px;
 `
-const NoneDataImg = styled.div`
+const StNoneDataImg = styled.div`
     width: 50px;
     height: 50px;
     background-image: url(${nonedatasquare});

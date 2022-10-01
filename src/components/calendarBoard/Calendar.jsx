@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect ,useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +8,7 @@ import CalendarCard from './CalendarCard';
 import calendarorange from '../../assets/calendarorange.png';
 import './CalendarModal.css';
 import nonedatasquare from '../../assets/nonedatasquare.png';
+import { __getMyPage, __getReset } from "../../redux/modules/MyPageSlice";
 
 const Calendar = () => {
   const dispatch = useDispatch();
@@ -15,7 +17,12 @@ const Calendar = () => {
   const { calendarPopular } = useSelector((state) => state.calendars);
   const [select, setSelect] = useState('new');
 
+  useEffect(()=>{
+    dispatch(__getReset())
+  },[])
+
   useEffect(() => {
+    dispatch(__getMyPage())
     dispatch(__getCalendar());
     dispatch(__getPopularCalendar());
   }, [dispatch]);
@@ -25,16 +32,16 @@ const Calendar = () => {
   };
 
   return (
-    <HelpContainer>
-      <BannerWrap>
-        <Banner />
-      </BannerWrap>
-      <HelpWrap>
-      <Select name='state' onChange={handleSelect}>
+    <StHelpContainer>
+      <StBannerWrap>
+        <StBanner />
+      </StBannerWrap>
+      <StHelpWrap>
+      <StSelect name='state' onChange={handleSelect}>
           <option value='new'>최신순</option>
           <option value='popular'>인기순</option>
-        </Select>
-        <HelpList>
+        </StSelect>
+        <StHelpList>
           <>
           {select === "new"&&calendars && calendars.length > 0 ? (
             <div>
@@ -51,29 +58,28 @@ const Calendar = () => {
            ))}
          </div>) :
           (
-            <NoneData>
-                <NoneDataImg></NoneDataImg>
+            <StNoneData>
+                <StNoneDataImg></StNoneDataImg>
                 <p>내가 쓴 게시글이 없습니다</p>
-              </NoneData>
+              </StNoneData>
           )}
           </>
-        </HelpList>
-      </HelpWrap>
-    </HelpContainer>
+        </StHelpList>
+      </StHelpWrap>
+    </StHelpContainer>
   );
 };
 
-export default Calendar;
+export default React.memo(Calendar);
 
-const HelpContainer = styled.div`
+const StHelpContainer = styled.div`
   gap: 12px;
-  /* height: 100vh; */
   width: 100%;
   height: 100%;
-  /* overflow-y: scroll; */
+  /* overflow-x: hidden; */
 `;
 
-const BannerWrap = styled.div`
+const StBannerWrap = styled.div`
   width: 100%;
   height: 190px;
   display: flex;
@@ -84,26 +90,25 @@ const BannerWrap = styled.div`
   position: absolute;
 `;
 
-const Banner = styled.div`
+const StBanner = styled.div`
   height: 190px;
   width: 95%;
-  /* border: 1px solid red; */
   background-image: url(${calendarorange});
   background-position: center;
   background-size: 100% 100%;
 `;
 
-const HelpWrap = styled.div`
+const StHelpWrap = styled.div`
   position: relative;
   top: 170px;
-  width: 100%;
+  /* width: 100%; */
   height: 62%;
   border-radius: 20px;
   background-color: white;
   padding: 10px 5px 10px 5px;
 `;
 
-const Select = styled.select`
+const StSelect = styled.select`
   display: flex;
   margin-left: auto;
   margin-right: 10px;
@@ -118,19 +123,17 @@ const Select = styled.select`
   outline: none;
 `;
 
-const HelpList = styled.div`
-  /* border: 1px solid red; */
+const StHelpList = styled.div`
   width: 95%;
   height: 95%;
   margin: 0 auto;
   overflow-y: scroll;
   ::-webkit-scrollbar {
     width: 0px;
-    /* height: 100vh; */
   }
 `;
 
-const NoneData = styled.div`
+const StNoneData = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
@@ -142,10 +145,11 @@ const NoneData = styled.div`
   font-size: 16px;
 `;
 
-const NoneDataImg = styled.div`
+const StNoneDataImg = styled.div`
   width: 50px;
   height: 50px;
   background-image: url(${nonedatasquare});
   background-position: center;
   background-size: 100% 100%;
+  margin-bottom: 5px;
 `;

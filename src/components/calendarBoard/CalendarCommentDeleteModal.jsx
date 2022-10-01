@@ -1,10 +1,9 @@
-import React, { useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { AiOutlineInfoCircle } from 'react-icons/ai';
-import { logout } from '../../shared/cookies';
 import { useDispatch, useSelector } from 'react-redux';
-import { __getCalendar, __deleteCalendarComment } from '../../redux/modules/CalendarSlice';
+import { __getCalendar, __deleteCalendarComment, __getDetailCalendar } from '../../redux/modules/CalendarSlice';
+import exclamation from "../../assets/exclamation.png"
 
 const CalendarCommentDeleteModal = ({ setModalOpen, comment, setShowComment}) => {
 
@@ -15,8 +14,9 @@ const CalendarCommentDeleteModal = ({ setModalOpen, comment, setShowComment}) =>
 
   const { calendars } = useSelector((state) => state.calendars)
   const { id } = useParams();
-  const calendarsfind = calendars.find((Calendar) => Calendar.articleId === Number(id))
-  const { commentId } = calendarsfind.commentList.find((commentmap) => commentmap.commentId === comment.commentId)
+  const { calendarfind } = useSelector((state) => state.calendars)
+  // const calendarsfind = calendars.find((Calendar) => Calendar.articleId === Number(id))
+  const { commentId } = calendarfind.commentList.find((commentmap) => commentmap.commentId === comment.commentId)
 
     const onClickDelete = async () => {
         const commentDelete = {
@@ -24,42 +24,40 @@ const CalendarCommentDeleteModal = ({ setModalOpen, comment, setShowComment}) =>
             commentId: commentId
         }
        await dispatch(__deleteCalendarComment(commentDelete))
-       await dispatch(__getCalendar())
+       await dispatch(__getDetailCalendar(id))
     }
   return (
-    <Container>
-      <Wrap>
-        <ModalContainer>
-          <FirstWrap>
-            <ModalTop>
-              <AiOutlineInfoCircle style={{ color: '#f7931e' }} size='28' />
-              <TopTitle>해당 댓글을 삭제하시겠습니까?</TopTitle>
-            </ModalTop>
-            <ModalBottom onClick={closeModal}>
-              <BottomTitle
+    <StContainer>
+      <StWrap>
+        <StModalContainer>
+          <StFirstWrap>
+            <StModalTop>
+              <StExclamation/>
+              <StTopTitle>해당 댓글을 삭제하시겠습니까?</StTopTitle>
+            </StModalTop>
+            <StModalBottom onClick={closeModal}>
+              <StBottomTitle
             onClick={onClickDelete}
-              >삭제하기</BottomTitle>
-              <BottomTitle>돌아가기</BottomTitle>
-            </ModalBottom>
-          </FirstWrap>
-        </ModalContainer>
-      </Wrap>
-    </Container>
+              >삭제하기</StBottomTitle>
+              <StBottomTitle>돌아가기</StBottomTitle>
+            </StModalBottom>
+          </StFirstWrap>
+        </StModalContainer>
+      </StWrap>
+    </StContainer>
   );
 };
 
 export default CalendarCommentDeleteModal;
 
-const Container = styled.div`
+const StContainer = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* align-items: center; */
   width: 100%;
   z-index: 10;
   overflow: hidden;
-  /* bottom: 0; */
   top: 0;
   @media screen and (max-width: 1024px) {
     background-image: none;
@@ -81,14 +79,11 @@ const Container = styled.div`
   }
 `;
 
-const Wrap = styled.div`
+const StWrap = styled.div`
 position: relative;
   width: 100%;
-  /* width: 420px; */
   max-width: 420px;
   height: 100vh;
-  /* height: 100%; */
-  /* border: 1px solid red; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -96,7 +91,7 @@ position: relative;
   overflow-y: hidden;
 `;
 
-const ModalContainer = styled.div`
+const StModalContainer = styled.div`
   width: 80%;
   height: 180px;
   background-color: white;
@@ -106,11 +101,11 @@ const ModalContainer = styled.div`
   border-radius: 16px;
 `;
 
-const FirstWrap = styled.div`
+const StFirstWrap = styled.div`
   width: 100%;
   height: 100%;
 `;
-const ModalTop = styled.div`
+const StModalTop = styled.div`
   width: 100%;
   height: 75%;
   display: flex;
@@ -120,14 +115,21 @@ const ModalTop = styled.div`
   gap: 12px;
 `;
 
-const TopTitle = styled.div`
+const StExclamation = styled.div`
+  width: 30px;
+  height: 30px;
+  background-image: url(${exclamation});
+  background-position: center;
+  background-size: 100% 100%;
+`
+const StTopTitle = styled.div`
   font-size: 16px;
   font-weight: 500;
   padding: 0 10px;
   text-align: center;
   word-break: keep-all;
 `;
-const ModalBottom = styled.div`
+const StModalBottom = styled.div`
   width: 100%;
   height: 25%;
   color: white;
@@ -140,7 +142,7 @@ const ModalBottom = styled.div`
   gap: 10px;
 `;
 
-const BottomTitle = styled.div`
+const StBottomTitle = styled.div`
   font-size: 16px;
   font-weight: 700;
   /* border: 1px solid red; */

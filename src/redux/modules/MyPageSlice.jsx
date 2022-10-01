@@ -7,6 +7,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 const initialState = {
   mypages: [],
   myarticles: [],
+  totalCount: null,
   isLoading: false,
   error: null,
 };
@@ -22,13 +23,32 @@ export const __getMyPage = createAsyncThunk("mypages/getMyPage", async (payload,
         // RefreshToken : getCookie('refreshToken')
       },
     });
-    console.log(data.data)
+    // console.log(data.data)
     return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
-    console.log('error', error);
+    // console.log('error', error);
     return thunkAPI.rejectWithValue(error);
   }
 });
+
+export const __getReset = createAsyncThunk("mypages/getReset", async (payload, thunkAPI) => {
+  try {
+    const data = await axios({
+      method: 'get',
+      url: `${BASE_URL}/myPage/reset`,
+      headers: {
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+        // RefreshToken : getCookie('refreshToken')
+      },
+    });
+    // console.log(data.data)
+    return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+    // console.log('error', error);
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
 
 // 프로필 이미지 수정
 export const __patchProfileImage = createAsyncThunk("mypages/patchProfileImage", async (payload, thunkAPI) => {
@@ -43,23 +63,23 @@ export const __patchProfileImage = createAsyncThunk("mypages/patchProfileImage",
       },
       data: payload
     });
-    console.log(payload)
-    console.log(data.data)
+    // console.log(payload)
+    // console.log(data.data)
     return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
-    console.log('error', error);
+    // console.log('error', error);
     return thunkAPI.rejectWithValue(error);
   }
 });
 
 export const __getMyArticle = createAsyncThunk("myarticles/getMyArticles", async (payload, thunkAPI) => {
-  console.log("payload", payload)
+  // console.log("payload", payload)
   try {
     const data = await axios({
       method: 'get',
-      url: `${BASE_URL}/myPage/myArticle`,
+      // url: `${BASE_URL}/myPage/myArticle`,
       // 아래 무한스크롤 url
-      // url: `${BASE_URL}/myPage/myArticle?page=${payload}&size=${7}`,
+      url: `${BASE_URL}/myPage/myArticle2?page=${payload}&size=${5}`,
       payload, 
       headers: {
         // 'Content-Type': 'application/json',
@@ -67,16 +87,16 @@ export const __getMyArticle = createAsyncThunk("myarticles/getMyArticles", async
         // RefreshToken : getCookie('refreshToken')
       },
     });
-    console.log(data.data.content)
-    return thunkAPI.fulfillWithValue(data.data);
+    // console.log(data.data)
+    // console.log("payload", payload)
+    // return thunkAPI.fulfillWithValue(data.data);
     // 아래 무한 스크롤일때
-    // return thunkAPI.fulfillWithValue(data.data.content);
+    return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
-    console.log('error', error);
+    // console.log('error', error);
     return thunkAPI.rejectWithValue(error);
   }
 });
-
 
 export const MyPageSlice = createSlice({
   name: "mypages",
@@ -94,12 +114,26 @@ export const MyPageSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    //리셋용
+    [__getReset.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getReset.fulfilled]: (state, action) => {
+      state.isLoading= false;
+      // console.log("action.payload",action.payload)
+      state.myarticles = []
+    },
+    [__getReset.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
     [__patchProfileImage.pending]: (state) => {
       state.isLoading = true;
     },
     [__patchProfileImage.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log('action.payload', action.payload)
+      // console.log('action.payload', action.payload)
       // state.instas = state.instas.filter((data) => data.boardId !== action.payload);
     },
     [__patchProfileImage.rejected]: (state, action) => {
@@ -111,13 +145,15 @@ export const MyPageSlice = createSlice({
     },
     [__getMyArticle.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.myarticles = action.payload;
+      // state.myarticles = action.payload;
       // 아래 무한스크롤일때
-      // state.myarticles.push(...action.payload);
+      state.myarticles.push(...action.payload.content);
+      state.totalCount = action.payload.totalElements;
+      // console.log('action.payload', action.payload);
     },
     [__getMyArticle.rejected]: (state, action) => {
       state.isLoading = false;
-      state.error = action.payload;
+      state.error = action.payload.message;
     },
   },
 });

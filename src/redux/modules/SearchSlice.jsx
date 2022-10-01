@@ -29,7 +29,7 @@ const initialState = {
 // });
 
 export const __getSearch = createAsyncThunk("searchs/getsearchs", async (props)=>{
-  console.log(props)
+  // console.log(props)
   return await axios
   .get(`http://localhost:3001/helps?keyword=${props}` )
   .then((response) => response.data)
@@ -46,10 +46,10 @@ export const __getSearchArticle = createAsyncThunk("searchs/getSearchArticle", a
         // RefreshToken : getCookie('refreshToken')
       },
     });
-      console.log(data)
+      // console.log(data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
-      console.log('error', error);
+      // console.log('error', error);
       return thunkAPI.rejectWithValue(error);
   }
 });
@@ -65,10 +65,10 @@ export const __getSearchArticlePopular = createAsyncThunk("searchs/getSearchArti
         // RefreshToken : getCookie('refreshToken')
       },
     });
-      console.log(data)
+      // console.log(data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
-      console.log('error', error);
+      // console.log('error', error);
       return thunkAPI.rejectWithValue(error);
   }
 });
@@ -78,7 +78,7 @@ export const __postSearch = createAsyncThunk("searchs/postSearch", async (payloa
     console.log('payload', payload)
     try {
         const data = await axios.post("http://localhost:3001/searchs", payload);
-        console.log('data', data)
+        // console.log('data', data)
         return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
         return thunkAPI.rejectWithValue(error);
@@ -103,8 +103,8 @@ export const SearchSlice = createSlice({
       // },
       
       [__getSearch.fulfilled]: (state, action) => {
-        console.log(state.helps)
-        console.log(action.payload)
+        // console.log(state.helps)
+        // console.log(action.payload)
         state.helps = action.payload.title;
         // state.result_musicArtist = action.payload.musicArtist;
         // state.result_musicTitle = action.payload.musicTitle;

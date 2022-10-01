@@ -1,10 +1,9 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { AiOutlineInfoCircle } from 'react-icons/ai';
-import { logout } from '../../shared/cookies';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteHelp } from '../../redux/modules/HelpSlice';
+import { __deleteHelp, __getHelp , __getDetailHelp} from '../../redux/modules/HelpSlice';
+import exclamation from "../../assets/exclamation.png"
 
 const HelpDeleteModal = ({ setModalOpen }) => {
 
@@ -16,47 +15,46 @@ const HelpDeleteModal = ({ setModalOpen }) => {
   const navigate = useNavigate();
   const { helps } = useSelector((state) => state.helps)
   const { id } = useParams();
-  const helpsfind = helps.find((help) => help.articleId === Number(id))
+  // const helpsfind = helps.find((help) => help.articleId === Number(id))
+  const { helpsfind } = useSelector((state) => state.helps);
 
 
   return (
-    <Container>
-      <Wrap>
-        <ModalContainer>
-          <FirstWrap>
-            <ModalTop>
-              <AiOutlineInfoCircle style={{ color: '#f7931e' }} size='28' />
-              <TopTitle>해당 게시글을 삭제하시겠습니까?</TopTitle>
-            </ModalTop>
-            <ModalBottom onClick={closeModal}>
-              <BottomTitle
+    <StContainer>
+      <StWrap>
+        <StModalContainer>
+          <StFirstWrap>
+            <StModalTop>
+            <StExclamation/>
+              <StTopTitle>해당 게시글을 삭제하시겠습니까?</StTopTitle>
+            </StModalTop>
+            <StModalBottom onClick={closeModal}>
+              <StBottomTitle
               onClick={() => {
                 dispatch(__deleteHelp(helpsfind.articleId))
+                dispatch(__getDetailHelp(id))
                 navigate("/main")
               }}
-              >삭제하기</BottomTitle>
-              <BottomTitle>돌아가기</BottomTitle>
-            </ModalBottom>
-          </FirstWrap>
-        </ModalContainer>
-      </Wrap>
-    </Container>
+              >삭제하기</StBottomTitle>
+              <StBottomTitle>돌아가기</StBottomTitle>
+            </StModalBottom>
+          </StFirstWrap>
+        </StModalContainer>
+      </StWrap>
+    </StContainer>
   );
 };
 
 export default HelpDeleteModal;
 
-const Container = styled.div`
+const StContainer = styled.div`
   position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* align-items: center; */
   width: 100%;
   z-index: 10;
   overflow: hidden;
-  /* bottom: 0; */
-  /* border: 1px solid red; */
   @media screen and (max-width: 1024px) {
     background-image: none;
   }
@@ -77,14 +75,11 @@ const Container = styled.div`
   }
 `;
 
-const Wrap = styled.div`
+const StWrap = styled.div`
 position: relative;
   width: 100%;
-  /* width: 420px; */
   max-width: 420px;
   height: 100vh;
-  /* height: 100%; */
-  /* border: 1px solid red; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -92,7 +87,7 @@ position: relative;
   overflow-y: hidden;
 `;
 
-const ModalContainer = styled.div`
+const StModalContainer = styled.div`
   width: 80%;
   height: 180px;
   background-color: white;
@@ -102,11 +97,12 @@ const ModalContainer = styled.div`
   border-radius: 16px;
 `;
 
-const FirstWrap = styled.div`
+const StFirstWrap = styled.div`
   width: 100%;
   height: 100%;
 `;
-const ModalTop = styled.div`
+
+const StModalTop = styled.div`
   width: 100%;
   height: 75%;
   display: flex;
@@ -116,14 +112,23 @@ const ModalTop = styled.div`
   gap: 12px;
 `;
 
-const TopTitle = styled.div`
+const StExclamation = styled.div`
+  width: 30px;
+  height: 30px;
+  background-image: url(${exclamation});
+  background-position: center;
+  background-size: 100% 100%;
+`
+
+const StTopTitle = styled.div`
   font-size: 16px;
   font-weight: 500;
   padding: 0 10px;
   text-align: center;
   word-break: keep-all;
 `;
-const ModalBottom = styled.div`
+
+const StModalBottom = styled.div`
   width: 100%;
   height: 25%;
   color: white;
@@ -136,10 +141,9 @@ const ModalBottom = styled.div`
   gap: 10px;
 `;
 
-const BottomTitle = styled.div`
+const StBottomTitle = styled.div`
   font-size: 16px;
   font-weight: 700;
-  /* border: 1px solid red; */
   background-color: #f7931e;
   border-radius: 16px;
   width: 40%;

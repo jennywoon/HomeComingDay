@@ -1,101 +1,218 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { VscBell } from "react-icons/vsc";
-import BottomTap from './BottomTap';
-import logo from "../assets/logo.png"
+import logo from '../assets/logo.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { __getMyPage } from '../redux/modules/MyPageSlice';
-import Cookies from 'universal-cookie';
+import { getCookie } from '../shared/cookies';
+import logoutAlert from '../assets/logoutAlert.png';
+import { __getNoticeCount } from '../redux/modules/NoticeSlice';
+import bell from '../assets/Bell.png';
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.mypages.mypages);
+  const count = useSelector((state) => state.notice.notices.count);
+  // console.log(count);
 
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    // useEffect(() => (
-    //     dispatch(__getMyPage())
-    // ), [dispatch])
-    const data = useSelector((state) => state.mypages.mypages)
-    console.log(data);
-    const cookies = new Cookies();
+  // 토큰 만료되면 로그아웃
+  const navigate = useNavigate();
+  const token = getCookie('accessToken');
+  const [loginOn, setLoginOn] = useState(true);
 
-    return (
-        <HeaderContainer>
-            <HeaderWrap>
-                <Logo onClick={() => { navigate("/main") }} style={{ cursor: "pointer" }} />
-                <div style={{fontSize:"20px"}}>
-                    {data && data.schoolName}
-                    {/* {cookies.get("schoolname")} */}
-                    </div>
-                <IconWrap>
-                    <VscBell size="27"
-                        onClick={() => { navigate("/notice") }} style={{ cursor: "pointer" }}
-                    />
-                    <NewDiv>
-                        <NewTitle>N</NewTitle>
-                    </NewDiv>
-                </IconWrap>
-            </HeaderWrap>
+  useEffect(() => {
+    if (!token) {
+      setLoginOn(false);
+    }
+  }, [loginOn]);
 
-        </HeaderContainer>
+  useEffect(() => {
+    dispatch(__getNoticeCount());
+  }, [dispatch]);
 
-    );
+  return (
+    <>
+      {loginOn ? (
+        ''
+      ) : (
+        <StNeedLogin>
+          <StNeedLoginModal>
+            <StLoginModalTop>자동 로그아웃 안내</StLoginModalTop>
+            <StLoginModalImg>
+              <StLogoutAlert
+                src={logoutAlert}
+                alt='로그인 필요'
+              />
+            </StLoginModalImg>
+            <StLoginModaltxt>
+              로그인 후 1시간이 경과되어
+              <br />
+              자동 로그아웃 되었습니다
+            </StLoginModaltxt>
+            <StNeedLoginBtn
+              onClick={() => {
+                navigate('/login');
+              }}
+            >
+              다시 로그인 하기
+            </StNeedLoginBtn>
+          </StNeedLoginModal>
+        </StNeedLogin>
+      )}
+      <StHeaderContainer>
+        <StHeaderWrap>
+          <StLogo
+            onClick={() => {
+              navigate('/main');
+            }}
+          />
+          <StSchoolName>{data && data.schoolName}</StSchoolName>
+          <StIconWrap>
+            <StBellimg
+              src={bell}
+              alt='알림 아이콘'
+              onClick={() => {
+                navigate('/notice');
+              }}
+            />
+            {count > 0 ? (
+              <StNewDiv>
+                <StNewTitle>N</StNewTitle>
+              </StNewDiv>
+            ) : null}
+          </StIconWrap>
+        </StHeaderWrap>
+      </StHeaderContainer>
+    </>
+  );
 };
 
 export default Header;
 
-const HeaderContainer = styled.div`
-    /* position: sticky;
-    top: 0; */
-    /* background-color: #eee; */
-    width: 100%;
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
-    font-weight: bold;
-    border-bottom: 1px solid #eeeded;
-    /* box-shadow: 0px 2px 13px rgba(107, 107, 107, 0.1); */
-    /* border: 1px solid green; */
+const StHeaderContainer = styled.div`
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-weight: bold;
+  border-bottom: 1px solid #eeeded;
+`;
+
+const StLogo = styled.div`
+  width: 27px;
+  height: 36px;
+  background-image: url(${logo});
+  background-position: center;
+  background-size: 100% 100%;
+  cursor: pointer;
+`;
+
+const StHeaderWrap = styled.div`
+  width: 90%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const StSchoolName = styled.div`
+  font-size: 20px;
 `
 
-const Logo = styled.div`
-    width: 27px;
-    height: 36px;
-    background-image: url(${logo});
-    background-position: center;
-    background-size: 100% 100%;
+const StIconWrap = styled.div`
+  display: flex;
+  align-items: start;
+  position: relative;
+`;
+
+const StBellimg = styled.img`
+  cursor: pointer;
 `
-const HeaderWrap = styled.div`
-    width: 90%;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /* border: 1px solid red; */
+
+const StNewDiv = styled.div`
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #f7931e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 15px;
+  position: absolute;
+`;
+
+const StNewTitle = styled.div`
+  font-size: 10px;
+  font-weight: 600;
+  color: white;
+`;
+
+const StNeedLogin = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(87, 87, 87, 0.3);
+  z-index: 99999;
+`;
+
+const StNeedLoginBtn = styled.button`
+  background: #ffffff;
+  padding: 10px 0px;
+  color: #f7931e;
+  border-radius: 9px;
+  margin-top: 17px;
+  width: 85%;
+  border: 1px solid #f7931e;
+  border-radius: 12px;
+  cursor: pointer;
+`;
+
+const StNeedLoginModal = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  height: 240px;
+  z-index: 99999;
+  box-shadow: 0px 14px 24px -4px rgba(117, 146, 189, 0.32),
+    inset 0px 8px 14px rgba(255, 255, 255, 0.3);
+  border-radius: 21px;
+  width: 80%;
+  text-align: center;
+`;
+
+const StLoginModalTop = styled.div`
+  width: 100%;
+  height: 44px;
+  background: #f7931e;
+  font-weight: 700;
+  font-size: 16px;
+  border-radius: 16px 16px 0px 0px;
+  color: #ffffff;
+  line-height: 44px;
+`;
+
+const StLoginModalImg = styled.div`
+  width: 100%;
+  height: 70px;
+  line-height: 70px;
+`;
+
+const StLogoutAlert = styled.img`
+  width: 63px;
 `
-const HeaderTitle = styled.div`
-`
-const IconWrap = styled.div`
-    display: flex;
-    /* border: 1px solid red; */
-    align-items: start;
-    position: relative;
-`
-const NewDiv = styled.div`
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: #f7931e;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    left: 15px;
-    position: absolute;
-`
-const NewTitle = styled.div`
-    font-size: 10px;
-    font-weight: 600;
-    color: white;
-`
+
+const StLoginModaltxt = styled.div`
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+`;

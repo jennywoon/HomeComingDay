@@ -2,28 +2,33 @@ import React, { useState, useEffect } from 'react';
 import Header from '../Header';
 import styled from 'styled-components';
 import { IoIosArrowBack } from 'react-icons/io'
-import { AiOutlineMenu } from 'react-icons/ai'
-import Img from "../../assets/naverIcon.png"
 import FreeTalkDetailComment from './FreeTalkDetailComment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteFreeTalk, __getDetailFreeTalk, __getFreeTalk, __getFreeTalkComment, __postFreeTalkComment, __postFreeTalkHeart } from '../../redux/modules/FreeTalkSlice';
+import { __getDetailFreeTalk, __getFreeTalk, __postFreeTalkComment, __postFreeTalkHeart } from '../../redux/modules/FreeTalkSlice';
 import { useRef } from 'react';
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
-import { BiDotsVerticalRounded } from "react-icons/bi";
-import { GrFormPrevious, GrFormNext } from "react-icons/gr";
+import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md';
 import FreeTalkDeleteModal from './FreeTalkDeleteModal';
 import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
 import heartColorImg from '../../assets/heartColor.png';
+import { __getMyPage } from '../../redux/modules/MyPageSlice';
+import { chatApi } from '../chatBoard/ChatApi';
+import { __getNoticeCount } from '../../redux/modules/NoticeSlice';
+import dots from "../../assets/dots.png"
 
 const FreeTalkDetail = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+
+
     const { freetalks } = useSelector((state) => state.freetalks)
+    const {freetalksfind} = useSelector((state) => state.freetalks)
     const data = useSelector((state) => state.mypages.mypages)
     // const { freeComments } = useSelector((state) => state.freetalks)
     const { id } = useParams();
@@ -32,28 +37,49 @@ const FreeTalkDetail = () => {
     const [showChaet, setShowChaet] = useState(false)
     const [comment, setComment] = useState("")
     const modalRef = useRef(null);
+    
+    // const freetalksfind = freetalks.find((freetalk) => freetalk.articleId === Number(id))
+    // console.log("freetalksfind",freetalksfind)
+    // console.log("detailFreeTalks",detailFreeTalkss)
+    //모달닫기
+    const node = useRef();
 
+    useEffect(() => {
+        const clickOutside = (e) => {
+            // 모달이 열려 있고 모달의 바깥쪽을 눌렀을 때 창 닫기
+            if (show && node.current && !node.current.contains(e.target)) {
+                setShow(false);
+            }
+        };
+        document.addEventListener("mousedown", clickOutside);
+        return () => {
+            // Cleanup the event listener
+            document.removeEventListener("mousedown", clickOutside);
+        };
+    }, [show]);
+
+
+    // 댓글
     const onChangePostHandler = (e) => {
         setComment(e.target.value)
     }
 
     //조회수반영
     useEffect(() => {
-        dispatch(__getDetailFreeTalk(id));
-    }, [dispatch])
+    dispatch(__getDetailFreeTalk(id));
+    dispatch(__getMyPage())
+    dispatch(__getFreeTalk())
+}, [dispatch])
 
-    const freetalksfind = freetalks.find((freetalk) => freetalk.articleId === Number(id))
-
-    console.log("freetalks", freetalks, "freetalksfind", freetalksfind)
 
     const onCilckShow = () => {
         setShow(!show)
     }
-
+    // 1:1 채팅버튼
     const onCilckChaetShow = () => {
         setShowChaet(!showChaet)
     }
-
+    // 수정버튼
     const onClickRevice = () => {
         navigate(`/freetalkupdate/${id}`)
     }
@@ -73,11 +99,12 @@ const FreeTalkDetail = () => {
         e.preventDefault();
         const newcomment = {
             content: comment,
-            articleId: id
+            articleId: Number(id)
         }
         await dispatch(__postFreeTalkComment(newcomment));
-        await dispatch(__getFreeTalk());
         setComment("");
+        await dispatch(__getDetailFreeTalk(id));
+        await dispatch(__getNoticeCount());
     }
     // const closeModal = (e) => {
     //     if (!modalRef.current.contains(e.target)) {
@@ -111,148 +138,165 @@ const FreeTalkDetail = () => {
         setModalOpen(true);
     }
 
-  // 좋아요
-  const heartClick = async () => {
-    const newHeart = {
-      articleId: id,
+    // 좋아요
+    const heartClick = async () => {
+        const newHeart = {
+            articleId: id,
+        };
+        const response = await dispatch(__postFreeTalkHeart(newHeart));
+        // console.log(response.payload);
+        await dispatch(__getDetailFreeTalk(id));
     };
-    const response = await dispatch(__postFreeTalkHeart(newHeart));
-    // console.log(response.payload);
-    dispatch(__getFreeTalk());
-  };
+
+    // 채팅 생성
+    const createChat = (userId) => {
+        chatApi
+            .createChat(userId)
+            .then((response) => {
+                navigate(`/chat/${response.data}`);
+                console.log("userId", userId)
+                console.log("response", response.data)
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
 
     return (
-        <Container>
+        <StContainer ref={node}>
             {modalOpen && <FreeTalkDeleteModal setModalOpen={setModalOpen} />}
             <Header />
-            <FirstWrap>
-                <DetailHeader>
+            <StFirstWrap>
+                <StDetailHeader>
                     <IoIosArrowBack size="25px" cursor="pointer" onClick={() => { navigate("/freetalk") }} />
-                    <HeaderTitle>자유토크</HeaderTitle>
-                    <div style={{ width: "25px", height: "25px" }}></div>
-                </DetailHeader>
-            </FirstWrap>
-            <FreeTalkContainer>
-                <HelpWrap>
-                    <DetailWrap>
-                        <DetailBody>
-                            <Bodytop>
-                                <Bodyimg src={freetalksfind && freetalksfind.userImage} alt="" />
-                                <Bodytxt>
-                                    <Txtname onClick={onCilckChaetShow}>{freetalksfind && freetalksfind.username}</Txtname>
-                                    <Txtstudent>{freetalksfind && freetalksfind.departmentName} <span> {freetalksfind && freetalksfind.admission} </span></Txtstudent>
+                    <StHeaderTitle>자유토크</StHeaderTitle>
+                    <StHeaderDiv/>
+                </StDetailHeader>
+            </StFirstWrap>
+            <StFreeTalkContainer>
+                <StHelpWrap>
+                    <StDetailWrap>
+                        <StDetailBody>
+                            <StBodytop>
+                                <StBodyimg src={freetalksfind && freetalksfind.userImage} alt="" />
+                                <StBodytxt>
+                                    <StTxtname onClick={onCilckChaetShow}>{freetalksfind && freetalksfind.username}</StTxtname>
+                                    <StTxtstudent>{freetalksfind && freetalksfind.departmentName} <span> {freetalksfind && freetalksfind.admission} </span></StTxtstudent>
                                     {showChaet ?
-                                        <ChaetingBox>1:1채팅</ChaetingBox>
-                                        : null
-                                    }
-                                </Bodytxt>
+                                        <StChatWrap onClick={() => createChat(freetalksfind.userId)}>
+                                            {freetalksfind && freetalksfind.username !== data.username ?
+                                                <StChatingBox>
+                                                    1:1채팅
+                                                </StChatingBox> : null}
+                                        </StChatWrap> : null}
+                                </StBodytxt>
                                 {/* <AiOutlineMenu size="20px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }}
                                     onClick={onCilckShow} /> */}
-                                {freetalksfind.username === data.username ?
-                                <BiDotsVerticalRounded
-                                    size="20px" style={{ marginLeft: "auto", cursor: "pointer", color: "#bebebe" }}
-                                    onClick={onCilckShow} /> 
+                                {freetalksfind && freetalksfind.username === data.username ?
+                                    <StDots
+                                        onClick={onCilckShow} />
                                     : null}
 
                                 {show ?
-                                    <Revisebox ref={modalRef}>
+                                    <StRevisebox ref={node}>
                                         <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
                                         <DeleteButton onClick={showModal}>삭제</DeleteButton>
-                                    </Revisebox>
+                                    </StRevisebox>
                                     : null
                                 }
 
-                            </Bodytop>
-                            <BodyContent>
-                                <ContentTitle>{freetalksfind && freetalksfind.title}</ContentTitle>
-                                <ContentBody>{freetalksfind && freetalksfind.content}</ContentBody>
-                                {freetalksfind && freetalksfind.imageList.length > 0 ?
-                                    <ContentImgBox>
+                            </StBodytop>
+                            <StBodyContent>
+                                <StContentTitle>{freetalksfind && freetalksfind.title}</StContentTitle>
+                                <StContentBody>{freetalksfind && freetalksfind.content}</StContentBody>
+                                {freetalksfind && freetalksfind.imageList?.length !== 0 ?
+                                    <StContentImgBox>
                                         <Swiper
                                             {...swiperParams}
                                             ref={setSwiper}
                                             spaceBetween={50}
                                             slidesPerView={1}
                                         >
-                                            {freetalksfind && freetalksfind.imageList.map((image) => {
+                                            {freetalksfind && freetalksfind.imageList?.map((image) => {
                                                 return (
                                                     <SwiperSlide key={image.imageId}>
-                                                        <ContentImg src={image.imgUrl}></ContentImg>
+                                                        <StContentImg src={image.imgUrl}></StContentImg>
                                                     </SwiperSlide>
                                                 )
                                             })}
-                                            <PrevButton ref={navigationPrevRef}>
-                                                <PreviousBtn />
-                                            </PrevButton>
-                                            <NextButton ref={navigationNextRef}>
-                                                <NextBtn />
-                                            </NextButton>
+                                            <StPrevButton ref={navigationPrevRef}>
+                                                <StPreviousBtn />
+                                            </StPrevButton>
+                                            <StNextButton ref={navigationNextRef}>
+                                                <StNextBtn />
+                                            </StNextButton>
                                         </Swiper>
-                                    </ContentImgBox>
+                                    </StContentImgBox>
                                     : null}
-                                <BodyTxtBox>
-                                    <ContentView>
+                                <StBodyTxtBox>
+                                    <StContentView>
                                         {freetalksfind && freetalksfind.createdAt} | 조회수{' '}
                                         {freetalksfind && freetalksfind.views}
-                                    </ContentView>
-                                    <Count>
-                                        <CommentCount>
-                                            <CommentImg>
+                                    </StContentView>
+                                    <StCount>
+                                        <StCommentCount>
+                                            <StCommentImg>
                                                 <img src={commentImg} alt='댓글이미지' />
-                                            </CommentImg>
+                                            </StCommentImg>
                                             댓글 {freetalksfind && freetalksfind.commentCnt}
-                                        </CommentCount>
-                                        <HeartCount
+                                        </StCommentCount>
+                                        <StHeartCount
                                             onClick={heartClick}
                                         >
-                                            {freetalksfind &&freetalksfind.heart === true ? (
-                                                <HeartImg>
+                                            {freetalksfind && freetalksfind.heart === true ? (
+                                                <StHeartImg>
                                                     <img src={heartColorImg} alt='좋아요이미지' />
-                                                </HeartImg>
+                                                </StHeartImg>
                                             ) : (
-                                                <HeartImg>
+                                                <StHeartImg>
                                                     <img src={heartImg} alt='좋아요이미지' />
-                                                </HeartImg>
+                                                </StHeartImg>
                                             )}
-                                        좋아요 {freetalksfind && freetalksfind.heartCnt}
-                                        </HeartCount>
-                                    </Count>
-                                </BodyTxtBox>
-                            </BodyContent>
+                                            좋아요 {freetalksfind && freetalksfind.heartCnt}
+                                        </StHeartCount>
+                                    </StCount>
+                                </StBodyTxtBox>
+                            </StBodyContent>
 
-                            <BodyContainer>
+                            <StBodyContainer>
 
-                                <BodyCommentBox>
-                                    {freetalksfind && freetalksfind.commentList.length === 0 ?
-                                        <BodyComment>작성한 댓글이 없습니다 <br></br> 첫번째 댓글을 남겨보세요 </BodyComment>
+                                <StBodyCommentBox>
+                                    {freetalksfind && freetalksfind.commentList?.length === 0 ?
+                                        <StBodyComment>작성한 댓글이 없습니다 <br></br> 첫번째 댓글을 남겨보세요 </StBodyComment>
                                         :
                                         <>
-                                            {freetalksfind && freetalksfind.commentList.map((comment) => (
-                                                <FreeTalkDetailComment key={comment.commentId} comment={comment} freetalksfind={freetalksfind} modalRef={modalRef} data={data}/>
+                                            {freetalksfind && freetalksfind.commentList?.map((comment) => (
+                                                <FreeTalkDetailComment key={comment.commentId} comment={comment} freetalksfind={freetalksfind} modalRef={modalRef} data={data} />
                                             ))}
                                         </>
                                     }
-                                </BodyCommentBox>
-                            </BodyContainer>
-                        </DetailBody>
-                    </DetailWrap>
-                </HelpWrap>
-                <CommentContainer onSubmit={onClickPostComment}>
-                    <CommentBox>
-                        <CommentDiv>
-                            <CommentPost placeholder='댓글을 입력해주세요' value={comment} onChange={onChangePostHandler} ></CommentPost>
-                            <CommentButton type="submit">올리기</CommentButton>
-                        </CommentDiv>
-                    </CommentBox>
-                </CommentContainer>
-            </FreeTalkContainer>
-        </Container>
+                                </StBodyCommentBox>
+                            </StBodyContainer>
+                        </StDetailBody>
+                    </StDetailWrap>
+                </StHelpWrap>
+                <StCommentContainer onSubmit={onClickPostComment}>
+                    <StCommentBox>
+                        <StCommentDiv>
+                            <StCommentPost placeholder='댓글을 입력해주세요' value={comment} onChange={onChangePostHandler} ></StCommentPost>
+                            <StCommentButton type="submit">올리기</StCommentButton>
+                        </StCommentDiv>
+                    </StCommentBox>
+                </StCommentContainer>
+            </StFreeTalkContainer>
+        </StContainer>
     );
 };
 
 export default FreeTalkDetail;
 
-const Container = styled.div`
+const StContainer = styled.div`
     position: relative;
     width: 100%;
     height: 100vh;
@@ -261,7 +305,7 @@ const Container = styled.div`
     flex-direction: column;
     /* align-items: center; */
 `
-const FirstWrap = styled.div`
+const StFirstWrap = styled.div`
     display: flex;
     /* align-items: center; */
     justify-content: center;
@@ -271,7 +315,7 @@ const FirstWrap = styled.div`
     height: 60px;
     margin: auto;
 `
-const DetailHeader = styled.div`
+const StDetailHeader = styled.div`
     width: 100%;
     height: 50px;
     display: flex;
@@ -279,7 +323,7 @@ const DetailHeader = styled.div`
     justify-content: space-between;
     position: sticky;
 `
-const FreeTalkContainer = styled.div`
+const StFreeTalkContainer = styled.div`
     width: 90%;
     height: 86%;
     border: 1px solid #eee;
@@ -292,7 +336,7 @@ const FreeTalkContainer = styled.div`
     margin: auto;
 `
 
-const HelpWrap = styled.div`
+const StHelpWrap = styled.div`
     width: 90%;
     height: 100%;
     /* border: 1px solid blue; */
@@ -301,7 +345,7 @@ const HelpWrap = styled.div`
     width: 0px;
   }
 `
-const DetailWrap = styled.form`
+const StDetailWrap = styled.form`
   width: 100%;
   /* height:100%; */
   background-color: white;
@@ -309,11 +353,16 @@ const DetailWrap = styled.form`
   flex-direction: column;
 `;
 
-const HeaderTitle = styled.div`
+const StHeaderTitle = styled.div`
   font-weight: 700;
   font-size: 16px;
 `;
-const Revisebox = styled.div`
+
+const StHeaderDiv = styled.div`
+  width: 25px;
+  height: 25px;
+`
+const StRevisebox = styled.div`
     border: 1px solid #f1f0f0;
     z-index: 5;
     border-radius: 10px;
@@ -354,13 +403,13 @@ const DeleteButton = styled.button`
     }
 `
 
-const DetailBody = styled.div`
+const StDetailBody = styled.div`
     border-radius: 20px;
     width: 100%;
     height: 100%;
 `
 
-const Bodytop = styled.div`
+const StBodytop = styled.div`
     display:flex;
     align-items: center;
     /* padding:20px 20px 10px 20px; */
@@ -368,49 +417,65 @@ const Bodytop = styled.div`
     margin: 10px 0; 
 `
 
-const Bodyimg = styled.img`
+const StBodyimg = styled.img`
     width:40px;
     height: 40px;
     border-radius: 50%;
 `
 
-const Bodytxt = styled.div`
+const StBodytxt = styled.div`
     display: flex;
     flex-direction: column;
     margin-left: 10px;
     position:relative;
 `
+const StDots = styled.div`
+  width: 20px;
+  height: 20px;
+  background-image: url(${dots});
+  background-size: 100% 100%;
+  background-position: center;
+  margin-left: auto;
+  cursor: pointer;
+`
 
-const Txtname = styled.h3`
+const StTxtname = styled.h3`
     cursor:pointer;
+    font-weight: 600;
+font-size: 16px;
     /* margin: 0px; */
 `
-const Txtstudent = styled.p`
+const StTxtstudent = styled.p`
     /* margin: 0px; */
     font-size: 12px;
     color: #bebebe;
 `
-const ChaetingBox = styled.div`
-    border: 1px solid #f1f0f0;
-    border-radius: 16px;
-    position: absolute;
-    text-align: center;
-    line-height: 30px;
-    top:25px;
-    z-index: 1;
-    width:60px;
-    height:30px;
-    background-color: #fff;
-    cursor:pointer;
-    box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
-    color:gray;
-    cursor:pointer;
-    :hover {
-        color: #000;
-    }
+const StChatWrap = styled.div``
+const StChatingBox = styled.div`
+  border: 1px solid #f1f0f0;
+  border-radius: 16px;
+  position: absolute;
+  /* text-align: center; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 30px;
+  top: 25px;
+  z-index: 1;
+  width: 70px;
+  height: 40px;
+  background-color: #fff;
+  cursor: pointer;
+  box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  :hover {
+    color: #000;
+  }
 `
 
-const BodyContent = styled.div`
+const StBodyContent = styled.div`
   /* padding: 0px 20px; */
   width: 100%;
   /* height: 370px; */
@@ -418,16 +483,17 @@ const BodyContent = styled.div`
   flex-direction: column;
   justify-content: space-between;
   border-bottom: 1px solid rgba(0,0,0,0.1);
+  font-size: 14px;
 `
-const ContentTitle = styled.h3`
+const StContentTitle = styled.h3`
     /* margin:10px 0px; */
     font-weight: 600;
-    font-size: 18px;
+    font-size: 16px;
     width:100%;
     /* height: 100%; */
     /* border: 1px solid green; */
 `
-const ContentBody = styled.p`
+const StContentBody = styled.p`
 /* border: 1px solid blue; */
     color: #000;
     font-size: 14px;
@@ -438,14 +504,14 @@ const ContentBody = styled.p`
     height: 100%;
 `
 
-const ContentImgBox = styled.div`
+const StContentImgBox = styled.div`
     width:100%;
     height:250px;
     border-radius: 20px;
     position: relative;
     margin-bottom: 40px;
 `
-const ContentImg = styled.img`
+const StContentImg = styled.img`
     /* border:1px solid gray; */
     width: 100%;
     height:250px;
@@ -455,39 +521,41 @@ const ContentImg = styled.img`
     /* background-repeat: no-repeat;
     background-size: cover; */
 `
-const PrevButton = styled.button`
-    font-size: 20px;
-    display: flex;
-    position:absolute;
-    border:none;
-    border-radius: 20px;
-    top:50%;
-    left:0;
-    z-index: 2;
-    transform: translatey(-50%);
-    
-`
-const NextButton = styled.button`
-    font-size: 20px;
-    display: flex;
-    position:absolute;
-    border:none;
-    border-radius: 20px;
-    top:50%;
-    right:0;
-    z-index: 2;
-    transform: translatey(-50%);
-`
+const StPrevButton = styled.div``;
+const StNextButton = styled.div``;
 
-const PreviousBtn = styled(GrFormPrevious)`
-    
-`
-const NextBtn = styled(GrFormNext)`
-   
-`
+const StPreviousBtn = styled(MdOutlineArrowBackIos)`
+  color: #fff;
+  /* font-size: 20px; */
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  border: none;
+  top: 50%;
+  left: 10px;
+  z-index: 2;
+  transform: translatey(-50%);
+`;
+const StNextBtn = styled(MdOutlineArrowForwardIos)`
+  color: #fff;
+  /* font-size: 20px; */
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  border: none;
+  border-radius: 20px;
+  top: 50%;
+  right: 10px;
+  z-index: 2;
+  transform: translatey(-50%);
+`;
 
 
-const ContentView = styled.p`
+const StContentView = styled.p`
     font-size: 12px;
     line-height: 40px;
     height:40px;
@@ -496,7 +564,7 @@ const ContentView = styled.p`
     /* border: 1px solid blue; */
     
 `
-const BodyTxtBox = styled.div`
+const StBodyTxtBox = styled.div`
     display: flex;
     width:100%;
     align-items: center;
@@ -509,13 +577,13 @@ const ContentTime = styled.div`
       
 `
 
-const BodyContainer = styled.div`
+const StBodyContainer = styled.div`
     width: 100%;
     height: 100%;
     /* border: 1px solid green; */
     /* overflow-y: scroll; */
 `
-const BodyCommentBox = styled.div`
+const StBodyCommentBox = styled.div`
     /* border-top : 1px solid rgba(0,0,0,0.1); */
     /* margin:20px; */
     /* overflow-y: scroll; */
@@ -526,7 +594,7 @@ const BodyCommentBox = styled.div`
     /* border: 1px solid orangered; */
 `
 
-const CommentContainer = styled.form`
+const StCommentContainer = styled.form`
     position: sticky;
     width: 100%;
     /* height: 100%; */
@@ -539,7 +607,7 @@ const CommentContainer = styled.form`
     margin-bottom: 10px;
 `
 
-const CommentBox = styled.div`
+const StCommentBox = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -548,7 +616,7 @@ const CommentBox = styled.div`
     /* border: 1px solid red; */
 `
 
-const CommentDiv = styled.div`
+const StCommentDiv = styled.div`
     /* width : 370px; */
     width: 100%;
     /* height: 50px; */
@@ -561,7 +629,7 @@ const CommentDiv = styled.div`
     justify-content: space-between;
 `
 
-const CommentPost = styled.input`
+const StCommentPost = styled.input`
     width:80%;
     /* width: 100%; */
     /* bottom : 0; */
@@ -571,13 +639,14 @@ const CommentPost = styled.input`
     border: none;
     outline: none;
 `
-const CommentButton = styled.button`
+const StCommentButton = styled.button`
     border: none;
     cursor: pointer;
-    color: black;
+    color: #F7931E;
     font-weight: 600;
+    background-color: transparent;
 `
-const BodyComment = styled.div`
+const StBodyComment = styled.div`
     display:flex;
     justify-content: center;
     align-items: center;
@@ -586,14 +655,15 @@ const BodyComment = styled.div`
     height:100px;
     width:100%;
     text-align: center;
+    font-size: 14px;
 `
-const Count = styled.div`
+const StCount = styled.div`
   display: flex;
   /* border: 1px solid blue; */
   align-items: center;
 `;
 
-const CommentCount = styled.div`
+const StCommentCount = styled.div`
   font-size: 12px;
   font-weight: 500;
   color: black;
@@ -601,11 +671,11 @@ const CommentCount = styled.div`
   margin-right: 15px;
 `;
 
-const CommentImg = styled.div`
+const StCommentImg = styled.div`
   margin-right: 5px;
 `;
 
-const HeartCount = styled.div`
+const StHeartCount = styled.div`
   font-size: 12px;
   font-weight: 500;
   color: black;
@@ -613,6 +683,6 @@ const HeartCount = styled.div`
   cursor: pointer;
 `;
 
-const HeartImg = styled.div`
+const StHeartImg = styled.div`
   margin-right: 5px;
 `;

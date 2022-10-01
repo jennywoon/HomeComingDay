@@ -1,91 +1,83 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { IoClose } from "react-icons/io5";
-import { __getSearch } from '../../redux/modules/SearchSlice';
+import {
+  __getSearch,
+  __getSearchArticle,
+  __getSearchArticlePopular,
+  __postSearch,
+} from '../../redux/modules/SearchSlice';
 import { useNavigate } from 'react-router-dom';
-import { BsQuestionSquare } from "react-icons/bs";
-import commentgray from "../../assets/commentgray.png"
+import commentgray from '../../assets/commentgray.png';
 import heartgray from '../../assets/heartgray.png';
 
 const SearchCard = ({ search, id }) => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    // useEffect(() => {
-    //     dispatch(__getSearch());
-    // },[dispatch])
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    const onClickNavi = () => {
-        if (search.articleFlag === "도움요청") {
-            navigate(`/helpdetail/${id}`)
-        } else if (search.articleFlag === "정보공유") {
-            navigate(`/informationdetail/${id}`)
-        } else if (search.articleFlag === "만남일정") {
-            navigate(`/calendardetail/${id}`)
-        } else if (search.articleFlag === "자유토크") {
-            navigate(`/freetalkdetail/${id}`)
-        }
-    };
+  const onClickNavi = () => {
+    if (search.articleFlag === '도움요청') {
+      navigate(`/helpdetail/${id}`);
+    } else if (search.articleFlag === '정보공유') {
+      navigate(`/informationdetail/${id}`);
+    } else if (search.articleFlag === '만남일정') {
+      navigate(`/calendardetail/${id}`);
+    } else if (search.articleFlag === '자유토크') {
+      navigate(`/freetalkdetail/${id}`);
+    }
+  };
 
+  return (
+    <HelpContainer onClick={onClickNavi}>
+      <CardHead>
+        <HeadImg>
+          <UserImg src={search.userImage}></UserImg>
+        </HeadImg>
+        <HeadUser>
+          <HeadTop>
+            <HeadName>{search.username}</HeadName>
+            <BoardName>{search.articleFlag}</BoardName>
+          </HeadTop>
+          <HeadBottom>
+            <HeadDepartment>{search.departmentName}</HeadDepartment>
+            <HeadStudent>· {search.admission}</HeadStudent>
+          </HeadBottom>
+        </HeadUser>
+      </CardHead>
+      <CardBody>
+        <BodyTitle>{search.title}</BodyTitle>
+      </CardBody>
 
-    return (
-        <HelpContainer onClick={onClickNavi}>
-            <CardHead>
-                <HeadImg>
-                    <UserImg src={search.userImage}></UserImg>
-                </HeadImg>
-                <HeadUser>
-                    <HeadTop>
-                        <HeadName>{search.username}</HeadName>
-                        <BoardName>{search.articleFlag}</BoardName>
-                    </HeadTop>
-                    <HeadBottom>
-                        <HeadDepartment>{search.departmentName}</HeadDepartment>
-                        <HeadStudent>· {search.admission}</HeadStudent>
-                    </HeadBottom>
-                </HeadUser>
-            </CardHead>
-            <CardBody>
-                <BodyTitle>{search.title}</BodyTitle>
-                {/* <BodyContent>
-                    {help.content}
-                </BodyContent> */}
-            </CardBody>
-
-            <CardFooter>
-                <FooterTxt>
-                    <Views>조회수 {search.views}</Views>
-                    <div>|</div>
-                    <HeadTime>{search.createdAt}</HeadTime>
-                    {/* <CommentCount>댓글 {search.commentCnt}</CommentCount> */}
-                </FooterTxt>
-                {/* <BoardName>
-                    <div>{search.articleFlag}</div>
-                </BoardName> */}
-                <Count>
-                    <CommentCount>
-                        <CommentImg>
-                            <img src={commentgray} alt='댓글이미지' />
-                        </CommentImg>
-                        {search.commentCnt}
-                    </CommentCount>
-                    <HeartCount>
-                        <HeartImg>
-                            <img src={heartgray} alt='댓글이미지' />
-                        </HeartImg>
-                        {search.heartCnt}
-                    </HeartCount>
-                </Count>
-            </CardFooter>
-        </HelpContainer>
-    );
+      <CardFooter>
+        <FooterTxt>
+          <Views>조회수 {search.views}</Views>
+          <div>|</div>
+          <HeadTime>{search.createdAt}</HeadTime>
+        </FooterTxt>
+        <Count>
+          <CommentCount>
+            <CommentImg>
+              <img src={commentgray} alt='댓글이미지' />
+            </CommentImg>
+            {search.commentCnt}
+          </CommentCount>
+          <HeartCount>
+            <HeartImg>
+              <img src={heartgray} alt='댓글이미지' />
+            </HeartImg>
+            {search.heartCnt}
+          </HeartCount>
+        </Count>
+      </CardFooter>
+    </HelpContainer>
+  );
 };
 
 export default SearchCard;
 
 const HelpContainer = styled.div`
   padding: 10px;
-  height:152px;
+  height: 152px;
   border: 1px solid #fff;
   border-radius: 10px;
   cursor: pointer;
@@ -94,100 +86,90 @@ const HelpContainer = styled.div`
 `;
 
 const CardHead = styled.div`
-    display: flex;
-    align-items: center;
-`
+  display: flex;
+  align-items: center;
+`;
 const HeadImg = styled.div`
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f6bd60;
-    border-radius: 50%;
-    margin-right: 7px;
-`
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f6bd60;
+  border-radius: 50%;
+  margin-right: 7px;
+`;
 const UserImg = styled.img`
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-`
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+`;
 
 const HeadUser = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    margin: 0px 5px;
-`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0px 5px;
+`;
 const HeadTop = styled.div`
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    /* border: 1px solid red; */
-`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
 const HeadBottom = styled.div`
-    display: flex;
-    font-size: 12px;
-    color:gray;
-    gap: 5px;
-`
-const HeadDepartment = styled.div``
+  display: flex;
+  font-size: 12px;
+  color: gray;
+  gap: 5px;
+`;
+const HeadDepartment = styled.div``;
 const HeadName = styled.h2`
-    font-size: 14px;
-    font-weight: 600;
-    color: #000;
-    /* margin: 0px 5px; */
-`
-const HeadStudent = styled.p`
-
-`
-const CardBody = styled.div`
-`
+  font-size: 14px;
+  font-weight: 600;
+  color: #000;
+`;
+const HeadStudent = styled.p``;
+const CardBody = styled.div``;
 const BodyTitle = styled.div`
-    display:flex;
-    width:350px;
-    height:60px;
-    font-weight: 600;
-    font-size: 16px;
-    align-items:center;
-`
-const BodyContent = styled.div`
-    font-size: 12px;
-    margin: 5px 0px;
-`
+  display: flex;
+  width: 350px;
+  height: 60px;
+  font-weight: 600;
+  font-size: 16px;
+  align-items: center;
+`;
+
 const CardFooter = styled.div`
-    display: flex;
-    /* height: 20px; */
-    align-items: center;
-    justify-content: space-between;
-    
-`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
 const FooterTxt = styled.div`
-    display: flex;
-    color:gray;
-    align-items: center;
-    gap: 5px;
-    font-size: 12px;
-`
+  display: flex;
+  color: gray;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+`;
 
-const Views = styled.div`
-`
+const Views = styled.div``;
 
-const HeadTime = styled.p`
-`
+const HeadTime = styled.p``;
 
 const BoardName = styled.div`
-    width: 60px;
-    height: 20px;
-    background-color: #fff4cc;
-    border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: 700;
-    color: #f7931e
-`
+  width: 60px;
+  height: 20px;
+  background-color: #fff4cc;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #f7931e;
+  align-items: center;
+`;
+
 const Count = styled.div`
   display: flex;
 `;
@@ -201,7 +183,7 @@ const CommentCount = styled.div`
 
 const CommentImg = styled.div`
   margin-right: 5px;
-`
+`;
 
 const HeartCount = styled.div`
   font-size: 12px;
@@ -211,4 +193,4 @@ const HeartCount = styled.div`
 
 const HeartImg = styled.div`
   margin-right: 5px;
-`
+`;

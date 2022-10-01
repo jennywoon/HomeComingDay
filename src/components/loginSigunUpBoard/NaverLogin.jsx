@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import naverIcon from "../../assets/naverIcon.png"
 import whtienaversquare from "../../assets/whitenaversquare.png"
@@ -10,6 +11,7 @@ import Cookies from "universal-cookie"
 
 const NaverLogin = () => {
 
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const cookies = new Cookies();
     // const location = useLocation();
@@ -37,21 +39,22 @@ const NaverLogin = () => {
         })
         naverLogin.init();
         // 네이버 로그인은 계속 유지되는 경우가 있어서, 초기화시 로그아웃 되도록 설정
-        naverLogin.logout();
+        // naverLogin.logout();
         naverLogin.getLoginStatus((status) => {
             if (status) {
-                console.log("Naver 로그인 상태", naverLogin.user);
+                // console.log("Naver 로그인 상태", naverLogin.user);
                 const { email, name } = naverLogin.user;
-                console.log(email, name);
+                // console.log(email, name);
 
                 // 필수 제공 동의 조건
                 if (name == undefined) {
                     alert("이름은 필수 동의 입니다. 정보제공을 동의해주세요.");
                     naverLogin.reprompt();
                     return;
+                    // console.log("네이버 로그인 ok");
                 }
             } else {
-                console.log("Naver 비 로그인 상태");
+                // console.log("Naver 비 로그인 상태");
             }
         });
     }
@@ -71,16 +74,16 @@ const NaverLogin = () => {
         });
         setCookie("accessToken", `${data.data.accessToken}`)
         setCookie("refreshToken", `${data.data.refreshToken}`)
-        // setCookie("userName", `${data.data.username}`)
+        setCookie("userName", `${data.data.username}`)
         // window.location.replace("/")
         console.log(data.data.accessToken);
-        console.log(data.data.username)
-        console.log(data.data.schoolInfo)
-        const schoolInfo = data.data.schoolInfo
+        console.log(data.data.username);
+        console.log(data.data.schoolInfo);
+        const schoolInfo = data.data.schoolInfo;
         if(schoolInfo === true) {
-            window.location.replace("/")
+            navigate("/main")
         }else{
-            window.location.replace("/schoolinfo")
+            navigate("/schoolinfo")
         }
     }
 

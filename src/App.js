@@ -1,9 +1,9 @@
 import React, { Fragment, useEffect } from "react";
 import Router from "./shared/Router";
 import './App.css'
-import styled from "styled-components";
-// import background from "./assets/background.png"
+import styled, {keyframes} from "styled-components";
 import background2 from "./assets/background2.png"
+import feedback from "./assets/feedback.png"
 
 function App() {
 
@@ -18,23 +18,25 @@ function App() {
   }, []);
 
   return (
-    <Container>
-      {/* <TitleWrap>
-        <SiteContent>대학교 졸업생 동문 사이트</SiteContent>
-        <SiteTitle>Homecoming Day</SiteTitle>
-      </TitleWrap> */}
+    <StContainer>
       <div className='wrap' >
         <Router />
       </div>
-      {/* <GoogleForm>안녕</GoogleForm> */}
-    </Container>
+      <StGoogleFeedback flag
+        href="https://forms.gle/WXw3wCGEaUaXw2Q6A"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <StFeedbackImg />
+      </StGoogleFeedback>
+    </StContainer>
   )
 
 }
 
 export default App;
 
-const Container = styled.div`
+const StContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -73,31 +75,33 @@ const Container = styled.div`
   }
 `;
 
-const TitleWrap = styled.div`
-  position: fixed;
-  left: 10%;
-  width: 305px;
-  height: 37px;
-  left: 61px;
-  /* top: 100px; */
-  top: 70px;
+const StGoogleAnimation = keyframes`
+0% {  
+    transform: translateY(-15PX); 
+}
+50%{
+  transform: translateY(0px); 
+}
+  100% {  
+    transform: translateY(-15px); 
+}
+`;
 
+const StGoogleFeedback = styled.a`
+  position: fixed;
+  bottom: 10%;
+  right: 8%;
+  cursor: pointer;
+  animation: ${StGoogleAnimation} 2s linear infinite;
+  @media screen and (max-width: 1400px) {
+    display: none;
+  }
 `
-const SiteContent = styled.div`
-  color: #f7931e;
-  font-size: 20px;
-  font-weight: 700;
+
+const StFeedbackImg = styled.div`
+  width: 130px;
+  height: 150px;
+  background-image: url(${feedback});
+  background-size: 100% 100%;
+  background-position: center;
 `
-const SiteTitle = styled.div`
-  font-size: 30px;
-  font-weight: 700;
-`
-// const GoogleForm = styled.div`
-//     position: fixed;
-//   bottom: 10%;
-//   right: 10%;
-//   cursor: pointer;
-//   @media screen and (max-width: 1400px) {
-//     display: none;
-//   }
-// `

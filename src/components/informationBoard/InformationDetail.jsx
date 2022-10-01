@@ -15,22 +15,26 @@ import {
   __postInformationHeart,
   __updateInformation,
 } from '../../redux/modules/InformationSlice';
-import { BiDotsVerticalRounded } from 'react-icons/bi';
 import { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
+import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md';
 import InformationDetailModal from './InformationDetailModal';
 import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
 import heartColorImg from '../../assets/heartColor.png';
+import { __getMyPage } from '../../redux/modules/MyPageSlice';
+import { chatApi } from '../chatBoard/ChatApi';
+import { __getNoticeCount } from '../../redux/modules/NoticeSlice';
+import dots from "../../assets/dots.png"
 
 const InformationDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { informations } = useSelector((state) => state.informations);
+  const { informationsfind } = useSelector((state) => state.informations);
   // const { infoComments } = useSelector((state) => state.informations)
   const { id } = useParams();
 
@@ -43,45 +47,56 @@ const InformationDetail = () => {
     setComment(e.target.value);
   };
 
-  const informationsfind = informations.find(
-    (info) => info.articleId === Number(id)
-  );
-  const data = useSelector((state) => state.mypages.mypages)
+  // const informationsfind = informations.find(
+  //   (info) => info.articleId === Number(id)
+  // );
+  const data = useSelector((state) => state.mypages.mypages);
+
+  //모달닫기
+  const node = useRef();
+
+  useEffect(() => {
+    const clickOutside = (e) => {
+      // 모달이 열려 있고 모달의 바깥쪽을 눌렀을 때 창 닫기
+      if (show && node.current && !node.current.contains(e.target)) {
+        setShow(false);
+      }
+    };
+    document.addEventListener('mousedown', clickOutside);
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener('mousedown', clickOutside);
+    };
+  }, [show]);
 
   //조회수반영
   useEffect(() => {
+    dispatch(__getMyPage());
+    dispatch(__getInformation());
     dispatch(__getDetailInformation(id));
   }, [dispatch]);
 
-  console.log(
-    'information',
-    informations,
-    'informationsfind',
-    informationsfind
-  );
-
+  // console.log(
+  //   'information',
+  //   informations,
+  //   'informationsfind',
+  //   informationsfind
+  // );
+  //프로필 사진 클릭
   const onCilckShow = () => {
     setShow(!show);
   };
+  // 1:1 채팅버튼
   const onCilckChaetShow = () => {
     setShowChaet(!showChaet);
   };
 
-  const onClickDelete = () => {
-    const result = window.confirm('정말 삭제하시겠습니까?');
-    if (result) {
-      dispatch(__deleteInformation(informationsfind.articleId));
-      navigate('/information');
-    } else {
-      navigate('/information');
-      return;
-    }
-  };
-
+  //수정버튼
   const onClickRevice = () => {
     navigate(`/informationupdate/${id}`);
   };
 
+  //댓글
   const onClickPostComment = async (e) => {
     e.preventDefault();
     const newcomment = {
@@ -89,14 +104,11 @@ const InformationDetail = () => {
       articleId: id,
     };
     await dispatch(__postInfoComment(newcomment));
-    await dispatch(__getInformation());
     setComment('');
+    await dispatch(__getDetailInformation(id));
+    await dispatch(__getNoticeCount());
   };
-  // const closeModal = (e) => {
-  //     if (!modalRef.current.contains(e.target)) {
-  //         setShow(false);
-  //     }
-  // };
+
 
   //swiper 옵션
   SwiperCore.use(Navigation);
@@ -113,7 +125,6 @@ const InformationDetail = () => {
     onBeforeInit: (swiper) => {
       swiper.params.navigation.prevEl = navigationPrevRef.current;
       swiper.params.navigation.nextEl = navigationNextRef.current;
-      // swiper.activeIndex = setMainImageIndex;
       swiper.navigation.update();
     },
     onSwiper: setSwiper,
@@ -133,16 +144,30 @@ const InformationDetail = () => {
       articleId: id,
     };
     const response = await dispatch(__postInformationHeart(newHeart));
-    // console.log(response.payload);
-    dispatch(__getInformation());
+    dispatch(__getDetailInformation(id));
   };
 
+  // 채팅 생성
+  const createChat = (userId) => {
+    chatApi
+      .createChat(userId)
+      .then((response) => {
+        navigate(`/chat/${response.data}`);
+        // console.log("userId", userId)
+        // console.log("response", response.data)
+      })
+      .catch((error) => {
+        // console.log(error);
+      })
+  }
+
+
   return (
-    <Container>
+    <StContainer ref={node}>
       {modalOpen && <InformationDetailModal setModalOpen={setModalOpen} />}
       <Header />
-      <FirstWrap>
-        <DetailHeader>
+      <StFirstWrap>
+        <StDetailHeader>
           <IoIosArrowBack
             size='25px'
             cursor='pointer'
@@ -150,57 +175,61 @@ const InformationDetail = () => {
               navigate('/information');
             }}
           />
-          <HeaderTitle>정보공유</HeaderTitle>
+          <StHeaderTitle>정보공유</StHeaderTitle>
           <div style={{ width: '25px', height: '25px' }}></div>
-        </DetailHeader>
-      </FirstWrap>
-      <InformationContainer>
-        <InformationWrap>
-          <DetailWrap>
-            <DetailBody>
-              <Bodytop>
-                <Bodyimg src={informationsfind.userImage} alt='' />
-                <Bodytxt>
-                  <Txtname onClick={onCilckChaetShow}>
+        </StDetailHeader>
+      </StFirstWrap>
+      <StInformationContainer>
+        <StInformationWrap>
+          <StDetailWrap>
+            <StDetailBody>
+              <StBodytop>
+                <StBodyimg
+                  src={informationsfind && informationsfind.userImage}
+                  alt=''
+                />
+                <StBodytxt>
+                  <StTxtname onClick={onCilckChaetShow}>
                     {informationsfind && informationsfind.username}
-                  </Txtname>
-                  <Txtstudent>
+                  </StTxtname>
+                  <StTxtstudent>
                     {informationsfind && informationsfind.departmentName}{' '}
                     <span>
                       {' '}
                       {informationsfind && informationsfind.admission}{' '}
                     </span>
-                  </Txtstudent>
-                  {showChaet ? <ChaetingBox>1:1채팅</ChaetingBox> : null}
-                </Bodytxt>
+                  </StTxtstudent>
+                  {showChaet ?
+                    <StChatWrap onClick={() => createChat(informationsfind.userId)}>
+                      {informationsfind && informationsfind.username !== data.username ?
+                      <StChaetingBox>
+                        1:1채팅
+                      </StChaetingBox>: null}
+                    </StChatWrap> : null}
+                </StBodytxt>
 
-                {informationsfind.username === data.username ? 
-                <BiDotsVerticalRounded
-                  size='20px'
-                  style={{
-                    marginLeft: 'auto',
-                    cursor: 'pointer',
-                    color: '#bebebe',
-                  }}
-                  onClick={onCilckShow}
-                  /> : null}
+                {informationsfind && informationsfind.username === data.username ? (
+                  <StDots
+                    onClick={onCilckShow}
+                  />
+                ) : null}
 
                 {show ? (
-                  <Revisebox ref={modalRef}>
-                    <ReviseButton onClick={onClickRevice}>수정</ReviseButton>
-                    <DeleteButton onClick={showModal}>삭제</DeleteButton>
-                  </Revisebox>
+                  <StRevisebox ref={node}>
+                    <StReviseButton onClick={onClickRevice}>수정</StReviseButton>
+                    <StDeleteButton onClick={showModal}>삭제</StDeleteButton>
+                  </StRevisebox>
                 ) : null}
-              </Bodytop>
-              <BodyContent>
-                <ContentTitle>
+              </StBodytop>
+              <StBodyContent>
+                <StContentTitle>
                   {informationsfind && informationsfind.title}
-                </ContentTitle>
-                <ContentBody>
+                </StContentTitle>
+                <StContentBody>
                   {informationsfind && informationsfind.content}
-                </ContentBody>
-                {informationsfind && informationsfind.imageList.length > 0 ? (
-                  <ContentImgBox>
+                </StContentBody>
+                {informationsfind && informationsfind.imageList?.length !== 0 ? (
+                  <StContentImgBox>
                     <Swiper
                       {...swiperParams}
                       ref={setSwiper}
@@ -208,61 +237,62 @@ const InformationDetail = () => {
                       slidesPerView={1}
                     >
                       {informationsfind &&
-                        informationsfind.imageList.map((image) => {
+                        informationsfind.imageList?.map((image) => {
                           return (
                             <SwiperSlide key={image.imageId}>
-                              <ContentImg src={image.imgUrl}></ContentImg>
+                              <StContentImg src={image.imgUrl}></StContentImg>
                             </SwiperSlide>
                           );
                         })}
-                      <PrevButton ref={navigationPrevRef}>
-                        <PreviousBtn />
-                      </PrevButton>
-                      <NextButton ref={navigationNextRef}>
-                        <NextBtn />
-                      </NextButton>
+                      
+                      <StPrevButton ref={navigationPrevRef}>
+                        <StPreviousBtn />
+                      </StPrevButton>
+                      <StNextButton ref={navigationNextRef}>
+                        <StNextBtn />
+                      </StNextButton>
                     </Swiper>
-                  </ContentImgBox>
+                  </StContentImgBox>
                 ) : null}
-                <BodyTxtBox>
-                  <ContentView>
+                <StBodyTxtBox>
+                  <StContentView>
                     {informationsfind && informationsfind.createdAt} | 조회수{' '}
                     {informationsfind && informationsfind.views}
-                  </ContentView>
-                  <Count>
-                    <CommentCount>
-                      <CommentImg>
+                  </StContentView>
+                  <StCount>
+                    <StCommentCount>
+                      <StCommentImg>
                         <img src={commentImg} alt='댓글이미지' />
-                      </CommentImg>
+                      </StCommentImg>
                       댓글 {informationsfind && informationsfind.commentCnt}
-                    </CommentCount>
-                    <HeartCount onClick={heartClick}>
-                      {informationsfind &&informationsfind.heart === true ? (
-                        <HeartImg>
+                    </StCommentCount>
+                    <StHeartCount onClick={heartClick}>
+                      {informationsfind && informationsfind.heart === true ? (
+                        <StHeartImg>
                           <img src={heartColorImg} alt='좋아요이미지' />
-                        </HeartImg>
+                        </StHeartImg>
                       ) : (
-                        <HeartImg>
+                        <StHeartImg>
                           <img src={heartImg} alt='좋아요이미지' />
-                        </HeartImg>
+                        </StHeartImg>
                       )}
                       좋아요 {informationsfind && informationsfind.heartCnt}
-                    </HeartCount>
-                  </Count>
-                </BodyTxtBox>
-              </BodyContent>
+                    </StHeartCount>
+                  </StCount>
+                </StBodyTxtBox>
+              </StBodyContent>
 
-              <BodyContainer>
-                <BodyCommentBox>
+              <StBodyContainer>
+                <StBodyCommentBox>
                   {informationsfind &&
-                  informationsfind.commentList.length === 0 ? (
-                    <BodyComment>
+                    informationsfind.commentList?.length === 0 ? (
+                    <StBodyComment>
                       작성한 댓글이 없습니다 <br></br> 첫번째 댓글을 남겨보세요{' '}
-                    </BodyComment>
+                    </StBodyComment>
                   ) : (
                     <>
                       {informationsfind &&
-                        informationsfind.commentList.map((comment) => (
+                        informationsfind.commentList?.map((comment) => (
                           <InformationDetailComment
                             key={comment.commentId}
                             comment={comment}
@@ -273,51 +303,49 @@ const InformationDetail = () => {
                         ))}
                     </>
                   )}
-                </BodyCommentBox>
-              </BodyContainer>
-            </DetailBody>
-          </DetailWrap>
-        </InformationWrap>
-        <CommentContainer onSubmit={onClickPostComment}>
-          <CommentBox>
-            <CommentDiv>
-              <CommentPost
+                </StBodyCommentBox>
+              </StBodyContainer>
+            </StDetailBody>
+          </StDetailWrap>
+        </StInformationWrap>
+        <StCommentContainer onSubmit={onClickPostComment}>
+          <StCommentBox>
+            <StCommentDiv>
+              <StCommentPost
                 placeholder='댓글을 입력해주세요'
                 value={comment}
                 onChange={onChangePostHandler}
-              ></CommentPost>
-              <CommentButton type='submit'>올리기</CommentButton>
-            </CommentDiv>
-          </CommentBox>
-        </CommentContainer>
-      </InformationContainer>
-    </Container>
+              ></StCommentPost>
+              <StCommentButton type='submit'>올리기</StCommentButton>
+            </StCommentDiv>
+          </StCommentBox>
+        </StCommentContainer>
+      </StInformationContainer>
+    </StContainer>
   );
 };
 
 export default InformationDetail;
 
-const Container = styled.div`
+const StContainer = styled.div`
   position: relative;
   width: 100%;
   height: 100vh;
   overflow-y: hidden;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
+  margin: auto;
 `;
 
-const FirstWrap = styled.div`
+const StFirstWrap = styled.div`
   display: flex;
-  /* align-items: center; */
-  justify-content: center;
   flex-direction: column;
-  /* border:1px solid blue; */
+  justify-content: center;
   width: 90%;
   height: 60px;
   margin: auto;
 `;
-const DetailHeader = styled.div`
+const StDetailHeader = styled.div`
   width: 100%;
   height: 50px;
   display: flex;
@@ -325,7 +353,8 @@ const DetailHeader = styled.div`
   justify-content: space-between;
   position: sticky;
 `;
-const InformationContainer = styled.div`
+
+const StInformationContainer = styled.div`
   width: 90%;
   height: 86%;
   border: 1px solid #eee;
@@ -338,32 +367,28 @@ const InformationContainer = styled.div`
   margin: auto;
 `;
 
-const InformationWrap = styled.div`
+const StInformationWrap = styled.div`
   width: 90%;
   height: 100%;
-  /* border: 1px solid blue; */
   overflow-y: scroll;
   ::-webkit-scrollbar {
     width: 0px;
   }
 `;
-const DetailWrap = styled.form`
+const StDetailWrap = styled.form`
   width: 100%;
-  /* height:100%; */
   background-color: white;
   display: flex;
   flex-direction: column;
 `;
 
-const HeaderTitle = styled.div`
+const StHeaderTitle = styled.div`
   font-weight: 700;
   font-size: 16px;
-  /* margin:10px auto; */
 `;
-const Revisebox = styled.div`
+const StRevisebox = styled.div`
   border: 1px solid #f1f0f0;
   z-index: 5;
-  border-radius: 16px;
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -372,9 +397,10 @@ const Revisebox = styled.div`
   background-color: #fff;
   box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
   border-radius: 16px;
-  width:58px;
+  width: 58px;
 `;
-const ReviseButton = styled.button`
+
+const StReviseButton = styled.button`
   border: none;
   border-bottom: 1px solid #f1f0f0;
   padding: 10px;
@@ -387,7 +413,7 @@ const ReviseButton = styled.button`
   }
 `;
 
-const DeleteButton = styled.button`
+const StDeleteButton = styled.button`
   border: none;
   background-color: #eee;
   padding: 10px;
@@ -400,81 +426,82 @@ const DeleteButton = styled.button`
   }
 `;
 
-const DetailBody = styled.div`
+const StDetailBody = styled.div`
   border-radius: 20px;
   width: 100%;
   height: 100%;
 `;
 
-const Bodytop = styled.div`
+const StBodytop = styled.div`
   display: flex;
   align-items: center;
-  /* padding:20px 20px 10px 20px; */
   position: relative;
   margin: 10px 0;
 `;
 
-const Bodyimg = styled.img`
+const StBodyimg = styled.img`
   width: 40px;
   height: 40px;
   border-radius: 50%;
 `;
 
-const Bodytxt = styled.div`
+const StBodytxt = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 10px;
   position: relative;
 `;
 
-const Txtname = styled.h3`
+const StTxtname = styled.h3`
   cursor: pointer;
-  /* margin: 0px; */
+  font-weight: 600;
+font-size: 16px;
 `;
-const Txtstudent = styled.p`
-  /* margin: 0px; */
+const StTxtstudent = styled.p`
   font-size: 12px;
   color: #bebebe;
 `;
-const ChaetingBox = styled.div`
+
+const StChatWrap = styled.div`
+`
+
+const StChaetingBox = styled.div`
   border: 1px solid #f1f0f0;
   border-radius: 16px;
   position: absolute;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   line-height: 30px;
   top: 25px;
   z-index: 1;
-  width: 60px;
-  height: 30px;
+  width: 70px;
+  height: 40px;
   background-color: #fff;
   cursor: pointer;
   box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
-  color: gray;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
   :hover {
     color: #000;
   }
 `;
 
-const BodyContent = styled.div`
-  /* padding: 0px 20px; */
+const StBodyContent = styled.div`
   width: 100%;
-  /* height: 370px; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 14px;
 `;
-const ContentTitle = styled.h3`
-  /* margin:10px 0px; */
+const StContentTitle = styled.h3`
   font-weight: 600;
-  font-size: 18px;
+  font-size: 16px;
   width: 100%;
-  /* height: 100%; */
-  /* border: 1px solid green; */
 `;
-const ContentBody = styled.div`
-  /* border: 1px solid blue; */
+const StContentBody = styled.p`
   color: #000;
   font-size: 14px;
   font-weight: 400;
@@ -484,93 +511,93 @@ const ContentBody = styled.div`
   height: 100%;
 `;
 
-const ContentImgBox = styled.div`
+const StContentImgBox = styled.div`
   width: 100%;
   height: 250px;
   border-radius: 20px;
   position: relative;
   margin-bottom: 40px;
 `;
-const ContentImg = styled.img`
-  /* border:1px solid gray; */
+const StContentImg = styled.img`
   width: 100%;
   height: 250px;
   display: flex;
   border-radius: 20px;
-  /* margin : 20px 0px; */
-  /* background-repeat: no-repeat;
-    background-size: cover; */
 `;
-const PrevButton = styled.button`
-  font-size: 20px;
+const StPrevButton = styled.div``;
+const StNextButton = styled.div``;
+
+const StPreviousBtn = styled(MdOutlineArrowBackIos)`
+  color: #fff;
+  width: 20px;
+  height: 20px;
   display: flex;
+  align-items: center;
+  position: absolute;
+  border: none;
+  top: 50%;
+  left: 10px;
+  z-index: 2;
+  transform: translatey(-50%);
+`;
+const StNextBtn = styled(MdOutlineArrowForwardIos)`
+  color: #fff;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
   position: absolute;
   border: none;
   border-radius: 20px;
   top: 50%;
-  left: 0;
-  z-index: 2;
-  transform: translatey(-50%);
-`;
-const NextButton = styled.button`
-  font-size: 20px;
-  display: flex;
-  position: absolute;
-  border: none;
-  border-radius: 20px;
-  top: 50%;
-  right: 0;
+  right: 10px;
   z-index: 2;
   transform: translatey(-50%);
 `;
 
-const PreviousBtn = styled(GrFormPrevious)``;
-const NextBtn = styled(GrFormNext)``;
+const StDots = styled.div`
+  width: 20px;
+  height: 20px;
+  background-image: url(${dots});
+  background-size: 100% 100%;
+  background-position: center;
+  margin-left: auto;
+  cursor: pointer;
+`;
 
-const ContentView = styled.p`
+
+const StContentView = styled.p`
   font-size: 12px;
   line-height: 40px;
   height: 40px;
-  /* margin:30px 0px 10px; */
-  color: #bebebe;
-  /* border: 1px solid blue; */
+  color: #8e8e8e;
 `;
-const BodyTxtBox = styled.div`
+
+const StBodyTxtBox = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: space-between;
 `;
-const ContentTime = styled.div`
+const StContentTime = styled.div`
   color: gray;
   font-size: 14px;
   margin-left: auto;
 `;
 
-const BodyContainer = styled.div`
+const StBodyContainer = styled.div`
   width: 100%;
   height: 100%;
-  /* border: 1px solid green; */
-  /* overflow-y: scroll; */
+
 `;
-const BodyCommentBox = styled.div`
-  /* border-top : 1px solid rgba(0,0,0,0.1); */
-  /* margin:20px; */
-  /* overflow-y: scroll; */
+const StBodyCommentBox = styled.div`
   height: 100%;
   width: 100%;
-  /* position:relative; */
-  /* height: 70%; */
-  /* border: 1px solid orangered; */
 `;
 
-const CommentContainer = styled.form`
+const StCommentContainer = styled.form`
   position: sticky;
-  /* bottom: 20px; */
   width: 100%;
-  /* height: 100%; */
-  /* border: 1px solid blue; */
-  /* max-width:500px; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -578,45 +605,39 @@ const CommentContainer = styled.form`
   margin-bottom: 10px;
 `;
 
-const CommentBox = styled.div`
+const StCommentBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* height: 60px; */
   width: 95%;
-  /* border: 1px solid red; */
 `;
 
-const CommentDiv = styled.div`
-  /* width : 370px; */
+const StCommentDiv = styled.div`
   width: 100%;
-  /* height: 50px; */
   padding: 10px;
   background-color: #eeeeee;
   border-radius: 16px;
   display: flex;
   align-items: center;
-  /* margin-bottom: 20px; */
   justify-content: space-between;
 `;
 
-const CommentPost = styled.input`
+const StCommentPost = styled.input`
   width: 80%;
-  /* width: 100%; */
-  /* bottom : 0; */
   background-color: #eeeeee;
   height: 30px;
   border-radius: 10px;
   border: none;
   outline: none;
 `;
-const CommentButton = styled.button`
+const StCommentButton = styled.button`
   border: none;
   cursor: pointer;
-  color: black;
+  color: #F7931E;
   font-weight: 600;
+  background-color: transparent;
 `;
-const BodyComment = styled.div`
+const StBodyComment = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -625,14 +646,15 @@ const BodyComment = styled.div`
   height: 100px;
   width: 100%;
   text-align: center;
+  font-size: 14px;
 `;
-const Count = styled.div`
+const StCount = styled.div`
   display: flex;
-  /* border: 1px solid blue; */
   align-items: center;
+  color: black;
 `;
 
-const CommentCount = styled.div`
+const StCommentCount = styled.div`
   font-size: 12px;
   font-weight: 500;
   color: black;
@@ -640,11 +662,11 @@ const CommentCount = styled.div`
   margin-right: 15px;
 `;
 
-const CommentImg = styled.div`
+const StCommentImg = styled.div`
   margin-right: 5px;
 `;
 
-const HeartCount = styled.div`
+const StHeartCount = styled.div`
   font-size: 12px;
   font-weight: 500;
   color: black;
@@ -652,6 +674,6 @@ const HeartCount = styled.div`
   cursor: pointer;
 `;
 
-const HeartImg = styled.div`
+const StHeartImg = styled.div`
   margin-right: 5px;
 `;

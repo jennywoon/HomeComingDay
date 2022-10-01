@@ -8,19 +8,22 @@ import { __getMyPage, __patchProfileImage } from '../../redux/modules/MyPageSlic
 import MyPageLogoutModal from "./MyPageLogoutModal"
 import profileorange from "../../assets/profileorange.png"
 import camera from "../../assets/camera.png"
+import goldmedal from "../../assets/goldmedal.png"
+import silvermedal from "../../assets/silvermedal.png"
+import bronzemedal from "../../assets/bronzemedal.png"
 
 const MyPageUser = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const mypages = useSelector((state) => state.mypages.mypages);
-    console.log(mypages);
+    const { mypages, totalCount } = useSelector((state) => state.mypages);
+    // console.log(mypages, totalCount);
 
     useEffect(() => {
         dispatch(__getMyPage())
     }, [dispatch])
 
-    //이미지 업로드
+    //프로필 이미지 PATCH 기능
 
     const [imageUrl, setImageUrl] = useState("");
     const imgRef = useRef();
@@ -52,6 +55,7 @@ const MyPageUser = () => {
         e.target.src = profileorange
     }
 
+    // 마이페이지 로그아웃 모달
     const [modalOpen, setModalOpen] = useState(false);
     const showModal = (e) => {
         e.preventDefault();
@@ -61,39 +65,48 @@ const MyPageUser = () => {
     return (
         <StLoginContainer>
             {modalOpen && <MyPageLogoutModal setModalOpen={setModalOpen} />}
-            <UserContainer>
-                <UserImgWrap>
-                        <UserImg 
-                        src={mypages.userImage} onClick={() => { onClickFileBtn() }} 
+            <StUserContainerWrap>
+                <StUserImgWrap>
+                    <StUserImg
+                        src={mypages.userImage} onClick={() => { onClickFileBtn() }}
                         onError={onErrorImg}
-                        >
-                        </UserImg>
-                        <input type="file" ref={imgRef} onChange={onChangeImage} style={{ display: "none" }}></input>
-                        <UserImgUpload onClick={() => { onClickFileBtn() }}>
-                            <CameraIcon/>
-                        </UserImgUpload>
-                </UserImgWrap>
-                <UserInfo>
-                    <FirstWrap>
-                        <UserWrap>
-                            <UserName>{mypages.username}</UserName>
-                            <UserAdmission>| {mypages.admission}</UserAdmission>
-                        </UserWrap>
-                        <UserWrap>
-                            <UserUniversity>{mypages.schoolName}</UserUniversity>
-                            <UserDepartment>{mypages.departmentName}</UserDepartment>
-                        </UserWrap>
-                        <UserEmail>{mypages.email}</UserEmail>
-                    </FirstWrap>
-                    <SecondWrap>
-                        <LogoutButton
+                    >
+                    </StUserImg>
+                    <input type="file" ref={imgRef} onChange={onChangeImage} style={{ display: "none" }}></input>
+                        <StUserImgUpload onClick={() => { onClickFileBtn() }}>
+                            <StCameraIcon />
+                        </StUserImgUpload>
+                </StUserImgWrap>
+                <StUserInfo>
+                    <StFirstWrap>
+                        <StUserContainer>
+                            <StFirstUserWrap>
+                                <StUserName>{mypages.username}</StUserName>
+                                <StUserAdmission>| {mypages.admission}</StUserAdmission>
+                            </StFirstUserWrap>
+                            <StUserLankWrap>
+                                <StUserLank>
+                                    {totalCount < 5 ? <img src={bronzemedal} /> :
+                                    totalCount < 10 ? <img src={silvermedal} /> : <img src={goldmedal} />}
+                                </StUserLank>
+                                {/* <StUserLankContent>게시글 개수 5개 이상 실버 왕관, 10개 이상 골드 왕관</StUserLankContent> */}
+                            </StUserLankWrap>
+                        </StUserContainer>
+                        <StUserWrap>
+                            <StUserUniversity>{mypages.schoolName}</StUserUniversity>
+                            <StUserDepartment>{mypages.departmentName}</StUserDepartment>
+                        </StUserWrap>
+                        <StUserEmail>{mypages.email}</StUserEmail>
+                    </StFirstWrap>
+                    <StSecondWrap>
+                        <StLogoutButton
                             onClick={showModal}
                         >
-                            <LogoutTitle>로그아웃</LogoutTitle>
-                        </LogoutButton>
-                    </SecondWrap>
-                </UserInfo>
-            </UserContainer>
+                            <StLogoutTitle>로그아웃</StLogoutTitle>
+                        </StLogoutButton>
+                    </StSecondWrap>
+                </StUserInfo>
+            </StUserContainerWrap>
         </StLoginContainer>
     );
 };
@@ -109,26 +122,26 @@ const StLoginContainer = styled.form`
   align-items: center;
 `;
 
-const UserContainer = styled.div`
-    width: 85%;
+const StUserContainerWrap = styled.div`
+    width: 100%;
     height: 78%;
     /* height: 200px; */
     display: flex;
-    /* border: 1px solid green; */
-    gap: 10px;
+    gap: 15px;
 `
 
-const UserImgWrap = styled.div`
+const StUserImgWrap = styled.div`
     width: 25%;
-    height: 100%;
-    /* border: 1px solid green; */
+    height: 90px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
+    margin-left: 30px;
+    align-items: flex-end;
 `
 
-const UserImg = styled.img`
-    width: 90px;
-    height: 90px;
+const StUserImg = styled.img`
+    width: 85px;
+    height: 85px;
     border-radius: 50%;
     background-color: #f9f9f9;
     display: flex;
@@ -136,9 +149,10 @@ const UserImg = styled.img`
     justify-content: flex-end;
     display: block;
     cursor: pointer;
+    position: relative;
 `
 
-const UserImgUpload = styled.div`
+const StUserImgUpload = styled.div`
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -147,67 +161,102 @@ const UserImgUpload = styled.div`
     justify-content: center;
     align-items: center;
     position: absolute;
-    bottom: 82%;
-    right: 70%;
+    /* bottom: 81%;
+    right: 70%; */
     cursor: pointer;
 `
 
-const CameraIcon = styled.div`
+const StCameraIcon = styled.div`
     width: 20px;
     height: 20px;
     background-image: url(${camera});
     background-position: center;
     background-size: 100% 100%;
 `
-const UserInfo = styled.div`
-    width: 75%;
+const StUserInfo = styled.div`
+    width: 80%;
     height: 100%;
-    /* border: 1px solid purple; */
     display: flex;
     flex-direction: column;
     /* justify-content: space-between; */
     align-items: center;
 `
 
-const FirstWrap = styled.div`
-    /* border: 1px solid red; */
-    width: 95%;
+const StFirstWrap = styled.div`
+    width: 100%;
     /* height: 100%; */
     margin: 5px 0 15px 0;
 `
-const SecondWrap = styled.div`
+const StSecondWrap = styled.div`
     width: 95%;
     /* border: 1px solid red; */
 `
 
-const UserUniversity = styled.div`
+const StUserUniversity = styled.div`
     font-weight: 600;
     font-size: 16px;
 `
 
-const UserDepartment = styled.div`
+const StUserDepartment = styled.div`
     font-weight: 600;
     font-size: 16px;
 `
-const UserWrap = styled.div`
+
+const StUserContainer = styled.div`
+    display: flex;
+    /* flex-direction: row; */
+    align-items: center;
+    gap: 5px;
+    height: 40px;
+    width: 100%;
+`
+const StUserWrap = styled.div`
+    display: flex;
+    gap: 5px;
+`
+
+const StFirstUserWrap = styled.div`
     display: flex;
     align-items: center;
     gap: 5px;
 `
-const UserName = styled.div`
+const StUserName = styled.div`
     font-weight: 700;
     font-size: 20px;
 `
-const UserAdmission = styled.div`
+const StUserAdmission = styled.div`
     color: white;
 `
-const UserEmail = styled.div`
+
+const StUserLankWrap = styled.div`
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    /* justify-content: space-between; */
+`
+
+const StUserLank = styled.div`
+    margin: 0 8px 3px 5px;
+    /* &:hover {
+    ~div{
+        display: block;
+    }
+    } */
+`
+
+// const StUserLankContent = styled.div`
+//     display: none;
+//     color: white;
+//     font-size: 8px;
+//     width: 130px;
+// `
+const StUserEmail = styled.div`
     font-weight: 500;
     font-size: 12px;
     /* color: #f7931e; */
     color: #fff4cc;
 `
-const LogoutButton = styled.div`
+const StLogoutButton = styled.div`
     width: 76px;
     height: 22px;
     /* height: 100%; */
@@ -219,7 +268,7 @@ const LogoutButton = styled.div`
     bottom: 0;
     cursor: pointer;
 `
-const LogoutTitle = styled.div`
+const StLogoutTitle = styled.div`
     font-size: 13px;
     font-weight: 500;
     color: white;
