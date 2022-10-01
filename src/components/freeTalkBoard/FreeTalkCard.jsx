@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import {
+  __getDetailFreeTalk,
   __getFreeTalk,
   __postFreeTalk,
 } from '../../redux/modules/FreeTalkSlice';
@@ -14,12 +15,12 @@ const FreeTalkCard = ({ freetalk, id }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(__postFreeTalk());
     dispatch(__getFreeTalk());
   }, [dispatch]);
 
-  const onClickNavi = () => {
-    navigate(`/freetalkdetail/${id}`);
+  const onClickNavi = async() => {
+    await dispatch(__getDetailFreeTalk(id))
+    await navigate(`/freetalkdetail/${id}`);
   };
 
   return (
