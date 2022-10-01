@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 import {
+  __getDetailInformation,
   __getInformation,
   __postInformation,
 } from '../../redux/modules/InformationSlice';
@@ -14,12 +15,12 @@ const InformationCard = ({ information, id }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(__postInformation());
     dispatch(__getInformation());
   }, [dispatch]);
 
-  const onClickNavi = () => {
-    navigate(`/informationdetail/${id}`);
+  const onClickNavi = async() => {
+    await dispatch(__getDetailInformation(id))
+    await navigate(`/informationdetail/${id}`);
   };
 
   return (
@@ -152,6 +153,7 @@ const StBodyTitle = styled.div`
   font-size: 16px;
   font-weight: 600;
   color: #000;
+  word-break: break-word;
 `;
 
 const StBodyContent = styled.div`

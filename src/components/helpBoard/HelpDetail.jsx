@@ -105,9 +105,23 @@ const HelpDetail = () => {
     };
     await dispatch(__postHelpComment(newcomment));
     setComment('');
-    await dispatch(__getDetailHelp(id))
+    await dispatch(__getDetailHelp(id));
     await dispatch(__getNoticeCount());
   };
+
+  // 댓글 올리기 버튼 활성화
+  const [isActive, setIsActive] = useState(false);
+  const handleCheck = (e) => {
+    setIsActive(e);
+  };
+
+  useEffect(() => {
+    if (comment !== '') {
+      handleCheck(true);
+    } else {
+      handleCheck(false);
+    }
+  }, [comment]);
 
   //swiper 옵션
   SwiperCore.use(Navigation);
@@ -302,7 +316,9 @@ const HelpDetail = () => {
                 onChange={onChangePostHandler}
                 maxLength='50'
               ></StCommentPost>
-              <StCommentButton type='submit'>올리기</StCommentButton>
+              <StCommentButton type='submit' disabled={isActive ? false : true}>
+                올리기
+              </StCommentButton>
             </StCommentDiv>
           </StCommentBox>
         </StCommentContainer>
@@ -460,7 +476,7 @@ const StDots = styled.div`
 const StTxtname = styled.h3`
   cursor: pointer;
   font-weight: 600;
-font-size: 16px;
+  font-size: 16px;
 `;
 
 const StTxtstudent = styled.p`
@@ -537,7 +553,7 @@ const StPrevButton = styled.div``;
 const StNextButton = styled.div``;
 
 const StPreviousBtn = styled(MdOutlineArrowBackIos)`
-  color: #fff;
+  color: #ddd;
   width: 20px;
   height: 20px;
   display: flex;
@@ -551,7 +567,7 @@ const StPreviousBtn = styled(MdOutlineArrowBackIos)`
 `;
 
 const StNextBtn = styled(MdOutlineArrowForwardIos)`
-  color: #fff;
+  color: #ddd;
   width: 20px;
   height: 20px;
   display: flex;
@@ -616,7 +632,7 @@ const StCommentDiv = styled.div`
 `;
 
 const StCommentPost = styled.input`
-  width: 80%;
+  width: 77%;
   background-color: #eeeeee;
   height: 30px;
   border-radius: 10px;
@@ -651,19 +667,19 @@ const StCount = styled.div`
 `;
 
 const StCommentCount = styled.div`
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   color: black;
   display: flex;
-  margin-right: 15px;
+  margin-right: 10px;
 `;
 
 const StCommentImg = styled.div`
-  margin-right: 5px;
+  margin-right: 3px;
 `;
 
 const StHeartCount = styled.div`
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   color: black;
   display: flex;
@@ -671,5 +687,5 @@ const StHeartCount = styled.div`
 `;
 
 const StHeartImg = styled.div`
-  margin-right: 5px;
+  margin-right: 3px;
 `;

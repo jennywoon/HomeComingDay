@@ -84,7 +84,7 @@ const StNoticeCard = styled.div`
 const StNoticeCardContainer = styled.div`
   display: flex;
   width: 90%;
-  height: 90px;
+  height: 100%;
   justify-content: center;
   align-items: center;
   gap: 5px;

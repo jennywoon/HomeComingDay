@@ -33,7 +33,7 @@ const InformationDetailModal = ({ setModalOpen }) => {
               <StBottomTitle
               onClick={() => {
                 dispatch(__deleteInformation(informationsfind.articleId))
-                dispatch(__getDetailInformation(id))
+                dispatch(__getInformation())
                 navigate("/information")
               }}
               >삭제하기</StBottomTitle>

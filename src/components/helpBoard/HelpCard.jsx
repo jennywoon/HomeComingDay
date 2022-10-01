@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { __getHelp, __postHeart, __postHelp } from '../../redux/modules/HelpSlice';
+import { __getDetailHelp, __getHelp, __postHeart, __postHelp } from '../../redux/modules/HelpSlice';
 import { useNavigate } from 'react-router-dom';
 import commentgray from '../../assets/commentgray.png';
 import heartgray from '../../assets/heartgray.png';
@@ -14,8 +14,10 @@ const HelpCard = ({ help, id }) => {
     dispatch(__getHelp());
   }, [dispatch]);
 
-  const onClickNavi = () => {
-    navigate(`/helpdetail/${id}`);
+  const onClickNavi = async() => {
+    await dispatch(__getDetailHelp(id))
+    await navigate(`/helpdetail/${id}`);
+    
   };
 
   return (
@@ -146,6 +148,7 @@ const StBodyTitle = styled.div`
   font-size: 16px;
   font-weight: 600;
   color: #000;
+  word-break: break-word;
 `;
 
 const StCardFooter = styled.div`

@@ -33,7 +33,7 @@ const FreeTalkDeleteModal = ({ setModalOpen }) => {
               <StBottomTitle
                 onClick={() => {
                   dispatch(__deleteFreeTalk(freetalksfind.articleId))
-                  dispatch(__getDetailFreeTalk(id))
+                  dispatch(__getFreeTalk())
                   navigate("/freeTalk")
                 }}
               >삭제하기</StBottomTitle>
