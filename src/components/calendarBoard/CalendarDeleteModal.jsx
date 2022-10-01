@@ -32,7 +32,7 @@ const CalendarDeleteModal = ({ setModalOpen }) => {
               <StBottomTitle
               onClick={() => {
                 dispatch(__deleteCalendar(calendarfind.articleId))
-                dispatch(__getDetailCalendar(id))
+                dispatch(__getCalendar())
                 navigate("/calendar")
               }}
               >삭제하기</StBottomTitle>
