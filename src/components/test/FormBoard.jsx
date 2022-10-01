@@ -1308,7 +1308,9 @@ const ArrowForward = styled(IoIosArrowForward)`
 `
 const MinusCircle = styled(AiOutlineMinusCircle)`
   color:#cfcfcf;
+  cursor: pointer;
 `
 const PlusCircle = styled(AiOutlinePlusCircle)`
   color:#cfcfcf;
+  cursor: pointer;
 `

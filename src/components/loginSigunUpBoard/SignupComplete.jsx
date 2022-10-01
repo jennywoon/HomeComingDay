@@ -44,10 +44,10 @@ const SignupComplete = () => {
             </p>
             <SchoolDiv>
               <p style={{color: "#f7931e"}}>
-                {data && data.schoolName}
+                {/* {data && data.schoolName} */}
                 {/* {cookies.get("schoolname")} */}
                 </p>
-              <p>선후배들과 소통을 이어가보세요</p>
+              <p>동문 선후배들과 소통을 이어가보세요</p>
             </SchoolDiv>
           </StText>
         </FisrtWrap>
