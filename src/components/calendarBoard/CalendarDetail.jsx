@@ -345,6 +345,7 @@ const CalendarDetail = () => {
                 placeholder='댓글을 입력해주세요'
                 value={comment}
                 onChange={onChangePostHandler}
+                maxLength='50'
               ></StCommentPost>
               <StCommentButton type='submit'>올리기</StCommentButton>
             </StCommentDiv>

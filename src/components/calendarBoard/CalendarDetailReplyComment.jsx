@@ -252,9 +252,9 @@ const StUserInfo = styled.div`
 const StReplyContent = styled.div`
     font-size:14px;
     width:100%;
-    word-break:break-all;
     margin: 5px 0;
     font-weight: 400;
+    word-break: break-word;
 `
 const StReplyTime = styled.div`
      font-size: 12px;
