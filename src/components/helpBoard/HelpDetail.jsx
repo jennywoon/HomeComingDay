@@ -29,7 +29,7 @@ import HelpDeleteModal from './HelpDeleteModal';
 import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
 import heartColorImg from '../../assets/heartColor.png';
-import { __getMyPage } from '../../redux/modules/MyPageSlice';
+import { __getMyPage, __getView } from '../../redux/modules/MyPageSlice';
 import { chatApi } from '../chatBoard/ChatApi';
 import { __getNoticeCount } from '../../redux/modules/NoticeSlice';
 import dots from '../../assets/dots.png';
@@ -48,6 +48,8 @@ const HelpDetail = () => {
   // const helpsCommentList = helpsfind.commentList.find((helpfind)=>helpfind)
   // const helpsChildCommentList = helpsCommentList.childCommentList.find((helpsComment)=>helpsComment)
   const data = useSelector((state) => state.mypages.mypages);
+  const detailview = useSelector((state)=>state.mypages.view);
+
   // console.log('helpsfind', helpsfind);
   // console.log("helpsCommentList",helpsCommentList)
   // console.log('helpsChildCommentList', helpsChildCommentList)
@@ -75,6 +77,7 @@ const HelpDetail = () => {
     dispatch(__getMyPage());
     dispatch(__getHelp());
     dispatch(__getDetailHelp(id));
+    dispatch(__getView(id))
   }, [dispatch]);
 
   // 프로필 사진 클릭
@@ -260,7 +263,7 @@ const HelpDetail = () => {
                   <StBodyTxtBox>
                     <StContentView>
                       {helpsfind && helpsfind.createdAt} | 조회수{' '}
-                      {helpsfind && helpsfind.views}
+                      {detailview.views}
                     </StContentView>
                     <StCount>
                       <StCommentCount>
