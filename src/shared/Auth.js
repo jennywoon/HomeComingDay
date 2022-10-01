@@ -83,7 +83,8 @@ const Auth = async (req, res) => {
   //ejs 모듈을 이용해 ejs 파일을 불러온다.
   //ejs 에 담기는 변수들은 위 코드에서 경우에 따라 설정 된 상태로 올 것이다.
   ejs.renderFile(__dirname + '/authForm/authMail.ejs', { clientAddr, authCode, action, endPoint, display }, (err, data) => {
-    if (err) console.log(err);
+    if (err) 
+    // console.log(err);
     authEmailForm = data;
   })
 
@@ -109,7 +110,7 @@ const Auth = async (req, res) => {
     html: authEmailForm,
   }, (error, info) => {
     if (error) {
-      console.log(error);
+      // console.log(error);
     }
     res.status(200).json({ "message": action });
     //전송을 끝내는 메소드

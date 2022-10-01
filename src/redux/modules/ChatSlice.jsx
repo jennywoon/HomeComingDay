@@ -25,7 +25,7 @@ export const getChatList = createAsyncThunk("GET_CHAT_LIST", async(page, thunkAP
 export const getChatMessage = createAsyncThunk("GET_CHAT_MESSAGE", async(roomId, thunkAPI) => {
     try{
         const response = await chatApi.getChatMessage(roomId);
-        console.log(response);
+        // console.log(response);
         return response;
     } catch(e) {
         return thunkAPI.rejectWithValue(e.response.data);

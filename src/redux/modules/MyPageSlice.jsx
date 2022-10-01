@@ -73,7 +73,7 @@ export const __patchProfileImage = createAsyncThunk("mypages/patchProfileImage",
 });
 
 export const __getMyArticle = createAsyncThunk("myarticles/getMyArticles", async (payload, thunkAPI) => {
-  console.log("payload", payload)
+  // console.log("payload", payload)
   try {
     const data = await axios({
       method: 'get',

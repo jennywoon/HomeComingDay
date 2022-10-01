@@ -114,7 +114,7 @@ export const __deleteHelp = createAsyncThunk("helps/deleteHelp", async (payload,
 
 export const __updateHelp = createAsyncThunk("helps/updateHelp", async (payload, thunkAPI) => {
   try {
-    console.log("payload" , payload)
+    // console.log("payload" , payload)
     const data = await axios({
       method: 'put',
       url: `${BASE_URL}/article/help/${payload.id}`,

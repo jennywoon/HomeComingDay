@@ -41,7 +41,7 @@ const ChatList = () => {
     // const hasNext = useSelector((state) => state.chat.hasNext);
     // const page = useSelector((state) => state.chat.page);
     const { chatList, isLoading, hasNext, page } = useSelector((state) => state.chat);
-    console.log(chatList);
+    // console.log(chatList);
 
     const inicialRoom = {
         roomname: null,

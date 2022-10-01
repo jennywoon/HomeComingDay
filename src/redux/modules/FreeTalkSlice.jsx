@@ -208,7 +208,7 @@ export const __updateFreeTalkComment = createAsyncThunk("comment/updateInfoComme
 //대댓글
 export const __postFreeTalkReplyComment = createAsyncThunk("comments/postFreeTalkReplyComment", async (payload, thunkAPI) => {
   try {
-    console.log("payload" , payload)
+    // console.log("payload" , payload)
     const data = await axios({
       method: 'post',
       url: `${BASE_URL}/article/freeTalk/${payload.articleId}/comment/${payload.commentId}`,
@@ -228,7 +228,7 @@ export const __postFreeTalkReplyComment = createAsyncThunk("comments/postFreeTal
 
 export const __deleteFreeTalkReplyComment = createAsyncThunk("comments/deleteFreeTalkReplyComment", async (payload, thunkAPI) => {
   try {
-    console.log("payload" , payload)
+    // console.log("payload" , payload)
     const data = await axios({
       method: 'delete',
       url: `${BASE_URL}/article/freeTalk/${payload.articleId}/comment/${payload.commentId}/${payload.childCommentId}`,
@@ -246,7 +246,7 @@ export const __deleteFreeTalkReplyComment = createAsyncThunk("comments/deleteFre
 
 export const __updateFreeTalkReplyComment = createAsyncThunk("comments/updatefreeTalkReplyComment", async (payload, thunkAPI) => {
   try {
-    console.log("payload" , payload)
+    // console.log("payload" , payload)
     const data = await axios({
       method: 'patch',
       url: `${BASE_URL}/article/freeTalk/${payload.articleId}/comment/${payload.commentId}/${payload.childCommentId}`,
@@ -469,8 +469,8 @@ export const FreeTalkSlice = createSlice({
   
       [__updateFreeTalkReplyComment.fulfilled]: (state, action) => {
         state.isLoading = false;
-        console.log('action', action.payload)
-        console.log('comment', state.childCommentList)
+        // console.log('action', action.payload)
+        // console.log('comment', state.childCommentList)
         state.freetalksReplyCommentList = state.freetalksReplyCommentList.map((comment) => {
           if (comment.childCommentId === action.payload.childCommentId) {
             comment.content = action.payload.content;
@@ -485,7 +485,7 @@ export const FreeTalkSlice = createSlice({
         state.isLoading = true;
       },
       [__postFreeTalkHeart.fulfilled]: (state, action) => {
-        console.log("__postHeart.fulfilled", action);
+        // console.log("__postHeart.fulfilled", action);
         state.isLoading = false;
         state.heart.unshift(action);
       },

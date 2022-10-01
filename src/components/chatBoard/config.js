@@ -29,7 +29,7 @@ instance.interceptors.request.use(
         return config;
     },
     (error) => {
-        console.log(error, "error");
+        // console.log(error, "error");
         return;
     },
 );
@@ -82,7 +82,7 @@ instance.interceptors.response.use(
     },
 
     function(error) {
-        console.log(error, "error");
+        // console.log(error, "error");
         store.dispatch(showError({ isOpen: true, message: error.response.data.message}));
         return Promise.reject(error);
     },

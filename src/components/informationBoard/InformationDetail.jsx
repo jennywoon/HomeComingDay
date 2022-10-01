@@ -153,11 +153,11 @@ const InformationDetail = () => {
       .createChat(userId)
       .then((response) => {
         navigate(`/chat/${response.data}`);
-        console.log("userId", userId)
-        console.log("response", response.data)
+        // console.log("userId", userId)
+        // console.log("response", response.data)
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       })
   }
 

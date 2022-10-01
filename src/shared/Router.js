@@ -32,7 +32,7 @@ import ChatDetail from "../components/chatBoard/ChatDetail"
 const Router = () => {
 
   const token = getCookie("accessToken")
-  console.log(token);
+  // console.log(token);
   
   return (
     <BrowserRouter>
