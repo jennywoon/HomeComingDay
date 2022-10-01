@@ -88,7 +88,7 @@ const SignUp = () => {
     try {
       if (!emailError) {
         const data = await axios.post(`${BASE_URL}/emailCheck`, newEmail);
-        console.log(data.data);
+        // console.log(data.data);
         if (data.data.success === true) {
           setIsOnCheck(true);
           setEmailConfirm(true);
@@ -99,7 +99,7 @@ const SignUp = () => {
         }
       }
     } catch (error) {
-      console.log('error ', error);
+      // console.log('error ', error);
     }
   };
 
@@ -107,21 +107,20 @@ const SignUp = () => {
   const [isSend, setIsSend] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [disabled, setDisabled] = useState(false);
+
   const handleSendEmail = async () => {
     const sendEmail = {
       email: email,
-    };
-    try {
-      const data = await axios.post(`${BASE_URL}/signup/sendEmail`, sendEmail);
-      setIsSend(true);
-      setModalOpen(true);
-      setIsActiveTimer(true);
-      console.log(data.data);
-    } catch (error) {
-      console.log('error ', error);
     }
-  };
-
+    const data = await axios.post(`${BASE_URL}/signup/sendEmail`, sendEmail);
+    setModalOpen(true);
+    if (isSend) {
+      setIsSend(true);
+    } else{
+      setIsSend(true);
+    }
+  }
+  
   // 이메일 인증번호
   const [emailCheck, setEmailCheck] = useState({
     authKey: '',
@@ -148,7 +147,7 @@ const SignUp = () => {
         `${BASE_URL}/signup/checkEmail`,
         checkEmail
       );
-      console.log(data.data);
+      // console.log(data.data);
       if (data.data.success === true) {
         setIsCheck(true);
         setFormError({ ...formError, emailChecked: false });
@@ -157,7 +156,7 @@ const SignUp = () => {
         setFormError({ ...formError, emailChecked: true });
       }
     } catch (error) {
-      console.log('error ', error);
+      // console.log('error ', error);
     }
   };
 
@@ -269,29 +268,29 @@ const SignUp = () => {
   const [min, setMin] = useState(3);
   const [sec, setSec] = useState(0);
   const [isActiveTimer, setIsActiveTimer] = useState(false);
-  const time = useRef(179);
+  const time = useRef(180);
   const timerId = useRef(null);
 
   useEffect(() => {
-      timerId.current = setInterval(() => {
-          setMin(parseInt(time.current / 60));
-          setSec(time.current % 60 );
-          time.current -= 1;
-      }, 1000);
+    timerId.current = setInterval(() => {
+      setMin(parseInt(time.current / 60));
+      setSec(time.current % 60);
+      time.current -= 1;
+    }, 1000);
 
-      return () => clearInterval(timerId.current)
+    return () => clearInterval(timerId.current)
   })
 
   useEffect(() => {
-      if(time.current <= 0){
-          console.log("타임 아웃");
-          clearInterval(timerId.current);
-      }
+    if (time.current <= 0) {
+      // console.log("타임 아웃");
+      clearInterval(timerId.current);
+    }
   }, [sec])
 
   return (
     <StFormContainer>
-      {isSend ? modalOpen && <SignupModal setModalOpen={setModalOpen} /> : null}
+      {isSend ? modalOpen && <SignupModal setModalOpen={setModalOpen} /> : modalOpen && <SignupModal setModalOpen={setModalOpen} />}
       <StSignupContainer onSubmit={handleSubmit}>
         <StFormHeader>
           <IoIosArrowBack
@@ -305,13 +304,13 @@ const SignUp = () => {
         <StSignupWraps>
           <StFisrtWrap>
             <StSecondWrap>
-              <StSignupTitle style={{ justifyContent: 'center' }}>
+              <StSignupTitle>
                 회원가입
               </StSignupTitle>
               <StThirdWrap>
                 <StSignupWrap>
                   <Stlabel>이름</Stlabel>
-                  <Input width='100%' onChange={handleChangeusername} style={{borderBottom:"1px solid #ccc"}}/>
+                  <Input width='100%' onChange={handleChangeusername} style={{ borderBottom: "1px solid #ccc", marginTop: "5px" }} />
                   {nameError ? (
                     <StErrorMessage>
                       2자 이상 12자 이하, 영어 또는 한글
@@ -322,7 +321,7 @@ const SignUp = () => {
                 <StSignupWrap>
                   <Stlabel>이메일</Stlabel>
                   <StFlexbox>
-                    <Input type='email' width='100%' onChange={handleChangeEmail} style={{borderBottom:"1px solid #ccc"}} />
+                    <Input type='email' width='100%' onChange={handleChangeEmail} style={{ borderBottom: "1px solid #ccc", marginTop: "5px" }} />
                     <StEmailButton
                       type='button'
                       isOnCheck={isOnCheck}
@@ -343,23 +342,24 @@ const SignUp = () => {
                         type='button'
                         onClick={handleSendEmail}
                         isSend={isSend}
-                        isActiveTimer={isActiveTimer}
+                        // isActiveTimer={isActiveTimer}
                       >
-                        {isSend
+                        {/* {isSend
                           ? '해당 이메일로 인증번호 발송 완료'
-                          : '해당 이메일로 인증번호 발송'}
+                          : '해당 이메일로 인증번호 발송'} */}
+                        {/* {isSend ? "해당 이메일로 인증번호 발송 완료" : "해당 이메일로 인증번호 발송"} */}
+                        {isSend ? "해당 이메일로 인증번호 재발송" : "해당 이메일로 인증번호 발송"}
                       </StSendEmailButton>
                       <Stlabel>인증번호</Stlabel>
                       <StFlexbox>
                         <StTimerDiv>
-                        <Input
-                          width='100%'
-                          style={{ marginRight: '10px'}}
-                          onChange={handleChangeAuthKey}
-                        />
-                        {/* 이메일 인증 타이버 컴포넌트 */}
-                        {isActiveTimer ? <AuthTimer/> : ""}
-                        {/* {isActiveTimer ? `${min}분 ${sec <= 10 ? `0` : sec}초` : ""} */}
+                          <Input
+                            width='100%'
+                            style={{ marginRight: '10px' }}
+                            onChange={handleChangeAuthKey}
+                          />
+                          {/* 이메일 인증 타이버 컴포넌트 */}
+                          {/* {isActiveTimer ? <AuthTimer /> : <AuthTimer />} */}
                         </StTimerDiv>
                         <StEmailCheckButton
                           type='button'
@@ -385,7 +385,7 @@ const SignUp = () => {
                       type={passwordType.type}
                       width='100%'
                       onChange={handleChangePassword}
-                      style={{borderBottom:"1px solid #ccc"}}
+                      style={{ borderBottom: "1px solid #ccc", marginTop: "5px" }}
                     />
                     <StVisible onClick={handlePasswordType}>
                       {passwordType.visible ? (
@@ -413,7 +413,7 @@ const SignUp = () => {
                       type={passwordConfirmType.type}
                       width='100%'
                       onChange={handleChangeConfirmPassword}
-                      style={{borderBottom:"1px solid #ccc"}}
+                      style={{ borderBottom: "1px solid #ccc", marginTop: "5px" }}
                     />
                     <StVisible onClick={handlePasswordConfirmType}>
                       {passwordConfirmType.visible ? (
@@ -433,15 +433,17 @@ const SignUp = () => {
                 </StSignupWrap>
               </StThirdWrap>
             </StSecondWrap>
+            <StButtonWrap>
             <Button
               type='submit'
               width='85%'
               isDisabled={isActive ? false : true}
-              style={{ marginTop: '50px', backgroundColor: '#f7931e' }}
+              style={{backgroundColor: '#f7931e' }}
               color='white'
             >
               <StButtonTitle>가입하기</StButtonTitle>
             </Button>
+            </StButtonWrap>
           </StFisrtWrap>
         </StSignupWraps>
       </StSignupContainer>
@@ -495,18 +497,28 @@ const StSecondWrap = styled.div`
   height: 100%;
 `
 
+const StButtonWrap = styled.div`
+  position: absolute;
+  bottom: 3%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`
+
 const StThirdWrap = styled.div`
   width: 100%;
-  height: 90%;
+  height: 87%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  /* border: 1px solid red; */
 `
 const StSignupTitle = styled.div`
   width: 95%;
   font-size: 24px;
   font-weight: 700;
-  margin-bottom: 20px;
+  justify-content: center;
+  margin-bottom: 10px;
 `;
 
 const StSignupWrap = styled.div`
@@ -514,13 +526,14 @@ const StSignupWrap = styled.div`
   padding: 0;
   border: none;
   align-items: left;
-  margin-bottom: 60px;
+  margin-bottom: 65px;
   position: relative;
 `;
 
 const Stlabel = styled.label`
   font-size: 14px;
   font-weight: 700;
+  /* margin-bottom: 10px; */
 `;
 
 const StFlexbox = styled.div`
@@ -573,7 +586,7 @@ const StSendEmailButton = styled.button`
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
-  margin: 10px 0;
+  margin: 10px 0 25px 0;
 `;
 
 const StVisible = styled.span`

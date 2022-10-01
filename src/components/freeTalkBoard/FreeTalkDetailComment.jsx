@@ -102,6 +102,20 @@ const FreeTalkDetailComment = ({ comment, freetalksfind, data }) => {
     setReplyComment(e.target.value);
   };
 
+  // 댓글 올리기 버튼 활성화
+  const [isActive, setIsActive] = useState(false);
+  const handleCheck = (e) => {
+    setIsActive(e);
+  };
+
+  useEffect(() => {
+    if (replyComment !== '') {
+      handleCheck(true);
+    } else {
+      handleCheck(false);
+    }
+  }, [replyComment]);
+
   //모달
   const [modalOpen, setModalOpen] = useState(false);
   const showModal = (e) => {
@@ -184,6 +198,7 @@ const FreeTalkDetailComment = ({ comment, freetalksfind, data }) => {
                   <StUploadBtnBox
                     type='submit'
                     onClick={onClickPostReplyComment}
+                    disabled={isActive ? false : true}
                   >
                     <StUploadBtn></StUploadBtn>
                   </StUploadBtnBox>
@@ -191,8 +206,6 @@ const FreeTalkDetailComment = ({ comment, freetalksfind, data }) => {
               </StReplyCommentBox>
             ) : null}
           </StReplyInputContainer>
-
-          {/* <AiOutlineMenu size="18px" cursor="pointer" style={{ marginLeft: "auto", cursor: "pointer" }} onClick={onCilckShow}/> */}
         </StCommentTxt>
         {showComment ? (
           <StRevisebox ref={node}>
