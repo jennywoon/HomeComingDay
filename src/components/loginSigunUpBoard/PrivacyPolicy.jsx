@@ -8,8 +8,8 @@ const PrivacyPolicy = ({ setPrivacyModal }) => {
   }
   return (
     <StPrivacyWrap>
-      <Wrap>
-        <ModalContainer>
+      <StWrap>
+        <StModalContainer>
           ( Homecoming Day )('https://www.homecomingdaycare.com/'이하 'Homecoming Day')은(는) 「개인정보 보호법」 제30조에 따라 정보주체의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보 처리방침을 수립·공개합니다.<br />
           <br />
           ○ 이 개인정보처리방침은 2022년 10월 1부터 적용됩니다.<br />
@@ -166,11 +166,11 @@ const PrivacyPolicy = ({ setPrivacyModal }) => {
           <br />
 
           ① 이 개인정보처리방침은 2022년 10월 1부터 적용됩니다.<br />
-        </ModalContainer>
-        <ModalBottom onClick={closePrivacyModal}>
-          <BottomTitle>확인</BottomTitle>
-        </ModalBottom>
-      </Wrap>
+        </StModalContainer>
+        <StModalBottom onClick={closePrivacyModal}>
+          <StBottomTitle>확인</StBottomTitle>
+        </StModalBottom>
+      </StWrap>
     </StPrivacyWrap>
   );
 };
@@ -207,7 +207,7 @@ const StPrivacyWrap = styled.div`
   }
 `
 
-const Wrap = styled.div`
+const StWrap = styled.div`
   position: relative;
   width: 100%;
   max-width: 420px;
@@ -223,7 +223,7 @@ const Wrap = styled.div`
   }
 `;
 
-const ModalContainer = styled.div`
+const StModalContainer = styled.div`
   width: 80%;
   height: 500px;
   background-color: white;
@@ -239,7 +239,7 @@ const ModalContainer = styled.div`
   }
 `;
 
-const ModalBottom = styled.div`
+const StModalBottom = styled.div`
   width: 80%;
   height: 5%;
   background-color: #f7931e;
@@ -252,7 +252,7 @@ const ModalBottom = styled.div`
   cursor: pointer;
 `;
 
-const BottomTitle = styled.div`
+const StBottomTitle = styled.div`
   font-size: 16px;
   font-weight: 700;
 `;
