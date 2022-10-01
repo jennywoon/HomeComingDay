@@ -37,8 +37,21 @@ const CalendarUpdate = () => {
   }
   // console.log(calendarfind)
   const onChange = (value) => setDate(value);
+
+  //  const reactCalen = calendarfind && calendarfind.calendarDate
+  // let editrealCalendar = reactCalen.substring(0,13)
+  
+
+  // console.log(editrealCalendar)
+  // // const editrealCalendar = moment(reactCalendar.toString()).format('YYYY년 MM월 DD일');
+  
+
+  // const [reactCalendar, setReactCalendar] = useState(
+  //   editrealCalendar
+  // );
+
   const [date, setDate] = useState({
-    calendarDate: '',
+    calendarDate:''
   });
   const realCalendar = moment(date.toString()).format('YYYY년 MM월 DD일 dddd');
 
@@ -61,22 +74,21 @@ const CalendarUpdate = () => {
     calendarfind && calendarfind.title
   );
   const [EditLocation, setEditLocation] = useState(
-    calendarfind && calendarfind.calendarLocation
+    (calendarfind && calendarfind.calendarLocation)
   );
+
   const [EditContent, setEditContent] = useState(
     calendarfind && calendarfind.content
   );
-  const [reactCalendar, setReactCalendar] = useState(
-    calendarfind && calendarfind.calendarDate
-  );
-  // const reactCalendar = calendarfind && calendarfind.calendarDate
-  // const editrealCalendar = moment(reactCalendar.toString()).format('YYYY년 MM월 DD일 dddd');
+
+  
+  
 
   const [joinNumber, setJoinNumber] = useState(calendarfind && calendarfind.maxPeople);
 
-  const onChangeCalendar = (e) => {
-    setReactCalendar(e.target.value);
-  };
+  // const onChangeCalendar = (e) => {
+  //   setReactCalendar(e.target.value);
+  // };
 
 
   //참여하기 인원 수정
@@ -125,9 +137,16 @@ const CalendarUpdate = () => {
 
   const [dateShow, setDateShow] = useState(true);
   const [timeShow, setTimeShow] = useState(false);
+ 
+  const calendarTimes = calendarfind && calendarfind.calendarTime
+
+  const calendarHour = calendarTimes.substring(0,2)
+  const calendarMinute = calendarTimes.substring(3,5)
+
+
   const [selectTime, setSelectTime] = useState("오전");
-  const [selectHour, setSelectHour] = useState("01");
-  const [selectMinute, setSelectMinute] = useState("00");
+  const [selectHour, setSelectHour] = useState(calendarHour);
+  const [selectMinute, setSelectMinute] = useState(calendarMinute);
 
   const division = ["오전", "오후"];
   const hourSelect = [
@@ -165,7 +184,7 @@ const CalendarUpdate = () => {
   // const [calendarlocation, setCalendarLocation] = useState({
   //   calendarLocation: "",
   // })
-  const [calendarlocation, setCalendarLocation] = useState("")
+  const [calendarlocation, setCalendarLocation] = useState(calendarfind && calendarfind.calendarLocation)
   const locations = { calendarLocation: calendarlocation }
 
   // console.log(calendarlocation);
@@ -213,7 +232,7 @@ const CalendarUpdate = () => {
   };
 
   useEffect(() => {
-    if (EditTitle !== '' && calendarlocation !== '' && EditContent !== '') {
+    if (EditTitle !== ''  && EditContent !== '') {
       handleCheck(true);
     } else {
       handleCheck(false);
@@ -245,16 +264,19 @@ const CalendarUpdate = () => {
               placeholder='제목을 입력해주세요'
               maxLength='40'
             ></StFormInput>
-            <StCalendarButton type="button"
+            <StCalendarButton
             // onClick={showModal}
             >
               <StCalendarTitle>날짜</StCalendarTitle>
               <StDateDiv onClick={() => setIsActive(!isActive)}>
+                {/* {editrealCalendar} */}
                 {moment(date).format('YYYY년 MM월 DD일')}
                 <ArrowForward />
               </StDateDiv>
             </StCalendarButton>
-            <StCalendarWrap value={reactCalendar} onClick={onChangeCalendar}>
+            <StCalendarWrap 
+            // value={reactCalendar} onClick={onChangeCalendar}
+            >
               {isActive && (
                 <Calendar
                   name='calendarDate'
@@ -362,7 +384,7 @@ const CalendarUpdate = () => {
                 onChange={calendaronChangeHandler}
                 onClick={handle.clickButton}
               >
-                {calendarlocation ? calendarlocation : "장소를 검색해주세요"}
+                {calendarlocation ? calendarlocation : `${EditLocation}`}
                 <ArrowForward />
               </StCalendarInput>
             </StCalendarDiv>
@@ -371,7 +393,7 @@ const CalendarUpdate = () => {
                 <DaumPostcode
                   onComplete={handle.selectAddress}  // 값을 선택할 경우 실행되는 이벤트
                   autoClose={false} // 값을 선택할 경우 사용되는 DOM을 제거하여 자동 닫힘 설정
-                  // defaultQuery='판교역로 235' // 팝업을 열때 기본적으로 입력되는 검색어 
+                  defaultQuery={EditLocation} // 팝업을 열때 기본적으로 입력되는 검색어 
                 />}
             </StKakaoMap>
             <StTextDiv>
@@ -410,7 +432,7 @@ const StFormContainer = styled.div`
   background-color: #f7ede2;
   display: flex;
   justify-content: center;
-  overflow: hidden;
+  overflow:hidden;
   @media only screen and (max-width: 768px) {
     width: 100%;
     height: 100%;
@@ -425,19 +447,23 @@ const StFormWrap = styled.form`
   background-color: white;
   display: flex;
   flex-direction: column;
-  
+  margin: 0 auto;
 `;
+
 const StFormHeader = styled.div`
   width: 100%;
-  padding-left:15px;
   height: 50px;
+  padding-left:15px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 40px 0px;
+  margin: 40px 0;
+  @media only screen and (max-width: 768px) {
+    margin: 0px 0px 20px 0px;
+  }
 `
 
-const StCalendarButton = styled.button`
+const StCalendarButton = styled.div`
     height: 40px;
     margin-top: 10px;
     border-radius: 10px;
@@ -468,6 +494,7 @@ const StCalendarTitle = styled.div`
     font-size: 14px;
   color: #f7931e;
   font-weight: 600;
+  width:50px;
 `
 const StCalendarDiv = styled.div`
     height: 40px;
@@ -487,13 +514,13 @@ const StKakaoMap = styled.div`
 
 const StCalendarInput = styled.div`
  width: 80%;
-  height: 30px;
+  height: 40px;
   display: flex;
   justify-content: right;
   align-items: center;
   font-size: 14px;
   cursor: pointer;
-  gap: 10px;
+  
 `
 const StCalendarTextarea = styled.textarea`
   width: 85%;
@@ -506,11 +533,13 @@ const StCalendarTextarea = styled.textarea`
   justify-content: center;
   align-items: center;
   outline: none;
-  textarea::placeholder {
+  ::placeholder {
+    line-height: 200px;
+    top: 50%;
     text-align: right;
   }
   padding: 0 10px;
-  text-align: right;
+  text-align: left;
 `;
 
 const StTextDiv = styled.div`
@@ -538,11 +567,13 @@ const StFormSelection = styled.select`
     color: #f7931e;
     font-size: 14px;
     font-weight: 600;
+    outline: none;
+    
 `
 const StFormInput = styled.input`
     font-size: 20px;
     border: none;
-    border-bottom:1px solid gray;
+    border-bottom:1px solid #d9d9d9;
     padding: 10px 10px 10px 5px;
     font-weight: bold;
     color: black;
@@ -562,7 +593,10 @@ const StFooterBtn = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
+  @media only screen and (max-width: 768px) {
+    padding-bottom: 15px;
+  }
 `
 
 const StChangediv = styled.div`
@@ -633,7 +667,7 @@ const StTimeModal = styled.div`
       flex-direction: column;
       align-items: center;
       height: 150px;
-      padding: 21px 10px;
+      padding: 28px 9px;
       width: auto;
       box-sizing: border-box;
       text-align: center;
@@ -694,7 +728,6 @@ const StJoinDiv = styled.div`
   justify-content: right;
   align-items: center;
   gap: 10px;
-  cursor: pointer;
   border:none;
 `
 const ArrowForward = styled(IoIosArrowForward)`
@@ -702,7 +735,9 @@ const ArrowForward = styled(IoIosArrowForward)`
 `
 const MinusCircle = styled(AiOutlineMinusCircle)`
 color:#cfcfcf;
+cursor: pointer;
 `
 const PlusCircle = styled(AiOutlinePlusCircle)`
   color:#cfcfcf;
+  cursor: pointer;
 `

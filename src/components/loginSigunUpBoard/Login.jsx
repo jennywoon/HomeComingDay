@@ -123,7 +123,7 @@ const Login = () => {
                 onChange={onChangeEmailHandler}
                 value={formValue.email}
                 width='100%'
-                style={{ borderBottom: "1px solid #ccc" }}
+                style={{ borderBottom: "1px solid #ccc", marginTop: "10PX" }}
               />
             </StEmail>
             <StPassword>
@@ -134,7 +134,7 @@ const Login = () => {
                   onChange={onChangePasswordHandler}
                   value={formValue.password}
                   width='100%'
-                  style={{ borderBottom: "1px solid #ccc" }}
+                  style={{ borderBottom: "1px solid #ccc", marginTop: "10PX" }}
                 />
                 <StVisible onClick={handlePasswordType}>
                   {passwordType.visible ? (
@@ -176,7 +176,7 @@ const Login = () => {
           </StLoginWrap>
         </StLoginWraps>
         <StPrivacy>
-          회원가입시<StPrivacyText onClick={showPrivacyModal}> 이용약관</StPrivacyText> 및 <StPrivacyText onClick={showPrivacyModal}>개인정보처리방침</StPrivacyText> 동의로 간주됩니다
+          회원가입시<StPrivacyText onClick={showPrivacyModal}>개인정보처리방침</StPrivacyText>동의로 간주됩니다
         </StPrivacy>
       </StLoginContainer>
     </>
@@ -278,7 +278,7 @@ const StPrivacy = styled.div`
   color: #b3b3b3;
   font-weight: 400;
   justify-content: center;
-  font-size: 15px;
+  font-size: 14px;
 `
 
 const StPrivacyText = styled.div`

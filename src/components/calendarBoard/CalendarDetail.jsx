@@ -14,7 +14,6 @@ import {
   __getJoin,
 } from '../../redux/modules/CalendarSlice';
 import { useRef } from 'react';
-import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
 import { GiPunchBlast } from 'react-icons/gi';
 import CalendarDeleteModal from './CalendarDeleteModal';
 import commentImg from '../../assets/commentImg.png';
@@ -90,10 +89,25 @@ const CalendarDetail = () => {
   const onCilckShow = () => {
     setShow(!show);
   };
+
   // 댓글
   const onChangePostHandler = (e) => {
     setComment(e.target.value);
   };
+
+  // 댓글 올리기 버튼 활성화 
+  const [isActive, setIsActive] = useState(false);
+  const handleCheck = (e) => {
+    setIsActive(e);
+  };
+
+  useEffect(() => {
+    if (comment !== '') {
+      handleCheck(true);
+    } else {
+      handleCheck(false);
+    }
+  }, [comment])
 
   // 1:1 채팅버튼
   const onCilckChaetShow = () => {
@@ -116,7 +130,6 @@ const CalendarDetail = () => {
     await dispatch(__getDetailCalendar(id));
     await dispatch(__getNoticeCount());
   };
-
 
   const onClickJoin = async (e) => {
     e.preventDefault();
@@ -345,8 +358,9 @@ const CalendarDetail = () => {
                 placeholder='댓글을 입력해주세요'
                 value={comment}
                 onChange={onChangePostHandler}
+                maxLength='50'
               ></StCommentPost>
-              <StCommentButton type='submit'>올리기</StCommentButton>
+              <StCommentButton type='submit' disabled={isActive ? false : true}>올리기</StCommentButton>
             </StCommentDiv>
           </StCommentBox>
         </StCommentContainer>
@@ -541,6 +555,7 @@ const StContentTitle = styled.h3`
   font-weight: 600;
   font-size: 16px;
   width: 100%;
+  word-break: break-word;
 `;
 const StContentBody = styled.div`
   color: #000;
@@ -563,16 +578,17 @@ const StContentget = styled.div`
 const StContentgetTitle = styled.span`
   color: #f7931e;
   font-weight: 600;
-  width:10%;
+  width:15%;
 `;
 
 const StContentgetContent = styled.div`
-  width:80%;
+  width:100%;
+  word-break: break-word;
 `
 const StContentView = styled.p`
   font-size: 12px;
   line-height: 40px;
-  height: 40px;
+  /* height: 40px; */
   color: #bebebe;
 `;
 const StBodyTxtBox = styled.div`
@@ -619,7 +635,7 @@ const StCommentDiv = styled.div`
 `;
 
 const StCommentPost = styled.input`
-  width: 80%;
+  width: 77%;
   background-color: #eeeeee;
   height: 30px;
   border-radius: 10px;
@@ -651,19 +667,19 @@ const StCount = styled.div`
 `;
 
 const StCommentCount = styled.div`
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   color: black;
   display: flex;
-  margin-right: 15px;
+  margin-right: 10px;
 `;
 
 const StCommentImg = styled.div`
-  margin-right: 5px;
+  margin-right: 3px;
 `;
 
 const StHeartCount = styled.div`
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   color: black;
   display: flex;
@@ -671,7 +687,7 @@ const StHeartCount = styled.div`
 `;
 
 const StHeartImg = styled.div`
-  margin-right: 5px;
+  margin-right: 3px;
 `;
 
 //참여하기

@@ -20,7 +20,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md';
+import {
+  MdOutlineArrowBackIos,
+  MdOutlineArrowForwardIos,
+} from 'react-icons/md';
 import InformationDetailModal from './InformationDetailModal';
 import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
@@ -28,7 +31,7 @@ import heartColorImg from '../../assets/heartColor.png';
 import { __getMyPage } from '../../redux/modules/MyPageSlice';
 import { chatApi } from '../chatBoard/ChatApi';
 import { __getNoticeCount } from '../../redux/modules/NoticeSlice';
-import dots from "../../assets/dots.png"
+import dots from '../../assets/dots.png';
 
 const InformationDetail = () => {
   const dispatch = useDispatch();
@@ -109,6 +112,19 @@ const InformationDetail = () => {
     await dispatch(__getNoticeCount());
   };
 
+  // 댓글 올리기 버튼 활성화
+  const [isActive, setIsActive] = useState(false);
+  const handleCheck = (e) => {
+    setIsActive(e);
+  };
+
+  useEffect(() => {
+    if (comment !== '') {
+      handleCheck(true);
+    } else {
+      handleCheck(false);
+    }
+  }, [comment]);
 
   //swiper 옵션
   SwiperCore.use(Navigation);
@@ -158,9 +174,8 @@ const InformationDetail = () => {
       })
       .catch((error) => {
         // console.log(error);
-      })
-  }
-
+      });
+  };
 
   return (
     <StContainer ref={node}>
@@ -199,24 +214,28 @@ const InformationDetail = () => {
                       {informationsfind && informationsfind.admission}{' '}
                     </span>
                   </StTxtstudent>
-                  {showChaet ?
-                    <StChatWrap onClick={() => createChat(informationsfind.userId)}>
-                      {informationsfind && informationsfind.username !== data.username ?
-                      <StChaetingBox>
-                        1:1채팅
-                      </StChaetingBox>: null}
-                    </StChatWrap> : null}
+                  {showChaet ? (
+                    <StChatWrap
+                      onClick={() => createChat(informationsfind.userId)}
+                    >
+                      {informationsfind &&
+                      informationsfind.username !== data.username ? (
+                        <StChaetingBox>1:1채팅</StChaetingBox>
+                      ) : null}
+                    </StChatWrap>
+                  ) : null}
                 </StBodytxt>
 
-                {informationsfind && informationsfind.username === data.username ? (
-                  <StDots
-                    onClick={onCilckShow}
-                  />
+                {informationsfind &&
+                informationsfind.username === data.username ? (
+                  <StDots onClick={onCilckShow} />
                 ) : null}
 
                 {show ? (
                   <StRevisebox ref={node}>
-                    <StReviseButton onClick={onClickRevice}>수정</StReviseButton>
+                    <StReviseButton onClick={onClickRevice}>
+                      수정
+                    </StReviseButton>
                     <StDeleteButton onClick={showModal}>삭제</StDeleteButton>
                   </StRevisebox>
                 ) : null}
@@ -228,7 +247,8 @@ const InformationDetail = () => {
                 <StContentBody>
                   {informationsfind && informationsfind.content}
                 </StContentBody>
-                {informationsfind && informationsfind.imageList?.length !== 0 ? (
+                {informationsfind &&
+                informationsfind.imageList?.length !== 0 ? (
                   <StContentImgBox>
                     <Swiper
                       {...swiperParams}
@@ -244,7 +264,7 @@ const InformationDetail = () => {
                             </SwiperSlide>
                           );
                         })}
-                      
+
                       <StPrevButton ref={navigationPrevRef}>
                         <StPreviousBtn />
                       </StPrevButton>
@@ -285,7 +305,7 @@ const InformationDetail = () => {
               <StBodyContainer>
                 <StBodyCommentBox>
                   {informationsfind &&
-                    informationsfind.commentList?.length === 0 ? (
+                  informationsfind.commentList?.length === 0 ? (
                     <StBodyComment>
                       작성한 댓글이 없습니다 <br></br> 첫번째 댓글을 남겨보세요{' '}
                     </StBodyComment>
@@ -315,8 +335,11 @@ const InformationDetail = () => {
                 placeholder='댓글을 입력해주세요'
                 value={comment}
                 onChange={onChangePostHandler}
+                maxLength='50'
               ></StCommentPost>
-              <StCommentButton type='submit'>올리기</StCommentButton>
+              <StCommentButton type='submit' disabled={isActive ? false : true}>
+                올리기
+              </StCommentButton>
             </StCommentDiv>
           </StCommentBox>
         </StCommentContainer>
@@ -455,15 +478,14 @@ const StBodytxt = styled.div`
 const StTxtname = styled.h3`
   cursor: pointer;
   font-weight: 600;
-font-size: 16px;
+  font-size: 16px;
 `;
 const StTxtstudent = styled.p`
   font-size: 12px;
   color: #bebebe;
 `;
 
-const StChatWrap = styled.div`
-`
+const StChatWrap = styled.div``;
 
 const StChaetingBox = styled.div`
   border: 1px solid #f1f0f0;
@@ -495,6 +517,7 @@ const StBodyContent = styled.div`
   justify-content: space-between;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   font-size: 14px;
+  white-space: pre-wrap;
 `;
 const StContentTitle = styled.h3`
   font-weight: 600;
@@ -528,7 +551,7 @@ const StPrevButton = styled.div``;
 const StNextButton = styled.div``;
 
 const StPreviousBtn = styled(MdOutlineArrowBackIos)`
-  color: #fff;
+  color: #ddd;
   width: 20px;
   height: 20px;
   display: flex;
@@ -541,7 +564,7 @@ const StPreviousBtn = styled(MdOutlineArrowBackIos)`
   transform: translatey(-50%);
 `;
 const StNextBtn = styled(MdOutlineArrowForwardIos)`
-  color: #fff;
+  color: #ddd;
   width: 20px;
   height: 20px;
   display: flex;
@@ -565,7 +588,6 @@ const StDots = styled.div`
   cursor: pointer;
 `;
 
-
 const StContentView = styled.p`
   font-size: 12px;
   line-height: 40px;
@@ -588,7 +610,6 @@ const StContentTime = styled.div`
 const StBodyContainer = styled.div`
   width: 100%;
   height: 100%;
-
 `;
 const StBodyCommentBox = styled.div`
   height: 100%;
@@ -623,7 +644,7 @@ const StCommentDiv = styled.div`
 `;
 
 const StCommentPost = styled.input`
-  width: 80%;
+  width: 77%;
   background-color: #eeeeee;
   height: 30px;
   border-radius: 10px;
@@ -633,7 +654,7 @@ const StCommentPost = styled.input`
 const StCommentButton = styled.button`
   border: none;
   cursor: pointer;
-  color: #F7931E;
+  color: #f7931e;
   font-weight: 600;
   background-color: transparent;
 `;
@@ -655,19 +676,19 @@ const StCount = styled.div`
 `;
 
 const StCommentCount = styled.div`
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   color: black;
   display: flex;
-  margin-right: 15px;
+  margin-right: 10px;
 `;
 
 const StCommentImg = styled.div`
-  margin-right: 5px;
+  margin-right: 3px;
 `;
 
 const StHeartCount = styled.div`
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   color: black;
   display: flex;
@@ -675,5 +696,5 @@ const StHeartCount = styled.div`
 `;
 
 const StHeartImg = styled.div`
-  margin-right: 5px;
+  margin-right: 3px;
 `;

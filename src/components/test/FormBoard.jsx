@@ -26,6 +26,7 @@ import imageCompression from 'browser-image-compression';
 
 
 const Form2 = () => {
+  // const node = useRef();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [help, setHelp] = useState({
@@ -48,6 +49,7 @@ const Form2 = () => {
 
   const [valueDate, onChageDate] = useState(new Date());
   const [isActive, setIsActive] = useState(false);
+
   const [select, setSelect] = useState('help');
   const [joinNumber , setJoinNumber] = useState(1);
 
@@ -601,14 +603,17 @@ const Form2 = () => {
                 placeholder='제목을 입력해주세요'
                 maxLength='40'
               ></FormInput>
+              <div>
               <CalendarButton>
                 <CalendarTitle>날짜</CalendarTitle>
-                <DateDiv onClick={() => setIsActive(!isActive)}>
+                <DateDiv 
+                onClick={() => setIsActive(!isActive)}
+                >
                   {moment(date).format('YYYY년 MM월 DD일')}
                   <ArrowForward />
                 </DateDiv>
               </CalendarButton>
-              <CalendarWrap 
+              <CalendarWrap
               value={reactCalendar} onClick={onChangeCalendar}
               >
                 {isActive && (
@@ -619,6 +624,7 @@ const Form2 = () => {
                   />
                 )}
               </CalendarWrap>
+              </div>
               <TimeDiv>
                 <CalendarTitle>시간</CalendarTitle>
                 <TimeOpenBtn
@@ -831,7 +837,8 @@ const Form2 = () => {
               </FormCheckWrap>
             </>
           ) : null}
-          <FooterBtn>
+        </FormBody>
+        <FooterBtn>
             <Button
               type='submit'
               backgroundColor='#F7931E'
@@ -844,9 +851,7 @@ const Form2 = () => {
               <div style={{ fontWeight: '500', fontSize: '16px' }}>올리기</div>
             </Button>
           </FooterBtn>
-        </FormBody>
       </FormWrap>
- 
     </TotalCatiner>
   );
 };
@@ -873,12 +878,14 @@ const FormContainer = styled.div`
 `;
 
 const FormWrap = styled.form`
-  width: 90%;
+  width: 95%;
   height: 90%;
   background-color: white;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+  /* align-items: center; */
+  /* border: 1px solid red; */
 `;
 const FormHeader = styled.div`
   width: 100%;
@@ -973,6 +980,8 @@ const FooterBtn = styled.div`
   bottom: 0;
   display: flex;
   align-items: flex-end;
+  /* justify-content: center; */
+  /* border: 1px solid red; */
 `;
 
 const Filelabel = styled.label`
@@ -1042,7 +1051,7 @@ const CalendarTitle = styled.div`
 
 const DateDiv = styled.div`
   width: 80%;
-  height: 30px;
+  height: 40px;
   display: flex;
   justify-content: right;
   align-items: center;
@@ -1106,18 +1115,20 @@ const StTextareaDiv = styled.div`
   align-items: center;
 `
 const CalendarTextarea = styled.textarea`
-  width: 95%;
+  width: 85%;
   height: 200px;
   resize: none;
   border: none;
   background-color: transparent;
   outline: none;
+  
   ::placeholder {
     line-height: 200px;
     top: 50%;
     text-align: right;
   }
   padding: 0 10px;
+  text-align: left;
 `;
 
 const StTimePicker = styled.input`
@@ -1192,7 +1203,7 @@ const CalendarWrap = styled.div`
 
 const TimeOpenBtn = styled.div`
 font-weight: 500;
-height: 30px;
+height: 40px;
 font-size: 14px;
 width: 80%;
 display: flex;
@@ -1219,9 +1230,7 @@ const StTimeModal = styled.div`
   overflow: hidden;
   
   text-align: center;
-
   width: 85%;
- 
 
   .select-time {
     display: flex;
@@ -1237,7 +1246,7 @@ const StTimeModal = styled.div`
       flex-direction: column;
       align-items: center;
       height: 150px;
-      padding: 21px 10px;
+      padding: 28px 9px;
       width: auto;
       box-sizing: border-box;
       text-align: center;
@@ -1293,7 +1302,7 @@ const StJoinPeople = styled.div`
 `
 const StJoinDiv = styled.div`
   font-weight: 500;
-  height: 30px;
+  height: 40px;
   font-size: 14px;
   width: 80%;
   display: flex;

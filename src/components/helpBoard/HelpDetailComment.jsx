@@ -8,13 +8,13 @@ import {
   __getHelp,
   __getDetailHelp,
   __postHelpComment,
-  __postHelpReplyComment
+  __postHelpReplyComment,
 } from '../../redux/modules/HelpSlice';
 import { useParams } from 'react-router-dom';
 import { GrUploadOption } from 'react-icons/gr';
 import HelpCommentDeleteModal from './HelpCommentDeleteModal';
 import HelpDetailReplyComment from './HelpDetailReplyComment';
-import dots from "../../assets/dots.png"
+import dots from '../../assets/dots.png';
 
 const DetailComment = ({ comment, helpsfind, data }) => {
   const dispatch = useDispatch();
@@ -103,7 +103,13 @@ const DetailComment = ({ comment, helpsfind, data }) => {
   };
 
   //대댓글 토글
+  const [createComment, setCreateComment] = useState(false);
   const onCilckReplyShow = () => {
+    if (!createComment) {
+      setCreateComment(true);
+    } else {
+      setCreateComment(false);
+    }
     setShowReplyComment(!showReplyComment);
   };
 
@@ -111,6 +117,20 @@ const DetailComment = ({ comment, helpsfind, data }) => {
   const onChangeReplyHandler = (e) => {
     setReplyComment(e.target.value);
   };
+
+  // 댓글 올리기 버튼 활성화
+  const [isActive, setIsActive] = useState(false);
+  const handleCheck = (e) => {
+    setIsActive(e);
+  };
+
+  useEffect(() => {
+    if (replyComment !== '') {
+      handleCheck(true);
+    } else {
+      handleCheck(false);
+    }
+  }, [replyComment]);
 
   //모달
   const [modalOpen, setModalOpen] = useState(false);
@@ -154,14 +174,12 @@ const DetailComment = ({ comment, helpsfind, data }) => {
                 <StTxtCreateAt> {comment && comment.createdAt}</StTxtCreateAt>
                 <StTxtCreateAt>|</StTxtCreateAt>
                 <StTxtCreateAt onClick={onCilckReplyShow}>
-                  답글쓰기
+                  {createComment ? '답글닫기' : '답글쓰기'}
                 </StTxtCreateAt>
               </StTxtFirstWrap>
             </StCommentsBox>
             {username === data.username ? (
-              <StDots
-                onClick={onCilckShow}
-              />
+              <StDots onClick={onCilckShow} />
             ) : null}
           </StComments>
 
@@ -182,12 +200,22 @@ const DetailComment = ({ comment, helpsfind, data }) => {
             {showReplyComment ? (
               <StReplyCommentBox>
                 <StCommentImg src={data.userImage}></StCommentImg>
-                <StReplyCommentInput
-                  value={replyComment}
-                  onChange={onChangeReplyHandler}
-                  width='100%'
-                />
-                <StUploadBtn onClick={onClickPostReplyComment}></StUploadBtn>
+                <StReplyCommentInputBox>
+                  <StReplyCommentInput
+                    placeholder='대댓글을 입력해주세요'
+                    value={replyComment}
+                    onChange={onChangeReplyHandler}
+                    width='100%'
+                    maxLength='50'
+                  />
+                  <StUploadBtnBox
+                    type='submit'
+                    onClick={onClickPostReplyComment}
+                    disabled={isActive ? false : true}
+                  >
+                    <StUploadBtn></StUploadBtn>
+                  </StUploadBtnBox>
+                </StReplyCommentInputBox>
               </StReplyCommentBox>
             ) : null}
           </StReplyInputContainer>
@@ -209,7 +237,7 @@ const DetailComment = ({ comment, helpsfind, data }) => {
 
 export default DetailComment;
 
-const StCommentContain = styled.div`
+const StCommentContain = styled.form`
   margin: 15px 0px;
   width: 100%;
   height: 100%;
@@ -234,27 +262,37 @@ const StCommentImg = styled.img`
   border-radius: 50%;
 `;
 
-const StReplyCommentInput = styled.textarea`
-  width: 100%;
-  height: 25px;
-  line-height: 25px;
-  border-radius: 30px;
+const StReplyCommentInputBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   border: 1px solid #d9d9d9;
   background-color: #fff;
+  border-radius: 12px;
+  height: 25px;
+  width: 100%;
+  padding: 2px 8px;
   margin-left: 5px;
-  padding: 2px 30px 0px 8px;
+`;
+const StReplyCommentInput = styled.input`
+  border: none;
+  width: 90%;
   outline: none;
   resize: none;
   overflow-y: hidden;
 `;
 
+const StUploadBtnBox = styled.button`
+  border: none;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  padding: 0;
+`;
 const StUploadBtn = styled(GrUploadOption)`
-  position: absolute;
-  right: 8px;
   font-size: 18px;
   cursor: pointer;
   opacity: 0.5;
-  color: red;
 `;
 
 const StDots = styled.div`
@@ -266,7 +304,7 @@ const StDots = styled.div`
   margin-left: auto;
   cursor: pointer;
   margin-top: 5px;
-`
+`;
 
 const StComments = styled.div`
   display: flex;
@@ -372,4 +410,5 @@ const StComment = styled.p`
   margin: 5px 0;
   font-size: 14px;
   font-weight: 400;
+  word-break: break-word;
 `;

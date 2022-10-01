@@ -152,11 +152,6 @@ const StFormWrap = styled.form`
   background-color: white;
   display: flex;
   flex-direction: column;
-
-  overflow-y: scroll;
-::-webkit-scrollbar{
-width: 0px;
-}
 `;
 
 const StFormHeader = styled.div`
@@ -167,6 +162,9 @@ const StFormHeader = styled.div`
   align-items: center;
   justify-content: space-between;
   margin: 40px 0px;
+  @media only screen and (max-width: 768px) {
+    margin: 0px 0px 20px 0px;
+  }
 `;
 
 const StFormBody = styled.div`
@@ -187,7 +185,7 @@ const StFormSelection = styled.select`
 const StFormInput = styled.input`
   font-size: 20px;
   border: none;
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid #d9d9d9;
   padding: 10px 10px 10px 5px;
   font-weight: bold;
   color: black;
@@ -201,11 +199,18 @@ const StFormInput = styled.input`
 `;
 
 const StTextarea = styled.textarea`
-  width: 100%;
-  height: 300px;
+  width: 95%;
+  /* height: 100%; */
+  height:200px;
   border: none;
   padding: 10px 5px;
   outline: none;
+  resize: none;
+  ::placeholder {
+    font-size: 16px;
+    color: #aaa;
+    font-weight: 400;
+  }
 `;
 
 const StFormFooter = styled.div`
@@ -218,6 +223,7 @@ const StCard = styled.div`
   border-radius: 16px;
   box-shadow: 0px 2px 14px rgba(0, 0, 0, 0.05);
   padding: 5px;
+  height: 300px;
 `;
 
 const StFooterBtn = styled.div`
@@ -228,7 +234,7 @@ const StFooterBtn = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  /* margin-bottom: 50px; */
+  margin-top: 40px;
 `;
 
 const StChangediv = styled.div`
