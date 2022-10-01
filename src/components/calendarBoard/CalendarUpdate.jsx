@@ -35,18 +35,19 @@ const CalendarUpdate = () => {
     e.preventDefault();
     setModalOpen(true);
   }
-  console.log(calendarfind)
+  // console.log(calendarfind)
   const onChange = (value) => setDate(value);
   const [date, setDate] = useState({
     calendarDate: '',
   });
   const realCalendar = moment(date.toString()).format('YYYY년 MM월 DD일 dddd');
+
   const dates = { calendarDate: realCalendar };
   const [isOnActive, setIsOnActive] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [calendar, setCalendar] = useState({
     calendartitle: '',
-    calendarDate: '',
+    calendarDate: null,
     calendartime: '',
     calendarlocation: '',
     calendarcontent: '',
@@ -68,6 +69,8 @@ const CalendarUpdate = () => {
   const [reactCalendar, setReactCalendar] = useState(
     calendarfind && calendarfind.calendarDate
   );
+  // const reactCalendar = calendarfind && calendarfind.calendarDate
+  // const editrealCalendar = moment(reactCalendar.toString()).format('YYYY년 MM월 DD일 dddd');
 
   const [joinNumber, setJoinNumber] = useState(calendarfind && calendarfind.maxPeople);
 
@@ -155,7 +158,7 @@ const CalendarUpdate = () => {
   const closeTimeShowBtn = () => {
     setTimeShow(!timeShow);
   }
-  console.log(hour + ":" + selectMinute)
+  // console.log(hour + ":" + selectMinute)
 
   // 카카오 주소 검색하기
   const [openPostcode, setOpenPostcode] = useState(false);
@@ -165,7 +168,7 @@ const CalendarUpdate = () => {
   const [calendarlocation, setCalendarLocation] = useState("")
   const locations = { calendarLocation: calendarlocation }
 
-  console.log(calendarlocation);
+  // console.log(calendarlocation);
   const handle = {
     // 버튼 클릭 이벤트
     clickButton: () => {
@@ -174,14 +177,17 @@ const CalendarUpdate = () => {
 
     // 주소 선택 이벤트
     selectAddress: (data) => {
-      console.log(`
-            주소: ${data.address},
-            우편번호: ${data.zonecode}
-        `)
+      // console.log(`
+      //       주소: ${data.address},
+      //       우편번호: ${data.zonecode}
+      //   `)
       setCalendarLocation(data.address);
       setOpenPostcode(false);
     },
-  }
+  } 
+
+  const now = new Date()
+    const defaultValue = moment(now.toString()).format('YYYY년 MM월 DD일 dddd')
 
   const onUpdateHandler = async (e) => {
     e.preventDefault();
@@ -195,6 +201,11 @@ const CalendarUpdate = () => {
       calendarTime: hour + ":" + selectMinute,
       maxPeople: joinNumber
     };
+    
+    if (editcalendarfind.calendarDate === "Invalid date") {
+      editcalendarfind.calendarDate = defaultValue
+    }
+
     await dispatch(__updateCalendar(editcalendarfind));
     await dispatch(__getDetailCalendar(id))
     navigate(`/calendardetail/${id}`)
@@ -360,7 +371,7 @@ const CalendarUpdate = () => {
                 <DaumPostcode
                   onComplete={handle.selectAddress}  // 값을 선택할 경우 실행되는 이벤트
                   autoClose={false} // 값을 선택할 경우 사용되는 DOM을 제거하여 자동 닫힘 설정
-                  defaultQuery='판교역로 235' // 팝업을 열때 기본적으로 입력되는 검색어 
+                  // defaultQuery='판교역로 235' // 팝업을 열때 기본적으로 입력되는 검색어 
                 />}
             </StKakaoMap>
             <StTextDiv>

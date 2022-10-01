@@ -629,8 +629,9 @@ const StCommentPost = styled.input`
 const StCommentButton = styled.button`
   border: none;
   cursor: pointer;
-  color: black;
+  color: #f7931e;
   font-weight: 600;
+  background-color: transparent;
 `;
 const StBodyComment = styled.div`
   display: flex;
