@@ -59,9 +59,9 @@ const StContainer = styled.div`
     height: 100%;
     /* max-height: 1000px; */
     max-height: 1202px;
-    min-height: 667px;
+    /* min-height: 600px; */
     max-width: 420px;
-    min-width: 280px;
+    /* min-width: 280px; */
     margin: auto;
     background-color: var(--white);
     background-color: white;

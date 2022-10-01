@@ -169,7 +169,9 @@ const FreeTalkDetail = () => {
   return (
     <StContainer ref={node}>
       {modalOpen && <FreeTalkDeleteModal setModalOpen={setModalOpen} />}
+      <div>
       <Header />
+      </div>
       <StFirstWrap>
         <StDetailHeader>
           <IoIosArrowBack

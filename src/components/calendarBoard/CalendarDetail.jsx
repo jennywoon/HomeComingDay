@@ -181,7 +181,9 @@ const CalendarDetail = () => {
     <StContainer ref={node}>
       {modalOpen && <CalendarDeleteModal setModalOpen={setModalOpen} />}
       {joinModalOpen && <CalendarJoiinModal setJoinModalOpen={setJoinModalOpen} joinPeopleList={joinPeopleList} id={id} />}
+      <div>
       <Header />
+      </div>
       <StFirstWrap>
         <StDetailHeader>
           <IoIosArrowBack

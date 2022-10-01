@@ -180,7 +180,9 @@ const InformationDetail = () => {
   return (
     <StContainer ref={node}>
       {modalOpen && <InformationDetailModal setModalOpen={setModalOpen} />}
+      <div>
       <Header />
+      </div>
       <StFirstWrap>
         <StDetailHeader>
           <IoIosArrowBack
