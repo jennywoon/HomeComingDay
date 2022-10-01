@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { getCookie, setCookie } from '../../shared/cookies';
 
-// const BASE_URL = 'http://localhost:3000';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const config = {
@@ -21,9 +20,6 @@ export const __loginUser = createAsyncThunk(
       setCookie('accessToken', `${data.data.data.accessToken}`);
       setCookie('refreshToken', `${data.data.data.refreshToken}`);
       setCookie('username', `${data.data.data.username}`);
-      // setCookie("schoolname", `${data.data.data.schoolName}`)
-      // console.log(data.data.success)
-      // console.log(data.data)
       return thunkAPI.fulfillWithValue(data.data);
       
     } catch (error) {

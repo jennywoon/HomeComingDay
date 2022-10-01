@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Complete from "../../assets/Complete.png"
-import Button from "../../components/elements/Button"
+import Complete from '../../assets/Complete.png';
+import Button from '../../components/elements/Button';
 import { __getMyPage } from '../../redux/modules/MyPageSlice';
 import Cookies from 'universal-cookie';
 
@@ -12,15 +12,15 @@ const SignupComplete = () => {
   const dispatch = useDispatch();
 
   const onClickHandler = () => {
-    navigate('/main')
-  }
+    navigate('/main');
+  };
 
   useEffect(() => {
-    dispatch(__getMyPage())
-  }, [dispatch])
+    dispatch(__getMyPage());
+  }, [dispatch]);
 
-  const data = useSelector((state) => state.mypages.mypages)
-  console.log(data);
+  const data = useSelector((state) => state.mypages.mypages);
+  // console.log(data);
 
   const cookies = new Cookies();
 
@@ -28,41 +28,30 @@ const SignupComplete = () => {
     <StSignupComplete>
       <StCompleteWrap>
         <div></div>
-        <FisrtWrap>
+        <StFisrtWrap>
           <StImg>
-            <CompleteImg src={Complete} alt='Complete' />
+            <StCompleteImg src={Complete} alt='Complete' />
           </StImg>
           <StText>
-            <p style={{ fontSize: '24px' }}>
-              <strong>
-                {/* {data && data.username} */}
-                {cookies.get("username")}
-                </strong>님,
-            </p>
-            <p style={{ fontSize: '24px', marginBottom: '25px' }}>
-              홈커밍데이 가입을 환영합니다!
-            </p>
-            <SchoolDiv>
-              <p style={{color: "#f7931e"}}>
-                {/* {data && data.schoolName} */}
-                {/* {cookies.get("schoolname")} */}
-                </p>
-              <p>동문 선후배들과 소통을 이어가보세요</p>
-            </SchoolDiv>
+            <StUsername>
+              <StUsernameBold>{cookies.get('username')}</StUsernameBold>님,
+            </StUsername>
+            <StWelcomeText>홈커밍데이 가입을 환영합니다!</StWelcomeText>
+            <StSchoolDiv>
+              {/* <StSchoolColorText>{data && data.schoolName}</StSchoolColorText> */}
+              <StSchoolText>선후배들과 소통을 이어가보세요</StSchoolText>
+            </StSchoolDiv>
           </StText>
-        </FisrtWrap>
+        </StFisrtWrap>
         <Button
           type='submit'
           width='100%'
-          // padding='10px 0'
           style={{ marginTop: '100px' }}
           backgroundColor='#f7931e'
           color='white'
           onClickHandler={onClickHandler}
         >
-          <ButtonTitle>
-            시작하기
-          </ButtonTitle>
+          <StButtonTitle>시작하기</StButtonTitle>
         </Button>
       </StCompleteWrap>
     </StSignupComplete>
@@ -77,24 +66,22 @@ const StSignupComplete = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 
 const StCompleteWrap = styled.div`
   width: 85%;
   height: 90%;
-  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 `;
 
-const FisrtWrap = styled.div`
+const StFisrtWrap = styled.div`
   width: 100%;
-  /* height: 100%; */
   display: flex;
   flex-direction: column;
   justify-content: center;
-`
+`;
 
 const StImg = styled.div`
   display: flex;
@@ -103,27 +90,43 @@ const StImg = styled.div`
   margin-bottom: 65px;
 `;
 
-const CompleteImg = styled.img`
+const StCompleteImg = styled.img`
   width: 100%;
 `;
 
 const StText = styled.div`
   text-align: center;
-`
+`;
 
-const SchoolDiv = styled.div`
+const StUsername = styled.p`
+  font-size: 24px;
+`;
+
+const StUsernameBold = styled.strong``;
+
+const StWelcomeText = styled.p`
+  font-size: 24px;
+  margin-bottom: 25px;
+`;
+
+const StSchoolText = styled.p``;
+const StSchoolColorText = styled.p`
+  color: #f7931e;
+`;
+
+const StSchoolDiv = styled.div`
   display: flex;
   justify-content: center;
   font-size: 16px;
   font-weight: 500;
   color: #bebebe;
   gap: 5px;
-`
+`;
 
-const ButtonTitle = styled.div`
+const StButtonTitle = styled.div`
   width: 100%;
   height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;

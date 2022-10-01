@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import Button from '../../components/elements/Button';
 import Input from '../../components/elements/Input';
@@ -80,7 +80,6 @@ const SignUp = () => {
 
   // 이메일 중복확인
   const [isOnCheck, setIsOnCheck] = useState(false);
-  // const [emailDuplicated, setEmailDuplicated] = useState(false);
   const [emailConfirm, setEmailConfirm] = useState(false);
   const handleChangeEmailCheck = async () => {
     const newEmail = {
@@ -139,7 +138,6 @@ const SignUp = () => {
 
   // 이메일 인증번호 확인
   const [isCheck, setIsCheck] = useState(false);
-  // const [emailChecked, setEmailChecked] = useState(false);
   const handleCheckEmail = async () => {
     const checkEmail = {
       email: email,
@@ -292,10 +290,10 @@ const SignUp = () => {
   }, [sec])
 
   return (
-    <FormContainer>
+    <StFormContainer>
       {isSend ? modalOpen && <SignupModal setModalOpen={setModalOpen} /> : null}
       <StSignupContainer onSubmit={handleSubmit}>
-        <FormHeader>
+        <StFormHeader>
           <IoIosArrowBack
             size='28'
             style={{ cursor: 'pointer' }}
@@ -303,14 +301,14 @@ const SignUp = () => {
               navigate('/login');
             }}
           />
-        </FormHeader>
+        </StFormHeader>
         <StSignupWraps>
-          <FisrtWrap>
-            <SecondWrap>
+          <StFisrtWrap>
+            <StSecondWrap>
               <StSignupTitle style={{ justifyContent: 'center' }}>
                 회원가입
               </StSignupTitle>
-              <ThirdWrap>
+              <StThirdWrap>
                 <StSignupWrap>
                   <Stlabel>이름</Stlabel>
                   <Input width='100%' onChange={handleChangeusername} style={{borderBottom:"1px solid #ccc"}}/>
@@ -433,8 +431,8 @@ const SignUp = () => {
                     <StErrorMessage>비밀번호가 일치하지 않습니다.</StErrorMessage>
                   ) : null}
                 </StSignupWrap>
-              </ThirdWrap>
-            </SecondWrap>
+              </StThirdWrap>
+            </StSecondWrap>
             <Button
               type='submit'
               width='85%'
@@ -442,18 +440,18 @@ const SignUp = () => {
               style={{ marginTop: '50px', backgroundColor: '#f7931e' }}
               color='white'
             >
-              <ButtonTitle>가입하기</ButtonTitle>
+              <StButtonTitle>가입하기</StButtonTitle>
             </Button>
-          </FisrtWrap>
+          </StFisrtWrap>
         </StSignupWraps>
       </StSignupContainer>
-    </FormContainer>
+    </StFormContainer>
   );
 };
 
 export default SignUp;
 
-const FormContainer = styled.div`
+const StFormContainer = styled.div`
   position: relative;
   width: 100%;
   height: 100vh;
@@ -464,51 +462,42 @@ const FormContainer = styled.div`
 
 const StSignupContainer = styled.form`
   width: 100%;
-  /* height: 100vh; */
   height: 90%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* border: 1px solid red; */
 `;
 
-const FormHeader = styled.div`
+const StFormHeader = styled.div`
   width: 90%;
   height: 50px;
   display: flex;
   align-items: center;
   margin-bottom: 20px;
-  /* border: 1px solid red; */
 `
 const StSignupWraps = styled.div`
-  /* width: 80%; */
   width: 100%;
   height: 100%;
-  /* border: 1px solid red; */
-  /* justify-content: space-between; */
 `;
 
-const FisrtWrap = styled.div`
+const StFisrtWrap = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* border: 1px solid blue; */
   align-items: center;
 `;
 
-const SecondWrap = styled.div`
+const StSecondWrap = styled.div`
   width: 85%;
   height: 100%;
-  /* border: 1px solid green; */
 `
 
-const ThirdWrap = styled.div`
+const StThirdWrap = styled.div`
   width: 100%;
   height: 90%;
-  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -518,18 +507,15 @@ const StSignupTitle = styled.div`
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 20px;
-  /* border: 1px solid blue; */
 `;
 
 const StSignupWrap = styled.div`
-  /* width: 80%; */
   box-sizing: border-box;
   padding: 0;
   border: none;
   align-items: left;
   margin-bottom: 60px;
   position: relative;
-  /* border: 1px solid blue; */
 `;
 
 const Stlabel = styled.label`
@@ -604,7 +590,7 @@ const StErrorMessage = styled.p`
   font-size: 12px;
 `;
 
-const ButtonTitle = styled.div`
+const StButtonTitle = styled.div`
   width: 100%;
   height: 40px;
   display: flex;
