@@ -37,8 +37,21 @@ const CalendarUpdate = () => {
   }
   // console.log(calendarfind)
   const onChange = (value) => setDate(value);
+
+  //  const reactCalen = calendarfind && calendarfind.calendarDate
+  // let editrealCalendar = reactCalen.substring(0,13)
+  
+
+  // console.log(editrealCalendar)
+  // // const editrealCalendar = moment(reactCalendar.toString()).format('YYYY년 MM월 DD일');
+  
+
+  // const [reactCalendar, setReactCalendar] = useState(
+  //   editrealCalendar
+  // );
+
   const [date, setDate] = useState({
-    calendarDate: '',
+    calendarDate:''
   });
   const realCalendar = moment(date.toString()).format('YYYY년 MM월 DD일 dddd');
 
@@ -61,22 +74,21 @@ const CalendarUpdate = () => {
     calendarfind && calendarfind.title
   );
   const [EditLocation, setEditLocation] = useState(
-    calendarfind && calendarfind.calendarLocation
+    (calendarfind && calendarfind.calendarLocation)
   );
+
   const [EditContent, setEditContent] = useState(
     calendarfind && calendarfind.content
   );
-  const [reactCalendar, setReactCalendar] = useState(
-    calendarfind && calendarfind.calendarDate
-  );
-  // const reactCalendar = calendarfind && calendarfind.calendarDate
-  // const editrealCalendar = moment(reactCalendar.toString()).format('YYYY년 MM월 DD일 dddd');
+
+  
+  
 
   const [joinNumber, setJoinNumber] = useState(calendarfind && calendarfind.maxPeople);
 
-  const onChangeCalendar = (e) => {
-    setReactCalendar(e.target.value);
-  };
+  // const onChangeCalendar = (e) => {
+  //   setReactCalendar(e.target.value);
+  // };
 
 
   //참여하기 인원 수정
@@ -125,9 +137,16 @@ const CalendarUpdate = () => {
 
   const [dateShow, setDateShow] = useState(true);
   const [timeShow, setTimeShow] = useState(false);
+ 
+  const calendarTimes = calendarfind && calendarfind.calendarTime
+
+  const calendarHour = calendarTimes.substring(0,2)
+  const calendarMinute = calendarTimes.substring(3,5)
+
+
   const [selectTime, setSelectTime] = useState("오전");
-  const [selectHour, setSelectHour] = useState("01");
-  const [selectMinute, setSelectMinute] = useState("00");
+  const [selectHour, setSelectHour] = useState(calendarHour);
+  const [selectMinute, setSelectMinute] = useState(calendarMinute);
 
   const division = ["오전", "오후"];
   const hourSelect = [
@@ -165,7 +184,7 @@ const CalendarUpdate = () => {
   // const [calendarlocation, setCalendarLocation] = useState({
   //   calendarLocation: "",
   // })
-  const [calendarlocation, setCalendarLocation] = useState("")
+  const [calendarlocation, setCalendarLocation] = useState(calendarfind && calendarfind.calendarLocation)
   const locations = { calendarLocation: calendarlocation }
 
   // console.log(calendarlocation);
@@ -213,7 +232,7 @@ const CalendarUpdate = () => {
   };
 
   useEffect(() => {
-    if (EditTitle !== '' && calendarlocation !== '' && EditContent !== '') {
+    if (EditTitle !== ''  && EditContent !== '') {
       handleCheck(true);
     } else {
       handleCheck(false);
@@ -250,11 +269,14 @@ const CalendarUpdate = () => {
             >
               <StCalendarTitle>날짜</StCalendarTitle>
               <StDateDiv onClick={() => setIsActive(!isActive)}>
+                {/* {editrealCalendar} */}
                 {moment(date).format('YYYY년 MM월 DD일')}
                 <ArrowForward />
               </StDateDiv>
             </StCalendarButton>
-            <StCalendarWrap value={reactCalendar} onClick={onChangeCalendar}>
+            <StCalendarWrap 
+            // value={reactCalendar} onClick={onChangeCalendar}
+            >
               {isActive && (
                 <Calendar
                   name='calendarDate'
@@ -362,7 +384,7 @@ const CalendarUpdate = () => {
                 onChange={calendaronChangeHandler}
                 onClick={handle.clickButton}
               >
-                {calendarlocation ? calendarlocation : "장소를 검색해주세요"}
+                {calendarlocation ? calendarlocation : `${EditLocation}`}
                 <ArrowForward />
               </StCalendarInput>
             </StCalendarDiv>
@@ -371,7 +393,7 @@ const CalendarUpdate = () => {
                 <DaumPostcode
                   onComplete={handle.selectAddress}  // 값을 선택할 경우 실행되는 이벤트
                   autoClose={false} // 값을 선택할 경우 사용되는 DOM을 제거하여 자동 닫힘 설정
-                  // defaultQuery='판교역로 235' // 팝업을 열때 기본적으로 입력되는 검색어 
+                  defaultQuery={EditLocation} // 팝업을 열때 기본적으로 입력되는 검색어 
                 />}
             </StKakaoMap>
             <StTextDiv>
@@ -506,7 +528,9 @@ const StCalendarTextarea = styled.textarea`
   justify-content: center;
   align-items: center;
   outline: none;
-  textarea::placeholder {
+  ::placeholder {
+    line-height: 200px;
+    top: 50%;
     text-align: right;
   }
   padding: 0 10px;
@@ -542,7 +566,7 @@ const StFormSelection = styled.select`
 const StFormInput = styled.input`
     font-size: 20px;
     border: none;
-    border-bottom:1px solid gray;
+    border-bottom:1px solid #d9d9d9;
     padding: 10px 10px 10px 5px;
     font-weight: bold;
     color: black;

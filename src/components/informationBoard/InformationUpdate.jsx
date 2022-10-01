@@ -145,7 +145,7 @@ const StFormSelection = styled.select`
 const StFormInput =styled.input`
     font-size: 20px;
     border: none;
-    border-bottom:1px solid gray;
+    border-bottom:1px solid #d9d9d9;
     padding: 10px 10px 10px 5px;
     font-weight: bold;
     color: black;
@@ -158,12 +158,17 @@ const StFormInput =styled.input`
     }
 `
 const StTextarea = styled.textarea`
-    width: 100%;
-    height:300px;
-    resize:none;
-    outline: none;
-    border:none;
-    padding: 10px 5px;
+    width: 95%;
+  height:200px;
+  border: none;
+  padding: 10px 5px;
+  outline: none;
+  resize: none;
+  ::placeholder {
+    font-size: 16px;
+    color: #aaa;
+    font-weight: 400;
+  }
 `
 
 const StFormFooter = styled.div`
@@ -187,9 +192,11 @@ const StCard = styled.div`
   border-radius: 16px;
   box-shadow: 0px 2px 14px rgba(0, 0, 0, 0.05);
   padding: 5px;
+  height: 300px;
 `;
 
 const StChangediv = styled.div`
 font-weight: 500;
 font-size: 16px;
+
 `
