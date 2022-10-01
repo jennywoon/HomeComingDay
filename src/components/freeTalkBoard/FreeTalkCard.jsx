@@ -152,6 +152,7 @@ const StBodyTitle = styled.div`
   font-size: 16px;
   font-weight: 600;
   color: #000;
+  word-break: break-word;
 `;
 
 const BodyContent = styled.div`

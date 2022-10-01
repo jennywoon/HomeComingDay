@@ -118,6 +118,20 @@ const DetailComment = ({ comment, helpsfind, data }) => {
     setReplyComment(e.target.value);
   };
 
+  // 댓글 올리기 버튼 활성화
+  const [isActive, setIsActive] = useState(false);
+  const handleCheck = (e) => {
+    setIsActive(e);
+  };
+
+  useEffect(() => {
+    if (replyComment !== '') {
+      handleCheck(true);
+    } else {
+      handleCheck(false);
+    }
+  }, [replyComment]);
+
   //모달
   const [modalOpen, setModalOpen] = useState(false);
   const showModal = (e) => {
@@ -197,6 +211,7 @@ const DetailComment = ({ comment, helpsfind, data }) => {
                   <StUploadBtnBox
                     type='submit'
                     onClick={onClickPostReplyComment}
+                    disabled={isActive ? false : true}
                   >
                     <StUploadBtn></StUploadBtn>
                   </StUploadBtnBox>

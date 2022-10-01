@@ -59,7 +59,6 @@ const FreeTalkDetail = () => {
     };
     document.addEventListener('mousedown', clickOutside);
     return () => {
-      // Cleanup the event listener
       document.removeEventListener('mousedown', clickOutside);
     };
   }, [show]);
@@ -68,6 +67,32 @@ const FreeTalkDetail = () => {
   const onChangePostHandler = (e) => {
     setComment(e.target.value);
   };
+
+  const onClickPostComment = async (e) => {
+    e.preventDefault();
+    const newcomment = {
+      content: comment,
+      articleId: Number(id),
+    };
+    await dispatch(__postFreeTalkComment(newcomment));
+    setComment('');
+    await dispatch(__getDetailFreeTalk(id));
+    await dispatch(__getNoticeCount());
+  };
+
+  // 댓글 올리기 버튼 활성화
+  const [isActive, setIsActive] = useState(false);
+  const handleCheck = (e) => {
+    setIsActive(e);
+  };
+
+  useEffect(() => {
+    if (comment !== '') {
+      handleCheck(true);
+    } else {
+      handleCheck(false);
+    }
+  }, [comment]);
 
   //조회수반영
   useEffect(() => {
@@ -87,34 +112,6 @@ const FreeTalkDetail = () => {
   const onClickRevice = () => {
     navigate(`/freetalkupdate/${id}`);
   };
-
-  // const onClickDelete = () => {
-  //     const result = window.confirm("정말 삭제하시겠습니까?")
-  //     if (result) {
-  //         dispatch(__deleteFreeTalk(freetalksfind.articleId))
-  //         navigate("/freetalk")
-  //     } else {
-  //         navigate("/freetalk")
-  //         return
-  //     }
-  // }
-
-  const onClickPostComment = async (e) => {
-    e.preventDefault();
-    const newcomment = {
-      content: comment,
-      articleId: Number(id),
-    };
-    await dispatch(__postFreeTalkComment(newcomment));
-    setComment('');
-    await dispatch(__getDetailFreeTalk(id));
-    await dispatch(__getNoticeCount());
-  };
-  // const closeModal = (e) => {
-  //     if (!modalRef.current.contains(e.target)) {
-  //         setShow(false);
-  //     }
-  // };
 
   //swiper 옵션
   SwiperCore.use(Navigation);
@@ -319,7 +316,7 @@ const FreeTalkDetail = () => {
                 onChange={onChangePostHandler}
                 maxLength='50'
               ></StCommentPost>
-              <StCommentButton type='submit'>올리기</StCommentButton>
+              <StCommentButton type='submit' disabled={isActive ? false : true}>올리기</StCommentButton>
             </StCommentDiv>
           </StCommentBox>
         </StCommentContainer>
@@ -618,7 +615,7 @@ const StCommentDiv = styled.div`
 `;
 
 const StCommentPost = styled.input`
-  width: 80%;
+  width: 77%;
   background-color: #eeeeee;
   height: 30px;
   border-radius: 10px;
@@ -649,19 +646,19 @@ const StCount = styled.div`
 `;
 
 const StCommentCount = styled.div`
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   color: black;
   display: flex;
-  margin-right: 15px;
+  margin-right: 10px;
 `;
 
 const StCommentImg = styled.div`
-  margin-right: 5px;
+  margin-right: 3px;
 `;
 
 const StHeartCount = styled.div`
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   color: black;
   display: flex;
@@ -669,5 +666,5 @@ const StHeartCount = styled.div`
 `;
 
 const StHeartImg = styled.div`
-  margin-right: 5px;
+  margin-right: 3px;
 `;

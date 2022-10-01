@@ -168,6 +168,7 @@ const StBodyTitle = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  word-break: break-word;
 `;
 
 const StBodyContent = styled.div`
