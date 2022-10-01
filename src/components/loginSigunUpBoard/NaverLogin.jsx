@@ -42,19 +42,19 @@ const NaverLogin = () => {
         // naverLogin.logout();
         naverLogin.getLoginStatus((status) => {
             if (status) {
-                console.log("Naver 로그인 상태", naverLogin.user);
+                // console.log("Naver 로그인 상태", naverLogin.user);
                 const { email, name } = naverLogin.user;
-                console.log(email, name);
+                // console.log(email, name);
 
                 // 필수 제공 동의 조건
                 if (name == undefined) {
                     alert("이름은 필수 동의 입니다. 정보제공을 동의해주세요.");
                     naverLogin.reprompt();
                     return;
-                    console.log("네이버 로그인 ok");
+                    // console.log("네이버 로그인 ok");
                 }
             } else {
-                console.log("Naver 비 로그인 상태");
+                // console.log("Naver 비 로그인 상태");
             }
         });
     }

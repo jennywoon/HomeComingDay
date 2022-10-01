@@ -300,6 +300,7 @@ const HelpDetail = () => {
                 placeholder='댓글을 입력해주세요'
                 value={comment}
                 onChange={onChangePostHandler}
+                maxLength='50'
               ></StCommentPost>
               <StCommentButton type='submit'>올리기</StCommentButton>
             </StCommentDiv>
@@ -498,6 +499,7 @@ const StBodyContent = styled.div`
   justify-content: space-between;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   font-size: 14px;
+  white-space: pre-wrap;
 `;
 
 const StContentTitle = styled.h3`
