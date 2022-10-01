@@ -24,7 +24,7 @@ import FreeTalkDeleteModal from './FreeTalkDeleteModal';
 import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
 import heartColorImg from '../../assets/heartColor.png';
-import { __getMyPage } from '../../redux/modules/MyPageSlice';
+import { __getMyPage,__getView } from '../../redux/modules/MyPageSlice';
 import { chatApi } from '../chatBoard/ChatApi';
 import { __getNoticeCount } from '../../redux/modules/NoticeSlice';
 import dots from '../../assets/dots.png';
@@ -36,6 +36,7 @@ const FreeTalkDetail = () => {
   const { freetalks } = useSelector((state) => state.freetalks);
   const { freetalksfind } = useSelector((state) => state.freetalks);
   const data = useSelector((state) => state.mypages.mypages);
+  const detailview = useSelector((state)=>state.mypages.view);
   // const { freeComments } = useSelector((state) => state.freetalks)
   const { id } = useParams();
   // console.log(id)
@@ -99,6 +100,7 @@ const FreeTalkDetail = () => {
     dispatch(__getDetailFreeTalk(id));
     dispatch(__getMyPage());
     dispatch(__getFreeTalk());
+    dispatch(__getView(id))
   }, [dispatch]);
 
   const onCilckShow = () => {
@@ -259,7 +261,7 @@ const FreeTalkDetail = () => {
                 <StBodyTxtBox>
                   <StContentView>
                     {freetalksfind && freetalksfind.createdAt} | 조회수{' '}
-                    {freetalksfind && freetalksfind.views}
+                    {detailview.views}
                   </StContentView>
                   <StCount>
                     <StCommentCount>
