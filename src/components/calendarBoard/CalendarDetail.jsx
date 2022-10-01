@@ -22,7 +22,7 @@ import heartColorImg from '../../assets/heartColor.png';
 import joinUser from '../../assets/users.png';
 import joinUserPlus from '../../assets/userPlus.png';
 import joinUserMinus from '../../assets/userMinus.png';
-import { __getMyPage } from '../../redux/modules/MyPageSlice';
+import { __getMyPage ,__getView} from '../../redux/modules/MyPageSlice';
 import CalendarJoiinModal from './CalendarJoiinModal';
 import { chatApi } from '../chatBoard/ChatApi';
 import { __getNoticeCount } from '../../redux/modules/NoticeSlice';
@@ -48,7 +48,7 @@ const CalendarDetail = () => {
   const { joinPeopleList } = useSelector((state) => state.calendars.calendarJoin);
   const joinPeopleLists = useSelector((state) => state.calendars.joinPeopleList);
   const data = useSelector((state) => state.mypages.mypages)
-
+  const detailview = useSelector((state)=>state.mypages.view);
 
   const trueList = joinPeopleList && joinPeopleList.map((list) => { if (list.email === data.email) return list.joinCheck })
   const joinTrueFalse = trueList && trueList.includes(true)
@@ -83,6 +83,7 @@ const CalendarDetail = () => {
     dispatch(__getCalendar());
     dispatch(__getJoin(id));
     dispatch(__getDetailCalendar(id));
+    dispatch(__getView(id))
   }, [dispatch]);
 
   // 수정 삭제 모달
@@ -181,7 +182,9 @@ const CalendarDetail = () => {
     <StContainer ref={node}>
       {modalOpen && <CalendarDeleteModal setModalOpen={setModalOpen} />}
       {joinModalOpen && <CalendarJoiinModal setJoinModalOpen={setJoinModalOpen} joinPeopleList={joinPeopleList} id={id} />}
+      <div>
       <Header />
+      </div>
       <StFirstWrap>
         <StDetailHeader>
           <IoIosArrowBack
@@ -301,7 +304,7 @@ const CalendarDetail = () => {
                 <StBodyTxtBox>
                   <StContentView>
                     {calendarfind && calendarfind.createdAt} | 조회수{' '}
-                    {calendarfind && calendarfind.views}
+                    {detailview.views}
                   </StContentView>
                   <StCount>
                     <StCommentCount>

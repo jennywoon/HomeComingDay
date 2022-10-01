@@ -7,6 +7,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 const initialState = {
   mypages: [],
   myarticles: [],
+  view:[],
   totalCount: null,
   isLoading: false,
   error: null,
@@ -36,6 +37,24 @@ export const __getReset = createAsyncThunk("mypages/getReset", async (payload, t
     const data = await axios({
       method: 'get',
       url: `${BASE_URL}/myPage/reset`,
+      headers: {
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+        // RefreshToken : getCookie('refreshToken')
+      },
+    });
+    // console.log(data.data)
+    return thunkAPI.fulfillWithValue(data.data);
+  } catch (error) {
+    // console.log('error', error);
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+export const __getView = createAsyncThunk("mypages/getView", async (payload, thunkAPI) => {
+  try {
+    const data = await axios({
+      method: 'get',
+      url: `${BASE_URL}/article/view/${payload}`,
       headers: {
         Authorization: `Bearer ${getCookie("accessToken")}`,
         // RefreshToken : getCookie('refreshToken')
@@ -114,6 +133,20 @@ export const MyPageSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+
+    //조회수
+    [__getView.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getView.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.view = action.payload;
+    },
+    [__getView.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
     //리셋용
     [__getReset.pending]: (state) => {
       state.isLoading = true;

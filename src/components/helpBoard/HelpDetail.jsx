@@ -29,7 +29,7 @@ import HelpDeleteModal from './HelpDeleteModal';
 import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
 import heartColorImg from '../../assets/heartColor.png';
-import { __getMyPage } from '../../redux/modules/MyPageSlice';
+import { __getMyPage, __getView } from '../../redux/modules/MyPageSlice';
 import { chatApi } from '../chatBoard/ChatApi';
 import { __getNoticeCount } from '../../redux/modules/NoticeSlice';
 import dots from '../../assets/dots.png';
@@ -48,6 +48,8 @@ const HelpDetail = () => {
   // const helpsCommentList = helpsfind.commentList.find((helpfind)=>helpfind)
   // const helpsChildCommentList = helpsCommentList.childCommentList.find((helpsComment)=>helpsComment)
   const data = useSelector((state) => state.mypages.mypages);
+  const detailview = useSelector((state)=>state.mypages.view);
+
   // console.log('helpsfind', helpsfind);
   // console.log("helpsCommentList",helpsCommentList)
   // console.log('helpsChildCommentList', helpsChildCommentList)
@@ -75,6 +77,7 @@ const HelpDetail = () => {
     dispatch(__getMyPage());
     dispatch(__getHelp());
     dispatch(__getDetailHelp(id));
+    dispatch(__getView(id))
   }, [dispatch]);
 
   // 프로필 사진 클릭
@@ -177,152 +180,154 @@ const HelpDetail = () => {
   return (
     <StContainer ref={node}>
       {modalOpen && <HelpDeleteModal setModalOpen={setModalOpen} />}
+      <div>
       <Header />
-      <StFirstWrap>
-        <StDetailHeader>
-          <IoIosArrowBack
-            size='25px'
-            cursor='pointer'
-            onClick={() => {
-              navigate('/main');
-            }}
-          />
-          <StHeaderTitle>도움요청</StHeaderTitle>
-          <StHeaderDiv />
-        </StDetailHeader>
-      </StFirstWrap>
-      <StHelpContainer>
-        <StHelpWrap>
-          <StDetailWrap>
-            <StDetailBody>
-              <StBodytop>
-                <StBodyimg src={helpsfind && helpsfind.userImage} alt='' />
-                <StBodytxt>
-                  <StTxtname onClick={onCilckChaetShow}>
-                    {helpsfind && helpsfind.username}
-                  </StTxtname>
-                  <StTxtstudent>
-                    {helpsfind && helpsfind.departmentName}{' '}
-                    <span> {helpsfind && helpsfind.admission} </span>
-                  </StTxtstudent>
-                  {showChaet ? (
-                    <StChatWrap onClick={() => createChat(helpsfind.userId)}>
-                      {helpsfind && helpsfind.username !== data.username ? (
-                        <StChaetingBox>1:1채팅</StChaetingBox>
-                      ) : null}
-                    </StChatWrap>
+      </div>
+        <StFirstWrap>
+          <StDetailHeader>
+            <IoIosArrowBack
+              size='25px'
+              cursor='pointer'
+              onClick={() => {
+                navigate('/main');
+              }}
+            />
+            <StHeaderTitle>도움요청</StHeaderTitle>
+            <StHeaderDiv />
+          </StDetailHeader>
+        </StFirstWrap>
+        <StHelpContainer>
+          <StHelpWrap>
+            <StDetailWrap>
+              <StDetailBody>
+                <StBodytop>
+                  <StBodyimg src={helpsfind && helpsfind.userImage} alt='' />
+                  <StBodytxt>
+                    <StTxtname onClick={onCilckChaetShow}>
+                      {helpsfind && helpsfind.username}
+                    </StTxtname>
+                    <StTxtstudent>
+                      {helpsfind && helpsfind.departmentName}{' '}
+                      <span> {helpsfind && helpsfind.admission} </span>
+                    </StTxtstudent>
+                    {showChaet ? (
+                      <StChatWrap onClick={() => createChat(helpsfind.userId)}>
+                        {helpsfind && helpsfind.username !== data.username ? (
+                          <StChaetingBox>1:1채팅</StChaetingBox>
+                        ) : null}
+                      </StChatWrap>
+                    ) : null}
+                  </StBodytxt>
+
+                  {helpsfind && helpsfind.username === data.username ? (
+                    <StDots onClick={onCilckShow} />
                   ) : null}
-                </StBodytxt>
 
-                {helpsfind && helpsfind.username === data.username ? (
-                  <StDots onClick={onCilckShow} />
-                ) : null}
+                  {show ? (
+                    <StRevisebox ref={node}>
+                      <StReviseButton onClick={onClickRevice}>
+                        수정
+                      </StReviseButton>
+                      <StDeleteButton onClick={showModal}>삭제</StDeleteButton>
+                    </StRevisebox>
+                  ) : null}
+                </StBodytop>
+                <StBodyContent>
+                  <StContentTitle>{helpsfind && helpsfind.title}</StContentTitle>
+                  <StContentBody>{helpsfind && helpsfind.content}</StContentBody>
+                  {helpsfind && helpsfind.imageList?.length !== 0 ? (
+                    <StContentImgBox>
+                      <Swiper
+                        {...swiperParams}
+                        ref={setSwiper}
+                        spaceBetween={50}
+                        slidesPerView={1}
+                      >
+                        {helpsfind &&
+                          helpsfind.imageList?.map((image) => {
+                            return (
+                              <SwiperSlide key={image.imageId}>
+                                <StContentImg src={image.imgUrl}></StContentImg>
+                              </SwiperSlide>
+                            );
+                          })}
+                        <StPrevButton ref={navigationPrevRef}>
+                          <StPreviousBtn />
+                        </StPrevButton>
+                        <StNextButton ref={navigationNextRef}>
+                          <StNextBtn />
+                        </StNextButton>
+                      </Swiper>
+                    </StContentImgBox>
+                  ) : null}
+                  <StBodyTxtBox>
+                    <StContentView>
+                      {helpsfind && helpsfind.createdAt} | 조회수{' '}
+                      {detailview.views}
+                    </StContentView>
+                    <StCount>
+                      <StCommentCount>
+                        <StCommentImg>
+                          <img src={commentImg} alt='댓글이미지' />
+                        </StCommentImg>
+                        댓글 {helpsfind && helpsfind.commentCnt}
+                      </StCommentCount>
+                      <StHeartCount onClick={heartClick}>
+                        {helpsfind && helpsfind.heart === true ? (
+                          <StHeartImg>
+                            <img src={heartColorImg} alt='좋아요이미지' />
+                          </StHeartImg>
+                        ) : (
+                          <StHeartImg>
+                            <img src={heartImg} alt='좋아요이미지' />
+                          </StHeartImg>
+                        )}
+                        좋아요 {helpsfind && helpsfind.heartCnt}
+                      </StHeartCount>
+                    </StCount>
+                  </StBodyTxtBox>
+                </StBodyContent>
 
-                {show ? (
-                  <StRevisebox ref={node}>
-                    <StReviseButton onClick={onClickRevice}>
-                      수정
-                    </StReviseButton>
-                    <StDeleteButton onClick={showModal}>삭제</StDeleteButton>
-                  </StRevisebox>
-                ) : null}
-              </StBodytop>
-              <StBodyContent>
-                <StContentTitle>{helpsfind && helpsfind.title}</StContentTitle>
-                <StContentBody>{helpsfind && helpsfind.content}</StContentBody>
-                {helpsfind && helpsfind.imageList?.length !== 0 ? (
-                  <StContentImgBox>
-                    <Swiper
-                      {...swiperParams}
-                      ref={setSwiper}
-                      spaceBetween={50}
-                      slidesPerView={1}
-                    >
-                      {helpsfind &&
-                        helpsfind.imageList?.map((image) => {
-                          return (
-                            <SwiperSlide key={image.imageId}>
-                              <StContentImg src={image.imgUrl}></StContentImg>
-                            </SwiperSlide>
-                          );
-                        })}
-                      <StPrevButton ref={navigationPrevRef}>
-                        <StPreviousBtn />
-                      </StPrevButton>
-                      <StNextButton ref={navigationNextRef}>
-                        <StNextBtn />
-                      </StNextButton>
-                    </Swiper>
-                  </StContentImgBox>
-                ) : null}
-                <StBodyTxtBox>
-                  <StContentView>
-                    {helpsfind && helpsfind.createdAt} | 조회수{' '}
-                    {helpsfind && helpsfind.views}
-                  </StContentView>
-                  <StCount>
-                    <StCommentCount>
-                      <StCommentImg>
-                        <img src={commentImg} alt='댓글이미지' />
-                      </StCommentImg>
-                      댓글 {helpsfind && helpsfind.commentCnt}
-                    </StCommentCount>
-                    <StHeartCount onClick={heartClick}>
-                      {helpsfind && helpsfind.heart === true ? (
-                        <StHeartImg>
-                          <img src={heartColorImg} alt='좋아요이미지' />
-                        </StHeartImg>
-                      ) : (
-                        <StHeartImg>
-                          <img src={heartImg} alt='좋아요이미지' />
-                        </StHeartImg>
-                      )}
-                      좋아요 {helpsfind && helpsfind.heartCnt}
-                    </StHeartCount>
-                  </StCount>
-                </StBodyTxtBox>
-              </StBodyContent>
-
-              <StBodyContainer>
-                <StBodyCommentBox>
-                  {helpsfind && helpsfind.commentList?.length === 0 ? (
-                    <StBodyComment>
-                      작성한 댓글이 없습니다 <br></br> 첫번째 댓글을 남겨보세요{' '}
-                    </StBodyComment>
-                  ) : (
-                    <>
-                      {helpsfind &&
-                        helpsfind.commentList?.map((comment) => (
-                          <HelpDetailComment
-                            key={comment.commentId}
-                            comment={comment}
-                            helpsfind={helpsfind}
-                            data={data}
-                          />
-                        ))}
-                    </>
-                  )}
-                </StBodyCommentBox>
-              </StBodyContainer>
-            </StDetailBody>
-          </StDetailWrap>
-        </StHelpWrap>
-        <StCommentContainer onSubmit={onClickPostComment}>
-          <StCommentBox>
-            <StCommentDiv>
-              <StCommentPost
-                placeholder='댓글을 입력해주세요'
-                value={comment}
-                onChange={onChangePostHandler}
-                maxLength='50'
-              ></StCommentPost>
-              <StCommentButton type='submit' disabled={isActive ? false : true}>
-                올리기
-              </StCommentButton>
-            </StCommentDiv>
-          </StCommentBox>
-        </StCommentContainer>
-      </StHelpContainer>
+                <StBodyContainer>
+                  <StBodyCommentBox>
+                    {helpsfind && helpsfind.commentList?.length === 0 ? (
+                      <StBodyComment>
+                        작성한 댓글이 없습니다 <br></br> 첫번째 댓글을 남겨보세요{' '}
+                      </StBodyComment>
+                    ) : (
+                      <>
+                        {helpsfind &&
+                          helpsfind.commentList?.map((comment) => (
+                            <HelpDetailComment
+                              key={comment.commentId}
+                              comment={comment}
+                              helpsfind={helpsfind}
+                              data={data}
+                            />
+                          ))}
+                      </>
+                    )}
+                  </StBodyCommentBox>
+                </StBodyContainer>
+              </StDetailBody>
+            </StDetailWrap>
+          </StHelpWrap>
+          <StCommentContainer onSubmit={onClickPostComment}>
+            <StCommentBox>
+              <StCommentDiv>
+                <StCommentPost
+                  placeholder='댓글을 입력해주세요'
+                  value={comment}
+                  onChange={onChangePostHandler}
+                  maxLength='50'
+                ></StCommentPost>
+                <StCommentButton type='submit' disabled={isActive ? false : true}>
+                  올리기
+                </StCommentButton>
+              </StCommentDiv>
+            </StCommentBox>
+          </StCommentContainer>
+        </StHelpContainer>
     </StContainer>
   );
 };
