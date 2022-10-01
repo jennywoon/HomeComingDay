@@ -264,7 +264,7 @@ const CalendarUpdate = () => {
               placeholder='제목을 입력해주세요'
               maxLength='40'
             ></StFormInput>
-            <StCalendarButton type="button"
+            <StCalendarButton
             // onClick={showModal}
             >
               <StCalendarTitle>날짜</StCalendarTitle>
@@ -432,7 +432,7 @@ const StFormContainer = styled.div`
   background-color: #f7ede2;
   display: flex;
   justify-content: center;
-  overflow: hidden;
+  overflow:hidden;
   @media only screen and (max-width: 768px) {
     width: 100%;
     height: 100%;
@@ -447,19 +447,23 @@ const StFormWrap = styled.form`
   background-color: white;
   display: flex;
   flex-direction: column;
-  
+  margin: 0 auto;
 `;
+
 const StFormHeader = styled.div`
   width: 100%;
-  padding-left:15px;
   height: 50px;
+  padding-left:15px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 40px 0px;
+  margin: 40px 0;
+  @media only screen and (max-width: 768px) {
+    margin: 0px 0px 20px 0px;
+  }
 `
 
-const StCalendarButton = styled.button`
+const StCalendarButton = styled.div`
     height: 40px;
     margin-top: 10px;
     border-radius: 10px;
@@ -490,6 +494,7 @@ const StCalendarTitle = styled.div`
     font-size: 14px;
   color: #f7931e;
   font-weight: 600;
+  width:50px;
 `
 const StCalendarDiv = styled.div`
     height: 40px;
@@ -509,13 +514,13 @@ const StKakaoMap = styled.div`
 
 const StCalendarInput = styled.div`
  width: 80%;
-  height: 30px;
+  height: 40px;
   display: flex;
   justify-content: right;
   align-items: center;
   font-size: 14px;
   cursor: pointer;
-  gap: 10px;
+  
 `
 const StCalendarTextarea = styled.textarea`
   width: 85%;
@@ -534,7 +539,7 @@ const StCalendarTextarea = styled.textarea`
     text-align: right;
   }
   padding: 0 10px;
-  text-align: right;
+  text-align: left;
 `;
 
 const StTextDiv = styled.div`
@@ -562,6 +567,8 @@ const StFormSelection = styled.select`
     color: #f7931e;
     font-size: 14px;
     font-weight: 600;
+    outline: none;
+    
 `
 const StFormInput = styled.input`
     font-size: 20px;
@@ -586,7 +593,10 @@ const StFooterBtn = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
+  @media only screen and (max-width: 768px) {
+    padding-bottom: 15px;
+  }
 `
 
 const StChangediv = styled.div`
@@ -657,7 +667,7 @@ const StTimeModal = styled.div`
       flex-direction: column;
       align-items: center;
       height: 150px;
-      padding: 21px 10px;
+      padding: 28px 9px;
       width: auto;
       box-sizing: border-box;
       text-align: center;
@@ -718,7 +728,6 @@ const StJoinDiv = styled.div`
   justify-content: right;
   align-items: center;
   gap: 10px;
-  cursor: pointer;
   border:none;
 `
 const ArrowForward = styled(IoIosArrowForward)`
@@ -726,7 +735,9 @@ const ArrowForward = styled(IoIosArrowForward)`
 `
 const MinusCircle = styled(AiOutlineMinusCircle)`
 color:#cfcfcf;
+cursor: pointer;
 `
 const PlusCircle = styled(AiOutlinePlusCircle)`
   color:#cfcfcf;
+  cursor: pointer;
 `

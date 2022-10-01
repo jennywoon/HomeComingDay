@@ -152,11 +152,6 @@ const StFormWrap = styled.form`
   background-color: white;
   display: flex;
   flex-direction: column;
-
-  overflow-y: scroll;
-::-webkit-scrollbar{
-width: 0px;
-}
 `;
 
 const StFormHeader = styled.div`
@@ -167,6 +162,9 @@ const StFormHeader = styled.div`
   align-items: center;
   justify-content: space-between;
   margin: 40px 0px;
+  @media only screen and (max-width: 768px) {
+    margin: 0px 0px 20px 0px;
+  }
 `;
 
 const StFormBody = styled.div`
@@ -236,7 +234,7 @@ const StFooterBtn = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  /* margin-bottom: 50px; */
+  margin-top: 40px;
 `;
 
 const StChangediv = styled.div`
