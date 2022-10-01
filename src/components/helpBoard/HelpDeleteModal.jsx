@@ -32,7 +32,7 @@ const HelpDeleteModal = ({ setModalOpen }) => {
               <StBottomTitle
               onClick={() => {
                 dispatch(__deleteHelp(helpsfind.articleId))
-                dispatch(__getDetailHelp(id))
+                dispatch(__getHelp())
                 navigate("/main")
               }}
               >삭제하기</StBottomTitle>
