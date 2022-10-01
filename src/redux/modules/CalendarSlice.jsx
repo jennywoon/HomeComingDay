@@ -154,7 +154,7 @@ export const __postCalendarComment = createAsyncThunk("comments/postHelpComment"
 
 export const __deleteCalendarComment = createAsyncThunk("comments/deleteHelpComment", async (payload, thunkAPI) => {
   try {
-    console.log(payload)
+    // console.log(payload)
     const data = await axios({
       method: 'delete',
       url: `${BASE_URL}/article/calendar/${payload.articleId}/comment/${payload.commentId}`,
@@ -195,7 +195,7 @@ export const __updateCalendarComment = createAsyncThunk("comment/updateHelpComme
 //대댓글
 export const __postCalendarReplyComment = createAsyncThunk("comments/postcalendarReplyComment", async (payload, thunkAPI) => {
   try {
-    console.log("payload" , payload)
+    // console.log("payload" , payload)
     const data = await axios({
       method: 'post',
       url: `${BASE_URL}/article/calendar/${payload.articleId}/comment/${payload.commentId}`,
@@ -215,7 +215,7 @@ export const __postCalendarReplyComment = createAsyncThunk("comments/postcalenda
 
 export const __deleteCalendarReplyComment = createAsyncThunk("comments/deletecalendarReplyComment", async (payload, thunkAPI) => {
   try {
-    console.log("payload" , payload)
+    // console.log("payload" , payload)
     const data = await axios({
       method: 'delete',
       url: `${BASE_URL}/article/calendar/${payload.articleId}/comment/${payload.commentId}/${payload.childCommentId}`,
@@ -233,7 +233,7 @@ export const __deleteCalendarReplyComment = createAsyncThunk("comments/deletecal
 
 export const __updateCalendarReplyComment = createAsyncThunk("comments/updatecalendarReplyComment", async (payload, thunkAPI) => {
   try {
-    console.log("payload" , payload)
+    // console.log("payload" , payload)
     const data = await axios({
       method: 'patch',
       url: `${BASE_URL}/article/calendar/${payload.articleId}/comment/${payload.commentId}/${payload.childCommentId}`,
@@ -338,7 +338,7 @@ export const __getJoin = createAsyncThunk("calendars/getCalendarJoin", async (pa
     // console.log(data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
-      console.log('error', error);
+      // console.log('error', error);
       return thunkAPI.rejectWithValue(error);
   }
 });

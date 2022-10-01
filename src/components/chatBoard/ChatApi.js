@@ -10,7 +10,7 @@ export const chatApi = {
         }
         // const data = await instance.post("/chat/rooms", req);
         const data = await instance.post(`${BASE_URL}/chat/rooms`, req);
-        console.log(data);
+        // console.log(data);
         return data;
     },
 

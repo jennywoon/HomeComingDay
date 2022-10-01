@@ -29,28 +29,26 @@ const ChatList = () => {
   const isLoadings = useSelector((state) => state.user.isLoading);
   const mypages = useSelector((state) => state.mypages.mypages);
 
-  useEffect(() => {
-    if (isLoadings && mypages.username === '') {
-      navigate('/login');
+    useEffect(() => {
+        if (isLoadings && mypages.username === "") {
+            navigate("/login")
+        }
+    }, []);
+
+    // const chatList = useSelector((state) => state.chat.chatList);
+    // const isLoading = useSelector((state) => state.chat.isLoading);
+    // const hasNext = useSelector((state) => state.chat.hasNext);
+    // const page = useSelector((state) => state.chat.page);
+    const { chatList, isLoading, hasNext, page } = useSelector((state) => state.chat);
+    // console.log(chatList);
+
+    const inicialRoom = {
+        roomname: null,
+        roomId: null,
+        lastMessage: null,
+        lastTime: null,
+        chatList,
     }
-  }, []);
-
-  // const chatList = useSelector((state) => state.chat.chatList);
-  // const isLoading = useSelector((state) => state.chat.isLoading);
-  // const hasNext = useSelector((state) => state.chat.hasNext);
-  // const page = useSelector((state) => state.chat.page);
-  const { chatList, isLoading, hasNext, page } = useSelector(
-    (state) => state.chat
-  );
-  console.log(chatList);
-
-  const inicialRoom = {
-    roomname: null,
-    roomId: null,
-    lastMessage: null,
-    lastTime: null,
-    chatList,
-  };
 
   // 채팅방 나가기 모달창
   const [isOpenPopup, setIsOpenPopup] = useState(false);

@@ -20,8 +20,6 @@ export const __loginUser = createAsyncThunk(
       setCookie('accessToken', `${data.data.data.accessToken}`);
       setCookie('refreshToken', `${data.data.data.refreshToken}`);
       setCookie('username', `${data.data.data.username}`);
-      // console.log(data.data.success)
-      // console.log(data.data)
       return thunkAPI.fulfillWithValue(data.data);
       
     } catch (error) {

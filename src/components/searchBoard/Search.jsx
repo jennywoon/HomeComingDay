@@ -36,8 +36,8 @@ dispatch(__getSearchArticlePopular());
   const searchArticle = useSelector((state) => state.searchs.searchs);
   const searchArticlePopular = useSelector((state) => state.searchs.popular);
 
-  console.log(searchArticle);
-  console.log(searchArticlePopular);
+  // console.log(searchArticle);
+  // console.log(searchArticlePopular);
 
  
   useEffect(()=>{

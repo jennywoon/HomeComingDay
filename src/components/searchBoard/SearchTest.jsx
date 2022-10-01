@@ -18,7 +18,7 @@ const SearchTest = () => {
     const [search, setSearch] = useState()
     const searchs = useSelector((state)=>state.helps.helps)
     
-    console.log(searchs)
+    // console.log(searchs)
 
     useEffect(() => {
         // dispatch(__getSearch());

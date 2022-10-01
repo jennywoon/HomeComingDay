@@ -156,7 +156,7 @@ const HelpDetail = () => {
         // console.log('response', response.data);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   };
 

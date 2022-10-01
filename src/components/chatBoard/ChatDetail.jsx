@@ -27,7 +27,7 @@ const ChatDetail = () => {
     const isLoading = useSelector((state) => state.user.isLoading);
     const chatList = useSelector((state) => state.chat.chatList);
     const mypages = useSelector((state) => state.mypages.mypages);
-    console.log(mypages);
+    // console.log(mypages);
     useEffect(() => {
         if (isLoading && mypages.username === "") {
             navigate("/login");
@@ -44,7 +44,7 @@ const ChatDetail = () => {
 
     // messages
     const messages = useSelector((state) => state.chat.messages);
-    console.log(messages);
+    // console.log(messages);
 
     // 상대방 정보 가져오기
     useEffect(() => {
@@ -55,9 +55,9 @@ const ChatDetail = () => {
                 setOtherUserInfo(response.data);
             })
             .catch((error) => {
-                console.log(error);
+                // console.log(error);
             });
-        console.log(roomId);
+        // console.log(roomId);
     }, [])
 
     // 채팅방 이전 메시지 가져오기
@@ -107,7 +107,7 @@ const ChatDetail = () => {
                 ws.current.send(`/pub/chat/enter`, { token: token }, JSON.stringify(message));
             });
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     }
 
@@ -118,7 +118,7 @@ const ChatDetail = () => {
                 ws.current.unsubscribe("sub-0");
             });
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     }
 
@@ -139,7 +139,7 @@ const ChatDetail = () => {
             ws.current.send("/pub/chat/message", { token: token }, JSON.stringify(message));
             setText("");
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     };
 
@@ -151,19 +151,21 @@ const ChatDetail = () => {
         <StChatDetailContainer>
             <Header />
             <StContainer>
-                <StNavbar>
-                    <IoIosArrowBack
-                        size="25px" cursor="pointer" style={{ paddingLeft: "20px" }}
-                        onClick={() => navigate("/chat")} />
-                    <StChatInfo>
-                        <StNavbarTitle>{otherUserInfo.otherUsername}</StNavbarTitle>
-                        <StInfoWrap>
-                            <StHeadDepartment>{otherUserInfo.otherDepartment} · </StHeadDepartment>
-                            <StHeadStudent> {otherUserInfo.otherAdmission}</StHeadStudent>
-                        </StInfoWrap>
-                    </StChatInfo>
-                    <StChatDiv />
-                </StNavbar>
+                <StNavbarWrap>
+                    <StNavbar>
+                        <IoIosArrowBack
+                            size="25px" cursor="pointer"
+                            onClick={() => navigate("/chat")} />
+                        <StChatInfo>
+                            <StNavbarTitle>{otherUserInfo.otherUsername}</StNavbarTitle>
+                            <StInfoWrap>
+                                <StHeadDepartment>{otherUserInfo.otherDepartment} · </StHeadDepartment>
+                                <StHeadStudent> {otherUserInfo.otherAdmission}</StHeadStudent>
+                            </StInfoWrap>
+                        </StChatInfo>
+                        <StChatDiv />
+                    </StNavbar>
+                </StNavbarWrap>
                 <ChatMessageBox messages={messages} scrollRef={scrollRef} />
                 <ChatInput
                     mypages={mypages}
@@ -187,9 +189,16 @@ const StContainer = styled.div`
     flex-direction: column;
 `
 
+const StNavbarWrap = styled.div`
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
 const StNavbar = styled.div`
-    width: 100%;
-    height: 60px;
+    width: 90%;
+    height: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -201,7 +210,8 @@ const StChatInfo = styled.div`
 `
 
 const StChatDiv = styled.div`
-    padding-right: 20px;
+    width: 25px;
+    height: 25px;
 `
 
 const StNavbarTitle = styled.div`

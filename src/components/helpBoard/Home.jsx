@@ -13,7 +13,7 @@ const Home = () => {
   const navigate = useNavigate();
   
   const chatList = useSelector((state) => state.chat.chatList[0]);
-  console.log(chatList);
+  // console.log(chatList);
 
   return (
     <StHomeContainer>
