@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import Button from '../../components/elements/Button';
 import { IoIosArrowBack } from 'react-icons/io';
 import Select from 'react-dropdown-select';
-// import './search.css'
 import {
   __getSchoolSearch,
   __getDepartmentSearch,
@@ -60,7 +59,7 @@ const SchoolInfo = () => {
 
   // 입학년도 검색
   const admissionSearch = useSelector((state) => state.schoolInfo.admissions);
-  console.log(admissionSearch);
+  // console.log(admissionSearch);
 
   const [selectedAdmission, setSelectedAdmission] = useState([]);
 
@@ -70,11 +69,11 @@ const SchoolInfo = () => {
   };
 
   // 저장하기 버튼
-  const onSubmitHandler = async(e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
     await dispatch(__postSchoolInfo(schoolInfos))
-    // await dispatch(__getMyPage())
-    .then(navigate('/signupcomplete'));
+      // await dispatch(__getMyPage())
+      .then(navigate('/signupcomplete'));
   };
 
   // 저장하기 버튼 활성화
@@ -89,9 +88,9 @@ const SchoolInfo = () => {
   }, [school, department, admission]);
 
   return (
-    <FormContainer>
+    <StFormContainer>
       <StSchoolInfo>
-        <FormHeader>
+        <StFormHeader>
           <IoIosArrowBack
             size='28'
             style={{ marginBottom: '20px', cursor: 'pointer' }}
@@ -99,26 +98,24 @@ const SchoolInfo = () => {
               navigate('/login');
             }}
           />
-        </FormHeader>
+        </StFormHeader>
         <StSchoolInfoWraps onSubmit={onSubmitHandler}>
-          <FisrtWrap>
+          <StFisrtWrap>
             <div>
               <StSchoolTitle style={{ justifyContent: 'center' }}>
                 대학교 정보 입력
               </StSchoolTitle>
               <StSchoolInfoWrap>
                 <Stlabel>학교명</Stlabel>
-                <Select
+                <StSelect
                   options={schoolSearch.map((item, index) => {
                     return { value: item.seq, label: item.schoolName };
                   })}
                   value={school}
                   values={selectedschoolSearch}
                   style={{
-                    maxHeight: '20px',
                     borderRadius: '16px',
                     border: '1px solid #f7931e',
-                    fontSize: '14px',
                     padding: '0 10px',
                   }}
                   onChange={onChangeSchool}
@@ -129,17 +126,15 @@ const SchoolInfo = () => {
 
               <StSchoolInfoWrap>
                 <Stlabel>학과 · 학부명</Stlabel>
-                <Select
+                <StSelect
                   options={departmentSearch.map((item, index) => {
                     return { value: item.seq, label: item.mclass };
                   })}
                   value={department}
                   values={selectedOptions}
                   style={{
-                    maxHeight: '20px',
                     borderRadius: '16px',
                     border: '1px solid #f7931e',
-                    fontSize: '14px',
                     padding: '0 10px',
                   }}
                   onChange={onChangeDepartment}
@@ -150,17 +145,15 @@ const SchoolInfo = () => {
 
               <StSchoolInfoWrap>
                 <Stlabel>입학년도</Stlabel>
-                <Select
+                <StSelect
                   options={admissionSearch.map((item, index) => {
                     return { value: item.id, label: item.admission };
                   })}
                   value={admission}
                   values={selectedAdmission}
                   style={{
-                    maxHeight: '20px',
                     borderRadius: '16px',
                     border: '1px solid #f7931e',
-                    fontSize: '14px',
                     padding: '0 10px',
                   }}
                   onChange={onChangeAdmission}
@@ -169,26 +162,25 @@ const SchoolInfo = () => {
                 />
               </StSchoolInfoWrap>
             </div>
-
-          </FisrtWrap>
+          </StFisrtWrap>
           <Button
-              type='submit'
-              width='100%'
-              isDisabled={isActive ? false : true}
-              style={{ backgroundColor: '#f7931e' }}
-              color='white'
-            >
-              <ButtonTitle>저장하기</ButtonTitle>
-            </Button>
+            type='submit'
+            width='100%'
+            isDisabled={isActive ? false : true}
+            style={{ backgroundColor: '#f7931e' }}
+            color='white'
+          >
+            <StButtonTitle>저장하기</StButtonTitle>
+          </Button>
         </StSchoolInfoWraps>
       </StSchoolInfo>
-    </FormContainer>
+    </StFormContainer>
   );
 };
 
 export default SchoolInfo;
 
-const FormContainer = styled.div`
+const StFormContainer = styled.div`
   position: relative;
   width: 100%;
   height: 100vh;
@@ -204,28 +196,25 @@ const StSchoolInfo = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-    /* border: 1px solid red; */
 `;
-const FormHeader = styled.div`
+const StFormHeader = styled.div`
   width: 90%;
   height: 50px;
   display: flex;
   align-items: center;
   margin-bottom: 20px;
-  /* border: 1px solid red; */
-`
+`;
 const StSchoolInfoWraps = styled.form`
   width: 85%;
   height: 100%;
 `;
 
-const FisrtWrap = styled.div`
+const StFisrtWrap = styled.div`
   width: 100%;
   height: 90%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* border: 1px solid blue; */
 `;
 
 const StSchoolTitle = styled.p`
@@ -250,7 +239,12 @@ const Stlabel = styled.label`
   display: block;
 `;
 
-const ButtonTitle = styled.div`
+const StSelect = styled(Select)`
+  max-height: 20px;
+  font-size: 14px;
+`;
+
+const StButtonTitle = styled.div`
   width: 100%;
   height: 40px;
   display: flex;
