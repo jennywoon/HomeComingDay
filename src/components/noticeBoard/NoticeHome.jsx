@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { IoIosArrowBack } from 'react-icons/io';
 import Homeimg from '../../assets/Home.png';
@@ -32,30 +32,21 @@ const NoticeHome = () => {
       <NoticeList />
       <StBottomTapWrap>
         <StBottom>
-          <StTap
+          <StFirstTap
             onClick={() => {
               navigate('/main');
             }}
-            style={{ paddingLeft: '20px' }}
           >
-            <img
-              src={Homeimg}
-              alt='홈'
-              style={{ width: '45%', margin: '2px' }}
-            />
-            <StTapTitle style={{ color: '#8E8E8E' }}>홈</StTapTitle>
-          </StTap>
+            <StImg src={Homeimg} alt='홈' />
+            <StTapTitle>홈</StTapTitle>
+          </StFirstTap>
           <StTap
             onClick={() => {
               navigate('/search');
             }}
           >
-            <img
-              src={Searchimg}
-              alt='검색'
-              style={{ width: '45%', margin: '2px' }}
-            />
-            <StTapTitle style={{ color: '#8E8E8E' }}>검색</StTapTitle>
+            <StImg src={Searchimg} alt='검색' />
+            <StTapTitle>검색</StTapTitle>
           </StTap>
           <StTap
             onClick={() => {
@@ -63,32 +54,23 @@ const NoticeHome = () => {
             }}
           >
             <StIconWrap>
-              <img
-                src={Chatimg}
-                alt='채팅'
-                style={{ width: '45%', margin: '2px' }}
-              />
+              <StImg src={Chatimg} alt='채팅' />
               {chatList && chatList.totalCnt > 0 ? (
                 <StNewDiv>
-                <StNewTitle>N</StNewTitle>
-              </StNewDiv>
+                  <StNewTitle>N</StNewTitle>
+                </StNewDiv>
               ) : null}
             </StIconWrap>
-            <StTapTitle style={{ color: '#8E8E8E' }}>채팅</StTapTitle>
+            <StTapTitle>채팅</StTapTitle>
           </StTap>
-          <StTap
-            style={{ paddingRight: '20px' }}
+          <StLastTap
             onClick={() => {
               navigate('/mypage');
             }}
           >
-            <img
-              src={Myimg}
-              alt='마이페이지'
-              style={{ width: '45%', margin: '2px' }}
-            />
-            <StTapTitle style={{ color: '#8E8E8E' }}>MY</StTapTitle>
-          </StTap>
+            <StImg src={Myimg} alt='마이페이지' />
+            <StTapTitle>MY</StTapTitle>
+          </StLastTap>
         </StBottom>
       </StBottomTapWrap>
     </StHomeContainer>
@@ -118,6 +100,7 @@ const StHeader = styled.div`
   align-items: center;
   border-bottom: 1px solid #f5f5f5;
 `;
+
 const StHeaderTitle = styled.div`
   font-size: 16px;
   font-weight: 800;
@@ -134,11 +117,34 @@ const StBottomTapWrap = styled.div`
   bottom: 0;
   box-shadow: 0px 2px 13px rgba(0, 0, 0, 0.2);
 `;
+
 const StBottom = styled.div`
   height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const StFirstTap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding-left: 20px;
+`;
+
+const StLastTap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding-right: 20px;
+`;
+
+const StImg = styled.img`
+  width: 25px;
+  height: 25px;
+  margin: 2px;
 `;
 
 const StTap = styled.div`
@@ -150,11 +156,9 @@ const StTap = styled.div`
 
 const StIconWrap = styled.div`
   display: flex;
-  /* border: 1px solid red; */
   justify-content: center;
-  /* align-items: start; */
   position: relative;
-`
+`;
 
 const StNewDiv = styled.div`
   width: 12px;
@@ -164,15 +168,24 @@ const StNewDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  right: 12px;
+  right: 1px;
   position: absolute;
 `;
+
 const StNewTitle = styled.div`
   font-size: 10px;
   font-weight: 600;
   color: white;
 `;
+
 const StTapTitle = styled.div`
   font-size: 11px;
   font-weight: 400;
+  color: #696969;
+`;
+
+const StColorTapTitle = styled.div`
+  font-size: 11px;
+  font-weight: 600;
+  color: #f7931e;
 `;
