@@ -1042,7 +1042,7 @@ const CalendarTitle = styled.div`
 
 const DateDiv = styled.div`
   width: 80%;
-  height: 30px;
+  height: 40px;
   display: flex;
   justify-content: right;
   align-items: center;
@@ -1106,18 +1106,20 @@ const StTextareaDiv = styled.div`
   align-items: center;
 `
 const CalendarTextarea = styled.textarea`
-  width: 95%;
+  width: 85%;
   height: 200px;
   resize: none;
   border: none;
   background-color: transparent;
   outline: none;
+  
   ::placeholder {
     line-height: 200px;
     top: 50%;
     text-align: right;
   }
   padding: 0 10px;
+  text-align: left;
 `;
 
 const StTimePicker = styled.input`
@@ -1192,7 +1194,7 @@ const CalendarWrap = styled.div`
 
 const TimeOpenBtn = styled.div`
 font-weight: 500;
-height: 30px;
+height: 40px;
 font-size: 14px;
 width: 80%;
 display: flex;
@@ -1293,7 +1295,7 @@ const StJoinPeople = styled.div`
 `
 const StJoinDiv = styled.div`
   font-weight: 500;
-  height: 30px;
+  height: 40px;
   font-size: 14px;
   width: 80%;
   display: flex;
