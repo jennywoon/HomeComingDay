@@ -135,7 +135,7 @@ const StNewDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  right: 12px;
+  right: 1px;
   position: absolute;
 `;
 const StNewTitle = styled.div`
@@ -152,7 +152,8 @@ const StLastTap = styled.div`
   padding-right: 20px;
 `
 const StImg = styled.img`
-  width: 45%;
+    width: 25px;
+  height: 25px;
   margin: 2px;
 `
 
@@ -164,7 +165,7 @@ const StHomeTitle = styled.div`
 const StTapTitle = styled.div`
   font-size: 11px;
   font-weight: 400;
-  color: #8e8e8e;
+  color: #696969;
 `;
 
 const StIconWrap = styled.div`

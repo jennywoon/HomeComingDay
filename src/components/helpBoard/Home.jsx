@@ -127,7 +127,10 @@ const StChatIconWrap = styled.div`
 `
 
 const StImg = styled.img`
-  width: 45%;
+  /* width: 45%;
+  height: */
+  width: 25px;
+  height: 25px;
   margin: 2px;
 `;
 
@@ -139,7 +142,7 @@ const StNewDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  right: 12px;
+  right: 1px;
   position: absolute;
 `;
 const StNewTitle = styled.div`
