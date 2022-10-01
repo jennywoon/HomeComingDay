@@ -99,6 +99,20 @@ const InformationComment = ({ comment, informationsfind, modalRef, data }) => {
     setReplyComment(e.target.value);
   };
 
+  // 댓글 올리기 버튼 활성화
+  const [isActive, setIsActive] = useState(false);
+  const handleCheck = (e) => {
+    setIsActive(e);
+  };
+
+  useEffect(() => {
+    if (replyComment !== '') {
+      handleCheck(true);
+    } else {
+      handleCheck(false);
+    }
+  }, [replyComment]);
+
   //대댓글 post
   const onClickPostReplyComment = async (e) => {
     e.preventDefault();
@@ -185,6 +199,7 @@ const InformationComment = ({ comment, informationsfind, modalRef, data }) => {
                   <StUploadBtnBox
                     type='submit'
                     onClick={onClickPostReplyComment}
+                    disabled={isActive ? false : true}
                   >
                     <StUploadBtn></StUploadBtn>
                   </StUploadBtnBox>
