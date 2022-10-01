@@ -61,6 +61,7 @@ const StContainer = styled.div`
     max-height: 1202px;
     min-height: 667px;
     max-width: 420px;
+    min-width: 280px;
     margin: auto;
     background-color: var(--white);
     background-color: white;

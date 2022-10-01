@@ -18,7 +18,8 @@ const PrivacyPolicy = ({ setPrivacyModal }) => {
               <br />
               ○ 이 개인정보처리방침은 2022년 10월 1부터 적용됩니다.<br />
             <br />
-            <StTitle>제1조(개인정보의 처리 목적)<br /></StTitle>
+            <StTitle>제1조</StTitle>
+            <StSecondTitle>(개인정보의 처리 목적)<br /></StSecondTitle>
             <br />
               [ Homecoming Day ]
               <br /><br />
@@ -36,7 +37,8 @@ const PrivacyPolicy = ({ setPrivacyModal }) => {
               민원인의 신원 확인 목적으로 개인정보를 처리합니다.<br />
               <br />
 
-            <StTitle>제2조(개인정보의 처리 및 보유 기간)<br /></StTitle>
+            <StTitle>제2조</StTitle>
+            <StSecondTitle>(개인정보의 처리 및 보유 기간)<br /></StSecondTitle>
             <br />
             ① ( Homecoming Day )은(는) 법령에 따른 개인정보 보유·이용기간 또는 정보주체로부터 개인정보를 수집 시에 동의받은 개인정보 보유·이용기간 내에서 개인정보를 처리·보유합니다.<br />
 
@@ -49,7 +51,8 @@ const PrivacyPolicy = ({ setPrivacyModal }) => {
             예외사유 : 없음<br />
 
             <br />
-            <StTitle>제3조(처리하는 개인정보의 항목)<br /></StTitle>
+            <StTitle>제3조</StTitle>
+            <StSecondTitle>(처리하는 개인정보의 항목)<br /></StSecondTitle>
             <br />
             ① ( Homecoming Day )은(는) 다음의 개인정보 항목을 처리하고 있습니다.<br /><br />
 
@@ -58,7 +61,8 @@ const PrivacyPolicy = ({ setPrivacyModal }) => {
             선택항목 : 없음<br />
 
             <br />
-            <StTitle>제4조(개인정보의 파기절차 및 파기방법)<br /></StTitle>
+            <StTitle>제4조</StTitle>
+            <StSecondTitle>(개인정보의 파기절차 및 파기방법)<br /></StSecondTitle>
             <br />
 
             ① ( Homecoming Day ) 은(는) 개인정보 보유기간의 경과, 처리목적 달성 등 개인정보가 불필요하게 되었을 때에는 지체없이 해당 개인정보를 파기합니다.<br /><br />
@@ -246,6 +250,7 @@ const StTitle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 16px;
   /* border: 1px solid rebeccapurple; */
 `
 
@@ -253,6 +258,7 @@ const StSecondTitle = styled.div`
   width: 100%;
   font-weight: 700;
   text-align: center;
+  font-size: 16px;
 `
 
 const StModalContainer = styled.div`
@@ -278,6 +284,7 @@ const StContentWrap = styled.div`
   display: flex;
   flex-direction: column;
   text-align: justify;
+  font-size: 14px;
 `
 
 const StContact = styled.div`
