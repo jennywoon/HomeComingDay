@@ -29,7 +29,7 @@ import HelpDeleteModal from './HelpDeleteModal';
 import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
 import heartColorImg from '../../assets/heartColor.png';
-import { __getMyPage, __getView } from '../../redux/modules/MyPageSlice';
+import { __getMyArticle, __getMyPage, __getView } from '../../redux/modules/MyPageSlice';
 import { chatApi } from '../chatBoard/ChatApi';
 import { __getNoticeCount } from '../../redux/modules/NoticeSlice';
 import dots from '../../assets/dots.png';
@@ -37,8 +37,8 @@ import dots from '../../assets/dots.png';
 const HelpDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { helps } = useSelector((state) => state.helps);
   const { helpsfind } = useSelector((state) => state.helps);
+  console.log(helpsfind)
   const { id } = useParams();
   const [show, setShow] = useState(false);
   const [showChaet, setShowChaet] = useState(false);
@@ -177,6 +177,15 @@ const HelpDetail = () => {
       });
   };
 
+  // const onPreviousPage = () => {
+  //   if((navigate(-1) !== navigate("/main"))){
+  //     navigate("/mypage")
+  //   } else if((navigate(-1) !== navigate("/mypage") || navigate(-1) !== navigate("/main"))){
+  //     navigate("/mypage")
+  //   } 
+  // }
+
+
   return (
     <StContainer ref={node}>
       {modalOpen && <HelpDeleteModal setModalOpen={setModalOpen} />}
@@ -189,7 +198,7 @@ const HelpDetail = () => {
               size='25px'
               cursor='pointer'
               onClick={() => {
-                navigate('/main');
+                navigate(-1)
               }}
             />
             <StHeaderTitle>도움요청</StHeaderTitle>
@@ -212,14 +221,14 @@ const HelpDetail = () => {
                     </StTxtstudent>
                     {showChaet ? (
                       <StChatWrap onClick={() => createChat(helpsfind.userId)}>
-                        {helpsfind && helpsfind.username !== data.username ? (
+                        {helpsfind && helpsfind.userId !== data.userId ? (
                           <StChaetingBox>1:1채팅</StChaetingBox>
                         ) : null}
                       </StChatWrap>
                     ) : null}
                   </StBodytxt>
 
-                  {helpsfind && helpsfind.username === data.username ? (
+                  {helpsfind && helpsfind.userId === data.userId ? (
                     <StDots onClick={onCilckShow} />
                   ) : null}
 

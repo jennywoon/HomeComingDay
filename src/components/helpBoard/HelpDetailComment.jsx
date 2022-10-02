@@ -178,7 +178,7 @@ const DetailComment = ({ comment, helpsfind, data }) => {
                 </StTxtCreateAt>
               </StTxtFirstWrap>
             </StCommentsBox>
-            {username === data.username ? (
+            {data.userId === data.userId ? (
               <StDots onClick={onCilckShow} />
             ) : null}
           </StComments>

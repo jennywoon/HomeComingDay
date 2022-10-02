@@ -180,7 +180,7 @@ const FreeTalkDetail = () => {
             size='25px'
             cursor='pointer'
             onClick={() => {
-              navigate('/freetalk');
+              navigate(-1);
             }}
           />
           <StHeaderTitle>자유토크</StHeaderTitle>
@@ -209,13 +209,13 @@ const FreeTalkDetail = () => {
                       onClick={() => createChat(freetalksfind.userId)}
                     >
                       {freetalksfind &&
-                      freetalksfind.username !== data.username ? (
+                      freetalksfind.userId !== data.userId ? (
                         <StChatingBox>1:1채팅</StChatingBox>
                       ) : null}
                     </StChatWrap>
                   ) : null}
                 </StBodytxt>
-                {freetalksfind && freetalksfind.username === data.username ? (
+                {freetalksfind && freetalksfind.userId === data.userId ? (
                   <StDots onClick={onCilckShow} />
                 ) : null}
 

@@ -191,7 +191,7 @@ const InformationDetail = () => {
             size='25px'
             cursor='pointer'
             onClick={() => {
-              navigate('/information');
+              navigate(-1);
             }}
           />
           <StHeaderTitle>정보공유</StHeaderTitle>
@@ -223,7 +223,7 @@ const InformationDetail = () => {
                       onClick={() => createChat(informationsfind.userId)}
                     >
                       {informationsfind &&
-                      informationsfind.username !== data.username ? (
+                      informationsfind.userId !== data.userId ? (
                         <StChaetingBox>1:1채팅</StChaetingBox>
                       ) : null}
                     </StChatWrap>
@@ -231,7 +231,7 @@ const InformationDetail = () => {
                 </StBodytxt>
 
                 {informationsfind &&
-                informationsfind.username === data.username ? (
+                informationsfind.userId === data.userId ? (
                   <StDots onClick={onCilckShow} />
                 ) : null}
 

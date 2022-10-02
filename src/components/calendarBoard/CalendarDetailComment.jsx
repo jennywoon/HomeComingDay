@@ -190,7 +190,7 @@ const CalendarDetailComment = ({ comment, modalRef, calendarfind, data }) => {
                 </StTxtCreateAt>
               </StTxtFirstWrap>
             </StCommentsBox>
-            {username === data.username ? (
+            {data.userId === data.userId ? (
               <StDots onClick={onCilckShow} />
             ) : null}
           </StComments>
