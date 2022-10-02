@@ -6,15 +6,11 @@ import HelpDetailComment from './HelpDetailComment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  __deleteHelp,
-  __updateHelp,
   __getHelp,
-  __getComments,
-  __getHelpComment,
   __postHelpComment,
   __getDetailHelp,
   __postHelpHeart,
-  __getHelpHeart,
+  __getHelpHeart
 } from '../../redux/modules/HelpSlice';
 import { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -29,7 +25,7 @@ import HelpDeleteModal from './HelpDeleteModal';
 import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
 import heartColorImg from '../../assets/heartColor.png';
-import { __getMyArticle, __getMyPage, __getView } from '../../redux/modules/MyPageSlice';
+import { __getMyPage, __getView } from '../../redux/modules/MyPageSlice';
 import { chatApi } from '../chatBoard/ChatApi';
 import { __getNoticeCount } from '../../redux/modules/NoticeSlice';
 import dots from '../../assets/dots.png';
@@ -38,22 +34,14 @@ const HelpDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { helpsfind } = useSelector((state) => state.helps);
-  console.log(helpsfind)
+  // console.log(helpsfind)
   const { id } = useParams();
   const [show, setShow] = useState(false);
   const [showChaet, setShowChaet] = useState(false);
   const [comment, setComment] = useState('');
 
-  // const helpsfind = helps.find((help) => help.articleId === Number(id));
-  // const helpsCommentList = helpsfind.commentList.find((helpfind)=>helpfind)
-  // const helpsChildCommentList = helpsCommentList.childCommentList.find((helpsComment)=>helpsComment)
   const data = useSelector((state) => state.mypages.mypages);
   const detailview = useSelector((state)=>state.mypages.view);
-
-  // console.log('helpsfind', helpsfind);
-  // console.log("helpsCommentList",helpsCommentList)
-  // console.log('helpsChildCommentList', helpsChildCommentList)
-  // console.log('data', data);
 
   //모달닫기
   const node = useRef();
@@ -67,7 +55,6 @@ const HelpDetail = () => {
     };
     document.addEventListener('mousedown', clickOutside);
     return () => {
-      // Cleanup the event listener
       document.removeEventListener('mousedown', clickOutside);
     };
   }, [show]);
@@ -160,7 +147,7 @@ const HelpDetail = () => {
       articleId: id,
     };
     const response = await dispatch(__postHelpHeart(newHeart));
-    dispatch(__getDetailHelp(id));
+    await dispatch(__getDetailHelp(id));
   };
 
   // 채팅 생성
@@ -688,6 +675,7 @@ const StCommentCount = styled.div`
   color: black;
   display: flex;
   margin-right: 10px;
+  align-items: center;
 `;
 
 const StCommentImg = styled.div`
@@ -700,6 +688,7 @@ const StHeartCount = styled.div`
   color: black;
   display: flex;
   cursor: pointer;
+  align-items: center;
 `;
 
 const StHeartImg = styled.div`
