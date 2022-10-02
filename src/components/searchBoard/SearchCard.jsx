@@ -1,12 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import {
-  __getSearch,
-  __getSearchArticle,
-  __getSearchArticlePopular,
-  __postSearch,
-} from '../../redux/modules/SearchSlice';
 import { useNavigate } from 'react-router-dom';
 import commentgray from '../../assets/commentgray.png';
 import heartgray from '../../assets/heartgray.png';
