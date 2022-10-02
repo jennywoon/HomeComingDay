@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { __getCalendar } from '../../redux/modules/CalendarSlice';
+import { __getCalendar, __getDetailCalendar } from '../../redux/modules/CalendarSlice';
 import { useNavigate } from 'react-router-dom';
 import commentgray from '../../assets/commentgray.png';
 import heartgray from '../../assets/heartgray.png';
@@ -16,8 +16,9 @@ const CalendarCard = ({ calendar, id }) => {
     dispatch(__getCalendar());
   }, [dispatch]);
 
-  const onClickNavi = () => {
-    navigate(`/calendardetail/${id}`)
+  const onClickNavi = async() => {
+    await dispatch(__getDetailCalendar(id))
+    await navigate(`/calendardetail/${id}`)
   }
 
   return (

@@ -116,11 +116,11 @@ const SignUp = () => {
     setModalOpen(true);
     if (isSend) {
       setIsSend(true);
-    } else{
+    } else {
       setIsSend(true);
     }
   }
-  
+
   // 이메일 인증번호
   const [emailCheck, setEmailCheck] = useState({
     authKey: '',
@@ -294,19 +294,22 @@ const SignUp = () => {
       <StSignupContainer onSubmit={handleSubmit}>
         <StFormHeader>
           <IoIosArrowBack
-            size='28'
+            size='28px'
             style={{ cursor: 'pointer' }}
             onClick={() => {
               navigate('/login');
             }}
           />
+          <StSignupTitle>
+            회원가입
+          </StSignupTitle>
         </StFormHeader>
         <StSignupWraps>
           <StFisrtWrap>
-            <StSecondWrap>
-              <StSignupTitle>
+            {/* <StSecondWrap> */}
+              {/* <StSignupTitle>
                 회원가입
-              </StSignupTitle>
+              </StSignupTitle> */}
               <StThirdWrap>
                 <StSignupWrap>
                   <Stlabel>이름</Stlabel>
@@ -342,7 +345,7 @@ const SignUp = () => {
                         type='button'
                         onClick={handleSendEmail}
                         isSend={isSend}
-                        // isActiveTimer={isActiveTimer}
+                      // isActiveTimer={isActiveTimer}
                       >
                         {/* {isSend
                           ? '해당 이메일로 인증번호 발송 완료'
@@ -432,17 +435,17 @@ const SignUp = () => {
                   ) : null}
                 </StSignupWrap>
               </StThirdWrap>
-            </StSecondWrap>
+            {/* </StSecondWrap> */}
             <StButtonWrap>
-            <Button
-              type='submit'
-              width='85%'
-              isDisabled={isActive ? false : true}
-              style={{backgroundColor: '#f7931e' }}
-              color='white'
-            >
-              <StButtonTitle>가입하기</StButtonTitle>
-            </Button>
+              <Button
+                type='submit'
+                width='85%'
+                isDisabled={isActive ? false : true}
+                style={{ backgroundColor: '#f7931e' }}
+                color='white'
+              >
+                <StButtonTitle>가입하기</StButtonTitle>
+              </Button>
             </StButtonWrap>
           </StFisrtWrap>
         </StSignupWraps>
@@ -464,19 +467,21 @@ const StFormContainer = styled.div`
 
 const StSignupContainer = styled.form`
   width: 100%;
-  height: 90%;
+  height: 85%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  /* border: 1px solid blue; */
 `;
 
 const StFormHeader = styled.div`
   width: 90%;
-  height: 50px;
+  /* height: 50px; */
   display: flex;
-  align-items: center;
-  margin-bottom: 20px;
+  /* align-items: center; */
+  margin-bottom: 28px;
+  flex-direction: column;
 `
 const StSignupWraps = styled.div`
   width: 100%;
@@ -506,7 +511,7 @@ const StButtonWrap = styled.div`
 `
 
 const StThirdWrap = styled.div`
-  width: 100%;
+  width: 85%;
   height: 87%;
   display: flex;
   flex-direction: column;
@@ -518,7 +523,7 @@ const StSignupTitle = styled.div`
   font-size: 24px;
   font-weight: 700;
   justify-content: center;
-  margin-bottom: 10px;
+  margin: 10px 0 15px 0;
 `;
 
 const StSignupWrap = styled.div`
@@ -526,7 +531,7 @@ const StSignupWrap = styled.div`
   padding: 0;
   border: none;
   align-items: left;
-  margin-bottom: 65px;
+  margin-bottom: 50px;
   position: relative;
 `;
 
@@ -586,7 +591,7 @@ const StSendEmailButton = styled.button`
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
-  margin: 10px 0 25px 0;
+  margin: 3px 0 8px 0;
 `;
 
 const StVisible = styled.span`

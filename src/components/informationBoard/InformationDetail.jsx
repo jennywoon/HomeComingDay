@@ -28,7 +28,7 @@ import InformationDetailModal from './InformationDetailModal';
 import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
 import heartColorImg from '../../assets/heartColor.png';
-import { __getMyPage } from '../../redux/modules/MyPageSlice';
+import { __getMyPage ,__getView} from '../../redux/modules/MyPageSlice';
 import { chatApi } from '../chatBoard/ChatApi';
 import { __getNoticeCount } from '../../redux/modules/NoticeSlice';
 import dots from '../../assets/dots.png';
@@ -54,6 +54,7 @@ const InformationDetail = () => {
   //   (info) => info.articleId === Number(id)
   // );
   const data = useSelector((state) => state.mypages.mypages);
+  const detailview = useSelector((state)=>state.mypages.view);
 
   //모달닫기
   const node = useRef();
@@ -77,6 +78,7 @@ const InformationDetail = () => {
     dispatch(__getMyPage());
     dispatch(__getInformation());
     dispatch(__getDetailInformation(id));
+    dispatch(__getView(id))
   }, [dispatch]);
 
   // console.log(
@@ -180,7 +182,9 @@ const InformationDetail = () => {
   return (
     <StContainer ref={node}>
       {modalOpen && <InformationDetailModal setModalOpen={setModalOpen} />}
+      <div>
       <Header />
+      </div>
       <StFirstWrap>
         <StDetailHeader>
           <IoIosArrowBack
@@ -277,7 +281,7 @@ const InformationDetail = () => {
                 <StBodyTxtBox>
                   <StContentView>
                     {informationsfind && informationsfind.createdAt} | 조회수{' '}
-                    {informationsfind && informationsfind.views}
+                    {detailview.views}
                   </StContentView>
                   <StCount>
                     <StCommentCount>
