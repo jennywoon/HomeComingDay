@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import DaumPostcode from 'react-daum-postcode';
 import styled from 'styled-components';
@@ -24,7 +24,7 @@ const CalendarUpdate = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { calendars } = useSelector((state) => state.calendars);
-  const {calendarJoin} = useSelector((state) => state.calendars)
+  const { calendarJoin } = useSelector((state) => state.calendars)
   const { calendarfind } = useSelector((state) => state.calendars);
   // const calendarfind = calendars.find((calendar) => calendar.articleId === Number(id));
   // console.log(calendarfind)
@@ -40,18 +40,18 @@ const CalendarUpdate = () => {
 
   //  const reactCalen = calendarfind && calendarfind.calendarDate
   // let editrealCalendar = reactCalen.substring(0,13)
-  
+
 
   // console.log(editrealCalendar)
   // // const editrealCalendar = moment(reactCalendar.toString()).format('YYYY년 MM월 DD일');
-  
+
 
   // const [reactCalendar, setReactCalendar] = useState(
   //   editrealCalendar
   // );
 
   const [date, setDate] = useState({
-    calendarDate:''
+    calendarDate: ''
   });
   const realCalendar = moment(date.toString()).format('YYYY년 MM월 DD일 dddd');
 
@@ -81,8 +81,8 @@ const CalendarUpdate = () => {
     calendarfind && calendarfind.content
   );
 
-  
-  
+
+
 
   const [joinNumber, setJoinNumber] = useState(calendarfind && calendarfind.maxPeople);
 
@@ -93,14 +93,14 @@ const CalendarUpdate = () => {
 
   //참여하기 인원 수정
 
-  const joinMinusHandle =()=>{
-    if(calendarJoin.joinPeople < joinNumber && joinNumber > 1){
-    setJoinNumber(joinNumber -1)
+  const joinMinusHandle = () => {
+    if (calendarJoin.joinPeople < joinNumber && joinNumber > 1) {
+      setJoinNumber(joinNumber - 1)
+    }
   }
-  }
-  const joinPlusHandle =()=>{
-    if(joinNumber < 50)
-    setJoinNumber(joinNumber +1)
+  const joinPlusHandle = () => {
+    if (joinNumber < 50)
+      setJoinNumber(joinNumber + 1)
   }
 
 
@@ -121,7 +121,7 @@ const CalendarUpdate = () => {
     calendarcontent,
   } = calendar;
 
-  
+
 
   const calendaronChangeHandler = (e) => {
     const { value, name } = e.target;
@@ -137,11 +137,11 @@ const CalendarUpdate = () => {
 
   const [dateShow, setDateShow] = useState(true);
   const [timeShow, setTimeShow] = useState(false);
- 
+
   const calendarTimes = calendarfind && calendarfind.calendarTime
 
-  const calendarHour = calendarTimes.substring(0,2)
-  const calendarMinute = calendarTimes.substring(3,5)
+  const calendarHour = calendarTimes.substring(0, 2)
+  const calendarMinute = calendarTimes.substring(3, 5)
 
 
   const [selectTime, setSelectTime] = useState("오전");
@@ -203,10 +203,10 @@ const CalendarUpdate = () => {
       setCalendarLocation(data.address);
       setOpenPostcode(false);
     },
-  } 
+  }
 
   const now = new Date()
-    const defaultValue = moment(now.toString()).format('YYYY년 MM월 DD일 dddd')
+  const defaultValue = moment(now.toString()).format('YYYY년 MM월 DD일 dddd')
 
   const onUpdateHandler = async (e) => {
     e.preventDefault();
@@ -220,7 +220,7 @@ const CalendarUpdate = () => {
       calendarTime: hour + ":" + selectMinute,
       maxPeople: joinNumber
     };
-    
+
     if (editcalendarfind.calendarDate === "Invalid date") {
       editcalendarfind.calendarDate = defaultValue
     }
@@ -232,7 +232,7 @@ const CalendarUpdate = () => {
   };
 
   useEffect(() => {
-    if (EditTitle !== ''  && EditContent !== '') {
+    if (EditTitle !== '' && EditContent !== '') {
       handleCheck(true);
     } else {
       handleCheck(false);
@@ -243,6 +243,21 @@ const CalendarUpdate = () => {
     dispatch(__getDetailCalendar(id));
   }, [dispatch]);
 
+  const node = useRef();
+
+  useEffect(() => {
+    const clickOutside = (e) => {
+      // 모달이 열려 있고 모달의 바깥쪽을 눌렀을 때 창 닫기
+      if (isActive && node.current && !node.current.contains(e.target)) {
+        setIsActive(false);
+      }
+    };
+    document.addEventListener('mousedown', clickOutside);
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener('mousedown', clickOutside);
+    };
+  }, [isActive]);
 
   return (
     <>
@@ -264,28 +279,29 @@ const CalendarUpdate = () => {
               placeholder='제목을 입력해주세요'
               maxLength='40'
             ></StFormInput>
-            <StCalendarButton
-            // onClick={showModal}
-            >
-              <StCalendarTitle>날짜</StCalendarTitle>
-              <StDateDiv onClick={() => setIsActive(!isActive)}>
-                {/* {editrealCalendar} */}
-                {moment(date).format('YYYY년 MM월 DD일')}
-                <ArrowForward />
-              </StDateDiv>
-            </StCalendarButton>
-            <StCalendarWrap 
-            // value={reactCalendar} onClick={onChangeCalendar}
-            >
-              {isActive && (
-                <Calendar
-                  name='calendarDate'
-                  value={calendarDate}
-                  onChange={onChange}
-                />
-              )}
-            </StCalendarWrap>
-
+            <div>
+              <StCalendarButton
+              // onClick={showModal}
+              >
+                <StCalendarTitle>날짜</StCalendarTitle>
+                <StDateDiv onClick={() => setIsActive(!isActive)}>
+                  {/* {editrealCalendar} */}
+                  {moment(date).format('YYYY년 MM월 DD일')}
+                  <ArrowForward />
+                </StDateDiv>
+              </StCalendarButton>
+              <StCalendarWrap ref={node}
+              // value={reactCalendar} onClick={onChangeCalendar}
+              >
+                {isActive && (
+                  <Calendar
+                    name='calendarDate'
+                    value={calendarDate}
+                    onChange={onChange}
+                  />
+                )}
+              </StCalendarWrap>
+            </div>
             <StTimeDiv>
               <StCalendarTitle>시간</StCalendarTitle>
               <StTimeOpenBtn
@@ -367,11 +383,11 @@ const CalendarUpdate = () => {
             <StJoinPeople>
               <StCalendarTitle>인원</StCalendarTitle>
               <StJoinDiv>
-                {calendarJoin.joinPeople < joinNumber ? 
-                <MinusCircle size="20px" onClick={joinMinusHandle}/>
-               : null}
+                {calendarJoin.joinPeople < joinNumber ?
+                  <MinusCircle size="20px" onClick={joinMinusHandle} />
+                  : null}
                 {joinNumber}명
-                <PlusCircle size="20px" onClick={joinPlusHandle}/>
+                <PlusCircle size="20px" onClick={joinPlusHandle} />
               </StJoinDiv>
 
             </StJoinPeople>
@@ -409,11 +425,11 @@ const CalendarUpdate = () => {
             {/* <CalendarTest/> */}
           </StFormBody>
           <StFooterBtn>
-            <Button 
-            type='submit' 
-            backgroundColor='#F7931E' 
-            width="100%" height="40px" color="white" 
-            style={{ width: "90%", backgroundColor: '#F7931E' }} isDisabled={isOnActive ? false : true}>
+            <Button
+              type='submit'
+              backgroundColor='#F7931E'
+              width="100%" height="40px" color="white"
+              style={{ width: "90%", backgroundColor: '#F7931E' }} isDisabled={isOnActive ? false : true}>
               <StChangediv>수정하기</StChangediv>
             </Button>
           </StFooterBtn>
