@@ -1,16 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
 import DaumPostcode from 'react-daum-postcode';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { __getHelp, __postHelp } from '../../redux/modules/HelpSlice';
 import { __postFreeTalk } from '../../redux/modules/FreeTalkSlice';
 import { __postInformation } from '../../redux/modules/InformationSlice';
-import {
-  __getCalendar,
-  __postCalendar,
-  __postTime,
-} from '../../redux/modules/CalendarSlice';
+import { __postCalendar } from '../../redux/modules/CalendarSlice';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { AiOutlinePlusCircle,AiOutlineMinusCircle  } from 'react-icons/ai';
 import { MdCancel } from 'react-icons/md';
@@ -18,7 +14,6 @@ import { TiDelete } from 'react-icons/ti';
 import { GrImage } from 'react-icons/gr';
 import Button from '../elements/Button';
 import moment from 'moment';
-// import '../calendarBoard/Time.css';
 import Calendar from 'react-calendar';
 import '../calendarBoard/CalendarModal.css';
 import { useDropzone } from 'react-dropzone';
@@ -26,7 +21,6 @@ import imageCompression from 'browser-image-compression';
 
 
 const Form2 = () => {
-  // const node = useRef();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [help, setHelp] = useState({
@@ -403,9 +397,25 @@ const Form2 = () => {
     }
   }, [calendartitle, calendarlocation, calendarcontent])
 
+    //모달닫기
+  const node = useRef();
+
+  useEffect(() => {
+    const clickOutside = (e) => {
+      // 모달이 열려 있고 모달의 바깥쪽을 눌렀을 때 창 닫기
+      if (isActive && node.current && !node.current.contains(e.target)) {
+        setIsActive(false);
+      }
+    };
+    document.addEventListener('mousedown', clickOutside);
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener('mousedown', clickOutside);
+    };
+  }, [isActive]);
 
   return (
-    <TotalCatiner>
+    <TotalCatiner ref={node}>
       {/* <FormContainer> */}
       <FormWrap onSubmit={onSubmitHandler}>
         <FormHeader>
@@ -603,7 +613,7 @@ const Form2 = () => {
                 placeholder='제목을 입력해주세요'
                 maxLength='40'
               ></FormInput>
-              <div>
+              <div ref={node}>
               <CalendarButton>
                 <CalendarTitle>날짜</CalendarTitle>
                 <DateDiv 
@@ -734,7 +744,7 @@ const Form2 = () => {
                   <DaumPostcode
                     onComplete={handle.selectAddress}  // 값을 선택할 경우 실행되는 이벤트
                     autoClose={false} // 값을 선택할 경우 사용되는 DOM을 제거하여 자동 닫힘 설정
-                    defaultQuery='판교역로 235' // 팝업을 열때 기본적으로 입력되는 검색어 
+                    // defaultQuery='판교역로 235' // 팝업을 열때 기본적으로 입력되는 검색어 
                   />}
               </StKakaoMap>
               <TextDiv>
@@ -749,7 +759,7 @@ const Form2 = () => {
                 ></CalendarTextarea>
                 </StTextareaDiv>
               </TextDiv>
-            </>
+              </>
           ) : select === 'freetalk' ? (
             <>
               <FormInput
