@@ -118,7 +118,7 @@ const InformationReplyComment = ({childCommentList,commentId,childComment, ids ,
                        <StUploadBtn onClick={onClickUpdateReplyComment}></StUploadBtn>
                        </StReviseBox>}
                </StCommentReplytxt>
-           {childComment.username === data.username ?
+           {childComment.userId === data.userId ?
            <StDots onClick={onCilckShow}/>
            : null}
 

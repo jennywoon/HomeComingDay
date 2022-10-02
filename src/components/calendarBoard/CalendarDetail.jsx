@@ -191,7 +191,7 @@ const CalendarDetail = () => {
             size='25px'
             cursor='pointer'
             onClick={() => {
-              navigate('/calendar');
+              navigate(-1);
             }}
           />
           <StHeaderTitle>만남일정</StHeaderTitle>
@@ -214,13 +214,13 @@ const CalendarDetail = () => {
                   </StTxtstudent>
                   {showChaet ?
                     <StChatWrap onClick={() => createChat(calendarfind.userId)}>
-                      {calendarfind && calendarfind.username !== data.username ?
+                      {calendarfind && calendarfind.userId !== data.userId ?
                         <StChatingBox>
                           1:1채팅
                         </StChatingBox> : null}
                     </StChatWrap> : null}
                 </StBodytxt>
-                {calendarfind && calendarfind.username === data.username ?
+                {calendarfind && calendarfind.userId === data.userId ?
                   <StDots
                     onClick={onCilckShow}
                   /> : null}
@@ -282,7 +282,7 @@ const CalendarDetail = () => {
                       참여마감
                     </StJoinPart>
                     :
-                    (calendarfind && calendarfind.username) !== data.username ? (
+                    (calendarfind && calendarfind.userId) !== data.userId ? (
                       ((joinBooline && joinBooline === false) || (joinTrueFalse === false) ?
                         <StJoinPart type="button" onClick={onClickJoin}>
                           <img src={joinUserPlus} alt="참여하기" />

@@ -147,7 +147,7 @@ const HelpDetailReplyComment = ({
             </StReviseBox>
           )}
         </StCommentReplytxt>
-        {childComment.username === data.username ? (
+        {childComment.userId === data.userId ? (
           <StDots onClick={onCilckShow} />
         ) : null}
 

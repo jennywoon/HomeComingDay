@@ -166,7 +166,7 @@ const InformationComment = ({ comment, informationsfind, modalRef, data }) => {
                 </StTxtCreateAt>
               </StTxtFirstWrap>
             </StCommentsBox>
-            {username === data.username ? (
+            {data.userId === data.userId ? (
               <StDots onClick={onCilckShow} />
             ) : null}
           </StComments>

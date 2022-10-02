@@ -12,6 +12,7 @@ import Chatimg from '../../assets/Chat.png';
 import MyColorimg from '../../assets/MyColor.png';
 import refresh from "../../assets/refresh.png"
 import MyPageLankModal from './MyPageLankModa';
+import ContactModal from "./ContactModal"
 
 const MyPageHome = () => {
   const navigate = useNavigate();
@@ -70,11 +71,19 @@ const MyPageHome = () => {
     setLankModalOpen(true);
   }
 
+  // 문의사항 모달
+  const [contactModalOpen, setContactModalOpen] = useState(false);
+  const showContactModal = (e) => {
+    e.preventDefault();
+    setContactModalOpen(true)
+  }
   return (
     <StHomeContainer>
       {lankModalOpen && <MyPageLankModal setLankModalOpen={setLankModalOpen} />}
+      {contactModalOpen && <ContactModal setContactModalOpen={setContactModalOpen} />}
       <StMyPageTop>
         <MyPageUser />
+        <StContact onClick={showContactModal}>궁금한 사항이 있으신가요?</StContact>
       </StMyPageTop>
       <StMyPageBottom>
         <StBottomWrap>
@@ -178,16 +187,26 @@ const StHomeContainer = styled.div`
 
 const StMyPageTop = styled.div`
   width: 100%;
-  height: 25%;
+  height: 24%;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #f7931e;
+  flex-direction: column;
 `;
 
+const StContact = styled.div`
+  width: 95%;
+  font-size: 12px;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 5px;
+  color: #fff4cc;
+  cursor: pointer;
+`
 const StMyPageBottom = styled.div`
   width: 100%;
-  height: 75%;
+  height: 76%;
   display: flex;
   justify-content: center;
 `;
