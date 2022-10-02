@@ -568,12 +568,12 @@ const StContentBody = styled.div`
   margin-top: 10px;
   margin-bottom: 20px;
   height: 100%;
+  word-break: break-word;
 `;
 const StContentget = styled.div`
   color: #000;
   display: flex;
   align-items: center;
-  /* border: 1px solid red; */
   margin: 8px 0;
   font-size: 14px;
 `;
@@ -588,12 +588,13 @@ const StContentgetContent = styled.div`
   width:100%;
   word-break: break-word;
 `
+
 const StContentView = styled.p`
   font-size: 12px;
   line-height: 40px;
-  /* height: 40px; */
   color: #bebebe;
 `;
+
 const StBodyTxtBox = styled.div`
   display: flex;
   width: 100%;
