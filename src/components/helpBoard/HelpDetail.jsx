@@ -527,6 +527,7 @@ const StContentTitle = styled.h3`
   font-weight: 600;
   font-size: 16px;
   width: 100%;
+  word-break: break-word;
 `;
 
 const StContentBody = styled.p`
@@ -537,6 +538,7 @@ const StContentBody = styled.p`
   margin-top: 10px;
   margin-bottom: 20px;
   height: 100%;
+  word-break: break-word;
 `;
 
 const StContentImgBox = styled.div`
