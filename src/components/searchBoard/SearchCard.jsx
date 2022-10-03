@@ -1,12 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import {
-  __getSearch,
-  __getSearchArticle,
-  __getSearchArticlePopular,
-  __postSearch,
-} from '../../redux/modules/SearchSlice';
 import { useNavigate } from 'react-router-dom';
 import commentgray from '../../assets/commentgray.png';
 import heartgray from '../../assets/heartgray.png';
@@ -28,54 +22,59 @@ const SearchCard = ({ search, id }) => {
   };
 
   return (
-    <HelpContainer onClick={onClickNavi}>
-      <CardHead>
-        <HeadImg>
-          <UserImg src={search.userImage}></UserImg>
-        </HeadImg>
-        <HeadUser>
-          <HeadTop>
-            <HeadName>{search.username}</HeadName>
-            <BoardName>{search.articleFlag}</BoardName>
-          </HeadTop>
-          <HeadBottom>
-            <HeadDepartment>{search.departmentName}</HeadDepartment>
-            <HeadStudent>· {search.admission}</HeadStudent>
-          </HeadBottom>
-        </HeadUser>
-      </CardHead>
-      <CardBody>
-        <BodyTitle>{search.title}</BodyTitle>
-      </CardBody>
+    <StSearch>
+      <HelpContainer onClick={onClickNavi}>
+        <CardHead>
+          <HeadImg>
+            <UserImg src={search.userImage}></UserImg>
+          </HeadImg>
+          <HeadUser>
+            <HeadTop>
+              <HeadName>{search.username}</HeadName>
+              <BoardName>{search.articleFlag}</BoardName>
+            </HeadTop>
+            <HeadBottom>
+              <HeadDepartment>{search.departmentName}</HeadDepartment>
+              <HeadStudent>· {search.admission}</HeadStudent>
+            </HeadBottom>
+          </HeadUser>
+        </CardHead>
+        <CardBody>
+          <BodyTitle>{search.title}</BodyTitle>
+        </CardBody>
 
-      <CardFooter>
-        <FooterTxt>
-          <Views>조회수 {search.views}</Views>
-          <div>|</div>
-          <HeadTime>{search.createdAt}</HeadTime>
-        </FooterTxt>
-        <Count>
-          <CommentCount>
-            <CommentImg>
-              <img src={commentgray} alt='댓글이미지' />
-            </CommentImg>
-            {search.commentCnt}
-          </CommentCount>
-          <HeartCount>
-            <HeartImg>
-              <img src={heartgray} alt='댓글이미지' />
-            </HeartImg>
-            {search.heartCnt}
-          </HeartCount>
-        </Count>
-      </CardFooter>
-    </HelpContainer>
+        <CardFooter>
+          <FooterTxt>
+            <Views>조회수 {search.views}</Views>
+            <div>|</div>
+            <HeadTime>{search.createdAt}</HeadTime>
+          </FooterTxt>
+          <Count>
+            <CommentCount>
+              <CommentImg>
+                <img src={commentgray} alt='댓글이미지' />
+              </CommentImg>
+              {search.commentCnt}
+            </CommentCount>
+            <HeartCount>
+              <HeartImg>
+                <img src={heartgray} alt='댓글이미지' />
+              </HeartImg>
+              {search.heartCnt}
+            </HeartCount>
+          </Count>
+        </CardFooter>
+      </HelpContainer>
+    </StSearch>
   );
 };
 
 export default SearchCard;
 
-const HelpContainer = styled.div`
+const StSearch = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 10px;
   height: 152px;
   border: 1px solid #fff;
@@ -84,6 +83,8 @@ const HelpContainer = styled.div`
   margin-bottom: 20px;
   box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
 `;
+
+const HelpContainer = styled.div``;
 
 const CardHead = styled.div`
   display: flex;

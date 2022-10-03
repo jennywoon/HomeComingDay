@@ -115,8 +115,8 @@ export default MyPageUser;
 
 const StLoginContainer = styled.form`
   width: 100%;
-  /* height: 100%; */
-  height: 150px;
+  height: 100%;
+  /* height: 150px; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -124,7 +124,7 @@ const StLoginContainer = styled.form`
 
 const StUserContainerWrap = styled.div`
     width: 100%;
-    height: 78%;
+    /* height: 78%; */
     /* height: 200px; */
     display: flex;
     gap: 15px;
