@@ -60,7 +60,8 @@ const Information = () => {
              (
                <StNoneData>
                  <StNoneDataImg></StNoneDataImg>
-                 <p>내가 쓴 게시글이 없습니다</p>
+                 <p>아직 게시글이 없습니다</p>
+                 <div>첫 게시글을 작성해주세요</div>
                </StNoneData>
              )}
           </>

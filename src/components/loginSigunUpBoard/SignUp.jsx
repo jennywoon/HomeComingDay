@@ -235,25 +235,27 @@ const SignUp = () => {
 
   useEffect(() => {
     if (
-      email !== '' &&
       username !== '' &&
+      email !== '' &&
+      authKey !== '' &&
       password !== '' &&
       passwordCheck !== '' &&
-      !emailError &&
       !nameError &&
+      !emailError &&
       !passwordError &&
       !confirmPasswordError &&
-      authKey !== '' &&
       !emailDuplicated &&
-      !emailChecked
+      !emailChecked &&
+      isCheck
     ) {
       setIsActive(true);
     } else {
       setIsActive(false);
     }
   }, [
-    email,
     username,
+    email,
+    authKey,
     password,
     passwordCheck,
     emailError,
@@ -261,7 +263,8 @@ const SignUp = () => {
     passwordError,
     confirmPasswordError,
     emailDuplicated,
-    emailChecked
+    emailChecked,
+    isCheck
   ]);
 
   // 이메일 인증 타이머

@@ -103,7 +103,7 @@ const CalendarDetail = () => {
   };
 
   useEffect(() => {
-    if (comment !== '') {
+    if (comment.trim() !== '') {
       handleCheck(true);
     } else {
       handleCheck(false);
@@ -191,7 +191,7 @@ const CalendarDetail = () => {
             size='25px'
             cursor='pointer'
             onClick={() => {
-              navigate('/calendar');
+              navigate(-1);
             }}
           />
           <StHeaderTitle>만남일정</StHeaderTitle>
@@ -214,13 +214,13 @@ const CalendarDetail = () => {
                   </StTxtstudent>
                   {showChaet ?
                     <StChatWrap onClick={() => createChat(calendarfind.userId)}>
-                      {calendarfind && calendarfind.username !== data.username ?
+                      {calendarfind && calendarfind.userId !== data.userId ?
                         <StChatingBox>
                           1:1채팅
                         </StChatingBox> : null}
                     </StChatWrap> : null}
                 </StBodytxt>
-                {calendarfind && calendarfind.username === data.username ?
+                {calendarfind && calendarfind.userId === data.userId ?
                   <StDots
                     onClick={onCilckShow}
                   /> : null}
@@ -282,7 +282,7 @@ const CalendarDetail = () => {
                       참여마감
                     </StJoinPart>
                     :
-                    (calendarfind && calendarfind.username) !== data.username ? (
+                    (calendarfind && calendarfind.userId) !== data.userId ? (
                       ((joinBooline && joinBooline === false) || (joinTrueFalse === false) ?
                         <StJoinPart type="button" onClick={onClickJoin}>
                           <img src={joinUserPlus} alt="참여하기" />
@@ -568,12 +568,12 @@ const StContentBody = styled.div`
   margin-top: 10px;
   margin-bottom: 20px;
   height: 100%;
+  word-break: break-word;
 `;
 const StContentget = styled.div`
   color: #000;
   display: flex;
   align-items: center;
-  /* border: 1px solid red; */
   margin: 8px 0;
   font-size: 14px;
 `;
@@ -588,12 +588,13 @@ const StContentgetContent = styled.div`
   width:100%;
   word-break: break-word;
 `
+
 const StContentView = styled.p`
   font-size: 12px;
   line-height: 40px;
-  /* height: 40px; */
   color: #bebebe;
 `;
+
 const StBodyTxtBox = styled.div`
   display: flex;
   width: 100%;
@@ -675,6 +676,7 @@ const StCommentCount = styled.div`
   color: black;
   display: flex;
   margin-right: 10px;
+  align-items: center;
 `;
 
 const StCommentImg = styled.div`
@@ -687,6 +689,7 @@ const StHeartCount = styled.div`
   color: black;
   display: flex;
   cursor: pointer;
+  align-items: center;
 `;
 
 const StHeartImg = styled.div`

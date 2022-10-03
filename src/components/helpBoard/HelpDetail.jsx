@@ -6,15 +6,11 @@ import HelpDetailComment from './HelpDetailComment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  __deleteHelp,
-  __updateHelp,
   __getHelp,
-  __getComments,
-  __getHelpComment,
   __postHelpComment,
   __getDetailHelp,
   __postHelpHeart,
-  __getHelpHeart,
+  __getHelpHeart
 } from '../../redux/modules/HelpSlice';
 import { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -37,23 +33,15 @@ import dots from '../../assets/dots.png';
 const HelpDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { helps } = useSelector((state) => state.helps);
   const { helpsfind } = useSelector((state) => state.helps);
+  // console.log(helpsfind)
   const { id } = useParams();
   const [show, setShow] = useState(false);
   const [showChaet, setShowChaet] = useState(false);
   const [comment, setComment] = useState('');
 
-  // const helpsfind = helps.find((help) => help.articleId === Number(id));
-  // const helpsCommentList = helpsfind.commentList.find((helpfind)=>helpfind)
-  // const helpsChildCommentList = helpsCommentList.childCommentList.find((helpsComment)=>helpsComment)
   const data = useSelector((state) => state.mypages.mypages);
   const detailview = useSelector((state)=>state.mypages.view);
-
-  // console.log('helpsfind', helpsfind);
-  // console.log("helpsCommentList",helpsCommentList)
-  // console.log('helpsChildCommentList', helpsChildCommentList)
-  // console.log('data', data);
 
   //모달닫기
   const node = useRef();
@@ -67,7 +55,6 @@ const HelpDetail = () => {
     };
     document.addEventListener('mousedown', clickOutside);
     return () => {
-      // Cleanup the event listener
       document.removeEventListener('mousedown', clickOutside);
     };
   }, [show]);
@@ -119,7 +106,7 @@ const HelpDetail = () => {
   };
 
   useEffect(() => {
-    if (comment !== '') {
+    if (comment.trim() !== '') {
       handleCheck(true);
     } else {
       handleCheck(false);
@@ -160,7 +147,7 @@ const HelpDetail = () => {
       articleId: id,
     };
     const response = await dispatch(__postHelpHeart(newHeart));
-    dispatch(__getDetailHelp(id));
+    await dispatch(__getDetailHelp(id));
   };
 
   // 채팅 생성
@@ -177,6 +164,15 @@ const HelpDetail = () => {
       });
   };
 
+  // const onPreviousPage = () => {
+  //   if((navigate(-1) !== navigate("/main"))){
+  //     navigate("/mypage")
+  //   } else if((navigate(-1) !== navigate("/mypage") || navigate(-1) !== navigate("/main"))){
+  //     navigate("/mypage")
+  //   } 
+  // }
+
+
   return (
     <StContainer ref={node}>
       {modalOpen && <HelpDeleteModal setModalOpen={setModalOpen} />}
@@ -189,7 +185,7 @@ const HelpDetail = () => {
               size='25px'
               cursor='pointer'
               onClick={() => {
-                navigate('/main');
+                navigate(-1)
               }}
             />
             <StHeaderTitle>도움요청</StHeaderTitle>
@@ -212,14 +208,14 @@ const HelpDetail = () => {
                     </StTxtstudent>
                     {showChaet ? (
                       <StChatWrap onClick={() => createChat(helpsfind.userId)}>
-                        {helpsfind && helpsfind.username !== data.username ? (
+                        {helpsfind && helpsfind.userId !== data.userId ? (
                           <StChaetingBox>1:1채팅</StChaetingBox>
                         ) : null}
                       </StChatWrap>
                     ) : null}
                   </StBodytxt>
 
-                  {helpsfind && helpsfind.username === data.username ? (
+                  {helpsfind && helpsfind.userId === data.userId ? (
                     <StDots onClick={onCilckShow} />
                   ) : null}
 
@@ -527,6 +523,7 @@ const StContentTitle = styled.h3`
   font-weight: 600;
   font-size: 16px;
   width: 100%;
+  word-break: break-word;
 `;
 
 const StContentBody = styled.p`
@@ -537,6 +534,7 @@ const StContentBody = styled.p`
   margin-top: 10px;
   margin-bottom: 20px;
   height: 100%;
+  word-break: break-word;
 `;
 
 const StContentImgBox = styled.div`
@@ -677,6 +675,7 @@ const StCommentCount = styled.div`
   color: black;
   display: flex;
   margin-right: 10px;
+  align-items: center;
 `;
 
 const StCommentImg = styled.div`
@@ -689,6 +688,7 @@ const StHeartCount = styled.div`
   color: black;
   display: flex;
   cursor: pointer;
+  align-items: center;
 `;
 
 const StHeartImg = styled.div`

@@ -106,7 +106,7 @@ const InformationComment = ({ comment, informationsfind, modalRef, data }) => {
   };
 
   useEffect(() => {
-    if (replyComment !== '') {
+    if (replyComment.trim() !== '') {
       handleCheck(true);
     } else {
       handleCheck(false);
@@ -166,7 +166,7 @@ const InformationComment = ({ comment, informationsfind, modalRef, data }) => {
                 </StTxtCreateAt>
               </StTxtFirstWrap>
             </StCommentsBox>
-            {username === data.username ? (
+            {data.userId === data.userId ? (
               <StDots onClick={onCilckShow} />
             ) : null}
           </StComments>

@@ -1,16 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
 import DaumPostcode from 'react-daum-postcode';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { __getHelp, __postHelp } from '../../redux/modules/HelpSlice';
 import { __postFreeTalk } from '../../redux/modules/FreeTalkSlice';
 import { __postInformation } from '../../redux/modules/InformationSlice';
-import {
-  __getCalendar,
-  __postCalendar,
-  __postTime,
-} from '../../redux/modules/CalendarSlice';
+import { __postCalendar } from '../../redux/modules/CalendarSlice';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { AiOutlinePlusCircle,AiOutlineMinusCircle  } from 'react-icons/ai';
 import { MdCancel } from 'react-icons/md';
@@ -18,7 +14,6 @@ import { TiDelete } from 'react-icons/ti';
 import { GrImage } from 'react-icons/gr';
 import Button from '../elements/Button';
 import moment from 'moment';
-// import '../calendarBoard/Time.css';
 import Calendar from 'react-calendar';
 import '../calendarBoard/CalendarModal.css';
 import { useDropzone } from 'react-dropzone';
@@ -26,7 +21,6 @@ import imageCompression from 'browser-image-compression';
 
 
 const Form2 = () => {
-  // const node = useRef();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [help, setHelp] = useState({
@@ -71,44 +65,26 @@ const Form2 = () => {
     setJoinNumber(joinNumber +1)
   }
 
-  // 이미지 압축하기
-  // const handleImageUpload = async(e) =>{
-  //   const imageFile = e.target.files[0];
-  //   const options = {
-  //     maxSizeMB: 1, // 허용하는 최대 사이즈 지정
-  //     maxWidthOrHeight: 400, // 허용하는 최대 width, height 값 지정
-  //     useWebWorker: true // webworker 사용 여부
-  //   }
-  //   try {
-  //     const compressedFile = await imageCompression(imageFile, options);
-  //     setFile(compressedFile);
-      
-  //     // resize된 이미지의 url을 받아 fileUrl에 저장
-  //     const promise = imageCompression.getDataUrlFromFile(compressedFile);
-  //     promise.then(result => {
-  //       setFileUrl(result);
-  //     })
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
 
   //이미지 Dropzone -추가
   const [files, setFiles] = useState([]);
+  const [previewImg, setPreviewImg] = useState('');
   const { getRootProps, getInputProps } = useDropzone({
     // accept: ".heic, .heif, image/*",
     accept:{
-      'image/*': ['.png','.jpg','.jpeg','.heic','.heif'],
+      'image/*': ['.png','.jpg','.jpeg','.heic','.heif','.gif'],
     },
     maxFiles: 3,
+    maxSize: 10485760,
 
     onDrop: (acceptedFiles) => {
+      console.log(acceptedFiles)
       setFiles(
         acceptedFiles.map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
           })
-        )
+          )
       );
     },
   });
@@ -249,6 +225,7 @@ const Form2 = () => {
 
   //등록하기
   const [isOnActive, setIsOnActive] = useState(false);
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
     setIsOnActive(e);
@@ -285,12 +262,54 @@ const Form2 = () => {
         content: content,
       };
     
-      
+      console.log(files)
 
+      const options = {
+        maxSizeMB: 2, // 허용하는 최대 사이즈 지정
+        maxWidthOrHeight: 400, // 허용하는 최대 width, height 값 지정
+        useWebWorker: true // webworker 사용 여부
+      }
+
+      // files.map(async(image) => {
+      //     const compressedFile = await imageCompression(image, options);
+      //     // setFiles(compressedFile);
+      //     console.log(compressedFile)
+      //     const reader = new FileReader();
+      //     reader.readAsDataURL(compressedFile);
+      //     // console.log(reader.result)
+      //     reader.onload = () => {
+      //       const base64data = reader.result;
+      //       console.log(base64data)
+          
+      //     handlingDataForm(base64data);
+      //   };
+      //     // formdata.append('files', 
+      //     // new Blob([JSON.stringify(compressedFile)], {type:'image/png'}));
+
+      //     const handlingDataForm = async dataURI => {
+      //       const byteString = atob(dataURI.split(",")[1]);
+
+      //       const ab = new ArrayBuffer(byteString.length);
+      //       const ia = new Uint8Array(ab);
+      //       for (let i = 0; i < byteString.length; i++) {
+      //         ia[i] = byteString.charCodeAt(i);
+      //       }
+      //       const blob = new Blob([ia], {
+      //         type: "image/jpeg"
+      //       });
+          
+      //       const file = new File([blob], "이미지", {type: 'image/jpeg'});
+
+      //     formdata.append('files', file)   
+      //     console.log(file)  
+      //     }
+      // });
 
       files.map((image) => {
         formdata.append('files', image);
       });
+
+
       formdata.append(
         'articleRequestDto',
         new Blob([JSON.stringify(newhelp)], { type: 'application/json' })
@@ -301,6 +320,8 @@ const Form2 = () => {
       console.log(value);
       dispatch(__postHelp(formdata));
       navigate('/main');
+
+
     } else if (select === 'info') {
       const newinfo = {
         title: infotitle,
@@ -315,6 +336,9 @@ const Form2 = () => {
       );
       dispatch(__postInformation(formdata));
       navigate('/information');
+
+
+
     } else if (select === 'freetalk') {
       const newfreetalk = {
         title: freetitle,
@@ -330,6 +354,8 @@ const Form2 = () => {
 
       dispatch(__postFreeTalk(formdata));
       navigate('/freetalk');
+
+
     } else if (select === 'meet') {
       const newcalendar = {
         title: calendartitle,
@@ -372,7 +398,7 @@ const Form2 = () => {
   };
 
   useEffect(() => {
-    if (title !== '' && content !== '') {
+    if (title.trim() !== '' && content.trim() !== '') {
       handleCheck(true);
     } else {
       handleCheck(false);
@@ -380,7 +406,7 @@ const Form2 = () => {
   }, [title, content])
 
   useEffect(() => {
-    if (infotitle !== '' && infocontent !== '') {
+    if (infotitle.trim() !== '' && infocontent.trim() !== '') {
       handleCheck(true);
     } else {
       handleCheck(false);
@@ -388,7 +414,7 @@ const Form2 = () => {
   }, [infotitle, infocontent])
 
   useEffect(() => {
-    if (freetitle !== '' && freecontent !== '') {
+    if (freetitle.trim() !== '' && freecontent.trim() !== '') {
       handleCheck(true);
     } else {
       handleCheck(false);
@@ -396,16 +422,50 @@ const Form2 = () => {
   }, [freetitle, freecontent])
 
   useEffect(() => {
-    if (calendartitle !== '' && calendarlocation !== '' && calendarcontent !== '') {
+    if (calendartitle.trim() !== '' && calendarlocation !== '' && calendarcontent.trim() !== '') {
       handleCheck(true);
     } else {
       handleCheck(false);
     }
   }, [calendartitle, calendarlocation, calendarcontent])
 
+    //모달닫기
+  const node = useRef();
+
+  useEffect(() => {
+    const clickOutside = (e) => {
+      // 모달이 열려 있고 모달의 바깥쪽을 눌렀을 때 창 닫기
+      if (isActive && node.current && !node.current.contains(e.target)) {
+        setIsActive(false);
+      }
+    };
+    document.addEventListener('mousedown', clickOutside);
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener('mousedown', clickOutside);
+    };
+  }, [isActive]);
+
+
+  // const [ inputs , setinputs] = useState("")
+  // const handleChange = (e) =>{
+  //   console.log(e.target.files[0])
+
+  //   const options = {
+  //     maxSizeMB: 1, // 허용하는 최대 사이즈 지정
+  //     maxWidthOrHeight: 400, // 허용하는 최대 width, height 값 지정
+  //     useWebWorker: true // webworker 사용 여부
+  //   }
+
+  //   const compressedFile =  imageCompression(inputs, options);
+  //     setinputs(compressedFile)
+  //       console.log(compressedFile)
+
+  // }
+
 
   return (
-    <TotalCatiner>
+    <TotalCatiner ref={node}>
       {/* <FormContainer> */}
       <FormWrap onSubmit={onSubmitHandler}>
         <FormHeader>
@@ -414,6 +474,7 @@ const Form2 = () => {
             cursor='pointer'
             onClick={() => navigate('/main')}
           />
+          {/* <input type="file" value={inputs} onChange={handleChange}/> */}
         </FormHeader>
         <FormBody>
           <FormSelection name='category' onChange={handleSelect}>
@@ -603,7 +664,7 @@ const Form2 = () => {
                 placeholder='제목을 입력해주세요'
                 maxLength='40'
               ></FormInput>
-              <div>
+              <div ref={node}>
               <CalendarButton>
                 <CalendarTitle>날짜</CalendarTitle>
                 <DateDiv 
@@ -734,7 +795,7 @@ const Form2 = () => {
                   <DaumPostcode
                     onComplete={handle.selectAddress}  // 값을 선택할 경우 실행되는 이벤트
                     autoClose={false} // 값을 선택할 경우 사용되는 DOM을 제거하여 자동 닫힘 설정
-                    defaultQuery='판교역로 235' // 팝업을 열때 기본적으로 입력되는 검색어 
+                    // defaultQuery='판교역로 235' // 팝업을 열때 기본적으로 입력되는 검색어 
                   />}
               </StKakaoMap>
               <TextDiv>
@@ -749,7 +810,7 @@ const Form2 = () => {
                 ></CalendarTextarea>
                 </StTextareaDiv>
               </TextDiv>
-            </>
+              </>
           ) : select === 'freetalk' ? (
             <>
               <FormInput

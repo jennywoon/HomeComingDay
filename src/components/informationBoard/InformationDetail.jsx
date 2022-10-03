@@ -191,7 +191,7 @@ const InformationDetail = () => {
             size='25px'
             cursor='pointer'
             onClick={() => {
-              navigate('/information');
+              navigate(-1);
             }}
           />
           <StHeaderTitle>정보공유</StHeaderTitle>
@@ -223,7 +223,7 @@ const InformationDetail = () => {
                       onClick={() => createChat(informationsfind.userId)}
                     >
                       {informationsfind &&
-                      informationsfind.username !== data.username ? (
+                      informationsfind.userId !== data.userId ? (
                         <StChaetingBox>1:1채팅</StChaetingBox>
                       ) : null}
                     </StChatWrap>
@@ -231,7 +231,7 @@ const InformationDetail = () => {
                 </StBodytxt>
 
                 {informationsfind &&
-                informationsfind.username === data.username ? (
+                informationsfind.userId === data.userId ? (
                   <StDots onClick={onCilckShow} />
                 ) : null}
 
@@ -523,11 +523,14 @@ const StBodyContent = styled.div`
   font-size: 14px;
   white-space: pre-wrap;
 `;
+
 const StContentTitle = styled.h3`
   font-weight: 600;
   font-size: 16px;
   width: 100%;
+  word-break: break-word;
 `;
+
 const StContentBody = styled.p`
   color: #000;
   font-size: 14px;
@@ -536,6 +539,7 @@ const StContentBody = styled.p`
   margin-top: 10px;
   margin-bottom: 20px;
   height: 100%;
+  word-break: break-word;
 `;
 
 const StContentImgBox = styled.div`
@@ -545,12 +549,14 @@ const StContentImgBox = styled.div`
   position: relative;
   margin-bottom: 40px;
 `;
+
 const StContentImg = styled.img`
   width: 100%;
   height: 250px;
   display: flex;
   border-radius: 20px;
 `;
+
 const StPrevButton = styled.div``;
 const StNextButton = styled.div``;
 
@@ -567,6 +573,7 @@ const StPreviousBtn = styled(MdOutlineArrowBackIos)`
   z-index: 2;
   transform: translatey(-50%);
 `;
+
 const StNextBtn = styled(MdOutlineArrowForwardIos)`
   color: #ddd;
   width: 20px;
@@ -605,16 +612,12 @@ const StBodyTxtBox = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
-const StContentTime = styled.div`
-  color: gray;
-  font-size: 14px;
-  margin-left: auto;
-`;
 
 const StBodyContainer = styled.div`
   width: 100%;
   height: 100%;
 `;
+
 const StBodyCommentBox = styled.div`
   height: 100%;
   width: 100%;
@@ -655,6 +658,7 @@ const StCommentPost = styled.input`
   border: none;
   outline: none;
 `;
+
 const StCommentButton = styled.button`
   border: none;
   cursor: pointer;
@@ -662,6 +666,7 @@ const StCommentButton = styled.button`
   font-weight: 600;
   background-color: transparent;
 `;
+
 const StBodyComment = styled.div`
   display: flex;
   justify-content: center;
@@ -673,6 +678,7 @@ const StBodyComment = styled.div`
   text-align: center;
   font-size: 14px;
 `;
+
 const StCount = styled.div`
   display: flex;
   align-items: center;
@@ -685,6 +691,7 @@ const StCommentCount = styled.div`
   color: black;
   display: flex;
   margin-right: 10px;
+  align-items: center;
 `;
 
 const StCommentImg = styled.div`
@@ -697,6 +704,7 @@ const StHeartCount = styled.div`
   color: black;
   display: flex;
   cursor: pointer;
+  align-items: center;
 `;
 
 const StHeartImg = styled.div`

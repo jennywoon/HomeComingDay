@@ -88,7 +88,7 @@ const FreeTalkDetail = () => {
   };
 
   useEffect(() => {
-    if (comment !== '') {
+    if (comment.trim() !== '') {
       handleCheck(true);
     } else {
       handleCheck(false);
@@ -180,7 +180,7 @@ const FreeTalkDetail = () => {
             size='25px'
             cursor='pointer'
             onClick={() => {
-              navigate('/freetalk');
+              navigate(-1);
             }}
           />
           <StHeaderTitle>자유토크</StHeaderTitle>
@@ -209,13 +209,13 @@ const FreeTalkDetail = () => {
                       onClick={() => createChat(freetalksfind.userId)}
                     >
                       {freetalksfind &&
-                      freetalksfind.username !== data.username ? (
+                      freetalksfind.userId !== data.userId ? (
                         <StChatingBox>1:1채팅</StChatingBox>
                       ) : null}
                     </StChatWrap>
                   ) : null}
                 </StBodytxt>
-                {freetalksfind && freetalksfind.username === data.username ? (
+                {freetalksfind && freetalksfind.userId === data.userId ? (
                   <StDots onClick={onCilckShow} />
                 ) : null}
 
@@ -513,6 +513,7 @@ const StContentTitle = styled.h3`
   font-weight: 600;
   font-size: 16px;
   width: 100%;
+  word-break: break-word;
 `;
 const StContentBody = styled.p`
   color: #000;
@@ -522,6 +523,7 @@ const StContentBody = styled.p`
   margin-top: 10px;
   margin-bottom: 20px;
   height: 100%;
+  word-break: break-word;
 `;
 
 const StContentImgBox = styled.div`
@@ -655,6 +657,7 @@ const StCommentCount = styled.div`
   color: black;
   display: flex;
   margin-right: 10px;
+  align-items: center;
 `;
 
 const StCommentImg = styled.div`
@@ -667,6 +670,7 @@ const StHeartCount = styled.div`
   color: black;
   display: flex;
   cursor: pointer;
+  align-items: center;
 `;
 
 const StHeartImg = styled.div`

@@ -1,18 +1,19 @@
 <!-- # 🏫 Homecoming Day -->
 
-# <img src="https://user-images.githubusercontent.com/109018926/190401269-849a9a95-d81a-4552-ba1e-da877a54893b.png" width="250px" height="40px">
-<br/>
-
-<img src="https://user-images.githubusercontent.com/109018926/190404804-f3c1d4a4-0747-4ec0-8408-aa6ddd9de4dc.png" height="250px" width="600px">
-
+# <img src="https://user-images.githubusercontent.com/109018926/193449320-c1ffb73a-c554-4870-8497-a8348c6b1a3b.png" width="250px" height="40px">
 <br/>
 <br/>
 
-### 👩‍🎓 대학교 졸업생 동문 사이트 [홈커밍데이 HomeComingDay] 에서 전국의 선후배를 만나보세요! 👨‍🎓
+<img src="https://user-images.githubusercontent.com/109018926/193449385-70608a7e-5b44-49e1-9c08-f168783f5a22.png" >
+
+<br/>
+<br/>
+
+### 👩‍🎓 대학교 졸업생 동문 사이트 [Homecoming Day] 에서 전국의 선후배를 만나보세요! 👨‍🎓
 
 <br/>
 
-🏫 홈커밍데이 HomeComingDay는 미국에서 고교 졸업자들이 30년 뒤에 모교를 방문하는 행사를 말합니다. 한국에서는 동창회란 표현이 있기 때문에 홈커밍은 동창회나 동문회, 동기회에서 추진하는 연간 모임이 아닌 학교 등 교육기관에서 공식적으로 추진하는 행사를 가리키는 표현이 되었습니다.[출처 : 나무위키]
+🏫 Homecoming Day는 미국에서 고교 졸업자들이 30년 뒤에 모교를 방문하는 행사를 말합니다. 한국에서는 동창회란 표현이 있기 때문에 홈커밍은 동창회나 동문회, 동기회에서 추진하는 연간 모임이 아닌 학교 등 교육기관에서 공식적으로 추진하는 행사를 가리키는 표현이 되었습니다.[출처 : 나무위키]
 <br/>
 <br/>
 청춘이 시작되는 20대를 함께 보낸 동기들, 의지하고 싶은 선후배를 찾고 싶지만 아쉽게도 동문을 만날 수 있는 방법은 많이 없습니다. 오픈채팅, 카페 등을 이용하여 동창들과 이어지는 것을 넘어 졸업 후에도 선후배를 만날 수 있는 커뮤니티를 만들고자 하는 아이디어에서 시작된 프로젝트입니다.
@@ -23,7 +24,7 @@
 ## 📪 주소
 <br/>
 
-- Homecoming Day : [Homecoming day 접속 링크](https://www.homecomingdaycare.com/)
+- Homecoming Day : [Homecoming Day 접속 링크](https://www.homecomingdaycare.com/)
 - Front-End Git Hub : [Front-End Git Hub 링크 클릭](https://github.com/jennywoon/HomeComingDay.git)
 - Back-End Git Hub : [Back-End Git Hub 링크 클릭](https://github.com/251643/HomecomingDay.git)
 - 기획안 정리(팀 회의록 포함) : [Notion 링크 클릭](https://prairie-scion-76d.notion.site/1-194af719c75a4851b4bdb7d3e38f6bde)
@@ -33,15 +34,15 @@
 <br/>
 <br/>
 
-## ⚙ 서비스 아키텍쳐(최종 목표 - 변경될 수 있음)
+## ⚙ 서비스 아키텍쳐
 
 <br/>
 
-![서비스아키텍처](https://user-images.githubusercontent.com/109018926/190453034-49935d5f-53cc-426c-a9f4-3718220c2e63.png)
+![서비스아키텍처](https://user-images.githubusercontent.com/109018926/193449550-206751e5-a40c-4325-a7ee-80990fbd328d.png)
 
 <br/>
 
-## 🗓프로젝트 기간
+## 🗓 프로젝트 기간
 
 <br/>
 
@@ -50,8 +51,9 @@
 <br/>
 <br/>
 
+## 🍀 페이지별 기능 소개
 <details>
-<summary><b>페이지별 기능 소개</b></summary>
+<summary><b>상세내용 확인</b></summary>
 <br/>
 
 ### 📲 로그인, 회원가입 페이지
@@ -98,8 +100,8 @@
 ### 📂 도움요청, 정보공유, 만남일정, 자유토크를 동문들과 나누는 게시판
 
 - 게시글 수정, 삭제 기능 
-- 댓글, 대댓글(대댓글 테스트 중)
-- 좋아요 기능 구현(테스트 중)
+- 댓글, 대댓글
+- 좋아요 기능
 
 <br/>
 
@@ -110,7 +112,7 @@
 ### 🔍 검색 페이지, 채팅 페이지
 
 - 게시글 Title별 검색 기능 구현
-- 동문들끼리 대화를 나눌 수 있는 채팅 페이지 구현(예정)
+- 동문들끼리 1:1 대화를 나눌 수 있는 채팅 페이지 구현
 
 <br/>
 
@@ -120,7 +122,7 @@
 
 ### 🔔 알림 페이지
 
-- 댓글이 달리는 것을 바로 확인할 수 있는 알림 페이지 구현(예정)
+- 댓글, 좋아요가 달리면 바로 확인할 수 있는 알림 페이지 구현
 
 <br/>
 
@@ -133,7 +135,7 @@
 - 내가 쓴 게시글을 확인할 수 있도록 구현
 - 게시글 클릭시 해당 게시글로 들어갈 수 있도록 구현
 - 프로필 사진 변경 기능 구현
-- 무한 스크롤(테스트 중)
+- 무한 스크롤
 
 <br/>
 
@@ -151,11 +153,22 @@
 <p>
 
 <img src="https://img.shields.io/badge/react-282C34?style=for-the-badge&logo=react&logoColor=61DAFB">
+<img src="https://img.shields.io/badge/React Router-CA4245?style=for-the-badge&logo=React Router&logoColor=white">
 <img src="https://img.shields.io/badge/Axios-39477F?style=for-the-badge&logo=Axios&logoColor=white">
+<img src="https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=white">
+<br/>
+<img src="https://img.shields.io/badge/styled_components-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white">
+<img src="https://img.shields.io/badge/yarn-2C8EBB?style=for-the-badge&logo=yarn&logoColor=black">
+<img src="https://img.shields.io/badge/Swiper-6332F6?style=for-the-badge&logo=Swiper&logoColor=white">
+<br/>
+<img src="https://img.shields.io/badge/kakao map-FFCD00?style=for-the-badge&logo=kakao&logoColor=black">
+<img src="https://img.shields.io/badge/PWA-5A0FC8?style=for-the-badge&logo=PWA&logoColor=white">
+<img src="https://img.shields.io/badge/Stomp & Sock.Js-0ABF53?style=for-the-badge&logo=Stomp & Sock.Js&logoColor=white">
 <br/>
 <img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white">
 <img src="https://img.shields.io/badge/Amazon AWS-232F3E?style=for-the-badge&logo=Amazon AWS&logoColor=white">
-
+<img src="https://img.shields.io/badge/-aws%20amplify-FF9900?style=for-the-badge&logo=aws%20amplify&logoColor=white">
+<img src="https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white">
 </p>
 <br/>
 

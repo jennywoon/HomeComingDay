@@ -125,13 +125,13 @@ dispatch(__getSearchArticlePopular());
               <StSearchInput
                 id='search-box'
                 onChange={filterBySearch}
-                placeholder='검색어를 입력해주세요'
+                placeholder='게시글 제목을 입력해주세요'
               />
             ) : select === 'popular' ? (
               <StSearchInput
                 id='search-box'
                 onChange={filterByPopularSearch}
-                placeholder='검색어를 입력해주세요'
+                placeholder='게시글 제목을 입력해주세요'
               />
             ) : null}
             <StClose
