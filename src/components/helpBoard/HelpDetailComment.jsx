@@ -125,7 +125,7 @@ const DetailComment = ({ comment, helpsfind, data }) => {
   };
 
   useEffect(() => {
-    if (replyComment !== '') {
+    if (replyComment.trim() !== '') {
       handleCheck(true);
     } else {
       handleCheck(false);

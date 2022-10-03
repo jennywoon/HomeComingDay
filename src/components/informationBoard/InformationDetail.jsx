@@ -24,7 +24,7 @@ import {
   MdOutlineArrowBackIos,
   MdOutlineArrowForwardIos,
 } from 'react-icons/md';
-import InformationDetailModal from './InformationDetailModal';
+import InformationDeleteModal from './InformationDeleteModal';
 import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
 import heartColorImg from '../../assets/heartColor.png';
@@ -121,7 +121,7 @@ const InformationDetail = () => {
   };
 
   useEffect(() => {
-    if (comment !== '') {
+    if (comment.trim() !== '') {
       handleCheck(true);
     } else {
       handleCheck(false);
@@ -181,7 +181,7 @@ const InformationDetail = () => {
 
   return (
     <StContainer ref={node}>
-      {modalOpen && <InformationDetailModal setModalOpen={setModalOpen} />}
+      {modalOpen && <InformationDeleteModal setModalOpen={setModalOpen} />}
       <div>
       <Header />
       </div>

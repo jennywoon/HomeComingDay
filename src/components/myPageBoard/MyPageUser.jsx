@@ -31,19 +31,19 @@ const MyPageUser = () => {
     const onChangeImage = async (e) => {
         const reader = new FileReader();
         const file = imgRef.current.files[0];
-        console.log(file);
+        // console.log(file);
 
         reader.readAsDataURL(file);
         reader.onloadend = () => {
             setImageUrl(reader.result);
-            console.log("이미지주소", reader.result);
+            // console.log("이미지주소", reader.result);
         };
         if (e.target.files[0]) {
             const userImage = new FormData();
             userImage.append("userImage", e.target.files[0]);
             await dispatch(__patchProfileImage(userImage));
             await dispatch(__getMyPage());
-            console.log(userImage);
+            // console.log(userImage);
         }
     }
 

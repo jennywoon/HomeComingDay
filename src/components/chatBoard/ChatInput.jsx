@@ -23,6 +23,19 @@ function ChatInput(props) {
         onSend();
     };
 
+    const [isActive, setIsActive] = useState(false);
+    const handleCheck = (e) => {
+        setIsActive(e)
+    }
+    // 공백 입력 불가하도록 설정
+    useEffect(() => {
+        if(text.trim() !== ""){
+            handleCheck(true);
+        } else{
+            handleCheck(false);
+        }
+    }, [text])
+
     return (
         <React.Fragment>
             <StMessageBox>
@@ -40,6 +53,7 @@ function ChatInput(props) {
                 <BsArrowUpCircle
                     onClick={onClick}
                     style={{ color: "#969696", cursor:"pointer" }} size="22px"
+                    disabled={isActive ? false : true}
                 />
             </StMessageBox>
         </React.Fragment>
@@ -52,7 +66,6 @@ const StMessageBox = styled.div`
     width: 100%;
     height: 60px;
     position: sticky;
-    /* position: fixed; */
     bottom: 0;
     background-color: white;
     display: flex;
@@ -68,7 +81,5 @@ const StChatInput = styled.input`
     outline: none;
     ::-webkit-input-placeholder{
         font-size: 14px;
-        /* text-align: center; */
-        padding-left: 20px;
     }
 `
