@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteHelp, __getHelp , __getDetailHelp} from '../../redux/modules/HelpSlice';
+import { __deleteHelp, __getHelp } from '../../redux/modules/HelpSlice';
 import exclamation from "../../assets/exclamation.png"
 
 const HelpDeleteModal = ({ setModalOpen }) => {
@@ -13,8 +13,8 @@ const HelpDeleteModal = ({ setModalOpen }) => {
   };
 
   const navigate = useNavigate();
-  const { helps } = useSelector((state) => state.helps)
-  const { id } = useParams();
+  // const { helps } = useSelector((state) => state.helps)
+  // const { id } = useParams();
   // const helpsfind = helps.find((help) => help.articleId === Number(id))
   const { helpsfind } = useSelector((state) => state.helps);
 
@@ -153,3 +153,18 @@ const StBottomTitle = styled.div`
   align-items: center;
   margin-bottom: 10px;
 `;
+
+const StBottomCancelTitle = styled.div`
+  font-size: 16px;
+  font-weight: 700;
+  /* background-color: #f7931e; */
+  border: 1px solid #f7931e;
+  border-radius: 16px;
+  width: 40%;
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  color: #f7931e;
+`

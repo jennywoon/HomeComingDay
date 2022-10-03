@@ -18,11 +18,11 @@ const NoticeList = () => {
   // (() => { console.warn = console.error = () => {}} )();
 
   const dispatch = useDispatch();
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
-  const [listening, setListening] = useState(false);
-  const [alarms, setAlarms] = useState([]);
-  const [value, setValue] = useState(null);
-  const [eventSourceStatus, setEventSourceStatus] = useState(null);
+  // const BASE_URL = process.env.REACT_APP_BASE_URL;
+  // const [listening, setListening] = useState(false);
+  // const [alarms, setAlarms] = useState([]);
+  // const [value, setValue] = useState(null);
+  // const [eventSourceStatus, setEventSourceStatus] = useState(null);
 
   useEffect(() => {
     dispatch(__getMyPage());

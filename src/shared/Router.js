@@ -33,40 +33,40 @@ const Router = () => {
 
   const token = getCookie("accessToken")
   // console.log(token);
-  
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/main" element={<MainPage />} />
-        <Route path="/naverlogin" element={<NaverLogin />} />
-        <Route path="/schoolinfo" element={<SchoolInfoPage />}></Route>
-        {/* <Route path="/login" element={token ? <Navigate to="/main" /> : <LoginPage />}/> */}
-        <Route path="/login" element={<LoginPage />}/>
-        <Route path="/signup" element={token ? <Navigate to="/main" /> :<SignUpPage />}/>
-        <Route path="/information" element={<InformationPage />} />
-        <Route path="/freetalk" element={<FreeTalkPage />} />
-        <Route path="/calendar" element={<CalendarPage />} />
-        <Route path="/search" element={<SearchPage />} />
-        <Route path="/chat" element={<ChatPage />} />
-        <Route path="/signupcomplete" element={<SignupCompletePage />} />
-        <Route path="/notice" element={<NoticePage />} />
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/" element={<Splash />} />
-        {/* 하단 페이지 추후 정리 */}
-        <Route path="/helpcard" element={<HelpCard />} />
-        <Route path="/searchcard" element={<SearchCard />} />
-        <Route path="/form" element={<FormPage />} />
-        <Route path="/helpdetail/:id" element={<HelpDetail />} />
-        <Route path="/helpupdate/:id" element={<HelpUpdate />} />
-        <Route path="/informationdetail/:id" element={<InformationDetail />} />
-        <Route path="/informationupdate/:id" element={<InformationUpdate />} />
-        <Route path="/freetalkdetail/:id" element={<FreeTalkDetail />} />
-        <Route path="/freetalkupdate/:id" element={<FreeTalkUpdate />} />
-        <Route path="/calendardetail/:id" element={<CalendarDetail />} />
-        <Route path="/calendarupdate/:id" element={<CalendarUpdate />} />
-        <Route path="/chat/:id" element={<ChatDetail />} />
-      </Routes>
-    </BrowserRouter>
+    // <BrowserRouter>
+    <Routes>
+      <Route path="/main" element={<MainPage />} />
+      <Route path="/naverlogin" element={<NaverLogin />} />
+      <Route path="/schoolinfo" element={<SchoolInfoPage />}></Route>
+      {/* <Route path="/login" element={token ? <Navigate to="/main" /> : <LoginPage />}/> */}
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/signup" element={token ? <Navigate to="/main" /> : <SignUpPage />} />
+      <Route path="/information" element={<InformationPage />} />
+      <Route path="/freetalk" element={<FreeTalkPage />} />
+      <Route path="/calendar" element={<CalendarPage />} />
+      <Route path="/search" element={<SearchPage />} />
+      <Route path="/chat" element={<ChatPage />} />
+      <Route path="/signupcomplete" element={<SignupCompletePage />} />
+      <Route path="/notice" element={<NoticePage />} />
+      <Route path="/mypage" element={<MyPage />} />
+      <Route path="/" element={<Splash />} />
+      {/* 하단 페이지 추후 정리 */}
+      <Route path="/helpcard" element={<HelpCard />} />
+      <Route path="/searchcard" element={<SearchCard />} />
+      <Route path="/form" element={<FormPage />} />
+      <Route path="/helpdetail/:id" element={<HelpDetail />} />
+      <Route path="/helpupdate/:id" element={<HelpUpdate />} />
+      <Route path="/informationdetail/:id" element={<InformationDetail />} />
+      <Route path="/informationupdate/:id" element={<InformationUpdate />} />
+      <Route path="/freetalkdetail/:id" element={<FreeTalkDetail />} />
+      <Route path="/freetalkupdate/:id" element={<FreeTalkUpdate />} />
+      <Route path="/calendardetail/:id" element={<CalendarDetail />} />
+      <Route path="/calendarupdate/:id" element={<CalendarUpdate />} />
+      <Route path="/chat/:id" element={<ChatDetail />} />
+    </Routes>
+    // </BrowserRouter>
   );
 };
 export default Router;
