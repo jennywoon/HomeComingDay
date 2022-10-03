@@ -65,44 +65,26 @@ const Form2 = () => {
     setJoinNumber(joinNumber +1)
   }
 
-  // 이미지 압축하기
-  // const handleImageUpload = async(e) =>{
-  //   const imageFile = e.target.files[0];
-  //   const options = {
-  //     maxSizeMB: 1, // 허용하는 최대 사이즈 지정
-  //     maxWidthOrHeight: 400, // 허용하는 최대 width, height 값 지정
-  //     useWebWorker: true // webworker 사용 여부
-  //   }
-  //   try {
-  //     const compressedFile = await imageCompression(imageFile, options);
-  //     setFile(compressedFile);
-      
-  //     // resize된 이미지의 url을 받아 fileUrl에 저장
-  //     const promise = imageCompression.getDataUrlFromFile(compressedFile);
-  //     promise.then(result => {
-  //       setFileUrl(result);
-  //     })
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
 
   //이미지 Dropzone -추가
   const [files, setFiles] = useState([]);
+  const [previewImg, setPreviewImg] = useState('');
   const { getRootProps, getInputProps } = useDropzone({
     // accept: ".heic, .heif, image/*",
     accept:{
-      'image/*': ['.png','.jpg','.jpeg','.heic','.heif'],
+      'image/*': ['.png','.jpg','.jpeg','.heic','.heif','.gif'],
     },
     maxFiles: 3,
+    maxSize: 10485760,
 
     onDrop: (acceptedFiles) => {
+      console.log(acceptedFiles)
       setFiles(
         acceptedFiles.map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
           })
-        )
+          )
       );
     },
   });
@@ -243,6 +225,7 @@ const Form2 = () => {
 
   //등록하기
   const [isOnActive, setIsOnActive] = useState(false);
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
     setIsOnActive(e);
@@ -279,12 +262,54 @@ const Form2 = () => {
         content: content,
       };
     
-      
+      console.log(files)
 
+      const options = {
+        maxSizeMB: 2, // 허용하는 최대 사이즈 지정
+        maxWidthOrHeight: 400, // 허용하는 최대 width, height 값 지정
+        useWebWorker: true // webworker 사용 여부
+      }
+
+      // files.map(async(image) => {
+      //     const compressedFile = await imageCompression(image, options);
+      //     // setFiles(compressedFile);
+      //     console.log(compressedFile)
+      //     const reader = new FileReader();
+      //     reader.readAsDataURL(compressedFile);
+      //     // console.log(reader.result)
+      //     reader.onload = () => {
+      //       const base64data = reader.result;
+      //       console.log(base64data)
+          
+      //     handlingDataForm(base64data);
+      //   };
+      //     // formdata.append('files', 
+      //     // new Blob([JSON.stringify(compressedFile)], {type:'image/png'}));
+
+      //     const handlingDataForm = async dataURI => {
+      //       const byteString = atob(dataURI.split(",")[1]);
+
+      //       const ab = new ArrayBuffer(byteString.length);
+      //       const ia = new Uint8Array(ab);
+      //       for (let i = 0; i < byteString.length; i++) {
+      //         ia[i] = byteString.charCodeAt(i);
+      //       }
+      //       const blob = new Blob([ia], {
+      //         type: "image/jpeg"
+      //       });
+          
+      //       const file = new File([blob], "이미지", {type: 'image/jpeg'});
+
+      //     formdata.append('files', file)   
+      //     console.log(file)  
+      //     }
+      // });
 
       files.map((image) => {
         formdata.append('files', image);
       });
+
+
       formdata.append(
         'articleRequestDto',
         new Blob([JSON.stringify(newhelp)], { type: 'application/json' })
@@ -295,6 +320,8 @@ const Form2 = () => {
       console.log(value);
       dispatch(__postHelp(formdata));
       navigate('/main');
+
+
     } else if (select === 'info') {
       const newinfo = {
         title: infotitle,
@@ -309,6 +336,9 @@ const Form2 = () => {
       );
       dispatch(__postInformation(formdata));
       navigate('/information');
+
+
+
     } else if (select === 'freetalk') {
       const newfreetalk = {
         title: freetitle,
@@ -324,6 +354,8 @@ const Form2 = () => {
 
       dispatch(__postFreeTalk(formdata));
       navigate('/freetalk');
+
+
     } else if (select === 'meet') {
       const newcalendar = {
         title: calendartitle,
@@ -366,7 +398,7 @@ const Form2 = () => {
   };
 
   useEffect(() => {
-    if (title !== '' && content !== '') {
+    if (title.trim() !== '' && content.trim() !== '') {
       handleCheck(true);
     } else {
       handleCheck(false);
@@ -374,7 +406,7 @@ const Form2 = () => {
   }, [title, content])
 
   useEffect(() => {
-    if (infotitle !== '' && infocontent !== '') {
+    if (infotitle.trim() !== '' && infocontent.trim() !== '') {
       handleCheck(true);
     } else {
       handleCheck(false);
@@ -382,7 +414,7 @@ const Form2 = () => {
   }, [infotitle, infocontent])
 
   useEffect(() => {
-    if (freetitle !== '' && freecontent !== '') {
+    if (freetitle.trim() !== '' && freecontent.trim() !== '') {
       handleCheck(true);
     } else {
       handleCheck(false);
@@ -390,7 +422,7 @@ const Form2 = () => {
   }, [freetitle, freecontent])
 
   useEffect(() => {
-    if (calendartitle !== '' && calendarlocation !== '' && calendarcontent !== '') {
+    if (calendartitle.trim() !== '' && calendarlocation !== '' && calendarcontent.trim() !== '') {
       handleCheck(true);
     } else {
       handleCheck(false);
@@ -414,6 +446,24 @@ const Form2 = () => {
     };
   }, [isActive]);
 
+
+  // const [ inputs , setinputs] = useState("")
+  // const handleChange = (e) =>{
+  //   console.log(e.target.files[0])
+
+  //   const options = {
+  //     maxSizeMB: 1, // 허용하는 최대 사이즈 지정
+  //     maxWidthOrHeight: 400, // 허용하는 최대 width, height 값 지정
+  //     useWebWorker: true // webworker 사용 여부
+  //   }
+
+  //   const compressedFile =  imageCompression(inputs, options);
+  //     setinputs(compressedFile)
+  //       console.log(compressedFile)
+
+  // }
+
+
   return (
     <TotalCatiner ref={node}>
       {/* <FormContainer> */}
@@ -424,6 +474,7 @@ const Form2 = () => {
             cursor='pointer'
             onClick={() => navigate('/main')}
           />
+          {/* <input type="file" value={inputs} onChange={handleChange}/> */}
         </FormHeader>
         <FormBody>
           <FormSelection name='category' onChange={handleSelect}>
