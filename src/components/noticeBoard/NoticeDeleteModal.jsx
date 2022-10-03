@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { useDispatch } from 'react-redux';
-import { __deleteHelp, __getHelp } from '../../redux/modules/HelpSlice';
+// import { __deleteHelp, __getHelp } from '../../redux/modules/HelpSlice';
 import { __deleteNotice, __getNotice } from '../../redux/modules/NoticeSlice';
 
 const NoticeDeleteModal = ({ setModalOpen, notificationId }) => {
@@ -33,7 +33,7 @@ const NoticeDeleteModal = ({ setModalOpen, notificationId }) => {
             </StModalTop>
             <StModalBottom onClick={closeModal}>
               <StBottomTitle onClick={deleteHandler}>삭제하기</StBottomTitle>
-              <StBottomTitle>돌아가기</StBottomTitle>
+              <StBottomCancelTitle>돌아가기</StBottomCancelTitle>
             </StModalBottom>
           </StFirstWrap>
         </StModalContainer>
@@ -121,7 +121,6 @@ const StTopTitle = styled.div`
 const StModalBottom = styled.div`
   width: 100%;
   height: 25%;
-  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -142,4 +141,20 @@ const StBottomTitle = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
+  color: white;
 `;
+
+const StBottomCancelTitle = styled.div`
+  font-size: 16px;
+  font-weight: 700;
+  /* background-color: #f7931e; */
+  border: 1px solid #f7931e;
+  border-radius: 16px;
+  width: 40%;
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  color: #f7931e;
+`

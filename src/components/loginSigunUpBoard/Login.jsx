@@ -170,9 +170,9 @@ const Login = () => {
             >
               이메일로 회원가입
             </StGoToSignup>
-            {/* <StNaverContainer>
+            <StNaverContainer>
               <PwaApp />
-            </StNaverContainer> */}
+            </StNaverContainer>
           </StLoginWrap>
         </StLoginWraps>
         <StPrivacy>
