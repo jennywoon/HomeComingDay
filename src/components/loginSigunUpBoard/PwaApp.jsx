@@ -1,14 +1,14 @@
 import React from 'react';
-import { useReactPWAInstall } from 'react-pwa-install';
-import logo60 from '../../assets/logo60.png';
 import styled from 'styled-components';
+import { useReactPWAInstall } from 'react-pwa-install';
+import logo192 from '../../assets/logo192.png'
 
 const PwaApp = () => {
   const { pwaInstall, supported, isInstalled } = useReactPWAInstall();
   const pwaClick = () => {
     pwaInstall({
       title: '홈커밍데이 다운받기',
-      logo: logo60,
+      logo: logo192,
     })
       .then(() => {})
       .catch(() => {});
@@ -17,7 +17,9 @@ const PwaApp = () => {
   return (
     <>
       {supported() && !isInstalled() && (
-        <StPwaButton type='button' click={pwaClick}>어플 다운받기</StPwaButton>
+        <StPwaButton type='button' onClick={pwaClick}>
+          어플 다운받기
+        </StPwaButton>
       )}
     </>
   );
