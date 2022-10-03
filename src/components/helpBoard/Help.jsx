@@ -6,19 +6,19 @@ import { __getHelp, __getPopularHelp } from "../../redux/modules/HelpSlice";
 import HelpCard from "./HelpCard";
 import helporange from "../../assets/helporange.png"
 import nonedatasquare from "../../assets/nonedatasquare.png"
-import { __getMyPage,__getReset  } from "../../redux/modules/MyPageSlice";
+import { __getMyPage, __getReset } from "../../redux/modules/MyPageSlice";
 
 const Help = () => {
   const dispatch = useDispatch();
   const { helps } = useSelector((state) => state.helps);
-  const {helpPopular} = useSelector((state)=>state.helps)
+  const { helpPopular } = useSelector((state) => state.helps)
   const [select, setSelect] = useState('new');
   // console.log(helps)
   // console.log(helpPopular)
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(__getReset())
-  },[])
+  }, [])
 
   useEffect(() => {
     dispatch(__getMyPage())
@@ -43,25 +43,26 @@ const Help = () => {
         </StSelect>
         <StHelpList>
           <>
-            {select === "new"&& helps && helps.length > 0 ? (
+            {select === "new" && helps && helps.length > 0 ? (
               <div>
                 {helps && helps.map((help) => (
                   <HelpCard key={help.articleId} id={help.articleId} help={help} />
                 ))}
               </div>
-            ) : 
-            select === "popular"&& helpPopular && helpPopular.length > 0 ?
-           (<div>
-            {helpPopular && helpPopular.map((help) => (
-              <HelpCard key={help.articleId} id={help.articleId} help={help} />
-            ))}
-          </div>) :
-            (
-              <StNoneData>
-                <StNoneDataImg></StNoneDataImg>
-                <p>내가 쓴 게시글이 없습니다</p>
-              </StNoneData>
-            )}
+            ) :
+              select === "popular" && helpPopular && helpPopular.length > 0 ?
+                (<div>
+                  {helpPopular && helpPopular.map((help) => (
+                    <HelpCard key={help.articleId} id={help.articleId} help={help} />
+                  ))}
+                </div>) :
+                (
+                  <StNoneData>
+                    <StNoneDataImg></StNoneDataImg>
+                    <p>아직 게시글이 없습니다</p>
+                    <div>첫 게시글을 작성해주세요</div>
+                  </StNoneData>
+                )}
           </>
         </StHelpList>
       </StHelpWrap>

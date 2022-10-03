@@ -1,7 +1,8 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 import { AiOutlinePlus } from "react-icons/ai";
 import { BsArrowUpCircle } from "react-icons/bs";
+import { useEffect } from "react";
 
 ChatInput.propTypes = {};
 
@@ -18,16 +19,16 @@ function ChatInput(props) {
         setText(e.target.value);
     }, []);
 
-    const onClick = (e) => {
+    const onClick = () => {
         onSend();
     };
 
     return (
         <React.Fragment>
             <StMessageBox>
-                <AiOutlinePlus
+                {/* <AiOutlinePlus
                     style={{ paddingLeft: "20px", color: "#969696" }} size="22px"
-                />
+                /> */}
                 <StChatInput
                     placeholder="채팅 메세지를 입력해주세요(1,000자 제한)"
                     type="text"
@@ -38,7 +39,7 @@ function ChatInput(props) {
                 />
                 <BsArrowUpCircle
                     onClick={onClick}
-                    style={{ paddingRight: "20px", color: "#969696", cursor:"pointer" }} size="22px"
+                    style={{ color: "#969696", cursor:"pointer" }} size="22px"
                 />
             </StMessageBox>
         </React.Fragment>
@@ -55,19 +56,19 @@ const StMessageBox = styled.div`
     bottom: 0;
     background-color: white;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    /* border: 1px solid red; */
 `
 
 const StChatInput = styled.input`
-    width: 75%;
+    width: 85%;
     height: 30px;
     font-size: 16px;
     border: none;
     outline: none;
     ::-webkit-input-placeholder{
         font-size: 14px;
-        text-align: center;
+        /* text-align: center; */
+        padding-left: 20px;
     }
 `

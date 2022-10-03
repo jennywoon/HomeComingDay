@@ -29,7 +29,7 @@ const StMessageWrapper = styled.div`
     height: 81.3%;
     overflow-y: auto;
     overflow-x: hidden;
-    background-color: #f9f9f9;
+    background-color: #f0f0f0;
     &::-webkit-scrollbar {
         width: 0px;
     }
