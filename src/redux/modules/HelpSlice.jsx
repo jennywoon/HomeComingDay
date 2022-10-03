@@ -81,7 +81,7 @@ export const __postHelp = createAsyncThunk(
       const config = {
         headers: {
           "Content-Type": "multipart/form-data",
-          responseType: "blob",
+          // responseType: "blob",
           Authorization: `Bearer ${getCookie("accessToken")}`
         }
       }
