@@ -103,7 +103,7 @@ const CalendarDetail = () => {
   };
 
   useEffect(() => {
-    if (comment !== '') {
+    if (comment.trim() !== '') {
       handleCheck(true);
     } else {
       handleCheck(false);

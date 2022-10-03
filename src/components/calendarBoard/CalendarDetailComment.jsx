@@ -131,7 +131,7 @@ const CalendarDetailComment = ({ comment, modalRef, calendarfind, data }) => {
   };
 
   useEffect(() => {
-    if (replyComment !== '') {
+    if (replyComment.trim() !== '') {
       handleCheck(true);
     } else {
       handleCheck(false);
