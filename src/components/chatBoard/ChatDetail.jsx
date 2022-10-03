@@ -27,7 +27,7 @@ const ChatDetail = () => {
     const isLoading = useSelector((state) => state.user.isLoading);
     const chatList = useSelector((state) => state.chat.chatList);
     const mypages = useSelector((state) => state.mypages.mypages);
-    // console.log(mypages);
+
     useEffect(() => {
         if (isLoading && mypages.username === "") {
             navigate("/login");
@@ -132,7 +132,7 @@ const ChatDetail = () => {
                 otherUserId: otherUserInfo.otherUserId,
             };
 
-            if (text === "") {
+            if (text.trim() === "") {
                 return;
             }
             // send message

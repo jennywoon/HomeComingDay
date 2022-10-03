@@ -47,6 +47,7 @@ const StMessageWrapper = styled.div`
         /* width: 319px; */
         min-width: 280px;
         /* height: 65vh; */
+        height: 73vh;
         top: 0;
         left: 0;
         margin-top: 12px;
