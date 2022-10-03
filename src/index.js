@@ -4,27 +4,30 @@ import App from "./App";
 import "./index.css";
 import { store } from "./redux/config/configStore";
 import { Provider } from "react-redux";
-import Loading from './components/test/Loading';
+import { BrowserRouter } from "react-router-dom";
 import ReactPWAInstallProvider from "react-pwa-install";
-import reportWebVitals from './reportWebVitals';
-import * as serviceWorkerRegistration from './serviceWorkerRegistration'
+// import Loading from './components/test/Loading';
+// import reportWebVitals from './reportWebVitals';
+// import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Suspense fallback={<Loading />}>
-    <ReactPWAInstallProvider enableLogging>
+  // <Suspense fallback={<Loading />}>
+  <ReactPWAInstallProvider enableLogging>
     <Provider store={store}>
+      <BrowserRouter>
         <App />
+      </BrowserRouter>
     </Provider>
-    </ReactPWAInstallProvider>
-  </Suspense>
+  </ReactPWAInstallProvider>
+  // </Suspense>
 );
 
-reportWebVitals();
-serviceWorkerRegistration.register();
+// reportWebVitals();
+// serviceWorkerRegistration.register();
 
-if ("serviceWorker" in navigator && process.env.NODE_ENV === 'production') {
+if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/service-worker.js");
+    navigator.serviceWorker.register("/serviceworker.js");
   });
 }
