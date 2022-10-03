@@ -58,7 +58,7 @@ const FreeTalkCommentDeleteModal = ({ setModalOpen, comment, setShowComment }) =
                 //   }}
                 onClick={onClickDelete}
               >삭제하기</StBottomTitle>
-              <StBottomTitle>돌아가기</StBottomTitle>
+              <StBottomCancelTitle>돌아가기</StBottomCancelTitle>
             </StModalBottom>
           </StFirstWrap>
         </StModalContainer>
@@ -180,3 +180,18 @@ const StBottomTitle = styled.div`
   align-items: center;
   margin-bottom: 10px;
 `;
+
+const StBottomCancelTitle = styled.div`
+  font-size: 16px;
+  font-weight: 700;
+  /* background-color: #f7931e; */
+  border: 1px solid #f7931e;
+  border-radius: 16px;
+  width: 40%;
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  color: #f7931e;
+`
