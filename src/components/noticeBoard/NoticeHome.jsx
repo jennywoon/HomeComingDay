@@ -20,13 +20,12 @@ const NoticeHome = () => {
           <IoIosArrowBack
             size='25px'
             cursor='pointer'
-            // style={{ paddingLeft: '10px' }}
             onClick={() => {
               navigate('/main');
             }}
           />
           <StHeaderTitle>알림</StHeaderTitle>
-          <StDiv/>
+          <StDiv />
         </StHeader>
       </StHelpContainer>
       <NoticeList />
@@ -90,6 +89,7 @@ const StHelpContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+  border-bottom: 1px solid #f5f5f5;
 `;
 
 const StHeader = styled.div`
@@ -98,7 +98,6 @@ const StHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #f5f5f5;
 `;
 
 const StHeaderTitle = styled.div`
@@ -109,7 +108,7 @@ const StHeaderTitle = styled.div`
 const StDiv = styled.div`
   width: 25px;
   height: 25px;
-`
+`;
 const StBottomTapWrap = styled.div`
   width: 100%;
   position: sticky;

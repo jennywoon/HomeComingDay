@@ -33,13 +33,14 @@ const DetailComment = ({ comment, helpsfind, data }) => {
   );
   // console.log('commentId', commentId);
   // console.log('childCommentList', childCommentList);
+  // console.log("comment",comment)
   // console.log('username', username);
   // console.log('data', data);
 
   const [showComment, setShowComment] = useState(false);
   const [showReplyComment, setShowReplyComment] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
-  const [editComment, setEditComment] = useState('');
+  const [editComment, setEditComment] = useState(comment.content);
   const [replyComment, setReplyComment] = useState('');
 
   // useEffect(() => {
@@ -133,6 +134,22 @@ const DetailComment = ({ comment, helpsfind, data }) => {
     }
   }, [replyComment]);
 
+
+  //댓글 수정하기 버튼 활성화
+  const [isReplyActive, setReplyActive] = useState(false);
+  const handleReplyCheck = (e) =>{
+    setReplyActive(e);
+  }
+
+  useEffect(() => {
+    if (editComment.trim() !== '') {
+      handleReplyCheck(true);
+    } else {
+      handleReplyCheck(false);
+    }
+  }, [editComment]);
+  
+
   //모달
   const [modalOpen, setModalOpen] = useState(false);
   const showModal = (e) => {
@@ -159,14 +176,16 @@ const DetailComment = ({ comment, helpsfind, data }) => {
               </StTxtStudent>
               {isEdit ? (
                 <StEditBox>
-                  <StReplyCommentInput
+                  <StReviceCommentInput
                     onChange={onChangeEdit}
                     value={editComment}
-                    width='100%'
+                    placeholder="댓글을 수정해주세요"
                   />
-                  <StUploadBtn onClick={onClickReviceChange}>
+                  <StUploadBtnBox type="button" onClick={onClickReviceChange} disabled={isReplyActive ? false:true}>
+                  <StUploadBtn  >
                     수정완료
                   </StUploadBtn>
+                  </StUploadBtnBox>
                 </StEditBox>
               ) : (
                 <StComment>{comment && comment.content}</StComment>
@@ -206,7 +225,6 @@ const DetailComment = ({ comment, helpsfind, data }) => {
                     placeholder='대댓글을 입력해주세요'
                     value={replyComment}
                     onChange={onChangeReplyHandler}
-                    width='100%'
                     maxLength='50'
                   />
                   <StUploadBtnBox
@@ -271,6 +289,7 @@ const StReplyCommentInputBox = styled.div`
   background-color: #fff;
   border-radius: 12px;
   height: 25px;
+  line-height: 25px;
   width: 100%;
   padding: 2px 8px;
   margin-left: 5px;
@@ -283,6 +302,20 @@ const StReplyCommentInput = styled.input`
   overflow-y: hidden;
 `;
 
+const StReviceCommentInput = styled.input`
+  border: none;
+  width: 90%;
+  outline: none;
+  resize: none;
+  overflow-y: hidden;
+  border: 1px solid #d9d9d9;
+  border-radius: 12px;
+  height: 25px;
+  line-height: 25px;
+  padding: 2px 30px 2px 8px;
+  margin:5px 0px;
+`
+
 const StUploadBtnBox = styled.button`
   border: none;
   background-color: transparent;
@@ -294,6 +327,8 @@ const StUploadBtn = styled(GrUploadOption)`
   font-size: 18px;
   cursor: pointer;
   opacity: 0.5;
+  position: absolute;
+  right: 5px;
 `;
 
 const StDots = styled.div`
