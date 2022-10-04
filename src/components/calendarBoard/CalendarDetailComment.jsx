@@ -175,9 +175,6 @@ const CalendarDetailComment = ({ comment, modalRef, calendarfind, data }) => {
                   <StUploadBtn onClick={onClickReviceChange}>
                     수정완료
                   </StUploadBtn>
-
-                  {/* // <StReplyCommentInput value={replyComment} onChange={onChangeReplyHandler} width="100%"/>
-                            //     <StUploadBtn onClick={onClickPostReplyComment}></StUploadBtn> */}
                 </StEditBox>
               ) : (
                 <StComment>{comment && comment.content}</StComment>
