@@ -106,6 +106,7 @@ const CalendarDetailComment = ({ comment, modalRef, calendarfind, data }) => {
     setReplyComment('');
     setShowReplyComment(!showReplyComment);
     await dispatch(__getDetailCalendar(id));
+    setCreateComment(false)
   };
 
   //대댓글 토글
@@ -175,9 +176,6 @@ const CalendarDetailComment = ({ comment, modalRef, calendarfind, data }) => {
                   <StUploadBtn onClick={onClickReviceChange}>
                     수정완료
                   </StUploadBtn>
-
-                  {/* // <StReplyCommentInput value={replyComment} onChange={onChangeReplyHandler} width="100%"/>
-                            //     <StUploadBtn onClick={onClickPostReplyComment}></StUploadBtn> */}
                 </StEditBox>
               ) : (
                 <StComment>{comment && comment.content}</StComment>

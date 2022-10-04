@@ -84,6 +84,7 @@ const FreeTalkDetailComment = ({ comment, freetalksfind, data }) => {
     setReplyComment('');
     setShowReplyComment(!showReplyComment);
     await dispatch(__getDetailFreeTalk(id));
+    setCreateComment(false)
   };
 
   //대댓글 토글
