@@ -36,7 +36,7 @@ const HelpDeleteModal = ({ setModalOpen }) => {
                 navigate("/main")
               }}
               >삭제하기</StBottomTitle>
-              <StBottomTitle>돌아가기</StBottomTitle>
+              <StBottomCancelTitle>돌아가기</StBottomCancelTitle>
             </StModalBottom>
           </StFirstWrap>
         </StModalContainer>
