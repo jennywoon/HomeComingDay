@@ -36,9 +36,9 @@ function ChatDeleteModal(props) {
                             <StBottomTitle
                                 onClick={confirmHandler}
                             >나가기</StBottomTitle>
-                            <StBottomTitle
+                            <StBottomCancelTitle
                                 onClick={returnBackHandler}
-                            >돌아가기</StBottomTitle>
+                            >돌아가기</StBottomCancelTitle>
                         </StModalBottom>
                     </StFirstWrap>
                 </StModalContainer>
@@ -160,3 +160,17 @@ const StBottomTitle = styled.div`
   align-items: center;
   margin-bottom: 10px;
 `;
+
+const StBottomCancelTitle = styled.div`
+  font-size: 16px;
+  font-weight: 700;
+  border: 1px solid #f7931e;
+  border-radius: 16px;
+  width: 40%;
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  color: #f7931e;
+`

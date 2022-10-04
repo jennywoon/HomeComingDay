@@ -249,6 +249,7 @@ const StGoToSignup = styled.p`
   font-size: 14px;
   font-weight: 500;
   text-decoration: underline;
+  margin-bottom: 10px;
 `
 
 const StNaverContainer = styled.div`
@@ -258,6 +259,7 @@ const StNaverContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
+  /* border: 1px solid red; */
 `
 
 const StButtonTitle = styled.div`
