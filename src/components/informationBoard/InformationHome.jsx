@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import BottomTap from '../BottomTap';
 import HeaderTap from '../HeaderTap';
 import Information from './Information';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { TiPencil } from 'react-icons/ti';
 import HomeColorimg from '../../assets/HomeColor.png';
 import Searchimg from '../../assets/Search.png';
@@ -14,6 +14,9 @@ import Myimg from '../../assets/My.png';
 const InformationHome = () => {
   const navigate = useNavigate();
   const chatList = useSelector((state) => state.chat.chatList[0]);
+
+  const {information} = useParams()
+  console.log(information)
 
   return (
     <StHomeContainer>
