@@ -100,6 +100,7 @@ const DetailComment = ({ comment, helpsfind, data }) => {
     setReplyComment('');
     setShowReplyComment(!showReplyComment);
     await dispatch(__getDetailHelp(id));
+    setCreateComment(false)
   };
 
   //대댓글 토글

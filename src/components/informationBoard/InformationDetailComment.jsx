@@ -125,6 +125,7 @@ const InformationComment = ({ comment, informationsfind, modalRef, data }) => {
     setReplyComment('');
     setShowReplyComment(!showReplyComment);
     await dispatch(__getDetailInformation(id));
+    setCreateComment(false)
   };
 
   return (
