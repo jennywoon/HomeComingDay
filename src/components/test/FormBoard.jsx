@@ -78,7 +78,6 @@ const Form2 = () => {
     maxSize: 10485760,
 
     onDrop: (acceptedFiles) => {
-      console.log(acceptedFiles)
       setFiles(
         acceptedFiles.map((file) =>
           Object.assign(file, {
@@ -226,7 +225,7 @@ const Form2 = () => {
   //등록하기
   const [isOnActive, setIsOnActive] = useState(false);
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async(e) => {
     e.preventDefault();
     setIsOnActive(e);
     if (
@@ -262,62 +261,66 @@ const Form2 = () => {
         content: content,
       };
     
-      console.log(files)
+      // console.log(files)
 
       const options = {
-        maxSizeMB: 2, // 허용하는 최대 사이즈 지정
+        maxSizeMB: 10, // 허용하는 최대 사이즈 지정
         maxWidthOrHeight: 400, // 허용하는 최대 width, height 값 지정
         useWebWorker: true // webworker 사용 여부
       }
+    
+    
+    //  files.map(async(image) => {
 
-      // files.map(async(image) => {
-      //     const compressedFile = await imageCompression(image, options);
-      //     // setFiles(compressedFile);
-      //     console.log(compressedFile)
-      //     const reader = new FileReader();
-      //     reader.readAsDataURL(compressedFile);
-      //     // console.log(reader.result)
-      //     reader.onload = () => {
-      //       const base64data = reader.result;
-      //       console.log(base64data)
+    //       const compressedFile = await imageCompression(image, options);
+    //       // setFiles(compressedFile);
+    //       console.log(compressedFile)
+    //       const reader = new FileReader();
+    //       reader.readAsDataURL(compressedFile);
+    //       // console.log(reader.result)
+    //       reader.onload = () => {
+    //         const base64data = reader.result;
+    //         // console.log(base64data)
           
-      //     handlingDataForm(base64data);
-      //   };
-      //     // formdata.append('files', 
-      //     // new Blob([JSON.stringify(compressedFile)], {type:'image/png'}));
+    //       handlingDataForm(base64data);
+    //     };
+    //       // formdata.append('files', 
+    //       // new Blob([JSON.stringify(compressedFile)], {type:'image/png'}));
 
-      //     const handlingDataForm = async dataURI => {
-      //       const byteString = atob(dataURI.split(",")[1]);
+    //       const handlingDataForm = async dataURI => {
+    //         const byteString = atob(dataURI.split(",")[1]);
 
-      //       const ab = new ArrayBuffer(byteString.length);
-      //       const ia = new Uint8Array(ab);
-      //       for (let i = 0; i < byteString.length; i++) {
-      //         ia[i] = byteString.charCodeAt(i);
-      //       }
-      //       const blob = new Blob([ia], {
-      //         type: "image/jpeg"
-      //       });
+    //         const ab = new ArrayBuffer(byteString.length);
+    //         const ia = new Uint8Array(ab);
+    //         for (let i = 0; i < byteString.length; i++) {
+    //           ia[i] = byteString.charCodeAt(i);
+    //         }
+    //         const blob = new Blob([ia], {
+    //           type: "image/jpeg"
+    //         });
           
-      //       const file = new File([blob], "이미지", {type: 'image/jpeg'});
-
-      //     formdata.append('files', file)   
-      //     console.log(file)  
-      //     }
-      // });
+    //         const file = new File([blob], "이미지.jpeg", {type: 'image/jpeg'});
+          
+    //      formdata.append('files', file)   
+    //       console.log(file)  
+    //       }
+    //   });
 
       files.map((image) => {
         formdata.append('files', image);
       });
-
+      // console.log("formdata",formdata)
 
       formdata.append(
         'articleRequestDto',
         new Blob([JSON.stringify(newhelp)], { type: 'application/json' })
       );
-      for (var value of formdata.values()) {
-        console.log('formdata value', value);
-      }
-      console.log(value);
+      // for (var value of formdata.values()) {
+      //   console.log('formdata value', value);
+      // }
+      // console.log(value);
+      // console.log("formdata2",formdata)
+
       dispatch(__postHelp(formdata));
       navigate('/main');
 
@@ -769,7 +772,7 @@ const Form2 = () => {
                 <CalendarTitle>인원</CalendarTitle>
                 <StJoinDiv>
                   <MinusCircle size="20px" onClick={joinMinusHandle}/>
-                    {joinNumber}명
+                  {joinNumber}명
                   <PlusCircle size="20px" onClick={joinPlusHandle}/>
                 </StJoinDiv>
               </StJoinPeople>
@@ -850,7 +853,6 @@ const Form2 = () => {
                         <StImgContainer>
                           {files.length !== 0 &&
                             files.map((file, i) => (
-                              
                               <StImgList key={i} style={{ display: 'flex' }}>
                                 <div
                                   style={{
