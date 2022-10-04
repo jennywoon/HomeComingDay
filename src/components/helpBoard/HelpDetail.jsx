@@ -347,7 +347,7 @@ const StFirstWrap = styled.div`
   justify-content: center;
   width: 90%;
   height: 60px;
-  margin: auto;
+  margin: 0 auto;
 `;
 
 const StDetailHeader = styled.div`
@@ -361,15 +361,14 @@ const StDetailHeader = styled.div`
 
 const StHelpContainer = styled.div`
   width: 90%;
-  height: 86%;
+  height: 84%;
   border: 1px solid #eee;
   display: flex;
   flex-direction: column;
   border-radius: 16px;
   box-shadow: 0px 2px 14px rgba(0, 0, 0, 0.05);
-  padding: 5px;
   align-items: center;
-  margin: auto;
+  margin: 0 auto;
 `;
 
 const StHelpWrap = styled.div`
@@ -625,7 +624,7 @@ const StCommentBox = styled.div`
 `;
 
 const StCommentDiv = styled.div`
-  width: 100%;
+  width: 90%;
   padding: 10px;
   background-color: #eeeeee;
   border-radius: 16px;
