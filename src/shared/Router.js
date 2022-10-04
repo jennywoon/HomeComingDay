@@ -42,7 +42,8 @@ const Router = () => {
       <Route path="/schoolinfo" element={<SchoolInfoPage />}></Route>
       {/* <Route path="/login" element={token ? <Navigate to="/main" /> : <LoginPage />}/> */}
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/signup" element={token ? <Navigate to="/main" /> : <SignUpPage />} />
+      {/* <Route path="/signup" element={token ? <Navigate to="/main" /> : <SignUpPage />} /> */}
+      <Route path="/signup" element={<SignUpPage />}/>
       <Route path="/information" element={<InformationPage />} />
       <Route path="/freetalk" element={<FreeTalkPage />} />
       <Route path="/calendar" element={<CalendarPage />} />
