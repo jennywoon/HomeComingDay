@@ -106,6 +106,7 @@ const CalendarDetailComment = ({ comment, modalRef, calendarfind, data }) => {
     setReplyComment('');
     setShowReplyComment(!showReplyComment);
     await dispatch(__getDetailCalendar(id));
+    setCreateComment(false)
   };
 
   //대댓글 토글
@@ -187,7 +188,7 @@ const CalendarDetailComment = ({ comment, modalRef, calendarfind, data }) => {
                 </StTxtCreateAt>
               </StTxtFirstWrap>
             </StCommentsBox>
-            {data.userId === data.userId ? (
+            {comment.userId === data.userId ? (
               <StDots onClick={onCilckShow} />
             ) : null}
           </StComments>

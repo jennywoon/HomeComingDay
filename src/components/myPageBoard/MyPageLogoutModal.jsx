@@ -151,7 +151,6 @@ const StBottomTitle = styled.div`
 const StBottomCancelTitle = styled.div`
   font-size: 16px;
   font-weight: 700;
-  /* background-color: #f7931e; */
   border: 1px solid #f7931e;
   border-radius: 16px;
   width: 40%;

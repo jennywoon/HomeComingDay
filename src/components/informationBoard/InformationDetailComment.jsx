@@ -125,6 +125,7 @@ const InformationComment = ({ comment, informationsfind, modalRef, data }) => {
     setReplyComment('');
     setShowReplyComment(!showReplyComment);
     await dispatch(__getDetailInformation(id));
+    setCreateComment(false)
   };
 
   return (
@@ -166,7 +167,7 @@ const InformationComment = ({ comment, informationsfind, modalRef, data }) => {
                 </StTxtCreateAt>
               </StTxtFirstWrap>
             </StCommentsBox>
-            {data.userId === data.userId ? (
+            {comment.userId === data.userId ? (
               <StDots onClick={onCilckShow} />
             ) : null}
           </StComments>
