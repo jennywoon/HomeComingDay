@@ -15,7 +15,7 @@ const InformationReplyComment = ({childCommentList,commentId,childComment, ids ,
     const [showReplyComment,setShowReplyComment] = useState(false)
     const [reviseReplyComment,setReviseReplyComment] = useState(false)
     const [modalOpen, setModalOpen] = useState(false);
-    const [editReplyComment , setEditReplyComment] = useState("")
+    const [editReplyComment , setEditReplyComment] = useState(childComment.content)
     const [replyTargetId,setReplyTargetId] = useState(null);
     const childCommentId = childCommentList.find((comment)=> comment.childCommentId === childComment.childCommentId)
 
@@ -43,6 +43,21 @@ const InformationReplyComment = ({childCommentList,commentId,childComment, ids ,
     const closeModal = () => {
         setModalOpen(false);
       };
+
+    //대댓글 수정하기 버튼 활성화
+  const [isReplyActive, setReplyActive] = useState(false);
+  const handleReplyCheck = (e) =>{
+    setReplyActive(e);
+  }
+
+  useEffect(() => {
+    if (editReplyComment.trim() !== '') {
+      handleReplyCheck(true);
+    } else {
+      handleReplyCheck(false);
+    }
+  }, [editReplyComment]);
+
 
     //모달
     const showModal = (e) => {
@@ -114,8 +129,10 @@ const InformationReplyComment = ({childCommentList,commentId,childComment, ids ,
                        </>
                        :
                        <StReviseBox>
-                       <StReplyCommentInput value={editReplyComment} onChange={onChangeReplyHandler} borderBottom="1px solid #ccc" width="100%"/>
-                       <StUploadBtn onClick={onClickUpdateReplyComment}></StUploadBtn>
+                       <StReplyCommentInput value={editReplyComment} onChange={onChangeReplyHandler} placeholder="대댓글을 수정해주세요"/>
+                       <StUploadBtnBox type="button" onClick={onClickUpdateReplyComment} disabled={isReplyActive ? false:true}>
+                       <StUploadBtn ></StUploadBtn>
+                       </StUploadBtnBox>
                        </StReviseBox>}
                </StCommentReplytxt>
            {childComment.userId === data.userId ?
@@ -153,6 +170,14 @@ const StCommentImg = styled.img`
     margin-top: 2px;
     border-radius: 50%;
 `
+const StUploadBtnBox = styled.button`
+  border: none;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  padding: 0;
+`;
+
 const StCommentReplytxt = styled.div`
     font-size:13px;
     width:100%;
@@ -169,7 +194,6 @@ const StDots = styled.div`
   position: relative;
 `
 
-
 const StReplyCommentInput = styled.textarea`
     width:100%;
     height: 25px;
@@ -177,7 +201,6 @@ const StReplyCommentInput = styled.textarea`
     border-radius: 30px;
     border:1px solid #D9D9D9;
     background-color: #fff;
-    margin-left:5px;
     padding:2px 30px 0px 8px;
     outline:none;
     resize:none;
