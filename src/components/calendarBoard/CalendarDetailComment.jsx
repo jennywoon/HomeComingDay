@@ -106,6 +106,7 @@ const CalendarDetailComment = ({ comment, modalRef, calendarfind, data }) => {
     setReplyComment('');
     setShowReplyComment(!showReplyComment);
     await dispatch(__getDetailCalendar(id));
+    setCreateComment(false)
   };
 
   //대댓글 토글
