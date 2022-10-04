@@ -1,51 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { IoMdClose } from 'react-icons/io';
 import { __deleteNotice, __getNotice } from '../../redux/modules/NoticeSlice';
-import NoticeDeleteModal from './NoticeDeleteModal';
 import bellRinging from '../../assets/bellRinging.png';
+import { __getDetailHelp } from '../../redux/modules/HelpSlice';
+import { __getDetailInformation } from '../../redux/modules/InformationSlice';
+import { __getDetailCalendar } from '../../redux/modules/CalendarSlice';
+import { __getDetailFreeTalk } from '../../redux/modules/FreeTalkSlice';
+
 
 const NoticeCard = ({ item }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isOnCheck, setIsOnCheck] = useState(false);
 
-  const { notificationId, username, title, createdAt, noticeType, articleId, articleFlag } =
-    item;
-
-  const [modalOpen, setModalOpen] = useState(false);
-  const showModal = (e) => {
-    e.preventDefault();
-    setModalOpen(true);
-  };
+  const {
+    notificationId,
+    username,
+    title,
+    createdAt,
+    noticeType,
+    articleId,
+    articleFlag,
+  } = item;
 
   useEffect(() => {
     dispatch(__getNotice());
   }, [dispatch]);
 
-  const onClickNavi = () => {
-    setIsOnCheck(true)
-    if (articleFlag === "도움요청") {
-        navigate(`/helpdetail/${articleId}`)
-    } else if (articleFlag === "정보공유") {
-        navigate(`/informationdetail/${articleId}`)
-    } else if (articleFlag === "만남일정") {
-        navigate(`/calendardetail/${articleId}`)
-    } else if (articleFlag === "자유토크") {
-        navigate(`/freetalkdetail/${articleId}`)
+  // 상세페이지 연결
+  const onClickNavi = async() => {
+    setIsOnCheck(true);
+    if (articleFlag === '도움요청') {
+      await dispatch(__getDetailHelp(articleId))
+      await navigate(`/helpdetail/${articleId}`);
+    } else if (articleFlag === '정보공유') {
+      await dispatch(__getDetailInformation(articleId))
+      await navigate(`/informationdetail/${articleId}`);
+    } else if (articleFlag === '만남일정') {
+      await dispatch(__getDetailCalendar(articleId))
+      await navigate(`/calendardetail/${articleId}`);
+    } else if (articleFlag === '자유토크') {
+      await dispatch(__getDetailFreeTalk(articleId))
+      await navigate(`/freetalkdetail/${articleId}`);
     }
+  };
+
+  // 삭제하기
+  const deleteHandler = async () => {
+    await dispatch(__deleteNotice(notificationId));
+    await dispatch(__getNotice());
+    navigate('/notice');
   };
 
   return (
     <StNoticeCard>
-      {modalOpen && (
-        <NoticeDeleteModal
-          setModalOpen={setModalOpen}
-          notificationId={notificationId}
-        />
-      )}
       <StNoticeCardContainer>
         <StHeadImg>
           <img src={bellRinging} alt='알림 아이콘' />
@@ -56,13 +67,13 @@ const NoticeCard = ({ item }) => {
               <StBold>
                 [{title.length < 12 ? title : title.slice(0, 12) + '...'}]
               </StBold>{' '}
-              게시글에{' '}
-              <StBold>{username}</StBold>
-              님이 <StBold>{noticeType}</StBold>{noticeType==='댓글'?'을':'를'} 남겼습니다
+              게시글에 <StBold>{username}</StBold>
+              님이 <StBold>{noticeType}</StBold>
+              {noticeType === '댓글' ? '을' : '를'} 남겼습니다
             </StArticle>
             <StCreatAt>{createdAt}</StCreatAt>
           </StFirstContainer>
-          <StSecondContainer onClick={showModal}>
+          <StSecondContainer onClick={deleteHandler}>
             <IoMdClose size='22' color='#8E8E8E' />
           </StSecondContainer>
         </StNoticeContainer>
@@ -78,7 +89,7 @@ const StNoticeCard = styled.div`
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid #f5f5f5;
-  background-color: ${({ isOnCheck }) => (isOnCheck ? '#f9f9f9' : '#fff')};  
+  background-color: ${({ isOnCheck }) => (isOnCheck ? '#f9f9f9' : '#fff')};
 `;
 
 const StNoticeCardContainer = styled.div`
@@ -119,7 +130,6 @@ const StFirstContainer = styled.div`
 const StArticle = styled.div`
   font-weight: 400;
   font-size: 16px;
-  /* width: 90%; */
   line-height: 24px;
 `;
 
