@@ -853,7 +853,6 @@ const Form2 = () => {
                         <StImgContainer>
                           {files.length !== 0 &&
                             files.map((file, i) => (
-                              
                               <StImgList key={i} style={{ display: 'flex' }}>
                                 <div
                                   style={{
