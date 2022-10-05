@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import DaumPostcode from 'react-daum-postcode';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { __getHelp, __postHelp } from '../../redux/modules/HelpSlice';
 import { __postFreeTalk } from '../../redux/modules/FreeTalkSlice';
 import { __postInformation } from '../../redux/modules/InformationSlice';
@@ -45,6 +45,7 @@ const Form2 = () => {
   const [isActive, setIsActive] = useState(false);
 
   const [select, setSelect] = useState('help');
+
   const [joinNumber , setJoinNumber] = useState(1);
 
   const [reactCalendar, setReactCalendar] = useState('');
@@ -68,31 +69,54 @@ const Form2 = () => {
 
   //이미지 Dropzone -추가
   const [files, setFiles] = useState([]);
-  const [previewImg, setPreviewImg] = useState('');
-  const { getRootProps, getInputProps } = useDropzone({
-    // accept: ".heic, .heif, image/*",
-    accept:{
-      'image/*': ['.png','.jpg','.jpeg','.heic','.heif','.gif'],
-    },
-    maxFiles: 3,
-    maxSize: 10485760,
+  const [previewImg, setPreviewImg] = useState([]);
+  const IMAGETYPE = [
+    "png", "jpg", "jpeg","heic","heif","gif"
+  ];
+  const [openImageNumberAlert, setOpenImageNumber] = useState(false);
+  
 
-    onDrop: (acceptedFiles) => {
-      setFiles(
-        acceptedFiles.map((file) =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-          )
-      );
-    },
-  });
+  //이미지 리사이징 && 프리뷰
+  const handleAddImages = async (e) => {
+    if (files.length + e.target.files.length > 3) setOpenImageNumber(true);
+    
+    [...e.target.files].map(async (file) => {
+      if (
+        !IMAGETYPE.includes(
+          file.name.split(".")[file.name.split(".").length - 1].toLowerCase()
+        )
+      )
+        return alert("지원하지 않는 파일 형식입니다.")
+        
+      if (file.size > 10000000) return alert("파일크기가 허용되는 한도를 초과하였습니다")
+
+      const options = {
+        maxSizeMB: 10,
+        maxWidthOrHeight: 3000,
+        useWebWorker: true,
+      };
+      try {
+        // console.log(file)
+        const compressedFile = await imageCompression(file, options);
+        // console.log(compressedFile)
+        setFiles((files) => [...files, compressedFile]);
+        const reader = new FileReader();
+        reader.readAsDataURL(compressedFile);
+        reader.onload = () => {
+          const previewImgUrl = reader.result;
+          setPreviewImg((previewImg) => [...previewImg, previewImgUrl]);
+        };
+      } catch (error) {
+        alert("이미지를 불러올 수 없습니다");
+      }
+    });
+   
+  };
 
   //이미지프리뷰삭제
-  const deleteImage = (i) => {
-    let deleteList = files.filter((_, id) => id !== i);
-    setFiles(deleteList);
-    return;
+  const deleteImage = (id) => {
+    setPreviewImg(previewImg.filter((_, index) => index !== id));
+    setFiles(files.filter((_, index) => index !== id));
   };
 
   useEffect(() => {
@@ -244,11 +268,6 @@ const Form2 = () => {
       return alert('내용을 입력해주세요');
     }
 
-    const options = {
-      maxSizeMB: 1, // 허용하는 최대 사이즈 지정
-      maxWidthOrHeight: 400, // 허용하는 최대 width, height 값 지정
-      useWebWorker: true // webworker 사용 여부
-    }
 
 
     const now = new Date()
@@ -261,65 +280,17 @@ const Form2 = () => {
         content: content,
       };
     
-      // console.log(files)
-
-      const options = {
-        maxSizeMB: 10, // 허용하는 최대 사이즈 지정
-        maxWidthOrHeight: 400, // 허용하는 최대 width, height 값 지정
-        useWebWorker: true // webworker 사용 여부
-      }
-    
-    
-    //  files.map(async(image) => {
-
-    //       const compressedFile = await imageCompression(image, options);
-    //       // setFiles(compressedFile);
-    //       console.log(compressedFile)
-    //       const reader = new FileReader();
-    //       reader.readAsDataURL(compressedFile);
-    //       // console.log(reader.result)
-    //       reader.onload = () => {
-    //         const base64data = reader.result;
-    //         // console.log(base64data)
-          
-    //       handlingDataForm(base64data);
-    //     };
-    //       // formdata.append('files', 
-    //       // new Blob([JSON.stringify(compressedFile)], {type:'image/png'}));
-
-    //       const handlingDataForm = async dataURI => {
-    //         const byteString = atob(dataURI.split(",")[1]);
-
-    //         const ab = new ArrayBuffer(byteString.length);
-    //         const ia = new Uint8Array(ab);
-    //         for (let i = 0; i < byteString.length; i++) {
-    //           ia[i] = byteString.charCodeAt(i);
-    //         }
-    //         const blob = new Blob([ia], {
-    //           type: "image/jpeg"
-    //         });
-          
-    //         const file = new File([blob], "이미지.jpeg", {type: 'image/jpeg'});
-          
-    //      formdata.append('files', file)   
-    //       console.log(file)  
-    //       }
-    //   });
 
       files.map((image) => {
         formdata.append('files', image);
       });
-      // console.log("formdata",formdata)
+     
 
       formdata.append(
         'articleRequestDto',
         new Blob([JSON.stringify(newhelp)], { type: 'application/json' })
       );
-      // for (var value of formdata.values()) {
-      //   console.log('formdata value', value);
-      // }
-      // console.log(value);
-      // console.log("formdata2",formdata)
+  
 
       dispatch(__postHelp(formdata));
       navigate('/main');
@@ -450,22 +421,6 @@ const Form2 = () => {
   }, [isActive]);
 
 
-  // const [ inputs , setinputs] = useState("")
-  // const handleChange = (e) =>{
-  //   console.log(e.target.files[0])
-
-  //   const options = {
-  //     maxSizeMB: 1, // 허용하는 최대 사이즈 지정
-  //     maxWidthOrHeight: 400, // 허용하는 최대 width, height 값 지정
-  //     useWebWorker: true // webworker 사용 여부
-  //   }
-
-  //   const compressedFile =  imageCompression(inputs, options);
-  //     setinputs(compressedFile)
-  //       console.log(compressedFile)
-
-  // }
-
 
   return (
     <TotalCatiner ref={node}>
@@ -477,7 +432,6 @@ const Form2 = () => {
             cursor='pointer'
             onClick={() => navigate('/main')}
           />
-          {/* <input type="file" value={inputs} onChange={handleChange}/> */}
         </FormHeader>
         <FormBody>
           <FormSelection name='category' onChange={handleSelect}>
@@ -511,60 +465,38 @@ const Form2 = () => {
                       <>
                         <GetRootProps>
                           <StImaBox>
-                            <StImgUpload
-                              {...getRootProps({ className: 'dropzone' })}
-                            >
-                              <Imgadd />
-                              <Imgtxt>이미지 첨부</Imgtxt>
-
+                           
+                              <StImgLabel htmlFor="input-Imgfile">
+                                <StImgadd />
+                                <StImgFont>이미지캡처</StImgFont>
+                              </StImgLabel>
+                                <StImgInput
+                                  type="file"
+                                  id="input-Imgfile"
+                                  accept=".png, .jpg, .jpeg, .heic, .heif, .gif"
+                                  onChange={handleAddImages}
+                                  multiple
+                                />
                               
-                              <input {...getInputProps()} />
-                            </StImgUpload>
+                             
+
                             <TxtWarning>* 이미지 최대 3장</TxtWarning>
                           </StImaBox>
                         </GetRootProps>
-                        <StImgContainer>
-                          {files.length !== 0 &&
-                            files.map((file, i) => (
-                              
-                              <StImgList key={i} style={{ display: 'flex' }}>
-                                <div
-                                  style={{
-                                    width: '122px',
-                                    height: '110px',
-                                    overflow: 'hidden',
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    position: 'relative',
-                                  }}
-                                >
-                                  <img
-                                    src={file.preview}
-                                    style={{
-                                      width: '100px',
-                                      height: '100px',
-                                      backgroundSize: 'cover',
-                                      justifyContent: 'center',
-                                      objectFit: 'cover',
-                                      borderRadius: '16px',
-                                    }}
-                                  />
-                                  <CancelBtn
-                                    onClick={() => deleteImage(i)}
-                                    size='20px'
-                                    style={{
-                                      color: '#F7931E',
-                                      position: 'absolute',
-                                      right: '5px',
-                                      top: '0px',
-                                      cursor: 'pointer',
-                                    }}
-                                  />
-                                </div>
-                              </StImgList>
-                            ))}
-                        </StImgContainer>
+                      
+                        <StImageList>
+                        {files.length !== 0 ?  (
+                              <StImageListBox>
+                                {previewImg.map((image, id) => (
+                                  <StImage key={id}>
+                                    <StImg src={image} alt={`${image}-${id}`} />
+                                      <CancelBtn  onClick={() => deleteImage(id)}/>
+                                  </StImage>
+                                ))}
+                              </StImageListBox>
+                                     ) : null}
+                          
+                        </StImageList>
                       </>
                     </FooterContain>
                   </FormFooter>
@@ -597,60 +529,33 @@ const Form2 = () => {
                       <>
                         <GetRootProps>
                           <StImaBox>
-                            <StImgUpload
-                              {...getRootProps({ className: 'dropzone' })}
-                            >
-                              <Imgadd />
-                              <Imgtxt>이미지 첨부</Imgtxt>
-            
-                              <input {...getInputProps()} />
-                            </StImgUpload>
+                          <StImgLabel htmlFor="input-Imgfile">
+                                <StImgadd />
+                                <StImgFont>이미지캡처</StImgFont>
+                              </StImgLabel>
+                                <StImgInput
+                                  type="file"
+                                  id="input-Imgfile"
+                                  accept=".png, .jpg, .jpeg, .heic, .heif, .gif"
+                                  onChange={handleAddImages}
+                                  multiple
+                                />
                             <TxtWarning>* 이미지 최대 3장</TxtWarning>
                           </StImaBox>
                         </GetRootProps>
-                        <StImgContainer>
-                          {files.length !== 0 &&
-                            files.map((file, i) => (
-                              
-                              <StImgList key={i} style={{ display: 'flex' }}>
-                                <div
-                                  style={{
-                                    width: '122px',
-                                    height: '110px',
-                                    overflow: 'hidden',
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    position: 'relative',
-                                  }}
-                                >
-                                  <img
-                                    src={file.preview}
-                                    style={{
-                                      width: '100px',
-                                      height: '100px',
-                                      backgroundSize: 'cover',
-                                      justifyContent: 'center',
-                                      objectFit: 'cover',
-                                      borderRadius: '16px',
-                                    }}
-                            
-                                  />
-                                  <CancelBtn
-                                    onClick={() => deleteImage(i)}
-                                    size='20px'
-                                    style={{
-                                      color: '#F7931E',
-                                      position: 'absolute',
-                                      right: '5px',
-                                      top: '0px',
-                                      cursor: 'pointer',
-                                    }}
-                                  />
-                                </div>
-                              </StImgList>
-                            ))}
-                        </StImgContainer>
+                        <StImageList>
+                        {files.length !== 0 ?  (
+                              <StImageListBox>
+                                {previewImg.map((image, id) => (
+                                  <StImage key={id}>
+                                    <StImg src={image} alt={`${image}-${id}`} />
+                                      <CancelBtn  onClick={() => deleteImage(id)}/>
+                                  </StImage>
+                                ))}
+                              </StImageListBox>
+                                     ) : null}
+                          
+                        </StImageList>
                       </>
 
                     </FooterContain>
@@ -839,59 +744,33 @@ const Form2 = () => {
                       <>
                         <GetRootProps>
                           <StImaBox>
-                            <StImgUpload
-                              {...getRootProps({ className: 'dropzone' })}
-                            >
-                              <Imgadd />
-                              <Imgtxt>이미지 첨부</Imgtxt>
-                              
-                              <input {...getInputProps()} />
-                            </StImgUpload>
+                          <StImgLabel htmlFor="input-Imgfile">
+                                <StImgadd />
+                                <StImgFont>이미지캡처</StImgFont>
+                              </StImgLabel>
+                                <StImgInput
+                                  type="file"
+                                  id="input-Imgfile"
+                                  accept=".png, .jpg, .jpeg, .heic, .heif, .gif"
+                                  onChange={handleAddImages}
+                                  multiple
+                                />
                             <TxtWarning>* 이미지 최대 3장</TxtWarning>
                           </StImaBox>
                         </GetRootProps>
-                        <StImgContainer>
-                          {files.length !== 0 &&
-                            files.map((file, i) => (
-                              <StImgList key={i} style={{ display: 'flex' }}>
-                                <div
-                                  style={{
-                                    width: '122px',
-                                    height: '110px',
-                                    overflow: 'hidden',
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    position: 'relative',
-                                  }}
-                                >
-                                  <img
-                                    src={file.preview}
-                                    style={{
-                                      width: '100px',
-                                      height: '100px',
-                                      backgroundSize: 'cover',
-                                      justifyContent: 'center',
-                                      objectFit: 'cover',
-                                      borderRadius: '16px',
-                                    }}
-     
-                                  />
-                                  <CancelBtn
-                                    onClick={() => deleteImage(i)}
-                                    size='20px'
-                                    style={{
-                                      color: '#F7931E',
-                                      position: 'absolute',
-                                      right: '5px',
-                                      top: '0px',
-                                      cursor: 'pointer',
-                                    }}
-                                  />
-                                </div>
-                              </StImgList>
-                            ))}
-                        </StImgContainer>
+                        <StImageList>
+                        {files.length !== 0 ?  (
+                              <StImageListBox>
+                                {previewImg.map((image, id) => (
+                                  <StImage key={id}>
+                                    <StImg src={image} alt={`${image}-${id}`} />
+                                      <CancelBtn  onClick={() => deleteImage(id)}/>
+                                  </StImage>
+                                ))}
+                              </StImageListBox>
+                                     ) : null}
+                          
+                        </StImageList>
                       </>
 
                     </FooterContain>
@@ -947,8 +826,6 @@ const FormWrap = styled.form`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  /* align-items: center; */
-  /* border: 1px solid red; */
 `;
 const FormHeader = styled.div`
   width: 100%;
@@ -1006,7 +883,6 @@ const StTextAreaBox = styled.div`
 
 const StTextarea = styled.textarea`
   width: 95%;
-  /* height: 100%; */
   height:200px;
   border: none;
   padding: 10px 5px;
@@ -1031,11 +907,6 @@ const FooterContain = styled.div`
   
 `;
 
-const Imgadd = styled(GrImage)`
-  opacity: 0.3;
-  font-size:20px;
-`;
-
 const FooterBtn = styled.div`
   width: 100%;
   height: 100%;
@@ -1043,43 +914,8 @@ const FooterBtn = styled.div`
   bottom: 0;
   display: flex;
   align-items: flex-end;
-  /* justify-content: center; */
-  /* border: 1px solid red; */
 `;
 
-const Filelabel = styled.label`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 120px;
-  height: 50px;
-  border: 1px solid #eee;
-  border-radius: 20px;
-  margin: 15px;
-`;
-
-const Addfile = styled.input`
-  display: none;
-`;
-const ImgContainer = styled.label`
-  display: 'flex';
-  align-items: center;
-  margin: 20px 10px;
-  position: relative;
-`;
-
-const ImgContent = styled.img`
-  width: 100px;
-  height: 100px;
-  position: relative;
-`;
-const DeleteButton = styled(TiDelete)`
-  position: absolute;
-  /* size:50px; */
-  right: 1px;
-  color: white;
-  cursor: pointer;
-`;
 
 const CalendarButton = styled.div`
   height: 40px;
@@ -1204,7 +1040,8 @@ const StTimePicker = styled.input`
   }
 `;
 
-//Dropzone추가
+
+//이미지
 const GetRootProps = styled.div`
   display: flex;
   justify-content: center;
@@ -1213,13 +1050,60 @@ const GetRootProps = styled.div`
 const StImaBox = styled.div`
   display: flex;
   width: 100%;
-  height: 36px;
-  margin: 10px;
- 
+  margin:10px 5px;
 `;
+
+const StImgLabel = styled.label`
+  display: flex;
+  border: 1px solid #e3e3e3;
+  width: 111px;
+  padding:7px;
+  border-radius: 20px;
+  cursor: pointer;
+  align-items: center;
+`
+const StImgadd = styled(GrImage)`
+  opacity: 0.3;
+  font-size:20px;
+  width:40px;
+`;
+
+const StImgFont = styled.div`
+  font-size:14px;
+`
+const StImgInput = styled.input`
+  display: none;
+`
 const TxtWarning = styled.div`
   font-size:12px;
 `
+const StImageList = styled.div`
+  width:100%;
+  height:110px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ `
+ const StImageListBox = styled.div`
+  display: flex;
+  width:90%;
+  flex-direction: row;
+ `
+const StImage = styled.div`
+  position: relative;
+  width:100px; 
+  height:100px;
+  margin:0px 8px;
+`;
+
+const StImg = styled.img`
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 16px;
+`;
+
+
 const StImgList = styled.div`
   justify-items: baseline;
   
@@ -1254,8 +1138,12 @@ const Imgtxt = styled.div`
   
 `;
 const CancelBtn = styled(MdCancel)`
+  color:#F7931E;
   position: absolute;
-  right: 0;
+  right: 5px;
+  top: 0px;
+  cursor: pointer;
+  font-size:20px;
 `;
 const CalendarWrap = styled.div`
   display: flex;
@@ -1386,3 +1274,6 @@ const PlusCircle = styled(AiOutlinePlusCircle)`
   color:#cfcfcf;
   cursor: pointer;
 `
+
+
+

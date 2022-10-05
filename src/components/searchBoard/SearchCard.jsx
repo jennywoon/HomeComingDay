@@ -4,22 +4,32 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import commentgray from '../../assets/commentgray.png';
 import heartgray from '../../assets/heartgray.png';
+import { __getDetailInformation } from '../../redux/modules/InformationSlice';
+import { __getDetailCalendar } from '../../redux/modules/CalendarSlice';
+import { __getDetailFreeTalk } from '../../redux/modules/FreeTalkSlice';
+import { __getDetailHelp } from '../../redux/modules/HelpSlice';
 
 const SearchCard = ({ search, id }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onClickNavi = () => {
+  const onClickNavi = async() => {
     if (search.articleFlag === '도움요청') {
-      navigate(`/helpdetail/${id}`);
+      await dispatch(__getDetailHelp(id))
+      await navigate(`/helpdetail/${id}`);
     } else if (search.articleFlag === '정보공유') {
-      navigate(`/informationdetail/${id}`);
+      await dispatch(__getDetailInformation(id))
+      await navigate(`/informationdetail/${id}`);
     } else if (search.articleFlag === '만남일정') {
-      navigate(`/calendardetail/${id}`);
+      await dispatch(__getDetailCalendar(id))
+      await navigate(`/calendardetail/${id}`);
     } else if (search.articleFlag === '자유토크') {
-      navigate(`/freetalkdetail/${id}`);
+      await dispatch(__getDetailFreeTalk(id))
+      await navigate(`/freetalkdetail/${id}`);
     }
   };
+
+
 
   return (
     <StSearch>
