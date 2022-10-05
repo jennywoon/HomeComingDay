@@ -32,6 +32,7 @@ const NoticeList = () => {
           <StNoneData>
             <StNoneDataImg />
             <StNoneDataMsg>받은 알림이 없습니다</StNoneDataMsg>
+            <StNoneDataMsg>댓글, 좋아요가 달리면 알림을 받으실 수 있습니다</StNoneDataMsg>
           </StNoneData>
         </StNone>
       )}

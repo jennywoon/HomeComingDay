@@ -17,7 +17,7 @@ const SignupModal = ({ setModalOpen }) => {
               <StTopTitle>
                 인증번호가 발송되었습니다
                 <br />
-                이메일을 확인하세요(유효시간 3분)
+                이메일을 확인하세요(유효시간 10분)
               </StTopTitle>
             </StModalTop>
             <StModalBottom onClick={closeModal}>
