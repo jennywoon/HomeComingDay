@@ -436,7 +436,7 @@ const Form2 = () => {
           <IoIosArrowBack
             size='25px'
             cursor='pointer'
-            onClick={() => navigate('/main')}
+            onClick={() => navigate(-1)}
           />
         </StFormHeader>
         <StFormBody>
