@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+// 아이콘 이미지
 import xcircle from "../../assets/xcircle.png"
 import github from "../../assets/github.png"
 import notion from "../../assets/notion.png"
@@ -72,8 +73,6 @@ const StWrap = styled.div`
   width: 100%;
   max-width: 420px;
   height: 100vh;
-  /* height: 100%; */
-  /* border: 1px solid red; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -100,10 +99,12 @@ const StFirstModalTop = styled.div`
   font-size: 16px;
   font-weight: 600;
 `
+
 const StClose = styled.div`
   width: 30px;
   heighT: 30px;
 `
+
 const StCloseX = styled.div`
   width: 30px;
   height: 30px;
@@ -120,7 +121,6 @@ const StFirstWrap = styled.div`
   align-items: center;
   justify-content: center;
   border-top: 1px solid #d9d9d9;
-  /* border: 1px solid red; */
   flex-direction: column;
   gap: 10px;
 `;
@@ -147,6 +147,5 @@ const StIcon = styled.div`
 const StContent = styled.div`
     font-size: 12px;
     text-align: center;
-    /* border: 1px solid blue; */
     color: gray;
 `

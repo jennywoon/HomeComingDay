@@ -1,35 +1,33 @@
 import React from 'react';
 import styled from 'styled-components';
+// 아이콘 이미지
 import exclamation from '../../assets/exclamation.png';
 
-const ImgUploadNumberModal = ({setImageNumberAlert}) => {
+const ImgUploadNumberModal = ({ setImageNumberAlert }) => {
+  const closeModal = () => {
+    setImageNumberAlert(false);
+  };
 
-    const closeModal = () => {
-        setImageNumberAlert(false);
-      };
-
-    return (
-        <StContainer>
-        <StWrap>
-          <StModalContainer>
-            <StFirstWrap>
-              <StModalTop>
+  return (
+    <StContainer>
+      <StWrap>
+        <StModalContainer>
+          <StFirstWrap>
+            <StModalTop>
               <StExclamation />
-                <StTopTitle>허용하는 이미지 갯수를 초과하였습니다.</StTopTitle>
-              </StModalTop>
-              <StModalBottom onClick={closeModal}>
-                <StBottomTitle onClick={closeModal}
-                >확인</StBottomTitle>
-              </StModalBottom>
-            </StFirstWrap>
-          </StModalContainer>
-        </StWrap>
-      </StContainer>
-    );
+              <StTopTitle>허용하는 이미지 갯수를 초과하였습니다.</StTopTitle>
+            </StModalTop>
+            <StModalBottom onClick={closeModal}>
+              <StBottomTitle onClick={closeModal}>확인</StBottomTitle>
+            </StModalBottom>
+          </StFirstWrap>
+        </StModalContainer>
+      </StWrap>
+    </StContainer>
+  );
 };
 
 export default ImgUploadNumberModal;
-
 
 const StContainer = styled.div`
   position: absolute;
@@ -65,8 +63,6 @@ const StWrap = styled.div`
   width: 100%;
   max-width: 420px;
   height: 100vh;
-  /* height: 100%; */
-  /* border: 1px solid red; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -114,6 +110,7 @@ const StTopTitle = styled.div`
   text-align: center;
   word-break: keep-all;
 `;
+
 const StModalBottom = styled.div`
   width: 100%;
   height: 25%;
@@ -130,7 +127,6 @@ const StModalBottom = styled.div`
 const StBottomTitle = styled.div`
   font-size: 16px;
   font-weight: 700;
-  /* border: 1px solid red; */
   background-color: #f7931e;
   border-radius: 16px;
   width: 40%;
@@ -140,17 +136,3 @@ const StBottomTitle = styled.div`
   align-items: center;
   margin-bottom: 10px;
 `;
-
-const StBottomCancelTitle = styled.div`
-  font-size: 16px;
-  font-weight: 700;
-  border: 1px solid #f7931e;
-  border-radius: 16px;
-  width: 40%;
-  height: 80%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 10px;
-  color: #f7931e;
-`

@@ -1,61 +1,61 @@
-import React from 'react';
-import styled from 'styled-components';
-import { IoMdClose } from 'react-icons/io';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import joinUser from '../../assets/users.png';
-import { useEffect } from 'react';
+import styled from 'styled-components';
+// 모듈
 import { __getJoin } from '../../redux/modules/CalendarSlice';
+// 아이콘 이미지
+import joinUser from '../../assets/users.png';
 import xcircle from "../../assets/xcircle.png"
 
-const CalendarJoiinModal = ({setJoinModalOpen,joinPeopleList,id}) => {
-  const dispatch = useDispatch();
+const CalendarJoiinModal = ({ setJoinModalOpen, joinPeopleList, id }) => {
 
+  const dispatch = useDispatch();
 
   const closeModal = () => {
     setJoinModalOpen(false);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(__getJoin(id));
-  },[dispatch])
+  }, [dispatch])
 
 
-    return (
+  return (
     <StContainer>
       <StWrap>
         <StModalContainer>
           <StFirstWrap>
-            <StFirstDiv/>
+            <StFirstDiv />
             <StModalTop>참여자보기</StModalTop>
             <StIconBox>
-            <StClose onClick={closeModal}/>
+              <StClose onClick={closeModal} />
             </StIconBox>
           </StFirstWrap>
 
-          <StJoinContain> 
-          {/* 참여자리스트 맵돌리기 */}
-          {joinPeopleList.length !== 0 ?
-          (joinPeopleList && joinPeopleList.map((joinList,i)=>
-          <StJoinList key={i}>
-            <StJoinMyImg src={joinList.userImage}></StJoinMyImg>
-            <StJointxtBox>
-              <StJoinName>{joinList.username}</StJoinName>
-              <StJoinInfo>{joinList.department} {joinList.admission}</StJoinInfo>
-            </StJointxtBox>
-          </StJoinList>
-          )) : 
-          (
-            <StJoinNone>
-                <StImg src={joinUser} alt="참여자조회"/>
-                <StNonetxt>참석자가 없습니다 <br/> 참석하기 버튼을 눌러 모임에 참석해보세요</StNonetxt>
-            </StJoinNone>
-          )
-          }
+          <StJoinContain>
+            {/* 참여자리스트 맵돌리기 */}
+            {joinPeopleList.length !== 0 ?
+              (joinPeopleList && joinPeopleList.map((joinList, i) =>
+                <StJoinList key={i}>
+                  <StJoinMyImg src={joinList.userImage}></StJoinMyImg>
+                  <StJointxtBox>
+                    <StJoinName>{joinList.username}</StJoinName>
+                    <StJoinInfo>{joinList.department} {joinList.admission}</StJoinInfo>
+                  </StJointxtBox>
+                </StJoinList>
+              )) :
+              (
+                <StJoinNone>
+                  <StImg src={joinUser} alt="참여자조회" />
+                  <StNonetxt>참석자가 없습니다 <br /> 참석하기 버튼을 눌러 모임에 참석해보세요</StNonetxt>
+                </StJoinNone>
+              )
+            }
           </StJoinContain>
         </StModalContainer>
       </StWrap>
     </StContainer>
-    );
+  );
 };
 
 export default CalendarJoiinModal;
@@ -65,11 +65,9 @@ const StContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* align-items: center; */
   width: 100%;
   z-index: 10;
   overflow: hidden;
-  /* bottom: 0; */
   @media screen and (max-width: 1024px) {
     background-image: none;
   }
@@ -93,11 +91,8 @@ const StContainer = styled.div`
 const StWrap = styled.div`
 position: relative;
   width: 100%;
-  /* width: 420px; */
   max-width: 420px;
   height: 100vh;
-  /* height: 100%; */
-  /* border: 1px solid red; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -199,7 +194,6 @@ const StJoinNone = styled.div`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  /* margin-top:100px; */
 `
 
 const StImg = styled.img`

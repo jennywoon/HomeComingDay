@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from "react-redux";
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import Help from './Help';
+// 이미지 아이콘
 import { TiPencil } from 'react-icons/ti';
 import HomeColorimg from '../../assets/HomeColor.png';
 import Searchimg from '../../assets/Search.png';
@@ -11,15 +12,17 @@ import Myimg from '../../assets/My.png';
 
 const Home = () => {
   const navigate = useNavigate();
-  
+
   const chatList = useSelector((state) => state.chat.chatList[0]);
-  // console.log(chatList);
+  const navigateForm = () => {
+    navigate('/form', { state: "help" })
+  }
 
   return (
     <StHomeContainer>
       <Help />
       <StIconWrap>
-        <StIconbox onClick={() => navigate('/form')}>
+        <StIconbox onClick={() => navigateForm()}>
           <TiPencil color='white' size='32' />
         </StIconbox>
       </StIconWrap>
@@ -50,8 +53,8 @@ const Home = () => {
               <StImg src={Chatimg} alt='채팅' />
               {chatList && chatList.totalCnt > 0 ? (
                 <StNewDiv>
-                <StNewTitle>N</StNewTitle>
-              </StNewDiv>
+                  <StNewTitle>N</StNewTitle>
+                </StNewDiv>
               ) : null}
             </StChatIconWrap>
             <StTapTitle>채팅</StTapTitle>
@@ -120,15 +123,11 @@ const StLastTap = styled.div`
 
 const StChatIconWrap = styled.div`
   display: flex;
-  /* border: 1px solid red; */
   justify-content: center;
-  /* align-items: start; */
   position: relative;
 `
 
 const StImg = styled.img`
-  /* width: 45%;
-  height: */
   width: 25px;
   height: 25px;
   margin: 2px;

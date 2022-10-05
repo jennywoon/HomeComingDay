@@ -1,17 +1,13 @@
-import React, { useEffect, useRef } from 'react';
-import styled from 'styled-components';
-import { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  __getFreeTalk,
-  __updateFreeTalkComment,
-  __postFreeTalkReplyComment,
-  __getDetailFreeTalk,
-} from '../../redux/modules/FreeTalkSlice';
 import { useParams } from 'react-router-dom';
-import { GrUploadOption } from 'react-icons/gr';
+import styled from 'styled-components';
 import FreeTalkCommentDeleteModal from './FreeTalkCommentDeleteModal';
 import FreeTalkDetailReplyComment from './FreeTalkDetailReplyComment';
+// 모듈
+import { __updateFreeTalkComment, __postFreeTalkReplyComment, __getDetailFreeTalk } from '../../redux/modules/FreeTalkSlice';
+// 아이콘 이미지
+import { GrUploadOption } from 'react-icons/gr';
 import dots from '../../assets/dots.png';
 
 const FreeTalkDetailComment = ({ comment, freetalksfind, data }) => {
@@ -384,7 +380,6 @@ const StEditBox = styled.div`
   align-items: center;
   width: 100%;
   position: relative;
-  /* padding: 0px 20px; */
 `;
 
 const StTxtName = styled.h3`

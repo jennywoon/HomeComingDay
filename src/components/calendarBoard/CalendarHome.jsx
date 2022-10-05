@@ -1,8 +1,9 @@
 import React from 'react';
 import { useSelector } from "react-redux";
-import styled from 'styled-components';
-import Calendar from './Calendar';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+// 아이콘 이미지
+import Calendar from './Calendar';
 import { TiPencil } from 'react-icons/ti';
 import HomeColorimg from '../../assets/HomeColor.png';
 import Searchimg from '../../assets/Search.png';
@@ -10,14 +11,18 @@ import Chatimg from '../../assets/Chat.png';
 import Myimg from '../../assets/My.png';
 
 const CalendarHome = () => {
+
   const navigate = useNavigate();
   const chatList = useSelector((state) => state.chat.chatList[0]);
+  const navigateForm = () => {
+    navigate('/form', { state: "meet" })
+  }
 
   return (
     <StHomeContainer>
       <Calendar />
       <StIconWrap>
-        <StIconbox onClick={() => navigate('/form')}>
+        <StIconbox onClick={() => navigateForm()}>
           <TiPencil color='white' size='32' />
         </StIconbox>
       </StIconWrap>

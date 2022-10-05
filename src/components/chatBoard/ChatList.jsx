@@ -1,26 +1,26 @@
-import React, { useState, useRef } from 'react';
-import styled from 'styled-components';
-import { useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { deleteChatList, getChatList } from '../../redux/modules/ChatSlice';
+import styled from 'styled-components';
 import Loading from '../test/Loading';
 import { chatApi } from './ChatApi';
 import _ from 'lodash';
+import ChatDeleteModal from './ChatDeleteModal';
+import Header from '../Header';
+// 모듈
+import { deleteChatList, getChatList } from '../../redux/modules/ChatSlice';
+import { __getReset } from '../../redux/modules/MyPageSlice';
+// 아이콘 이미지
 import Homeimg from '../../assets/Home.png';
 import Searchimg from '../../assets/Search.png';
 import ChatColorimg from '../../assets/ChatColor.png';
 import Myimg from '../../assets/My.png';
-import { __getReset } from '../../redux/modules/MyPageSlice';
-import ChatDeleteModal from './ChatDeleteModal';
 import nonedataballoon from '../../assets/nonedataballoon.png';
 import xorange from '../../assets/xorange.png';
-import Header from '../Header';
 
 const ChatList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const { setCurrentHeader } = useStore();
 
   useEffect(() => {
     dispatch(__getReset());
@@ -35,12 +35,7 @@ const ChatList = () => {
         }
     }, []);
 
-    // const chatList = useSelector((state) => state.chat.chatList);
-    // const isLoading = useSelector((state) => state.chat.isLoading);
-    // const hasNext = useSelector((state) => state.chat.hasNext);
-    // const page = useSelector((state) => state.chat.page);
     const { chatList, isLoading, hasNext, page } = useSelector((state) => state.chat);
-    // console.log(chatList);
 
     const inicialRoom = {
         roomname: null,
@@ -104,7 +99,6 @@ const ChatList = () => {
     if (page === 1) {
       dispatch(getChatList(page));
     }
-    // setCurrentHeader("채팅");
   }, []);
 
   if (isLoading) {
@@ -116,7 +110,6 @@ const ChatList = () => {
       <Header />
       <StContainer>
         <StChatContainer>
-          {/* {chatList.chatRoomResponseDto.length === 0 && */}
           {chatList.length === 0 && (
             <StNoneData>
               <StNoneDataImg />
@@ -465,7 +458,6 @@ const StChatTap = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* border: 1px solid red; */
   cursor: pointer;
   color: #f7931e;
 `;

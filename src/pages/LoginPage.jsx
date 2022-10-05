@@ -1,5 +1,4 @@
 import React from 'react';
-import JustLayout from '../components/JustLayout';
 import Login from "../components/loginSigunUpBoard/Login"
 import styled from 'styled-components';
 

@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getCookie, setCookie } from '../../shared/cookies';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -21,9 +21,7 @@ export const __loginUser = createAsyncThunk(
       setCookie('refreshToken', `${data.data.data.refreshToken}`);
       setCookie('username', `${data.data.data.username}`);
       return thunkAPI.fulfillWithValue(data.data);
-      
     } catch (error) {
-      // console.log("error",error)
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -34,7 +32,6 @@ export const __signupUser = createAsyncThunk(
   'SIGNUP_USER',
   async (payload, thunkAPI) => {
     try {
-      // console.log(payload);
       const data = await axios.post(`${BASE_URL}/signup`, payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -48,11 +45,9 @@ export const __emailCheck = createAsyncThunk(
   'emailCheck',
   async (payload, thunkAPI) => {
     try {
-      // console.log(payload);
       const data = await axios.post(`${BASE_URL}/emailCheck`, payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      // console.log('error', error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -61,9 +56,7 @@ export const __emailCheck = createAsyncThunk(
 // 이메일보내기
 export const __postSendEmail = createAsyncThunk("sendEmail", async (payload, thunkAPI) => {
   try {
-    // console.log(payload);
       const data = await axios.post(`${BASE_URL}/signup/sendEmail`, payload);
-      // console.log('data', data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -73,9 +66,7 @@ export const __postSendEmail = createAsyncThunk("sendEmail", async (payload, thu
 // 인증번호보내기
 export const __postCheckEmail = createAsyncThunk("checkEmail", async (payload, thunkAPI) => {
   try {
-    // console.log(payload);
       const data = await axios.post(`${BASE_URL}/signup/checkEmail`, payload);
-      // console.log('data', data)
       return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -107,7 +98,6 @@ export const UserSlice = createSlice({
     },
     [__loginUser.fulfilled]: (state, action) => {
       state.isLoading = false;
-      // console.log(action.payload)
       state.isLogin = action.payload.success;
       state.schoolInfo = action.payload.data['schoolInfo'];
     },

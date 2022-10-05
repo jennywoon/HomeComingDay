@@ -1,40 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../Header';
-import styled from 'styled-components';
-import { IoIosArrowBack } from 'react-icons/io';
-import HelpDetailComment from './HelpDetailComment';
-import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  __getHelp,
-  __postHelpComment,
-  __getDetailHelp,
-  __postHelpHeart,
-  __getHelpHeart
-} from '../../redux/modules/HelpSlice';
+import { useNavigate, useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import Header from '../Header';
+import HelpDetailComment from './HelpDetailComment';
+import { chatApi } from '../chatBoard/ChatApi';
 import { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import {
-  MdOutlineArrowBackIos,
-  MdOutlineArrowForwardIos,
-} from 'react-icons/md';
 import HelpDeleteModal from './HelpDeleteModal';
+// 모듈
+import { __getHelp, __postHelpComment, __getDetailHelp, __postHelpHeart } from '../../redux/modules/HelpSlice';
+import { __getMyPage, __getView } from '../../redux/modules/MyPageSlice';
+import { __getNoticeCount } from '../../redux/modules/NoticeSlice';
+// 아이콘
+import dots from '../../assets/dots.png';
 import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
 import heartColorImg from '../../assets/heartColor.png';
-import { __getMyPage, __getView } from '../../redux/modules/MyPageSlice';
-import { chatApi } from '../chatBoard/ChatApi';
-import { __getNoticeCount } from '../../redux/modules/NoticeSlice';
-import dots from '../../assets/dots.png';
+import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md';
+import { IoIosArrowBack } from 'react-icons/io';
 
 const HelpDetail = () => {
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { helpsfind } = useSelector((state) => state.helps);
-  // console.log(helpsfind)
   const { id } = useParams();
   const [show, setShow] = useState(false);
   const [showChaet, setShowChaet] = useState(false);
@@ -156,22 +149,10 @@ const HelpDetail = () => {
       .createChat(userId)
       .then((response) => {
         navigate(`/chat/${response.data}`);
-        // console.log('userId', userId);
-        // console.log('response', response.data);
       })
       .catch((error) => {
-        // console.log(error);
       });
   };
-
-  // const onPreviousPage = () => {
-  //   if((navigate(-1) !== navigate("/main"))){
-  //     navigate("/mypage")
-  //   } else if((navigate(-1) !== navigate("/mypage") || navigate(-1) !== navigate("/main"))){
-  //     navigate("/mypage")
-  //   } 
-  // }
-
 
   return (
     <StContainer ref={node}>

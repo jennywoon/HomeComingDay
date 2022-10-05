@@ -1,7 +1,8 @@
 import axios from "axios";
 import { getCookie, setCookie } from "../../shared/cookies";
+import { store } from "../../redux/config/configStore";
+// 모듈
 import { showError } from "../../redux/modules/ErrorSlice";
-import { store } from "../../redux/config/configStore"; 
 
 export const instance = axios.create({
     BASE_URL: process.env.REACT_APP_BASE_URL,
@@ -29,7 +30,6 @@ instance.interceptors.request.use(
         return config;
     },
     (error) => {
-        // console.log(error, "error");
         return;
     },
 );
@@ -82,7 +82,6 @@ instance.interceptors.response.use(
     },
 
     function(error) {
-        // console.log(error, "error");
         store.dispatch(showError({ isOpen: true, message: error.response.data.message}));
         return Promise.reject(error);
     },

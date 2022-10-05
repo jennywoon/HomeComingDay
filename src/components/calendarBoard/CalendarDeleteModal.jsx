@@ -1,8 +1,10 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { __deleteCalendar, __getCalendar, __getDetailCalendar } from '../../redux/modules/CalendarSlice';
+// 모듈
+import { __deleteCalendar, __getCalendar } from '../../redux/modules/CalendarSlice';
+// 아이콘 이미지
 import exclamation from "../../assets/exclamation.png"
 
 const CalendarDeleteModal = ({ setModalOpen }) => {
@@ -13,11 +15,7 @@ const CalendarDeleteModal = ({ setModalOpen }) => {
   };
 
   const navigate = useNavigate();
-  const { calendars } = useSelector((state) => state.calendars)
-  const { id } = useParams();
   const { calendarfind } = useSelector((state) => state.calendars)
-  // const calendarsfind = calendars.find((calendar) => calendar.articleId === Number(id))
-
 
   return (
     <StContainer>
@@ -155,7 +153,6 @@ const StBottomTitle = styled.div`
 const StBottomCancelTitle = styled.div`
   font-size: 16px;
   font-weight: 700;
-  /* background-color: #f7931e; */
   border: 1px solid #f7931e;
   border-radius: 16px;
   width: 40%;

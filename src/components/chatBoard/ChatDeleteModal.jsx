@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import styled from 'styled-components';
+// 아이콘 이미지
 import exclamation from "../../assets/exclamation.png"
 
 ChatDeleteModal.propTypes = {
@@ -59,7 +60,6 @@ const StContainer = styled.div`
   z-index: 10;
   overflow: hidden;
   bottom: 0;
-  /* border: 1px solid red; */
   @media screen and (max-width: 1024px) {
     background-image: none;
   }
@@ -83,11 +83,8 @@ const StContainer = styled.div`
 const StWrap = styled.div`
 position: relative;
   width: 100%;
-  /* width: 420px; */
   max-width: 420px;
   height: 100vh;
-  /* height: 100%; */
-  /* border: 1px solid red; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -150,7 +147,6 @@ const StModalBottom = styled.div`
 const StBottomTitle = styled.div`
   font-size: 16px;
   font-weight: 700;
-  /* border: 1px solid red; */
   background-color: #f7931e;
   border-radius: 16px;
   width: 40%;

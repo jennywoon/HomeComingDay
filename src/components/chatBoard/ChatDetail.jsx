@@ -1,16 +1,18 @@
 import React, { useEffect, useState, useRef } from 'react';
-import styled from "styled-components"
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import styled from "styled-components"
 import { chatApi } from './ChatApi';
 import { getCookie } from '../../shared/cookies';
 import useStore from "../../zustand/store";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
-import { getChatMessage, subMessage } from '../../redux/modules/ChatSlice';
 import ChatMessageBox from "./ChatMessageBox"
 import ChatInput from './ChatInput';
 import Header from "../Header"
+// 모듈
+import { getChatMessage, subMessage } from '../../redux/modules/ChatSlice';
+// 아이콘 이미지
 import { IoIosArrowBack } from 'react-icons/io'
 
 const ChatDetail = () => {
@@ -25,7 +27,6 @@ const ChatDetail = () => {
 
     // 보내는 사람
     const isLoading = useSelector((state) => state.user.isLoading);
-    const chatList = useSelector((state) => state.chat.chatList);
     const mypages = useSelector((state) => state.mypages.mypages);
 
     useEffect(() => {
@@ -44,7 +45,6 @@ const ChatDetail = () => {
 
     // messages
     const messages = useSelector((state) => state.chat.messages);
-    // console.log(messages);
 
     // 상대방 정보 가져오기
     useEffect(() => {
@@ -55,9 +55,7 @@ const ChatDetail = () => {
                 setOtherUserInfo(response.data);
             })
             .catch((error) => {
-                // console.log(error);
             });
-        // console.log(roomId);
     }, [])
 
     // 채팅방 이전 메시지 가져오기
@@ -107,7 +105,6 @@ const ChatDetail = () => {
                 ws.current.send(`/pub/chat/enter`, { token: token }, JSON.stringify(message));
             });
         } catch (error) {
-            // console.log(error);
         }
     }
 
@@ -118,7 +115,6 @@ const ChatDetail = () => {
                 ws.current.unsubscribe("sub-0");
             });
         } catch (error) {
-            // console.log(error);
         }
     }
 
@@ -139,7 +135,6 @@ const ChatDetail = () => {
             ws.current.send("/pub/chat/message", { token: token }, JSON.stringify(message));
             setText("");
         } catch (error) {
-            // console.log(error);
         }
     };
 
@@ -190,7 +185,6 @@ const StContainer = styled.div`
 `
 
 const StNavbarWrap = styled.div`
-    /* border: 1px solid red; */
     display: flex;
     justify-content: center;
     align-items: center;

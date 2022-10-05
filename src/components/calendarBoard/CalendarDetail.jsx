@@ -1,35 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import Header from '../Header';
-import { IoIosArrowBack } from 'react-icons/io';
-import CalendarDetailComment from './CalendarDetailComment';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  __getCalendar,
-  __getDetailCalendar,
-  __postCalendarComment,
-  __postCalendarHeart,
-  __postJoin,
-  __getJoin,
-} from '../../redux/modules/CalendarSlice';
-import { useRef } from 'react';
-import { GiPunchBlast } from 'react-icons/gi';
+import { useNavigate, useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import { chatApi } from '../chatBoard/ChatApi';
 import CalendarDeleteModal from './CalendarDeleteModal';
+import CalendarDetailComment from './CalendarDetailComment';
+import Header from '../Header';
+// 모듈
+import { __getCalendar, __getDetailCalendar, __postCalendarComment, __postCalendarHeart, __postJoin, __getJoin } from '../../redux/modules/CalendarSlice';
+import { __getMyPage, __getView } from '../../redux/modules/MyPageSlice';
+import { __getNoticeCount } from '../../redux/modules/NoticeSlice';
+import CalendarJoiinModal from './CalendarJoiinModal';
+// 아이콘 이미지
 import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
 import heartColorImg from '../../assets/heartColor.png';
 import joinUser from '../../assets/users.png';
 import joinUserPlus from '../../assets/userPlus.png';
 import joinUserMinus from '../../assets/userMinus.png';
-import { __getMyPage ,__getView} from '../../redux/modules/MyPageSlice';
-import CalendarJoiinModal from './CalendarJoiinModal';
-import { chatApi } from '../chatBoard/ChatApi';
-import { __getNoticeCount } from '../../redux/modules/NoticeSlice';
 import dots from "../../assets/dots.png"
-
+import { IoIosArrowBack } from 'react-icons/io';
+import { GiPunchBlast } from 'react-icons/gi';
 
 const CalendarDetail = () => {
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -38,27 +32,16 @@ const CalendarDetail = () => {
   const [comment, setComment] = useState('');
   const modalRef = useRef(null);
 
-  const { calendars } = useSelector((state) => state.calendars);
   const { calendarfind } = useSelector((state) => state.calendars);
-  // const calendarfind = calendars.find(
-  //   (calendar) => calendar.articleId === Number(id)
-  // );
-  // console.log("calendarfind",calendarfind)
-  // const { calendarJoin } = useSelector((state) => state.calendars);
   const { joinPeopleList } = useSelector((state) => state.calendars.calendarJoin);
   const joinPeopleLists = useSelector((state) => state.calendars.joinPeopleList);
   const data = useSelector((state) => state.mypages.mypages)
-  const detailview = useSelector((state)=>state.mypages.view);
+  const detailview = useSelector((state) => state.mypages.view);
 
   const trueList = joinPeopleList && joinPeopleList.map((list) => { if (list.email === data.email) return list.joinCheck })
   const joinTrueFalse = trueList && trueList.includes(true)
   const joinPeopleListfind = joinPeopleLists && joinPeopleLists.map((list) => list.joinCheck)
   const joinBooline = joinPeopleListfind[joinPeopleListfind.length - 1]
-  // console.log("joinPeopleLists", joinPeopleLists)
-  // console.log("calendars", calendars)
-  // console.log("calendarJoin", calendarJoin)
-  // console.log("joinPeopleList", joinPeopleList)
-  // console.log("joinPeopleLists", joinPeopleLists)
 
   //모달닫기
   const node = useRef();
@@ -171,11 +154,8 @@ const CalendarDetail = () => {
       .createChat(userId)
       .then((response) => {
         navigate(`/chat/${response.data}`);
-        // console.log("userId", userId)
-        // console.log("response", response.data)
       })
       .catch((error) => {
-        // console.log(error);
       })
   }
   return (
@@ -183,7 +163,7 @@ const CalendarDetail = () => {
       {modalOpen && <CalendarDeleteModal setModalOpen={setModalOpen} />}
       {joinModalOpen && <CalendarJoiinModal setJoinModalOpen={setJoinModalOpen} joinPeopleList={joinPeopleList} id={id} />}
       <div>
-      <Header />
+        <Header />
       </div>
       <StFirstWrap>
         <StDetailHeader>
@@ -195,7 +175,7 @@ const CalendarDetail = () => {
             }}
           />
           <StHeaderTitle>만남일정</StHeaderTitle>
-          <StHeaderDiv/>
+          <StHeaderDiv />
         </StDetailHeader>
       </StFirstWrap>
       <StCalendarContainer>
@@ -268,11 +248,9 @@ const CalendarDetail = () => {
                     </StContentgetContent>
                   </StContentget>
                 </StContentBody>
-                {/* <ContentImg src=''></ContentImg> */}
-
                 <StJoinContain>
                   <StJoinPart className="look" type="button" onClick={showJoinModal}>
-                    <StShowUser src={joinUser} alt="참여자조회"/>
+                    <StShowUser src={joinUser} alt="참여자조회" />
                     참여자보기
                   </StJoinPart>
 
@@ -296,9 +274,6 @@ const CalendarDetail = () => {
                       ))
                       : null
                   }
-
-                  {/* : null}  */}
-
                 </StJoinContain>
 
                 <StBodyTxtBox>

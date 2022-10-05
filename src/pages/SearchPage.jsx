@@ -3,7 +3,6 @@ import SearchHome from '../components/searchBoard/SearchHome';
 import styled from 'styled-components';
 import Header from '../components/Header';
 
-
 const SearchPage = () => {
 
     return (

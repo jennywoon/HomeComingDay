@@ -38,7 +38,6 @@ const StyledTextarea = styled.textarea`
   width: 100%;
   height: 50vh;
   border-radius: 5px;
-  /* margin-left: 10px; */
   padding: 5px;
   border:none;
 `;

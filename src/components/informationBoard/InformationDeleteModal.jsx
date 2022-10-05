@@ -1,24 +1,22 @@
-import React, { useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import styled from 'styled-components';
-import { AiOutlineInfoCircle } from 'react-icons/ai';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteInformation ,__getDetailInformation,__getInformation} from '../../redux/modules/InformationSlice';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+// 모듈
+import { __deleteInformation, __getInformation} from '../../redux/modules/InformationSlice';
+// 이미지 아이콘
 import exclamation from "../../assets/exclamation.png"
 
 const InformationDeleteModal = ({ setModalOpen }) => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { informationsfind } = useSelector((state) => state.informations)
+  
   const closeModal = () => {
     setModalOpen(false);
   };
-
-  const navigate = useNavigate();
-  const { informations } = useSelector((state) => state.informations)
-  const { id } = useParams();
-  const { informationsfind } = useSelector((state) => state.informations)
-  // const informationsfind = informations.find((info) => info.articleId === Number(id))
-
 
   return (
     <StContainer>
@@ -157,7 +155,6 @@ const StBottomTitle = styled.div`
 const StBottomCancelTitle = styled.div`
   font-size: 16px;
   font-weight: 700;
-  /* background-color: #f7931e; */
   border: 1px solid #f7931e;
   border-radius: 16px;
   width: 40%;

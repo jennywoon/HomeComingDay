@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { getCookie, setCookie } from '../../shared/cookies';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { getCookie } from '../../shared/cookies';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -8,21 +8,12 @@ const initialState = {
   infoComments: [],
   infoReplyComments: [],
   informations: [],
-  informationsfind:[],
-  informationPopular:[],
+  informationsfind: [],
+  informationPopular: [],
   heart: [],
   isLoading: false,
   error: null,
 };
-
-// const config = {
-
-//   headers: {
-//     'Content-Type': 'application/json',
-//     Authorization : `Bearer ${getCookie('accessToken')}`,
-//     // RefreshToken : `${getCookie('refreshToken')}`
-//   },
-// };
 
 export const __getInformation = createAsyncThunk(
   'informations/getInformation',
@@ -36,10 +27,8 @@ export const __getInformation = createAsyncThunk(
           Authorization: `Bearer ${getCookie('accessToken')}`,
         },
       });
-      // console.log(data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      // console.log('error', error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -54,52 +43,45 @@ export const __getDetailInformation = createAsyncThunk(
         url: `${BASE_URL}/article/information/${payload}`,
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${getCookie('accessToken')}`,
-          // RefreshToken : getCookie('refreshToken')
+          Authorization: `Bearer ${getCookie('accessToken')}`
         },
       });
-      // console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      // console.log('error', error);
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
-export const __getPopularInformation = createAsyncThunk("information/getPopularInformation", async (payload, thunkAPI) => {
-  try {
-    const data = await axios({
-      method: 'get',
-      url: `${BASE_URL}/article/information/popular`,
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${getCookie("accessToken")}`,
-        // RefreshToken : getCookie('refreshToken')
-      },
-    });
-    // console.log(data.data)
+export const __getPopularInformation = createAsyncThunk(
+  'information/getPopularInformation',
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios({
+        method: 'get',
+        url: `${BASE_URL}/article/information/popular`,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getCookie('accessToken')}`
+        },
+      });
       return thunkAPI.fulfillWithValue(data.data);
-  } catch (error) {
-      // console.log('error', error);
+    } catch (error) {
       return thunkAPI.rejectWithValue(error);
+    }
   }
-});
+);
 
 export const __postInformation = createAsyncThunk(
   'informations/postInformation',
   async (payload, thunkAPI) => {
-    // console.log('payload', payload);
-    for (var value of payload.values()) {
-      // console.log('formdata value', value);
-    }
+    for (var value of payload.values()) {}
     try {
       const config = {
         headers: {
           'Content-Type': 'multipart/form-data',
           responseType: 'blob',
-          Authorization: `Bearer ${getCookie('accessToken')}`,
-          // RefreshToken : `${getCookie("refreshToken")}`
+          Authorization: `Bearer ${getCookie('accessToken')}`
         },
       };
       const data = await axios.post(
@@ -107,7 +89,6 @@ export const __postInformation = createAsyncThunk(
         payload,
         config
       );
-      // console.log('data', data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -150,20 +131,7 @@ export const __updateInformation = createAsyncThunk(
       });
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
-      // console.log('error', error)
       return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
-
-export const __getInfoComment = createAsyncThunk(
-  'comments/getInfoComment',
-  async (payload, thunkAPI) => {
-    try {
-      const data = await axios.get(`http://localhost:3001/infoComments`);
-      return thunkAPI.fulfillWithValue(data.data);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
     }
   }
 );
@@ -181,8 +149,6 @@ export const __postInfoComment = createAsyncThunk(
         },
         data: payload,
       });
-      // console.log('payload', payload);
-      // console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -202,7 +168,6 @@ export const __deleteInfoComment = createAsyncThunk(
           Authorization: `Bearer ${getCookie('accessToken')}`,
         },
       });
-      //   console.log(payload)
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -223,14 +188,13 @@ export const __updateInfoComment = createAsyncThunk(
         },
         data: payload,
       });
-      // console.log('payload', payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
-      // console.log(payload);
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
+
 //대댓글
 export const __postInfoReplyComment = createAsyncThunk(
   'replycomennts/postInfoReplyComment',
@@ -245,8 +209,6 @@ export const __postInfoReplyComment = createAsyncThunk(
         },
         data: payload,
       });
-      // console.log('payload', payload);
-      // console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -254,41 +216,44 @@ export const __postInfoReplyComment = createAsyncThunk(
   }
 );
 
-export const __deleteInfoReplyComment = createAsyncThunk("comments/deleteHelpReplyComment", async (payload, thunkAPI) => {
-  try {
-    const data = await axios({
-      method: 'delete',
-      url: `${BASE_URL}/article/information/${payload.articleId}/comment/${payload.commentId}/${payload.childCommentId}`,
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${getCookie("accessToken")}`,
-      },
-    });
-    // console.log(data)
-    return thunkAPI.fulfillWithValue(payload);
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error);
+export const __deleteInfoReplyComment = createAsyncThunk(
+  'comments/deleteHelpReplyComment',
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios({
+        method: 'delete',
+        url: `${BASE_URL}/article/information/${payload.articleId}/comment/${payload.commentId}/${payload.childCommentId}`,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getCookie('accessToken')}`,
+        },
+      });
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
   }
-});
+);
 
-export const __updateInfoReplyComment = createAsyncThunk("comments/updateHelpReplyComment", async (payload, thunkAPI) => {
-  try {
-
-    const data = await axios({
-      method: 'patch',
-      url: `${BASE_URL}/article/information/${payload.articleId}/comment/${payload.commentId}/${payload.childCommentId}`,
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${getCookie("accessToken")}`,
-      },
-      data: payload
-    });
-    // console.log(data)
-    return thunkAPI.fulfillWithValue(payload);
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error);
+export const __updateInfoReplyComment = createAsyncThunk(
+  'comments/updateHelpReplyComment',
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios({
+        method: 'patch',
+        url: `${BASE_URL}/article/information/${payload.articleId}/comment/${payload.commentId}/${payload.childCommentId}`,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getCookie('accessToken')}`,
+        },
+        data: payload,
+      });
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
   }
-});
+);
 
 // 좋아요
 export const __postInformationHeart = createAsyncThunk(
@@ -304,12 +269,8 @@ export const __postInformationHeart = createAsyncThunk(
         },
         data: payload,
       });
-      // console.log(data);
-      // console.log('data', data.data);
-      // console.log(payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      // console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -337,7 +298,6 @@ export const InformationSlice = createSlice({
     },
     [__getDetailInformation.fulfilled]: (state, action) => {
       state.isLoading = false;
-      // console.log(action.payload)
       state.informationsfind = action.payload;
     },
     [__getDetailInformation.rejected]: (state, action) => {
@@ -345,7 +305,7 @@ export const InformationSlice = createSlice({
       state.error = action.payload;
     },
 
-
+    // 인기순
     [__getPopularInformation.pending]: (state) => {
       state.isLoading = true;
     },
@@ -375,7 +335,6 @@ export const InformationSlice = createSlice({
     },
     [__deleteInformation.fulfilled]: (state, action) => {
       state.isLoading = false;
-      // console.log(action)
       state.informations = state.informations.filter(
         (info) => info.id !== action.payload
       );
@@ -388,11 +347,8 @@ export const InformationSlice = createSlice({
     [__updateInformation.pending]: (state) => {
       state.isLoading = true;
     },
-
     [__updateInformation.fulfilled]: (state, action) => {
       state.isLoading = false;
-      // console.log('action', action);
-      // console.log('action.payload', action.payload);
       state.informations = state.informations.map((info) => {
         if (info.id === action.payload.id) {
           info = action.payload;
@@ -404,17 +360,8 @@ export const InformationSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    [__getInfoComment.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [__getInfoComment.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      state.infoComments = action.payload;
-    },
-    [__getInfoComment.rejected]: (state, action) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
+
+    // 댓글
     [__postInfoComment.pending]: (state) => {
       state.isLoading = true;
     },
@@ -432,8 +379,6 @@ export const InformationSlice = createSlice({
     },
     [__deleteInfoComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      // console.log(state.comment)
-      // console.log(action);
       state.infoComments = state.infoComments.filter(
         (comment) => comment.id !== action.payload
       );
@@ -443,15 +388,12 @@ export const InformationSlice = createSlice({
       state.error = action.payload;
     },
 
-    
     [__updateInfoComment.pending]: (state) => {
       state.isLoading = true;
     },
 
     [__updateInfoComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      // console.log('action', action);
-      // console.log('comment', state.helpcomments);
       state.infoComments = state.infoComments.map((comment) => {
         if (comment.id === action.payload.id) {
           comment.comment = action.payload.content;
@@ -470,7 +412,6 @@ export const InformationSlice = createSlice({
     },
     [__postInfoReplyComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      // console.log(action.payload);
       state.infoReplyComments.push(action.payload);
     },
     [__postInfoReplyComment.rejected]: (state, action) => {
@@ -482,9 +423,9 @@ export const InformationSlice = createSlice({
     },
     [__deleteInfoReplyComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      // console.log(state.comment)
-      // console.log(action)
-      state.infoReplyComments = state.infoReplyComments.filter(comment => comment.id !== action.payload)
+      state.infoReplyComments = state.infoReplyComments.filter(
+        (comment) => comment.id !== action.payload
+      );
     },
     [__deleteInfoReplyComment.rejected]: (state, action) => {
       state.isLoading = false;
@@ -493,27 +434,21 @@ export const InformationSlice = createSlice({
     [__updateInfoReplyComment.pending]: (state) => {
       state.isLoading = true;
     },
-
     [__updateInfoReplyComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      // console.log('action', action.payload)
-      // console.log('comment', state.childCommentList)
       state.infoReplyComments = state.infoReplyComments.map((comment) => {
         if (comment.childCommentId === action.payload.childCommentId) {
           comment.content = action.payload.content;
         }
         return comment;
-      })
-
+      });
     },
-
 
     // 좋아요
     [__postInformationHeart.pending]: (state) => {
       state.isLoading = true;
     },
     [__postInformationHeart.fulfilled]: (state, action) => {
-      // console.log('__postHeart.fulfilled', action);
       state.isLoading = false;
       state.heart.unshift(action);
     },

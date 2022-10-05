@@ -1,13 +1,9 @@
 import React from 'react';
-import NoticeHome from "../components/noticeBoard/NoticeHome"
 import styled from 'styled-components';
-import { useNavigate } from "react-router-dom";
-import { VscBell } from "react-icons/vsc";
+import NoticeHome from "../components/noticeBoard/NoticeHome"
 import Header from '../components/Header';
 
 const FreeTalkPage = () => {
-
-    const navigate = useNavigate();
  
     return (
         <Container>

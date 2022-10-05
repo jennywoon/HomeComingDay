@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import Button from "../../components/elements/Button"
-import Input from "../../components/elements/Input"
-import { __loginUser } from '../../redux/modules/UserSlice';
-import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
-import NaverLogin from './NaverLogin';
-import logoname from "../../assets/logoname.png"
+import Button from '../../components/elements/Button';
+import Input from '../../components/elements/Input';
 import LoginErrorModal from './LoginErrorModal';
-import { getUser } from '../../redux/modules/UserSlice';
 import PrivacyPolicy from './PrivacyPolicy';
 import PwaApp from './PwaApp';
+// import NaverLogin from './NaverLogin';
+// 모듈
+import { __loginUser, getUser } from '../../redux/modules/UserSlice';
+// 아이콘 이미지
+import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
+import logoname from '../../assets/logoname.png';
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLogin, error } = useSelector((state) => state.user)
+  const { isLogin, error } = useSelector((state) => state.user);
   // console.log(isLogin)
   const [formValue, setFormValue] = useState({
     email: '',
@@ -66,32 +66,31 @@ const Login = () => {
 
   // 로그인버튼
   const [modalOpen, setModalOpen] = useState(false);
-  const [isLoginCheck, setIsLoginCheck] = useState(false)
+  const [isLoginCheck, setIsLoginCheck] = useState(false);
   const onSubmitHandler = async (formValue) => {
-    const response = await dispatch(__loginUser(formValue))
-    // console.log(response)
+    const response = await dispatch(__loginUser(formValue));
     if (response.payload.success === true) {
       if (response.payload.data.schoolInfo === true) {
         navigate('/main');
       } else if (response.payload.data.schoolInfo === false) {
         navigate('/schoolinfo');
       }
-    }
-    else if (response.error) {
+    } else if (response.error) {
       setModalOpen(true);
     }
   };
 
+  // 로그인 버튼 비활성화
   useEffect(() => {
     if (formValue.email !== '' && formValue.password !== '') {
       handleCheck(true);
     } else {
       handleCheck(false);
     }
-  }, [formValue])
+  }, [formValue]);
 
   useEffect(() => {
-    setIsLoginCheck(isLogin)
+    setIsLoginCheck(isLogin);
     dispatch(getUser());
   }, [dispatch, isLogin]);
 
@@ -103,83 +102,85 @@ const Login = () => {
   };
 
   return (
-    <>
-      <StLoginContainer
-        onSubmit={(e) => {
-          e.preventDefault();
-          onSubmitHandler(formValue);
-        }}
-      >
-        {modalOpen && <LoginErrorModal setModalOpen={setModalOpen} />}
-        {privcayModal && <PrivacyPolicy setPrivacyModal={setPrivacyModal} />}
-        <StLoginWraps>
-          <StLoginTitle>
-            <StLogoImg />
-          </StLoginTitle>
-          <StLoginWrap>
-            <StEmail>
-              <Stlabel>이메일</Stlabel>
-              <Input
-                onChange={onChangeEmailHandler}
-                value={formValue.email}
-                width='100%'
-                style={{ borderBottom: "1px solid #ccc", marginTop: "10PX" }}
-              />
-            </StEmail>
-            <StPassword>
-              <Stlabel>비밀번호</Stlabel>
-              <StPasswordInput>
-                <Input
-                  type={passwordType.type}
-                  onChange={onChangePasswordHandler}
-                  value={formValue.password}
-                  width='100%'
-                  style={{ borderBottom: "1px solid #ccc", marginTop: "10PX" }}
-                />
-                <StVisible onClick={handlePasswordType}>
-                  {passwordType.visible ? (
-                    <span>
-                      <AiOutlineEye />
-                    </span>
-                  ) : (
-                    <span>
-                      <AiOutlineEyeInvisible />
-                    </span>
-                  )}
-                </StVisible>
-              </StPasswordInput>
-            </StPassword>
-            <Button
-              type='submit'
+    <StLoginContainer
+      onSubmit={(e) => {
+        e.preventDefault();
+        onSubmitHandler(formValue);
+      }}
+    >
+      {modalOpen && <LoginErrorModal setModalOpen={setModalOpen} />}
+      {privcayModal && <PrivacyPolicy setPrivacyModal={setPrivacyModal} />}
+      <StLoginWraps>
+        <StLoginTitle>
+          <StLogoImg />
+        </StLoginTitle>
+        <StLoginWrap>
+          <StEmail>
+            <Stlabel>이메일</Stlabel>
+            <Input
+              onChange={onChangeEmailHandler}
+              value={formValue.email}
               width='100%'
-              height="100%"
-              isDisabled={isActive ? false : true}
-              color='white'
-              style={{ marginTop: '50px', backgroundColor: "#f7931e" }}
-            >
-              <StButtonTitle>로그인</StButtonTitle>
-            </Button>
-            {/* <StNaverContainer>
+              style={{ borderBottom: '1px solid #ccc', marginTop: '10PX' }}
+            />
+          </StEmail>
+          <StPassword>
+            <Stlabel>비밀번호</Stlabel>
+            <StPasswordInput>
+              <Input
+                type={passwordType.type}
+                onChange={onChangePasswordHandler}
+                value={formValue.password}
+                width='100%'
+                style={{ borderBottom: '1px solid #ccc', marginTop: '10PX' }}
+              />
+              <StVisible onClick={handlePasswordType}>
+                {passwordType.visible ? (
+                  <span>
+                    <AiOutlineEye />
+                  </span>
+                ) : (
+                  <span>
+                    <AiOutlineEyeInvisible />
+                  </span>
+                )}
+              </StVisible>
+            </StPasswordInput>
+          </StPassword>
+          <Button
+            type='submit'
+            width='100%'
+            height='100%'
+            isDisabled={isActive ? false : true}
+            color='white'
+            style={{ marginTop: '50px', backgroundColor: '#f7931e' }}
+          >
+            <StButtonTitle>로그인</StButtonTitle>
+          </Button>
+          {/* <StNaverContainer>
               <NaverLogin />
             </StNaverContainer> */}
-            <StGoToSignup
-              type='button'
-              onClick={() => {
-                navigate('/signup');
-              }}
-            >
-              이메일로 회원가입
-            </StGoToSignup>
-            <StNaverContainer>
-              <PwaApp />
-            </StNaverContainer>
-          </StLoginWrap>
-        </StLoginWraps>
-        <StPrivacy>
-          회원가입시<StPrivacyText onClick={showPrivacyModal}>개인정보처리방침</StPrivacyText>동의로 간주됩니다
-        </StPrivacy>
-      </StLoginContainer>
-    </>
+          <StGoToSignup
+            type='button'
+            onClick={() => {
+              navigate('/signup');
+            }}
+          >
+            이메일로 회원가입
+          </StGoToSignup>
+          <StNaverContainer>
+            <PwaApp />
+          </StNaverContainer>
+        </StLoginWrap>
+      </StLoginWraps>
+      <StPrivacy>
+        회원가입시
+        <StPrivacyText onClick={showPrivacyModal}>
+          개인정보처리방침
+        </StPrivacyText>
+        동의로 간주됩니다
+      </StPrivacy>
+    </StLoginContainer>
   );
 };
 
@@ -216,7 +217,7 @@ const StLogoImg = styled.div`
   background-image: url(${logoname});
   background-position: center;
   background-size: 100% 100%;
-`
+`;
 
 const StEmail = styled.div`
   margin-bottom: 30px;
@@ -250,7 +251,7 @@ const StGoToSignup = styled.p`
   font-weight: 500;
   text-decoration: underline;
   margin-bottom: 10px;
-`
+`;
 
 const StNaverContainer = styled.div`
   width: 100%;
@@ -259,8 +260,7 @@ const StNaverContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
-  /* border: 1px solid red; */
-`
+`;
 
 const StButtonTitle = styled.div`
   width: 100%;
@@ -268,7 +268,7 @@ const StButtonTitle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 
 const StPrivacy = styled.div`
   position: fixed;
@@ -281,10 +281,10 @@ const StPrivacy = styled.div`
   font-weight: 400;
   justify-content: center;
   font-size: 14px;
-`
+`;
 
 const StPrivacyText = styled.div`
   color: #f7931e;
   text-decoration: underline;
   cursor: pointer;
-`
+`;

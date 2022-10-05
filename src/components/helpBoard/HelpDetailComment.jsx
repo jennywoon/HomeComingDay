@@ -2,14 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  __deleteHelpComment,
-  __updateHelpComment,
-  __getHelp,
-  __getDetailHelp,
-  __postHelpComment,
-  __postHelpReplyComment,
-} from '../../redux/modules/HelpSlice';
+import { __updateHelpComment, __getDetailHelp, __postHelpReplyComment } from '../../redux/modules/HelpSlice';
 import { useParams } from 'react-router-dom';
 import { GrUploadOption } from 'react-icons/gr';
 import HelpCommentDeleteModal from './HelpCommentDeleteModal';
@@ -20,8 +13,6 @@ const DetailComment = ({ comment, helpsfind, data }) => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  // console.log(comment);
-
   const { commentId } = helpsfind.commentList.find(
     (commentmap) => commentmap.commentId === comment.commentId
   );
@@ -31,22 +22,12 @@ const DetailComment = ({ comment, helpsfind, data }) => {
   const { username } = helpsfind.commentList.find(
     (commentmap) => commentmap.username === comment.username
   );
-  // console.log('commentId', commentId);
-  // console.log('childCommentList', childCommentList);
-  // console.log("comment",comment)
-  // console.log('username', username);
-  // console.log('data', data);
 
   const [showComment, setShowComment] = useState(false);
   const [showReplyComment, setShowReplyComment] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [editComment, setEditComment] = useState(comment.content);
   const [replyComment, setReplyComment] = useState('');
-
-  // useEffect(() => {
-  //     dispatch(__postHelpComment());
-  //     dispatch(__getDetailHelp(id))
-  // }, [dispatch])
 
   //모달닫기
   const node = useRef();
@@ -404,7 +385,6 @@ const StEditBox = styled.div`
   align-items: center;
   width: 100%;
   position: relative;
-  /* padding: 0px 20px; */
 `;
 
 const StTxtName = styled.h3`
