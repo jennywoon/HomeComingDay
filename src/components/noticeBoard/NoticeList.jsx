@@ -1,10 +1,11 @@
-import React from 'react';
-import { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { __getNotice } from '../../redux/modules/NoticeSlice';
 import NoticeCard from './NoticeCard';
+// 모듈
+import { __getNotice } from '../../redux/modules/NoticeSlice';
 import { __getMyPage } from '../../redux/modules/MyPageSlice';
+// 아이콘 이미지
 import nonedatasquare from '../../assets/nonedatabell.png';
 
 const NoticeList = () => {

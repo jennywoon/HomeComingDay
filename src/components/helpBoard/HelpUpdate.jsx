@@ -1,38 +1,25 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
-import { __getDetailHelp, __getHelp, __postHelp } from '../../redux/modules/HelpSlice';
-import { IoIosArrowBack } from 'react-icons/io';
-import { GrImage } from 'react-icons/gr';
 import Button from '../elements/Button';
+// 모듈
+import { __getDetailHelp } from '../../redux/modules/HelpSlice';
 import { __updateHelp } from '../../redux/modules/HelpSlice';
-import { useSelector } from 'react-redux';
-import { useDropzone } from 'react-dropzone';
-import { MdCancel } from 'react-icons/md';
+// 아이콘 이미지
+import { IoIosArrowBack } from 'react-icons/io';
 
 const HelpUpdate = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  const { helps } = useSelector((state) => state.helps);
   const { helpsfind } = useSelector((state) => state.helps);
-  // const helpsfind = helps.find((help) => help.articleId === Number(id));
 
-  // const [updateHelp, setUpdateHelp] = useState({
-  //     title: "",
-  //     content: "",
-  //     imgUrl:""
-  // });
-
-  // const [title, content , imgUrl] = updateHelp
-
-  // console.log("helps", helps , "helpsfind" , helpsfind)
   const [EditTitle, setEditTitle] = useState(helpsfind && helpsfind.title);
   const [EditContent, setEditContent] = useState(
     helpsfind && helpsfind.content
   );
-  const [EditImg, setEditImg] = useState('');
+
   const [isOnActive, setIsOnActive] = useState(false);
 
   const onChangeTitle = (e) => {
@@ -41,10 +28,6 @@ const HelpUpdate = () => {
 
   const onChangeContent = (e) => {
     setEditContent(e.target.value);
-  };
-
-  const onChangeImg = (e) => {
-    setEditImg(e.target.value);
   };
 
   const handleCheck = (e) => {
@@ -66,7 +49,6 @@ const HelpUpdate = () => {
       id: id,
       title: EditTitle,
       content: EditContent,
-      imgUrl: EditImg,
     };
     await dispatch(__updateHelp(edithelpsfind));
     await dispatch(__getDetailHelp(id));
@@ -200,7 +182,6 @@ const StFormInput = styled.input`
 
 const StTextarea = styled.textarea`
   width: 95%;
-  /* height: 100%; */
   height:200px;
   border: none;
   padding: 10px 5px;

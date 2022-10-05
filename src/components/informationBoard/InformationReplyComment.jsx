@@ -1,14 +1,15 @@
-import React , { useRef ,useEffect }from 'react';
-import styled from 'styled-components';
-import { useState } from 'react';
+import React , { useRef ,useEffect, useState }from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { GrUploadOption } from "react-icons/gr";
+import styled from 'styled-components';
 import InformationReplyCommentDeleteModal from './InformationReplyCommentDeleteModal';
-import { __deleteInfoReplyComment, __getDetailInformation, __getInformation ,__updateInfoReplyComment} from '../../redux/modules/InformationSlice';
+// 모듈
+import { __deleteInfoReplyComment, __getDetailInformation, __updateInfoReplyComment} from '../../redux/modules/InformationSlice';
+// 이미지 아이콘
+import { GrUploadOption } from "react-icons/gr";
 import dots from "../../assets/dots.png"
 
-const InformationReplyComment = ({childCommentList,commentId,childComment, ids , data}) => {
+const InformationReplyComment = ({ commentId, childComment, ids , data}) => {
     const {id} = useParams()
     const dispatch = useDispatch()
 
@@ -17,10 +18,6 @@ const InformationReplyComment = ({childCommentList,commentId,childComment, ids ,
     const [modalOpen, setModalOpen] = useState(false);
     const [editReplyComment , setEditReplyComment] = useState(childComment.content)
     const [replyTargetId,setReplyTargetId] = useState(null);
-    const childCommentId = childCommentList.find((comment)=> comment.childCommentId === childComment.childCommentId)
-
-    // console.log("childCommentList",childCommentList)
-    // console.log("childCommentId",childCommentId)
 
     //모달닫기
     const node = useRef();
@@ -38,11 +35,6 @@ const InformationReplyComment = ({childCommentList,commentId,childComment, ids ,
         document.removeEventListener("mousedown", clickOutside);
         };
     }, [showReplyComment]);
-
-
-    const closeModal = () => {
-        setModalOpen(false);
-      };
 
     //대댓글 수정하기 버튼 활성화
   const [isReplyActive, setReplyActive] = useState(false);
@@ -107,9 +99,6 @@ const InformationReplyComment = ({childCommentList,commentId,childComment, ids ,
         setReviseReplyComment(!reviseReplyComment)
         await dispatch(__getDetailInformation(id))
     }
-
-
-
 
     return (
         <div>
@@ -255,16 +244,7 @@ const StDeleteButton = styled.button`
         color: #000;
     }
 `
-const StReviseButtonChange = styled.button`
-    width:50px;
-    background-color:white;
-    font-size:10px;
-    border:1px solid gray;
-    cursor:pointer;
-    border-radius: 10px;
-    height:25px;
-    color:gray;
-`
+
 const StReviseBox = styled.div`
     display: flex;
     align-items: center;

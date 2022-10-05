@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+// 이미지
 import HomeColorimg from '../assets/HomeColor.png';
 import Searchimg from '../assets/Search.png';
 import Chatimg from '../assets/Chat.png';

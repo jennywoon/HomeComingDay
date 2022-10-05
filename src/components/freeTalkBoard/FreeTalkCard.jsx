@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
-import {
-  __getDetailFreeTalk,
-  __getFreeTalk,
-  __postFreeTalk,
-} from '../../redux/modules/FreeTalkSlice';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+// 모듈
+import { __getDetailFreeTalk, __getFreeTalk } from '../../redux/modules/FreeTalkSlice';
+// 이미지 아이콘
 import commentgray from '../../assets/commentgray.png';
 import heartgray from '../../assets/heartgray.png';
 
@@ -83,7 +81,6 @@ const StFreeTalkContainer = styled.div`
 
 const StCard = styled.div`
   width: 97%;
-  /* border: 1px solid red; */
   margin: 0 auto;
 `;
 
@@ -94,7 +91,6 @@ const StCardHead = styled.div`
 `;
 
 const StImg = styled.div`
-  /* border: 1px solid red; */
 `;
 
 const StHeadImg = styled.img`
@@ -118,7 +114,6 @@ const StHeadTop = styled.div`
   height: 100%;
   display: flex;
   justify-content: space-between;
-  /* border: 1px solid red; */
 `;
 const StHeadBottom = styled.div`
   display: flex;
@@ -132,7 +127,6 @@ const StHeadName = styled.h2`
   font-size: 14px;
   font-weight: 600;
   color: #000;
-  /* margin: 0px 5px; */
 `;
 const StHeadStudent = styled.p``;
 
@@ -156,11 +150,6 @@ const StBodyTitle = styled.div`
   word-break: break-word;
 `;
 
-const BodyContent = styled.div`
-  font-size: 12px;
-  margin: 5px 0px;
-`;
-
 const StCardFooter = styled.div`
   display: flex;
   justify-content: space-between;
@@ -168,14 +157,6 @@ const StCardFooter = styled.div`
 
 const StViews = styled.div`
   font-size: 12px;
-  color: gray;
-  /* margin-right:10px; */
-`;
-
-const Division = styled.div`
-  font-size: 12px;
-  align-items: center;
-  margin: 0 5px;
   color: gray;
 `;
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import Header from '../components/Header';
 import ChatList from '../components/chatBoard/ChatList';
 
 const FreeTalkPage = () => {

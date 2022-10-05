@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+// 아이콘 이미지
 import exclamation from "../../assets/exclamation.png"
 
 const CalendarReplyCommentDeleteModal = ({setModalOpen,onClickDeleteReplyComment}) => {
+
     const closeModal = () => {
         setModalOpen(false);
       };
@@ -37,11 +39,9 @@ const StContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* align-items: center; */
   width: 100%;
   z-index: 10;
   overflow: hidden;
-  /* bottom: 0; */
   top: 0;
   transform: translateX(-80px);
   
@@ -150,7 +150,6 @@ const StBottomTitle = styled.div`
 const StBottomCancelTitle = styled.div`
   font-size: 16px;
   font-weight: 700;
-  /* background-color: #f7931e; */
   border: 1px solid #f7931e;
   border-radius: 16px;
   width: 40%;

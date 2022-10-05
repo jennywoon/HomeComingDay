@@ -36,7 +36,6 @@ const Navbar = styled.div`
     justify-content: space-between;
     align-items: center;
     font-size: 15px;
-    /* font-weight: bold; */
     ;
 `
 

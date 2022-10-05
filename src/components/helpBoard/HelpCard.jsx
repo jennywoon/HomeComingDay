@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
-import { __getDetailHelp, __getHelp, __postHeart, __postHelp } from '../../redux/modules/HelpSlice';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+// 모듈
+import { __getDetailHelp, __getHelp } from '../../redux/modules/HelpSlice';
+// 아이콘 이미지
 import commentgray from '../../assets/commentgray.png';
 import heartgray from '../../assets/heartgray.png';
 
 const HelpCard = ({ help, id }) => {
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

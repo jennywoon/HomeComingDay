@@ -1,53 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import Header from '../Header';
-import styled from 'styled-components';
-import { IoIosArrowBack } from 'react-icons/io';
-import FreeTalkDetailComment from './FreeTalkDetailComment';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  __getDetailFreeTalk,
-  __getFreeTalk,
-  __postFreeTalkComment,
-  __postFreeTalkHeart,
-} from '../../redux/modules/FreeTalkSlice';
-import { useRef } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import Header from '../Header';
+import FreeTalkDetailComment from './FreeTalkDetailComment';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import {
-  MdOutlineArrowBackIos,
-  MdOutlineArrowForwardIos,
-} from 'react-icons/md';
 import FreeTalkDeleteModal from './FreeTalkDeleteModal';
+import { chatApi } from '../chatBoard/ChatApi';
+// 모듈
+import { __getDetailFreeTalk, __getFreeTalk, __postFreeTalkComment, __postFreeTalkHeart } from '../../redux/modules/FreeTalkSlice';
+import { __getMyPage,__getView } from '../../redux/modules/MyPageSlice';
+import { __getNoticeCount } from '../../redux/modules/NoticeSlice';
+// 아이콘 이미지
+import dots from '../../assets/dots.png';
+import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md';
 import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
 import heartColorImg from '../../assets/heartColor.png';
-import { __getMyPage,__getView } from '../../redux/modules/MyPageSlice';
-import { chatApi } from '../chatBoard/ChatApi';
-import { __getNoticeCount } from '../../redux/modules/NoticeSlice';
-import dots from '../../assets/dots.png';
+import { IoIosArrowBack } from 'react-icons/io';
 
 const FreeTalkDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { freetalks } = useSelector((state) => state.freetalks);
   const { freetalksfind } = useSelector((state) => state.freetalks);
   const data = useSelector((state) => state.mypages.mypages);
   const detailview = useSelector((state)=>state.mypages.view);
-  // const { freeComments } = useSelector((state) => state.freetalks)
   const { id } = useParams();
-  // console.log(id)
   const [show, setShow] = useState(false);
   const [showChaet, setShowChaet] = useState(false);
   const [comment, setComment] = useState('');
   const modalRef = useRef(null);
 
-  // const freetalksfind = freetalks.find((freetalk) => freetalk.articleId === Number(id))
-  // console.log("freetalksfind",freetalksfind)
-  // console.log("detailFreeTalks",detailFreeTalkss)
   //모달닫기
   const node = useRef();
 
@@ -130,7 +117,6 @@ const FreeTalkDetail = () => {
     onBeforeInit: (swiper) => {
       swiper.params.navigation.prevEl = navigationPrevRef.current;
       swiper.params.navigation.nextEl = navigationNextRef.current;
-      // swiper.activeIndex = setMainImageIndex;
       swiper.navigation.update();
     },
     onSwiper: setSwiper,
@@ -150,7 +136,6 @@ const FreeTalkDetail = () => {
       articleId: id,
     };
     const response = await dispatch(__postFreeTalkHeart(newHeart));
-    // console.log(response.payload);
     await dispatch(__getDetailFreeTalk(id));
   };
 

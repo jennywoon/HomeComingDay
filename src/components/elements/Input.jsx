@@ -49,7 +49,6 @@ Input.defaultValue = {
 export default Input;
 
 const StyledButtonField = styled.div`
-  /* margin: 0.3rem 0; */
 `;
 const StyledInput = styled.input`
   font-size: 16px;
@@ -59,7 +58,5 @@ const StyledInput = styled.input`
   padding: ${(props) => props.padding};
   border: none;
   border-bottom: ${(props) => props.borderBottom};
-  /* border: 1px solid #ccc; */
-  /* border-radius: 3px; */
 `;
 const StyledText = styled.div``
