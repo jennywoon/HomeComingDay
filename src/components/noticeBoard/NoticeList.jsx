@@ -43,10 +43,12 @@ export default NoticeList;
 
 const StNoticeList = styled.div`
   width: 100%;
-  height: 83%;
+  height: 100%;
   overflow: scroll;
   display: flex;
   justify-content: center;
+  margin-bottom: 60px;
+  padding: 0;
   ::-webkit-scrollbar {
     width: 0px;
   }
