@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
-import { __getCalendar, __getDetailCalendar } from '../../redux/modules/CalendarSlice';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+// 모듈
+import { __getCalendar, __getDetailCalendar } from '../../redux/modules/CalendarSlice';
+// 아이콘 이미지
 import commentgray from '../../assets/commentgray.png';
 import heartgray from '../../assets/heartgray.png';
 import calendarCheck from "../../assets/calendarCheck.png"
@@ -180,7 +182,7 @@ const StRecruit = styled.div`
   width:25%;
   font-weight: 700;
 font-size: 14px;
-color:#F7931E;
+color:#03C75A;
 
 text-align: end;
 &&.end{
@@ -195,11 +197,8 @@ const StBodyTitle = styled.div`
   color: #000;
   box-sizing: border-box;
   padding:0px 10px;
-  /* height: 100%; */
   width: 60%;
-  /* display: flex; */
   text-align: center;
-  justify-content: center;
   word-break: break-word;
 `;
 

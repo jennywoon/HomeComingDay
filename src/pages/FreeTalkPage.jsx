@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom"
-import FreeTalkHome from '../components/freeTalkBoard/FreeTalkHome';
 import styled from 'styled-components';
+import FreeTalkHome from '../components/freeTalkBoard/FreeTalkHome';
 import Header from '../components/Header';
 
 const FreeTalkPage = () => {
@@ -48,8 +48,6 @@ const Navbar = styled.div`
     justify-content: space-between;
     align-items: center;
     font-size: 15px;
-    /* font-weight: bold; */
-    ;
 `
 
 const NavbarTitle = styled.div`

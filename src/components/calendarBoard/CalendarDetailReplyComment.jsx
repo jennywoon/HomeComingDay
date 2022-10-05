@@ -1,63 +1,54 @@
-import React , { useRef ,useEffect }from 'react';
-import styled from 'styled-components';
-import { BiDotsVerticalRounded } from "react-icons/bi";
-import { useState } from 'react';
-import Input from "../elements/Input";
+import React, { useRef, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { GrUploadOption } from "react-icons/gr";
-import { __getCalendar ,__deleteCalendarReplyComment, __updateCalendarReplyComment, __getDetailCalendar} from '../../redux/modules/CalendarSlice';
+import styled from 'styled-components';
 import CalendarReplyCommentDeleteModal from './CalendarReplyCommentDeleteModal';
+// 모듈
+import { __deleteCalendarReplyComment, __updateCalendarReplyComment, __getDetailCalendar } from '../../redux/modules/CalendarSlice';
+// 이미지 아이콘
 import dots from "../../assets/dots.png"
+import { GrUploadOption } from "react-icons/gr";
 
-const CalendarDetailReplyComment = ({childCommentList,commentId,childComment, ids ,data}) => {
-    const {id} = useParams()
+const CalendarDetailReplyComment = ({ commentId, childComment, ids, data }) => {
+    const { id } = useParams()
     const dispatch = useDispatch()
 
-    const [showReplyComment,setShowReplyComment] = useState(false)
-    const [reviseReplyComment,setReviseReplyComment] = useState(false)
+    const [showReplyComment, setShowReplyComment] = useState(false)
+    const [reviseReplyComment, setReviseReplyComment] = useState(false)
     const [modalOpen, setModalOpen] = useState(false);
-    const [editReplyComment , setEditReplyComment] = useState(childComment.content)
-    const [replyTargetId,setReplyTargetId] = useState(null);
-    const childCommentId = childCommentList.find((comment)=> comment.childCommentId === childComment.childCommentId)
-
-    // console.log("childCommentList",childCommentList)
-    // console.log("childCommentId",childCommentId)
+    const [editReplyComment, setEditReplyComment] = useState(childComment.content)
+    const [replyTargetId, setReplyTargetId] = useState(null);
 
     //모달닫기
     const node = useRef();
 
     useEffect(() => {
         const clickOutside = (e) => {
-        // 모달이 열려 있고 모달의 바깥쪽을 눌렀을 때 창 닫기
-        if (showReplyComment && node.current && !node.current.contains(e.target)) {
-            setShowReplyComment(false);
-        }
-    };
+            // 모달이 열려 있고 모달의 바깥쪽을 눌렀을 때 창 닫기
+            if (showReplyComment && node.current && !node.current.contains(e.target)) {
+                setShowReplyComment(false);
+            }
+        };
         document.addEventListener("mousedown", clickOutside);
         return () => {
-        // Cleanup the event listener
-        document.removeEventListener("mousedown", clickOutside);
+            // Cleanup the event listener
+            document.removeEventListener("mousedown", clickOutside);
         };
     }, [showReplyComment]);
 
-    const closeModal = () => {
-        setModalOpen(false);
-      };
-
-//대댓글 수정하기 버튼 활성화
-  const [isReplyActive, setReplyActive] = useState(false);
-  const handleReplyCheck = (e) =>{
-    setReplyActive(e);
-  }
-
-  useEffect(() => {
-    if (editReplyComment.trim() !== '') {
-      handleReplyCheck(true);
-    } else {
-      handleReplyCheck(false);
+    //대댓글 수정하기 버튼 활성화
+    const [isReplyActive, setReplyActive] = useState(false);
+    const handleReplyCheck = (e) => {
+        setReplyActive(e);
     }
-  }, [editReplyComment]);
+
+    useEffect(() => {
+        if (editReplyComment.trim() !== '') {
+            handleReplyCheck(true);
+        } else {
+            handleReplyCheck(false);
+        }
+    }, [editReplyComment]);
 
     //모달
     const showModal = (e) => {
@@ -67,7 +58,7 @@ const CalendarDetailReplyComment = ({childCommentList,commentId,childComment, id
 
 
     //대댓글수정하기 텍스트핸들러
-    const onChangeReplyHandler = (e) =>{
+    const onChangeReplyHandler = (e) => {
         setEditReplyComment(e.target.value)
     }
 
@@ -84,23 +75,23 @@ const CalendarDetailReplyComment = ({childCommentList,commentId,childComment, id
     }
 
 
-    const onClickDeleteReplyComment = async() =>{
+    const onClickDeleteReplyComment = async () => {
         const deleteReplyComments = {
             articleId: Number(id),
             commentId: commentId,
-            childCommentId : replyTargetId
+            childCommentId: replyTargetId
         }
         await dispatch(__deleteCalendarReplyComment(deleteReplyComments))
         await dispatch(__getDetailCalendar(id))
-        
+
     }
 
     //대댓글 수정하기
-    const onClickUpdateReplyComment = async() =>{
+    const onClickUpdateReplyComment = async () => {
         const reviseReplyComments = {
             articleId: Number(id),
             commentId: commentId,
-            childCommentId :replyTargetId,
+            childCommentId: replyTargetId,
             content: editReplyComment
         }
         await dispatch(__updateCalendarReplyComment(reviseReplyComments))
@@ -110,32 +101,32 @@ const CalendarDetailReplyComment = ({childCommentList,commentId,childComment, id
 
     return (
         <div>
-             <StReplyCommentBox id={ids} ref={node}>
-             {modalOpen && <CalendarReplyCommentDeleteModal setModalOpen={setModalOpen} onClickDeleteReplyComment={onClickDeleteReplyComment}/>}
-             
+            <StReplyCommentBox id={ids} ref={node}>
+                {modalOpen && <CalendarReplyCommentDeleteModal setModalOpen={setModalOpen} onClickDeleteReplyComment={onClickDeleteReplyComment} />}
+
                 <StCommentImgDiv>
                     <StCommentImg src={childComment && childComment.userImage}></StCommentImg>
                 </StCommentImgDiv>
-                    <StCommentReplytxt >
-                            {!reviseReplyComment ? 
-                            <>
+                <StCommentReplytxt >
+                    {!reviseReplyComment ?
+                        <>
                             <StReplyUserName>{childComment && childComment.username} </StReplyUserName>
                             <StUserInfo>{childComment && childComment.admission} · {childComment && childComment.departmentName}</StUserInfo>
-                            <StReplyContent>{childComment&& childComment.content}</StReplyContent>
-                            <StReplyTime>{childComment&& childComment.createdAt}</StReplyTime>
-                            </>
-                            :
-                            <StReviseBox>
-                            <StReplyCommentInput value={editReplyComment} onChange={onChangeReplyHandler} placeholder="대댓글을 수정해주세요"/>
-                            <StUploadBtnBox type="button" onClick={onClickUpdateReplyComment} disabled={isReplyActive ? false:true}>
-                            <StUploadBtn ></StUploadBtn>
+                            <StReplyContent>{childComment && childComment.content}</StReplyContent>
+                            <StReplyTime>{childComment && childComment.createdAt}</StReplyTime>
+                        </>
+                        :
+                        <StReviseBox>
+                            <StReplyCommentInput value={editReplyComment} onChange={onChangeReplyHandler} placeholder="대댓글을 수정해주세요" />
+                            <StUploadBtnBox type="button" onClick={onClickUpdateReplyComment} disabled={isReplyActive ? false : true}>
+                                <StUploadBtn ></StUploadBtn>
                             </StUploadBtnBox>
-                            </StReviseBox>}
-                            
-                    </StCommentReplytxt>
+                        </StReviseBox>}
+
+                </StCommentReplytxt>
                 {childComment.userId === data.userId ?
-                <StDots onClick={onCilckShow}/>
-                : null}
+                    <StDots onClick={onCilckShow} />
+                    : null}
 
                 {showReplyComment ?
                     <StRevisebox ref={node}>
@@ -143,7 +134,7 @@ const CalendarDetailReplyComment = ({childCommentList,commentId,childComment, id
                         <StDeleteButton onClick={showModal} type="button">삭제</StDeleteButton>
                     </StRevisebox>
                     : null}
-                
+
 
             </StReplyCommentBox>
         </div>
@@ -260,7 +251,6 @@ const StReviseBox = styled.div`
 `
 
 const StReplyUserName = styled.div`
-    /* font-weight: bold; */
     display:flex;
     align-items: center;
     font-size:14px;

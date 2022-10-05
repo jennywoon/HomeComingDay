@@ -1,11 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
-import BottomTap from './BottomTap';
-import Header from './Header';
-import { useMediaQuery } from "react-responsive";
-import HeaderTap from './HeaderTap';
-import { TiPencil } from "react-icons/ti";
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import Header from './Header';
+// 이미지 아이콘
+import { TiPencil } from "react-icons/ti";
 
 const Layout = ({ children }) => {
 

@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Search from './Search';
-import { useNavigate } from 'react-router-dom';
+// 모듈
+import { __getMyPage } from '../../redux/modules/MyPageSlice';
+// 이미지 아이콘
 import Homeimg from '../../assets/Home.png';
 import SearchColorimg from '../../assets/SearchColor.png';
 import Chatimg from '../../assets/Chat.png';
 import Myimg from '../../assets/My.png';
-import { __getMyPage } from '../../redux/modules/MyPageSlice';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 const SearchHome = () => {
+  
   const navigate = useNavigate();
   const chatList = useSelector((state) => state.chat.chatList[0]);
 

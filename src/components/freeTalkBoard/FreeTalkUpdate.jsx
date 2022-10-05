@@ -1,32 +1,21 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from "react-router-dom";
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
-import {IoIosArrowBack} from 'react-icons/io'
 import Button from '../elements/Button';
-import { useSelector } from 'react-redux';
+// 모듈
 import { __getDetailFreeTalk, __getFreeTalk, __updateFreeTalk } from '../../redux/modules/FreeTalkSlice';
+// 이미지 아이콘
+import {IoIosArrowBack} from 'react-icons/io'
 
 const FreeTalkUpdate = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {id} = useParams();
-    const {freetalks} = useSelector((state) => state.freetalks)
+
     const {freetalksfind} = useSelector((state) => state.freetalks)
-    // const freetalksfind = freetalks.find((freetalk)=> freetalk.articleId === Number(id))
-
-    // const [updateHelp, setUpdateHelp] = useState({
-    //     title: "",
-    //     content: "",
-    //     imgUrl:""
-    // });
-
-    // const [title, content , imgUrl] = updateHelp
-
-    // console.log("helps", helps , "helpsfind" , helpsfind)
     const [EditTitle, setEditTitle] = useState(freetalksfind&&freetalksfind.title)
     const [EditContent, setEditContent] = useState(freetalksfind&&freetalksfind.content)
-    const [EditImg, setEditImg] = useState('')
     const [isOnActive, setIsOnActive] = useState(false);
 
 
@@ -36,10 +25,6 @@ const FreeTalkUpdate = () => {
     
     const onChangeContent = (e) =>{
         setEditContent(e.target.value)
-    }
-
-    const onChangeImg = (e) =>{
-        setEditImg(e.target.value)
     }
 
     useEffect(() => {
@@ -62,18 +47,11 @@ const FreeTalkUpdate = () => {
     const onUpdateHandler = async(e) => {
         e.preventDefault();
         setIsOnActive(false);
-        // if (EditTitle === 0) {
-        //     return alert('변경된 내용이 없습니다');
-        //   } else if (EditContent === 0) {
-        //     return alert('변경된 내용이 없습니다');
-        //   }
-
          const editfreetalksfind = {
             ...freetalksfind ,
             id: id,
             title: EditTitle,
             content: EditContent,
-            imageList : EditImg
         }
         await dispatch(__updateFreeTalk(editfreetalksfind))
         await dispatch(__getDetailFreeTalk(id));
@@ -192,18 +170,8 @@ const StTextarea = styled.textarea`
 const StFormFooter = styled.div`
     display: flex;
     width:100%;
-    /* background-color: yellow; */
-    /* border-top: 1px solid gray; */
-
-`
-const Filelabel = styled.label`
-    margin : 10px 20px;
-    
 `
 
-const Addfile = styled.input`
-    display: none;
-`
 const StFooterBtn = styled.div`
   width: 100%;
   height: 100%;

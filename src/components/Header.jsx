@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import logo from '../assets/logo.png';
-import { useDispatch, useSelector } from 'react-redux';
-import { __getMyPage } from '../redux/modules/MyPageSlice';
 import { getCookie } from '../shared/cookies';
-import logoutAlert from '../assets/logoutAlert.png';
+// 모듈
 import { __getNoticeCount } from '../redux/modules/NoticeSlice';
+// 이미지 아이콘
+import logo from '../assets/logo.png';
+import logoutAlert from '../assets/logoutAlert.png';
 import bell from '../assets/Bell.png';
 
 const Header = () => {
+  
   const dispatch = useDispatch();
   const data = useSelector((state) => state.mypages.mypages);
   const count = useSelector((state) => state.notice.notices.count);
-  // console.log(count);
 
   // 토큰 만료되면 로그아웃
   const navigate = useNavigate();

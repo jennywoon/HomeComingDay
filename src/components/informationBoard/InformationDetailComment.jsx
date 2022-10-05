@@ -1,22 +1,16 @@
-import React, { useEffect, useRef } from 'react';
-import styled from 'styled-components';
-import { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  __deleteInfoComment,
-  __updateInfoComment,
-  __getInformation,
-  __getDetailInformation,
-  __postInformation,
-  __postInfoReplyComment,
-} from '../../redux/modules/InformationSlice';
 import { useParams } from 'react-router-dom';
-import { GrUploadOption } from 'react-icons/gr';
+import styled from 'styled-components';
 import InfoCommentDeleteModal from './InfoCommentDeleteModal';
 import InformationReplyComment from './InformationReplyComment';
+// 모듈
+import { __updateInfoComment, __getDetailInformation, __postInfoReplyComment } from '../../redux/modules/InformationSlice';
 import dots from '../../assets/dots.png';
+import { GrUploadOption } from 'react-icons/gr';
 
-const InformationComment = ({ comment, informationsfind, modalRef, data }) => {
+const InformationComment = ({ comment, informationsfind, data }) => {
+
   const dispatch = useDispatch();
   const { id } = useParams();
 
@@ -379,18 +373,7 @@ const StDeleteButton = styled.button`
     color: #000;
   }
 `;
-const StReviseButtonChange = styled.button`
-  width: 50px;
-  background-color: white;
-  position: absolute;
-  right: 0;
-  font-size: 10px;
-  border: 1px solid gray;
-  cursor: pointer;
-  border-radius: 10px;
-  height: 25px;
-  color: gray;
-`;
+
 const StEditBox = styled.div`
   display: flex;
   align-items: center;
@@ -409,11 +392,6 @@ const StTxtStudent = styled.p`
   font-size: 12px;
   font-weight: 400;
   color: #bebebe;
-`;
-const StTxtWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
 `;
 
 const StTxtFirstWrap = styled.div`

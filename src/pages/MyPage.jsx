@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCookie } from '../shared/cookies';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { getCookie } from '../shared/cookies';
 import MyPageHome from '../components/myPageBoard/MyPageHome';
+// 모듈
+import { __getNoticeCount } from '../redux/modules/NoticeSlice';
+// 이미지 아이콘
 import mypagelogo from '../assets/mypagelogo.png';
 import logoutAlert from '../assets/logoutAlert.png';
-import { __getNoticeCount } from '../redux/modules/NoticeSlice';
 import bell from '../assets/Bell.png';
 
 const MyPage = () => {

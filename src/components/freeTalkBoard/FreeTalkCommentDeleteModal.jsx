@@ -1,8 +1,10 @@
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { __deleteFreeTalkComment, __getFreeTalk ,__getDetailFreeTalk} from '../../redux/modules/FreeTalkSlice';
+import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
+// 모듈
+import { __deleteFreeTalkComment, __getDetailFreeTalk } from '../../redux/modules/FreeTalkSlice';
+// 이미지 아이콘
 import exclamation from "../../assets/exclamation.png"
 
 const FreeTalkCommentDeleteModal = ({ setModalOpen, comment, setShowComment }) => {
@@ -12,25 +14,9 @@ const FreeTalkCommentDeleteModal = ({ setModalOpen, comment, setShowComment }) =
     setModalOpen(false);
   };
 
-  const navigate = useNavigate();
-  // const { freetalks } = useSelector((state) => state.freetalks)
   const { id } = useParams();
-  // const freetalksfind = freetalks.find((freetalk) => freetalk.articleId === Number(id))
-  const {freetalksfind} = useSelector((state) => state.freetalks)
+  const { freetalksfind } = useSelector((state) => state.freetalks)
   const { commentId } = freetalksfind.commentList.find((commentmap) => commentmap.commentId === comment.commentId)
-  // console.log("commentId", commentId)
-  // console.log(comment)
-
-  //   const onClickDelete = async () => {
-  //     const commentDelete = {
-  //         articleId: Number(id),
-  //         commentId: commentId
-  //     }
-  //     // const result = window.confirm("정말 삭제하시겠습니까?")
-  //         await dispatch(__deleteHelpComment(commentDelete))
-  //         await dispatch(__getHelp());
-  //         setShowComment(false)
-  // }
 
   const onClickDelete = async () => {
     const commentDelete = {
@@ -39,8 +25,8 @@ const FreeTalkCommentDeleteModal = ({ setModalOpen, comment, setShowComment }) =
     }
     await dispatch(__deleteFreeTalkComment(commentDelete))
     await dispatch(__getDetailFreeTalk(id))
-    // setShowComment(false)
   }
+
   return (
     <StContainer>
       <StWrap>
@@ -52,10 +38,6 @@ const FreeTalkCommentDeleteModal = ({ setModalOpen, comment, setShowComment }) =
             </StModalTop>
             <StModalBottom onClick={closeModal}>
               <StBottomTitle
-                //   onClick={() => {
-                //     dispatch(__deleteHelp(helpsfind.articleId))
-                //     navigate("/main")
-                //   }}
                 onClick={onClickDelete}
               >삭제하기</StBottomTitle>
               <StBottomCancelTitle>돌아가기</StBottomCancelTitle>
@@ -74,11 +56,9 @@ const StContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* align-items: center; */
   width: 100%;
   z-index: 10;
   overflow: hidden;
-  /* bottom: 0; */
   top: 0;
   @media screen and (max-width: 1024px) {
     background-image: none;
@@ -103,11 +83,8 @@ const StContainer = styled.div`
 const StWrap = styled.div`
 position: relative;
   width: 100%;
-  /* width: 420px; */
   max-width: 420px;
   height: 100vh;
-  /* height: 100%; */
-  /* border: 1px solid red; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -170,7 +147,6 @@ const StModalBottom = styled.div`
 const StBottomTitle = styled.div`
   font-size: 16px;
   font-weight: 700;
-  /* border: 1px solid red; */
   background-color: #f7931e;
   border-radius: 16px;
   width: 40%;
@@ -184,7 +160,6 @@ const StBottomTitle = styled.div`
 const StBottomCancelTitle = styled.div`
   font-size: 16px;
   font-weight: 700;
-  /* background-color: #f7931e; */
   border: 1px solid #f7931e;
   border-radius: 16px;
   width: 40%;

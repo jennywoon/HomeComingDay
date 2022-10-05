@@ -1,24 +1,18 @@
-import React, { useRef, useEffect } from 'react';
-import styled from 'styled-components';
-import { useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  __updateHelpReplyComment,
-  __deleteHelpReplyComment,
-  __getHelp,
-  __getDetailHelp
-} from '../../redux/modules/HelpSlice';
 import { useParams } from 'react-router-dom';
-import { GrUploadOption } from 'react-icons/gr';
+import styled from 'styled-components';
 import HelpReplyCommentDeleteModal from './HelpReplyCommentDeleteModal';
+// 모듈
+import { __updateHelpReplyComment, __deleteHelpReplyComment, __getDetailHelp } from '../../redux/modules/HelpSlice';
+// 아이콘 이미지
+import { GrUploadOption } from 'react-icons/gr';
 import dots from '../../assets/dots.png';
 
 const HelpDetailReplyComment = ({
-  childCommentList,
   commentId,
   childComment,
   ids,
-  username,
   data,
 }) => {
   const { id } = useParams();
@@ -29,13 +23,6 @@ const HelpDetailReplyComment = ({
   const [modalOpen, setModalOpen] = useState(false);
   const [editReplyComment, setEditReplyComment] = useState(childComment.content);
   const [replyTargetId, setReplyTargetId] = useState(null);
-  const childCommentId = childCommentList.find(
-    (comment) => comment.childCommentId === childComment.childCommentId
-  );
-
-  // console.log("childCommentList",childCommentList)
-  // console.log("childComment",childComment)
-  // console.log("childCommentId",childCommentId)
 
   //모달닫기
   const node = useRef();
@@ -298,7 +285,6 @@ const StReviseBox = styled.div`
 `;
 
 const StReplyUserName = styled.div`
-  /* font-weight: bold; */
   display: flex;
   align-items: center;
   font-size: 14px;

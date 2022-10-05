@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { getCookie } from '../shared/cookies';
-import goldmedal from "../assets/goldmedal.png"
 import FormBoard from "../components/test/FormBoard"
+// 이미지 아이콘
 import logoutAlert from "../assets/logoutAlert.png"
 
 const FormPage = () => {
@@ -47,7 +47,6 @@ const FormPage = () => {
                 </NeedLogin>
       )}
       <Container>
-        {/* <Form2 /> */}
         <FormBoard/>
       </Container>
     </>
@@ -91,7 +90,6 @@ const NeedLoginModal = styled.div`
   transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
   background-color: #fff;
   height:240px;

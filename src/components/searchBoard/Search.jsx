@@ -1,23 +1,18 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import SearchCard from './SearchCard';
-import {
-  __getSearch,
-  __getSearchArticle,
-  __getSearchArticlePopular,
-  __postSearch,
-} from '../../redux/modules/SearchSlice';
+// 모듈
+import { __getSearchArticle, __getSearchArticlePopular } from '../../redux/modules/SearchSlice';
+import { __getReset } from "../../redux/modules/MyPageSlice";
+// 아이콘 이미지
 import SearchColorimg from '../../assets/SearchColor.png';
 import Xcircle from '../../assets/x-circle.png';
-import { __getReset } from "../../redux/modules/MyPageSlice";
 
 const Search = () => {
+
   const dispatch = useDispatch();
 
-  // search post 연습
-  
   const [search, setSearch] = useState();
   const [inputText, setInputText] = useState('');
   const [select, setSelect] = useState('new');
@@ -35,37 +30,14 @@ dispatch(__getSearchArticlePopular());
   
   const searchArticle = useSelector((state) => state.searchs.searchs);
   const searchArticlePopular = useSelector((state) => state.searchs.popular);
-
-  // console.log(searchArticle);
-  // console.log(searchArticlePopular);
-
  
   useEffect(()=>{
     dispatch(__getReset())
     },[])
-    
-  // const searchArticlePopulars = searchArticle.map((article)=>article.views )
-  // console.log("searchArticlePopulars",searchArticlePopulars)
 
   const handleSelect = (e) => {
     setSelect(e.target.value);
   };
-
-  // //filter
-  // const [filteredList, setFilteredList] = new useState(searchArticle);
-  // const filterBySearch = (e) => {
-  //     // Access input value
-  //     const query =e.target.value;
-  //     // console.log(query)
-  //     // Create copy of item list
-  //     let updatedList = [...searchArticle];
-  //     // Include all elements which includes the search query
-  //     updatedList = updatedList.filter((item) => {
-  //       return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
-  //     });
-  //     // Trigger render with updated values
-  //     setFilteredList(updatedList);
-  //   };
 
   //Articles
   const [filteredList, setFilteredList] = new useState(searchArticle);
@@ -102,17 +74,19 @@ dispatch(__getSearchArticlePopular());
   //         [name]: value,
   //     })
   // }
+
   const onReset = () => {
     setInputText('');
   };
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    dispatch(__postSearch(search));
   };
 
   return (
-    <StContainer onSubmit={onSubmitHandler}>
+    <StContainer 
+    onSubmit={onSubmitHandler}
+    >
       <StWrap>
         <StSearchWrap>
           <StSearchDiv>
@@ -134,11 +108,12 @@ dispatch(__getSearchArticlePopular());
                 placeholder='게시글 제목을 입력해주세요'
               />
             ) : null}
-            <StClose
+            {/* <StClose
               onClick = {onReset}
               src={Xcircle}
               alt='검색'
-            />
+            /> */}
+            <div/>
           </StSearchDiv>
         </StSearchWrap>
 

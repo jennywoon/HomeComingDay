@@ -1,13 +1,14 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import NoticeList from './NoticeList';
+// 이미지 아이콘
 import { IoIosArrowBack } from 'react-icons/io';
 import Homeimg from '../../assets/Home.png';
 import Searchimg from '../../assets/Search.png';
 import Chatimg from '../../assets/Chat.png';
 import Myimg from '../../assets/My.png';
-import NoticeList from './NoticeList';
 
 const NoticeHome = () => {
   const navigate = useNavigate();
@@ -181,10 +182,4 @@ const StTapTitle = styled.div`
   font-size: 11px;
   font-weight: 400;
   color: #696969;
-`;
-
-const StColorTapTitle = styled.div`
-  font-size: 11px;
-  font-weight: 600;
-  color: #f7931e;
 `;

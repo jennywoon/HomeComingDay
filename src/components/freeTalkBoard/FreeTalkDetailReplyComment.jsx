@@ -1,16 +1,12 @@
-import React, { useRef, useEffect } from 'react';
-import styled from 'styled-components';
-import { useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { GrUploadOption } from 'react-icons/gr';
-import {
-  __getFreeTalk,
-  __deleteFreeTalkReplyComment,
-  __updateFreeTalkReplyComment,
-  __getDetailFreeTalk,
-} from '../../redux/modules/FreeTalkSlice';
+import styled from 'styled-components';
 import FreeTalkReplyCommentDeleteModal from './FreeTalkReplyCommentDeleteModal';
+// 모듈
+import { __deleteFreeTalkReplyComment, __updateFreeTalkReplyComment, __getDetailFreeTalk } from '../../redux/modules/FreeTalkSlice';
+// 아이콘 이미지
+import { GrUploadOption } from 'react-icons/gr';
 import dots from '../../assets/dots.png';
 
 const FreeTalkDetailReplyComment = ({
@@ -28,10 +24,6 @@ const FreeTalkDetailReplyComment = ({
   const [modalOpen, setModalOpen] = useState(false);
   const [editReplyComment, setEditReplyComment] = useState(childComment.content);
   const [replyTargetId, setReplyTargetId] = useState(null);
-  // const childCommentId = childCommentList.find((comment)=> comment.childCommentId === childComment.childCommentId)
-
-  // console.log("childCommentList",childCommentList)
-  // console.log("childCommentId",childCommentId)
 
   //모달닫기
   const node = useRef();
@@ -53,10 +45,6 @@ const FreeTalkDetailReplyComment = ({
       document.removeEventListener('mousedown', clickOutside);
     };
   }, [showReplyComment]);
-
-  const closeModal = () => {
-    setModalOpen(false);
-  };
 
   //대댓글 수정하기 버튼 활성화
   const [isReplyActive, setReplyActive] = useState(false);
@@ -286,29 +274,13 @@ const StDeleteButton = styled.button`
     color: #000;
   }
 `;
-const StReviseButtonChange = styled.button`
-  width: 50px;
-  background-color: white;
-  font-size: 10px;
-  /* border:none; */
-  border: 1px solid gray;
-  cursor: pointer;
-  border-radius: 10px;
-  height: 25px;
-  color: gray;
-`;
+
 const StReviseBox = styled.div`
   display: flex;
   align-items: center;
 `;
-// const StReplyInput = styled.input`
-//     border
-//     border-bottom: 1px solid #ccc;
-//     width:100%;
-// `
 
 const StReplyUserName = styled.div`
-  /* font-weight: bold; */
   display: flex;
   align-items: center;
   font-size: 14px;

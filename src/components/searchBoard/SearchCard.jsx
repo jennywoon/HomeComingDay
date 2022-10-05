@@ -1,13 +1,15 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import commentgray from '../../assets/commentgray.png';
-import heartgray from '../../assets/heartgray.png';
+import styled from 'styled-components';
+// 모듈
 import { __getDetailInformation } from '../../redux/modules/InformationSlice';
 import { __getDetailCalendar } from '../../redux/modules/CalendarSlice';
 import { __getDetailFreeTalk } from '../../redux/modules/FreeTalkSlice';
 import { __getDetailHelp } from '../../redux/modules/HelpSlice';
+// 이미지 아이콘
+import commentgray from '../../assets/commentgray.png';
+import heartgray from '../../assets/heartgray.png';
 
 const SearchCard = ({ search, id }) => {
   const dispatch = useDispatch();
@@ -28,8 +30,6 @@ const SearchCard = ({ search, id }) => {
       await navigate(`/freetalkdetail/${id}`);
     }
   };
-
-
 
   return (
     <StSearch>

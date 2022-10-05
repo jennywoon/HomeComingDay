@@ -1,95 +1,88 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from "react-router-dom";
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
-import {IoIosArrowBack} from 'react-icons/io'
 import Button from '../elements/Button';
-import { useSelector } from 'react-redux';
+// 모듈
 import { __getDetailInformation, __getInformation, __updateInformation } from '../../redux/modules/InformationSlice';
+// 이미지 아이콘
+import { IoIosArrowBack } from 'react-icons/io'
 
 
 const InformationUpdate = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const {id} = useParams();
-    const {informations} = useSelector((state) => state.informations)
-    const {informationsfind} = useSelector((state) => state.informations)
-    // const informationsfind = informations.find((info)=> info.articleId === Number(id))
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { id } = useParams();
 
-    const [EditTitle, setEditTitle] = useState(informationsfind&&informationsfind.title)
-    const [EditContent, setEditContent] = useState(informationsfind&&informationsfind.content)
-    const [EditImg, setEditImg] = useState('');
-    const [isOnActive, setIsOnActive] = useState(false);
+  const { informationsfind } = useSelector((state) => state.informations)
+  const [EditTitle, setEditTitle] = useState(informationsfind && informationsfind.title)
+  const [EditContent, setEditContent] = useState(informationsfind && informationsfind.content)
 
-    const onChangeTitle = (e) =>{
-        setEditTitle(e.target.value)
+  const [isOnActive, setIsOnActive] = useState(false);
+
+  const onChangeTitle = (e) => {
+    setEditTitle(e.target.value)
+  }
+
+  const onChangeContent = (e) => {
+    setEditContent(e.target.value)
+  }
+
+  useEffect(() => {
+    dispatch(__getInformation());
+  }, [dispatch])
+
+  const handleCheck = (e) => {
+    setIsOnActive(e);
+  };
+
+  useEffect(() => {
+    if (EditTitle !== '' && EditContent !== '') {
+      handleCheck(true);
+    } else {
+      handleCheck(false);
     }
+  }, [EditTitle, EditContent])
 
-    const onChangeContent = (e) =>{
-        setEditContent(e.target.value)
+  const onUpdateHandler = async (e) => {
+    e.preventDefault();
+    setIsOnActive(false);
+    const editinformationsfind = {
+      ...informationsfind,
+      id: id,
+      title: EditTitle,
+      content: EditContent,
     }
+    await dispatch(__updateInformation(editinformationsfind))
+    await dispatch(__getDetailInformation(id));
+    navigate(`/informationdetail/${id}`)
+  }
 
-    useEffect(() => {
-        dispatch(__getInformation());
-    }, [dispatch])
-
-    const handleCheck = (e) => {
-        setIsOnActive(e);
-      };
-    
-      useEffect(() => {
-        if (EditTitle !== '' && EditContent !== '') {
-          handleCheck(true);
-        } else {
-          handleCheck(false);
-        }
-      },[EditTitle, EditContent])
-
-    const onUpdateHandler = async(e) => {
-        e.preventDefault();
-        setIsOnActive(false);
-         const editinformationsfind = {
-            ...informationsfind ,
-            id: id,
-            title: EditTitle,
-            content: EditContent,
-            imageList : EditImg
-        }
-       await dispatch(__updateInformation(editinformationsfind))
-       await dispatch(__getDetailInformation(id));
-        navigate(`/informationdetail/${id}`)
-    } 
-
-    
-
-    return (
-        <StFormContainer>
-            <StFormWrap onSubmit={onUpdateHandler}>
-                <StFormHeader>
-                    <IoIosArrowBack size="25px" cursor="pointer" onClick={() => {navigate(`/informationdetail/${id}`)}}/>
-                </StFormHeader>
-                <StFormBody>
-                    <StFormSelection name="category">
-                        <option value="informationform">정보공유</option>
-                    </StFormSelection>
-                <StFormInput name="title" value={EditTitle} onChange={onChangeTitle} placeholder="제목을 입력해주세요"></StFormInput>
-                <StCard>
-                <StTextarea name="content" value={EditContent} onChange={onChangeContent} placeholder="내용을 입력해주세요"></StTextarea>
-                </StCard>
-                </StFormBody>
-                <StFormFooter>
-                    <StFooterBtn>
-                        <Button type='submit' backgroundColor='#F7931E' width="90%" height="40px" color="white" style={{ display: "block", margin: "15px auto", backgroundColor:'#F7931E'}} isDisabled={isOnActive ? false : true}>
-                            <StChangediv>수정하기</StChangediv>
-                        </Button>
-                    </StFooterBtn>
-
-                    
-                </StFormFooter>
-            </StFormWrap>
-        </StFormContainer>
-       
-    );
+  return (
+    <StFormContainer>
+      <StFormWrap onSubmit={onUpdateHandler}>
+        <StFormHeader>
+          <IoIosArrowBack size="25px" cursor="pointer" onClick={() => { navigate(`/informationdetail/${id}`) }} />
+        </StFormHeader>
+        <StFormBody>
+          <StFormSelection name="category">
+            <option value="informationform">정보공유</option>
+          </StFormSelection>
+          <StFormInput name="title" value={EditTitle} onChange={onChangeTitle} placeholder="제목을 입력해주세요"></StFormInput>
+          <StCard>
+            <StTextarea name="content" value={EditContent} onChange={onChangeContent} placeholder="내용을 입력해주세요"></StTextarea>
+          </StCard>
+        </StFormBody>
+        <StFormFooter>
+          <StFooterBtn>
+            <Button type='submit' backgroundColor='#F7931E' width="90%" height="40px" color="white" style={{ display: "block", margin: "15px auto", backgroundColor: '#F7931E' }} isDisabled={isOnActive ? false : true}>
+              <StChangediv>수정하기</StChangediv>
+            </Button>
+          </StFooterBtn>
+        </StFormFooter>
+      </StFormWrap>
+    </StFormContainer>
+  );
 };
 
 export default InformationUpdate;
@@ -145,7 +138,7 @@ const StFormSelection = styled.select`
     font-size: 14px;
     font-weight: 600;
 `
-const StFormInput =styled.input`
+const StFormInput = styled.input`
     font-size: 20px;
     border: none;
     border-bottom:1px solid #d9d9d9;

@@ -2,11 +2,9 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
-import {
-  __getDetailInformation,
-  __getInformation,
-  __postInformation,
-} from '../../redux/modules/InformationSlice';
+// 모듈
+import { __getDetailInformation, __getInformation } from '../../redux/modules/InformationSlice';
+// 이미지 아이콘
 import commentgray from '../../assets/commentgray.png';
 import heartgray from '../../assets/heartgray.png';
 
@@ -156,11 +154,6 @@ const StBodyTitle = styled.div`
   word-break: break-word;
 `;
 
-const StBodyContent = styled.div`
-  font-size: 12px;
-  margin: 5px 0px;
-`;
-
 const StCardFooter = styled.div`
   display: flex;
   justify-content: space-between;
@@ -168,13 +161,6 @@ const StCardFooter = styled.div`
 
 const StViews = styled.div`
   font-size: 12px;
-  color: gray;
-`;
-
-const StDivision = styled.div`
-  font-size: 12px;
-  align-items: center;
-  margin: 0 5px;
   color: gray;
 `;
 

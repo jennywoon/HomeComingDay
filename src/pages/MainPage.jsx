@@ -1,10 +1,9 @@
 import React from 'react';
-import { useNavigate } from "react-router-dom"
-import Home from '../components/helpBoard/Home';
-import Header from '../components/Header';
-import styled from 'styled-components';
 import { useSelector } from "react-redux";
-import Loading from "../components/test/Loading";
+import { useNavigate } from "react-router-dom"
+import styled from 'styled-components';
+import Home from '../components/helpBoard/Home';
+// 이미지 아이콘
 import bell from '../assets/Bell.png';
 import logo from '../assets/logo.png';
 
@@ -16,7 +15,6 @@ const MainPage = () => {
 
     return (
         <Container>
-            {/* <Header /> */}
             <StHeaderContainer>
                 <StHeaderWrap>
                     <StLogo

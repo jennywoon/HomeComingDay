@@ -1,6 +1,6 @@
 import React from 'react';
-import SchoolInfo from '../components/loginSigunUpBoard/SchoolInfo';
 import styled from 'styled-components';
+import SchoolInfo from '../components/loginSigunUpBoard/SchoolInfo';
 
 const SchoolInfoPage = () => {
   return (
