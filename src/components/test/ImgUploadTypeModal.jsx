@@ -1,45 +1,46 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AiOutlineCheckCircle } from 'react-icons/ai';
+import exclamation from '../../assets/exclamation.png';
 
-const SignupModal = ({ setModalOpen }) => {
-  const closeModal = () => {
-    setModalOpen(false);
-  };
+const ImgUploadTypeModal = ({setImageTypeAlert}) => {
 
-  return (
-    <StContainer>
-      <StWrap>
-        <StModalContainer>
-          <StFirstWrap>
-            <StModalTop>
-              <AiOutlineCheckCircle style={{ color: '#f7931e' }} size='28' />
-              <StTopTitle>
-                인증번호가 발송되었습니다
-                <br />
-                이메일을 확인하세요(유효시간 10분)
-              </StTopTitle>
-            </StModalTop>
-            <StModalBottom onClick={closeModal}>
-              <StBottomTitle>확인</StBottomTitle>
-            </StModalBottom>
-          </StFirstWrap>
-        </StModalContainer>
-      </StWrap>
-    </StContainer>
-  );
+    const closeModal = () => {
+        setImageTypeAlert(false);
+      };
+
+    return (
+        <StContainer>
+        <StWrap>
+          <StModalContainer>
+            <StFirstWrap>
+              <StModalTop>
+              <StExclamation />
+                <StTopTitle>지원하지 않는 파일 형식입니다.</StTopTitle>
+              </StModalTop>
+              <StModalBottom onClick={closeModal}>
+                <StBottomTitle onClick={closeModal}
+                >확인</StBottomTitle>
+              </StModalBottom>
+            </StFirstWrap>
+          </StModalContainer>
+        </StWrap>
+      </StContainer>
+    );
 };
 
-export default SignupModal;
+export default ImgUploadTypeModal;
+
 
 const StContainer = styled.div`
-  position: fixed;
+  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   width: 100%;
   z-index: 10;
   overflow: hidden;
+  bottom: 0;
   @media screen and (max-width: 1024px) {
     background-image: none;
   }
@@ -61,16 +62,18 @@ const StContainer = styled.div`
 `;
 
 const StWrap = styled.div`
-  position: relative;
   width: 100%;
   max-width: 420px;
   height: 100vh;
+  /* height: 100%; */
+  /* border: 1px solid red; */
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: rgba(87, 87, 87, 0.3);
   overflow-y: hidden;
 `;
+
 const StModalContainer = styled.div`
   width: 80%;
   height: 180px;
@@ -85,6 +88,15 @@ const StFirstWrap = styled.div`
   width: 100%;
   height: 100%;
 `;
+
+const StExclamation = styled.div`
+  width: 30px;
+  height: 30px;
+  background-image: url(${exclamation});
+  background-position: center;
+  background-size: 100% 100%;
+`;
+
 const StModalTop = styled.div`
   width: 100%;
   height: 75%;
@@ -105,7 +117,6 @@ const StTopTitle = styled.div`
 const StModalBottom = styled.div`
   width: 100%;
   height: 25%;
-  background-color: #f7931e;
   color: white;
   display: flex;
   justify-content: center;
@@ -113,9 +124,33 @@ const StModalBottom = styled.div`
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
   cursor: pointer;
+  gap: 10px;
 `;
 
 const StBottomTitle = styled.div`
   font-size: 16px;
   font-weight: 700;
+  /* border: 1px solid red; */
+  background-color: #f7931e;
+  border-radius: 16px;
+  width: 40%;
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
 `;
+
+const StBottomCancelTitle = styled.div`
+  font-size: 16px;
+  font-weight: 700;
+  border: 1px solid #f7931e;
+  border-radius: 16px;
+  width: 40%;
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  color: #f7931e;
+`

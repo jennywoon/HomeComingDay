@@ -272,7 +272,7 @@ const CalendarDetail = () => {
 
                 <StJoinContain>
                   <StJoinPart className="look" type="button" onClick={showJoinModal}>
-                    <img src={joinUser} alt="참여자조회" />
+                    <StShowUser src={joinUser} alt="참여자조회"/>
                     참여자보기
                   </StJoinPart>
 
@@ -704,6 +704,11 @@ const StJoinContain = styled.div`
   gap:10px;
 `
 
+const StShowUser = styled.img`
+  width: 23px;
+  height: 23px;
+`
+
 const StJoinPart = styled.button`
   background: #F7931E;
   width: 136px;
@@ -719,14 +724,14 @@ justify-content: center;
 align-items: center;
 gap: 5px;
 &.cancel {
-    background: #9c9c9c;
-    border: 1px solid #9c9c9c;
+    background: #b8b8b8;
+    border: 1px solid #b8b8b8;
     color:#fff
   }
  &.look{
   background: #FFFFFF;
-  color: #8E8E8E;
-  border: 1px solid #8E8E8E;
+  color: #F7931E;
+  border: 1px solid #F7931E;
  } 
  &.last{
   cursor:default;
