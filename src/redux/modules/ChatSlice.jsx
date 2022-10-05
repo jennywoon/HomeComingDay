@@ -18,18 +18,15 @@ export const getChatList = createAsyncThunk("GET_CHAT_LIST", async(page, thunkAP
         return response.data;
     } catch(e) {
         return thunkAPI.rejectWithValue(e.response.data);
-        // return thunkAPI.rejectWithValue(page);
     }
 });
 
 export const getChatMessage = createAsyncThunk("GET_CHAT_MESSAGE", async(roomId, thunkAPI) => {
     try{
         const response = await chatApi.getChatMessage(roomId);
-        // console.log(response);
         return response;
     } catch(e) {
         return thunkAPI.rejectWithValue(e.response.data);
-        // return thunkAPI.rejectWithValue(roomId);
     }
 });
 
@@ -83,7 +80,6 @@ const ChatSlice = createSlice({
         },
         deleteChatList(state, action) {
             state.chatList = state.chatList.filter((chat) => chat.chatRoomUuid !== action.payload);
-            // state.chatList = state.chatList.filter((chat) => chat.chatRoomId !== action.payload);
         },
     },
 

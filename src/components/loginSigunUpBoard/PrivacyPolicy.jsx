@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+// 아이콘 이미지
 import logo60 from "../../assets/logo60.png"
 
 const PrivacyPolicy = ({ setPrivacyModal }) => {
@@ -7,6 +8,7 @@ const PrivacyPolicy = ({ setPrivacyModal }) => {
   const closePrivacyModal = () => {
     setPrivacyModal(false)
   }
+
   return (
     <StPrivacyWrap>
       <StWrap>
@@ -244,6 +246,7 @@ const StLogo = styled.div`
   height: 22px;
   margin-right: 5px;
 `
+
 const StTitle = styled.div`
   width: 100%;
   font-weight: 700;
@@ -251,7 +254,6 @@ const StTitle = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 16px;
-  /* border: 1px solid rebeccapurple; */
 `
 
 const StSecondTitle = styled.div`
@@ -271,7 +273,6 @@ const StModalContainer = styled.div`
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
   overflow-y: scroll;
-  /* padding: 15px; */
   ::-webkit-scrollbar{
     width: 0px;
   }
@@ -279,7 +280,6 @@ const StModalContainer = styled.div`
 
 const StContentWrap = styled.div`
   width: 88%;
-  /* border: 1px solid red; */
   padding: 20px 0;
   display: flex;
   flex-direction: column;
