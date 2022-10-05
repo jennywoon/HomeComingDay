@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { __getCalendar, __getDetailCalendar } from '../../redux/modules/CalendarSlice';
 import { useNavigate } from 'react-router-dom';
@@ -40,7 +40,15 @@ const CalendarCard = ({ calendar, id }) => {
               </StHeadUser>
               </StCardHead>
         <StCardBody>
-          <StBodyTitle>{calendar.title}</StBodyTitle>
+          <StBodyTitleBox>
+            {calendar.joinCheck === false ?
+            <StRecruit>모집중</StRecruit> 
+          :
+          <StRecruit className='end'>모집마감</StRecruit>
+          }
+            <StBodyTitle>{calendar.title}</StBodyTitle>
+            <StBodyDiv></StBodyDiv>
+          </StBodyTitleBox>
           <StBodyContent>
             <StCheckLeft>
               <CalendarCheck />
@@ -160,17 +168,44 @@ const StCardBody = styled.div`
   justify-content: center;
 `;
 
+const StBodyTitleBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width:100%;
+  height: 100%;
+`
+
+const StRecruit = styled.div`
+  width:25%;
+  font-weight: 700;
+font-size: 14px;
+color:#F7931E;
+
+text-align: end;
+&&.end{
+  color:#B3B3B3;
+}
+`
+
 const StBodyTitle = styled.div`
   margin: 5px 0px;
   font-size: 16px;
   font-weight: 600;
   color: #000;
-  height: 100%;
-  width: 100%;
-  display: flex;
+  box-sizing: border-box;
+  padding:0px 10px;
+  /* height: 100%; */
+  width: 60%;
+  /* display: flex; */
+  text-align: center;
   justify-content: center;
   word-break: break-word;
 `;
+
+const StBodyDiv = styled.div`
+width:25%;
+`
 
 const StBodyContent = styled.div`
   width: 80%;
