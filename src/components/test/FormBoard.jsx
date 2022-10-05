@@ -16,8 +16,11 @@ import Button from '../elements/Button';
 import moment from 'moment';
 import Calendar from 'react-calendar';
 import '../calendarBoard/CalendarModal.css';
-import { useDropzone } from 'react-dropzone';
+import ImgUploadNumberModal from './ImgUploadNumberModal';
+import ImgUploadTypeModal from './ImgUploadTypeModal';
+import ImgUploadSizeModal from './ImgUploadSizeModal';
 import imageCompression from 'browser-image-compression';
+
 
 
 const Form2 = () => {
@@ -73,12 +76,13 @@ const Form2 = () => {
   const IMAGETYPE = [
     "png", "jpg", "jpeg","heic","heif","gif"
   ];
-  const [openImageNumberAlert, setOpenImageNumber] = useState(false);
-  
+  const [imageNumberAlert, setImageNumberAlert] = useState(false);
+  const [imageTypeAlert, setImageTypeAlert] = useState(false);
+  const [imageSizeAlert, setImageSizeAlert] = useState(false);
 
   //이미지 리사이징 && 프리뷰
   const handleAddImages = async (e) => {
-    if (files.length + e.target.files.length > 3) setOpenImageNumber(true);
+    if (files.length + e.target.files.length > 3) {return setImageNumberAlert(true);}
     
     [...e.target.files].map(async (file) => {
       if (
@@ -86,9 +90,12 @@ const Form2 = () => {
           file.name.split(".")[file.name.split(".").length - 1].toLowerCase()
         )
       )
-        return alert("지원하지 않는 파일 형식입니다.")
+        return setImageTypeAlert(true);
+        // alert("지원하지 않는 파일 형식입니다.")
         
-      if (file.size > 10000000) return alert("파일크기가 허용되는 한도를 초과하였습니다")
+      if (file.size > 10000000) return setImageSizeAlert(true);
+      
+      // alert("파일크기가 허용되는 한도를 초과하였습니다")
 
       const options = {
         maxSizeMB: 10,
@@ -424,6 +431,9 @@ const Form2 = () => {
 
   return (
     <TotalCatiner ref={node}>
+      {imageNumberAlert && <ImgUploadNumberModal setImageNumberAlert={setImageNumberAlert}/>}
+      {imageTypeAlert && <ImgUploadTypeModal setImageTypeAlert={setImageTypeAlert}/>}
+      {imageSizeAlert && <ImgUploadSizeModal setImageSizeAlert={setImageSizeAlert}/>}
       {/* <FormContainer> */}
       <FormWrap onSubmit={onSubmitHandler}>
         <FormHeader>

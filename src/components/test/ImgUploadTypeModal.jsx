@@ -1,16 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { logout } from '../../shared/cookies';
 // 아이콘 이미지
 import exclamation from '../../assets/exclamation.png';
 
-const MyPageLogoutModal = ({ setModalOpen }) => {
+const ImgUploadTypeModal = ({ setImageTypeAlert }) => {
   const closeModal = () => {
-    setModalOpen(false);
+    setImageTypeAlert(false);
   };
-
-  const navigate = useNavigate();
 
   return (
     <StContainer>
@@ -18,17 +14,11 @@ const MyPageLogoutModal = ({ setModalOpen }) => {
         <StModalContainer>
           <StFirstWrap>
             <StModalTop>
-            <StExclamation />
-              <StTopTitle>정말 로그아웃 하시겠습니까?</StTopTitle>
+              <StExclamation />
+              <StTopTitle>지원하지 않는 파일 형식입니다.</StTopTitle>
             </StModalTop>
             <StModalBottom onClick={closeModal}>
-              <StBottomTitle
-              onClick={() => {
-                logout();
-                navigate("/login")
-              }}
-              >로그아웃</StBottomTitle>
-              <StBottomCancelTitle>돌아가기</StBottomCancelTitle>
+              <StBottomTitle onClick={closeModal}>확인</StBottomTitle>
             </StModalBottom>
           </StFirstWrap>
         </StModalContainer>
@@ -37,10 +27,10 @@ const MyPageLogoutModal = ({ setModalOpen }) => {
   );
 };
 
-export default MyPageLogoutModal;
+export default ImgUploadTypeModal;
 
 const StContainer = styled.div`
-  position: fixed;
+  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -147,16 +137,3 @@ const StBottomTitle = styled.div`
   margin-bottom: 10px;
 `;
 
-const StBottomCancelTitle = styled.div`
-  font-size: 16px;
-  font-weight: 700;
-  border: 1px solid #f7931e;
-  border-radius: 16px;
-  width: 40%;
-  height: 80%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 10px;
-  color: #f7931e;
-`

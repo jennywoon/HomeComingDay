@@ -1,5 +1,5 @@
-import { AiOutlineLoading } from 'react-icons/ai';
 import styled from 'styled-components';
+// 아이콘 이미지
 import loading from "../../assets/loading.gif"
 
 const Loading = () => {
@@ -7,7 +7,6 @@ const Loading = () => {
     <Container>
       <LoadingContainer>
           <LoadingImg />
-          {/* <LoadingMessage>잠시만 기다려주세요</LoadingMessage> */}
       </LoadingContainer>
     </Container>
   );
@@ -28,9 +27,7 @@ const LoadingContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  /* border: 1px solid red; */
   flex-direction: column;
-  /* padding-top: 60px; */
 
   .spinner {
     margin: 4px;

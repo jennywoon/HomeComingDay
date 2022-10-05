@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useReactPWAInstall } from 'react-pwa-install';
-import logo240 from '../../assets/logo240.png'
+// 아이콘 이미지
+import logo240 from '../../assets/logo240.png';
 
 const PwaApp = () => {
   const { pwaInstall, supported, isInstalled } = useReactPWAInstall();
@@ -28,7 +29,6 @@ const PwaApp = () => {
 export default PwaApp;
 
 const StPwaButton = styled.button`
-  /* margin-top: 20px; */
   cursor: pointer;
   text-align: center;
   font-size: 14px;
@@ -39,4 +39,3 @@ const StPwaButton = styled.button`
   color: #f7931e;
   padding: 3px 15px;
 `;
-
