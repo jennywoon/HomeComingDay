@@ -94,7 +94,11 @@ const StSearch = styled.div`
   box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
 `;
 
-const HelpContainer = styled.div``;
+const HelpContainer = styled.div`
+   width: 97%;
+  margin: 0 auto;
+`;
+
 
 const CardHead = styled.div`
   display: flex;

@@ -1,28 +1,15 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useQuery } from 'react-query';
 import styled from 'styled-components';
 import { __getNotice } from '../../redux/modules/NoticeSlice';
 import NoticeCard from './NoticeCard';
-import { getCookie } from '../../shared/cookies';
-import { NativeEventSource, EventSourcePolyfill } from 'event-source-polyfill';
-import axios from 'axios';
 import { __getMyPage } from '../../redux/modules/MyPageSlice';
 import nonedatasquare from '../../assets/nonedatabell.png';
 
 const NoticeList = () => {
-  // // 콘솔 에러 안찍히게 하기
-  //   console.warn = console.error = () => {};
-  // // or IIFE
-  // (() => { console.warn = console.error = () => {}} )();
 
   const dispatch = useDispatch();
-  // const BASE_URL = process.env.REACT_APP_BASE_URL;
-  // const [listening, setListening] = useState(false);
-  // const [alarms, setAlarms] = useState([]);
-  // const [value, setValue] = useState(null);
-  // const [eventSourceStatus, setEventSourceStatus] = useState(null);
 
   useEffect(() => {
     dispatch(__getMyPage());
@@ -30,7 +17,6 @@ const NoticeList = () => {
   }, [dispatch]);
 
   const data = useSelector((state) => state.notice.notices);
-  // console.log(data);
 
   return (
     <StNoticeList>
@@ -57,7 +43,7 @@ export default NoticeList;
 
 const StNoticeList = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 83%;
   overflow: scroll;
   display: flex;
   justify-content: center;

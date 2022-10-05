@@ -28,7 +28,7 @@ const PwaApp = () => {
 export default PwaApp;
 
 const StPwaButton = styled.button`
-  margin-top: 20px;
+  /* margin-top: 20px; */
   cursor: pointer;
   text-align: center;
   font-size: 14px;
