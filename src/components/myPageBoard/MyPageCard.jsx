@@ -1,14 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
-import { useEffect } from 'react';
-import { __getMyPage, __getMyArticle } from '../../redux/modules/MyPageSlice';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+// 모듈
+import { __getMyPage, __getMyArticle } from '../../redux/modules/MyPageSlice';
+// 아이콘 이미지
 import commentgray from "../../assets/commentgray.png"
 import heartgray from '../../assets/heartgray.png';
 
 const MyPageCard = ({ myarticle, id }) => {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const onClickNavi = () => {
@@ -64,7 +63,6 @@ export default MyPageCard;
 
 const StContainer = styled.div`
   height: 120px;
-  /* padding: 10px; */
   border: 1px solid #eee;
   border-radius: 16px;
   cursor: pointer;
@@ -77,7 +75,6 @@ const StContainer = styled.div`
 
 const StTotalWrap = styled.div`
     width: 90%;
-    /* height: 100%; */
 `
 
 const StCardHead = styled.div`
@@ -99,10 +96,7 @@ const StFlagWrap = styled.div`
     color: #f7931e
 `
 
-const StCardBody = styled.div`
-  /* height: 50px; */
-  /* margin-bottom: 20px; */
-`;
+const StCardBody = styled.div``;
 
 const StBodyTitle = styled.div`
   height: 45px;
@@ -114,7 +108,6 @@ const StBodyTitle = styled.div`
 
 const StCardFooter = styled.div`
   display: flex;
-  /* justify-content: start; */
   justify-content: space-between;
 `;
 
@@ -130,6 +123,7 @@ const StHeadTime = styled.p`
   margin-left: auto;
   font-weight: 500;
 `;
+
 const StViews = styled.div`
   font-size: 12px;
 `;
