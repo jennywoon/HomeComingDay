@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Loading from '../formBoard/Loading';
+import Loading from '../test/Loading';
 import { chatApi } from './ChatApi';
 import _ from 'lodash';
 import ChatDeleteModal from './ChatDeleteModal';
