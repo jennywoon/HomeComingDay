@@ -91,7 +91,7 @@ const Form2 = () => {
   }else{
     setSelect('freetalk')
   }
-})
+},[])
   
   const handleSelect = (e) => {
       setSelect(e.target.value)
@@ -440,7 +440,7 @@ const Form2 = () => {
           />
         </StFormHeader>
         <StFormBody>
-          <FormSelection name='category' value={select} onChange={()=>handleSelect()}>
+          <FormSelection name='category' value={select} onChange={handleSelect}>
             <option value='help'>도움요청</option> 
             <option value='information'>정보공유</option>
             <option value='meet'>만남일정</option>
