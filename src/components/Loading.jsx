@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 // 아이콘 이미지
-import loading from "../../assets/loading.gif"
+import loading from "../assets/loading.gif"
 
 const Loading = () => {
   return (

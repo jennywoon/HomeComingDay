@@ -23,7 +23,7 @@ import { MdCancel } from 'react-icons/md';
 import { GrImage } from 'react-icons/gr';
 
 
-const Form2 = () => {
+const FormBoard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {state} = useLocation();
@@ -91,7 +91,7 @@ const Form2 = () => {
   }else{
     setSelect('freetalk')
   }
-})
+}, [])
   
   const handleSelect = (e) => {
       setSelect(e.target.value)
@@ -440,7 +440,7 @@ const Form2 = () => {
           />
         </StFormHeader>
         <StFormBody>
-          <FormSelection name='category' value={select} onChange={()=>handleSelect()}>
+          <FormSelection name='category' value={select} onChange={handleSelect}>
             <option value='help'>도움요청</option> 
             <option value='information'>정보공유</option>
             <option value='meet'>만남일정</option>
@@ -791,7 +791,7 @@ const Form2 = () => {
   );
 };
 
-export default Form2;
+export default FormBoard;
 
 const StTotalCatiner = styled.div`
   width: 100%;
