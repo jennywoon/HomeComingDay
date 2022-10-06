@@ -196,7 +196,7 @@
 <br/>
 
 <details>
-<summary><b>✅ 게시글 조회 속도</b></summary>
+<summary><b>✅ 게시글 조회 속도(723% 개선)</b></summary>
 <br/>
 해당 트러블 슈팅은 백엔드 속도 개선이다. useEffect도 잘 되어 있는 것 같았고 아무리 코드를 수정해도 렌더링 속도가 너무 느리고 이미지는 더 느리게 나와서, BackEnd와 계속해서 속도를 확인해보다, Redis를 통해 속도를 개선할 수 있다는 것을 알게 됨
 </br>
@@ -220,6 +220,8 @@
 
 - 라이브러리를 제거하고 시간을 코드로 구현하도록 변경함. 라이브러리에 의존하기 보다, 직접 구현을 통해 Custom을 자유롭게 할 수 있는 경험이 됨.
 - 폴더 formBoard / 파일 FormBoard.jsx 197번째줄 시작
+<br/>
+
 <img src="https://user-images.githubusercontent.com/109018926/194243399-bae9186a-ef9a-4740-be4c-f74de6cce9e1.png">
 
 </details>
