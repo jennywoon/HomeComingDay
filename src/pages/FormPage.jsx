@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { getCookie } from '../shared/cookies';
-import FormBoard from "../components/test/FormBoard"
+import FormBoard from "../components/formBoard/FormBoard"
 // 이미지 아이콘
 import logoutAlert from "../assets/logoutAlert.png"
 
