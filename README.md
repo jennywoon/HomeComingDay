@@ -28,8 +28,9 @@
 - Front-End Git Hub : [Front-End Git Hub 링크 클릭](https://github.com/jennywoon/HomeComingDay.git)
 - Back-End Git Hub : [Back-End Git Hub 링크 클릭](https://github.com/251643/HomecomingDay.git)
 - 기획안 정리(팀 회의록 포함) : [Notion 링크 클릭](https://prairie-scion-76d.notion.site/1-194af719c75a4851b4bdb7d3e38f6bde)
+- 브로셔 정리 : [Brochure 링크 클릭](https://neon-hub-f15.notion.site/Homecoming-Day-ef7d1c50568e4adc9ae05af11159197d)
+> Arichitecture, ERD, 기술적 의사결정, BackEnd Trouble Shooting, 주요 기능, 팀원 소개 정리
 - 시연 영상 : 추후 유튜브 링크 달 예정
-- API Notion : [Notion 링크 클릭](https://www.notion.so/API-958fc1f5810045a684d94cc16b43772a)
 <br/>
 <br/>
 <br/>
@@ -58,6 +59,8 @@
 <br/>
 
 ## 🍀 페이지별 기능 소개
+<br/>
+
 <details>
 <summary><b>상세내용 확인</b></summary>
 <br/>
@@ -178,16 +181,23 @@
 </p>
 <br/>
 
+## 🙆 담당 역할(React)
+<br/>
+
 | 이름       | 포지션       | GitHub & Email          | 담당                             |
-| ---------- | ------------ | ------------------------------ |  ------------------------------ |
-| **나청운** | `프론트엔드` | https://github.com/jennywoon/HomeComingDay.git | [부리더]<br/>1. 마이페이지, 프로필 수정, 등급 기능<br/> 2. 메인 페이지 게시글 get, post <br/> 3. 채팅 기능 <br/>4. 네이버 소셜로그인<br/> 5. 상세 페이지 calendar, time <br/> 6. 무한 스크롤<br/> 7. 전체 회의록 & 피드백 & QA 시트 관리
-| **조수정** | `프론트엔드` | https://github.com/suzzeong/HomeComingDay.git | 1. 로그인/회원가입/회원가입 완성 페이지<br/> 2. 학교정보입력 페이지<br/> 3. 좋아요 기능<br/> 4. 알림 기능<br/> 5. PWA 기능
-| **최형용** | `프론트엔드` | https://github.com/hyeongyong-choi/HomeComingDay.git | 1. 게시글, 댓글, 대댓글 CRUD<br/> 2. 검색 기능<br/> 3. 참여하기 기능<br/>4. 이미지 리사이징<br/> 5. 게시글 폼 페이지<br/> 6. 최신순, 인기순 필터
+| ------------ | ------------ | ---------------------------- |  ------------------------------ |
+| **나청운** | <img src="https://img.shields.io/badge/FrontEnd-2088FF?style=flat&logo=FrontEnd&logoColor=white"/> | https://github.com/jennywoon/HomeComingDay.git | [부리더]<br/>1. 마이페이지, 프로필 수정, 등급 기능<br/> 2. 메인 페이지 게시글 get, post <br/> 3. 채팅 기능 <br/>4. 네이버 소셜로그인<br/> 5. 상세 페이지 calendar, time <br/> 6. 무한 스크롤<br/> 7. 전체 회의록 & 피드백 & QA 시트 관리
+| **조수정** | <img src="https://img.shields.io/badge/FrontEnd-2088FF?style=flat&logo=FrontEnd&logoColor=white"/> | https://github.com/suzzeong/HomeComingDay.git | 1. 로그인/회원가입/회원가입 완성 페이지<br/> 2. 학교정보입력 페이지<br/> 3. 좋아요 기능<br/> 4. 알림 기능<br/> 5. PWA 기능
+| **최형용** | <img src="https://img.shields.io/badge/FrontEnd-2088FF?style=flat&logo=FrontEnd&logoColor=white"/> | https://github.com/hyeongyong-choi/HomeComingDay.git | 1. 게시글, 댓글, 대댓글 CRUD<br/> 2. 검색 기능<br/> 3. 참여하기 기능<br/>4. 이미지 리사이징<br/> 5. 게시글 폼 페이지<br/> 6. 최신순, 인기순 필터
+
+<br/>
 
 ## ❓ Front-End Trouble Shooting
+<br/>
 
 <details>
 <summary><b>✅ 게시글 조회 속도</b></summary>
+<br/>
 해당 트러블 슈팅은 백엔드 속도 개선이다. useEffect도 잘 되어 있는 것 같았고 아무리 코드를 수정해도 렌더링 속도가 너무 느리고 이미지는 더 느리게 나와서, BackEnd와 계속해서 속도를 확인해보다, Redis를 통해 속도를 개선할 수 있다는 것을 알게 됨
 </br>
 메인 페이지인 article/help 위치에선 무려 723%의 속도 개선율을 보였다. FrontEnd에서도 해당 과정을 알고 있었다면 더 빠르게 소통해볼 수 있었을 것 같아 좋은 러닝이 되어 기록.
@@ -195,6 +205,8 @@
 </br>
 </details>
 <details>
+
+<br/>
 <summary><b>✅ TimePicker 라이브러리</b></summary>
 
 </br>
