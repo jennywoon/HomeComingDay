@@ -23,7 +23,7 @@ import { MdCancel } from 'react-icons/md';
 import { GrImage } from 'react-icons/gr';
 
 
-const Form2 = () => {
+const FormBoard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {state} = useLocation();
@@ -91,7 +91,7 @@ const Form2 = () => {
   }else{
     setSelect('freetalk')
   }
-},[])
+}, [])
   
   const handleSelect = (e) => {
       setSelect(e.target.value)
@@ -791,7 +791,7 @@ const Form2 = () => {
   );
 };
 
-export default Form2;
+export default FormBoard;
 
 const StTotalCatiner = styled.div`
   width: 100%;
