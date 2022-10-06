@@ -28,8 +28,9 @@
 - Front-End Git Hub : [Front-End Git Hub 링크 클릭](https://github.com/jennywoon/HomeComingDay.git)
 - Back-End Git Hub : [Back-End Git Hub 링크 클릭](https://github.com/251643/HomecomingDay.git)
 - 기획안 정리(팀 회의록 포함) : [Notion 링크 클릭](https://prairie-scion-76d.notion.site/1-194af719c75a4851b4bdb7d3e38f6bde)
+- 브로셔 정리 : [Brochure 링크 클릭](https://neon-hub-f15.notion.site/Homecoming-Day-ef7d1c50568e4adc9ae05af11159197d)
+> Arichitecture, ERD, 기술적 의사결정, BackEnd Trouble Shooting, 주요 기능, 팀원 소개 정리
 - 시연 영상 : 추후 유튜브 링크 달 예정
-- API Notion : [Notion 링크 클릭](https://www.notion.so/API-958fc1f5810045a684d94cc16b43772a)
 <br/>
 <br/>
 <br/>
@@ -42,16 +43,24 @@
 
 <br/>
 
-## 🗓 프로젝트 기간
+## 🗓 프로젝트 기간 & 마케팅
 
 <br/>
 
-- 2022.08.26 ~ 2022.10.07 (6주)
+- 2022.08.26 ~ 10.07 (6주)
+- 10월 1일 배포, 마케팅 시작
+- 10월 3일 기준 순 방문자 227명, 누적 가입자 수 83명
+- 10월 6일 기준<br/>
+> - 순 방문자 463명, 누적 가입자 수 170명<br/>
+> - 유저 테스트 1,794개
+>> - 작성 게시글 153개, 댓글 600개, 대댓글 58개, 채팅 메시지 534개, 좋아요 125개, 알림 324개
 
 <br/>
 <br/>
 
 ## 🍀 페이지별 기능 소개
+<br/>
+
 <details>
 <summary><b>상세내용 확인</b></summary>
 <br/>
@@ -172,22 +181,48 @@
 </p>
 <br/>
 
+## 🙆 담당 역할(React)
+<br/>
+
+| 이름       | 포지션       | GitHub & Email          | 담당                             |
+| ------------ | ------------ | ---------------------------- |  ------------------------------ |
+| **나청운** | <img src="https://img.shields.io/badge/FrontEnd-2088FF?style=flat&logo=FrontEnd&logoColor=white"/> | https://github.com/jennywoon/HomeComingDay.git | [부리더]<br/>1. 마이페이지, 프로필 수정, 등급 기능<br/> 2. 메인 페이지 게시글 get, post <br/> 3. 채팅 기능 <br/>4. 네이버 소셜로그인<br/> 5. 상세 페이지 calendar, time <br/> 6. 무한 스크롤<br/> 7. 전체 회의록 & 피드백 & QA 시트 관리
+| **조수정** | <img src="https://img.shields.io/badge/FrontEnd-2088FF?style=flat&logo=FrontEnd&logoColor=white"/> | https://github.com/suzzeong/HomeComingDay.git | 1. 로그인/회원가입/회원가입 완성 페이지<br/> 2. 학교정보입력 페이지<br/> 3. 좋아요 기능<br/> 4. 알림 기능<br/> 5. PWA 기능
+| **최형용** | <img src="https://img.shields.io/badge/FrontEnd-2088FF?style=flat&logo=FrontEnd&logoColor=white"/> | https://github.com/hyeongyong-choi/HomeComingDay.git | 1. 게시글, 댓글, 대댓글 CRUD<br/> 2. 검색 기능<br/> 3. 참여하기 기능<br/>4. 이미지 리사이징<br/> 5. 게시글 폼 페이지<br/> 6. 최신순, 인기순 필터
+
+<br/>
+
 ## ❓ Front-End Trouble Shooting
+<br/>
 
 <details>
-<summary><b>✅ 캘린더 라이브러리</b></summary>
+<summary><b>✅ 게시글 조회 속도(723% 개선)</b></summary>
+<br/>
+해당 트러블 슈팅은 백엔드 속도 개선이다. useEffect도 잘 되어 있는 것 같았고 아무리 코드를 수정해도 렌더링 속도가 너무 느리고 이미지는 더 느리게 나와서, BackEnd와 계속해서 속도를 확인해보다, Redis를 통해 속도를 개선할 수 있다는 것을 알게 됨
+</br>
+메인 페이지인 article/help 위치에선 무려 723%의 속도 개선율을 보였다. FrontEnd에서도 해당 과정을 알고 있었다면 더 빠르게 소통해볼 수 있었을 것 같아 좋은 러닝이 되어 기록.
+<img src="https://user-images.githubusercontent.com/109018926/194244336-268d2921-5a5c-4a5d-9859-06e15b8123e5.png">
+</br>
+</details>
+<details>
+
+<br/>
+<summary><b>✅ TimePicker 라이브러리</b></summary>
 
 </br>
 
 ✔ 문제상황
-- 초기 시안에서는 캘린더와 시간 선택을 모달로 진행하고자 하였으나, POST하는 과정에서 모달 사용시 별도의 API를 생성해야 하는 비효율성이 발생됨
+- 디자이너님이 원하는 디자인은 React에서 만들 수 없었고 TimePicker 라이브러리 Custom을 아무리 하여도 원하는 디자인을 만들 수 없었음. post하는 과정에서도 라이브러리는 비효율성이 있음.
 
 </br>
 
 ✔ 해결방안
 
-- 드롭다운 형식으로 변경하고 백엔드와 API 명세서에 기획한대로 moment 라이브러리를 통해 데이터 형태 변경
-- css 디자인 편의 수정을 위한 리액트-캘린더 라이브러리, 타임피커 라이브러리 사용 
+- 라이브러리를 제거하고 시간을 코드로 구현하도록 변경함. 라이브러리에 의존하기 보다, 직접 구현을 통해 Custom을 자유롭게 할 수 있는 경험이 됨.
+- 폴더 formBoard / 파일 FormBoard.jsx 197번째줄 시작
+<br/>
+
+<img src="https://user-images.githubusercontent.com/109018926/194243399-bae9186a-ef9a-4740-be4c-f74de6cce9e1.png">
 
 </details>
 
