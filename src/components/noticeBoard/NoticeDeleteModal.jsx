@@ -1,12 +1,14 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { AiOutlineInfoCircle } from 'react-icons/ai';
-import { useDispatch } from 'react-redux';
-// import { __deleteHelp, __getHelp } from '../../redux/modules/HelpSlice';
+// 모듈
 import { __deleteNotice, __getNotice } from '../../redux/modules/NoticeSlice';
+// 이미지 아이콘
+import { AiOutlineInfoCircle } from 'react-icons/ai';
 
 const NoticeDeleteModal = ({ setModalOpen, notificationId }) => {
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -147,7 +149,6 @@ const StBottomTitle = styled.div`
 const StBottomCancelTitle = styled.div`
   font-size: 16px;
   font-weight: 700;
-  /* background-color: #f7931e; */
   border: 1px solid #f7931e;
   border-radius: 16px;
   width: 40%;

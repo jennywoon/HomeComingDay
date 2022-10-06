@@ -1,21 +1,17 @@
-import React, { useEffect, useRef } from 'react';
-import styled from 'styled-components';
-import { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  __deleteCalendarComment,
-  __updateCalendarComment,
-  __getCalendar,
-  __postCalendarReplyComment,
-  __getDetailCalendar,
-} from '../../redux/modules/CalendarSlice';
 import { useParams } from 'react-router-dom';
-import { GrUploadOption } from 'react-icons/gr';
+import styled from 'styled-components';
 import CalendarCommentDeleteModal from './CalendarCommentDeleteModal';
 import CalendarDetailReplyComment from './CalendarDetailReplyComment';
+// 모듈
+import { __updateCalendarComment, __postCalendarReplyComment, __getDetailCalendar } from '../../redux/modules/CalendarSlice';
+// 아이콘 이미지
+import { GrUploadOption } from 'react-icons/gr';
 import dots from '../../assets/dots.png';
 
-const CalendarDetailComment = ({ comment, modalRef, calendarfind, data }) => {
+const CalendarDetailComment = ({ comment, calendarfind, data }) => {
+
   const dispatch = useDispatch();
   const { id } = useParams();
 
@@ -28,17 +24,12 @@ const CalendarDetailComment = ({ comment, modalRef, calendarfind, data }) => {
   const { username } = calendarfind.commentList.find(
     (commentmap) => commentmap.username === comment.username
   );
-  // console.log("commentId", commentId)
 
   const [showComment, setShowComment] = useState(false);
   const [showReplyComment, setShowReplyComment] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [editComment, setEditComment] = useState(comment.content);
   const [replyComment, setReplyComment] = useState('');
-  // useEffect(() => {
-  //     dispatch(__postHelpComment());
-  //     dispatch(__getDetailHelp(id))
-  // }, [dispatch])
 
   //모달닫기
   const node = useRef();
@@ -393,7 +384,6 @@ const StEditBox = styled.div`
   align-items: center;
   width: 100%;
   position: relative;
-  /* padding: 0px 20px; */
 `;
 
 const StTxtName = styled.h3`

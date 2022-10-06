@@ -1,19 +1,20 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { __getHelp, __deleteHelpComment ,__getDetailHelp} from '../../redux/modules/HelpSlice';
+// 모듈
+import { __deleteHelpComment ,__getDetailHelp} from '../../redux/modules/HelpSlice';
+// 아이콘 이미지
 import exclamation from "../../assets/exclamation.png"
 
 const HelpCommentDeleteModal = ({ setModalOpen, comment }) => {
+
   const dispatch = useDispatch();
   const closeModal = () => {
     setModalOpen(false);
   };
 
-  const { helps } = useSelector((state) => state.helps);
   const { id } = useParams();
-  // const helpsfind = helps.find((help) => help.articleId === Number(id));
   const { helpsfind } = useSelector((state) => state.helps);
   const { commentId } = helpsfind.commentList.find(
     (commentmap) => commentmap.commentId === comment.commentId
@@ -161,7 +162,6 @@ const StBottomTitle = styled.div`
 const StBottomCancelTitle = styled.div`
   font-size: 16px;
   font-weight: 700;
-  /* background-color: #f7931e; */
   border: 1px solid #f7931e;
   border-radius: 16px;
   width: 40%;

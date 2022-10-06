@@ -35,12 +35,6 @@ const StyledButton = styled.button`
   border-radius: var(--button-radius, 16px);
   color: ${(props) => props.color};
 
-  /* &:active,
-  &:hover,
-  &:focus {
-    background: var(--button-hover-bg-color, #B43917)
-  } */
-
   &:disabled {
     cursor: default;
     opacity: 0.5;

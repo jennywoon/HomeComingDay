@@ -1,8 +1,7 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import styled from "styled-components";
-import { AiOutlinePlus } from "react-icons/ai";
+// 아이콘 이미지
 import { BsArrowUpCircle } from "react-icons/bs";
-import { useEffect } from "react";
 
 ChatInput.propTypes = {};
 
@@ -39,9 +38,6 @@ function ChatInput(props) {
     return (
         <React.Fragment>
             <StMessageBox>
-                {/* <AiOutlinePlus
-                    style={{ paddingLeft: "20px", color: "#969696" }} size="22px"
-                /> */}
                 <StChatInput
                     placeholder="채팅 메세지를 입력해주세요(1,000자 제한)"
                     type="text"

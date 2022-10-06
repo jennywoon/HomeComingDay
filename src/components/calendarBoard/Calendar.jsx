@@ -1,18 +1,18 @@
-import React from "react";
-import { useEffect ,useState} from 'react';
+import React, { useEffect ,useState} from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { __getCalendar, __getPopularCalendar } from '../../redux/modules/CalendarSlice';
-import CalendarCard from './CalendarCard';
-import calendarorange from '../../assets/calendarorange.png';
 import './CalendarModal.css';
-import nonedatasquare from '../../assets/nonedatasquare.png';
+import CalendarCard from './CalendarCard';
+// 모듈
 import { __getMyPage, __getReset } from "../../redux/modules/MyPageSlice";
+import { __getCalendar, __getPopularCalendar } from '../../redux/modules/CalendarSlice';
+// 아이콘 이미지
+import calendarorange from '../../assets/calendarorange.png';
+import nonedatasquare from '../../assets/nonedatasquare.png';
 
 const Calendar = () => {
+
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { calendars } = useSelector((state) => state.calendars);
   const { calendarPopular } = useSelector((state) => state.calendars);
   const [select, setSelect] = useState('new');
@@ -77,7 +77,6 @@ const StHelpContainer = styled.div`
   gap: 12px;
   width: 100%;
   height: 100%;
-  /* overflow-x: hidden; */
 `;
 
 const StBannerWrap = styled.div`

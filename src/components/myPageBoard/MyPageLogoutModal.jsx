@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { logout } from '../../shared/cookies';
+// 아이콘 이미지
 import exclamation from '../../assets/exclamation.png';
 
 const MyPageLogoutModal = ({ setModalOpen }) => {
@@ -24,7 +25,7 @@ const MyPageLogoutModal = ({ setModalOpen }) => {
               <StBottomTitle
               onClick={() => {
                 logout();
-                navigate("/")
+                navigate("/login")
               }}
               >로그아웃</StBottomTitle>
               <StBottomCancelTitle>돌아가기</StBottomCancelTitle>
@@ -72,8 +73,6 @@ const StWrap = styled.div`
   width: 100%;
   max-width: 420px;
   height: 100vh;
-  /* height: 100%; */
-  /* border: 1px solid red; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -121,6 +120,7 @@ const StTopTitle = styled.div`
   text-align: center;
   word-break: keep-all;
 `;
+
 const StModalBottom = styled.div`
   width: 100%;
   height: 25%;
@@ -137,7 +137,6 @@ const StModalBottom = styled.div`
 const StBottomTitle = styled.div`
   font-size: 16px;
   font-weight: 700;
-  /* border: 1px solid red; */
   background-color: #f7931e;
   border-radius: 16px;
   width: 40%;

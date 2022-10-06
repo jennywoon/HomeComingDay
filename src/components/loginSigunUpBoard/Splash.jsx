@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Login from './Login';
+// 아이콘 이미지
 import logo3 from '../../assets/logo3.png';
 
 const Splash = () => {
@@ -40,6 +41,7 @@ const StContainer = styled.div`
   height: 100vh;
   overflow-y: hidden;
 `;
+
 const StHomeContainer = styled.div`
   width: 100%;
   height: 100%;

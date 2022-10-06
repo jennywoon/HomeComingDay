@@ -1,10 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
-import BottomTap from '../BottomTap';
-import HeaderTap from '../HeaderTap';
-import Information from './Information';
 import { useNavigate, useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import Information from './Information';
+// 이미지 아이콘
 import { TiPencil } from 'react-icons/ti';
 import HomeColorimg from '../../assets/HomeColor.png';
 import Searchimg from '../../assets/Search.png';
@@ -15,14 +14,15 @@ const InformationHome = () => {
   const navigate = useNavigate();
   const chatList = useSelector((state) => state.chat.chatList[0]);
 
-  const {information} = useParams()
-  console.log(information)
+  const navigateForm = () => {
+    navigate('/form', { state: "information" })
+  }
 
   return (
     <StHomeContainer>
       <Information />
       <StIconWrap>
-        <StIconbox onClick={() => navigate('/form')}>
+        <StIconbox onClick={() => navigateForm()}>
           <TiPencil color='white' size='32' />
         </StIconbox>
       </StIconWrap>
@@ -148,9 +148,7 @@ const StTapimg = styled.img`
 `
 const StChatIconWrap = styled.div`
   display: flex;
-  /* border: 1px solid red; */
   justify-content: center;
-  /* align-items: start; */
   position: relative;
 `
 

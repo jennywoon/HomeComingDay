@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../../components/elements/Button';
-import { IoIosArrowBack } from 'react-icons/io';
 import Select from 'react-dropdown-select';
-import {
-  __getSchoolSearch,
-  __getDepartmentSearch,
-  __getAdmissions,
-  __postSchoolInfo,
-} from '../../redux/modules/SchoolInfoSlice';
+// 모듈
+import { __getSchoolSearch,  __getDepartmentSearch, __getAdmissions, __postSchoolInfo } from '../../redux/modules/SchoolInfoSlice';
 import { __getMyPage } from '../../redux/modules/MyPageSlice';
+// 아이콘 이미지
+import { IoIosArrowBack } from 'react-icons/io';
 
 const SchoolInfo = () => {
   const navigate = useNavigate();
@@ -29,7 +26,6 @@ const SchoolInfo = () => {
 
   // 학교 정보 검색
   const schoolSearch = useSelector((state) => state.schoolInfo.schoolSearchs);
-  // console.log(schoolSearch)
 
   useEffect(() => {
     dispatch(__getSchoolSearch());
@@ -48,7 +44,6 @@ const SchoolInfo = () => {
   const departmentSearch = useSelector(
     (state) => state.schoolInfo.departmentSearchs
   );
-  // console.log(departmentSearch)
 
   const [selectedOptions, setSelectedOptions] = useState([]);
 
@@ -59,7 +54,6 @@ const SchoolInfo = () => {
 
   // 입학년도 검색
   const admissionSearch = useSelector((state) => state.schoolInfo.admissions);
-  // console.log(admissionSearch);
 
   const [selectedAdmission, setSelectedAdmission] = useState([]);
 
@@ -72,7 +66,6 @@ const SchoolInfo = () => {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     await dispatch(__postSchoolInfo(schoolInfos))
-      // await dispatch(__getMyPage())
       .then(navigate('/signupcomplete'));
   };
 
@@ -101,14 +94,12 @@ const SchoolInfo = () => {
         </StFormHeader>
         <StSchoolInfoWraps onSubmit={onSubmitHandler}>
           <StFisrtWrap>
-            <div>
-              <StSchoolTitle style={{ justifyContent: 'center' }}>
-                대학교 정보 입력
-              </StSchoolTitle>
+            <StSecondWrap>
+              <StSchoolTitle>대학교 정보 입력</StSchoolTitle>
               <StSchoolInfoWrap>
                 <Stlabel>학교명</Stlabel>
                 <StSelect
-                  options={schoolSearch.map((item, index) => {
+                  options={schoolSearch.map((item) => {
                     return { value: item.seq, label: item.schoolName };
                   })}
                   value={school}
@@ -127,7 +118,7 @@ const SchoolInfo = () => {
               <StSchoolInfoWrap>
                 <Stlabel>학과 · 학부명</Stlabel>
                 <StSelect
-                  options={departmentSearch.map((item, index) => {
+                  options={departmentSearch.map((item) => {
                     return { value: item.seq, label: item.mclass };
                   })}
                   value={department}
@@ -146,7 +137,7 @@ const SchoolInfo = () => {
               <StSchoolInfoWrap>
                 <Stlabel>입학년도</Stlabel>
                 <StSelect
-                  options={admissionSearch.map((item, index) => {
+                  options={admissionSearch.map((item) => {
                     return { value: item.id, label: item.admission };
                   })}
                   value={admission}
@@ -161,7 +152,7 @@ const SchoolInfo = () => {
                   dropdownHeight='200px'
                 />
               </StSchoolInfoWrap>
-            </div>
+            </StSecondWrap>
           </StFisrtWrap>
           <Button
             type='submit'
@@ -197,6 +188,7 @@ const StSchoolInfo = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
 const StFormHeader = styled.div`
   width: 90%;
   height: 50px;
@@ -204,6 +196,7 @@ const StFormHeader = styled.div`
   align-items: center;
   margin-bottom: 20px;
 `;
+
 const StSchoolInfoWraps = styled.form`
   width: 85%;
   height: 100%;
@@ -217,10 +210,13 @@ const StFisrtWrap = styled.div`
   justify-content: space-between;
 `;
 
+const StSecondWrap = styled.div``
+
 const StSchoolTitle = styled.p`
   font-size: 25px;
   font-weight: bold;
   margin-bottom: 80px;
+  justify-content: center;
 `;
 
 const StSchoolInfoWrap = styled.div`

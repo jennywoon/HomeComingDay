@@ -1,21 +1,21 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { __deleteInfoComment, __getDetailInformation, __getInformation } from '../../redux/modules/InformationSlice';
+// 모듈
+import { __deleteInfoComment, __getDetailInformation } from '../../redux/modules/InformationSlice';
+// 아이콘 이미지
 import exclamation from "../../assets/exclamation.png"
 
-const InfoCommentDeleteModal = ({ setModalOpen, comment, setShowComment}) => {
+const InfoCommentDeleteModal = ({ setModalOpen, comment }) => {
 
   const dispatch = useDispatch();
   const closeModal = () => {
     setModalOpen(false);
   };
 
-  const { informations } = useSelector((state) => state.informations)
   const { id } = useParams();
   const { informationsfind } = useSelector((state) => state.informations)
-  // const informationsfind = informations.find((info) => info.articleId === Number(id))
   const { commentId } = informationsfind.commentList.find((commentmap) => commentmap.commentId === comment.commentId)
 
     const onClickDelete = async () => {
@@ -58,7 +58,6 @@ const StContainer = styled.div`
   width: 100%;
   z-index: 10;
   overflow: hidden;
-  /* bottom: 0; */
   top: 0;
   @media screen and (max-width: 1024px) {
     background-image: none;
@@ -160,7 +159,6 @@ const StBottomTitle = styled.div`
 const StBottomCancelTitle = styled.div`
   font-size: 16px;
   font-weight: 700;
-  /* background-color: #f7931e; */
   border: 1px solid #f7931e;
   border-radius: 16px;
   width: 40%;

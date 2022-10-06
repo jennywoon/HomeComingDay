@@ -1,37 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import Header from '../Header';
-import styled from 'styled-components';
-import { IoIosArrowBack } from 'react-icons/io';
-import InformationDetailComment from './InformationDetailComment';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  __deleteInformation,
-  __getDetailInformation,
-  __getInfoComment,
-  __getInformation,
-  __postInfoComment,
-  __postInformation,
-  __postInformationHeart,
-  __updateInformation,
-} from '../../redux/modules/InformationSlice';
-import { useRef } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import Header from '../Header';
+import InformationDetailComment from './InformationDetailComment';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import {
-  MdOutlineArrowBackIos,
-  MdOutlineArrowForwardIos,
-} from 'react-icons/md';
+import { chatApi } from '../chatBoard/ChatApi';
 import InformationDeleteModal from './InformationDeleteModal';
+// 모듈
+import { __getDetailInformation, __getInformation, __postInfoComment, __postInformationHeart } from '../../redux/modules/InformationSlice';
+import { __getNoticeCount } from '../../redux/modules/NoticeSlice';
+import { __getMyPage ,__getView} from '../../redux/modules/MyPageSlice';
+// 이미지 아이콘
+import dots from '../../assets/dots.png';
+import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md';
 import commentImg from '../../assets/commentImg.png';
 import heartImg from '../../assets/heartImg.png';
 import heartColorImg from '../../assets/heartColor.png';
-import { __getMyPage ,__getView} from '../../redux/modules/MyPageSlice';
-import { chatApi } from '../chatBoard/ChatApi';
-import { __getNoticeCount } from '../../redux/modules/NoticeSlice';
-import dots from '../../assets/dots.png';
+import { IoIosArrowBack } from 'react-icons/io';
 
 const InformationDetail = () => {
   const dispatch = useDispatch();

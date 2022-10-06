@@ -1,21 +1,21 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { __getCalendar, __deleteCalendarComment, __getDetailCalendar } from '../../redux/modules/CalendarSlice';
+// 모듈
+import { __deleteCalendarComment, __getDetailCalendar } from '../../redux/modules/CalendarSlice';
+// 아이콘 이미지
 import exclamation from "../../assets/exclamation.png"
 
-const CalendarCommentDeleteModal = ({ setModalOpen, comment, setShowComment}) => {
+const CalendarCommentDeleteModal = ({ setModalOpen, comment }) => {
 
   const dispatch = useDispatch();
   const closeModal = () => {
     setModalOpen(false);
   };
 
-  const { calendars } = useSelector((state) => state.calendars)
   const { id } = useParams();
   const { calendarfind } = useSelector((state) => state.calendars)
-  // const calendarsfind = calendars.find((Calendar) => Calendar.articleId === Number(id))
   const { commentId } = calendarfind.commentList.find((commentmap) => commentmap.commentId === comment.commentId)
 
     const onClickDelete = async () => {
@@ -159,7 +159,6 @@ const StBottomTitle = styled.div`
 const StBottomCancelTitle = styled.div`
   font-size: 16px;
   font-weight: 700;
-  /* background-color: #f7931e; */
   border: 1px solid #f7931e;
   border-radius: 16px;
   width: 40%;

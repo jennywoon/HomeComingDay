@@ -1,54 +1,26 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import DaumPostcode from 'react-daum-postcode';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
-import { __getHelp, __postHelp } from '../../redux/modules/HelpSlice';
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
-import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai';
-import TimeRangePicker from '@wojtekmaj/react-timerange-picker';
 import Button from '../elements/Button';
-import {
-  __getCalendar,
-  __getDetailCalendar,
-  __updateCalendar,
-} from '../../redux/modules/CalendarSlice';
-import { useSelector } from 'react-redux';
 import '../calendarBoard/CalendarModal.css';
 import Calendar from 'react-calendar';
 import moment from 'moment';
-
+// 모듈
+import { __getDetailCalendar, __updateCalendar } from '../../redux/modules/CalendarSlice';
+// 아이콘 이미지
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
+import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai';
 
 const CalendarUpdate = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  const { calendars } = useSelector((state) => state.calendars);
   const { calendarJoin } = useSelector((state) => state.calendars)
   const { calendarfind } = useSelector((state) => state.calendars);
-  // const calendarfind = calendars.find((calendar) => calendar.articleId === Number(id));
-  // console.log(calendarfind)
 
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const showModal = (e) => {
-    e.preventDefault();
-    setModalOpen(true);
-  }
-  // console.log(calendarfind)
   const onChange = (value) => setDate(value);
-
-  //  const reactCalen = calendarfind && calendarfind.calendarDate
-  // let editrealCalendar = reactCalen.substring(0,13)
-
-
-  // console.log(editrealCalendar)
-  // // const editrealCalendar = moment(reactCalendar.toString()).format('YYYY년 MM월 DD일');
-
-
-  // const [reactCalendar, setReactCalendar] = useState(
-  //   editrealCalendar
-  // );
 
   const [date, setDate] = useState({
     calendarDate: ''
@@ -86,11 +58,6 @@ const CalendarUpdate = () => {
 
   const [joinNumber, setJoinNumber] = useState(calendarfind && calendarfind.maxPeople);
 
-  // const onChangeCalendar = (e) => {
-  //   setReactCalendar(e.target.value);
-  // };
-
-
   //참여하기 인원 수정
 
   const joinMinusHandle = () => {
@@ -122,7 +89,6 @@ const CalendarUpdate = () => {
   } = calendar;
 
 
-
   const calendaronChangeHandler = (e) => {
     const { value, name } = e.target;
     setCalendar({
@@ -130,8 +96,6 @@ const CalendarUpdate = () => {
       [name]: value,
     });
   };
-
-
 
   // 시간 구현
 
@@ -149,20 +113,7 @@ const CalendarUpdate = () => {
   const [selectMinute, setSelectMinute] = useState(calendarMinute);
 
   const division = ["오전", "오후"];
-  const hourSelect = [
-    "01",
-    "02",
-    "03",
-    "04",
-    "05",
-    "06",
-    "07",
-    "08",
-    "09",
-    "10",
-    "11",
-    "12",
-  ];
+  const hourSelect = [ "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" ];
   const minuteSelect = ["00", "10", "20", "30", "40", "50"];
   const hour = String(
     Number(selectHour) + Number(selectTime === "오후" ? 12 : 0)
@@ -177,29 +128,19 @@ const CalendarUpdate = () => {
   const closeTimeShowBtn = () => {
     setTimeShow(!timeShow);
   }
-  // console.log(hour + ":" + selectMinute)
 
   // 카카오 주소 검색하기
   const [openPostcode, setOpenPostcode] = useState(false);
-  // const [calendarlocation, setCalendarLocation] = useState({
-  //   calendarLocation: "",
-  // })
   const [calendarlocation, setCalendarLocation] = useState(calendarfind && calendarfind.calendarLocation)
   const locations = { calendarLocation: calendarlocation }
 
-  // console.log(calendarlocation);
   const handle = {
-    // 버튼 클릭 이벤트
     clickButton: () => {
       setOpenPostcode(current => !current);
     },
 
     // 주소 선택 이벤트
     selectAddress: (data) => {
-      // console.log(`
-      //       주소: ${data.address},
-      //       우편번호: ${data.zonecode}
-      //   `)
       setCalendarLocation(data.address);
       setOpenPostcode(false);
     },
@@ -228,7 +169,6 @@ const CalendarUpdate = () => {
     await dispatch(__updateCalendar(editcalendarfind));
     await dispatch(__getDetailCalendar(id))
     navigate(`/calendardetail/${id}`)
-    // window.location.reload();
   };
 
   useEffect(() => {
@@ -280,19 +220,14 @@ const CalendarUpdate = () => {
               maxLength='40'
             ></StFormInput>
             <div>
-              <StCalendarButton
-              // onClick={showModal}
-              >
+              <StCalendarButton>
                 <StCalendarTitle>날짜</StCalendarTitle>
                 <StDateDiv onClick={() => setIsActive(!isActive)}>
-                  {/* {editrealCalendar} */}
                   {moment(date).format('YYYY년 MM월 DD일')}
                   <ArrowForward />
                 </StDateDiv>
               </StCalendarButton>
-              <StCalendarWrap ref={node}
-              // value={reactCalendar} onClick={onChangeCalendar}
-              >
+              <StCalendarWrap ref={node}>
                 {isActive && (
                   <Calendar
                     name='calendarDate'
@@ -422,7 +357,6 @@ const CalendarUpdate = () => {
                 maxLength='400'
               ></StCalendarTextarea>
             </StTextDiv>
-            {/* <CalendarTest/> */}
           </StFormBody>
           <StFooterBtn>
             <Button
@@ -504,7 +438,6 @@ const StTimeDiv = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
-    /* cursor: pointer; */
 `
 const StCalendarTitle = styled.div`
     font-size: 14px;
@@ -633,7 +566,6 @@ const StDateDiv = styled.div`
 const StCalendarWrap = styled.div`
   display: flex;
   justify-content: right;
-  /* padding-right: 10px; */
 `;
 const StTimeOpenBtn = styled.div`
   font-weight: 500;
@@ -656,18 +588,12 @@ const StTimeWrap = styled.div`
   margin-top: 10px;
 `
 const StTimeModal = styled.div`
-  /* background-color: var(--blue1); */
-  /* box-shadow: 0px 14px 24px -4px rgba(117, 146, 189, 0.32),
-    inset 0px 8px 14px rgba(255, 255, 255, 0.3); */
   border-radius: 6.83801px;
   border: none;
   height: 130px;
   overflow: hidden;
-  /* padding: 18px; */
   text-align: center;
-  /* margin-bottom: 16px; */
   width: 85%;
-  /* border: 1px solid red; */
 
   .select-time {
     display: flex;
@@ -705,7 +631,6 @@ const StSelectTimeBtn = styled.p`
   color: ${(props) => props.color && props.color};
   border: 1px solid white;
   cursor: pointer;
-  /* border: 1px solid red; */
 `;
 
 const StTimeClose = styled.div`

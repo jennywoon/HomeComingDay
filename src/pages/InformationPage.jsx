@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom"
+import styled from 'styled-components';
 import InformationHome from '../components/informationBoard/InformationHome';
 import Header from '../components/Header';
-import styled from 'styled-components';
 
 const InformationPage = () => {
     const navigate = useNavigate();

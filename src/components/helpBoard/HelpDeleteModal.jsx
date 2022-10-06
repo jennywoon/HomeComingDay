@@ -1,8 +1,10 @@
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+// 모듈
 import { __deleteHelp, __getHelp } from '../../redux/modules/HelpSlice';
+// 아이콘 이미지
 import exclamation from "../../assets/exclamation.png"
 
 const HelpDeleteModal = ({ setModalOpen }) => {
@@ -13,11 +15,7 @@ const HelpDeleteModal = ({ setModalOpen }) => {
   };
 
   const navigate = useNavigate();
-  // const { helps } = useSelector((state) => state.helps)
-  // const { id } = useParams();
-  // const helpsfind = helps.find((help) => help.articleId === Number(id))
   const { helpsfind } = useSelector((state) => state.helps);
-
 
   return (
     <StContainer>
@@ -157,7 +155,6 @@ const StBottomTitle = styled.div`
 const StBottomCancelTitle = styled.div`
   font-size: 16px;
   font-weight: 700;
-  /* background-color: #f7931e; */
   border: 1px solid #f7931e;
   border-radius: 16px;
   width: 40%;

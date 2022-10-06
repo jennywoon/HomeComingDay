@@ -1,8 +1,9 @@
 import React from 'react';
 import { useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import FreeTalk from './FreeTalk';
-import { useNavigate } from 'react-router-dom';
+// 아이콘 이미지
 import { TiPencil } from 'react-icons/ti';
 import HomeColorimg from '../../assets/HomeColor.png';
 import Searchimg from '../../assets/Search.png';
@@ -12,12 +13,15 @@ import Myimg from '../../assets/My.png';
 const FreeTalkHome = () => {
   const navigate = useNavigate();
   const chatList = useSelector((state) => state.chat.chatList[0]);
+  const navigateForm = () => {
+    navigate('/form', { state: "freetalk" })
+  }
 
   return (
     <StHomeContainer>
       <FreeTalk />
       <StIconWrap>
-        <StIconbox onClick={() => navigate('/form')}>
+        <StIconbox onClick={() => navigateForm()}>
           <TiPencil color='white' size="32" />
         </StIconbox>
       </StIconWrap>
@@ -121,9 +125,7 @@ const StTap = styled.div`
 
 const StChatIconWrap = styled.div`
   display: flex;
-  /* border: 1px solid red; */
   justify-content: center;
-  /* align-items: start; */
   position: relative;
 `
 

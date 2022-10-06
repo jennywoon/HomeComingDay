@@ -1,10 +1,11 @@
-import React from 'react';
-import { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { __getNotice } from '../../redux/modules/NoticeSlice';
 import NoticeCard from './NoticeCard';
+// 모듈
+import { __getNotice } from '../../redux/modules/NoticeSlice';
 import { __getMyPage } from '../../redux/modules/MyPageSlice';
+// 아이콘 이미지
 import nonedatasquare from '../../assets/nonedatabell.png';
 
 const NoticeList = () => {
@@ -32,6 +33,7 @@ const NoticeList = () => {
           <StNoneData>
             <StNoneDataImg />
             <StNoneDataMsg>받은 알림이 없습니다</StNoneDataMsg>
+            <StNoneDataMsg>댓글, 좋아요가 달리면 알림을 받으실 수 있습니다</StNoneDataMsg>
           </StNoneData>
         </StNone>
       )}

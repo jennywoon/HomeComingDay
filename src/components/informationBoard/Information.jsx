@@ -1,22 +1,20 @@
-import React from "react";
-import { useEffect ,useState} from "react";
+import React, { useEffect ,useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components"
-import { __getInformation, __getPopularInformation } from "../../redux/modules/InformationSlice";
 import InformationCard from "./InformationCard";
-import { useNavigate } from "react-router-dom";
+// 모듈
+import { __getInformation, __getPopularInformation } from "../../redux/modules/InformationSlice";
+import { __getMyPage,__getReset} from "../../redux/modules/MyPageSlice";
+// 아이콘 이미지
 import informationorange from "../../assets/informationorange.png"
 import nonedatasquare from "../../assets/nonedatasquare.png"
-import { __getMyPage,__getReset} from "../../redux/modules/MyPageSlice";
 
 const Information = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const { informations } = useSelector((state) => state.informations);
   const {informationPopular} = useSelector((state)=>state.informations)
   const [select, setSelect] = useState('new');
-  // console.log(informationPopular)
 
   const handleSelect = (e) => {
     setSelect(e.target.value);

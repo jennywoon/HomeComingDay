@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { IoMdClose } from 'react-icons/io';
+import styled from 'styled-components';
+// 모듈
 import { __deleteNotice, __getNotice } from '../../redux/modules/NoticeSlice';
 import bellRinging from '../../assets/bellRinging.png';
 import { __getDetailHelp } from '../../redux/modules/HelpSlice';
 import { __getDetailInformation } from '../../redux/modules/InformationSlice';
 import { __getDetailCalendar } from '../../redux/modules/CalendarSlice';
 import { __getDetailFreeTalk } from '../../redux/modules/FreeTalkSlice';
+// 이미지 아이콘
+import { IoMdClose } from 'react-icons/io';
 
 
 const NoticeCard = ({ item }) => {
+  
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isOnCheck, setIsOnCheck] = useState(false);

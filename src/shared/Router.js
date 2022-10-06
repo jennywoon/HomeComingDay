@@ -1,5 +1,6 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
+import { getCookie } from "./cookies";
 import NaverLogin from "../components/loginSigunUpBoard/NaverLogin";
 import LoginPage from "../pages/LoginPage";
 import SignUpPage from "../pages/SignUpPage";
@@ -24,26 +25,21 @@ import SignupCompletePage from '../pages/SignupCompletePage';
 import NoticePage from "../pages/NoticePage";
 import MyPage from "../pages/MyPage";
 import Splash from "../components/loginSigunUpBoard/Splash";
-import { getCookie } from "./cookies";
-import { Navigate } from "react-router-dom";
 import FormPage from "../pages/FormPage";
 import ChatDetail from "../components/chatBoard/ChatDetail"
 
 const Router = () => {
 
   const token = getCookie("accessToken")
-  // console.log(token);
 
   return (
-    // <BrowserRouter>
     <Routes>
+      <Route path="/" element={token ? <Navigate to="/main" /> : <Splash />} />
       <Route path="/main" element={<MainPage />} />
       <Route path="/naverlogin" element={<NaverLogin />} />
       <Route path="/schoolinfo" element={<SchoolInfoPage />}></Route>
-      {/* <Route path="/login" element={token ? <Navigate to="/main" /> : <LoginPage />}/> */}
       <Route path="/login" element={<LoginPage />} />
-      {/* <Route path="/signup" element={token ? <Navigate to="/main" /> : <SignUpPage />} /> */}
-      <Route path="/signup" element={<SignUpPage />}/>
+      <Route path="/signup" element={<SignUpPage />} />
       <Route path="/information" element={<InformationPage />} />
       <Route path="/freetalk" element={<FreeTalkPage />} />
       <Route path="/calendar" element={<CalendarPage />} />
@@ -52,8 +48,6 @@ const Router = () => {
       <Route path="/signupcomplete" element={<SignupCompletePage />} />
       <Route path="/notice" element={<NoticePage />} />
       <Route path="/mypage" element={<MyPage />} />
-      <Route path="/" element={<Splash />} />
-      {/* 하단 페이지 추후 정리 */}
       <Route path="/helpcard" element={<HelpCard />} />
       <Route path="/searchcard" element={<SearchCard />} />
       <Route path="/form" element={<FormPage />} />
@@ -67,7 +61,6 @@ const Router = () => {
       <Route path="/calendarupdate/:id" element={<CalendarUpdate />} />
       <Route path="/chat/:id" element={<ChatDetail />} />
     </Routes>
-    // </BrowserRouter>
   );
 };
 export default Router;

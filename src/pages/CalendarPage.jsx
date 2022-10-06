@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom"
-import CalendarHome from "../components/calendarBoard/CalendarHome"
 import styled from 'styled-components';
+import CalendarHome from "../components/calendarBoard/CalendarHome"
 import Header from '../components/Header';
 
 const FreeTalkPage = () => {

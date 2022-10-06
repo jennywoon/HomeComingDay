@@ -1,19 +1,19 @@
-import React from "react";
-import { useEffect ,useState} from "react";
+import React, { useEffect ,useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components"
-import { __getFreeTalk, __getPopularFreeTalk } from "../../redux/modules/FreeTalkSlice";
 import FreeTalkCard from "./FreeTalkCard"
+// 모듈
+import { __getFreeTalk, __getPopularFreeTalk } from "../../redux/modules/FreeTalkSlice";
+import { __getMyPage, __getReset } from "../../redux/modules/MyPageSlice";
+// 아이콘 이미지
 import freetalkorange from "../../assets/freetalkorange.png"
 import nonedatasquare from "../../assets/nonedatasquare.png"
-import { __getMyPage, __getReset } from "../../redux/modules/MyPageSlice";
 
 const FreeTalk = () => {
   const dispatch = useDispatch();
   const { freetalks } = useSelector((state) => state.freetalks);
   const { freePopular } = useSelector((state) => state.freetalks);
   const [select, setSelect] = useState('new');
-  // console.log(freetalks)
 
   useEffect(()=>{
     dispatch(__getReset())
@@ -74,7 +74,6 @@ export default React.memo(FreeTalk);
 const StFreeTalkContainer = styled.div`
   width: 100%;
   height: 100%;
-  /* height: 100vh; */
   gap: 12px;
   overflow-x: hidden;
 `;
@@ -103,13 +102,10 @@ const StBanner = styled.div`
 const StFreeTalkWrap = styled.div`
   position: relative;
   top: 170px;
-  /* width: 100%; */
-  /* height: 100vh; */
   height: 62%;
   border-radius: 20px;
   background-color: white;
   padding: 10px 5px 10px 5px;
-  /* border: 1px solid red; */
 `;
 
 const StSelect = styled.select`
@@ -128,24 +124,13 @@ const StSelect = styled.select`
 `;
 
 const StFreeTalkList = styled.div`
-  /* height: 100%; */
   width: 95%;
   height: 95%;
   margin: 0 auto;
-  /* border: 1px solid green; */
   overflow-y: scroll;
-  /* overflow-y: auto; */
   ::-webkit-scrollbar{
     width: 0px;
-    /* height: 100vh; */
   }
-  /* ::-webkit-scrollbar-thumb{
-    background: #f7931e;
-    height: 100%;
-  }
-  ::-webkit-scrollbar-track{
-    background: #f7931e;
-  } */
 `;
 
 const StNoneData = styled.div`

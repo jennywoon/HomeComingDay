@@ -1,20 +1,20 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import styled from "styled-components"
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { __getHelp, __getPopularHelp } from "../../redux/modules/HelpSlice";
+import styled from "styled-components"
 import HelpCard from "./HelpCard";
+// 모듈
+import { __getHelp, __getPopularHelp } from "../../redux/modules/HelpSlice";
+import { __getMyPage, __getReset } from "../../redux/modules/MyPageSlice";
+// 아이콘 이미지
 import helporange from "../../assets/helporange.png"
 import nonedatasquare from "../../assets/nonedatasquare.png"
-import { __getMyPage, __getReset } from "../../redux/modules/MyPageSlice";
 
 const Help = () => {
+  
   const dispatch = useDispatch();
   const { helps } = useSelector((state) => state.helps);
   const { helpPopular } = useSelector((state) => state.helps)
   const [select, setSelect] = useState('new');
-  // console.log(helps)
-  // console.log(helpPopular)
 
   useEffect(() => {
     dispatch(__getReset())

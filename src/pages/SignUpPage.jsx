@@ -1,6 +1,6 @@
 import React from 'react';
-import SignUp from "../components/loginSigunUpBoard/SignUp"
 import styled from 'styled-components';
+import SignUp from "../components/loginSigunUpBoard/SignUp"
 
 const SignUpPage = () => {
   return (

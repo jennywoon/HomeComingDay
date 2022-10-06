@@ -1,52 +1,48 @@
-import React, { useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import styled from 'styled-components';
-import { AiOutlineInfoCircle } from 'react-icons/ai';
-import { logout } from '../../shared/cookies';
-import goldtitle from "../../assets/goldtitle.png"
-import silvertitle from "../../assets/silvertitle.png"
-import bronzetitle from "../../assets/bronzetitle.png"
-import xcircle from "../../assets/xcircle.png"
+// 아이콘 이미지
+import goldtitle from '../../assets/goldtitle.png';
+import silvertitle from '../../assets/silvertitle.png';
+import bronzetitle from '../../assets/bronzetitle.png';
+import xcircle from '../../assets/xcircle.png';
 
 const MyPageLankModal = ({ setLankModalOpen }) => {
-    const closeModal = () => {
-        setLankModalOpen(false);
-    };
+  const closeModal = () => {
+    setLankModalOpen(false);
+  };
 
-    return (
-        <StContainer>
-            <StWrap>
-                <StModalContainer>
-                    <StFirstModalTop>
-                      <StClose/>등급안내
-                      <StCloseX onClick={closeModal}/>
-                    </StFirstModalTop>
-                    <StFirstWrap>
-                        <StTopWrap>
-                            <StModalTop>
-                                <StBronzeLank />
-                                <StTopTitle>게시글 작성 개수</StTopTitle>
-                                <StTotTotileSecond>0개 이상</StTotTotileSecond>
-                            </StModalTop>
-                            <StModalTop>
-                                <StSilverLank />
-                                <StTopTitle>게시글 작성 개수</StTopTitle>
-                                <StTotTotileSecond>5개 이상</StTotTotileSecond>
-                            </StModalTop>
-                            <StModalTop>
-                                <StGoldLank />
-                                <StTopTitle>게시글 작성 개수</StTopTitle>
-                                <StTotTotileSecond>10개 이상</StTotTotileSecond>
-                            </StModalTop>
-                        </StTopWrap>
-                        {/* <ModalBottom onClick={closeModal}>
-                            <BottomTitle>돌아가기</BottomTitle>
-                        </ModalBottom> */}
-                    </StFirstWrap>
-                </StModalContainer>
-            </StWrap>
-        </StContainer>
-    );
+  return (
+    <StContainer>
+      <StWrap>
+        <StModalContainer>
+          <StFirstModalTop>
+            <StClose />
+            등급안내
+            <StCloseX onClick={closeModal} />
+          </StFirstModalTop>
+          <StFirstWrap>
+            <StTopWrap>
+              <StModalTop>
+                <StBronzeLank />
+                <StTopTitle>게시글 작성 개수</StTopTitle>
+                <StTotTotileSecond>0개 이상</StTotTotileSecond>
+              </StModalTop>
+              <StModalTop>
+                <StSilverLank />
+                <StTopTitle>게시글 작성 개수</StTopTitle>
+                <StTotTotileSecond>5개 이상</StTotTotileSecond>
+              </StModalTop>
+              <StModalTop>
+                <StGoldLank />
+                <StTopTitle>게시글 작성 개수</StTopTitle>
+                <StTotTotileSecond>10개 이상</StTotTotileSecond>
+              </StModalTop>
+            </StTopWrap>
+          </StFirstWrap>
+        </StModalContainer>
+      </StWrap>
+    </StContainer>
+  );
 };
 
 export default MyPageLankModal;
@@ -85,8 +81,6 @@ const StWrap = styled.div`
   width: 100%;
   max-width: 420px;
   height: 100vh;
-  /* height: 100%; */
-  /* border: 1px solid red; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -112,11 +106,13 @@ const StFirstModalTop = styled.div`
   align-items: center;
   font-size: 16px;
   font-weight: 600;
-`
+`;
+
 const StClose = styled.div`
   width: 30px;
-  heighT: 30px;
-`
+  height: 30px;
+`;
+
 const StCloseX = styled.div`
   width: 30px;
   height: 30px;
@@ -124,7 +120,7 @@ const StCloseX = styled.div`
   background-size: 100% 100%;
   background-position: center;
   cursor: pointer;
-`
+`;
 
 const StFirstWrap = styled.div`
   width: 100%;
@@ -136,62 +132,59 @@ const StFirstWrap = styled.div`
 `;
 
 const StTopWrap = styled.div`
-    width: 95%;
-    height: 80%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-`
+  width: 95%;
+  height: 80%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+`;
+
 const StModalTop = styled.div`
   width: 70%;
-  /* height: 10%; */
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
   color: #bebebe;
 `;
+
 const StBronzeLank = styled.div`
-    width: 60px;
-    height: 75px;
-    background-image: url(${bronzetitle});
-    background-size: 100% 100%;
-    background-position: center;
-    margin-bottom: 8px;
-`
+  width: 60px;
+  height: 75px;
+  background-image: url(${bronzetitle});
+  background-size: 100% 100%;
+  background-position: center;
+  margin-bottom: 8px;
+`;
 
 const StSilverLank = styled.div`
-    width: 50px;
-    height: 75px;
-    background-image: url(${silvertitle});
-    background-size: 100% 100%;
-    background-position: center;
-    margin-bottom: 8px;
-`
+  width: 50px;
+  height: 75px;
+  background-image: url(${silvertitle});
+  background-size: 100% 100%;
+  background-position: center;
+  margin-bottom: 8px;
+`;
+
 const StGoldLank = styled.div`
-    width: 43px;
-    height: 75px;
-    background-image: url(${goldtitle});
-    background-size: 100% 100%;
-    background-position: center;
-    margin-bottom: 8px;
-`
+  width: 43px;
+  height: 75px;
+  background-image: url(${goldtitle});
+  background-size: 100% 100%;
+  background-position: center;
+  margin-bottom: 8px;
+`;
 
 const StTopTitle = styled.div`
   font-size: 12px;
   font-weight: 500;
   display: flex;
   justify-content: center;
-  /* width: 100px; */
-  /* padding: 0 10px; */
   text-align: center;
-  /* word-break: keep-all; */
-  /* width: 100%; */
 `;
 
 const StTotTotileSecond = styled.div`
   font-weight: 600;
   font-size: 15px;
-`
+`;

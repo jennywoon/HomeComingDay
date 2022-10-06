@@ -1,6 +1,6 @@
 import React from 'react';
-import SignupComplete from '../components/loginSigunUpBoard/SignupComplete'
 import styled from 'styled-components';
+import SignupComplete from '../components/loginSigunUpBoard/SignupComplete'
 
 const SignupCompletePage = () => {
   return (
