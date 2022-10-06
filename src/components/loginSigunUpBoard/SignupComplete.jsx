@@ -2,10 +2,12 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Complete from '../../assets/Complete.png';
 import Button from '../../components/elements/Button';
-import { __getMyPage } from '../../redux/modules/MyPageSlice';
 import Cookies from 'universal-cookie';
+// 모듈
+import { __getMyPage } from '../../redux/modules/MyPageSlice';
+// 아이콘 이미지
+import Complete from '../../assets/Complete.png';
 
 const SignupComplete = () => {
   const navigate = useNavigate();
@@ -18,9 +20,6 @@ const SignupComplete = () => {
   useEffect(() => {
     dispatch(__getMyPage());
   }, [dispatch]);
-
-  const data = useSelector((state) => state.mypages.mypages);
-  // console.log(data);
 
   const cookies = new Cookies();
 
@@ -38,7 +37,6 @@ const SignupComplete = () => {
             </StUsername>
             <StWelcomeText>홈커밍데이 가입을 환영합니다!</StWelcomeText>
             <StSchoolDiv>
-              {/* <StSchoolColorText>{data && data.schoolName}</StSchoolColorText> */}
               <StSchoolText>선후배들과 소통을 이어가보세요</StSchoolText>
             </StSchoolDiv>
           </StText>
@@ -110,9 +108,6 @@ const StWelcomeText = styled.p`
 `;
 
 const StSchoolText = styled.p``;
-const StSchoolColorText = styled.p`
-  color: #f7931e;
-`;
 
 const StSchoolDiv = styled.div`
   display: flex;

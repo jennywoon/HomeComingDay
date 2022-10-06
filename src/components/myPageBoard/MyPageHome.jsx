@@ -1,96 +1,96 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import MyPageUser from './MyPageUser';
 import MyPageCard from './MyPageCard';
+import MyPageLankModal from './MyPageLankModa';
+import ContactModal from './ContactModal';
+// 모듈
 import { __getMyArticle } from '../../redux/modules/MyPageSlice';
-import { useDispatch, useSelector } from 'react-redux';
+// 아이콘 이미지
 import nonedatasquare from '../../assets/nonedatasquare.png';
 import Homeimg from '../../assets/Home.png';
 import Searchimg from '../../assets/Search.png';
 import Chatimg from '../../assets/Chat.png';
 import MyColorimg from '../../assets/MyColor.png';
-import refresh from "../../assets/refresh.png"
-import MyPageLankModal from './MyPageLankModa';
-import ContactModal from "./ContactModal"
+import refresh from '../../assets/refresh.png';
 
 const MyPageHome = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   const chatList = useSelector((state) => state.chat.chatList[0]);
   const { myarticles, totalCount } = useSelector((state) => state.mypages);
-  const { error } = useSelector((state) => state.mypages.myarticles)
-  // console.log("myarticles", myarticles, totalCount);
-  // console.log(error);
+  const { error } = useSelector((state) => state.mypages.myarticles);
 
-  useEffect(()=>{
-    if(totalCount === 0 ) {
-      dispatch(__getMyArticle())
+  useEffect(() => {
+    if (totalCount === 0) {
+      dispatch(__getMyArticle());
     }
-  }, [])
+  }, []);
 
   //무한 스크롤
-
   const targetRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [page, setPage] = useState(0);
 
-  
-
-  const checkIntersect = useCallback(([entry], observer) => {
-    if (entry.isIntersecting && !isLoaded) {
-      // console.log("page", page);
-      dispatch(__getMyArticle(page));
-      observer.unobserve(entry.target);
-      setPage((prev) => prev + 1);
-    }
-  }, [dispatch, isLoaded, page])
+  const checkIntersect = useCallback(
+    ([entry], observer) => {
+      if (entry.isIntersecting && !isLoaded) {
+        dispatch(__getMyArticle(page));
+        observer.unobserve(entry.target);
+        setPage((prev) => prev + 1);
+      }
+    },
+    [dispatch, isLoaded, page]
+  );
 
   useEffect(() => {
     let observer;
-    // console.log("length", myarticles.length);
-    // console.log("totalCount", totalCount);
-    // console.log(myarticles.length !== totalCount)
     if (targetRef && myarticles.length !== totalCount) {
       observer = new IntersectionObserver(checkIntersect, {
         threshold: 0.5,
-      })
+      });
       observer.observe(targetRef.current);
     }
   }, [myarticles]);
 
   const refreshPage = () => {
     window.location.reload();
-  }
+  };
 
   // 마이페이지 등급안내 모달
   const [lankModalOpen, setLankModalOpen] = useState(false);
   const showLankModal = (e) => {
     e.preventDefault();
     setLankModalOpen(true);
-  }
+  };
 
   // 문의사항 모달
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const showContactModal = (e) => {
     e.preventDefault();
-    setContactModalOpen(true)
-  }
+    setContactModalOpen(true);
+  };
+  
   return (
     <StHomeContainer>
       {lankModalOpen && <MyPageLankModal setLankModalOpen={setLankModalOpen} />}
-      {contactModalOpen && <ContactModal setContactModalOpen={setContactModalOpen} />}
+      {contactModalOpen && (
+        <ContactModal setContactModalOpen={setContactModalOpen} />
+      )}
       <StMyPageTop>
         <MyPageUser />
-        <StContact onClick={showContactModal}>궁금한 사항이 있으신가요?</StContact>
+        <StContact onClick={showContactModal}>
+          궁금한 사항이 있으신가요?
+        </StContact>
       </StMyPageTop>
       <StMyPageBottom>
         <StBottomWrap>
           <StTitleWrap>
             <StMyPosTitletWrap>
               <StMyPostTitle>내가 쓴 게시글</StMyPostTitle>
-              {/* <StPostCount>{myarticles && myarticles.length}</StPostCount> */}
               <StPostCount>{totalCount && totalCount}</StPostCount>
               <StRefresh onClick={refreshPage} />
             </StMyPosTitletWrap>
@@ -101,10 +101,14 @@ const MyPageHome = () => {
           <StArticleWrap>
             {myarticles && myarticles.length > 0 ? (
               <div>
-                {myarticles && myarticles.map((myarticle) => (
-                  <MyPageCard key={myarticle.articleId} id={myarticle.articleId} myarticle={myarticle}
-                  />
-                ))}
+                {myarticles &&
+                  myarticles.map((myarticle) => (
+                    <MyPageCard
+                      key={myarticle.articleId}
+                      id={myarticle.articleId}
+                      myarticle={myarticle}
+                    />
+                  ))}
               </div>
             ) : (
               <StNoneData>
@@ -123,10 +127,7 @@ const MyPageHome = () => {
               navigate('/main');
             }}
           >
-            <StImg
-              src={Homeimg}
-              alt='홈'
-            />
+            <StImg src={Homeimg} alt='홈' />
             <StTapTitle>홈</StTapTitle>
           </StFirstTap>
           <StTap
@@ -134,10 +135,7 @@ const MyPageHome = () => {
               navigate('/search');
             }}
           >
-            <StImg
-              src={Searchimg}
-              alt='검색'
-            />
+            <StImg src={Searchimg} alt='검색' />
             <StTapTitle>검색</StTapTitle>
           </StTap>
           <StTap
@@ -146,14 +144,11 @@ const MyPageHome = () => {
             }}
           >
             <StIconWrap>
-              <StImg
-                src={Chatimg}
-                alt='채팅'
-              />
+              <StImg src={Chatimg} alt='채팅' />
               {chatList && chatList.totalCnt > 0 ? (
                 <StNewDiv>
-                <StNewTitle>N</StNewTitle>
-              </StNewDiv>
+                  <StNewTitle>N</StNewTitle>
+                </StNewDiv>
               ) : null}
             </StIconWrap>
             <StTapTitle>채팅</StTapTitle>
@@ -163,10 +158,7 @@ const MyPageHome = () => {
               navigate('/mypage');
             }}
           >
-            <StImg
-              src={MyColorimg}
-              alt='마이페이지'
-            />
+            <StImg src={MyColorimg} alt='마이페이지' />
             <StLastTapTitle>MY</StLastTapTitle>
           </StLastTap>
         </StBottom>
@@ -203,7 +195,8 @@ const StContact = styled.div`
   margin-bottom: 5px;
   color: #fff4cc;
   cursor: pointer;
-`
+`;
+
 const StMyPageBottom = styled.div`
   width: 100%;
   height: 76%;
@@ -258,7 +251,7 @@ const StNoneDataImg = styled.div`
 const StMyPosTitletWrap = styled.div`
   display: flex;
   align-items: center;
-`
+`;
 
 const StMyPostTitle = styled.div`
   color: #bebebe;
@@ -276,7 +269,7 @@ const StRefresh = styled.div`
   background-position: center;
   background-size: 100% 100%;
   cursor: pointer;
-`
+`;
 
 const StLankWrap = styled.div`
   border: 1px solid #b3b3b3;
@@ -287,12 +280,14 @@ const StLankWrap = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-`
+`;
+
 const StLank = styled.div`
   color: #bebebe;
   font-size: 12px;
   font-weight: 500;
-`
+`;
+
 const SecondWrap = styled.div`
   width: 100%;
   position: sticky;
@@ -309,12 +304,13 @@ const StBottom = styled.div`
 `;
 
 const StFirstTap = styled.div`
-    display: flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
   padding-left: 20px;
-`
+`;
+
 const StTap = styled.div`
   display: flex;
   flex-direction: column;
@@ -326,7 +322,7 @@ const StIconWrap = styled.div`
   display: flex;
   justify-content: center;
   position: relative;
-`
+`;
 
 const StNewDiv = styled.div`
   width: 12px;
@@ -347,17 +343,18 @@ const StNewTitle = styled.div`
 `;
 
 const StLastTap = styled.div`
-    display: flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
   padding-right: 20px;
-`
+`;
+
 const StImg = styled.img`
   width: 25px;
   height: 25px;
   margin: 2px;
-`
+`;
 
 const StTapTitle = styled.div`
   font-size: 11px;
@@ -366,7 +363,7 @@ const StTapTitle = styled.div`
 `;
 
 const StLastTapTitle = styled.div`
-    font-size: 11px;
+  font-size: 11px;
   font-weight: 600;
   color: #f7931e;
-`
+`;

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+// 아이콘
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 
 const LoginErrorModal = ({ setModalOpen }) => {
@@ -67,6 +68,7 @@ const StWrap = styled.div`
   background-color: rgba(87, 87, 87, 0.3);
   overflow-y: hidden;
 `;
+
 const StModalContainer = styled.div`
   width: 80%;
   height: 180px;
@@ -81,6 +83,7 @@ const StFirstWrap = styled.div`
   width: 100%;
   height: 100%;
 `;
+
 const StModalTop = styled.div`
   width: 100%;
   height: 75%;
@@ -98,6 +101,7 @@ const StTopTitle = styled.div`
   text-align: center;
   word-break: keep-all;
 `;
+
 const StModalBottom = styled.div`
   width: 100%;
   height: 25%;
